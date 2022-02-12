@@ -1,20 +1,45 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from "react";
+import * as Font from "expo-font";
+import AppLoading from "expo-app-loading";
+import { enableScreens } from "react-native-screens";
+import CloserNavigation from "./navigation/CloserNavigation";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+enableScreens();
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const fetchFonts = () => {
+  return Font.loadAsync({
+    "Exo-Black": require("./assets/fonts/static/Exo-Black.ttf"),
+    "Exo-Bold": require("./assets/fonts/static/Exo-Bold.ttf"),
+    "Exo-SemiBold": require("./assets/fonts/static/Exo-SemiBold.ttf"),
+    "Exo-ExtraBold": require("./assets/fonts/static/Exo-ExtraBold.ttf"),
+    "Exo-Light": require("./assets/fonts/static/Exo-Light.ttf"),
+    "Exo-Regular": require("./assets/fonts/static/Exo-Regular.ttf"),
+    "Exo-ExtraLight": require("./assets/fonts/static/Exo-ExtraLight.ttf"),
+    "Exo-Medium": require("./assets/fonts/static/Exo-Medium.ttf"),
+    "Exo-SemiBold": require("./assets/fonts/static/Exo-SemiBold.ttf"),
+    "IBMPlexSansThaiLooped-Light": require("./assets/fonts/IBMPlexSansThaiLooped-Light.ttf"),
+    "IBMPlexSansThaiLooped-Regular": require("./assets/fonts/IBMPlexSansThaiLooped-Regular.ttf"),
+    "IBMPlexSansThaiLooped-Medium": require("./assets/fonts/IBMPlexSansThaiLooped-Medium.ttf"),
+    "IBMPlexSansThaiLooped-SemiBold": require("./assets/fonts/IBMPlexSansThaiLooped-SemiBold.ttf"),
+    "IBMPlexSansThaiLooped-Bold": require("./assets/fonts/IBMPlexSansThaiLooped-Bold.ttf"),
+    "IBMPlexSansThaiLooped-Thin": require("./assets/fonts/IBMPlexSansThaiLooped-Thin.ttf"),
+  });
+};
+
+const App = () => {
+  const [fontLoaded, setFontLoaded] = useState(false);
+
+  if (!fontLoaded) {
+    return (
+      <AppLoading
+        startAsync={fetchFonts}
+        onFinish={() => setFontLoaded(true)}
+        onError={() => setFontLoaded(false)}
+      />
+    );
+  }
+
+  return <CloserNavigation />;
+};
+
+export default App;
