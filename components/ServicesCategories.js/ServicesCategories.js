@@ -7,59 +7,25 @@ import {
   Image,
 } from "react-native";
 import { Divider } from "react-native-elements";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../../assets/styles/Colors";
-
-const data = [
-  {
-    id: "6",
-    title: "Toate serviciile",
-    icon: "category",
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Smart_logo.svg/2048px-Smart_logo.svg.png",
-  },
-  {
-    id: "4",
-    title: "ITP",
-    icon: "car-repair",
-    image:
-      "https://itp-dumbravita.ro/wp-content/uploads/2021/07/cropped-logo-itp-dumbravita-mic.png",
-  },
-  {
-    id: "1",
-    title: "Restaurant",
-    icon: "restaurant",
-    image:
-      "https://www.pngall.com/wp-content/uploads/8/Restaurant-Chef-PNG-Free-Download.png",
-  },
-  {
-    id: "5",
-    title: "Spalatorie auto",
-    icon: "local-car-wash",
-    image:
-      "https://image.shutterstock.com/image-vector/vector-icons-logos-car-repair-260nw-1968480934.jpg",
-  },
-  {
-    id: "3",
-    title: "Masaj",
-    icon: "airline-seat-recline-extra",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr6YuFn36i93VvHnXWrgntwzgdsLJAs1-ViQ&usqp=CAU",
-  },
-  {
-    id: "2",
-    title: "Tuns",
-    icon: "restaurant",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEq-5Ke0jJ2fakdPr5Ntn2IFNWkF_SZ_T-Ya91Sj2yqsESTPu8KHtXjD4gdLjKIX5FhWU&usqp=CAU",
-  },
-];
+import axios from "axios";
 
 const ServicesCategories = () => {
   const { t } = useTranslation();
   const navigation = useNavigation();
+  const [services, setServices] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://192.168.100.2:8000/api/v1/services")
+      .then((resp) => {
+        setServices(resp.data.services);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   return (
     <View style={styles.servicesContainer}>
@@ -83,7 +49,7 @@ const ServicesCategories = () => {
       <FlatList
         nestedScrollEnabled={true}
         horizontal
-        data={data}
+        data={services}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View
@@ -107,7 +73,7 @@ const ServicesCategories = () => {
                 }}
               />
             </TouchableOpacity>
-            <Text style={styles.servicesTitle}>{item.title}</Text>
+            <Text style={styles.servicesTitle}>{item.name}</Text>
           </View>
         )}
       />
@@ -136,7 +102,7 @@ const styles = StyleSheet.create({
   },
   servicesHeading: {
     color: Colors.textDark,
-    fontFamily: "IBMPlexSansThaiLooped-SemiBold",
+    fontFamily: "Exo-SemiBold",
     fontSize: 15,
   },
   seeAllHeading: {

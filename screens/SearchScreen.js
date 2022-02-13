@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Divider, SearchBar } from "react-native-elements";
 import { useTranslation } from "react-i18next";
 import {
   SafeAreaView,
   StyleSheet,
-  ScrollView,
   Text,
   TouchableOpacity,
   FlatList,
@@ -12,28 +12,38 @@ import {
 import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../assets/styles/Colors";
-import { DUMMY_SERVICES } from "../dummy-data/dummyServices";
 
 const SearchScreen = () => {
-  const [data, setData] = useState(DUMMY_SERVICES);
+  const [initialServices, setInitialServices] = useState([]);
   const [filteredServices, setFilteredServices] = useState([]);
   const [search, setSearch] = useState("");
   const { t } = useTranslation();
   const navigation = useNavigation();
 
-  console.log(data);
+  console.log(initialServices);
 
   const updateSearch = (search) => {
     setSearch(search);
   };
 
   useEffect(() => {
-    let services = data.filter(
-      (item) => item.service.toLowerCase().indexOf(search.toLowerCase()) >= 0
+    axios
+      .get("http://192.168.100.2:8000/api/v1/services")
+      .then((resp) => {
+        setInitialServices(resp.data.services);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+  useEffect(() => {
+    let services = initialServices.filter(
+      (item) => item.name.toLowerCase().indexOf(search.toLowerCase()) >= 0
     );
 
     setFilteredServices(services);
   }, [search]);
+
+  console.log(filteredServices);
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -103,11 +113,16 @@ const SearchScreen = () => {
           <View>
             <FlatList
               data={filteredServices}
-              keyExtractor={(item) => item.id}
+              keyExtractor={(item) => item._id}
               renderItem={({ item }) => (
-                <TouchableOpacity style={styles.item}>
-                  <Text style={styles.serviceItem}>{item.service}</Text>
-                  <Text style={styles.categoryItem}>{item.category}</Text>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("Filters", { serviceId: item._id })
+                  }
+                  style={styles.item}
+                >
+                  <Text style={styles.serviceItem}>{item.name}</Text>
+                  <Text style={styles.categoryItem}>{item.category.name}</Text>
                 </TouchableOpacity>
               )}
             />

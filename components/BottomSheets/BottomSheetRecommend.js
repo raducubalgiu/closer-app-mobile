@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingLeft: 15,
     color: Colors.textDark,
-    fontFamily: "IBMPlexSansThaiLooped-SemiBold",
+    fontFamily: "Exo-SemiBold",
     fontSize: 15,
   },
 });

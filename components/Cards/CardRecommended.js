@@ -44,12 +44,6 @@ const CardRecommended = (props) => {
                 {props.ratingsQuantity} de recenzii
               </Text>
             </View>
-            <Text style={styles.cardAvailable}>
-              {props.availableSeats}{" "}
-              {props.title === "Restaurant"
-                ? t("availableTables")
-                : t("availableSeats")}
-            </Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -129,19 +123,13 @@ const styles = StyleSheet.create({
   cardRatingsAverage: {
     marginLeft: 2,
     fontSize: 12,
+    fontFamily: "Exo-Medium",
   },
   cardRatingsQuantity: {
     marginLeft: 4,
-    fontSize: 10.5,
+    fontSize: 12,
     padding: 2,
     color: Colors.textLight,
     fontFamily: "Exo-Medium",
-  },
-  cardAvailable: {
-    textAlign: "right",
-    fontSize: 10,
-    marginTop: 10,
-    color: Colors.textLight,
-    fontFamily: "Exo-Bold",
   },
 });

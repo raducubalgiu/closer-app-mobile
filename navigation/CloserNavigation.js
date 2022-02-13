@@ -14,7 +14,6 @@ import LoginScreen from "../screens/User/LoginScreen";
 import RegisterScreen from "../screens/User/RegisterScreen";
 import ProfileScreen from "../screens/User/ProfileScreen";
 import SearchScreen from "../screens/SearchScreen";
-import AllServicesScreen from "../screens/AllServicesScreen";
 import EditProfileScreen from "../screens/User/EditProfileScreen";
 import GiftsScreen from "../screens/User/GiftsScreen";
 import RatingsScreen from "../screens/User/RatingsScreen";
@@ -23,6 +22,8 @@ import ReportProblemScreen from "../screens/User/ReportProblemScreen";
 import SettingsScreen from "../screens/User/SettingsScreen";
 import LegalScreen from "../screens/User/LegalScreen";
 import RegisterBusinessScreen from "../screens/User/RegisterBusinessScreen";
+import FiltersScreen from "../screens/FiltersScreen";
+import ServicesNavigation from "../screens/ServicesNavigationScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -36,7 +37,8 @@ const StackNavigator = () => {
     >
       <Stack.Screen name="StackBase" component={HomeScreen} />
       <Stack.Screen name="Search" component={SearchScreen} />
-      <Stack.Screen name="AllServices" component={AllServicesScreen} />
+      <Stack.Screen name="AllServices" component={ServicesNavigation} />
+      <Stack.Screen name="Filters" component={FiltersScreen} />
     </Stack.Navigator>
   );
 };

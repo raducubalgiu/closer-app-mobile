@@ -21,20 +21,13 @@ const ProfileScreen = () => {
 
   return (
     <View style={styles.screen}>
-      <SafeAreaView style={{ backgroundColor: "#f1f1f1", borderRadius: 15 }}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("EditProfile")}
-          style={{
-            flexDirection: "row",
-            justifyContent: "flex-end",
-            marginRight: 25,
-            marginTop: 5,
-            paddingBottom: 10,
-          }}
-        >
-          <Icon name="settings" color={Colors.textDark} />
-        </TouchableOpacity>
-      </SafeAreaView>
+      <SafeAreaView
+        style={{
+          backgroundColor: "#f1f1f1",
+          borderRadius: 15,
+          marginVertical: 10,
+        }}
+      ></SafeAreaView>
       <ScrollView>
         <View style={styles.avatarSection}>
           <Avatar
@@ -160,6 +153,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 20,
     backgroundColor: "white",
+    borderRadius: 15,
   },
   name: {
     fontSize: 20,
