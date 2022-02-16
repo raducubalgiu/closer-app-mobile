@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button } from "react-native";
 import DatePicker from "react-native-date-picker";
 
-const ModalDate = () => {
+const DateTimeModal = () => {
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
 
@@ -25,4 +25,4 @@ const ModalDate = () => {
   );
 };
 
-export default ModalDate;
+export default DateTimeModal;

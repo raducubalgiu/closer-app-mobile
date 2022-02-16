@@ -12,10 +12,13 @@ import BackSearchFilter from "../components/Headers/BackSearchFilter";
 import { Divider } from "react-native-elements/dist/divider/Divider";
 import { Icon } from "react-native-elements/dist/icons/Icon";
 import { Avatar } from "react-native-elements";
+import { Colors } from "../assets/styles/Colors";
+import { useNavigation } from "@react-navigation/native";
 
 const ServicesNavigation = () => {
   const [categories, setCategories] = useState([]);
   const [isOpen, setIsOpen] = useState(true);
+  const navigation = useNavigation();
 
   useEffect(() => {
     axios
@@ -40,6 +43,7 @@ const ServicesNavigation = () => {
           renderItem={({ item }) => (
             <View>
               <TouchableOpacity
+                activeOpacity={1}
                 onPress={handleAccordion}
                 style={{
                   backgroundColor: "#f1f1f1",
@@ -52,7 +56,7 @@ const ServicesNavigation = () => {
                 <Text style={{ fontFamily: "Exo-Medium" }}>{item.name}</Text>
                 <Icon
                   size={18}
-                  name="keyboard-arrow-up"
+                  name={isOpen ? "keyboard-arrow-up" : "keyboard-arrow-down"}
                   style={{ backgroundColor: "white", borderRadius: 50 }}
                 />
               </TouchableOpacity>
@@ -64,6 +68,12 @@ const ServicesNavigation = () => {
                   renderItem={({ item }) => (
                     <View style={{ paddingHorizontal: 15 }}>
                       <TouchableOpacity
+                        onPress={() =>
+                          navigation.navigate("Services", {
+                            serviceId: item._id,
+                          })
+                        }
+                        activeOpacity={1}
                         style={{
                           flexDirection: "row",
                           alignItems: "center",
@@ -87,15 +97,15 @@ const ServicesNavigation = () => {
                           >
                             {item.name}
                           </Text>
-                          {/* <Text
-                          style={{
-                            fontFamily: "Exo-Regular",
-                            fontSize: 12,
-                            color: Colors.textLight,
-                          }}
-                        >
-                          5 rezultate
-                        </Text> */}
+                          <Text
+                            style={{
+                              fontFamily: "Exo-Regular",
+                              fontSize: 12,
+                              color: Colors.textLight,
+                            }}
+                          >
+                            5 rezultate
+                          </Text>
                         </View>
                       </TouchableOpacity>
                       <Divider />

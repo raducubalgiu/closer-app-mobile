@@ -1,6 +1,6 @@
 {
   "searchInputTitle": "Ce serviciu cauţi?",
-  "nearYou": "Disponibil în zona ta",
+  "nearYou": "Disponibil acum",
   "servicesHeading": "Servicii populare",
   "availableSeats": "locuri disponibile",
   "availableTables": "mese disponibile",
@@ -20,5 +20,8 @@
   "register": "Înregistrare",
   "support": "Suport",
   "settingsAndJuridicInfo": "Setări şi informaţii juridice",
-  "partners": "Parteneri"
+  "partners": "Parteneri",
+  "price": "Preţ",
+  "distance": "Distanţă",
+  "rating": "Rating"
 }

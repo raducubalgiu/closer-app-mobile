@@ -1,42 +1,28 @@
 import { useState, useRef, useMemo, useCallback } from "react";
-import { StyleSheet, Text, View, FlatList, Dimensions } from "react-native";
+import { StyleSheet, Text, View, FlatList } from "react-native";
 import { Divider } from "react-native-elements";
 import BottomSheet, {
   BottomSheetView,
   BottomSheetBackdrop,
 } from "@gorhom/bottom-sheet";
-import { DUMMY_RECOMMENDED } from "../../dummy-data/dummyRecomended";
-import CardRecommended from "../Cards/CardRecommended";
 import { useTranslation } from "react-i18next";
 import { Colors } from "../../assets/styles/Colors";
+import CardService from "../Cards/CardService";
 
-const BottomSheetRecommend = (props) => {
+const BottomSheetService = (props) => {
+  const [sheetStep, setSheetStep] = useState(1);
   const { t } = useTranslation();
   const sheetRef = useRef(null);
-  const [sheetStep, setSheetStep] = useState(0);
-  const height = Dimensions.get("window").height;
 
-  const snapPoints = useMemo(() => [height / 2, height / 1.2], []);
+  const snapPoints = useMemo(() => ["60%", "10%", "85%"], []);
 
   const handleSheetChange = useCallback((index) => {
     setSheetStep(index);
   }, []);
 
-  const renderBackdrop = useCallback(
-    (props) => (
-      <BottomSheetBackdrop
-        {...props}
-        disappearsOnIndex={sheetStep[0]}
-        appearsOnIndex={sheetStep[1]}
-      />
-    ),
-    []
-  );
-
   return (
     <BottomSheet
       style={styles.bottomSheet}
-      backdropComponent={renderBackdrop}
       ref={sheetRef}
       snapPoints={snapPoints}
       onChange={handleSheetChange}
@@ -48,27 +34,28 @@ const BottomSheetRecommend = (props) => {
     >
       <BottomSheetView>
         <View>
-          <Text style={styles.sheetHeading}>{t("nearYou")}</Text>
+          <Text style={styles.sheetHeading}>134 de rezultate</Text>
           <Divider
             width={2}
             color="#f1f1f1"
             style={{ paddingBottom: 5, marginBottom: 5 }}
           />
           <FlatList
-            data={DUMMY_RECOMMENDED}
-            keyExtractor={(item) => item.id}
+            data={props.data}
+            keyExtractor={(item) => item._id}
             renderItem={({ item }) => (
-              <CardRecommended
-                id={item._id}
-                name={item.name}
-                image={item.image}
-                title={item.title}
-                address={item.address}
-                distance={item.distance}
-                ratingsAverage={item.ratingsAverage}
-                ratingsQuantity={item.ratingsQuantity}
-                availableSeats={item.availableSeats}
-              />
+              <>
+                <CardService
+                  id={item._id}
+                  image={item.imageCover}
+                  business={item.name}
+                  address={`${item.startLocation.address.street}, ${item.startLocation.address.number}, ${item.startLocation.address.county}`}
+                  ratingsAverage={item.ratingsAverage}
+                  ratingsQuantity={item.ratingsQuantity}
+                  service={item.service.name}
+                />
+                <Divider />
+              </>
             )}
           />
         </View>
@@ -77,7 +64,7 @@ const BottomSheetRecommend = (props) => {
   );
 };
 
-export default BottomSheetRecommend;
+export default BottomSheetService;
 
 const styles = StyleSheet.create({
   sheetHeading: {
@@ -86,6 +73,7 @@ const styles = StyleSheet.create({
     color: Colors.textDark,
     fontFamily: "Exo-SemiBold",
     fontSize: 15,
+    textAlign: "center",
   },
   bottomSheet: {
     shadowColor: "#c9c5c5",

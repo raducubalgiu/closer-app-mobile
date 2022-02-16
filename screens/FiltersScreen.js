@@ -1,15 +1,19 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { StyleSheet, Text, SafeAreaView, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import DateTimeModal from "../components/DateTimeModal/DateTimeModal";
 
 const FiltersScreen = ({ route }) => {
   const { serviceId } = route.params;
-
-  console.log(serviceId);
+  const navigation = useNavigation();
 
   return (
-    <View style={styles.screen}>
-      <Text>FilterScreen</Text>
-    </View>
+    <SafeAreaView style={styles.screen}>
+      <TouchableOpacity onPress={() => navigation.navigate("Services")}>
+        <Text>Go to Services Screen</Text>
+      </TouchableOpacity>
+      <DateTimeModal />
+    </SafeAreaView>
   );
 };
 
@@ -18,5 +22,7 @@ export default FiltersScreen;
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
 });

@@ -61,7 +61,11 @@ const ServicesCategories = () => {
               paddingHorizontal: 5,
             }}
           >
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("Services", { serviceId: item._id })
+              }
+            >
               <Image
                 style={{
                   width: 70,

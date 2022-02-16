@@ -13,7 +13,7 @@ import ProfileListItem from "../../components/ProfileListItem/ProfileListItem";
 import { useTranslation } from "react-i18next";
 import { Colors } from "../../assets/styles/Colors";
 import { useNavigation } from "@react-navigation/native";
-import BottomScheetReusable from "../../components/BottomSheets/BottomScheetReusable";
+import HeaderSimple from "../../components/Headers/HeaderSimple";
 
 const ProfileScreen = () => {
   const { t } = useTranslation();
@@ -21,121 +21,131 @@ const ProfileScreen = () => {
 
   return (
     <View style={styles.screen}>
-      <SafeAreaView
-        style={{
-          backgroundColor: "#f1f1f1",
-          borderRadius: 15,
-          marginVertical: 10,
-        }}
-      ></SafeAreaView>
+      <HeaderSimple />
       <ScrollView>
         <View style={styles.avatarSection}>
           <Avatar
-            size={100}
+            size={60}
             rounded
             source={{
-              uri: "https://scontent.fotp3-1.fna.fbcdn.net/v/t1.6435-1/c0.202.1612.1611a/71498148_2594599870570594_298053640667529216_n.jpg?_nc_cat=110&ccb=1-5&_nc_sid=dbb9e7&_nc_ohc=NVUyJqOQousAX_zJXTC&_nc_ht=scontent.fotp3-1.fna&oh=00_AT9yCGLs0oKSHTumtf06hI15BlZ4Kc90Q0Ll96NwteELoQ&oe=622E8A05",
+              uri: "https://stanandrei.ro/wp-content/uploads/2021/02/user-icon-png.jpg",
             }}
           />
-          <Text style={styles.name}>Raducu Balgiu</Text>
+          <View>
+            <Text style={styles.name}>Raducu Balgiu</Text>
+            <Text style={styles.phone}>+40731289633</Text>
+          </View>
         </View>
-        <View style={styles.detailsSection}>
-          <ProfileListItem
-            onPress={() => navigation.navigate("EditProfile")}
-            listItemName={t("administrateYourAccount")}
-            name="user"
-            type="antdesign"
-            size={20}
-          />
-
+        <View style={{ paddingHorizontal: 20 }}>
           <Divider />
+        </View>
+        <View>
+          <View style={styles.userDetails}>
+            <ProfileListItem
+              onPress={() => navigation.navigate("EditProfile")}
+              listItemName={t("administrateYourAccount")}
+              name="user"
+              type="antdesign"
+              size={20}
+            />
 
-          <ProfileListItem
-            onPress={() => navigation.navigate("Gifts")}
-            listItemName={t("gifts")}
-            name="gift"
-            type="feather"
-            size={20}
-          />
+            <ProfileListItem
+              onPress={() => navigation.navigate("Gifts")}
+              listItemName={t("gifts")}
+              name="gift"
+              type="feather"
+              size={20}
+            />
 
-          <Divider />
+            <ProfileListItem
+              onPress={() => navigation.navigate("Ratings")}
+              listItemName={t("ratings")}
+              name="profile"
+              type="antdesign"
+              size={20}
+            />
+          </View>
 
-          <ProfileListItem
-            onPress={() => navigation.navigate("Ratings")}
-            listItemName={t("ratings")}
-            name="profile"
-            type="antdesign"
-            size={20}
-          />
+          <View style={styles.sectionDetails}>
+            <Text style={styles.heading}>{t("support")}</Text>
 
-          <Text style={styles.heading}>{t("support")}</Text>
+            <ProfileListItem
+              onPress={() => navigation.navigate("ControlPanel")}
+              listItemName={t("controlPanel")}
+              name="database"
+              type="antdesign"
+              size={20}
+            />
 
-          <ProfileListItem
-            onPress={() => navigation.navigate("ControlPanel")}
-            listItemName={t("controlPanel")}
-            name="database"
-            type="antdesign"
-            size={20}
-          />
+            <ProfileListItem
+              onPress={() => navigation.navigate("ReportProblem")}
+              listItemName={t("reportAProblem")}
+              name="exclamationcircleo"
+              type="antdesign"
+              size={20}
+            />
+          </View>
 
-          <Divider />
+          <View style={styles.sectionDetails}>
+            <Text style={styles.heading}>{t("settingsAndJuridicInfo")}</Text>
 
-          <ProfileListItem
-            onPress={() => navigation.navigate("ReportProblem")}
-            listItemName={t("reportAProblem")}
-            name="exclamationcircleo"
-            type="antdesign"
-            size={20}
-          />
+            <ProfileListItem
+              onPress={() => navigation.navigate("Settings")}
+              listItemName={t("Settings")}
+              name="setting"
+              type="antdesign"
+              size={20}
+            />
 
-          <Text style={styles.heading}>{t("settingsAndJuridicInfo")}</Text>
+            <ProfileListItem
+              onPress={() => {}}
+              listItemName={t("rateOurApp")}
+              name="like2"
+              type="antdesign"
+              size={20}
+            />
 
-          <ProfileListItem
-            onPress={() => navigation.navigate("Settings")}
-            listItemName={t("Settings")}
-            name="setting"
-            type="antdesign"
-            size={20}
-          />
+            <ProfileListItem
+              onPress={() => navigation.navigate("Legal")}
+              listItemName={t("legal")}
+              name="user"
+              type="antdesign"
+              size={20}
+            />
+          </View>
 
-          <Divider />
+          <View style={styles.sectionDetails}>
+            <Text style={styles.heading}>{t("partners")}</Text>
 
-          <ProfileListItem
-            onPress={() => {}}
-            listItemName={t("rateOurApp")}
-            name="like2"
-            type="antdesign"
-            size={20}
-          />
+            <ProfileListItem
+              onPress={() => navigation.navigate("RegisterBusiness")}
+              listItemName={t("registerYourBusiness")}
+              name="login"
+              type="antdesign"
+              size={20}
+            />
 
-          <Divider />
-
-          <ProfileListItem
-            onPress={() => navigation.navigate("Legal")}
-            listItemName={t("legal")}
-            name="user"
-            type="antdesign"
-            size={20}
-          />
-
-          <Text style={styles.heading}>{t("partners")}</Text>
-
-          <ProfileListItem
-            onPress={() => navigation.navigate("RegisterBusiness")}
-            listItemName={t("registerYourBusiness")}
-            name="login"
-            type="antdesign"
-            size={20}
-          />
-
-          <Divider />
-
-          <TouchableOpacity style={styles.detailsItem}>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Icon name="log-out" type="feather" size={20} />
-              <Text style={{ marginLeft: 10 }}>{t("logout")}</Text>
-            </View>
-          </TouchableOpacity>
+            <TouchableOpacity style={styles.detailsItem}>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Icon
+                  name="log-out"
+                  type="feather"
+                  size={20}
+                  color={Colors.danger}
+                />
+                <Text
+                  style={{
+                    marginLeft: 10,
+                    paddingVertical: 20,
+                    color: Colors.danger,
+                    fontFamily: "Exo-SemiBold",
+                  }}
+                >
+                  {t("logout")}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     </View>
@@ -149,38 +159,34 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   avatarSection: {
-    flexDirection: "column",
+    flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 20,
+    paddingHorizontal: 15,
     backgroundColor: "white",
-    borderRadius: 15,
+    paddingVertical: 10,
+    paddingBottom: 25,
   },
   name: {
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: "700",
-    marginTop: 10,
-    fontFamily: "Exo-ExtraBold",
+    fontFamily: "Exo-Bold",
     color: Colors.textDark,
+    marginLeft: 15,
   },
-  detailsSection: {
-    flex: 1,
+  phone: {
+    fontFamily: "Exo-Medium",
+    color: Colors.textLight,
+    marginLeft: 15,
+    marginTop: 5,
+  },
+  userDetails: {
+    paddingHorizontal: 25,
     backgroundColor: "white",
-    marginTop: 15,
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    borderRadius: 15,
-    shadowColor: "#c9c5c5",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.8,
-    shadowRadius: 10,
-
-    elevation: 11,
   },
-  detailsItem: {
-    paddingVertical: 15,
+  sectionDetails: {
+    backgroundColor: "white",
+    marginTop: 10,
+    paddingHorizontal: 25,
   },
   heading: {
     fontSize: 16,

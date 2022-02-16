@@ -4,11 +4,19 @@ import { Icon } from "react-native-elements";
 import React from "react";
 import { t } from "i18next";
 import { Colors } from "../../assets/styles/Colors";
+import { useNavigation } from "@react-navigation/native";
 
 const CardRecommended = (props) => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.cardItem}>
+      <TouchableOpacity
+        style={styles.cardItem}
+        onPress={() =>
+          navigation.navigate("ServiceItem", { serviceIde: props.id })
+        }
+      >
         <View style={styles.recommendItem}>
           <View>
             <Image

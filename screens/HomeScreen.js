@@ -1,10 +1,12 @@
-import { StyleSheet, SafeAreaView } from "react-native";
+import { SafeAreaView, StyleSheet, Dimensions, View } from "react-native";
 import React from "react";
-import ServicesCategories from "../components/ServicesCategories.js/ServicesCategories";
 import BottomSheetRecommend from "../components/BottomSheets/BottomSheetRecommend";
 import FakeSearchBar from "../components/FakeSearchBar/FakeSearchBar";
+import ServicesCategories from "../components/ServicesCategories/ServicesCategories";
 
 const HomeScreen = () => {
+  const height = Dimensions.get("window").height;
+
   return (
     <SafeAreaView style={styles.screen}>
       <FakeSearchBar />
@@ -14,10 +16,10 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
-
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
   },
 });
+
+export default HomeScreen;

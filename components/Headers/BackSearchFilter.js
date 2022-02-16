@@ -47,10 +47,10 @@ const BackSearchFilter = () => {
           fontFamily: "Exo-Regular",
         }}
       />
-      <TouchableOpacity>
+      {/* <TouchableOpacity>
         <Icon
           name="sliders"
-          size={20}
+          size={19}
           style={{
             padding: 10,
             backgroundColor: "#f1f1f1",
@@ -60,7 +60,7 @@ const BackSearchFilter = () => {
           type="font-awesome"
           color={Colors.textDark}
         />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };

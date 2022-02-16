@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Divider, SearchBar } from "react-native-elements";
 import { useTranslation } from "react-i18next";
+import { Platform } from "react-native";
 import {
   SafeAreaView,
   StyleSheet,
@@ -69,7 +70,11 @@ const SearchScreen = () => {
           borderStyle: "dashed",
           paddingHorizontal: 5,
         }}
-        inputContainerStyle={{ backgroundColor: "white", borderRadius: "none" }}
+        inputContainerStyle={
+          Platform == "ios"
+            ? { backgroundColor: "white", borderRadius: "none" }
+            : { backgroundColor: "white" }
+        }
         inputStyle={{
           backgroundColor: "white",
           fontSize: 15,
