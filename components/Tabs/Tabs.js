@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import React, { useState } from "react";
 import { Colors } from "../../assets/styles/Colors";
 import { Tab, TabView } from "react-native-elements";

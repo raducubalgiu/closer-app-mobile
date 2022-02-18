@@ -29,17 +29,7 @@ const ServicesCategories = () => {
 
   return (
     <View style={styles.servicesContainer}>
-      <View
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          paddingBottom: 20,
-          paddingTop: 5,
-          paddingHorizontal: 10,
-        }}
-      >
+      <View style={styles.headingContainer}>
         <Text style={styles.servicesHeading}>{t("servicesHeading")}</Text>
         <TouchableOpacity onPress={() => navigation.navigate("AllServices")}>
           <Text style={styles.seeAllHeading}>{t("seeAll")}</Text>
@@ -52,15 +42,7 @@ const ServicesCategories = () => {
         data={services}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <View
-            style={{
-              alignItems: "center",
-              marginRight: 20,
-              paddingVertical: 20,
-              flex: 1,
-              paddingHorizontal: 5,
-            }}
-          >
+          <View style={styles.serviceItem}>
             <TouchableOpacity
               onPress={() =>
                 navigation.navigate("Services", {
@@ -70,11 +52,7 @@ const ServicesCategories = () => {
               }
             >
               <Image
-                style={{
-                  width: 70,
-                  height: 70,
-                  resizeMode: "contain",
-                }}
+                style={styles.image}
                 source={{
                   uri: item.image,
                 }}
@@ -107,6 +85,15 @@ const styles = StyleSheet.create({
 
     elevation: 11,
   },
+  headingContainer: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingBottom: 20,
+    paddingTop: 5,
+    paddingHorizontal: 10,
+  },
   servicesHeading: {
     color: Colors.textDark,
     fontFamily: "Exo-SemiBold",
@@ -126,5 +113,17 @@ const styles = StyleSheet.create({
     fontFamily: "Exo-SemiBold",
     color: Colors.textDark,
     fontSize: 13,
+  },
+  serviceItem: {
+    alignItems: "center",
+    marginRight: 20,
+    paddingVertical: 20,
+    flex: 1,
+    paddingHorizontal: 5,
+  },
+  image: {
+    width: 70,
+    height: 70,
+    resizeMode: "contain",
   },
 });

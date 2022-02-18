@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { Icon } from "react-native-elements/dist/icons/Icon";
 import { Switch } from "react-native-elements";
@@ -22,9 +22,14 @@ const ServicesScreen = ({ route }) => {
   const [results, setResults] = useState(null);
   const [locations, setLocations] = useState([]);
   const [checked, setChecked] = useState(true);
+  const [sheetStep, setSheetStep] = useState(0);
   const navigation = useNavigation();
   const { t } = useTranslation();
   const { serviceId, serviceName } = route.params;
+
+  const handleSheetChange = useCallback((index) => {
+    setSheetStep(index);
+  }, []);
 
   const toggleSwitch = () => {
     setChecked(!checked);
@@ -77,11 +82,16 @@ const ServicesScreen = ({ route }) => {
         <Divider />
         {checked && (
           <>
-            <Map locations={locations} serviceName={serviceName} />
+            <Map
+              locations={locations}
+              serviceName={serviceName}
+              sheetStep={sheetStep}
+            />
             <BottomSheetService
               data={locations}
               results={results}
               serviceName={serviceName}
+              onHandleSheetChange={handleSheetChange}
             />
           </>
         )}

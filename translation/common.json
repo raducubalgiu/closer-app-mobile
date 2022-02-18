@@ -23,5 +23,13 @@
   "partners": "Parteneri",
   "price": "Preţ",
   "distance": "Distanţă",
-  "rating": "Rating"
+  "rating": "Rating",
+  "ofResults": "de rezultate",
+  "result": "rezultate",
+  "seeProfile": "Vezi profilul",
+  "book": "Rezervă",
+  "reviews": "de recenzii",
+  "findService": "Caută serviciu..",
+  "from": "de la",
+  "suggested": "Sugerate"
 }

@@ -12,11 +12,7 @@ const ProfileListItem = (props) => {
           <Text style={styles.text}>{props.listItemName}</Text>
         </View>
         <View>
-          <Icon
-            name="keyboard-arrow-right"
-            size={22}
-            style={{ backgroundColor: "#f1f1f1", padding: 3, borderRadius: 50 }}
-          />
+          <Icon name="keyboard-arrow-right" size={22} style={styles.icon} />
         </View>
       </View>
     </TouchableOpacity>
@@ -39,4 +35,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   text: { fontFamily: "Exo-Medium", color: Colors.textDark, fontSize: 14 },
+  icon: { backgroundColor: "#f1f1f1", padding: 3, borderRadius: 50 },
 });

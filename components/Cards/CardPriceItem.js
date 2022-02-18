@@ -1,8 +1,11 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Colors } from "../../assets/styles/Colors";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const CardPriceItem = (props) => {
+  const { t } = useTranslation();
+
   return (
     <View style={styles.personServices}>
       <View style={styles.serviceDetailsContainer}>
@@ -15,7 +18,7 @@ const CardPriceItem = (props) => {
       <View styles={styles.servicePriceContainer}>
         <Text style={styles.servicePrice}>{props.servicePrice} Lei</Text>
         <TouchableOpacity style={styles.bookNowButton}>
-          <Text style={styles.bookButtonText}>Rezerva</Text>
+          <Text style={styles.bookButtonText}>{t("book")}</Text>
         </TouchableOpacity>
       </View>
     </View>

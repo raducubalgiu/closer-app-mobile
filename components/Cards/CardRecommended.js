@@ -4,9 +4,11 @@ import { Icon } from "react-native-elements";
 import React from "react";
 import { Colors } from "../../assets/styles/Colors";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 const CardRecommended = (props) => {
   const navigation = useNavigation();
+  const { t } = useTranslation();
 
   return (
     <View style={styles.container}>
@@ -28,7 +30,7 @@ const CardRecommended = (props) => {
           <View style={styles.cardInfo}>
             <View style={styles.cardNameDistance}>
               <Text style={styles.cardName}>{props.name}</Text>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <View style={styles.distanceContainer}>
                 <Icon
                   style={{ marginRight: 3 }}
                   size={15}
@@ -52,7 +54,7 @@ const CardRecommended = (props) => {
                 {props.ratingsAverage}
               </Text>
               <Text style={styles.cardRatingsQuantity}>
-                {props.ratingsQuantity} de recenzii
+                {props.ratingsQuantity} {t("reviews")}
               </Text>
             </View>
           </View>
@@ -96,6 +98,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 10,
   },
+  distanceContainer: { flexDirection: "row", alignItems: "center" },
   cardNameDistance: {
     flexDirection: "row",
     justifyContent: "space-between",

@@ -1,4 +1,4 @@
-import { useState, useRef, useMemo, useCallback } from "react";
+import { useRef, useMemo } from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import { Divider } from "react-native-elements";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
@@ -7,38 +7,25 @@ import { Colors } from "../../assets/styles/Colors";
 import CardService from "../Cards/CardService";
 
 const BottomSheetService = (props) => {
-  const [sheetStep, setSheetStep] = useState(1);
   const { t } = useTranslation();
   const sheetRef = useRef(null);
 
   const snapPoints = useMemo(() => ["60%", "10%", "85%"], []);
-
-  const handleSheetChange = useCallback((index) => {
-    setSheetStep(index);
-  }, []);
 
   return (
     <BottomSheet
       style={styles.bottomSheet}
       ref={sheetRef}
       snapPoints={snapPoints}
-      onChange={handleSheetChange}
-      handleIndicatorStyle={{
-        backgroundColor: "#ddd",
-        width: 45,
-        height: 5,
-      }}
+      onChange={props.onHandleSheetChange}
+      handleIndicatorStyle={styles.indicatorStyle}
     >
       <BottomSheetView>
         <View>
           <Text style={styles.sheetHeading}>
             {props.results} {props.results > 19 ? "de rezultate" : "rezultate"}
           </Text>
-          <Divider
-            width={2}
-            color="#f1f1f1"
-            style={{ paddingBottom: 5, marginBottom: 5 }}
-          />
+          <Divider width={2} color="#f1f1f1" style={styles.divider} />
           <FlatList
             data={props.data}
             keyExtractor={(item) => item._id}
@@ -75,6 +62,12 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: "center",
   },
+  indicatorStyle: {
+    backgroundColor: "#ddd",
+    width: 45,
+    height: 5,
+  },
+  divider: { paddingBottom: 5, marginBottom: 5 },
   bottomSheet: {
     shadowColor: "#c9c5c5",
     shadowOffset: {

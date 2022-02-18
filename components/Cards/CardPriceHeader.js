@@ -11,8 +11,11 @@ import { Icon } from "react-native-elements/dist/icons/Icon";
 import { Divider } from "react-native-elements/dist/divider/Divider";
 import { Colors } from "../../assets/styles/Colors";
 import CardPriceItem from "./CardPriceItem";
+import { useTranslation } from "react-i18next";
 
 const CardPriceHeader = (props) => {
+  const { t } = useTranslation();
+
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.personContainer}>
@@ -27,7 +30,7 @@ const CardPriceHeader = (props) => {
         ></Avatar>
         <View style={styles.personDetails}>
           <Text style={styles.personName}>{props.personName}</Text>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <View style={style.personJobContainer}>
             <Text style={styles.personJob}>{props.personJob}</Text>
             <Icon
               name="star"
@@ -39,7 +42,7 @@ const CardPriceHeader = (props) => {
               {props.personRatingsAverage} ({props.personRatingsQuantity})
             </Text>
           </View>
-          <Text style={styles.seeMore}>Vezi profilul</Text>
+          <Text style={styles.seeMore}>{t("seeProfile")}</Text>
         </View>
       </TouchableOpacity>
 
@@ -86,6 +89,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginRight: 5,
   },
+  personJobContainer: { flexDirection: "row", alignItems: "center" },
   personJob: {
     fontFamily: "Exo-Medium",
     color: Colors.textLight,

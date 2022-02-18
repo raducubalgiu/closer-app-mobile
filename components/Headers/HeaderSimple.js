@@ -1,10 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  SafeAreaView,
-} from "react-native";
+import { StyleSheet, TouchableOpacity, SafeAreaView } from "react-native";
 import React from "react";
 import { Icon } from "react-native-elements";
 import { Colors } from "../../assets/styles/Colors";

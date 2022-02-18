@@ -3,9 +3,11 @@ import React from "react";
 import { Colors } from "../../assets/styles/Colors";
 import { Icon } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 const CardService = (props) => {
   const navigation = useNavigation();
+  const { t } = useTranslation();
 
   return (
     <TouchableOpacity
@@ -30,7 +32,7 @@ const CardService = (props) => {
             <Icon name="star" type="antdesign" size={15} color="#ffba00" />
             <Text style={styles.ratingsAverage}>{props.ratingsAverage}</Text>
             <Text style={styles.ratingsQuantity}>
-              {props.ratingsQuantity} de recenzii
+              {props.ratingsQuantity} {t("reviews")}
             </Text>
           </View>
           <View style={styles.serviceContainer}>

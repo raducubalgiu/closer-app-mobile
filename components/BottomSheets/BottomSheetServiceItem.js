@@ -7,7 +7,6 @@ import BottomSheet, {
 import Tabs from "../Tabs/Tabs";
 
 const BottomSheetRecommend = (props) => {
-  const [index, setIndex] = useState(0);
   const sheetRef = useRef(null);
   const [sheetStep, setSheetStep] = useState(0);
   const height = Dimensions.get("window").height;
@@ -36,11 +35,7 @@ const BottomSheetRecommend = (props) => {
       ref={sheetRef}
       snapPoints={snapPoints}
       onChange={handleSheetChange}
-      handleIndicatorStyle={{
-        backgroundColor: "#ddd",
-        width: 45,
-        height: 5,
-      }}
+      handleIndicatorStyle={styles.indicatorStyle}
     >
       <BottomSheetView style={{ flex: 1 }}>
         <Tabs />
@@ -62,5 +57,10 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
 
     elevation: 11,
+  },
+  indicatorStyle: {
+    backgroundColor: "#ddd",
+    width: 45,
+    height: 5,
   },
 });

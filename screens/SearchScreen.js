@@ -84,7 +84,7 @@ const SearchScreen = () => {
       <View style={styles.container}>
         {search == "" ? (
           <View>
-            <Text style={styles.heading}>Sugerate</Text>
+            <Text style={styles.heading}>{t("suggested")}</Text>
             <TouchableOpacity
               style={styles.item}
               onPress={() =>

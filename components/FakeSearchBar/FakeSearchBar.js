@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Icon, Divider } from "react-native-elements";
-import React, { useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../../assets/styles/Colors";
@@ -15,16 +15,7 @@ const FakeSearchBar = () => {
         onPress={() => navigation.navigate("Search")}
         style={styles.fakeInput}
       >
-        <Icon
-          name="search"
-          style={{
-            backgroundColor: "#f1f1f1",
-            padding: 7.5,
-            borderRadius: 100,
-          }}
-          color="grey"
-          size={20}
-        />
+        <Icon name="search" style={styles.iconSearch} color="grey" size={20} />
         <Text style={styles.fakeInputText}>{t("searchInputTitle")}</Text>
       </TouchableOpacity>
       <Divider orientation="vertical" />
@@ -93,5 +84,10 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontFamily: "Exo-SemiBold",
     color: Colors.textDark,
+  },
+  iconSearch: {
+    backgroundColor: "#f1f1f1",
+    padding: 7.5,
+    borderRadius: 100,
   },
 });

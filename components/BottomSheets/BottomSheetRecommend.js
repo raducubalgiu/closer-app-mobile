@@ -7,7 +7,6 @@ import BottomSheet, {
   BottomSheetBackdrop,
 } from "@gorhom/bottom-sheet";
 import { useTranslation } from "react-i18next";
-import { DUMMY_RECOMMENDED } from "../../dummy-data/dummyRecomended";
 import CardRecommended from "../Cards/CardRecommended";
 import { Colors } from "../../assets/styles/Colors";
 
@@ -53,20 +52,12 @@ const BottomSheetRecommend = (props) => {
       ref={sheetRef}
       snapPoints={snapPoints}
       onChange={handleSheetChange}
-      handleIndicatorStyle={{
-        backgroundColor: "#ddd",
-        width: 45,
-        height: 5,
-      }}
+      handleIndicatorStyle={styles.indicatorStyle}
     >
       <BottomSheetView>
         <View>
           <Text style={styles.sheetHeading}>{t("nearYou")}</Text>
-          <Divider
-            width={2}
-            color="#f1f1f1"
-            style={{ paddingBottom: 5, marginBottom: 5 }}
-          />
+          <Divider width={2} color="#f1f1f1" style={styles.divider} />
           <FlatList
             data={locations}
             keyExtractor={(item) => item._id}
@@ -102,6 +93,12 @@ const styles = StyleSheet.create({
     fontFamily: "Exo-SemiBold",
     fontSize: 15,
   },
+  indicatorStyle: {
+    backgroundColor: "#ddd",
+    width: 45,
+    height: 5,
+  },
+  divider: { paddingBottom: 5, marginBottom: 5 },
   bottomSheet: {
     shadowColor: "#c9c5c5",
     shadowOffset: {
