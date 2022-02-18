@@ -21,8 +21,6 @@ const SearchScreen = () => {
   const { t } = useTranslation();
   const navigation = useNavigation();
 
-  console.log(initialServices);
-
   const updateSearch = (search) => {
     setSearch(search);
   };
@@ -43,8 +41,6 @@ const SearchScreen = () => {
 
     setFilteredServices(services);
   }, [search]);
-
-  console.log(filteredServices);
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -89,30 +85,64 @@ const SearchScreen = () => {
         {search == "" ? (
           <View>
             <Text style={styles.heading}>Sugerate</Text>
-            <TouchableOpacity style={styles.item}>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() =>
+                navigation.navigate("Filters", {
+                  serviceId: "6209039fcf0acaf67b38c5b1",
+                  serviceName: "Tuns",
+                })
+              }
+            >
               <Text style={styles.serviceItem}>Tuns</Text>
-              <Text style={styles.categoryItem}>Saloane de imfrumusetare</Text>
+              <Text style={styles.categoryItem}>
+                Frizerie, saloane de infrumusetare
+              </Text>
             </TouchableOpacity>
             <Divider />
-            <TouchableOpacity style={styles.item}>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() =>
+                navigation.navigate("Filters", {
+                  serviceId: "620904d695c3c5b40ba87fc3",
+                  serviceName: "Restaurant",
+                })
+              }
+            >
               <Text style={styles.serviceItem}>Restaurant</Text>
-              <Text style={styles.categoryItem}>Restaurante</Text>
+              <Text style={styles.categoryItem}>Restaurante, baruri</Text>
             </TouchableOpacity>
             <Divider />
-            <TouchableOpacity style={styles.item}>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() =>
+                navigation.navigate("Filters", {
+                  serviceId: "620a99f49b162da2c7108338",
+                  serviceName: "Pensat",
+                })
+              }
+            >
               <Text style={styles.serviceItem}>Pensat</Text>
-              <Text style={styles.categoryItem}>Saloane de imfrumusetare</Text>
+              <Text style={styles.categoryItem}>
+                Frizerie, saloane de infrumusetare
+              </Text>
             </TouchableOpacity>
             <Divider />
-            <TouchableOpacity style={styles.item}>
+            <TouchableOpacity
+              style={styles.item}
+              onPress={() =>
+                navigation.navigate("Filters", {
+                  serviceId: "620904ad95c3c5b40ba87fc1",
+                  serviceName: "ITP",
+                })
+              }
+            >
               <Text style={styles.serviceItem}>ITP</Text>
-              <Text style={styles.categoryItem}>Service-uri auto</Text>
+              <Text style={styles.categoryItem}>
+                Service-uri auto, spalatorii auto, parcari
+              </Text>
             </TouchableOpacity>
             <Divider />
-            <TouchableOpacity style={styles.item}>
-              <Text style={styles.serviceItem}>Bowling</Text>
-              <Text style={styles.categoryItem}>Baruri</Text>
-            </TouchableOpacity>
           </View>
         ) : (
           <View>
@@ -122,7 +152,10 @@ const SearchScreen = () => {
               renderItem={({ item }) => (
                 <TouchableOpacity
                   onPress={() =>
-                    navigation.navigate("Filters", { serviceId: item._id })
+                    navigation.navigate("Filters", {
+                      serviceId: item._id,
+                      serviceName: item.name,
+                    })
                   }
                   style={styles.item}
                 >

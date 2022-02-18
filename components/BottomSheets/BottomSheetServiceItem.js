@@ -1,17 +1,18 @@
 import { useState, useRef, useMemo, useCallback } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import BottomSheet, {
   BottomSheetView,
   BottomSheetBackdrop,
 } from "@gorhom/bottom-sheet";
 import Tabs from "../Tabs/Tabs";
-import { Colors } from "../../assets/styles/Colors";
 
 const BottomSheetRecommend = (props) => {
+  const [index, setIndex] = useState(0);
   const sheetRef = useRef(null);
   const [sheetStep, setSheetStep] = useState(0);
+  const height = Dimensions.get("window").height;
 
-  const snapPoints = useMemo(() => ["48%", "95%"], []);
+  const snapPoints = useMemo(() => [height / 1.54, "95%"], []);
 
   const handleSheetChange = useCallback((index) => {
     setSheetStep(index);
@@ -41,7 +42,7 @@ const BottomSheetRecommend = (props) => {
         height: 5,
       }}
     >
-      <BottomSheetView>
+      <BottomSheetView style={{ flex: 1 }}>
         <Tabs />
       </BottomSheetView>
     </BottomSheet>
@@ -61,6 +62,5 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
 
     elevation: 11,
-    zIndex: 1500,
   },
 });

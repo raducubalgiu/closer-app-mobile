@@ -45,8 +45,10 @@ const CardService = (props) => {
           </Text> */}
         </View>
         <View style={styles.distanceContainer}>
-          <Icon name="location-on" size={15} color={Colors.yellowDark} />
-          <Text style={styles.distance}>la 5 km de tine</Text>
+          <Icon name="location-on" size={15} color={Colors.yellowRatings} />
+          <Text style={styles.distance}>
+            la {Math.round(props.distance)} km de tine
+          </Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -81,12 +83,12 @@ const styles = StyleSheet.create({
   },
   cardContentFlex: {},
   business: {
-    fontSize: 17,
-    fontFamily: "Exo-Bold",
+    fontSize: 16,
+    fontFamily: "Exo-ExtraBold",
     color: Colors.textDark,
   },
   address: {
-    fontFamily: "Exo-Medium",
+    fontFamily: "Exo-SemiBold",
     color: Colors.textLight,
     marginTop: 1,
     fontSize: 13,
@@ -112,7 +114,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   service: {
-    fontFamily: "Exo-SemiBold",
+    fontFamily: "Exo-Bold",
     backgroundColor: "#f1f1f1",
     padding: 5,
     fontSize: 12.5,
@@ -142,8 +144,9 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   distance: {
-    fontFamily: "Exo-Medium",
+    fontFamily: "Exo-SemiBold",
     marginLeft: 2.5,
     fontSize: 13,
+    color: Colors.textDark,
   },
 });

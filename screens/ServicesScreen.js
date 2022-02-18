@@ -18,11 +18,13 @@ import { useTranslation } from "react-i18next";
 import CardService from "../components/Cards/CardService";
 import Map from "../components/Map/Map";
 
-const ServicesScreen = () => {
+const ServicesScreen = ({ route }) => {
+  const [results, setResults] = useState(null);
   const [locations, setLocations] = useState([]);
   const [checked, setChecked] = useState(true);
   const navigation = useNavigation();
   const { t } = useTranslation();
+  const { serviceId, serviceName } = route.params;
 
   const toggleSwitch = () => {
     setChecked(!checked);
@@ -30,9 +32,12 @@ const ServicesScreen = () => {
 
   useEffect(() => {
     axios
-      .get("http://192.168.100.2:8000/api/v1/locations")
+      .get(
+        `http://192.168.100.2:8000/api/v1/locations/get-by-distance?serviceId=${serviceId}&latlng=26.100195,44.428286`
+      )
       .then((resp) => {
-        setLocations(resp.data.locations);
+        setLocations(resp.data.services);
+        setResults(resp.data.results);
       })
       .catch((error) => console.log(error));
   }, []);
@@ -46,7 +51,7 @@ const ServicesScreen = () => {
           </TouchableOpacity>
           <TouchableOpacity style={styles.searchDetailContainer}>
             <Icon name="search" size={18} color={Colors.textLight} />
-            <Text style={styles.serviceText}>Tuns,</Text>
+            <Text style={styles.serviceText}>{serviceName},</Text>
             <Text style={styles.searchText}>6 feb, 16:30</Text>
           </TouchableOpacity>
         </View>
@@ -72,8 +77,12 @@ const ServicesScreen = () => {
         <Divider />
         {checked && (
           <>
-            <Map locations={locations} />
-            <BottomSheetService data={locations} />
+            <Map locations={locations} serviceName={serviceName} />
+            <BottomSheetService
+              data={locations}
+              results={results}
+              serviceName={serviceName}
+            />
           </>
         )}
         {!checked && (
@@ -85,12 +94,13 @@ const ServicesScreen = () => {
                 <>
                   <CardService
                     id={item._id}
+                    distance={item.distance}
                     image={item.imageCover}
                     business={item.name}
                     address={`${item.startLocation.address.street}, ${item.startLocation.address.number}, ${item.startLocation.address.county}`}
                     ratingsAverage={item.ratingsAverage}
                     ratingsQuantity={item.ratingsQuantity}
-                    service={item.service.name}
+                    service={serviceName}
                   />
                   <Divider />
                 </>

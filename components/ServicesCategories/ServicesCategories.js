@@ -63,7 +63,10 @@ const ServicesCategories = () => {
           >
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate("Services", { serviceId: item._id })
+                navigation.navigate("Services", {
+                  serviceId: item._id,
+                  serviceName: item.name,
+                })
               }
             >
               <Image

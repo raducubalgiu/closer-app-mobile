@@ -1,16 +1,18 @@
-import { useState, useRef, useMemo, useCallback } from "react";
+import { useState, useRef, useMemo, useCallback, useEffect } from "react";
 import { StyleSheet, Text, View, FlatList, Dimensions } from "react-native";
 import { Divider } from "react-native-elements";
+import axios from "axios";
 import BottomSheet, {
   BottomSheetView,
   BottomSheetBackdrop,
 } from "@gorhom/bottom-sheet";
+import { useTranslation } from "react-i18next";
 import { DUMMY_RECOMMENDED } from "../../dummy-data/dummyRecomended";
 import CardRecommended from "../Cards/CardRecommended";
-import { useTranslation } from "react-i18next";
 import { Colors } from "../../assets/styles/Colors";
 
 const BottomSheetRecommend = (props) => {
+  const [locations, setLocations] = useState([]);
   const { t } = useTranslation();
   const sheetRef = useRef(null);
   const [sheetStep, setSheetStep] = useState(0);
@@ -20,6 +22,17 @@ const BottomSheetRecommend = (props) => {
 
   const handleSheetChange = useCallback((index) => {
     setSheetStep(index);
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get(
+        `http://192.168.100.2:8000/api/v1/locations/get-recommended?latlng=26.100195,44.428286`
+      )
+      .then((resp) => {
+        setLocations(resp.data.services);
+      })
+      .catch((error) => console.log(error));
   }, []);
 
   const renderBackdrop = useCallback(
@@ -55,15 +68,17 @@ const BottomSheetRecommend = (props) => {
             style={{ paddingBottom: 5, marginBottom: 5 }}
           />
           <FlatList
-            data={DUMMY_RECOMMENDED}
-            keyExtractor={(item) => item.id}
+            data={locations}
+            keyExtractor={(item) => item._id}
             renderItem={({ item }) => (
               <CardRecommended
                 id={item._id}
                 name={item.name}
-                image={item.image}
+                image={item.imageCover}
                 title={item.title}
-                address={item.address}
+                street={item.startLocation.address.street}
+                number={item.startLocation.address.number}
+                county={item.startLocation.address.county}
                 distance={item.distance}
                 ratingsAverage={item.ratingsAverage}
                 ratingsQuantity={item.ratingsQuantity}

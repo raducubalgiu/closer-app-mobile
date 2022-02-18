@@ -1,10 +1,7 @@
 import { useState, useRef, useMemo, useCallback } from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import { Divider } from "react-native-elements";
-import BottomSheet, {
-  BottomSheetView,
-  BottomSheetBackdrop,
-} from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { useTranslation } from "react-i18next";
 import { Colors } from "../../assets/styles/Colors";
 import CardService from "../Cards/CardService";
@@ -34,7 +31,9 @@ const BottomSheetService = (props) => {
     >
       <BottomSheetView>
         <View>
-          <Text style={styles.sheetHeading}>134 de rezultate</Text>
+          <Text style={styles.sheetHeading}>
+            {props.results} {props.results > 19 ? "de rezultate" : "rezultate"}
+          </Text>
           <Divider
             width={2}
             color="#f1f1f1"
@@ -49,10 +48,11 @@ const BottomSheetService = (props) => {
                   id={item._id}
                   image={item.imageCover}
                   business={item.name}
+                  distance={item.distance}
                   address={`${item.startLocation.address.street}, ${item.startLocation.address.number}, ${item.startLocation.address.county}`}
                   ratingsAverage={item.ratingsAverage}
                   ratingsQuantity={item.ratingsQuantity}
-                  service={item.service.name}
+                  service={props.serviceName}
                 />
                 <Divider />
               </>

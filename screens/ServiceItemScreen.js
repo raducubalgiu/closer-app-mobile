@@ -1,12 +1,11 @@
 import { StyleSheet, Text, View, Dimensions, Image } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import { Icon } from "react-native-elements";
 import { Colors } from "../assets/styles/Colors";
 import BackButton from "../components/BackButton/BackButton";
 import BottomSheetServiceItem from "../components/BottomSheets/BottomSheetServiceItem";
 
 const ServiceItemScreen = () => {
-  const [index, setIndex] = useState(0);
   const height = Dimensions.get("window").height;
 
   return (
@@ -16,11 +15,10 @@ const ServiceItemScreen = () => {
         <Image
           source={{
             uri: "https://stailer.ro/files/B-FKBMWJCR/S163274355071-thumb.jpg",
-            height: height / 3.5,
+            height: height / 2.86,
           }}
-          style={{ borderBottomLeftRadius: 15, borderBottomRightRadius: 15 }}
         />
-        <View style={styles.businessDetailsContainer}>
+        {/* <View style={styles.businessDetailsContainer}>
           <View
             style={{
               flexDirection: "row",
@@ -54,7 +52,7 @@ const ServiceItemScreen = () => {
                   fontFamily: "Exo-Medium",
                   color: Colors.textLight,
                   marginLeft: 10,
-                  fontSize: 14,
+                  fontSize: 15,
                 }}
               >
                 Drumul Fermei, nr 97, Popesti Leordeni, Ilfov
@@ -86,7 +84,7 @@ const ServiceItemScreen = () => {
               </Text>
             </View>
           </View>
-        </View>
+        </View> */}
       </View>
       <BottomSheetServiceItem />
     </View>
@@ -109,7 +107,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   favoritesStyle: {
-    backgroundColor: "#f1f1f1",
     padding: 5,
     borderRadius: 50,
   },
@@ -120,7 +117,6 @@ const styles = StyleSheet.create({
   ratingsContainer: { flexDirection: "row", alignItems: "center" },
   ratings: {
     fontFamily: "Exo-Bold",
-    marginLeft: 10,
     fontSize: 15,
   },
 });

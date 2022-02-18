@@ -2,7 +2,6 @@ import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import { Divider } from "react-native-elements";
 import { Icon } from "react-native-elements";
 import React from "react";
-import { t } from "i18next";
 import { Colors } from "../../assets/styles/Colors";
 import { useNavigation } from "@react-navigation/native";
 
@@ -36,10 +35,14 @@ const CardRecommended = (props) => {
                   color="gray"
                   name="location-pin"
                 />
-                <Text style={styles.cardDistance}>{props.distance}</Text>
+                <Text style={styles.cardDistance}>
+                  {Math.round(props.distance)} km
+                </Text>
               </View>
             </View>
-            <Text style={styles.cardAddress}>{props.address}</Text>
+            <Text style={styles.cardAddress}>
+              {props.street}, {props.number}, {props.county}
+            </Text>
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.cardTitle}>{props.title}</Text>
             </View>
@@ -101,7 +104,7 @@ const styles = StyleSheet.create({
   cardName: {
     flex: 1,
     color: Colors.textDark,
-    fontFamily: "Exo-SemiBold",
+    fontFamily: "Exo-Bold",
     fontSize: 14,
   },
   cardDistance: {
