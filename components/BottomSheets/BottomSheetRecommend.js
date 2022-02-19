@@ -61,6 +61,7 @@ const BottomSheetRecommend = (props) => {
           <FlatList
             data={locations}
             keyExtractor={(item) => item._id}
+            showsVerticalScrollIndicator={false}
             renderItem={({ item }) => (
               <CardRecommended
                 id={item._id}

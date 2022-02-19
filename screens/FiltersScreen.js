@@ -1,7 +1,6 @@
 import { StyleSheet, Text, SafeAreaView, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import DateTimeModal from "../components/DateTimeModal/DateTimeModal";
 
 const FiltersScreen = ({ route }) => {
   const { serviceId, serviceName } = route.params;
@@ -16,7 +15,6 @@ const FiltersScreen = ({ route }) => {
       >
         <Text>Go to Services Screen</Text>
       </TouchableOpacity>
-      <DateTimeModal />
     </SafeAreaView>
   );
 };

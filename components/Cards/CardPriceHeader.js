@@ -30,7 +30,7 @@ const CardPriceHeader = (props) => {
         ></Avatar>
         <View style={styles.personDetails}>
           <Text style={styles.personName}>{props.personName}</Text>
-          <View style={style.personJobContainer}>
+          <View style={styles.personJobContainer}>
             <Text style={styles.personJob}>{props.personJob}</Text>
             <Icon
               name="star"

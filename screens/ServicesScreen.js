@@ -100,6 +100,7 @@ const ServicesScreen = ({ route }) => {
             <FlatList
               data={locations}
               keyExtractor={(item) => item._id}
+              showsVerticalScrollIndicator={false}
               renderItem={({ item }) => (
                 <>
                   <CardService
