@@ -17,12 +17,6 @@ const fetchFonts = () => {
     "Exo-ExtraLight": require("./assets/fonts/static/Exo-ExtraLight.ttf"),
     "Exo-Medium": require("./assets/fonts/static/Exo-Medium.ttf"),
     "Exo-SemiBold": require("./assets/fonts/static/Exo-SemiBold.ttf"),
-    "IBMPlexSansThaiLooped-Light": require("./assets/fonts/IBMPlexSansThaiLooped-Light.ttf"),
-    "IBMPlexSansThaiLooped-Regular": require("./assets/fonts/IBMPlexSansThaiLooped-Regular.ttf"),
-    "IBMPlexSansThaiLooped-Medium": require("./assets/fonts/IBMPlexSansThaiLooped-Medium.ttf"),
-    "IBMPlexSansThaiLooped-SemiBold": require("./assets/fonts/IBMPlexSansThaiLooped-SemiBold.ttf"),
-    "IBMPlexSansThaiLooped-Bold": require("./assets/fonts/IBMPlexSansThaiLooped-Bold.ttf"),
-    "IBMPlexSansThaiLooped-Thin": require("./assets/fonts/IBMPlexSansThaiLooped-Thin.ttf"),
   });
 };
 

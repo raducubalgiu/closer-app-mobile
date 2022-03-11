@@ -82,7 +82,7 @@ const UserStackNavigator = () => {
 };
 
 const CloserNavigation = () => {
-  const user = true;
+  const user = false;
 
   return (
     <NavigationContainer>
@@ -117,7 +117,7 @@ const CloserNavigation = () => {
               <Icon name={iconName} type={iconType} color={color} size={size} />
             );
           },
-          tabBarActiveTintColor: Colors.textDark,
+          tabBarActiveTintColor: Colors.primary,
           tabBarInactiveTintColor: "gray",
           headerShown: false,
           tabBarShowLabel: false,
