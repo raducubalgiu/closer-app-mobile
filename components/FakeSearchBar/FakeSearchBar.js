@@ -15,7 +15,7 @@ const FakeSearchBar = () => {
         onPress={() => navigation.navigate("Search")}
         style={styles.fakeInput}
       >
-        <Icon name="search" style={styles.iconSearch} color="grey" size={20} />
+        <Icon name="search" style={styles.iconSearch} color="gray" size={17} />
         <Text style={styles.fakeInputText}>{t("searchInputTitle")}</Text>
       </TouchableOpacity>
       <Divider orientation="vertical" />
@@ -38,25 +38,29 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: "white",
-    marginVertical: 5,
+    marginVertical: 10,
     marginHorizontal: 10,
-    shadowColor: "#c9c5c5",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.8,
-    shadowRadius: 10,
+    // shadowColor: "#c9c5c5",
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 1,
+    // },
+    // shadowOpacity: 0.8,
+    // shadowRadius: 10,
 
-    elevation: 11,
-    borderRadius: 20,
+    // elevation: 11,
+    // borderRadius: 20,
   },
   fakeInput: {
     flexDirection: "row",
     alignItems: "center",
     flex: 1,
-    paddingVertical: 10,
+    paddingVertical: 7,
     paddingHorizontal: 10,
+    backgroundColor: "#f1f1f1",
+    borderWidth: 2,
+    borderColor: "#f1f1f1",
+    borderTopLeftRadius: 10,
   },
   fakeInputText: {
     marginLeft: 10,
@@ -66,16 +70,19 @@ const styles = StyleSheet.create({
   },
   datePicker: {
     textAlign: "center",
-    paddingVertical: 5,
+    paddingVertical: 6.5,
     paddingHorizontal: 10,
+    backgroundColor: "#f1f1f1",
+    borderBottomRightRadius: 10,
   },
   datePickerDetails: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#f1f1f1",
-    paddingHorizontal: 10,
-    paddingVertical: 7.5,
-    borderRadius: 20,
+    backgroundColor: "white",
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+    borderTopLeftRadius: 10,
+    borderBottomRightRadius: 10,
   },
   datePickerTitle: {
     textAlign: "center",
@@ -86,8 +93,8 @@ const styles = StyleSheet.create({
     color: Colors.textDark,
   },
   iconSearch: {
-    backgroundColor: "#f1f1f1",
-    padding: 7.5,
+    backgroundColor: "white",
+    padding: 7,
     borderRadius: 100,
   },
 });

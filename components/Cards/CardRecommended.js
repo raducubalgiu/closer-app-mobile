@@ -34,11 +34,13 @@ const CardRecommended = (props) => {
                 <Icon
                   style={{ marginRight: 3 }}
                   size={15}
-                  color="gray"
+                  color={Colors.primary}
                   name="location-pin"
                 />
                 <Text style={styles.cardDistance}>
-                  {Math.round(props.distance)} km
+                  {props.distance < 1000
+                    ? `la ${Math.round(props.distance)} m`
+                    : `la ${Math.round(props.distance * 0.001)} km`}
                 </Text>
               </View>
             </View>
@@ -46,7 +48,7 @@ const CardRecommended = (props) => {
               {props.street}, {props.number}, {props.county}
             </Text>
             <View style={{ flexDirection: "row" }}>
-              <Text style={styles.cardTitle}>{props.title}</Text>
+              <Text style={styles.cardTitle}>Tuns</Text>
             </View>
             <View style={styles.ratingsContainer}>
               <Icon name="star" type="antdesign" size={15} color="#ffba00" />
@@ -72,25 +74,27 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   cardItem: {
-    paddingVertical: 10,
+    paddingVertical: 15,
     paddingHorizontal: 15,
   },
   recommendItem: {
     flexDirection: "row",
     justifyContent: "flex-start",
     //alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#f1f1f1",
+    // borderWidth: 1,
+    // borderColor: "#f1f1f1",
     borderRadius: 5,
   },
   cardImage: {
     flex: 1,
     width: 120,
     height: 80,
-    borderTopLeftRadius: 5,
-    borderBottomLeftRadius: 5,
-    borderTopRightRadius: 5,
-    borderBottomRightRadius: 5,
+    borderTopLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    // borderTopLeftRadius: 5,
+    // borderBottomLeftRadius: 5,
+    // borderTopRightRadius: 5,
+    // borderBottomRightRadius: 5,
     //resizeMode: "contain",
   },
   cardInfo: {

@@ -1,150 +1,71 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
-import { Icon } from "react-native-elements";
-import { Avatar, Divider } from "react-native-elements";
+import { StyleSheet, View, ScrollView } from "react-native";
 import React from "react";
-import ProfileListItem from "../../components/ProfileListItem/ProfileListItem";
-import { useTranslation } from "react-i18next";
 import { Colors } from "../../assets/styles/Colors";
-import { useNavigation } from "@react-navigation/native";
 import HeaderSimple from "../../components/Headers/HeaderSimple";
+import TabsProfile from "../../components/Tabs/TabsProfile/TabsProfile";
+import TabViewProfile from "../../components/Tabs/TabsProfile/TabViewProfile";
+import ProfileAvatarSection from "../../components/ProfileAvatarSection.tsx/ProfileAvatarSection";
+
+const user = {
+  _id: "1",
+  name: "Raducu Balgiu",
+  avatar: "https://randomuser.me/api/portraits/men/36.jpg",
+  job: "Stylist",
+  followersCount: 0,
+  followingCount: 0,
+  ratingsCount: 0,
+  products: [
+    {
+      _id: "1",
+      name: "Tuns scurt",
+      description: "Pachetul include spalat, aranjat",
+      price: "50",
+      options: [
+        {
+          name: "Barbati",
+        },
+      ],
+    },
+    {
+      _id: "2",
+      name: "Tuns lung",
+      description: "Pachetul include spalat, aranjat",
+      price: "70",
+      options: [
+        {
+          name: "Barbati",
+        },
+      ],
+    },
+    {
+      _id: "3",
+      name: "Tuns chelie",
+      description: "Pachetul include spalat, aranjat",
+      price: "30",
+      options: [
+        {
+          name: "Barbati",
+        },
+      ],
+    },
+  ],
+};
 
 const ProfileScreen = () => {
-  const { t } = useTranslation();
-  const navigation = useNavigation();
+  const [index, setIndex] = React.useState(0);
 
   return (
     <View style={styles.screen}>
-      <HeaderSimple />
+      <HeaderSimple onPress={() => {}} />
       <ScrollView>
-        <View style={styles.avatarSection}>
-          <Avatar
-            size={60}
-            rounded
-            source={{
-              uri: "https://stanandrei.ro/wp-content/uploads/2021/02/user-icon-png.jpg",
-            }}
-          />
-          <View>
-            <Text style={styles.name}>Raducu Balgiu</Text>
-            <Text style={styles.phone}>+40731289633</Text>
-          </View>
-        </View>
-        <View style={{ paddingHorizontal: 20 }}>
-          <Divider />
-        </View>
+        <ProfileAvatarSection user={user} />
         <View>
-          <View style={styles.userDetails}>
-            <ProfileListItem
-              onPress={() => navigation.navigate("EditProfile")}
-              listItemName={t("administrateYourAccount")}
-              name="user"
-              type="antdesign"
-              size={20}
-            />
-
-            <ProfileListItem
-              onPress={() => navigation.navigate("Gifts")}
-              listItemName={t("gifts")}
-              name="gift"
-              type="feather"
-              size={20}
-            />
-
-            <ProfileListItem
-              onPress={() => navigation.navigate("Ratings")}
-              listItemName={t("ratings")}
-              name="profile"
-              type="antdesign"
-              size={20}
-            />
-          </View>
-
-          <View style={styles.sectionDetails}>
-            <Text style={styles.heading}>{t("support")}</Text>
-
-            <ProfileListItem
-              onPress={() => navigation.navigate("ControlPanel")}
-              listItemName={t("controlPanel")}
-              name="database"
-              type="antdesign"
-              size={20}
-            />
-
-            <ProfileListItem
-              onPress={() => navigation.navigate("ReportProblem")}
-              listItemName={t("reportAProblem")}
-              name="exclamationcircleo"
-              type="antdesign"
-              size={20}
-            />
-          </View>
-
-          <View style={styles.sectionDetails}>
-            <Text style={styles.heading}>{t("settingsAndJuridicInfo")}</Text>
-
-            <ProfileListItem
-              onPress={() => navigation.navigate("Settings")}
-              listItemName={t("Settings")}
-              name="setting"
-              type="antdesign"
-              size={20}
-            />
-
-            <ProfileListItem
-              onPress={() => {}}
-              listItemName={t("rateOurApp")}
-              name="like2"
-              type="antdesign"
-              size={20}
-            />
-
-            <ProfileListItem
-              onPress={() => navigation.navigate("Legal")}
-              listItemName={t("legal")}
-              name="user"
-              type="antdesign"
-              size={20}
-            />
-          </View>
-
-          <View style={styles.sectionDetails}>
-            <Text style={styles.heading}>{t("partners")}</Text>
-
-            <ProfileListItem
-              onPress={() => navigation.navigate("RegisterBusiness")}
-              listItemName={t("registerYourBusiness")}
-              name="login"
-              type="antdesign"
-              size={20}
-            />
-
-            <TouchableOpacity style={styles.detailsItem}>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Icon
-                  name="log-out"
-                  type="feather"
-                  size={20}
-                  color={Colors.danger}
-                />
-                <Text
-                  style={{
-                    marginLeft: 10,
-                    paddingVertical: 20,
-                    color: Colors.danger,
-                    fontFamily: "Exo-SemiBold",
-                  }}
-                >
-                  {t("logout")}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
+          <TabsProfile index={index} onSetIndex={(e) => setIndex(e)} />
+          <TabViewProfile
+            index={index}
+            onSetIndex={(e) => setIndex(e)}
+            products={user.products}
+          />
         </View>
       </ScrollView>
     </View>
@@ -156,42 +77,5 @@ export default ProfileScreen;
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-  },
-  avatarSection: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 15,
-    backgroundColor: "white",
-    paddingVertical: 10,
-    paddingBottom: 25,
-  },
-  name: {
-    fontSize: 25,
-    fontWeight: "700",
-    fontFamily: "Exo-Bold",
-    color: Colors.textDark,
-    marginLeft: 15,
-  },
-  phone: {
-    fontFamily: "Exo-Medium",
-    color: Colors.textLight,
-    marginLeft: 15,
-    marginTop: 5,
-  },
-  userDetails: {
-    paddingHorizontal: 25,
-    backgroundColor: "white",
-  },
-  sectionDetails: {
-    backgroundColor: "white",
-    marginTop: 10,
-    paddingHorizontal: 25,
-  },
-  heading: {
-    fontSize: 16,
-    marginTop: 30,
-    marginBottom: 5,
-    fontFamily: "IBMPlexSansThaiLooped-SemiBold",
-    color: Colors.textDark,
   },
 });

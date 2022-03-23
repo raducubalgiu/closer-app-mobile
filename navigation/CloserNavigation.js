@@ -13,20 +13,13 @@ import LoginScreen from "../screens/User/LoginScreen";
 import RegisterScreen from "../screens/User/RegisterScreen";
 import ProfileScreen from "../screens/User/ProfileScreen";
 import SearchScreen from "../screens/SearchScreen";
-import EditProfileScreen from "../screens/User/EditProfileScreen";
-import GiftsScreen from "../screens/User/GiftsScreen";
-import RatingsScreen from "../screens/User/RatingsScreen";
-import ControlPanelScreen from "../screens/User/ControlPanelScreen";
-import ReportProblemScreen from "../screens/User/ReportProblemScreen";
-import SettingsScreen from "../screens/User/SettingsScreen";
-import LegalScreen from "../screens/User/LegalScreen";
-import RegisterBusinessScreen from "../screens/User/RegisterBusinessScreen";
 import FiltersScreen from "../screens/FiltersScreen";
 import ServicesNavigation from "../screens/ServicesNavigationScreen";
 import ServicesScreen from "../screens/ServicesScreen";
 import SearchEverything from "../screens/SearchEverything";
 import MessagesScreen from "../screens/MessagesScreen";
 import ServiceItemScreen from "../screens/ServiceItemScreen";
+import SocialScreen from "../screens/SocialScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -66,23 +59,12 @@ const UserStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Profile" component={ProfileScreen} />
-      <Stack.Screen name="EditProfile" component={EditProfileScreen} />
-      <Stack.Screen name="Gifts" component={GiftsScreen} />
-      <Stack.Screen name="Ratings" component={RatingsScreen} />
-      <Stack.Screen name="ControlPanel" component={ControlPanelScreen} />
-      <Stack.Screen name="ReportProblem" component={ReportProblemScreen} />
-      <Stack.Screen name="Settings" component={SettingsScreen} />
-      <Stack.Screen name="Legal" component={LegalScreen} />
-      <Stack.Screen
-        name="RegisterBusiness"
-        component={RegisterBusinessScreen}
-      />
     </Stack.Navigator>
   );
 };
 
 const CloserNavigation = () => {
-  const user = false;
+  const user = true;
 
   return (
     <NavigationContainer>
@@ -101,9 +83,11 @@ const CloserNavigation = () => {
             } else if (route.name === "Traseu") {
               iconType = "font-awesome-5";
               iconName = focused ? "route" : "route";
-            } else if (route.name === "Notifications") {
-              iconType = "ionicon";
-              iconName = focused ? "notifications" : "notifications-outline";
+            } else if (route.name === "Social") {
+              iconType = "material";
+              iconName = focused
+                ? "local-fire-department"
+                : "local-fire-department";
             } else if (route.name === "Messages") {
               iconType = "ionicon";
               iconName = focused ? "chatbubble-sharp" : "chatbubble-outline";
@@ -125,7 +109,7 @@ const CloserNavigation = () => {
       >
         <Tab.Screen name="Home" component={StackNavigator} />
         <Tab.Screen name="SearchEverything" component={SearchEverything} />
-        <Tab.Screen name="Notifications" component={NotificationScreen} />
+        <Tab.Screen name="Social" component={SocialScreen} />
         <Tab.Screen name="Messages" component={MessagesScreen} />
         {user ? (
           <Tab.Screen name="User" component={UserStackNavigator} />

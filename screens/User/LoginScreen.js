@@ -6,13 +6,10 @@ import { useForm, Controller } from "react-hook-form";
 import MainButton from "../../components/Buttons/MainButton";
 import GoogleButton from "../../components/Buttons/GoogleButton";
 import BoxTitleAuth from "../../components/BoxTitleAuth/BoxTitleAuth";
-//import { AuthService } from "../../services/AuthService";
-//import { getAuth } from "firebase/auth";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
-  //const auth = getAuth();
   const {
     control,
     handleSubmit,
@@ -23,37 +20,7 @@ const LoginScreen = () => {
       password: "",
     },
   });
-  const loginHandler = (data) => {
-    // setLoading(true);
-    // const { user, error } = await AuthService.loginWithPassword(
-    //   auth,
-    //   data.email,
-    //   data.password
-    // );
-    // if (error) {
-    //   console.log(error);
-    //   setLoading(false);
-    // } else {
-    //   const idTokenResult = await user?.getIdTokenResult();
-    //   createOrUpdateUser(idTokenResult?.token)
-    //     .then((res) => {
-    //       console.log(res);
-    //       // dispatch({
-    //       //   type: "LOGGED_IN_USER",
-    //       //   payload: {
-    //       //     name: res.data.name,
-    //       //     email: res.data.email,
-    //       //     token: idTokenResult?.token,
-    //       //     role: res.data.role,
-    //       //     _id: res.data._id,
-    //       //   },
-    //       //});
-    //     })
-    //     .catch((err) => err.message);
-    //   setLoading(false);
-    //   router.push("/");
-    // }
-  };
+  const loginHandler = (data) => {};
 
   return (
     <View style={styles.screen}>
@@ -139,8 +106,11 @@ const styles = StyleSheet.create({
   },
   label: {
     fontFamily: "Exo-Medium",
+    fontSize: 14,
+    marginBottom: 5,
   },
   inputStyle: {
     fontFamily: "Exo-Regular",
+    backgroundColor: "#f1f1f1",
   },
 });

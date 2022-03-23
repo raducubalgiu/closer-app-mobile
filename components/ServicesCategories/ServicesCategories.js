@@ -54,7 +54,7 @@ const ServicesCategories = () => {
               <Image
                 style={styles.image}
                 source={{
-                  uri: item.image,
+                  uri: item.logo[0].url,
                 }}
               />
             </TouchableOpacity>
@@ -72,18 +72,10 @@ const styles = StyleSheet.create({
   servicesContainer: {
     backgroundColor: "white",
     marginVertical: 10,
-    paddingVertical: 5,
+    paddingVertical: 10,
     paddingHorizontal: 10,
-    borderRadius: 20,
-    shadowColor: "#c9c5c5",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.8,
-    shadowRadius: 10,
-
-    elevation: 11,
+    borderTopLeftRadius: 20,
+    borderBottomRightRadius: 20,
   },
   headingContainer: {
     display: "flex",

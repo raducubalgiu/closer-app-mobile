@@ -66,7 +66,7 @@ const BottomSheetRecommend = (props) => {
               <CardRecommended
                 id={item._id}
                 name={item.name}
-                image={item.imageCover}
+                image={item.imageCover[0].url}
                 title={item.title}
                 street={item.startLocation.address.street}
                 number={item.startLocation.address.number}

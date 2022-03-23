@@ -33,7 +33,7 @@ const BottomSheetService = (props) => {
               <>
                 <CardService
                   id={item._id}
-                  image={item.imageCover}
+                  image={item.imageCover[0].url}
                   business={item.name}
                   distance={item.distance}
                   address={`${item.startLocation.address.street}, ${item.startLocation.address.number}, ${item.startLocation.address.county}`}

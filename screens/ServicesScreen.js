@@ -47,6 +47,8 @@ const ServicesScreen = ({ route }) => {
       .catch((error) => console.log(error));
   }, []);
 
+  console.log(locations);
+
   return (
     <View style={styles.screen}>
       <SafeAreaView style={{ flex: 1 }}>
@@ -106,7 +108,7 @@ const ServicesScreen = ({ route }) => {
                   <CardService
                     id={item._id}
                     distance={item.distance}
-                    image={item.imageCover}
+                    image={item.imageCover[0].url}
                     business={item.name}
                     address={`${item.startLocation.address.street}, ${item.startLocation.address.number}, ${item.startLocation.address.county}`}
                     ratingsAverage={item.ratingsAverage}
