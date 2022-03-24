@@ -29,7 +29,12 @@ const CardService = (props) => {
           <Text style={styles.business}>{props.business}</Text>
           <Text style={styles.address}>{props.address} </Text>
           <View style={styles.ratingsContainer}>
-            <Icon name="star" type="antdesign" size={15} color="#ffba00" />
+            <Icon
+              name="star"
+              type="antdesign"
+              size={17}
+              color={Colors.primary}
+            />
             <Text style={styles.ratingsAverage}>{props.ratingsAverage}</Text>
             <Text style={styles.ratingsQuantity}>
               {props.ratingsQuantity} {t("reviews")}
@@ -47,7 +52,12 @@ const CardService = (props) => {
           </Text> */}
         </View>
         <View style={styles.distanceContainer}>
-          <Icon name="location-on" size={15} color={Colors.yellowRatings} />
+          <Icon
+            name="pushpino"
+            type="antdesign"
+            size={20}
+            color={Colors.textLight}
+          />
           <Text style={styles.distance}>
             la {Math.round(props.distance)} km de tine
           </Text>
@@ -147,7 +157,7 @@ const styles = StyleSheet.create({
   },
   distance: {
     fontFamily: "Exo-SemiBold",
-    marginLeft: 2.5,
+    marginLeft: 5,
     fontSize: 13,
     color: Colors.textDark,
   },

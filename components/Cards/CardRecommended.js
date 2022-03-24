@@ -32,10 +32,11 @@ const CardRecommended = (props) => {
               <Text style={styles.cardName}>{props.name}</Text>
               <View style={styles.distanceContainer}>
                 <Icon
-                  style={{ marginRight: 3 }}
-                  size={15}
-                  color={Colors.primary}
-                  name="location-pin"
+                  style={{ marginRight: 5 }}
+                  size={20}
+                  color={Colors.textLight}
+                  type="antdesign"
+                  name="pushpino"
                 />
                 <Text style={styles.cardDistance}>
                   {props.distance < 1000
@@ -51,7 +52,12 @@ const CardRecommended = (props) => {
               <Text style={styles.cardTitle}>Tuns</Text>
             </View>
             <View style={styles.ratingsContainer}>
-              <Icon name="star" type="antdesign" size={15} color="#ffba00" />
+              <Icon
+                name="star"
+                type="antdesign"
+                size={18}
+                color={Colors.primary}
+              />
               <Text style={styles.cardRatingsAverage}>
                 {props.ratingsAverage}
               </Text>
@@ -130,9 +136,10 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 5,
     backgroundColor: "#f1f1f1",
-    padding: 2,
+    paddingVertical: 5,
+    paddingHorizontal: 15,
     color: Colors.textDark,
-    fontFamily: "Exo-Bold",
+    fontFamily: "Exo-SemiBold",
   },
   ratingsContainer: {
     flexDirection: "row",
@@ -140,8 +147,9 @@ const styles = StyleSheet.create({
   },
   cardRatingsAverage: {
     marginLeft: 2,
-    fontSize: 12,
-    fontFamily: "Exo-Medium",
+    fontSize: 13,
+    fontFamily: "Exo-Bold",
+    color: Colors.textDark,
   },
   cardRatingsQuantity: {
     marginLeft: 4,

@@ -204,7 +204,7 @@ const Map = (props) => {
                 <Icon
                   name="star"
                   type="antdesign"
-                  color={Colors.yellowRatings}
+                  color={Colors.primary}
                   size={17}
                 />
                 <Text style={styles.markerRatingsAverage}>

@@ -61,10 +61,11 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: "#f1f1f1",
     borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
   },
   fakeInputText: {
     marginLeft: 10,
-    fontSize: 15,
+    fontSize: 14,
     color: Colors.textLight,
     fontFamily: "Exo-Regular",
   },
@@ -74,6 +75,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     backgroundColor: "#f1f1f1",
     borderBottomRightRadius: 10,
+    borderTopRightRadius: 10,
   },
   datePickerDetails: {
     flexDirection: "row",
@@ -81,8 +83,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     paddingHorizontal: 8,
     paddingVertical: 6,
-    borderTopLeftRadius: 10,
-    borderBottomRightRadius: 10,
+    borderRadius: 20,
   },
   datePickerTitle: {
     textAlign: "center",

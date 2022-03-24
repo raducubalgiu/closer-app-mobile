@@ -39,7 +39,7 @@ const TabViewProfile = (props) => {
           >
             Despre Raducu
           </Text>
-          <Text>
+          <Text style={{ fontFamily: "Exo-Regular" }}>
             Povestea noastra a inceput intr-o frumoasa primavara cand m-am decis
             sa deschid acest business
           </Text>
