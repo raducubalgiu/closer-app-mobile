@@ -5,6 +5,7 @@ import HeaderSimple from "../../components/Headers/HeaderSimple";
 import TabsProfile from "../../components/Tabs/TabsProfile/TabsProfile";
 import TabViewProfile from "../../components/Tabs/TabsProfile/TabViewProfile";
 import ProfileAvatarSection from "../../components/ProfileAvatarSection.tsx/ProfileAvatarSection";
+import BottomSheetGeneral from "../../components/BottomSheets/BottomSheetGeneral";
 
 const user = {
   _id: "1",
@@ -55,20 +56,22 @@ const ProfileScreen = () => {
   const [index, setIndex] = React.useState(0);
 
   return (
-    <View style={styles.screen}>
-      <HeaderSimple onPress={() => {}} />
-      <ScrollView>
-        <ProfileAvatarSection user={user} />
-        <View>
-          <TabsProfile index={index} onSetIndex={(e) => setIndex(e)} />
-          <TabViewProfile
-            index={index}
-            onSetIndex={(e) => setIndex(e)}
-            products={user.products}
-          />
-        </View>
-      </ScrollView>
-    </View>
+    <>
+      <View style={styles.screen}>
+        <HeaderSimple onPress={() => {}} />
+        <ScrollView>
+          <ProfileAvatarSection user={user} />
+          <View>
+            <TabsProfile index={index} onSetIndex={(e) => setIndex(e)} />
+            <TabViewProfile
+              index={index}
+              onSetIndex={(e) => setIndex(e)}
+              products={user.products}
+            />
+          </View>
+        </ScrollView>
+      </View>
+    </>
   );
 };
 

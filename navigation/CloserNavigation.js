@@ -8,7 +8,6 @@ import "../i18next";
 
 import { Colors } from "../assets/styles/Colors";
 import HomeScreen from "../screens/HomeScreen";
-import NotificationScreen from "../screens/NotificationScreen";
 import LoginScreen from "../screens/User/LoginScreen";
 import RegisterScreen from "../screens/User/RegisterScreen";
 import ProfileScreen from "../screens/User/ProfileScreen";
@@ -70,7 +69,7 @@ const CloserNavigation = () => {
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
+          tabBarIcon: ({ focused, color }) => {
             let iconName;
             let iconType;
 
@@ -79,10 +78,7 @@ const CloserNavigation = () => {
               iconName = focused ? "home-sharp" : "home-outline";
             } else if (route.name === "SearchEverything") {
               iconType = "ionicon";
-              iconName = focused ? "search" : "search-outline";
-            } else if (route.name === "Traseu") {
-              iconType = "font-awesome-5";
-              iconName = focused ? "route" : "route";
+              iconName = focused ? "ios-search" : "search-outline";
             } else if (route.name === "Social") {
               iconType = "material";
               iconName = focused
@@ -97,9 +93,7 @@ const CloserNavigation = () => {
             }
 
             // You can return any component that you like here!
-            return (
-              <Icon name={iconName} type={iconType} color={color} size={size} />
-            );
+            return <Icon name={iconName} type={iconType} color={color} />;
           },
           tabBarActiveTintColor: Colors.primary,
           tabBarInactiveTintColor: "gray",
@@ -107,14 +101,34 @@ const CloserNavigation = () => {
           tabBarShowLabel: false,
         })}
       >
-        <Tab.Screen name="Home" component={StackNavigator} />
-        <Tab.Screen name="SearchEverything" component={SearchEverything} />
+        <Tab.Screen
+          name="Home"
+          component={StackNavigator}
+          options={{ tabBarLabel: "Acasa" }}
+        />
+        <Tab.Screen
+          name="SearchEverything"
+          component={SearchEverything}
+          options={{ tabBarLabel: "Exploreaza" }}
+        />
         <Tab.Screen name="Social" component={SocialScreen} />
-        <Tab.Screen name="Messages" component={MessagesScreen} />
+        <Tab.Screen
+          name="Messages"
+          component={MessagesScreen}
+          options={{ tabBarLabel: "Mesaje" }}
+        />
         {user ? (
-          <Tab.Screen name="User" component={UserStackNavigator} />
+          <Tab.Screen
+            name="User"
+            component={UserStackNavigator}
+            options={{ tabBarLabel: "Profil" }}
+          />
         ) : (
-          <Tab.Screen name="User" component={AuthStackNavigator} />
+          <Tab.Screen
+            name="User"
+            component={AuthStackNavigator}
+            options={{ tabBarLabel: "Profil" }}
+          />
         )}
       </Tab.Navigator>
     </NavigationContainer>

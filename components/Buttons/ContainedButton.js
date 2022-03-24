@@ -3,7 +3,7 @@ import { Colors } from "../../assets/styles/Colors";
 
 const ContainedButton = (props) => {
   return (
-    <TouchableOpacity style={styles.button}>
+    <TouchableOpacity onPress={props.onPress} style={styles.button}>
       <Text style={styles.buttonText}>{props.title}</Text>
     </TouchableOpacity>
   );

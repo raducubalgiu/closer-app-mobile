@@ -2,7 +2,6 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Avatar } from "react-native-elements";
 import React from "react";
 import { Colors } from "../../assets/styles/Colors";
-import ContainedButton from "../Buttons/ContainedButton";
 import OutlinedButton from "../Buttons/OutlinedButton";
 
 const CardUserRecommend = (props) => {

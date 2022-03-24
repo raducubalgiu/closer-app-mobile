@@ -172,7 +172,9 @@ const Map = (props) => {
   return (
     <MapView
       style={
-        parseFloat(props.sheetStep) === 0 ? { height: 200 } : { height: "100%" }
+        parseFloat(props.sheetStep) === 0
+          ? { height: "80%" }
+          : { height: "100%" }
       }
       initialRegion={{
         latitude: 44.425625,

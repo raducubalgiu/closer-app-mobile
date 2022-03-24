@@ -1,7 +1,5 @@
-import { StyleSheet, Text, View, Dimensions, Image } from "react-native";
+import { StyleSheet, View, Dimensions, Image } from "react-native";
 import React from "react";
-import { Icon } from "react-native-elements";
-import { Colors } from "../assets/styles/Colors";
 import BackButton from "../components/BackButton/BackButton";
 import BottomSheetServiceItem from "../components/BottomSheets/BottomSheetServiceItem";
 

@@ -9,7 +9,7 @@ import React from "react";
 import { Avatar } from "react-native-elements";
 import { Icon } from "react-native-elements/dist/icons/Icon";
 import { Divider } from "react-native-elements/dist/divider/Divider";
-import { Colors } from "../../assets/styles/Colors";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 import CardPriceItem from "./CardPriceItem";
 import { useTranslation } from "react-i18next";
 

@@ -38,6 +38,7 @@ const ServicesCategories = () => {
       <Divider />
       <FlatList
         nestedScrollEnabled={true}
+        showsHorizontalScrollIndicator={false}
         horizontal
         data={services}
         keyExtractor={(item) => item.id}
@@ -76,6 +77,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderTopLeftRadius: 20,
     borderBottomRightRadius: 20,
+    marginVertical: 10,
   },
   headingContainer: {
     display: "flex",

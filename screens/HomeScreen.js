@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import FakeSearchBar from "../components/FakeSearchBar/FakeSearchBar";
 import ServicesCategories from "../components/ServicesCategories/ServicesCategories";
-import { ScrollView } from "react-native-gesture-handler";
 import { FlatList } from "react-native-gesture-handler";
 import CardRecommended from "../components/Cards/CardRecommended";
 import { useTranslation } from "react-i18next";
@@ -14,8 +13,6 @@ const HomeScreen = () => {
   const height = Dimensions.get("window").height;
   const [locations, setLocations] = useState([]);
   const { t } = useTranslation();
-
-  console.log(locations);
 
   useEffect(() => {
     axios
@@ -33,7 +30,38 @@ const HomeScreen = () => {
       <SafeAreaView style={{ backgroundColor: "white" }}>
         <FakeSearchBar />
       </SafeAreaView>
-      <ScrollView style={{ flex: 1 }}>
+
+      <FlatList
+        ListHeaderComponent={
+          <>
+            <ServicesCategories />
+            <View style={{ backgroundColor: "white", borderTopLeftRadius: 20 }}>
+              <Text style={styles.sheetHeading}>{t("nearYou")}</Text>
+              <Divider width={2} color="#f1f1f1" style={styles.divider} />
+            </View>
+          </>
+        }
+        data={locations}
+        keyExtractor={(item) => item._id}
+        showsVerticalScrollIndicator={false}
+        renderItem={({ item }) => (
+          <CardRecommended
+            id={item._id}
+            name={item.name}
+            image={item.imageCover[0].url}
+            title={item.title}
+            street={item.startLocation.address.street}
+            number={item.startLocation.address.number}
+            county={item.startLocation.address.county}
+            distance={item.distance}
+            ratingsAverage={item.ratingsAverage}
+            ratingsQuantity={item.ratingsQuantity}
+            availableSeats={item.availableSeats}
+          />
+        )}
+      />
+
+      {/* <ScrollView style={{ flex: 1 }}>
         <ServicesCategories />
         <View
           style={{
@@ -64,7 +92,7 @@ const HomeScreen = () => {
             )}
           />
         </View>
-      </ScrollView>
+      </ScrollView> */}
     </View>
   );
 };
