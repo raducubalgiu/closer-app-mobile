@@ -12,6 +12,7 @@ const FakeSearchBar = () => {
   return (
     <View style={styles.screen}>
       <TouchableOpacity
+        activeOpacity={1}
         onPress={() => navigation.navigate("Search")}
         style={styles.fakeInput}
       >
@@ -19,13 +20,16 @@ const FakeSearchBar = () => {
         <Text style={styles.fakeInputText}>{t("searchInputTitle")}</Text>
       </TouchableOpacity>
       <Divider orientation="vertical" />
-      <TouchableOpacity style={styles.datePicker}>
-        <View style={styles.datePickerDetails}>
+      <View style={styles.datePicker}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Search")}
+          style={styles.datePickerDetails}
+        >
           <Icon name="access-time" size={18} />
           <Text style={styles.datePickerTitle}>Acum</Text>
           <Icon name="keyboard-arrow-down" />
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -40,16 +44,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     marginVertical: 10,
     marginHorizontal: 10,
-    // shadowColor: "#c9c5c5",
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 1,
-    // },
-    // shadowOpacity: 0.8,
-    // shadowRadius: 10,
-
-    // elevation: 11,
-    // borderRadius: 20,
   },
   fakeInput: {
     flexDirection: "row",
@@ -60,8 +54,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#f1f1f1",
     borderWidth: 2,
     borderColor: "#f1f1f1",
-    borderTopLeftRadius: 10,
-    borderBottomLeftRadius: 10,
+    borderTopLeftRadius: 15,
+    borderBottomLeftRadius: 15,
   },
   fakeInputText: {
     marginLeft: 10,
@@ -74,8 +68,8 @@ const styles = StyleSheet.create({
     paddingVertical: 6.5,
     paddingHorizontal: 10,
     backgroundColor: "#f1f1f1",
-    borderBottomRightRadius: 10,
-    borderTopRightRadius: 10,
+    borderBottomRightRadius: 15,
+    borderTopRightRadius: 15,
   },
   datePickerDetails: {
     flexDirection: "row",

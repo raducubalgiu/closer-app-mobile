@@ -8,11 +8,15 @@ import CardRecommended from "../components/Cards/CardRecommended";
 import { useTranslation } from "react-i18next";
 import { Colors } from "../assets/styles/Colors";
 import { Divider } from "react-native-elements";
+import { useAuth } from "../context/auth";
 
 const HomeScreen = () => {
   const height = Dimensions.get("window").height;
   const [locations, setLocations] = useState([]);
   const { t } = useTranslation();
+  const { user } = useAuth();
+
+  console.log(user);
 
   useEffect(() => {
     axios
@@ -60,39 +64,6 @@ const HomeScreen = () => {
           />
         )}
       />
-
-      {/* <ScrollView style={{ flex: 1 }}>
-        <ServicesCategories />
-        <View
-          style={{
-            backgroundColor: "white",
-            borderTopLeftRadius: 20,
-          }}
-        >
-          <Text style={styles.sheetHeading}>{t("nearYou")}</Text>
-          <Divider width={2} color="#f1f1f1" style={styles.divider} />
-          <FlatList
-            data={locations}
-            keyExtractor={(item) => item._id}
-            showsVerticalScrollIndicator={false}
-            renderItem={({ item }) => (
-              <CardRecommended
-                id={item._id}
-                name={item.name}
-                image={item.imageCover[0].url}
-                title={item.title}
-                street={item.startLocation.address.street}
-                number={item.startLocation.address.number}
-                county={item.startLocation.address.county}
-                distance={item.distance}
-                ratingsAverage={item.ratingsAverage}
-                ratingsQuantity={item.ratingsQuantity}
-                availableSeats={item.availableSeats}
-              />
-            )}
-          />
-        </View>
-      </ScrollView> */}
     </View>
   );
 };

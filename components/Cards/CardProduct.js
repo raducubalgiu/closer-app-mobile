@@ -25,11 +25,11 @@ export default CardProduct;
 const styles = StyleSheet.create({
   card: {
     marginTop: 10,
-    marginHorizontal: 10,
     backgroundColor: "white",
     padding: 15,
-    borderTopLeftRadius: 20,
-    borderBottomRightRadius: 20,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "#eee",
   },
   cardLayout: {
     flexDirection: "row",

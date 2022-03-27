@@ -6,7 +6,7 @@ import {
   FlatList,
   Image,
 } from "react-native";
-import { Divider } from "react-native-elements";
+import { Divider, Icon } from "react-native-elements";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
@@ -75,8 +75,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     paddingVertical: 10,
     paddingHorizontal: 10,
-    borderTopLeftRadius: 20,
-    borderBottomRightRadius: 20,
+    borderRadius: 20,
     marginVertical: 10,
   },
   headingContainer: {

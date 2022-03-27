@@ -25,7 +25,7 @@ const ServicesScreen = ({ route }) => {
   const [sheetStep, setSheetStep] = useState(0);
   const navigation = useNavigation();
   const { t } = useTranslation();
-  const { serviceId, serviceName } = route.params;
+  const { serviceId, serviceName, option } = route.params;
 
   const handleSheetChange = useCallback((index) => {
     setSheetStep(index);
@@ -46,8 +46,6 @@ const ServicesScreen = ({ route }) => {
       })
       .catch((error) => console.log(error));
   }, []);
-
-  console.log(locations);
 
   return (
     <View style={styles.screen}>

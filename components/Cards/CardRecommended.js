@@ -13,6 +13,7 @@ const CardRecommended = (props) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity
+        activeOpacity={1}
         style={styles.cardItem}
         onPress={() =>
           navigation.navigate("ServiceItem", { serviceIde: props.id })
@@ -96,8 +97,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: 120,
     height: 80,
-    borderTopLeftRadius: 10,
-    borderBottomRightRadius: 10,
+    borderRadius: 15,
     // borderTopLeftRadius: 5,
     // borderBottomLeftRadius: 5,
     // borderTopRightRadius: 5,
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   cardDistance: {
-    fontSize: 13,
+    fontSize: 12,
     fontFamily: "Exo-Bold",
     color: Colors.textDark,
   },
@@ -133,12 +133,12 @@ const styles = StyleSheet.create({
     fontFamily: "Exo-Medium",
   },
   cardTitle: {
-    fontSize: 13,
+    fontSize: 11.5,
     marginTop: 5,
     marginBottom: 5,
     backgroundColor: "#f1f1f1",
-    paddingVertical: 5,
-    paddingHorizontal: 15,
+    paddingVertical: 4,
+    paddingHorizontal: 12,
     color: Colors.textDark,
     fontFamily: "Exo-SemiBold",
   },

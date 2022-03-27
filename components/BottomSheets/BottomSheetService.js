@@ -1,7 +1,10 @@
 import { useRef, useMemo, useCallback } from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import { Divider } from "react-native-elements";
-import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
+import BottomSheet, {
+  BottomSheetFlatList,
+  BottomSheetBackdrop,
+} from "@gorhom/bottom-sheet";
 import { useTranslation } from "react-i18next";
 import { Colors } from "../../assets/styles/Colors";
 import CardService from "../Cards/CardService";
@@ -11,6 +14,17 @@ const BottomSheetService = (props) => {
   const sheetRef = useRef(null);
 
   const snapPoints = useMemo(() => ["25%", "90%"], []);
+
+  const renderBackdrop = useCallback(
+    (props) => (
+      <BottomSheetBackdrop
+        {...props}
+        disappearsOnIndex={0}
+        appearsOnIndex={1}
+      />
+    ),
+    []
+  );
 
   const renderItem = useCallback(
     ({ item }) => (
@@ -39,6 +53,7 @@ const BottomSheetService = (props) => {
       onChange={props.onHandleSheetChange}
       handleIndicatorStyle={styles.indicatorStyle}
       enableOverDrag={true}
+      backdropComponent={renderBackdrop}
     >
       <View style={{ flex: 1 }}>
         <Text style={styles.sheetHeading}>

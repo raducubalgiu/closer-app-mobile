@@ -3,6 +3,8 @@ import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import { enableScreens } from "react-native-screens";
 import CloserNavigation from "./navigation/CloserNavigation";
+import { AuthProvider } from "./context/auth";
+import "./firebase/firebase.config";
 
 enableScreens();
 
@@ -33,7 +35,11 @@ const App = () => {
     );
   }
 
-  return <CloserNavigation />;
+  return (
+    <AuthProvider>
+      <CloserNavigation />
+    </AuthProvider>
+  );
 };
 
 export default App;

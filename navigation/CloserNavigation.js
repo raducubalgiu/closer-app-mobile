@@ -4,15 +4,16 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Icon } from "react-native-elements";
+import { useAuth } from "../context/auth";
 import "../i18next";
 
 import { Colors } from "../assets/styles/Colors";
 import HomeScreen from "../screens/HomeScreen";
-import LoginScreen from "../screens/User/LoginScreen";
-import RegisterScreen from "../screens/User/RegisterScreen";
+import AuthScreen from "../screens/User/AuthScreen";
 import ProfileScreen from "../screens/User/ProfileScreen";
 import SearchScreen from "../screens/SearchScreen";
-import FiltersScreen from "../screens/FiltersScreen";
+import FiltersDateScreen from "../screens/FilterDateScreen";
+import FiltersServiceScreen from "../screens/FiltersServiceScreen";
 import ServicesNavigation from "../screens/ServicesNavigationScreen";
 import ServicesScreen from "../screens/ServicesScreen";
 import SearchEverything from "../screens/SearchEverything";
@@ -33,7 +34,8 @@ const StackNavigator = () => {
       <Stack.Screen name="StackBase" component={HomeScreen} />
       <Stack.Screen name="Search" component={SearchScreen} />
       <Stack.Screen name="AllServices" component={ServicesNavigation} />
-      <Stack.Screen name="Filters" component={FiltersScreen} />
+      <Stack.Screen name="FiltersDate" component={FiltersDateScreen} />
+      <Stack.Screen name="FiltersService" component={FiltersServiceScreen} />
       <Stack.Screen name="Services" component={ServicesScreen} />
       <Stack.Screen name="ServiceItem" component={ServiceItemScreen} />
     </Stack.Navigator>
@@ -43,13 +45,12 @@ const StackNavigator = () => {
 const AuthStackNavigator = () => {
   return (
     <Stack.Navigator
-      initialRouteName="Login"
+      initialRouteName="Auth"
       screenOptions={{
         headerShown: false,
       }}
     >
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Register" component={RegisterScreen} />
+      <Stack.Screen name="Auth" component={AuthScreen} />
     </Stack.Navigator>
   );
 };
@@ -63,7 +64,7 @@ const UserStackNavigator = () => {
 };
 
 const CloserNavigation = () => {
-  const user = true;
+  const { user } = useAuth();
 
   return (
     <NavigationContainer>

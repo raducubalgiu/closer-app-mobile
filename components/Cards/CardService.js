@@ -11,6 +11,7 @@ const CardService = (props) => {
 
   return (
     <TouchableOpacity
+      activeOpacity={1}
       style={styles.container}
       onPress={() =>
         navigation.navigate("ServiceItem", { serviceId: props.id })
@@ -59,7 +60,9 @@ const CardService = (props) => {
             color={Colors.textLight}
           />
           <Text style={styles.distance}>
-            la {Math.round(props.distance)} km de tine
+            {props.distance < 1
+              ? `la mai putin de 1 km`
+              : `la ${Math.round(props.distance)} km de tine`}
           </Text>
         </View>
       </View>

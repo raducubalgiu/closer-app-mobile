@@ -152,7 +152,7 @@ const SearchScreen = () => {
               renderItem={({ item }) => (
                 <TouchableOpacity
                   onPress={() =>
-                    navigation.navigate("Filters", {
+                    navigation.navigate("FiltersDate", {
                       serviceId: item._id,
                       serviceName: item.name,
                     })
