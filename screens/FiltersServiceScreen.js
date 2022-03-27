@@ -41,7 +41,7 @@ const FiltersServiceScreen = (props) => {
               style={
                 item._id !== option._id
                   ? styles.button
-                  : { ...styles.button, backgroundColor: Colors.primary }
+                  : { ...styles.button, backgroundColor: "#bbb" }
               }
             >
               <Text

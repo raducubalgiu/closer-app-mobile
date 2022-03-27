@@ -75,11 +75,11 @@ const CloserNavigation = () => {
             let iconType;
 
             if (route.name === "Home") {
-              iconType = "ionicon";
-              iconName = focused ? "home-sharp" : "home-outline";
+              iconType = "antdesign";
+              iconName = focused ? "home" : "home";
             } else if (route.name === "SearchEverything") {
-              iconType = "ionicon";
-              iconName = focused ? "ios-search" : "search-outline";
+              iconType = "antdesign";
+              iconName = focused ? "search1" : "search1";
             } else if (route.name === "Social") {
               iconType = "material";
               iconName = focused
@@ -87,10 +87,10 @@ const CloserNavigation = () => {
                 : "local-fire-department";
             } else if (route.name === "Messages") {
               iconType = "ionicon";
-              iconName = focused ? "chatbubble-sharp" : "chatbubble-outline";
+              iconName = focused ? "chatbubble-outline" : "chatbubble-outline";
             } else if (route.name === "User") {
-              iconType = "ionicon";
-              iconName = focused ? "person" : "person-outline";
+              iconType = "antdesign";
+              iconName = focused ? "user" : "user";
             }
 
             // You can return any component that you like here!

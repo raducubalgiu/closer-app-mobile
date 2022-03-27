@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { Avatar, Icon } from "react-native-elements";
+import { Avatar, Icon, Badge } from "react-native-elements";
 import { Colors } from "../../assets/styles/Colors";
 import ContainedButton from "../Buttons/ContainedButton";
 import OutlinedButton from "../Buttons/OutlinedButton";
@@ -8,18 +8,32 @@ import OutlinedButton from "../Buttons/OutlinedButton";
 const ProfileAvatarSection = (props) => {
   return (
     <View style={styles.container}>
-      <Avatar
-        size={90}
-        rounded
-        source={{ uri: `${props.user.avatar}` }}
-        title="Bj"
-        containerStyle={{ backgroundColor: "grey" }}
-      >
-        <Avatar.Accessory size={18} backgroundColor={Colors.primary} />
-      </Avatar>
+      <View>
+        <Avatar
+          size={90}
+          rounded
+          source={{ uri: `${props.user.avatar}` }}
+          title={
+            <Icon
+              name="user-alt"
+              type="font-awesome-5"
+              size={30}
+              color="#f1f1f1"
+            />
+          }
+        />
+        <Badge
+          value={<Icon name="plus" type="entypo" size={15} color="white" />}
+          containerStyle={{
+            position: "absolute",
+            bottom: 5,
+            left: 70,
+          }}
+        />
+      </View>
       <Text style={styles.name}>{props.user.name}</Text>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <Text style={styles.job}>{props.user.job}</Text>
+        <Text style={styles.job}>{props.user.role}</Text>
         <Icon
           type="antdesign"
           name="star"
@@ -32,26 +46,41 @@ const ProfileAvatarSection = (props) => {
 
       <View style={styles.statsContainer}>
         <View style={{ alignItems: "center" }}>
-          <Text style={styles.statsNumber}>{props.user.ratingsCount}</Text>
+          <Text style={styles.statsNumber}>
+            {props.user.ratingsCount ? props.user.ratingsCount : 0}
+          </Text>
           <Text style={styles.statsText}>Ratinguri</Text>
         </View>
         <View style={{ alignItems: "center" }}>
-          <Text style={styles.statsNumber}>{props.user.followersCount}</Text>
+          <Text style={styles.statsNumber}>
+            {props.user.followersCount ? props.user.followersCount : 0}
+          </Text>
           <Text style={styles.statsText}>Urmaritori</Text>
         </View>
         <View style={{ alignItems: "center" }}>
-          <Text style={styles.statsNumber}>{props.user.followingCount}</Text>
+          <Text style={styles.statsNumber}>
+            {props.user.followingCount ? props.user.followingCount : 0}
+          </Text>
           <Text style={styles.statsText}>Urmaresti</Text>
         </View>
       </View>
-      <View style={styles.buttonsContainer}>
-        <View>
-          <ContainedButton title="Urmareste" />
+      {!props.user && (
+        <View style={styles.buttonsContainer}>
+          <View>
+            <ContainedButton title="Urmareste" />
+          </View>
+          <View style={{ marginLeft: 10 }}>
+            <OutlinedButton title="Mesaj" />
+          </View>
         </View>
-        <View style={{ marginLeft: 10 }}>
-          <OutlinedButton title="Mesaj" />
+      )}
+      {props.user && (
+        <View style={styles.buttonsContainer}>
+          <View>
+            <OutlinedButton title="Editeaza profilul" />
+          </View>
         </View>
-      </View>
+      )}
     </View>
   );
 };

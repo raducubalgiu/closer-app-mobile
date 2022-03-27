@@ -6,6 +6,7 @@ import { useForm, Controller } from "react-hook-form";
 import { TextInput } from "react-native";
 import { AuthService } from "../../services/AuthService";
 import { useAuth } from "../../context/auth";
+import { Divider } from "react-native-elements";
 
 const LoginForm = () => {
   const { user, setUser } = useAuth();
@@ -27,8 +28,6 @@ const LoginForm = () => {
         data.password
       );
 
-      console.log("USER FROM FIREBASE!!!!!!!", user);
-
       if (!error) {
         const idTokenResult = await user?.getIdTokenResult();
 
@@ -41,8 +40,6 @@ const LoginForm = () => {
             },
           }
         );
-
-        console.log("USER FROM OUR BACKEND!!!!", userResult);
 
         const { name, role, _id, business, location, email } =
           userResult.data.user;
@@ -63,7 +60,9 @@ const LoginForm = () => {
   };
 
   return (
-    <View style={{ marginVertical: 30 }}>
+    <View>
+      <Text style={styles.mainHeading}>Bine ai venit</Text>
+      <Divider style={{ marginVertical: 20 }} />
       <Controller
         control={control}
         rules={{
@@ -94,13 +93,14 @@ const LoginForm = () => {
             onChangeText={onChange}
             value={value}
             placeholder="Parola"
+            secureTextEntry={true}
           />
         )}
         name="password"
       />
       {errors.password && <Text>This is required.</Text>}
 
-      <MainButton title="Logare" onPress={handleSubmit(onSubmit)} />
+      <MainButton title="Logheaza-te" onPress={handleSubmit(onSubmit)} />
     </View>
   );
 };
@@ -108,8 +108,13 @@ const LoginForm = () => {
 export default LoginForm;
 
 const styles = StyleSheet.create({
+  mainHeading: {
+    textAlign: "center",
+    fontFamily: "Exo-SemiBold",
+    fontSize: 18,
+  },
   input: {
-    padding: 17.5,
+    padding: 15,
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 10,

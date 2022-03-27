@@ -2,10 +2,18 @@ import React, { useState } from "react";
 import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "../../assets/styles/Colors";
-import { Divider, Icon } from "react-native-elements";
-import BottomSheetAuth from "../../components/BottomSheets/BottomSheetAuth";
+import { Divider } from "react-native-elements";
+import BottomSheetPopup from "../../components/BottomSheets/BottomSheetPopup";
+import LoginForm from "../../components/Forms/LoginForm";
+import MenuItemBigger from "../../components/MenuItem/MenuItemBigger";
 
 const AuthScreen = () => {
+  const [open, setOpen] = useState(false);
+  const [openLogin, setOpenLogin] = useState(false);
+  const [openRegister, setOpenRegister] = useState(false);
+
+  const closeSheet = () => setOpen(false);
+
   return (
     <>
       <SafeAreaView style={styles.screen}>
@@ -16,113 +24,61 @@ const AuthScreen = () => {
           </Text>
         </View>
         <TouchableOpacity
-          onPress={() => {}}
-          style={{
-            backgroundColor: Colors.primary,
-            marginTop: 30,
-            padding: 12.5,
-            borderRadius: 5,
+          onPress={() => {
+            setOpen(true);
+            setOpenLogin(true);
+            setOpenRegister(false);
           }}
+          style={styles.mainBtn}
         >
-          <Text
-            style={{
-              textAlign: "center",
-              color: "white",
-              fontFamily: "Exo-SemiBold",
-              fontSize: 15,
+          <Text style={styles.mainBtnText}>Conectează-te</Text>
+        </TouchableOpacity>
+        <View style={styles.registerText}>
+          <Text style={styles.textAction}>Nu ai un cont?</Text>
+          <TouchableOpacity
+            style={{ marginLeft: 5 }}
+            onPress={() => {
+              setOpen(true);
+              setOpenRegister(true);
+              setOpenLogin(false);
             }}
           >
-            Conectează-te
-          </Text>
-        </TouchableOpacity>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            marginVertical: 15,
-          }}
-        >
-          <Text style={styles.textAction}>Nu ai un cont?</Text>
-          <TouchableOpacity style={{ marginLeft: 5 }}>
             <Text style={styles.btnAction}>Înscrie-te</Text>
           </TouchableOpacity>
         </View>
         <Divider />
         <View style={{ marginTop: 25 }}>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              paddingVertical: 15,
-            }}
-          >
-            <Icon
-              name="settings-outline"
-              type="ionicon"
-              color={Colors.textDark}
-              size={26}
-            />
-            <Text
-              style={{
-                fontFamily: "Exo-Regular",
-                fontSize: 16,
-                color: Colors.textDark,
-                marginLeft: 10,
-              }}
-            >
-              Setări
-            </Text>
-          </View>
-          <Divider />
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              paddingVertical: 15,
-            }}
-          >
-            <Icon
-              name="exclamationcircleo"
-              type="antdesign"
-              color={Colors.textDark}
-            />
-            <Text
-              style={{
-                fontFamily: "Exo-Regular",
-                fontSize: 16,
-                color: Colors.textDark,
-                marginLeft: 10,
-              }}
-            >
-              Raportează o problemă
-            </Text>
-          </View>
-          <Divider />
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              paddingVertical: 15,
-            }}
-          >
-            <Icon
-              name="questioncircleo"
-              type="antdesign"
-              color={Colors.textDark}
-            />
-            <Text
-              style={{
-                fontFamily: "Exo-Regular",
-                fontSize: 16,
-                color: Colors.textDark,
-                marginLeft: 10,
-              }}
-            >
-              Termeni şi condiţii
-            </Text>
-          </View>
+          <MenuItemBigger
+            onPress={() => {}}
+            iconName="settings-outline"
+            iconType="ionicon"
+            text="Setări"
+          />
+          <MenuItemBigger
+            onPress={() => {}}
+            iconName="exclamationcircleo"
+            iconType="antdesign"
+            text="Raportează o problemă"
+          />
+          <MenuItemBigger
+            onPress={() => {}}
+            iconName="questioncircleo"
+            iconType="antdesign"
+            text="Termeni şi condiţii"
+          />
         </View>
-        <BottomSheetAuth />
+        <BottomSheetPopup
+          height={90}
+          open={open}
+          onClose={closeSheet}
+          sheetBody={
+            openLogin && !openRegister ? (
+              <LoginForm />
+            ) : (
+              <Text>Register Form</Text>
+            )
+          }
+        />
       </SafeAreaView>
     </>
   );
@@ -145,11 +101,28 @@ const styles = StyleSheet.create({
     fontSize: 27,
     color: Colors.textDark,
   },
+  mainBtnText: {
+    textAlign: "center",
+    color: "white",
+    fontFamily: "Exo-SemiBold",
+    fontSize: 15,
+  },
   secondHeading: {
     fontFamily: "Exo-Medium",
     color: Colors.textLight,
     fontSize: 16,
     marginTop: 2.5,
+  },
+  mainBtn: {
+    backgroundColor: Colors.primary,
+    marginTop: 30,
+    padding: 12.5,
+    borderRadius: 5,
+  },
+  registerText: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 20,
   },
   textAction: {
     fontFamily: "Exo-Regular",

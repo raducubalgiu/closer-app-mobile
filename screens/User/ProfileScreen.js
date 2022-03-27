@@ -1,84 +1,108 @@
-import { StyleSheet, View, ScrollView } from "react-native";
-import React from "react";
-import { Colors } from "../../assets/styles/Colors";
-import HeaderSimple from "../../components/Headers/HeaderSimple";
+import { StyleSheet, View, SafeAreaView, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
 import TabsProfile from "../../components/Tabs/TabsProfile/TabsProfile";
 import TabViewProfile from "../../components/Tabs/TabsProfile/TabViewProfile";
 import ProfileAvatarSection from "../../components/ProfileAvatarSection.tsx/ProfileAvatarSection";
-import BottomSheetGeneral from "../../components/BottomSheets/BottomSheetGeneral";
-
-const user = {
-  _id: "1",
-  name: "Raducu Balgiu",
-  avatar: "https://randomuser.me/api/portraits/men/36.jpg",
-  job: "Stylist",
-  followersCount: 0,
-  followingCount: 0,
-  ratingsCount: 0,
-  products: [
-    {
-      _id: "1",
-      name: "Tuns scurt",
-      description: "Pachetul include spalat, aranjat",
-      price: "50",
-      options: [
-        {
-          name: "Barbati",
-        },
-      ],
-    },
-    {
-      _id: "2",
-      name: "Tuns lung",
-      description: "Pachetul include spalat, aranjat",
-      price: "70",
-      options: [
-        {
-          name: "Barbati",
-        },
-      ],
-    },
-    {
-      _id: "3",
-      name: "Tuns chelie",
-      description: "Pachetul include spalat, aranjat",
-      price: "30",
-      options: [
-        {
-          name: "Barbati",
-        },
-      ],
-    },
-  ],
-};
+import BottomSheetGeneral from "../../components/BottomSheets/BottomSheetPopup";
+import { useAuth } from "../../context/auth";
+import { AuthService } from "../../services/AuthService";
+import MenuItem from "../../components/MenuItem/MenuItem";
+import { Icon } from "react-native-elements";
 
 const ProfileScreen = () => {
-  const [index, setIndex] = React.useState(0);
+  const [open, setOpen] = useState(false);
+  const [index, setIndex] = useState(0);
+  const { user } = useAuth();
+
+  const closeSheet = () => setOpen(false);
+  const handleLogout = async () => {
+    await AuthService.logout();
+
+    setUser(null);
+  };
 
   return (
-    <>
-      <View style={styles.screen}>
-        <HeaderSimple onPress={() => {}} />
-        <ScrollView>
-          <ProfileAvatarSection user={user} />
+    <SafeAreaView style={styles.container}>
+      <TouchableOpacity
+        activeOpacity={1}
+        style={styles.header}
+        onPress={() => setOpen(true)}
+      >
+        <Icon
+          style={{ padding: 20 }}
+          size={20}
+          type="entypo"
+          name="dots-three-vertical"
+        />
+      </TouchableOpacity>
+      <View>
+        <ProfileAvatarSection user={user} />
+        <View>
+          <TabsProfile index={index} onSetIndex={(e) => setIndex(e)} />
+          <TabViewProfile
+            index={index}
+            onSetIndex={(e) => setIndex(e)}
+            products={user.products}
+          />
+        </View>
+      </View>
+      <BottomSheetGeneral
+        open={open}
+        onClose={closeSheet}
+        height={60}
+        sheetBody={
           <View>
-            <TabsProfile index={index} onSetIndex={(e) => setIndex(e)} />
-            <TabViewProfile
-              index={index}
-              onSetIndex={(e) => setIndex(e)}
-              products={user.products}
+            <MenuItem
+              iconName="setting"
+              iconType="antdesign"
+              text="Setari"
+              onPress={() => {}}
+            />
+
+            <MenuItem
+              iconName="bars"
+              iconType="antdesign"
+              text="Programarile tale"
+              onPress={() => {}}
+            />
+
+            <MenuItem
+              iconName="gift"
+              iconType="antdesign"
+              text="Discounturi"
+              onPress={() => {}}
+            />
+
+            <MenuItem
+              iconName="exclamationcircleo"
+              iconType="antdesign"
+              text="Raporteaza o problema"
+              onPress={() => {}}
+            />
+
+            <MenuItem
+              iconName="logout"
+              iconType="antdesign"
+              text="Delogare"
+              onPress={handleLogout}
             />
           </View>
-        </ScrollView>
-      </View>
-    </>
+        }
+      />
+    </SafeAreaView>
   );
 };
 
 export default ProfileScreen;
 
 const styles = StyleSheet.create({
-  screen: {
+  container: {
     flex: 1,
+    backgroundColor: "white",
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    padding: 2.5,
   },
 });

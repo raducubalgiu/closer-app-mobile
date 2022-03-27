@@ -5,11 +5,7 @@ import {
   Text,
   TouchableOpacity,
 } from "react-native";
-import React, {
-  useCallback,
-  useRef,
-  useMemo,
-} from "react";
+import React, { useCallback, useRef, useMemo } from "react";
 import BottomSheet, {
   BottomSheetView,
   BottomSheetFooter,

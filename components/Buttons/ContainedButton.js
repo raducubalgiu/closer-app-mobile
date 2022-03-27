@@ -18,8 +18,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderWidth: 2,
     borderColor: Colors.primary,
-    borderTopLeftRadius: 10,
-    borderBottomRightRadius: 10,
+    borderRadius: 5,
   },
   buttonText: { color: "white", fontFamily: "Exo-Medium" },
 });

@@ -20,8 +20,7 @@ const MainButton = (props) => {
       }}
       titleStyle={{
         fontFamily: "Exo-Medium",
-        textTransform: "uppercase",
-        fontSize: 14,
+        fontSize: 15,
       }}
     />
   );
