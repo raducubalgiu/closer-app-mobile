@@ -89,4 +89,15 @@ export const AuthService = {
       };
     }
   },
+  updateUserName: async (name) => {
+    try {
+      const { user } = await updateProfile(getAuth().currentUser, {
+        displayName: name,
+      });
+
+      return user;
+    } catch (error) {
+      return error;
+    }
+  },
 };

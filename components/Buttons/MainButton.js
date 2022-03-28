@@ -11,7 +11,7 @@ const MainButton = (props) => {
       title={props.title}
       buttonStyle={{
         backgroundColor: "#fe9934",
-        padding: 12.5,
+        padding: 15,
         borderRadius: 10,
       }}
       containerStyle={{

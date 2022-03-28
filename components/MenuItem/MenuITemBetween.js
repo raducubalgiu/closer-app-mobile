@@ -9,7 +9,7 @@ const MenuITemBetween = (props) => {
       <Text style={{ fontFamily: "Exo-Medium", color: Colors.textDark }}>
         {props.label}
       </Text>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={props.onPress}>
         <Text style={styles.buttonText}>{props.resultText}</Text>
         <Icon name="keyboard-arrow-right" size={17} />
       </TouchableOpacity>

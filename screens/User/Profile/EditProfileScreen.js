@@ -8,11 +8,11 @@ import {
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon, Divider } from "react-native-elements";
-import { Colors } from "../../assets/styles/Colors";
-import { useAuth } from "../../context/auth";
+import { Colors } from "../../../assets/styles/Colors";
+import { useAuth } from "../../../context/auth";
 import { useNavigation } from "@react-navigation/native";
-import ProfileEditAvatar from "../../components/ProfileAvatar/ProfileEditAvatar";
-import MenuITemBetween from "../../components/MenuItem/MenuITemBetween";
+import ProfileEditAvatar from "../../../components/ProfileAvatar/ProfileEditAvatar";
+import MenuITemBetween from "../../../components/MenuItem/MenuITemBetween";
 
 const EditProfileScreen = () => {
   const { user } = useAuth();
@@ -54,14 +54,20 @@ const EditProfileScreen = () => {
         <Divider />
         <View style={styles.sectionContainer}>
           <Text style={styles.sectionHeading}>Despre tine</Text>
-          <MenuITemBetween label="Nume" resultText="Oprea Laurentiu" />
+          <MenuITemBetween
+            label="Nume"
+            resultText="Oprea Laurentiu"
+            onPress={() => navigation.navigate("EditName")}
+          />
           <MenuITemBetween
             label="Site web"
             resultText="https://www.raducubalgiu.com"
+            onPress={() => navigation.navigate("EditWebsite")}
           />
           <MenuITemBetween
             label="Biografie"
             resultText="Life is short, but very..."
+            onPress={() => navigation.navigate("EditBio")}
           />
         </View>
         <Divider color="#ccc" />
@@ -92,7 +98,7 @@ const styles = StyleSheet.create({
   sectionContainer: {
     paddingTop: 10,
     paddingBottom: 30,
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
   },
   sectionHeading: {
     marginBottom: 10,

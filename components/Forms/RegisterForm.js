@@ -10,9 +10,8 @@ import { Divider, Icon } from "react-native-elements";
 import { Colors } from "../../assets/styles/Colors";
 import ButtonProvider from "../Buttons/ButtonProvider";
 
-const LoginForm = (props) => {
+const RegisterForm = (props) => {
   const { setUser } = useAuth();
-
   const {
     control,
     handleSubmit,
@@ -23,43 +22,7 @@ const LoginForm = (props) => {
       password: "",
     },
   });
-  const onSubmit = async (data) => {
-    try {
-      const { user, error } = await AuthService.loginWithPassword(
-        data.email,
-        data.password
-      );
-
-      if (!error) {
-        const idTokenResult = await user?.getIdTokenResult();
-
-        const userResult = await axios.post(
-          `http://192.168.100.2:8000/api/v1/users/create-or-update-user`,
-          {},
-          {
-            headers: {
-              Authorization: "Bearer " + idTokenResult?.token,
-            },
-          }
-        );
-
-        const { name, role, _id, business, location, email } =
-          userResult.data.user;
-
-        setUser({
-          name,
-          role,
-          _id,
-          business,
-          email,
-          location,
-          token: idTokenResult?.token,
-        });
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const onSubmit = async (data) => {};
 
   return (
     <View>
@@ -73,8 +36,7 @@ const LoginForm = (props) => {
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
             style={{
-              borderTopLeftRadius: 10,
-              borderTopRightRadius: 10,
+              borderRadius: 10,
               ...styles.input,
             }}
             onBlur={onBlur}
@@ -88,32 +50,8 @@ const LoginForm = (props) => {
       />
       {errors.email && <Text>This is required.</Text>}
 
-      <Controller
-        control={control}
-        rules={{
-          required: true,
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={{
-              borderBottomLeftRadius: 10,
-              borderBottomRightRadius: 10,
-              ...styles.input,
-            }}
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            placeholder="Parola"
-            secureTextEntry={true}
-            placeholderTextColor={Colors.textLight}
-          />
-        )}
-        name="password"
-      />
-      {errors.password && <Text>This is required.</Text>}
-
       <View style={{ marginTop: 10 }}>
-        <MainButton title="Logheaza-te" onPress={handleSubmit(onSubmit)} />
+        <MainButton title="Inregistreaza-te" onPress={handleSubmit(onSubmit)} />
       </View>
 
       <View style={styles.actionsContainer}>
@@ -121,15 +59,10 @@ const LoginForm = (props) => {
           <Text style={{ fontFamily: "Exo-Regular", marginRight: 5 }}>
             Ai deja cont?
           </Text>
-          <TouchableOpacity onPress={() => props.onGoToRegister()}>
-            <Text style={{ fontFamily: "Exo-SemiBold" }}>Inregistrare</Text>
+          <TouchableOpacity onPress={() => props.onGoToLogin()}>
+            <Text style={{ fontFamily: "Exo-SemiBold" }}>Login</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity>
-          <Text style={{ fontFamily: "Exo-Medium", color: Colors.primary }}>
-            Ai uitat parola?
-          </Text>
-        </TouchableOpacity>
       </View>
 
       <Divider style={{ marginTop: 20, marginBottom: 35 }} />
@@ -159,7 +92,7 @@ const LoginForm = (props) => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;
 
 const styles = StyleSheet.create({
   mainHeading: {

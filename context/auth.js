@@ -11,6 +11,7 @@ export const AuthProvider = (props) => {
     const unsubscribe = getAuth().onAuthStateChanged(async (user) => {
       if (user) {
         const idTokenResult = await user.getIdTokenResult();
+        console.log(idTokenResult);
         getCurrentUser(idTokenResult?.token)
           .then((res) => {
             const { name, email, role, _id, business, location } =

@@ -1,12 +1,12 @@
 import { StyleSheet, View, SafeAreaView, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
-import TabsProfile from "../../components/Tabs/TabsProfile/TabsProfile";
-import TabViewProfile from "../../components/Tabs/TabsProfile/TabViewProfile";
-import ProfileAvatarSection from "../../components/ProfileAvatar/ProfileAvatar";
-import BottomSheetGeneral from "../../components/BottomSheets/BottomSheetPopup";
-import { useAuth } from "../../context/auth";
-import { AuthService } from "../../services/AuthService";
-import MenuItem from "../../components/MenuItem/MenuItem";
+import TabsProfile from "../../../components/Tabs/TabsProfile/TabsProfile";
+import TabViewProfile from "../../../components/Tabs/TabsProfile/TabViewProfile";
+import ProfileAvatarSection from "../../../components/ProfileAvatar/ProfileAvatar";
+import BottomSheetGeneral from "../../../components/BottomSheets/BottomSheetPopup";
+import { useAuth } from "../../../context/auth";
+import { AuthService } from "../../../services/AuthService";
+import MenuItem from "../../../components/MenuItem/MenuItem";
 import { Icon } from "react-native-elements";
 import { Divider } from "react-native-elements/dist/divider/Divider";
 

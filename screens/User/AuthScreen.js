@@ -6,6 +6,7 @@ import { Divider } from "react-native-elements";
 import BottomSheetPopup from "../../components/BottomSheets/BottomSheetPopup";
 import LoginForm from "../../components/Forms/LoginForm";
 import MenuItemBigger from "../../components/MenuItem/MenuItemBigger";
+import RegisterForm from "../../components/Forms/RegisterForm";
 
 const AuthScreen = () => {
   const [open, setOpen] = useState(false);
@@ -13,6 +14,16 @@ const AuthScreen = () => {
   const [openRegister, setOpenRegister] = useState(false);
 
   const closeSheet = () => setOpen(false);
+  const goToRegister = () => {
+    setOpen(true);
+    setOpenLogin(false);
+    setOpenRegister(true);
+  };
+  const goToLogin = () => {
+    setOpen(true);
+    setOpenLogin(true);
+    setOpenRegister(false);
+  };
 
   return (
     <>
@@ -73,9 +84,9 @@ const AuthScreen = () => {
           onClose={closeSheet}
           sheetBody={
             openLogin && !openRegister ? (
-              <LoginForm />
+              <LoginForm onGoToRegister={goToRegister} />
             ) : (
-              <Text>Register Form</Text>
+              <RegisterForm onGoToLogin={goToLogin} />
             )
           }
         />

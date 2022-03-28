@@ -10,8 +10,12 @@ import "../i18next";
 import { Colors } from "../assets/styles/Colors";
 import HomeScreen from "../screens/HomeScreen";
 import AuthScreen from "../screens/User/AuthScreen";
-import ProfileScreen from "../screens/User/ProfileScreen";
-import EditProfileScreen from "../screens/User/EditProfileScreen";
+import ProfileScreen from "../screens/User/Profile/ProfileScreen";
+import EditProfileScreen from "../screens/User/Profile/EditProfileScreen";
+import EditNameScreen from "../screens/User/Profile/EditNameScreen";
+import EditWebsiteScreen from "../screens/User/Profile/EditWebsiteScreen";
+import EditBioScreen from "../screens/User/Profile/EditBioScreen";
+
 import SearchScreen from "../screens/SearchScreen";
 import FiltersDateScreen from "../screens/FilterDateScreen";
 import FiltersServiceScreen from "../screens/FiltersServiceScreen";
@@ -61,6 +65,9 @@ const UserStackNavigator = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Profile" component={ProfileScreen} />
       <Stack.Screen name="EditProfile" component={EditProfileScreen} />
+      <Stack.Screen name="EditName" component={EditNameScreen} />
+      <Stack.Screen name="EditWebsite" component={EditWebsiteScreen} />
+      <Stack.Screen name="EditBio" component={EditBioScreen} />
     </Stack.Navigator>
   );
 };
