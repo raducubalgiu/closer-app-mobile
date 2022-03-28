@@ -3,7 +3,6 @@ import React, {
   useEffect,
   useMemo,
   useRef,
-  useState,
 } from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
 import {
@@ -54,6 +53,7 @@ const BottomSheetPopup = (props) => {
           backdropComponent={renderBackdrop}
           handleIndicatorStyle={styles.indicatorStyle}
           onDismiss={props.onClose}
+          
         >
           <View style={styles.container}>{props.sheetBody}</View>
         </BottomSheetModal>

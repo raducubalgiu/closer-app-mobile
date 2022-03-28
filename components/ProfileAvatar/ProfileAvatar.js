@@ -1,14 +1,17 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { Avatar, Icon, Badge } from "react-native-elements";
 import { Colors } from "../../assets/styles/Colors";
 import ContainedButton from "../Buttons/ContainedButton";
 import OutlinedButton from "../Buttons/OutlinedButton";
+import { useNavigation } from "@react-navigation/native";
 
 const ProfileAvatarSection = (props) => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
-      <View>
+      <TouchableOpacity>
         <Avatar
           size={90}
           rounded
@@ -23,14 +26,14 @@ const ProfileAvatarSection = (props) => {
           }
         />
         <Badge
-          value={<Icon name="plus" type="entypo" size={15} color="white" />}
+          value={<Icon name="plus" type="entypo" size={17} color="white" />}
           containerStyle={{
             position: "absolute",
             bottom: 5,
             left: 70,
           }}
         />
-      </View>
+      </TouchableOpacity>
       <Text style={styles.name}>{props.user.name}</Text>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Text style={styles.job}>{props.user.role}</Text>
@@ -76,9 +79,10 @@ const ProfileAvatarSection = (props) => {
       )}
       {props.user && (
         <View style={styles.buttonsContainer}>
-          <View>
-            <OutlinedButton title="Editeaza profilul" />
-          </View>
+          <OutlinedButton
+            title="Editeaza profilul"
+            onPress={() => navigation.navigate("EditProfile")}
+          />
         </View>
       )}
     </View>

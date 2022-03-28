@@ -5,12 +5,12 @@ import React from "react";
 const MenuItem = (props) => {
   return (
     <>
-      <View style={styles.container}>
+      <TouchableOpacity onPress={props.onPress} style={styles.container}>
         <Icon name={props.iconName} type={props.iconType} />
-        <TouchableOpacity style={styles.button} onPress={props.onPress}>
+        <View style={styles.button}>
           <Text style={styles.buttonText}>{props.text}</Text>
-        </TouchableOpacity>
-      </View>
+        </View>
+      </TouchableOpacity>
       <Divider style={{ marginLeft: 25 }} />
     </>
   );
