@@ -9,9 +9,11 @@ import { useAuth } from "../../context/auth";
 import { Divider, Icon } from "react-native-elements";
 import { Colors } from "../../assets/styles/Colors";
 import ButtonProvider from "../Buttons/ButtonProvider";
+import { useNavigation } from "@react-navigation/native";
 
 const RegisterForm = (props) => {
   const { setUser } = useAuth();
+  const navigation = useNavigation();
   const {
     control,
     handleSubmit,
@@ -88,6 +90,19 @@ const RegisterForm = (props) => {
         color="#4267B2"
         text="Continua cu Facebook"
       />
+      <Divider style={{ marginTop: 10 }} />
+      <View style={{ ...styles.actionsContainer, marginTop: 20 }}>
+        <View style={styles.actionRegister}>
+          <Text style={{ fontFamily: "Exo-Regular", marginRight: 5 }}>
+            Ai un business?
+          </Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("RegisterBusiness")}
+          >
+            <Text style={{ fontFamily: "Exo-SemiBold" }}>Inregistreaza</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   );
 };

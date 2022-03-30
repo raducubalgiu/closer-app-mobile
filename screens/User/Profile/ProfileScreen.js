@@ -1,94 +1,163 @@
-import { StyleSheet, View, SafeAreaView, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  SafeAreaView,
+  TouchableOpacity,
+  Text,
+  ScrollView,
+} from "react-native";
 import React, { useState } from "react";
-import TabsProfile from "../../../components/Tabs/TabsProfile/TabsProfile";
-import TabViewProfile from "../../../components/Tabs/TabsProfile/TabViewProfile";
-import ProfileAvatarSection from "../../../components/ProfileAvatar/ProfileAvatar";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import ProfileAvatar from "../../../components/ProfileAvatar/ProfileAvatar";
 import BottomSheetGeneral from "../../../components/BottomSheets/BottomSheetPopup";
 import { useAuth } from "../../../context/auth";
 import { AuthService } from "../../../services/AuthService";
 import MenuItem from "../../../components/MenuItem/MenuItem";
 import { Icon } from "react-native-elements";
-import { Divider } from "react-native-elements/dist/divider/Divider";
+import { useNavigation } from "@react-navigation/native";
+import HeaderReusable from "../../../components/Headers/HeaderReusable";
+import SwitchAccount from "../../../components/SwitchAccount/SwitchAccount";
+import PostsProfileScreen from "./PostsProfileScreen";
+import ProductsProfileScreen from "./ProductsProfileScreen";
+import { Colors } from "../../../assets/styles/Colors";
+import AboutProfileScreen from "./AboutProfileScreen";
+import CalendarProfileScreen from "./CalendarProfileScreen";
 
 const ProfileScreen = () => {
-  const [open, setOpen] = useState(false);
-  const [index, setIndex] = useState(0);
+  const [openSettings, setOpenSettings] = useState(false);
+  const [openSwitch, setOpenSwitch] = useState(false);
+  const navigation = useNavigation();
   const { user, setUser } = useAuth();
 
-  const closeSheet = () => setOpen(false);
+  const closeSheet = () => {
+    setOpenSwitch(false);
+    setOpenSettings(false);
+  };
   const handleLogout = async () => {
     await AuthService.logout();
-
     setUser(null);
   };
+  const Tab = createMaterialTopTabNavigator();
 
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity
-        activeOpacity={1}
-        style={styles.header}
-        onPress={() => setOpen(true)}
-      >
-        <Icon
-          style={{ padding: 20 }}
-          size={20}
-          type="entypo"
-          name="dots-three-vertical"
+      <View style={{ padding: 10 }}>
+        <HeaderReusable
+          firstBox={
+            <TouchableOpacity>
+              <Icon name="adduser" type="antdesign" />
+            </TouchableOpacity>
+          }
+          secondBox={
+            <TouchableOpacity
+              onPress={() => setOpenSwitch(true)}
+              style={{ flexDirection: "row", alignItems: "center" }}
+            >
+              <Text style={{ fontFamily: "Exo-Medium", fontSize: 15 }}>
+                {user?.name}
+              </Text>
+              <Icon name="keyboard-arrow-down" type="material" />
+            </TouchableOpacity>
+          }
+          thirdBox={
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={() => setOpenSettings(true)}
+            >
+              <Icon size={20} type="entypo" name="dots-three-vertical" />
+            </TouchableOpacity>
+          }
         />
-      </TouchableOpacity>
-      <View>
-        <ProfileAvatarSection user={user} />
-        <View>
-          <TabsProfile index={index} onSetIndex={(e) => setIndex(e)} />
-          <TabViewProfile
-            index={index}
-            onSetIndex={(e) => setIndex(e)}
-            products={user.products}
-          />
-        </View>
       </View>
+      <ProfileAvatar user={user} />
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color }) => {
+            let iconName;
+            let iconType;
+
+            if (route.name === "Posts") {
+              iconType = "antdesign";
+              iconName = focused ? "appstore-o" : "appstore-o";
+            } else if (route.name === "Products") {
+              iconType = "antdesign";
+              iconName = focused ? "isv" : "isv";
+            } else if (route.name === "Calendar") {
+              iconType = "antdesign";
+              iconName = focused ? "calendar" : "calendar";
+            } else if (route.name === "About") {
+              iconType = "antdesign";
+              iconName = focused ? "user" : "user";
+            }
+            return <Icon name={iconName} type={iconType} color={color} />;
+          },
+          tabBarActiveTintColor: Colors.primary,
+          tabBarInactiveTintColor: "gray",
+          headerShown: false,
+          tabBarShowLabel: false,
+          tabBarIndicatorContainerStyle: {
+            color: "red",
+          },
+        })}
+      >
+        <Tab.Screen name="Posts" component={PostsProfileScreen} />
+        <Tab.Screen name="Products" component={ProductsProfileScreen} />
+        <Tab.Screen name="Calendar" component={CalendarProfileScreen} />
+        <Tab.Screen name="About" component={AboutProfileScreen} />
+      </Tab.Navigator>
+
       <BottomSheetGeneral
-        open={open}
+        open={openSettings}
         onClose={closeSheet}
         height={60}
         sheetBody={
-          <View>
-            <MenuItem
-              iconName="setting"
-              iconType="antdesign"
-              text="Setari"
-              onPress={() => {}}
-            />
+          openSettings && (
+            <View>
+              <MenuItem
+                iconName="setting"
+                iconType="antdesign"
+                text="Setari"
+                onPress={() => {
+                  navigation.navigate("Settings");
+                }}
+              />
 
-            <MenuItem
-              iconName="bars"
-              iconType="antdesign"
-              text="Programarile tale"
-              onPress={() => {}}
-            />
+              <MenuItem
+                iconName="bars"
+                iconType="antdesign"
+                text="Programarile tale"
+                onPress={() => navigation.navigate("Schedules")}
+              />
 
-            <MenuItem
-              iconName="gift"
-              iconType="antdesign"
-              text="Discounturi"
-              onPress={() => {}}
-            />
+              <MenuItem
+                iconName="gift"
+                iconType="antdesign"
+                text="Discounturi"
+                onPress={() => navigation.navigate("Discounts")}
+              />
 
-            <MenuItem
-              iconName="exclamationcircleo"
-              iconType="antdesign"
-              text="Raporteaza o problema"
-              onPress={() => {}}
-            />
+              <MenuItem
+                iconName="exclamationcircleo"
+                iconType="antdesign"
+                text="Raporteaza o problema"
+                onPress={() => {}}
+              />
 
-            <MenuItem
-              iconName="logout"
-              iconType="antdesign"
-              text="Delogare"
-              onPress={handleLogout}
-            />
-          </View>
+              <MenuItem
+                iconName="logout"
+                iconType="antdesign"
+                text="Delogare"
+                onPress={handleLogout}
+              />
+            </View>
+          )
         }
+      />
+      <BottomSheetGeneral
+        open={openSwitch}
+        onClose={closeSheet}
+        height={40}
+        sheetBody={openSwitch && <SwitchAccount />}
       />
     </SafeAreaView>
   );
@@ -100,10 +169,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    padding: 2.5,
   },
 });

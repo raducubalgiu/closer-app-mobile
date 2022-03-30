@@ -6,7 +6,7 @@ import { Divider } from "react-native-elements";
 import { Colors } from "../../../assets/styles/Colors";
 import { useNavigation } from "@react-navigation/native";
 
-const EditField = (props) => {
+const EditFieldScreen = (props) => {
   const navigation = useNavigation();
 
   const updateField = (text) => {
@@ -58,7 +58,7 @@ const EditField = (props) => {
   );
 };
 
-export default EditField;
+export default EditFieldScreen;
 
 const styles = StyleSheet.create({
   cancel: {

@@ -7,14 +7,14 @@ const CardProduct = (props) => {
   return (
     <View style={styles.card}>
       <View style={styles.cardLayout}>
-        <View>
+        <View style={{ flex: 1, marginRight: 5 }}>
           <Text style={styles.name}>
             {props.name} - {props.option}
           </Text>
           <Text style={styles.description}>{props.description}</Text>
           <Text style={styles.price}>{props.price} RON</Text>
         </View>
-        <OutlinedButton title="Rezerva" />
+        <OutlinedButton title="Rezerva" style={{ flex: 1 }} />
       </View>
     </View>
   );
@@ -30,11 +30,13 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 1,
     borderColor: "#eee",
+    marginHorizontal: 10,
   },
   cardLayout: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-start",
+    flex: 1,
   },
   name: {
     fontFamily: "Exo-SemiBold",

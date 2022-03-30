@@ -6,25 +6,23 @@ import ContainedButton from "../Buttons/ContainedButton";
 import OutlinedButton from "../Buttons/OutlinedButton";
 import { useNavigation } from "@react-navigation/native";
 
-const ProfileAvatarSection = (props) => {
+const ProfileAvatar = (props) => {
   const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
       <TouchableOpacity>
-        <Avatar
-          size={90}
-          rounded
-          source={{ uri: `${props.user.avatar}` }}
-          title={
-            <Icon
-              name="user-alt"
-              type="font-awesome-5"
-              size={30}
-              color="#f1f1f1"
-            />
-          }
-        />
+        {props.user?.avatar && (
+          <Avatar size={64} rounded source={{ uri: `${props.user?.avatar}` }} />
+        )}
+        {!props.user?.avatar && (
+          <Avatar
+            size={90}
+            rounded
+            icon={{ name: "user", type: "font-awesome", size: 37 }}
+            containerStyle={{ backgroundColor: "#ccc" }}
+          />
+        )}
         <Badge
           value={<Icon name="plus" type="entypo" size={17} color="white" />}
           containerStyle={{
@@ -89,7 +87,7 @@ const ProfileAvatarSection = (props) => {
   );
 };
 
-export default ProfileAvatarSection;
+export default ProfileAvatar;
 
 const styles = StyleSheet.create({
   container: {

@@ -2,16 +2,18 @@ import React, { useState } from "react";
 import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "../../assets/styles/Colors";
-import { Divider } from "react-native-elements";
+import { Divider, Icon } from "react-native-elements";
 import BottomSheetPopup from "../../components/BottomSheets/BottomSheetPopup";
 import LoginForm from "../../components/Forms/LoginForm";
 import MenuItemBigger from "../../components/MenuItem/MenuItemBigger";
 import RegisterForm from "../../components/Forms/RegisterForm";
+import { useNavigation } from "@react-navigation/native";
 
 const AuthScreen = () => {
   const [open, setOpen] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
+  const navigation = useNavigation();
 
   const closeSheet = () => setOpen(false);
   const goToRegister = () => {
@@ -58,7 +60,41 @@ const AuthScreen = () => {
           </TouchableOpacity>
         </View>
         <Divider />
-        <View style={{ marginTop: 25 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginVertical: 10,
+            paddingVertical: 10,
+          }}
+        >
+          <Icon name="wallet" type="antdesign" size={35} />
+          <View style={{ marginLeft: 20, flex: 1 }}>
+            <Text
+              style={{
+                fontFamily: "Exo-Regular",
+                fontSize: 15,
+              }}
+            >
+              Detii un business? Incepe sa primesti clienti imediat
+            </Text>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("RegisterBusiness")}
+            >
+              <Text
+                style={{
+                  marginTop: 5,
+                  fontFamily: "Exo-SemiBold",
+                  fontSize: 15,
+                }}
+              >
+                Inregistreaza
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <Divider />
+        <View style={{ marginTop: 20 }}>
           <MenuItemBigger
             onPress={() => {}}
             iconName="settings-outline"

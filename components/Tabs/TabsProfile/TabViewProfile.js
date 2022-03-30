@@ -10,6 +10,9 @@ const TabViewProfile = (props) => {
       onChange={(e) => onSetIndex(e)}
       animationType="spring"
     >
+      <TabView.Item style={{ width: "100%" }}>
+        <Text h1>Postari</Text>
+      </TabView.Item>
       <TabView.Item style={styles.item}>
         <FlatList
           data={props.products}
@@ -27,9 +30,6 @@ const TabViewProfile = (props) => {
       </TabView.Item>
       <TabView.Item style={{ width: "100%" }}>
         <Text h1>Urmatoarele date disponibile</Text>
-      </TabView.Item>
-      <TabView.Item style={{ width: "100%" }}>
-        <Text h1>Postari</Text>
       </TabView.Item>
       <TabView.Item style={styles.item}>
         <View style={styles.card}>

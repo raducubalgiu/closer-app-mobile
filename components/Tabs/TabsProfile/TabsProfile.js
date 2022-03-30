@@ -11,6 +11,11 @@ const TabsProfile = (props) => {
       indicatorStyle={styles.indicator}
     >
       <Tab.Item
+        title={<Icon type="antdesign" name="appstore-o" size={20} />}
+        style={{ backgroundColor: "white", padding: 5 }}
+        titleStyle={styles.item}
+      />
+      <Tab.Item
         title={<Icon type="antdesign" name="isv" size={20} />}
         style={{
           backgroundColor: "white",
@@ -20,11 +25,6 @@ const TabsProfile = (props) => {
       />
       <Tab.Item
         title={<Icon type="material" name="schedule" size={20} />}
-        style={{ backgroundColor: "white", padding: 5 }}
-        titleStyle={styles.item}
-      />
-      <Tab.Item
-        title={<Icon type="antdesign" name="appstore-o" size={20} />}
         style={{ backgroundColor: "white", padding: 5 }}
         titleStyle={styles.item}
       />
