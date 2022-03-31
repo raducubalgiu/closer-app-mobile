@@ -9,7 +9,7 @@ import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
 import { ProgressStep } from "react-native-progress-steps";
 import React from "react";
-import ButtonProvider from "../Buttons/ButtonProvider";
+import ButtonProvider from "../core/Buttons/ButtonProvider";
 import { Colors } from "../../assets/styles/Colors";
 import { AuthService } from "../../services/AuthService";
 import { useAuth } from "../../context/auth";
@@ -55,7 +55,7 @@ const RegisterBusinessForm = (props) => {
           }
         );
 
-        const { role, _id, email, name } = userResult.data;
+        const { _id, email, role, name, job } = userResult.data;
 
         const res = await axios.post(
           `http://192.168.100.2:8000/api/v1/orders`,
@@ -69,11 +69,12 @@ const RegisterBusinessForm = (props) => {
 
         if (userResult) {
           setUser({
-            role,
             _id,
             email,
-            name,
+            role,
             token: idTokenResult?.token,
+            name,
+            job,
             orderId: res.data.order._id,
           });
         }

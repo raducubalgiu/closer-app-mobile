@@ -1,12 +1,11 @@
 import {
   StyleSheet,
-  Text,
   FlatList,
   Dimensions,
   TouchableOpacity,
   View,
 } from "react-native";
-import { Image, Avatar, Icon } from "react-native-elements";
+import { Image, Icon } from "react-native-elements";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 
@@ -110,7 +109,7 @@ const PostsProfileScreen = () => {
                   name="shopping"
                   type="material-community"
                   color="white"
-                  size={18}
+                  size={20}
                 />
               </View>
             )}

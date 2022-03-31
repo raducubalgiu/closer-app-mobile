@@ -11,20 +11,45 @@ export const AuthProvider = (props) => {
     const unsubscribe = getAuth().onAuthStateChanged(async (user) => {
       if (user) {
         const idTokenResult = await user.getIdTokenResult();
-        console.log(idTokenResult);
         getCurrentUser(idTokenResult?.token)
           .then((res) => {
-            const { name, email, role, _id, business, location } =
-              res.data.user;
-            setUser({
-              name,
-              role,
+            const {
               _id,
-              business,
               email,
-              location,
-              token: idTokenResult?.token,
-            });
+              role,
+              name,
+              job,
+              logo,
+              selectedLocation,
+              ratingsAverage,
+              ratingsQuantity,
+            } = res.data.user;
+            if (selectedLocation === null) {
+              setUser({
+                _id,
+                email,
+                role,
+                token: idTokenResult?.token,
+                name,
+                job,
+                avatar: logo[0]?.url,
+                ratingsAverage,
+                ratingsQuantity,
+              });
+            } else {
+              setUser({
+                _id,
+                email,
+                role,
+                token: idTokenResult?.token,
+                locationId: selectedLocation?._id,
+                name: selectedLocation?.name,
+                job: selectedLocation?.job,
+                avatar: selectedLocation?.logo[0]?.url,
+                ratingsAverage: selectedLocation?.ratingsAverage,
+                ratingsQuantity: selectedLocation?.ratingsQuantity,
+              });
+            }
           })
           .catch((err) => console.log(err));
       }

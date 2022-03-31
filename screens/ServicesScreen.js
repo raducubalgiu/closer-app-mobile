@@ -10,13 +10,13 @@ import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { Icon } from "react-native-elements/dist/icons/Icon";
 import { Switch } from "react-native-elements";
-import { Colors } from "../assets/styles/Colors";
-import BottomSheetService from "../components/BottomSheets/BottomSheetService";
 import { Divider } from "react-native-elements/dist/divider/Divider";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import CardService from "../components/Cards/CardService";
-import Map from "../components/Map/Map";
+import BottomSheetService from "../components/customized/BottomSheets/BottomSheetService";
+import CardService from "../components/customized/Cards/CardService";
+import Map from "../components/customized/Map/Map";
+import { Colors } from "../assets/styles/Colors";
 
 const ServicesScreen = ({ route }) => {
   const [results, setResults] = useState(null);

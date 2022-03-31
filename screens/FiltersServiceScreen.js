@@ -1,10 +1,9 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, FlatList, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import BottomSheetFilter from "../components/BottomSheets/BottomSheetFilter";
 import { useNavigation } from "@react-navigation/native";
-import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { Colors } from "../assets/styles/Colors";
+import BottomSheetFilter from "../components/customized/BottomSheets/BottomSheetFilter";
 
 const FiltersServiceScreen = (props) => {
   const navigation = useNavigation();

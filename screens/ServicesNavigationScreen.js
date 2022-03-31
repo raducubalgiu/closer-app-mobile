@@ -8,12 +8,12 @@ import {
 } from "react-native";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import BackSearchFilter from "../components/Headers/BackSearchFilter";
 import { Divider } from "react-native-elements/dist/divider/Divider";
 import { Icon } from "react-native-elements/dist/icons/Icon";
 import { Avatar } from "react-native-elements";
-import { Colors } from "../assets/styles/Colors";
 import { useNavigation } from "@react-navigation/native";
+import BackSearchFilter from "../components/customized/Headers/BackSearchFilter";
+import { Colors } from "../assets/styles/Colors";
 
 const ServicesNavigation = () => {
   const [categories, setCategories] = useState([]);

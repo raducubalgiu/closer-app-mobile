@@ -7,15 +7,15 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { Divider, Icon } from "react-native-elements";
-import HeaderReusable from "../components/Headers/HeaderReusable";
-import { Colors } from "../assets/styles/Colors";
 import { ProgressSteps } from "react-native-progress-steps";
 import { useNavigation } from "@react-navigation/native";
 import RegisterBusinessForm from "../components/Forms/RegisterBusinessForm";
 import RegisterLocationForm from "../components/Forms/RegisterLocationForm";
 import AddServicesForm from "../components/Forms/AddServicesForm";
+import HeaderReusable from "../components/customized/Headers/HeaderReusable";
+import { Colors } from "../assets/styles/Colors";
 
-const RegisterBusiness = () => {
+const RegisterBusiness = (props) => {
   const [step, setStep] = useState(0);
   const navigation = useNavigation();
 

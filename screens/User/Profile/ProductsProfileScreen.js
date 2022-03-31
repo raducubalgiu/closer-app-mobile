@@ -1,5 +1,5 @@
-import { FlatList, StyleSheet, Text, View } from "react-native";
-import CardProduct from "../../../components/Cards/CardProduct";
+import { FlatList, StyleSheet } from "react-native";
+import CardProduct from "../../../components/customized/Cards/CardProduct";
 import React from "react";
 
 const products = [

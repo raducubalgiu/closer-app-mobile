@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import BottomSheetFilter from "../components/BottomSheets/BottomSheetFilter";
-import FilterDate from "../components/Filters/FilterDate";
 import axios from "axios";
 import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
 import { Colors } from "../assets/styles/Colors";
+import BottomSheetFilter from "../components/customized/BottomSheets/BottomSheetFilter";
+import FilterDate from "../components/customized/Filters/FilterDate";
 
 const FiltersDateScreen = (props) => {
   const { serviceId, serviceName } = props.route.params;

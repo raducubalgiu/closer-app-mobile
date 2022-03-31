@@ -8,9 +8,9 @@ import {
 import { ProgressStep } from "react-native-progress-steps";
 import { useForm, Controller } from "react-hook-form";
 import React from "react";
+import axios from "axios";
 import { Colors } from "../../assets/styles/Colors";
 import { useAuth } from "../../context/auth";
-import axios from "axios";
 
 const RegisterLocationForm = (props) => {
   const { user } = useAuth();

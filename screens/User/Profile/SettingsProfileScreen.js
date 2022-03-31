@@ -6,9 +6,9 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React from "react";
-import HeaderReusable from "../../../components/Headers/HeaderReusable";
 import { Divider, Icon } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
+import HeaderReusable from "../../../components/customized/Headers/HeaderReusable";
 
 const SettingsProfileScreen = () => {
   const navigation = useNavigation();

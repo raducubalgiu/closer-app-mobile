@@ -1,14 +1,14 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import axios from "axios";
-import MainButton from "../Buttons/MainButton";
 import { useForm, Controller } from "react-hook-form";
 import { TextInput } from "react-native";
 import { AuthService } from "../../services/AuthService";
 import { useAuth } from "../../context/auth";
-import { Divider, Icon } from "react-native-elements";
+import { Divider } from "react-native-elements";
 import { Colors } from "../../assets/styles/Colors";
-import ButtonProvider from "../Buttons/ButtonProvider";
+import ButtonProvider from "../core/Buttons/ButtonProvider";
+import MainButton from "../core/Buttons/MainButton";
 
 const LoginForm = (props) => {
   const { setUser } = useAuth();
@@ -43,18 +43,44 @@ const LoginForm = (props) => {
           }
         );
 
-        const { name, role, _id, business, location, email } =
-          userResult.data.user;
-
-        setUser({
-          name,
-          role,
+        const {
           _id,
-          business,
           email,
-          location,
-          token: idTokenResult?.token,
-        });
+          role,
+          name,
+          job,
+          logo,
+          selectedLocation,
+          ratingsAverage,
+          ratingsQuantity,
+        } = userResult.data.user;
+
+        if (selectedLocation === null) {
+          setUser({
+            _id,
+            email,
+            role,
+            token: idTokenResult?.token,
+            name,
+            job,
+            avatar: logo[0]?.url,
+            ratingsAverage,
+            ratingsQuantity,
+          });
+        } else {
+          setUser({
+            _id,
+            email,
+            role,
+            token: idTokenResult?.token,
+            locationId: selectedLocation?._id,
+            name: selectedLocation?.name,
+            job: selectedLocation?.job,
+            avatar: selectedLocation?.logo[0]?.url,
+            ratingsAverage: selectedLocation?.ratingsAverage,
+            ratingsQuantity: selectedLocation?.ratingsQuantity,
+          });
+        }
       }
     } catch (err) {
       console.log(err);

@@ -4,19 +4,18 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Text,
-  ScrollView,
 } from "react-native";
 import React, { useState } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import ProfileAvatar from "../../../components/ProfileAvatar/ProfileAvatar";
-import BottomSheetGeneral from "../../../components/BottomSheets/BottomSheetPopup";
+import ProfileAvatar from "../../../components/customized/ProfileAvatar/ProfileAvatar";
+import BottomSheetPopup from "../../../components/customized/BottomSheets/BottomSheetPopup";
 import { useAuth } from "../../../context/auth";
 import { AuthService } from "../../../services/AuthService";
-import MenuItem from "../../../components/MenuItem/MenuItem";
+import MenuItem from "../../../components/customized/MenuItem/MenuItem";
 import { Icon } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
-import HeaderReusable from "../../../components/Headers/HeaderReusable";
-import SwitchAccount from "../../../components/SwitchAccount/SwitchAccount";
+import HeaderReusable from "../../../components/customized/Headers/HeaderReusable";
+import SwitchAccount from "../../../components/customized/SwitchAccount/SwitchAccount";
 import PostsProfileScreen from "./PostsProfileScreen";
 import ProductsProfileScreen from "./ProductsProfileScreen";
 import { Colors } from "../../../assets/styles/Colors";
@@ -61,6 +60,7 @@ const ProfileScreen = () => {
           }
           thirdBox={
             <TouchableOpacity
+              style={{ marginLeft: 10 }}
               activeOpacity={1}
               onPress={() => setOpenSettings(true)}
             >
@@ -80,8 +80,8 @@ const ProfileScreen = () => {
               iconType = "antdesign";
               iconName = focused ? "appstore-o" : "appstore-o";
             } else if (route.name === "Products") {
-              iconType = "antdesign";
-              iconName = focused ? "isv" : "isv";
+              iconType = "material-community";
+              iconName = focused ? "shopping-outline" : "shopping-outline";
             } else if (route.name === "Calendar") {
               iconType = "antdesign";
               iconName = focused ? "calendar" : "calendar";
@@ -106,7 +106,7 @@ const ProfileScreen = () => {
         <Tab.Screen name="About" component={AboutProfileScreen} />
       </Tab.Navigator>
 
-      <BottomSheetGeneral
+      <BottomSheetPopup
         open={openSettings}
         onClose={closeSheet}
         height={60}
@@ -153,7 +153,7 @@ const ProfileScreen = () => {
           )
         }
       />
-      <BottomSheetGeneral
+      <BottomSheetPopup
         open={openSwitch}
         onClose={closeSheet}
         height={40}

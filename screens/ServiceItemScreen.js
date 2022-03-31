@@ -8,9 +8,9 @@ import {
 import React, { useState } from "react";
 import { Avatar, Image, Icon, Divider, Badge } from "react-native-elements";
 import { ScrollView } from "react-native";
-import { Colors } from "../assets/styles/Colors";
 import { useNavigation } from "@react-navigation/native";
-import CardProduct from "../components/Cards/CardProduct";
+import CardProduct from "../components/customized/Cards/CardProduct";
+import { Colors } from "../assets/styles/Colors";
 
 const images = [
   "https://images.unsplash.com/photo-1648288582532-7ca072ae2ee3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1631&q=80",

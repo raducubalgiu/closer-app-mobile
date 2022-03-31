@@ -1,13 +1,19 @@
-import { SafeAreaView, StyleSheet, Dimensions, View, Text } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  Dimensions,
+  View,
+  Text,
+  FlatList,
+} from "react-native";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import FakeSearchBar from "../components/FakeSearchBar/FakeSearchBar";
-import ServicesCategories from "../components/ServicesCategories/ServicesCategories";
-import { FlatList } from "react-native-gesture-handler";
-import CardRecommended from "../components/Cards/CardRecommended";
 import { useTranslation } from "react-i18next";
-import { Colors } from "../assets/styles/Colors";
 import { Divider } from "react-native-elements";
+import FakeSearchBar from "../components/customized/FakeSearchBar/FakeSearchBar";
+import ServicesCategories from "../components/customized/ServicesCategories/ServicesCategories";
+import CardRecommended from "../components/customized/Cards/CardRecommended";
+import { Colors } from "../assets/styles/Colors";
 import { useAuth } from "../context/auth";
 
 const HomeScreen = () => {

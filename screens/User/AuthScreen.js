@@ -3,9 +3,9 @@ import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Colors } from "../../assets/styles/Colors";
 import { Divider, Icon } from "react-native-elements";
-import BottomSheetPopup from "../../components/BottomSheets/BottomSheetPopup";
+import BottomSheetPopup from "../../components/customized/BottomSheets/BottomSheetPopup";
 import LoginForm from "../../components/Forms/LoginForm";
-import MenuItemBigger from "../../components/MenuItem/MenuItemBigger";
+import MenuItemBigger from "../../components/customized/MenuItem/MenuItemBigger";
 import RegisterForm from "../../components/Forms/RegisterForm";
 import { useNavigation } from "@react-navigation/native";
 

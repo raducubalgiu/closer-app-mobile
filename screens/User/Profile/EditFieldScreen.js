@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
-import HeaderReusable from "../../../components/Headers/HeaderReusable";
 import SearchBar from "react-native-elements/dist/searchbar/SearchBar-ios";
 import { Divider } from "react-native-elements";
-import { Colors } from "../../../assets/styles/Colors";
 import { useNavigation } from "@react-navigation/native";
+import { Colors } from "../../../assets/styles/Colors";
+import HeaderReusable from "../../../components/customized/Headers/HeaderReusable";
 
 const EditFieldScreen = (props) => {
   const navigation = useNavigation();

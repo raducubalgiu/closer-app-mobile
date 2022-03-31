@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import React from "react";
-import HeaderSimple from "../components/Headers/HeaderSimple";
+import HeaderSimple from "../components/customized/Headers/HeaderSimple";
 
 const MessagesScreen = () => {
   return (

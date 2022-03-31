@@ -31,6 +31,8 @@ import MessagesScreen from "../screens/MessagesScreen";
 import ServiceItemScreen from "../screens/ServiceItemScreen";
 import SocialScreen from "../screens/SocialScreen";
 
+import OrderScreen from "../screens/OrderScreen";
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -48,7 +50,7 @@ const StackNavigator = () => {
       <Stack.Screen name="FiltersService" component={FiltersServiceScreen} />
       <Stack.Screen name="Services" component={ServicesScreen} />
       <Stack.Screen name="ServiceItem" component={ServiceItemScreen} />
-      <Stack.Screen name="RegisterBusiness" component={RegisterBusiness} />
+      <Stack.Screen name="Order" component={OrderScreen} />
     </Stack.Navigator>
   );
 };

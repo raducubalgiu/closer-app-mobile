@@ -1,6 +1,5 @@
 import {
   SafeAreaView,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -8,10 +7,10 @@ import {
 } from "react-native";
 import React from "react";
 import { FlatList } from "react-native";
-import { Colors } from "../assets/styles/Colors";
 import { Icon } from "react-native-elements";
-import CardUserRecommend from "../components/Cards/CardUserRecommend";
-import CardPost from "../components/Cards/CardPost";
+import CardUserRecommend from "../components/customized/Cards/CardUserRecommend";
+import CardPost from "../components/customized/Cards/CardPost";
+import { Colors } from "../assets/styles/Colors";
 
 const DUMMY_RECOMMEND_PROF = [
   {

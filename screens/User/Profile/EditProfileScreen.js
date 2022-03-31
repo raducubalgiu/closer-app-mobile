@@ -8,11 +8,11 @@ import {
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon, Divider } from "react-native-elements";
+import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../../../assets/styles/Colors";
 import { useAuth } from "../../../context/auth";
-import { useNavigation } from "@react-navigation/native";
-import ProfileEditAvatar from "../../../components/ProfileAvatar/ProfileEditAvatar";
-import MenuITemBetween from "../../../components/MenuItem/MenuITemBetween";
+import ProfileEditAvatar from "../../../components/customized/ProfileAvatar/ProfileEditAvatar";
+import MenuITemBetween from "../../../components/customized/MenuItem/MenuITemBetween";
 
 const EditProfileScreen = () => {
   const { user } = useAuth();
@@ -51,36 +51,33 @@ const EditProfileScreen = () => {
       <Divider />
       <ScrollView style={{ flex: 1 }}>
         <ProfileEditAvatar userAvatar={user?.avatar} />
-        <Divider />
         <View style={styles.sectionContainer}>
           <Text style={styles.sectionHeading}>Despre tine</Text>
           <MenuITemBetween
             label="Nume"
-            resultText="Oprea Laurentiu"
+            resultText={user?.name}
             onPress={() => navigation.navigate("EditName")}
           />
           <MenuITemBetween
             label="Site web"
-            resultText="https://www.raducubalgiu.com"
+            resultText={user?.website ? user?.website : "Adauga un website"}
             onPress={() => navigation.navigate("EditWebsite")}
           />
           <MenuITemBetween
-            label="Biografie"
-            resultText="Life is short, but very..."
+            label="Descriere"
+            resultText={
+              user?.description ? user?.description : "Adauga o descriere"
+            }
             onPress={() => navigation.navigate("EditBio")}
           />
         </View>
-        <Divider color="#ccc" />
+        <Divider color="#ddd" />
         <View style={styles.sectionContainer}>
           <Text style={styles.sectionHeading}>Social</Text>
           <MenuITemBetween label="Instagram" resultText="raducu__balgiu" />
           <MenuITemBetween
             label="Youtube"
             resultText="Adauga contul de Youtube"
-          />
-          <MenuITemBetween
-            label="Biografie"
-            resultText="Life is short, but very..."
           />
         </View>
       </ScrollView>
@@ -102,8 +99,9 @@ const styles = StyleSheet.create({
   },
   sectionHeading: {
     marginBottom: 10,
-    fontFamily: "Exo-Bold",
+    fontFamily: "Exo-SemiBold",
     color: Colors.textLight,
     fontSize: 13,
+    marginTop: 5,
   },
 });

@@ -1,15 +1,13 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
-import axios from "axios";
-import MainButton from "../Buttons/MainButton";
+import MainButton from "../core/Buttons/MainButton";
 import { useForm, Controller } from "react-hook-form";
 import { TextInput } from "react-native";
-import { AuthService } from "../../services/AuthService";
-import { useAuth } from "../../context/auth";
-import { Divider, Icon } from "react-native-elements";
-import { Colors } from "../../assets/styles/Colors";
-import ButtonProvider from "../Buttons/ButtonProvider";
+import { Divider } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
+import { useAuth } from "../../context/auth";
+import { Colors } from "../../assets/styles/Colors";
+import ButtonProvider from "../core/Buttons/ButtonProvider";
 
 const RegisterForm = (props) => {
   const { setUser } = useAuth();
