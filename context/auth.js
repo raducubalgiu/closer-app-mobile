@@ -16,18 +16,19 @@ export const AuthProvider = (props) => {
             const {
               _id,
               email,
+              username,
               role,
               name,
               job,
               logo,
-              selectedLocation,
               ratingsAverage,
               ratingsQuantity,
             } = res.data.user;
-            if (selectedLocation === null) {
+            if (username) {
               setUser({
                 _id,
                 email,
+                username,
                 role,
                 token: idTokenResult?.token,
                 name,
@@ -35,19 +36,6 @@ export const AuthProvider = (props) => {
                 avatar: logo[0]?.url,
                 ratingsAverage,
                 ratingsQuantity,
-              });
-            } else {
-              setUser({
-                _id,
-                email,
-                role,
-                token: idTokenResult?.token,
-                locationId: selectedLocation?._id,
-                name: selectedLocation?.name,
-                job: selectedLocation?.job,
-                avatar: selectedLocation?.logo[0]?.url,
-                ratingsAverage: selectedLocation?.ratingsAverage,
-                ratingsQuantity: selectedLocation?.ratingsQuantity,
               });
             }
           })

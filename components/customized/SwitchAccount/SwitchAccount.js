@@ -21,16 +21,7 @@ const SwitchAccount = () => {
   return (
     <>
       <View>
-        <Text
-          style={{
-            textAlign: "center",
-            fontFamily: "Exo-SemiBold",
-            color: Colors.textDark,
-            marginBottom: 15,
-          }}
-        >
-          Comuta contul
-        </Text>
+        <Text style={styles.heading}>Comuta contul</Text>
         <Divider />
       </View>
       <FlatList
@@ -38,14 +29,7 @@ const SwitchAccount = () => {
         data={USERS}
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => (
-          <TouchableOpacity
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-              marginVertical: 10,
-            }}
-          >
+          <TouchableOpacity style={styles.item}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               {!user?.avatar && (
                 <Avatar
@@ -64,20 +48,8 @@ const SwitchAccount = () => {
                 />
               )}
               <View style={{ marginLeft: 10 }}>
-                <Text
-                  style={{
-                    fontFamily: "Exo-SemiBold",
-                    marginBottom: 2.5,
-                    fontSize: 15,
-                  }}
-                >
-                  {item?.name}
-                </Text>
-                <Text
-                  style={{ fontFamily: "Exo-Medium", color: Colors.textLight }}
-                >
-                  {item?.job}
-                </Text>
+                <Text style={styles.name}>{item?.name}</Text>
+                <Text style={styles.job}>{item?.job}</Text>
               </View>
             </View>
             <View>
@@ -93,11 +65,7 @@ const SwitchAccount = () => {
                 headerLabel: "Detalii Business",
               })
             }
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginVertical: 10,
-            }}
+            style={styles.actionBtn}
           >
             <Avatar
               size={55}
@@ -110,16 +78,7 @@ const SwitchAccount = () => {
               }}
               containerStyle={{ backgroundColor: "#eee" }}
             />
-            <Text
-              style={{
-                fontFamily: "Exo-Medium",
-                marginBottom: 2.5,
-                fontSize: 15,
-                marginLeft: 10,
-              }}
-            >
-              Adauga o noua locatie
-            </Text>
+            <Text style={styles.actionBtnText}>Adauga o noua locatie</Text>
           </TouchableOpacity>
         }
       />
@@ -129,4 +88,34 @@ const SwitchAccount = () => {
 
 export default SwitchAccount;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  heading: {
+    textAlign: "center",
+    fontFamily: "Exo-SemiBold",
+    color: Colors.textDark,
+    marginBottom: 15,
+  },
+  item: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginVertical: 10,
+  },
+  name: {
+    fontFamily: "Exo-SemiBold",
+    marginBottom: 2.5,
+    fontSize: 15,
+  },
+  job: { fontFamily: "Exo-Medium", color: Colors.textLight },
+  actionBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 10,
+  },
+  actionBtnText: {
+    fontFamily: "Exo-Medium",
+    marginBottom: 2.5,
+    fontSize: 15,
+    marginLeft: 10,
+  },
+});

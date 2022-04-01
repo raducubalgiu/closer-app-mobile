@@ -1,31 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Colors } from "../../assets/styles/Colors";
+import { Colors } from "../../../assets/styles/Colors";
 import { Divider, Icon } from "react-native-elements";
-import BottomSheetPopup from "../../components/customized/BottomSheets/BottomSheetPopup";
-import LoginForm from "../../components/Forms/LoginForm";
-import MenuItemBigger from "../../components/customized/MenuItem/MenuItemBigger";
-import RegisterForm from "../../components/Forms/RegisterForm";
+import MenuItemBigger from "../../../components/customized/MenuItem/MenuItemBigger";
 import { useNavigation } from "@react-navigation/native";
 
 const AuthScreen = () => {
-  const [open, setOpen] = useState(false);
-  const [openLogin, setOpenLogin] = useState(false);
-  const [openRegister, setOpenRegister] = useState(false);
   const navigation = useNavigation();
-
-  const closeSheet = () => setOpen(false);
-  const goToRegister = () => {
-    setOpen(true);
-    setOpenLogin(false);
-    setOpenRegister(true);
-  };
-  const goToLogin = () => {
-    setOpen(true);
-    setOpenLogin(true);
-    setOpenRegister(false);
-  };
 
   return (
     <>
@@ -37,11 +19,7 @@ const AuthScreen = () => {
           </Text>
         </View>
         <TouchableOpacity
-          onPress={() => {
-            setOpen(true);
-            setOpenLogin(true);
-            setOpenRegister(false);
-          }}
+          onPress={() => navigation.navigate("Login")}
           style={styles.mainBtn}
         >
           <Text style={styles.mainBtnText}>Conectează-te</Text>
@@ -50,46 +28,22 @@ const AuthScreen = () => {
           <Text style={styles.textAction}>Nu ai un cont?</Text>
           <TouchableOpacity
             style={{ marginLeft: 5 }}
-            onPress={() => {
-              setOpen(true);
-              setOpenRegister(true);
-              setOpenLogin(false);
-            }}
+            onPress={() => navigation.navigate("Register")}
           >
             <Text style={styles.btnAction}>Înscrie-te</Text>
           </TouchableOpacity>
         </View>
         <Divider />
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            marginVertical: 10,
-            paddingVertical: 10,
-          }}
-        >
+        <View style={styles.businessContainer}>
           <Icon name="wallet" type="antdesign" size={35} />
           <View style={{ marginLeft: 20, flex: 1 }}>
-            <Text
-              style={{
-                fontFamily: "Exo-Regular",
-                fontSize: 15,
-              }}
-            >
+            <Text style={styles.businessText}>
               Detii un business? Incepe sa primesti clienti imediat
             </Text>
             <TouchableOpacity
               onPress={() => navigation.navigate("RegisterBusiness")}
             >
-              <Text
-                style={{
-                  marginTop: 5,
-                  fontFamily: "Exo-SemiBold",
-                  fontSize: 15,
-                }}
-              >
-                Inregistreaza
-              </Text>
+              <Text style={styles.registerBtnText}>Inregistreaza</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -114,18 +68,6 @@ const AuthScreen = () => {
             text="Termeni şi condiţii"
           />
         </View>
-        <BottomSheetPopup
-          height={90}
-          open={open}
-          onClose={closeSheet}
-          sheetBody={
-            openLogin && !openRegister ? (
-              <LoginForm onGoToRegister={goToRegister} />
-            ) : (
-              <RegisterForm onGoToLogin={goToLogin} />
-            )
-          }
-        />
       </SafeAreaView>
     </>
   );
@@ -180,5 +122,20 @@ const styles = StyleSheet.create({
     fontFamily: "Exo-SemiBold",
     fontSize: 15,
     color: Colors.textDark,
+  },
+  businessContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 10,
+    paddingVertical: 10,
+  },
+  businessText: {
+    fontFamily: "Exo-Regular",
+    fontSize: 15,
+  },
+  registerBtnText: {
+    marginTop: 5,
+    fontFamily: "Exo-SemiBold",
+    fontSize: 15,
   },
 });

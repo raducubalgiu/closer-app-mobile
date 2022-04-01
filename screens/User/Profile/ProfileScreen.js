@@ -4,6 +4,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Text,
+  ScrollView,
 } from "react-native";
 import React, { useState } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
@@ -21,6 +22,7 @@ import ProductsProfileScreen from "./ProductsProfileScreen";
 import { Colors } from "../../../assets/styles/Colors";
 import AboutProfileScreen from "./AboutProfileScreen";
 import CalendarProfileScreen from "./CalendarProfileScreen";
+import { FlatList } from "react-native-gesture-handler";
 
 const ProfileScreen = () => {
   const [openSettings, setOpenSettings] = useState(false);
@@ -37,6 +39,13 @@ const ProfileScreen = () => {
     setUser(null);
   };
   const Tab = createMaterialTopTabNavigator();
+
+  const tabs = [
+    <Tab.Screen name="Posts" component={PostsProfileScreen} />,
+    <Tab.Screen name="Products" component={ProductsProfileScreen} />,
+    <Tab.Screen name="Calendar" component={CalendarProfileScreen} />,
+    <Tab.Screen name="About" component={AboutProfileScreen} />,
+  ];
 
   return (
     <SafeAreaView style={styles.container}>

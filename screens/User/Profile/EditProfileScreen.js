@@ -59,6 +59,11 @@ const EditProfileScreen = () => {
             onPress={() => navigation.navigate("EditName")}
           />
           <MenuITemBetween
+            label="Nume utilizator"
+            resultText={user?.username}
+            onPress={() => navigation.navigate("EditUsername")}
+          />
+          <MenuITemBetween
             label="Site web"
             resultText={user?.website ? user?.website : "Adauga un website"}
             onPress={() => navigation.navigate("EditWebsite")}

@@ -95,60 +95,6 @@ const RegisterBusinessForm = (props) => {
       removeBtnRow={true}
     >
       <View style={{ margin: 10 }}>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <View style={{ flex: 1, marginRight: 5 }}>
-            <Controller
-              control={control}
-              rules={{
-                required: true,
-              }}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <TextInput
-                  style={{
-                    borderRadius: 10,
-                    ...styles.input,
-                  }}
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                  placeholder="Nume*"
-                  placeholderTextColor={Colors.textLight}
-                />
-              )}
-              name="lastName"
-            />
-            {errors.lastName && <Text>This is required.</Text>}
-          </View>
-          <View style={{ flex: 1, marginLeft: 5 }}>
-            <Controller
-              control={control}
-              rules={{
-                required: true,
-              }}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <TextInput
-                  style={{
-                    borderRadius: 10,
-                    ...styles.input,
-                  }}
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                  placeholder="Prenume*"
-                  placeholderTextColor={Colors.textLight}
-                />
-              )}
-              name="firstName"
-            />
-            {errors.lastName && <Text>This is required.</Text>}
-          </View>
-        </View>
         <View style={{ marginTop: 10 }}>
           <Controller
             control={control}

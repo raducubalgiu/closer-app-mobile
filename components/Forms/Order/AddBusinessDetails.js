@@ -14,8 +14,8 @@ const AddBusinessDetails = () => {
         style={{ marginTop: 15 }}
         onPress={() =>
           navigation.setParams({
-            activeStep: 2,
-            headerLabel: "Adresa Locatiei",
+            activeStep: 0,
+            headerLabel: "Business",
             locationId: 1,
           })
         }

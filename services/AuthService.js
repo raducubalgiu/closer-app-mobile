@@ -10,17 +10,13 @@ import {
 } from "firebase/auth";
 
 export const AuthService = {
-  registerWithPassword: async (email, password, firstName, lastName) => {
+  registerWithPassword: async (email, password) => {
     try {
       const { user } = await createUserWithEmailAndPassword(
         getAuth(),
         email,
         password
       );
-
-      await updateProfile(user, {
-        displayName: `${firstName} ${lastName}`,
-      });
 
       return {
         user,

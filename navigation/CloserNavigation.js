@@ -9,7 +9,6 @@ import "../i18next";
 
 import { Colors } from "../assets/styles/Colors";
 import HomeScreen from "../screens/HomeScreen";
-import AuthScreen from "../screens/User/AuthScreen";
 import ProfileScreen from "../screens/User/Profile/ProfileScreen";
 import EditProfileScreen from "../screens/User/Profile/EditProfileScreen";
 import EditNameScreen from "../screens/User/Profile/EditNameScreen";
@@ -31,7 +30,11 @@ import MessagesScreen from "../screens/MessagesScreen";
 import ServiceItemScreen from "../screens/ServiceItemScreen";
 import SocialScreen from "../screens/SocialScreen";
 
-import OrderScreen from "../screens/OrderScreen";
+// Auth
+import AuthScreen from "../screens/User/Auth/AuthScreen";
+import LoginScreen from "../screens/User/Auth/LoginScreen";
+import RegisterScreen from "../screens/User/Auth/RegisterScreen";
+import UsernameScreen from "../screens/User/Auth/UsernameScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -50,7 +53,7 @@ const StackNavigator = () => {
       <Stack.Screen name="FiltersService" component={FiltersServiceScreen} />
       <Stack.Screen name="Services" component={ServicesScreen} />
       <Stack.Screen name="ServiceItem" component={ServiceItemScreen} />
-      <Stack.Screen name="Order" component={OrderScreen} />
+      <Stack.Screen name="RegisterBusiness" component={RegisterBusiness} />
     </Stack.Navigator>
   );
 };
@@ -64,6 +67,9 @@ const AuthStackNavigator = () => {
       }}
     >
       <Stack.Screen name="Auth" component={AuthScreen} />
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Register" component={RegisterScreen} />
+      <Stack.Screen name="Username" component={UsernameScreen} />
     </Stack.Navigator>
   );
 };

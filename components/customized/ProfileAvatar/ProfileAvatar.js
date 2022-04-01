@@ -32,7 +32,7 @@ const ProfileAvatar = (props) => {
           }}
         />
       </TouchableOpacity>
-      <Text style={styles.name}>{props?.user?.name}</Text>
+      <Text style={styles.name}>@{props?.user?.username}</Text>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Text style={styles.job}>{props?.user?.job}</Text>
         {props?.user?.useRatings && (
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   name: {
     fontFamily: "Exo-SemiBold",
     color: Colors.textDark,
-    fontSize: 17.5,
+    fontSize: 16,
     marginTop: 5,
     marginBottom: 5,
   },
