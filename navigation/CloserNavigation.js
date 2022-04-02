@@ -18,8 +18,6 @@ import SettingsScreen from "../screens/User/Profile/SettingsProfileScreen";
 import SchedulesScreen from "../screens/User/Profile/SchedulesProfileScreen";
 import DiscountsScreen from "../screens/User/Profile/DiscountsProfileScreen";
 
-import RegisterBusiness from "../screens/RegisterBusiness";
-
 import SearchScreen from "../screens/SearchScreen";
 import FiltersDateScreen from "../screens/FilterDateScreen";
 import FiltersServiceScreen from "../screens/FiltersServiceScreen";
@@ -35,6 +33,7 @@ import AuthScreen from "../screens/User/Auth/AuthScreen";
 import LoginScreen from "../screens/User/Auth/LoginScreen";
 import RegisterScreen from "../screens/User/Auth/RegisterScreen";
 import UsernameScreen from "../screens/User/Auth/UsernameScreen";
+import RegisterBusinessScreen from "../screens/User/Auth/RegisterBusinessScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -53,7 +52,6 @@ const StackNavigator = () => {
       <Stack.Screen name="FiltersService" component={FiltersServiceScreen} />
       <Stack.Screen name="Services" component={ServicesScreen} />
       <Stack.Screen name="ServiceItem" component={ServiceItemScreen} />
-      <Stack.Screen name="RegisterBusiness" component={RegisterBusiness} />
     </Stack.Navigator>
   );
 };
@@ -70,6 +68,10 @@ const AuthStackNavigator = () => {
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Register" component={RegisterScreen} />
       <Stack.Screen name="Username" component={UsernameScreen} />
+      <Stack.Screen
+        name="RegisterBusiness"
+        component={RegisterBusinessScreen}
+      />
     </Stack.Navigator>
   );
 };

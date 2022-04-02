@@ -1,49 +1,45 @@
-import { SafeAreaView, StyleSheet, Text, View, TextInput } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import axios from "axios";
 import React from "react";
 import { Colors } from "../../../assets/styles/Colors";
-import InputCheck from "../../../components/core/Inputs/InputCheck";
-import { getAuth } from "firebase/auth";
 import { useAuth } from "../../../context/auth";
+import InputCheck from "../../../components/core/Inputs/InputCheck";
 
-const UsernameScreen = () => {
+const UsernameScreen = (props) => {
+  const { idTokenResult } = props.route.params;
   const { setUser } = useAuth();
 
-  const handleSubmit = (data) => {
-    getAuth().onAuthStateChanged(async (user) => {
-      if (user) {
-        const idTokenResult = await user.getIdTokenResult();
-
-        const userResult = await axios.post(
-          `http://192.168.100.2:8000/api/v1/users/create-or-update-user`,
-          {
-            username: data.username,
-            role: "subscriber",
+  const handleSubmit = async (data) => {
+    try {
+      const userResult = await axios.post(
+        `http://192.168.100.2:8000/api/v1/users/create-or-update-user`,
+        {
+          username: data.username,
+          role: props.route.params.role,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + idTokenResult?.token,
           },
-          {
-            headers: {
-              Authorization: "Bearer " + idTokenResult?.token,
-            },
-          }
-        );
-
-        console.log("USER FROM BACKEND", userResult.data);
-
-        const { _id, email, name, username, role, job } = userResult.data;
-
-        if (userResult) {
-          setUser({
-            _id,
-            email,
-            name,
-            username,
-            role,
-            token: idTokenResult?.token,
-            job,
-          });
         }
+      );
+
+      const { _id, email, name, username, role, job } = userResult.data;
+
+      if (userResult) {
+        setUser({
+          _id,
+          email,
+          name,
+          username,
+          role,
+          token: idTokenResult?.token,
+          job,
+        });
       }
-    });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -55,9 +51,9 @@ const UsernameScreen = () => {
         </Text>
       </View>
       <InputCheck
-        onSubmit={handleSubmit}
         endpoint="http://192.168.100.2:8000/api/v1/users/check-username"
         inputName="username"
+        onSubmit={handleSubmit}
       />
     </SafeAreaView>
   );

@@ -2,12 +2,13 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Image, Avatar, Icon } from "react-native-elements";
 import { Colors } from "../../../assets/styles/Colors";
 import React from "react";
+import Stack from "../../core/Containers/Stack";
 
 const CardPost = (props) => {
   return (
     <View style={styles.container}>
-      <View style={styles.cardHeader}>
-        <View style={styles.avatarContainer}>
+      <Stack direction="row" sx={styles.cardHeader}>
+        <Stack direction="row" sx={styles.avatarContainer}>
           <Avatar
             size={35}
             rounded
@@ -15,15 +16,15 @@ const CardPost = (props) => {
               uri: `${props.avatar}`,
             }}
           />
-          <View>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Stack align="start">
+            <Stack direction="row">
               <Text style={styles.name}>{props.name}</Text>
               <Text style={styles.job}>{props.job}</Text>
-            </View>
+            </Stack>
             <Text style={styles.date}>{props.date}</Text>
-          </View>
-        </View>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          </Stack>
+        </Stack>
+        <Stack direction="row">
           <TouchableOpacity style={styles.followBtn}>
             <Text style={styles.followBtnText}>Urmareste</Text>
           </TouchableOpacity>
@@ -33,8 +34,8 @@ const CardPost = (props) => {
             style={{ marginRight: 10 }}
             size={20}
           />
-        </View>
-      </View>
+        </Stack>
+      </Stack>
       <Image
         source={{
           uri: `${props.image}`,
@@ -48,13 +49,9 @@ const CardPost = (props) => {
       >
         <Text style={styles.description}>{props.description}</Text>
       </View>
-      <View style={styles.actionBtns}>
-        <View>
-          <Text style={{ fontFamily: "Exo-SemiBold", color: Colors.textDark }}>
-            {props.likes} aprecieri
-          </Text>
-        </View>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+      <Stack direction="row" sx={styles.actionBtns}>
+        <Text style={styles.likes}>{props.likes} aprecieri</Text>
+        <Stack direction="row">
           <TouchableOpacity>
             <Icon
               type="feather"
@@ -82,8 +79,8 @@ const CardPost = (props) => {
           <TouchableOpacity>
             <Icon type="antdesign" name="hearto" size={22} />
           </TouchableOpacity>
-        </View>
-      </View>
+        </Stack>
+      </Stack>
     </View>
   );
 };
@@ -99,14 +96,9 @@ const styles = StyleSheet.create({
     borderColor: "#f1f1f1",
   },
   cardHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
     paddingVertical: 5,
   },
   avatarContainer: {
-    flexDirection: "row",
-    alignItems: "center",
     marginVertical: 10,
     paddingHorizontal: 10,
   },
@@ -138,12 +130,10 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     borderTopRightRadius: 20,
   },
+  likes: { fontFamily: "Exo-SemiBold", color: Colors.textDark },
   description: { fontFamily: "Exo-Regular" },
   actionBtns: {
     paddingVertical: 17,
     paddingHorizontal: 15,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
   },
 });

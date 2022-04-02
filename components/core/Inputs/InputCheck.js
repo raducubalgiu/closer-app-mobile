@@ -38,7 +38,8 @@ const InputCheck = (props) => {
         .then((res) => {
           setLoading(false);
           setStatus(res.data.status);
-        });
+        })
+        .catch((err) => console.log(err));
     }, 500);
 
     return () => {
@@ -66,8 +67,11 @@ const InputCheck = (props) => {
   }
 
   const onSubmit = (data) => {
-    props.onSubmit(data);
+    if (status === "success") props.onSubmit(data);
   };
+
+  console.log("STATUS!!!!", status);
+  console.log("INPUT", input);
 
   return (
     <View style={styles.container}>

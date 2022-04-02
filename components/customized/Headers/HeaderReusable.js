@@ -1,13 +1,14 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import React from "react";
+import Stack from "../../core/Containers/Stack";
 
 const HeaderReusable = (props) => {
   return (
-    <View style={styles.container}>
-      <View>{props.firstBox}</View>
-      <View>{props.secondBox}</View>
-      <View>{props.thirdBox}</View>
-    </View>
+    <Stack direction="row" sx={styles.container}>
+      <Stack>{props.firstBox}</Stack>
+      <Stack>{props.secondBox}</Stack>
+      <Stack>{props.thirdBox}</Stack>
+    </Stack>
   );
 };
 
@@ -15,9 +16,6 @@ export default HeaderReusable;
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
     backgroundColor: "white",
     padding: 10,
   },

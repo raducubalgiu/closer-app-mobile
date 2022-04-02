@@ -8,6 +8,7 @@ import {
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { TextInput } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { AuthService } from "../../../services/AuthService";
 import { Divider } from "react-native-elements";
 import { Colors } from "../../../assets/styles/Colors";
@@ -15,9 +16,8 @@ import ButtonProvider from "../../../components/core/Buttons/ButtonProvider";
 import MainButton from "../../../components/core/Buttons/MainButton";
 import HeaderReusable from "../../../components/customized/Headers/HeaderReusable";
 import IconBackButton from "../../../components/core/IconButton/IconBackButton";
-import { useNavigation } from "@react-navigation/native";
 
-const RegisterScreen = () => {
+const RegisterBusinessScreen = () => {
   const navigation = useNavigation();
   const {
     control,
@@ -41,7 +41,7 @@ const RegisterScreen = () => {
 
       if (user && !error) {
         const idTokenResult = await user.getIdTokenResult();
-        navigation.navigate("Username", { role: "subscriber", idTokenResult });
+        navigation.navigate("Username", { role: "admin", idTokenResult });
       }
     } catch (err) {
       console.log(err);
@@ -150,7 +150,7 @@ const RegisterScreen = () => {
   );
 };
 
-export default RegisterScreen;
+export default RegisterBusinessScreen;
 
 const styles = StyleSheet.create({
   screen: {
