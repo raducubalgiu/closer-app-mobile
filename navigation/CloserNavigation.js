@@ -10,13 +10,14 @@ import "../i18next";
 import { Colors } from "../assets/styles/Colors";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/User/Profile/ProfileScreen";
-import EditProfileScreen from "../screens/User/Profile/EditProfileScreen";
-import EditNameScreen from "../screens/User/Profile/EditNameScreen";
-import EditWebsiteScreen from "../screens/User/Profile/EditWebsiteScreen";
-import EditBioScreen from "../screens/User/Profile/EditBioScreen";
+import EditProfileScreen from "../screens/User/Profile/EditProfile/EditProfileScreen";
+import EditNameScreen from "../screens/User/Profile/EditProfile/EditNameScreen";
+import EditWebsiteScreen from "../screens/User/Profile/EditProfile/EditWebsiteScreen";
+import EditBioScreen from "../screens/User/Profile/EditProfile/EditBioScreen";
 import SettingsScreen from "../screens/User/Profile/SettingsProfileScreen";
 import SchedulesScreen from "../screens/User/Profile/SchedulesProfileScreen";
 import DiscountsScreen from "../screens/User/Profile/DiscountsProfileScreen";
+import AllFollowersScreen from "../screens/User/Profile/FollowersFollowing/AllFollowersScreen";
 
 import SearchScreen from "../screens/SearchScreen";
 import FiltersDateScreen from "../screens/FilterDateScreen";
@@ -87,6 +88,7 @@ const UserStackNavigator = () => {
       <Stack.Screen name="Settings" component={SettingsScreen} />
       <Stack.Screen name="Schedules" component={SchedulesScreen} />
       <Stack.Screen name="Discounts" component={DiscountsScreen} />
+      <Stack.Screen name="AllFollowers" component={AllFollowersScreen} />
     </Stack.Navigator>
   );
 };

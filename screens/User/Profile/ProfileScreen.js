@@ -23,6 +23,7 @@ import { Colors } from "../../../assets/styles/Colors";
 import AboutProfileScreen from "./AboutProfileScreen";
 import CalendarProfileScreen from "./CalendarProfileScreen";
 import { FlatList } from "react-native-gesture-handler";
+import Stack from "../../../components/core/Containers/Stack";
 
 const ProfileScreen = () => {
   const [openSettings, setOpenSettings] = useState(false);
@@ -40,44 +41,49 @@ const ProfileScreen = () => {
   };
   const Tab = createMaterialTopTabNavigator();
 
-  const tabs = [
-    <Tab.Screen name="Posts" component={PostsProfileScreen} />,
-    <Tab.Screen name="Products" component={ProductsProfileScreen} />,
-    <Tab.Screen name="Calendar" component={CalendarProfileScreen} />,
-    <Tab.Screen name="About" component={AboutProfileScreen} />,
-  ];
-
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ padding: 10 }}>
-        <HeaderReusable
-          firstBox={
-            <TouchableOpacity>
+      <HeaderReusable
+        sx={{ paddingVertical: 20 }}
+        firstBox={
+          <Stack direction="row">
+            <TouchableOpacity style={{ marginRight: 10 }}>
               <Icon name="adduser" type="antdesign" />
             </TouchableOpacity>
-          }
-          secondBox={
-            <TouchableOpacity
-              onPress={() => setOpenSwitch(true)}
-              style={{ flexDirection: "row", alignItems: "center" }}
-            >
-              <Text style={{ fontFamily: "Exo-Medium", fontSize: 15 }}>
-                {user?.name}
-              </Text>
-              <Icon name="keyboard-arrow-down" type="material" />
+            <Icon
+              size={30}
+              type="ionicon"
+              name="add-circle-outline"
+              color="white"
+            />
+          </Stack>
+        }
+        secondBox={
+          <TouchableOpacity
+            onPress={() => setOpenSwitch(true)}
+            style={{ flexDirection: "row", alignItems: "center" }}
+          >
+            <Text style={{ fontFamily: "Exo-Medium", fontSize: 15 }}>
+              {user?.name}
+            </Text>
+            <Icon name="keyboard-arrow-down" type="material" />
+          </TouchableOpacity>
+        }
+        thirdBox={
+          <Stack direction="row">
+            <TouchableOpacity activeOpacity={1} onPress={() => {}}>
+              <Icon size={30} type="ionicon" name="add-circle-outline" />
             </TouchableOpacity>
-          }
-          thirdBox={
             <TouchableOpacity
               style={{ marginLeft: 10 }}
               activeOpacity={1}
               onPress={() => setOpenSettings(true)}
             >
-              <Icon size={20} type="entypo" name="dots-three-vertical" />
+              <Icon size={30} type="ionicon" name="menu-outline" />
             </TouchableOpacity>
-          }
-        />
-      </View>
+          </Stack>
+        }
+      />
       <ProfileAvatar user={user} />
       <Tab.Navigator
         screenOptions={({ route }) => ({

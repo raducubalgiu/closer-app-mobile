@@ -3,8 +3,8 @@ import React from "react";
 import SearchBar from "react-native-elements/dist/searchbar/SearchBar-ios";
 import { Divider } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
-import { Colors } from "../../../assets/styles/Colors";
-import HeaderReusable from "../../../components/customized/Headers/HeaderReusable";
+import { Colors } from "../../../../assets/styles/Colors";
+import HeaderReusable from "../../../../components/customized/Headers/HeaderReusable";
 
 const EditFieldScreen = (props) => {
   const navigation = useNavigation();

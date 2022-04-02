@@ -1,8 +1,8 @@
 import { SafeAreaView, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import EditField from "./EditFieldScreen";
-import { useAuth } from "../../../context/auth";
-import { AuthService } from "../../../services/AuthService";
+import { useAuth } from "../../../../context/auth";
+import { AuthService } from "../../../../services/AuthService";
 
 const EditNameScreen = () => {
   const { user } = useAuth();

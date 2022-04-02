@@ -9,10 +9,10 @@ import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon, Divider } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
-import { Colors } from "../../../assets/styles/Colors";
-import { useAuth } from "../../../context/auth";
-import ProfileEditAvatar from "../../../components/customized/ProfileAvatar/ProfileEditAvatar";
-import MenuITemBetween from "../../../components/customized/MenuItem/MenuITemBetween";
+import { Colors } from "../../../../assets/styles/Colors";
+import { useAuth } from "../../../../context/auth";
+import ProfileEditAvatar from "../../../../components/customized/ProfileAvatar/ProfileEditAvatar";
+import MenuITemBetween from "../../../../components/customized/MenuItem/MenuITemBetween";
 
 const EditProfileScreen = () => {
   const { user } = useAuth();

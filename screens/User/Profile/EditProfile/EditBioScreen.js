@@ -1,32 +1,32 @@
 import { SafeAreaView, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import EditField from "./EditFieldScreen";
-import { useAuth } from "../../../context/auth";
+import { useAuth } from "../../../../context/auth";
 
-const EditWebsiteScreen = () => {
+const EditBioScreen = () => {
   const { user } = useAuth();
-  const [value, setValue] = useState("Website");
+  const [value, setValue] = useState("Bio");
 
   const updateField = (text) => {
     setValue(text);
   };
 
-  const updateWebsite = async () => {};
+  const updateBio = async () => {};
 
   return (
     <SafeAreaView style={styles.screen}>
       <EditField
-        field="Website"
-        onSave={updateWebsite}
+        field="Biografie"
+        onSave={updateBio}
         updateField={updateField}
         value={value}
-        fieldLength={80}
+        fieldLength={200}
       />
     </SafeAreaView>
   );
 };
 
-export default EditWebsiteScreen;
+export default EditBioScreen;
 
 const styles = StyleSheet.create({
   screen: {

@@ -31,11 +31,7 @@ const ProfileAvatar = (props) => {
           )}
           <Badge
             value={<Icon name="plus" type="entypo" size={17} color="white" />}
-            containerStyle={{
-              position: "absolute",
-              bottom: 10,
-              left: 80,
-            }}
+            containerStyle={styles.badge}
           />
         </TouchableOpacity>
         <Text style={styles.name}>@{props?.user?.username}</Text>
@@ -53,17 +49,23 @@ const ProfileAvatar = (props) => {
       </Stack>
       <Stack direction="row" justify="between" sx={styles.statsContainer}>
         <StatsButton
-          onPress={() => {}}
+          onPress={() =>
+            navigation.navigate("AllFollowers", { initialRoute: "Ratings" })
+          }
           labelStats="Ratinguri"
           statsNo={props?.user?.ratingsCount}
         />
         <StatsButton
-          onPress={() => {}}
+          onPress={() =>
+            navigation.navigate("AllFollowers", { initialRoute: "Followers" })
+          }
           labelStats="Urmaritori"
           statsNo={props?.user?.followersCount}
         />
         <StatsButton
-          onPress={() => {}}
+          onPress={() =>
+            navigation.navigate("AllFollowers", { initialRoute: "Following" })
+          }
           labelStats="Urmaresti"
           statsNo={props?.user?.followingCount}
         />
@@ -83,6 +85,11 @@ export default ProfileAvatar;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
+  },
+  badge: {
+    position: "absolute",
+    bottom: 10,
+    left: 75,
   },
   name: {
     fontFamily: "Exo-SemiBold",
