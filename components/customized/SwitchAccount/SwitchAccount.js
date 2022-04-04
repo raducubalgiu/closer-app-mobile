@@ -78,7 +78,7 @@ const SwitchAccount = () => {
               }}
               containerStyle={{ backgroundColor: "#eee" }}
             />
-            <Text style={styles.actionBtnText}>Adauga o noua locatie</Text>
+            <Text style={styles.actionBtnText}>Adauga cont</Text>
           </TouchableOpacity>
         }
       />

@@ -13,11 +13,11 @@ const IconBackButton = () => {
   );
 };
 
-export default IconBackButton;
-
 const styles = StyleSheet.create({
   btn: {
     paddingVertical: 5,
     paddingRight: 5,
   },
 });
+
+export default IconBackButton;

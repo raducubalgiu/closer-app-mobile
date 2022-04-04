@@ -20,7 +20,7 @@ export const AuthProvider = (props) => {
               role,
               name,
               job,
-              logo,
+              avatar,
               ratingsAverage,
               ratingsQuantity,
             } = res.data.user;
@@ -33,7 +33,7 @@ export const AuthProvider = (props) => {
                 token: idTokenResult?.token,
                 name,
                 job,
-                avatar: logo[0]?.url,
+                avatar: avatar[0]?.url,
                 ratingsAverage,
                 ratingsQuantity,
               });

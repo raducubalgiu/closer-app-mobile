@@ -7,17 +7,19 @@ import FollowersScreen from "./FollowersScreen";
 import FollowingScreen from "./FollowingScreen";
 import RatingsScreen from "./RatingsScreen";
 import { Colors } from "../../../../assets/styles/Colors";
+import { useAuth } from "../../../../context/auth";
 
 const Tab = createMaterialTopTabNavigator();
 
 const AllFollowers = (props) => {
   const { initialRoute } = props.route.params;
+  const { user } = useAuth();
 
   return (
     <SafeAreaView style={styles.screen}>
       <HeaderReusable
         firstBox={<IconBackButton />}
-        secondBox={<Text style={styles.heading}>raducu__balgiu</Text>}
+        secondBox={<Text style={styles.heading}>{user?.username}</Text>}
       />
       <Tab.Navigator
         initialRouteName={initialRoute}

@@ -24,7 +24,7 @@ const UsernameScreen = (props) => {
         }
       );
 
-      const { _id, email, name, username, role, job } = userResult.data;
+      const { _id, email, name, username, role, job, avatar } = userResult.data;
 
       if (userResult) {
         setUser({
@@ -35,6 +35,7 @@ const UsernameScreen = (props) => {
           role,
           token: idTokenResult?.token,
           job,
+          avatar: avatar[0]?.url,
         });
       }
     } catch (err) {

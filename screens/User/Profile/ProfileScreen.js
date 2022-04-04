@@ -1,35 +1,44 @@
-import {
-  StyleSheet,
-  View,
-  SafeAreaView,
-  TouchableOpacity,
-  Text,
-  ScrollView,
-} from "react-native";
-import React, { useState } from "react";
+import { StyleSheet, View, SafeAreaView } from "react-native";
+import React, { useState, useEffect, useCallback } from "react";
+import axios from "axios";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import ProfileAvatar from "../../../components/customized/ProfileAvatar/ProfileAvatar";
 import BottomSheetPopup from "../../../components/customized/BottomSheets/BottomSheetPopup";
-import { useAuth } from "../../../context/auth";
 import { AuthService } from "../../../services/AuthService";
 import MenuItem from "../../../components/customized/MenuItem/MenuItem";
 import { Icon } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
-import HeaderReusable from "../../../components/customized/Headers/HeaderReusable";
 import SwitchAccount from "../../../components/customized/SwitchAccount/SwitchAccount";
 import PostsProfileScreen from "./PostsProfileScreen";
 import ProductsProfileScreen from "./ProductsProfileScreen";
 import { Colors } from "../../../assets/styles/Colors";
 import AboutProfileScreen from "./AboutProfileScreen";
 import CalendarProfileScreen from "./CalendarProfileScreen";
-import { FlatList } from "react-native-gesture-handler";
-import Stack from "../../../components/core/Containers/Stack";
+import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
+import OutlinedButton from "../../../components/core/Buttons/OutlinedButton";
+import HeaderProfile from "../../../components/customized/Headers/HeaderProfile";
+import { useAuth } from "../../../context/auth";
 
 const ProfileScreen = () => {
   const [openSettings, setOpenSettings] = useState(false);
   const [openSwitch, setOpenSwitch] = useState(false);
   const navigation = useNavigation();
-  const { user, setUser } = useAuth();
+  const [userDetails, setUserDetails] = useState(null);
+  const { user } = useAuth();
+
+  const fetchUser = useCallback(() => {
+    axios
+      .get(`http://192.168.100.2:8000/api/v1/users/${user?._id}`, {
+        headers: { Authorization: `Bearer ${user?.token}` },
+      })
+      .then((resp) => {
+        setUserDetails(resp.data.user);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
 
   const closeSheet = () => {
     setOpenSwitch(false);
@@ -41,55 +50,31 @@ const ProfileScreen = () => {
   };
   const Tab = createMaterialTopTabNavigator();
 
+  const buttons = (
+    <OutlinedButton
+      title="Editeaza profilul"
+      onPress={() => navigation.navigate("EditProfile")}
+    />
+  );
+
   return (
     <SafeAreaView style={styles.container}>
-      <HeaderReusable
-        sx={{ paddingVertical: 20 }}
-        firstBox={
-          <Stack direction="row">
-            <TouchableOpacity style={{ marginRight: 10 }}>
-              <Icon name="adduser" type="antdesign" />
-            </TouchableOpacity>
-            <Icon
-              size={30}
-              type="ionicon"
-              name="add-circle-outline"
-              color="white"
-            />
-          </Stack>
-        }
-        secondBox={
-          <TouchableOpacity
-            onPress={() => setOpenSwitch(true)}
-            style={{ flexDirection: "row", alignItems: "center" }}
-          >
-            <Text style={{ fontFamily: "Exo-Medium", fontSize: 15 }}>
-              {user?.name}
-            </Text>
-            <Icon name="keyboard-arrow-down" type="material" />
-          </TouchableOpacity>
-        }
-        thirdBox={
-          <Stack direction="row">
-            <TouchableOpacity activeOpacity={1} onPress={() => {}}>
-              <Icon size={30} type="ionicon" name="add-circle-outline" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{ marginLeft: 10 }}
-              activeOpacity={1}
-              onPress={() => setOpenSettings(true)}
-            >
-              <Icon size={30} type="ionicon" name="menu-outline" />
-            </TouchableOpacity>
-          </Stack>
-        }
+      <HeaderProfile
+        onOpenSwitch={() => setOpenSwitch(true)}
+        name={userDetails?.name}
+        onOpenSettings={() => setOpenSettings(true)}
       />
-      <ProfileAvatar user={user} />
+      <ProfileOverview
+        user={userDetails}
+        withBadge={true}
+        actionButtons={buttons}
+      />
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color }) => {
             let iconName;
             let iconType;
+            let size;
 
             if (route.name === "Posts") {
               iconType = "antdesign";
@@ -102,9 +87,11 @@ const ProfileScreen = () => {
               iconName = focused ? "calendar" : "calendar";
             } else if (route.name === "About") {
               iconType = "antdesign";
-              iconName = focused ? "user" : "user";
+              iconName = focused ? "solution1" : "solution1";
             }
-            return <Icon name={iconName} type={iconType} color={color} />;
+            return (
+              <Icon name={iconName} type={iconType} color={color} size={size} />
+            );
           },
           tabBarActiveTintColor: Colors.primary,
           tabBarInactiveTintColor: "gray",
@@ -112,6 +99,9 @@ const ProfileScreen = () => {
           tabBarShowLabel: false,
           tabBarIndicatorContainerStyle: {
             color: "red",
+          },
+          tabBarIndicatorStyle: {
+            backgroundColor: Colors.textDark,
           },
         })}
       >

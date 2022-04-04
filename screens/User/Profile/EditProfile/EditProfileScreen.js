@@ -11,7 +11,7 @@ import { Icon, Divider } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../../../../assets/styles/Colors";
 import { useAuth } from "../../../../context/auth";
-import ProfileEditAvatar from "../../../../components/customized/ProfileAvatar/ProfileEditAvatar";
+import ProfileEditAvatar from "../../../../components/customized/ProfileOverview/ProfileEditAvatar";
 import MenuITemBetween from "../../../../components/customized/MenuItem/MenuITemBetween";
 
 const EditProfileScreen = () => {

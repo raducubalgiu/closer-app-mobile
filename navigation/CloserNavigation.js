@@ -10,6 +10,7 @@ import "../i18next";
 import { Colors } from "../assets/styles/Colors";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/User/Profile/ProfileScreen";
+import ProfileGeneralScreen from "../screens/User/Profile/ProfileGeneralScreen";
 import EditProfileScreen from "../screens/User/Profile/EditProfile/EditProfileScreen";
 import EditNameScreen from "../screens/User/Profile/EditProfile/EditNameScreen";
 import EditWebsiteScreen from "../screens/User/Profile/EditProfile/EditWebsiteScreen";
@@ -24,7 +25,7 @@ import FiltersDateScreen from "../screens/FilterDateScreen";
 import FiltersServiceScreen from "../screens/FiltersServiceScreen";
 import ServicesNavigation from "../screens/ServicesNavigationScreen";
 import ServicesScreen from "../screens/ServicesScreen";
-import SearchEverything from "../screens/SearchEverything";
+import ExploreScreen from "../screens/ExploreScreen";
 import MessagesScreen from "../screens/MessagesScreen";
 import ServiceItemScreen from "../screens/ServiceItemScreen";
 import SocialScreen from "../screens/SocialScreen";
@@ -77,6 +78,20 @@ const AuthStackNavigator = () => {
   );
 };
 
+const ExploreStackNavigator = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName="Explore"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="ExploreStack" component={ExploreScreen} />
+      <Stack.Screen name="ProfileGeneral" component={ProfileGeneralScreen} />
+    </Stack.Navigator>
+  );
+};
+
 const UserStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -107,7 +122,7 @@ const CloserNavigation = () => {
             if (route.name === "Home") {
               iconType = "antdesign";
               iconName = focused ? "home" : "home";
-            } else if (route.name === "SearchEverything") {
+            } else if (route.name === "Explore") {
               iconType = "antdesign";
               iconName = focused ? "search1" : "search1";
             } else if (route.name === "Social") {
@@ -132,34 +147,14 @@ const CloserNavigation = () => {
           tabBarShowLabel: false,
         })}
       >
-        <Tab.Screen
-          name="Home"
-          component={StackNavigator}
-          options={{ tabBarLabel: "Acasa" }}
-        />
-        <Tab.Screen
-          name="SearchEverything"
-          component={SearchEverything}
-          options={{ tabBarLabel: "Exploreaza" }}
-        />
+        <Tab.Screen name="Home" component={StackNavigator} />
+        <Tab.Screen name="Explore" component={ExploreStackNavigator} />
         <Tab.Screen name="Social" component={SocialScreen} />
-        <Tab.Screen
-          name="Messages"
-          component={MessagesScreen}
-          options={{ tabBarLabel: "Mesaje" }}
-        />
+        <Tab.Screen name="Messages" component={MessagesScreen} />
         {user ? (
-          <Tab.Screen
-            name="User"
-            component={UserStackNavigator}
-            options={{ tabBarLabel: "Profil" }}
-          />
+          <Tab.Screen name="User" component={UserStackNavigator} />
         ) : (
-          <Tab.Screen
-            name="User"
-            component={AuthStackNavigator}
-            options={{ tabBarLabel: "Profil" }}
-          />
+          <Tab.Screen name="User" component={AuthStackNavigator} />
         )}
       </Tab.Navigator>
     </NavigationContainer>

@@ -61,7 +61,7 @@ const LoginScreen = () => {
           role,
           name,
           job,
-          logo,
+          avatar,
           ratingsAverage,
           ratingsQuantity,
         } = userResult.data.user;
@@ -74,7 +74,7 @@ const LoginScreen = () => {
           token: idTokenResult?.token,
           name,
           job,
-          avatar: logo[0]?.url,
+          avatar: avatar[0]?.url,
           ratingsAverage,
           ratingsQuantity,
         });

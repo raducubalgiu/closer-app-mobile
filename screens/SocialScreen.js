@@ -4,9 +4,9 @@ import {
   Text,
   TouchableOpacity,
   View,
+  FlatList,
 } from "react-native";
 import React from "react";
-import { FlatList } from "react-native";
 import { Icon } from "react-native-elements";
 import CardUserRecommend from "../components/customized/Cards/CardUserRecommend";
 import CardPost from "../components/customized/Cards/CardPost";

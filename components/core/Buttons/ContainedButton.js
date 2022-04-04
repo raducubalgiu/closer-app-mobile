@@ -21,10 +21,11 @@ export default ContainedButton;
 
 const styles = StyleSheet.create({
   button: {
-    paddingVertical: 10,
+    paddingVertical: 7.5,
     paddingHorizontal: 20,
     borderWidth: 2,
-    borderRadius: 10,
+    borderColor: Colors.primary,
+    borderRadius: 5,
   },
   buttonText: { color: "white", fontFamily: "Exo-Medium", textAlign: "center" },
   active: { backgroundColor: Colors.primary, borderColor: Colors.primary },

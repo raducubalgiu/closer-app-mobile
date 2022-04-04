@@ -4,7 +4,10 @@ import { Colors } from "../../../assets/styles/Colors";
 
 const OutlinedButton = (props) => {
   return (
-    <TouchableOpacity onPress={props.onPress} style={styles.button}>
+    <TouchableOpacity
+      onPress={props.onPress}
+      style={{ ...styles.button, ...props.sx }}
+    >
       <Text style={styles.buttonText}>{props.title}</Text>
     </TouchableOpacity>
   );
