@@ -2,11 +2,12 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 import { Colors } from "../../../assets/styles/Colors";
 import OutlinedButton from "../../core/Buttons/OutlinedButton";
+import { Stack } from "../../core";
 
 const CardProduct = (props) => {
   return (
     <View style={styles.card}>
-      <View style={styles.cardLayout}>
+      <Stack direction="row" align="start" sx={styles.cardLayout}>
         <View style={{ flex: 1, marginRight: 5 }}>
           <Text style={styles.name}>
             {props.name} - {props.option}
@@ -15,7 +16,7 @@ const CardProduct = (props) => {
           <Text style={styles.price}>{props.price} RON</Text>
         </View>
         <OutlinedButton title="Rezerva" style={{ flex: 1 }} />
-      </View>
+      </Stack>
     </View>
   );
 };
@@ -32,12 +33,7 @@ const styles = StyleSheet.create({
     borderColor: "#eee",
     marginHorizontal: 10,
   },
-  cardLayout: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-    flex: 1,
-  },
+  cardLayout: { flex: 1 },
   name: {
     fontFamily: "Exo-SemiBold",
     fontSize: 15,

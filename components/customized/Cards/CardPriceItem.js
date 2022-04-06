@@ -2,12 +2,13 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Colors } from "../../../assets/styles/Colors";
+import { Stack } from "../../core";
 
 const CardPriceItem = (props) => {
   const { t } = useTranslation();
 
   return (
-    <View style={styles.personServices}>
+    <Stack direction="row" align="start" sx={styles.personServices}>
       <View style={styles.serviceDetailsContainer}>
         <Text style={styles.serviceName}>{props.serviceTitle}</Text>
         <Text style={styles.serviceGender}>{props.gender}</Text>
@@ -21,7 +22,7 @@ const CardPriceItem = (props) => {
           <Text style={styles.bookButtonText}>{t("book")}</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </Stack>
   );
 };
 
@@ -29,8 +30,6 @@ export default CardPriceItem;
 
 const styles = StyleSheet.create({
   personServices: {
-    flexDirection: "row",
-    justifyContent: "space-between",
     paddingHorizontal: 5,
     paddingVertical: 10,
   },

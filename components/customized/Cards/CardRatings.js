@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { AirbnbRating, Divider, Avatar } from "react-native-elements";
+import { AirbnbRating, Divider } from "react-native-elements";
+import UserAvatar from "../Avatars/UserAvatar";
 import { Colors } from "../../../assets/styles/Colors";
 import Stack from "../../core/Containers/Stack";
 
@@ -9,7 +10,14 @@ const CardRatings = (props) => {
     <View style={styles.container}>
       <Stack direction="row" align="start">
         <Stack direction="row">
-          <Avatar size={45} rounded source={{ uri: `${props.avatar}` }} />
+          <UserAvatar
+            iconSize={20}
+            size={45}
+            avatar={
+              props?.avatar !== undefined ? props?.avatar[0]?.url : undefined
+            }
+            withBadge={false}
+          />
           <View style={{ marginLeft: 10 }}>
             <Text style={styles.name}>{props.name}</Text>
             <Text style={styles.date}>{props.date}</Text>

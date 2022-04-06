@@ -1,5 +1,5 @@
 import { SafeAreaView, StyleSheet } from "react-native";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useMemo } from "react";
 import { Icon } from "react-native-elements";
 import axios from "axios";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
@@ -27,7 +27,7 @@ const ProfileGeneralScreen = (props) => {
         setUserDetails(resp.data.user);
       })
       .catch((error) => console.log(error));
-  }, [user?.id]);
+  }, [userId]);
 
   useEffect(() => {
     fetchUser();

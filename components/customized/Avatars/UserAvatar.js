@@ -14,7 +14,7 @@ const UserAvatar = (props) => {
       <Avatar
         size={props.size}
         rounded
-        icon={{ name: "user", type: "font-awesome", size: 37 }}
+        icon={{ name: "user", type: "font-awesome", size: props.iconSize }}
         containerStyle={{ backgroundColor: "#ccc" }}
       />
     );

@@ -45,9 +45,10 @@ const ProfileScreen = () => {
     setOpenSettings(false);
   };
   const handleLogout = async () => {
-    await AuthService.logout();
-    setUser(null);
+    const { error } = await AuthService.logout();
+    if (!error) setUser(null);
   };
+
   const Tab = createMaterialTopTabNavigator();
 
   const buttons = (

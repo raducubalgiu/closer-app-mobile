@@ -1,14 +1,15 @@
 import { useState } from "react";
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Colors } from "../../../assets/styles/Colors";
+import { Stack } from "../../core";
 
 const FilterDate = () => {
   const [calendar, setCalendar] = useState(true);
 
   return (
     <>
-      <View style={styles.container}>
-        <View style={styles.buttonsContainer}>
+      <Stack direction="row" justify="center" sx={styles.container}>
+        <Stack direction="row" justify="start" sx={styles.buttonsContainer}>
           <TouchableOpacity
             activeOpacity={1}
             onPress={() => setCalendar((calendar) => !calendar)}
@@ -27,8 +28,8 @@ const FilterDate = () => {
           >
             <Text style={styles.buttonText}>Oricand dupa 18:00</Text>
           </TouchableOpacity>
-        </View>
-      </View>
+        </Stack>
+      </Stack>
       {calendar && <Text>Calendar</Text>}
       {!calendar && <Text>Dupa ora 18:00</Text>}
     </>
@@ -39,15 +40,10 @@ export default FilterDate;
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
     marginTop: 10,
     paddingVertical: 10,
   },
   buttonsContainer: {
-    flexDirection: "row",
-    alignItems: "center",
     backgroundColor: "#f1f1f1",
     padding: 5,
     borderRadius: 20,

@@ -1,28 +1,24 @@
 import { StyleSheet, View, FlatList } from "react-native";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
 import CardFollowers from "../../../../components/customized/Cards/CardFollowers";
-import { useAuth } from "../../../../context/auth";
+import { useNavigation } from "@react-navigation/native";
 
-const FollowersScreen = () => {
-  const [followers, setFollowers] = useState([]);
-  const { user } = useAuth();
+const FollowersTabDetails = (props) => {
+  const navigation = useNavigation();
 
-  useEffect(() => {
-    axios
-      .get(`http://192.168.100.2:8000/api/v1/users/${user?._id}/get-followers`)
-      .then((res) => setFollowers(res.data.followers))
-      .catch((err) => console.log(err));
-  }, []);
+  const goToUser = (userId) => {
+    navigation.navigate("ProfileGeneral", { userId });
+  };
 
   return (
     <View style={styles.screen}>
       <FlatList
-        data={followers}
+        data={props?.followers}
         keyExtractor={(item) => item?._id}
         renderItem={({ item }) => (
           <CardFollowers
-            onPress={() => {}}
+            onGoToUser={() => goToUser(item?._id)}
+            onFollowUser={() => {}}
             avatar={item?.userId?.avatar}
             username={item?.userId?.username}
             name={item?.userId?.name}
@@ -33,7 +29,7 @@ const FollowersScreen = () => {
   );
 };
 
-export default FollowersScreen;
+export default FollowersTabDetails;
 
 const styles = StyleSheet.create({
   screen: {

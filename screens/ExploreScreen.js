@@ -9,8 +9,10 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Colors } from "../assets/styles/Colors";
 import { useNavigation } from "@react-navigation/native";
+import { useAuth } from "../context/auth";
 
 const ExploreScreen = () => {
+  const { user } = useAuth();
   const [users, setUsers] = useState([]);
   const navigation = useNavigation();
 
@@ -23,6 +25,14 @@ const ExploreScreen = () => {
       .catch((error) => console.log(error));
   }, []);
 
+  const goToUser = (userId) => {
+    if (user?._id === userId) {
+      navigation.navigate("Profile");
+    } else {
+      navigation.navigate("ProfileGeneral", { userId });
+    }
+  };
+
   return (
     <SafeAreaView style={styles.screen}>
       <Text style={{ marginBottom: 50 }}>ExploreScreen</Text>
@@ -31,9 +41,7 @@ const ExploreScreen = () => {
         keyExtractor={(item) => item?._id}
         renderItem={({ item }) => (
           <TouchableOpacity
-            onPress={() =>
-              navigation.navigate("ProfileGeneral", { userId: item?._id })
-            }
+            onPress={() => goToUser(item?._id)}
             style={{
               alignItems: "center",
               justifyContent: "center",
