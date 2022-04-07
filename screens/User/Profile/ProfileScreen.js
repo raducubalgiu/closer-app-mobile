@@ -17,6 +17,7 @@ import ProfileOverview from "../../../components/customized/ProfileOverview/Prof
 import OutlinedButton from "../../../components/core/Buttons/OutlinedButton";
 import HeaderProfile from "../../../components/customized/Headers/HeaderProfile";
 import { useAuth } from "../../../context/auth";
+import JobsProfileScreen from "./ProfileStatsTabs/JobsProfileScreen";
 
 const ProfileScreen = () => {
   const [openSettings, setOpenSettings] = useState(false);
@@ -61,6 +62,7 @@ const ProfileScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <HeaderProfile
+        onGoToFindFriends={() => navigation.navigate("FindFriends")}
         onOpenSwitch={() => setOpenSwitch(true)}
         name={userDetails?.name}
         onOpenSettings={() => setOpenSettings(true)}
@@ -78,17 +80,20 @@ const ProfileScreen = () => {
             let size;
 
             if (route.name === "Posts") {
-              iconType = "antdesign";
-              iconName = focused ? "appstore-o" : "appstore-o";
+              iconType = "feather";
+              iconName = focused ? "grid" : "grid";
             } else if (route.name === "Products") {
-              iconType = "material-community";
-              iconName = focused ? "shopping-outline" : "shopping-outline";
+              iconType = "feather";
+              iconName = focused ? "shopping-bag" : "shopping-bag";
             } else if (route.name === "Calendar") {
-              iconType = "antdesign";
+              iconType = "feather";
               iconName = focused ? "calendar" : "calendar";
+            } else if (route.name === "Jobs") {
+              iconType = "feather";
+              iconName = focused ? "briefcase" : "briefcase";
             } else if (route.name === "About") {
-              iconType = "antdesign";
-              iconName = focused ? "solution1" : "solution1";
+              iconType = "feather";
+              iconName = focused ? "user-check" : "user-check";
             }
             return (
               <Icon name={iconName} type={iconType} color={color} size={size} />
@@ -109,6 +114,7 @@ const ProfileScreen = () => {
         <Tab.Screen name="Posts" component={PostsProfileScreen} />
         <Tab.Screen name="Products" component={ProductsProfileScreen} />
         <Tab.Screen name="Calendar" component={CalendarProfileScreen} />
+        <Tab.Screen name="Jobs" component={JobsProfileScreen} />
         <Tab.Screen name="About" component={AboutProfileScreen} />
       </Tab.Navigator>
 

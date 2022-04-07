@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import { Icon } from "react-native-elements";
 import { IconButton, Stack } from "../../core";
@@ -6,10 +6,10 @@ import { Colors } from "../../../assets/styles/Colors";
 
 const HeaderProfile = (props) => {
   return (
-    <Stack direction="row" sx={{ marginVertical: 20, marginHorizontal: 15 }}>
+    <Stack direction="row" sx={{ marginVertical: 10, marginHorizontal: 15 }}>
       <Stack direction="row">
         <IconButton
-          onPress={() => {}}
+          onPress={props.onGoToFindFriends}
           iconName="adduser"
           iconType="antdesign"
           size={27}

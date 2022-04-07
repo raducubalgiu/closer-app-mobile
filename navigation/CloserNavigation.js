@@ -18,6 +18,7 @@ import EditBioScreen from "../screens/User/Profile/EditProfile/EditBioScreen";
 import SettingsScreen from "../screens/User/Profile/SettingsProfileScreen";
 import SchedulesScreen from "../screens/User/Profile/SchedulesProfileScreen";
 import DiscountsScreen from "../screens/User/Profile/DiscountsProfileScreen";
+import FindFriendsScreen from "../screens/User/Profile/FindFriendsScreen";
 import ProfileTabsScreen from "../screens/User/Profile/ProfileStatsTabs/ProfileTabsScreen";
 
 import SearchScreen from "../screens/SearchScreen";
@@ -105,6 +106,7 @@ const UserStackNavigator = () => {
       <Stack.Screen name="Schedules" component={SchedulesScreen} />
       <Stack.Screen name="Discounts" component={DiscountsScreen} />
       <Stack.Screen name="ProfileTabsScreen" component={ProfileTabsScreen} />
+      <Stack.Screen name="FindFriends" component={FindFriendsScreen} />
       <Stack.Screen name="ProfileGeneral" component={ProfileGeneralScreen} />
     </Stack.Navigator>
   );

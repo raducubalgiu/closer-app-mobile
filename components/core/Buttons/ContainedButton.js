@@ -12,7 +12,9 @@ const ContainedButton = (props) => {
       }
       disabled={props.disabled}
     >
-      <Text style={styles.buttonText}>{props.title}</Text>
+      <Text style={{ ...styles.buttonText, ...props.sxText }}>
+        {props.title}
+      </Text>
     </TouchableOpacity>
   );
 };

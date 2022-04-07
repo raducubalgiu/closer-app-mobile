@@ -21,8 +21,11 @@ const CardFollowers = (props) => {
           <Text style={styles.name}>{props.name}</Text>
         </Stack>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.btn} onPress={props.onPress}>
-        <Text style={styles.btnText}>Urmaresti</Text>
+      <TouchableOpacity
+        style={{ ...styles.btn, ...props.sxBtn }}
+        onPress={props.onPress}
+      >
+        <Text style={{ ...styles.btnText, ...props.sxBtnText }}>Urmaresti</Text>
       </TouchableOpacity>
     </Stack>
   );

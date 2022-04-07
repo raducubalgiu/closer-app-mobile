@@ -1,0 +1,88 @@
+import { StyleSheet, Text, View, ScrollView } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Stack } from "../../core";
+import { Colors } from "../../../assets/styles/Colors";
+import CardCompleteProfile from "../Cards/CardCompleteProfile";
+import { useAuth } from "../../../context/auth";
+import { useNavigation } from "@react-navigation/native";
+
+const CompleteProfile = () => {
+  const navigation = useNavigation();
+  const { user } = useAuth();
+
+  const STEPS = [
+    {
+      title: "Include-ti numele",
+      description: "Cum ar trebui sa iti spuna oamenii?",
+      iconName: "user",
+      iconType: "antdesign",
+      completed: true,
+      navigation: "EditName",
+    },
+    {
+      title: "Adauga-ti biografia",
+      description: "Ce ne spui despre tine?",
+      iconName: "form",
+      iconType: "antdesign",
+      completed: false,
+      navigation: "EditBio",
+    },
+    {
+      title: "Adauga fotografia de profil",
+      description: "Ce fotografie te reprezinta?",
+      iconName: "camerao",
+      iconType: "antdesign",
+      completed: true,
+      navigation: "EditAvatar",
+    },
+  ];
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Completeaza-ti profilul</Text>
+      <Stack
+        direction="row"
+        justify="start"
+        sx={{ marginTop: 5, marginBottom: 15 }}
+      >
+        <Text style={styles.counter}>0 / 4</Text>
+        <Text style={styles.status}> FINALIZATE</Text>
+      </Stack>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        {STEPS.map((step, i) => (
+          <CardCompleteProfile
+            key={i}
+            onPress={() => navigation.navigate(step?.navigation)}
+            iconName={step.iconName}
+            iconType={step.iconType}
+            withBadge={step.completed}
+            title={step.title}
+            description={step.description}
+            completed={step.completed}
+          />
+        ))}
+      </ScrollView>
+    </View>
+  );
+};
+
+export default CompleteProfile;
+
+const styles = StyleSheet.create({
+  container: { margin: 15, flex: 1 },
+  title: {
+    fontFamily: "Exo-Medium",
+    color: Colors.textDark,
+    fontSize: 15,
+  },
+  counter: {
+    fontFamily: "Exo-SemiBold",
+    color: Colors.textDark,
+    fontSize: 12.5,
+  },
+  status: {
+    fontFamily: "Exo-SemiBold",
+    color: Colors.primary,
+    fontSize: 12,
+  },
+});

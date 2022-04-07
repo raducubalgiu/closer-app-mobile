@@ -8,7 +8,7 @@ const OutlinedButton = (props) => {
       onPress={props.onPress}
       style={{ ...styles.button, ...props.sx }}
     >
-      <Text style={styles.buttonText}>{props.title}</Text>
+      <Text style={{...styles.buttonText, ...props.sxText}}>{props.title}</Text>
     </TouchableOpacity>
   );
 };
@@ -24,5 +24,9 @@ const styles = StyleSheet.create({
     borderColor: Colors.primary,
     borderRadius: 5,
   },
-  buttonText: { color: Colors.textDark, fontFamily: "Exo-Medium" },
+  buttonText: {
+    color: Colors.textDark,
+    fontFamily: "Exo-Medium",
+    textAlign: "center",
+  },
 });

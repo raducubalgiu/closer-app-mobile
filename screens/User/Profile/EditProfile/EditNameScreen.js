@@ -2,7 +2,6 @@ import { SafeAreaView, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import EditField from "./EditFieldScreen";
 import { useAuth } from "../../../../context/auth";
-import { AuthService } from "../../../../services/AuthService";
 
 const EditNameScreen = () => {
   const { user } = useAuth();
@@ -12,10 +11,8 @@ const EditNameScreen = () => {
     setValue(text);
   };
 
-  const updateName = async (event, value) => {
+  const updateName = (event, value) => {
     event.persist();
-    const { user } = await AuthService.updateUserName();
-    console.log(user);
   };
 
   return (
