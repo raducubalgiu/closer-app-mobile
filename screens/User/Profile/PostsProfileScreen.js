@@ -4,13 +4,12 @@ import {
   Dimensions,
   TouchableOpacity,
   View,
-  Text,
 } from "react-native";
 import { Image, Icon } from "react-native-elements";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import CompleteProfile from "../../../components/customized/CompleteProfile/CompleteProfile";
-import { Colors } from "../../../assets/styles/Colors";
+import NoFoundPosts from "../../../components/customized/NotFoundContent/NoFoundPosts";
 
 const posts = [
   // {
@@ -81,7 +80,11 @@ const posts = [
 const { width } = Dimensions.get("window");
 
 const PostsProfileScreen = () => {
+  
   const navigation = useNavigation();
+
+  let noFoundPosts;
+
 
   return (
     <FlatList
@@ -113,43 +116,7 @@ const PostsProfileScreen = () => {
           </View>
         </TouchableOpacity>
       )}
-      ListHeaderComponent={
-        <View
-          style={{
-            borderBottomWidth: 1,
-            borderBottomColor: "#f1f1f1",
-            alignItems: "center",
-            justifyContent: "center",
-            paddingVertical: 15,
-            paddingHorizontal: 30,
-          }}
-        >
-          <Text
-            style={{
-              fontFamily: "Exo-SemiBold",
-              color: Colors.textDark,
-              marginBottom: 5,
-            }}
-          >
-            Adauga prima ta postare
-          </Text>
-          <Text
-            style={{
-              fontFamily: "Exo-Regular",
-              color: Colors.textLight,
-              marginBottom: 15,
-              textAlign: "center",
-            }}
-          >
-            Creeaza prima ta postare si iesi in fata oamenilor
-          </Text>
-          <TouchableOpacity>
-            <Text style={{ fontFamily: "Exo-SemiBold", color: Colors.primary }}>
-              Adauga o postare
-            </Text>
-          </TouchableOpacity>
-        </View>
-      }
+      ListHeaderComponent={<NoFoundPosts />}
       ListFooterComponent={<CompleteProfile />}
     />
   );
