@@ -6,10 +6,11 @@ import {
   View,
 } from "react-native";
 import { Image, Icon } from "react-native-elements";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import CompleteProfile from "../../../components/customized/CompleteProfile/CompleteProfile";
 import NoFoundPosts from "../../../components/customized/NotFoundContent/NoFoundPosts";
+import axios from "axios";
 
 const posts = [
   // {
@@ -80,11 +81,7 @@ const posts = [
 const { width } = Dimensions.get("window");
 
 const PostsProfileScreen = () => {
-  
   const navigation = useNavigation();
-
-  let noFoundPosts;
-
 
   return (
     <FlatList

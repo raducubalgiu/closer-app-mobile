@@ -26,18 +26,29 @@ const UsernameScreen = (props) => {
 
       const { _id, email, name, username, role, job, avatar } = userResult.data;
 
-      if (userResult) {
-        setUser({
-          _id,
-          email,
-          name,
-          username,
-          role,
-          token: idTokenResult?.token,
-          job,
-          avatar: avatar[0]?.url,
-        });
-      }
+      await axios.post(
+        `http://192.168.100.2:8000/api/v1/orders`,
+        {
+          nameStep: { name, completed: true },
+          user: _id,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + idTokenResult?.token,
+          },
+        }
+      );
+
+      setUser({
+        _id,
+        email,
+        name,
+        username,
+        role,
+        token: idTokenResult?.token,
+        job,
+        avatar: avatar[0]?.url,
+      });
     } catch (err) {
       console.log(err);
     }

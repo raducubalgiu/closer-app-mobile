@@ -1,27 +1,21 @@
 import { StyleSheet, View, SafeAreaView } from "react-native";
 import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import BottomSheetPopup from "../../../components/customized/BottomSheets/BottomSheetPopup";
 import { AuthService } from "../../../services/AuthService";
 import MenuItem from "../../../components/customized/MenuItem/MenuItem";
-import { Icon } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import SwitchAccount from "../../../components/customized/SwitchAccount/SwitchAccount";
-import PostsProfileScreen from "./PostsProfileScreen";
-import ProductsProfileScreen from "./ProductsProfileScreen";
-import { Colors } from "../../../assets/styles/Colors";
-import AboutProfileScreen from "./AboutProfileScreen";
-import CalendarProfileScreen from "./CalendarProfileScreen";
 import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
 import OutlinedButton from "../../../components/core/Buttons/OutlinedButton";
 import HeaderProfile from "../../../components/customized/Headers/HeaderProfile";
 import { useAuth } from "../../../context/auth";
-import JobsProfileScreen from "./ProfileStatsTabs/JobsProfileScreen";
+import TopTabNavigator from "../../TopTabNavigator";
 
 const ProfileScreen = () => {
   const [openSettings, setOpenSettings] = useState(false);
   const [openSwitch, setOpenSwitch] = useState(false);
+  const [completedSteps, setCompletedSteps] = useState(null);
   const navigation = useNavigation();
   const [userDetails, setUserDetails] = useState(null);
   const { user } = useAuth();
@@ -41,6 +35,15 @@ const ProfileScreen = () => {
     fetchUser();
   }, [fetchUser]);
 
+  useEffect(() => {
+    axios
+      .get(`http://192.168.100.2:8000/api/v1/users/${user?._id}/get-order`, {
+        headers: { Authorization: `Bearer ${user?.token}` },
+      })
+      .then((res) => setCompletedSteps(res.data.order))
+      .catch((err) => console.log(err));
+  }, []);
+
   const closeSheet = () => {
     setOpenSwitch(false);
     setOpenSettings(false);
@@ -49,8 +52,6 @@ const ProfileScreen = () => {
     const { error } = await AuthService.logout();
     if (!error) setUser(null);
   };
-
-  const Tab = createMaterialTopTabNavigator();
 
   const buttons = (
     <OutlinedButton
@@ -72,51 +73,7 @@ const ProfileScreen = () => {
         withBadge={true}
         actionButtons={buttons}
       />
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color }) => {
-            let iconName;
-            let iconType;
-            let size;
-
-            if (route.name === "Posts") {
-              iconType = "feather";
-              iconName = focused ? "grid" : "grid";
-            } else if (route.name === "Products") {
-              iconType = "feather";
-              iconName = focused ? "shopping-bag" : "shopping-bag";
-            } else if (route.name === "Calendar") {
-              iconType = "feather";
-              iconName = focused ? "calendar" : "calendar";
-            } else if (route.name === "Jobs") {
-              iconType = "feather";
-              iconName = focused ? "briefcase" : "briefcase";
-            } else if (route.name === "About") {
-              iconType = "feather";
-              iconName = focused ? "user-check" : "user-check";
-            }
-            return (
-              <Icon name={iconName} type={iconType} color={color} size={size} />
-            );
-          },
-          tabBarActiveTintColor: Colors.primary,
-          tabBarInactiveTintColor: "gray",
-          headerShown: false,
-          tabBarShowLabel: false,
-          tabBarIndicatorContainerStyle: {
-            color: "red",
-          },
-          tabBarIndicatorStyle: {
-            backgroundColor: Colors.textDark,
-          },
-        })}
-      >
-        <Tab.Screen name="Posts" component={PostsProfileScreen} />
-        <Tab.Screen name="Products" component={ProductsProfileScreen} />
-        <Tab.Screen name="Calendar" component={CalendarProfileScreen} />
-        <Tab.Screen name="Jobs" component={JobsProfileScreen} />
-        <Tab.Screen name="About" component={AboutProfileScreen} />
-      </Tab.Navigator>
+      <TopTabNavigator />
 
       <BottomSheetPopup
         open={openSettings}

@@ -6,12 +6,13 @@ import {
   View,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import HeaderReusable from "../../../components/customized/Headers/HeaderReusable";
 import { Icon } from "react-native-elements";
 import CardFollowers from "../../../components/customized/Cards/CardFollowers";
 import { Colors } from "../../../assets/styles/Colors";
 import { useNavigation } from "@react-navigation/native";
+import * as Contacts from "expo-contacts";
 
 const users = [
   {
@@ -77,7 +78,26 @@ const users = [
 ];
 
 const FindFriendsScreen = () => {
+  const [contacts, setContacts] = useState([]);
   const navigation = useNavigation();
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Contacts.requestPermissionsAsync();
+      if (status === "granted") {
+        const { data } = await Contacts.getContactsAsync({
+          fields: [Contacts.Fields.PhoneNumbers],
+        });
+
+        if (data.length > 0) {
+          const contacts = data;
+          setContacts(contacts);
+        }
+      }
+    })();
+  }, []);
+
+  console.log("CONTACTS FROM STATE", contacts);
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -103,12 +123,12 @@ const FindFriendsScreen = () => {
       <View style={{ paddingHorizontal: 15, flex: 1 }}>
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={users}
-          keyExtractor={(item) => item._id}
+          data={contacts}
+          keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <CardFollowers
               username={item?.name}
-              name={item?.channel}
+              name={"Din contactele tale"}
               sxBtn={{
                 backgroundColor: Colors.primary,
                 borderColor: Colors.primary,

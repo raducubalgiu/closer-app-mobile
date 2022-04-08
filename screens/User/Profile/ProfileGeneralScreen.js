@@ -1,10 +1,14 @@
 import { SafeAreaView, StyleSheet } from "react-native";
-import React, { useCallback, useEffect, useState, useMemo } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Icon } from "react-native-elements";
 import axios from "axios";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
-import { OutlinedButton, ContainedButton } from "../../../components/core";
+import {
+  OutlinedButton,
+  ContainedButton,
+  IconButton,
+} from "../../../components/core";
 import HeaderProfileGeneral from "../../../components/customized/Headers/HeaderProfileGeneral";
 import PostsProfileScreen from "./PostsProfileScreen";
 import ProductsProfileScreen from "./ProductsProfileScreen";
@@ -16,7 +20,23 @@ import { useAuth } from "../../../context/auth";
 const ProfileGeneralScreen = (props) => {
   const { userId } = props.route.params;
   const [userDetails, setUserDetails] = useState(null);
+  const [follow, setFollow] = useState(true);
   const { user } = useAuth();
+  const Tab = createMaterialTopTabNavigator();
+
+  useEffect(() => {
+    axios
+      .get(
+        `http://192.168.100.2:8000/api/v1/users/${user?._id}/follower/${userId}/followee/check-follow`,
+        {
+          headers: { Authorization: `Bearer ${user?.token}` },
+        }
+      )
+      .then((res) => {
+        setFollow(res.data.status);
+      })
+      .catch((error) => console.log(error));
+  }, [user?._id, userId]);
 
   const fetchUser = useCallback(() => {
     axios
@@ -36,12 +56,17 @@ const ProfileGeneralScreen = (props) => {
   const followHandler = () => {
     axios
       .post(
-        `http://192.168.100.2:8000/api/v1/users/${user?._id}/user/${userId}/following`,
+        `http://192.168.100.2:8000/api/v1/users/follow`,
+        {
+          userId: user?._id,
+          followingId: userId,
+        },
         {
           headers: { Authorization: `Bearer ${user?.token}` },
         }
       )
       .then(() => {
+        setFollow(follow ? false : true);
         fetchUser();
       })
       .catch((error) => console.log(error));
@@ -49,12 +74,26 @@ const ProfileGeneralScreen = (props) => {
 
   const buttons = (
     <>
-      <ContainedButton title="Urmareste" onPress={followHandler} />
-      <OutlinedButton title="Mesaj" sx={{ marginLeft: 10 }} />
+      <ContainedButton
+        title={follow ? "Urmaresti" : "Urmareste"}
+        sx={follow ? styles.followBtn : styles.unfollowBtn}
+        sxText={follow && styles.followBtnText}
+        onPress={followHandler}
+      />
+      <OutlinedButton
+        title="Mesaj"
+        sx={styles.btnMessage}
+        sxText={{ fontFamily: "Exo-SemiBold" }}
+      />
+      <IconButton
+        sx={styles.iconBtn}
+        size={20}
+        color={Colors.textDark}
+        iconType="antdesign"
+        iconName="addusergroup"
+      />
     </>
   );
-
-  const Tab = createMaterialTopTabNavigator();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -115,5 +154,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
+  },
+  unfollowBtn: { borderWidth: 1 },
+  followBtn: {
+    backgroundColor: "white",
+    borderWidth: 1,
+    borderColor: "#ddd",
+    paddingHorizontal: 20,
+  },
+  followBtnText: { color: Colors.textDark, fontFamily: "Exo-SemiBold" },
+  btnMessage: { marginLeft: 5, borderWidth: 1, borderColor: "#ddd" },
+  iconBtn: {
+    borderWidth: 1,
+    paddingVertical: 7,
+    paddingHorizontal: 10,
+    borderColor: "#ddd",
+    borderRadius: 5,
+    marginLeft: 5,
   },
 });
