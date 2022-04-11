@@ -58,15 +58,9 @@ const ProfileTabsScreen = (props) => {
         initialRouteName={initialRoute}
         screenOptions={{
           tabBarActiveTintColor: Colors.textDark,
-          tabBarLabelStyle: {
-            fontFamily: "Exo-SemiBold",
-            textTransform: "capitalize",
-            fontSize: 14,
-          },
-          tabBarStyle: { backgroundColor: "white" },
-          tabBarIndicatorStyle: {
-            backgroundColor: Colors.textDark,
-          },
+          tabBarLabelStyle: styles.tabLabel,
+          tabBarStyle: styles.tabStyle,
+          tabBarIndicatorStyle: styles.tabIndicator,
         }}
       >
         <Tab.Screen
@@ -100,5 +94,14 @@ const styles = StyleSheet.create({
     fontFamily: "Exo-Bold",
     color: Colors.textDark,
     fontSize: 16,
+  },
+  tabLabel: {
+    fontFamily: "Exo-SemiBold",
+    textTransform: "capitalize",
+    fontSize: 14,
+  },
+  tabStyle: { backgroundColor: "white" },
+  tabIndicator: {
+    backgroundColor: Colors.textDark,
   },
 });

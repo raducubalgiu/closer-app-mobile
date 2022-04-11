@@ -1,8 +1,13 @@
-import { SafeAreaView, StyleSheet } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  FlatList,
+  Text,
+  ActivityIndicator,
+  View,
+} from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
-import { Icon } from "react-native-elements";
 import axios from "axios";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
 import {
   OutlinedButton,
@@ -10,19 +15,19 @@ import {
   IconButton,
 } from "../../../components/core";
 import HeaderProfileGeneral from "../../../components/customized/Headers/HeaderProfileGeneral";
-import PostsProfileScreen from "./PostsProfileScreen";
-import ProductsProfileScreen from "./ProductsProfileScreen";
-import CalendarProfileScreen from "./CalendarProfileScreen";
-import AboutProfileScreen from "./AboutProfileScreen";
 import { Colors } from "../../../assets/styles/Colors";
 import { useAuth } from "../../../context/auth";
+import TopTabNavigator from "../../TopTabNavigator";
+import { Stack } from "../../../components/core";
+import CardSuggestedPeople from "../../../components/customized/Cards/CardSuggestedPeople";
 
 const ProfileGeneralScreen = (props) => {
   const { userId } = props.route.params;
   const [userDetails, setUserDetails] = useState(null);
   const [follow, setFollow] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [suggestedPeople, setSuggestedPeople] = useState([]);
   const { user } = useAuth();
-  const Tab = createMaterialTopTabNavigator();
 
   useEffect(() => {
     axios
@@ -53,23 +58,59 @@ const ProfileGeneralScreen = (props) => {
     fetchUser();
   }, [fetchUser]);
 
-  const followHandler = () => {
+  const handleSuggested = () => {
+    setLoading(true);
     axios
-      .post(
-        `http://192.168.100.2:8000/api/v1/users/follow`,
-        {
-          userId: user?._id,
-          followingId: userId,
-        },
+      .get(
+        `http://192.168.100.2:8000/api/v1/users/${userDetails?.job}/get-suggested`,
         {
           headers: { Authorization: `Bearer ${user?.token}` },
         }
       )
-      .then(() => {
-        setFollow(follow ? false : true);
-        fetchUser();
+      .then((res) => {
+        setSuggestedPeople(res.data.suggestedPeople);
+        setLoading(false);
       })
-      .catch((error) => console.log(error));
+      .catch((err) => {
+        console.log(error);
+        setLoading(false);
+      });
+  };
+
+  const followHandler = () => {
+    if (!follow) {
+      axios
+        .post(
+          `http://192.168.100.2:8000/api/v1/users/follow`,
+          {
+            userId: user?._id,
+            followingId: userId,
+          },
+          {
+            headers: { Authorization: `Bearer ${user?.token}` },
+          }
+        )
+        .then(() => {
+          setFollow(true);
+          handleSuggested();
+          fetchUser();
+        })
+        .catch((error) => console.log(error));
+    }
+    if (follow) {
+      axios
+        .delete(
+          `http://192.168.100.2:8000/api/v1/users/${user?._id}/followee/${userId}/follower/unfollow`,
+          {
+            headers: { Authorization: `Bearer ${user?.token}` },
+          }
+        )
+        .then(() => {
+          setFollow(false);
+          fetchUser();
+        })
+        .catch((error) => console.log(error));
+    }
   };
 
   const buttons = (
@@ -85,13 +126,29 @@ const ProfileGeneralScreen = (props) => {
         sx={styles.btnMessage}
         sxText={{ fontFamily: "Exo-SemiBold" }}
       />
-      <IconButton
-        sx={styles.iconBtn}
-        size={20}
-        color={Colors.textDark}
-        iconType="antdesign"
-        iconName="addusergroup"
-      />
+      {!loading && (
+        <IconButton
+          sx={styles.iconBtn}
+          size={20}
+          color={Colors.textDark}
+          iconType="antdesign"
+          iconName="addusergroup"
+          onPress={handleSuggested}
+        />
+      )}
+      {loading && (
+        <View
+          style={{
+            marginLeft: 5,
+            borderWidth: 1,
+            borderColor: "#ddd",
+            padding: 7,
+            borderRadius: 5,
+          }}
+        >
+          <ActivityIndicator />
+        </View>
+      )}
     </>
   );
 
@@ -103,47 +160,26 @@ const ProfileGeneralScreen = (props) => {
         withBadge={false}
         actionButtons={buttons}
       />
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color }) => {
-            let iconName;
-            let iconType;
-            let size;
-
-            if (route.name === "Posts") {
-              iconType = "antdesign";
-              iconName = focused ? "appstore-o" : "appstore-o";
-            } else if (route.name === "Products") {
-              iconType = "material-community";
-              iconName = focused ? "shopping-outline" : "shopping-outline";
-            } else if (route.name === "Calendar") {
-              iconType = "antdesign";
-              iconName = focused ? "calendar" : "calendar";
-            } else if (route.name === "About") {
-              iconType = "antdesign";
-              iconName = focused ? "solution1" : "solution1";
-            }
-            return (
-              <Icon name={iconName} type={iconType} color={color} size={size} />
-            );
-          },
-          tabBarActiveTintColor: Colors.primary,
-          tabBarInactiveTintColor: "gray",
-          headerShown: false,
-          tabBarShowLabel: false,
-          tabBarIndicatorContainerStyle: {
-            color: "red",
-          },
-          tabBarIndicatorStyle: {
-            backgroundColor: Colors.textDark,
-          },
-        })}
-      >
-        <Tab.Screen name="Posts" component={PostsProfileScreen} />
-        <Tab.Screen name="Products" component={ProductsProfileScreen} />
-        <Tab.Screen name="Calendar" component={CalendarProfileScreen} />
-        <Tab.Screen name="About" component={AboutProfileScreen} />
-      </Tab.Navigator>
+      {suggestedPeople.length !== 0 && (
+        <Stack align="start" justify="start" sx={styles.suggestedPeople}>
+          <Text style={styles.suggestedTitle}>Sugestii pentru tine</Text>
+          <FlatList
+            showsHorizontalScrollIndicator={false}
+            horizontal
+            data={suggestedPeople}
+            keyExtractor={(item) => item?._id}
+            renderItem={({ item }) => (
+              <CardSuggestedPeople
+                title={item?.name}
+                job={item?.job}
+                noFollowers={item?.followersCount}
+                username={item?.username}
+              />
+            )}
+          />
+        </Stack>
+      )}
+      <TopTabNavigator />
     </SafeAreaView>
   );
 };
@@ -171,5 +207,13 @@ const styles = StyleSheet.create({
     borderColor: "#ddd",
     borderRadius: 5,
     marginLeft: 5,
+  },
+  suggestedTitle: {
+    fontFamily: "Exo-Medium",
+    color: Colors.textLight,
+    marginBottom: 5,
+  },
+  suggestedPeople: {
+    margin: 15,
   },
 });

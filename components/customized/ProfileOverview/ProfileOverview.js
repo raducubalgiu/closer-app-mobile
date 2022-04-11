@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { Icon } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
@@ -12,8 +12,8 @@ const ProfileOverview = (props) => {
   const navigation = useNavigation();
 
   return (
-    <Stack sx={styles.container}>
-      <Stack justify="center">
+    <View style={styles.container}>
+      <Stack justify="center" align="center">
         <TouchableOpacity>
           <UserAvatar
             iconSize={37}
@@ -79,7 +79,7 @@ const ProfileOverview = (props) => {
       <Stack direction="row" justify="center" sx={styles.buttonsContainer}>
         {props.actionButtons}
       </Stack>
-    </Stack>
+    </View>
   );
 };
 
@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
     color: Colors.primary,
     marginLeft: 5,
     fontSize: 14,
+    textTransform: "capitalize",
   },
   ratingsAverage: { fontFamily: "Exo-SemiBold", marginLeft: 2.5 },
   statsContainer: {
