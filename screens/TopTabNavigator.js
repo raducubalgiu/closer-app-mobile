@@ -8,8 +8,20 @@ import AboutProfileScreen from "./User/Profile/AboutProfileScreen";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { Colors } from "../assets/styles/Colors";
 
-const TopTabNavigator = () => {
+const TopTabNavigator = (props) => {
   const Tab = createMaterialTopTabNavigator();
+
+  const PostsProfile = () => <PostsProfileScreen posts={props?.posts} />;
+  const ProductsProfile = () => (
+    <ProductsProfileScreen products={props?.products} />
+  );
+  const AboutProfile = () => (
+    <AboutProfileScreen
+      biography={props?.biography}
+      website={props?.website}
+      address={props?.address}
+    />
+  );
 
   const topTab = (
     <Tab.Navigator
@@ -43,19 +55,16 @@ const TopTabNavigator = () => {
         tabBarInactiveTintColor: "gray",
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarIndicatorContainerStyle: {
-          color: "red",
-        },
         tabBarIndicatorStyle: {
           backgroundColor: Colors.textDark,
         },
       })}
     >
-      <Tab.Screen name="Posts" component={PostsProfileScreen} />
-      <Tab.Screen name="Products" component={ProductsProfileScreen} />
+      <Tab.Screen name="Posts" component={PostsProfile} />
+      <Tab.Screen name="Products" component={ProductsProfile} />
       <Tab.Screen name="Calendar" component={CalendarProfileScreen} />
       <Tab.Screen name="Jobs" component={JobsProfileScreen} />
-      <Tab.Screen name="About" component={AboutProfileScreen} />
+      <Tab.Screen name="About" component={AboutProfile} />
     </Tab.Navigator>
   );
 

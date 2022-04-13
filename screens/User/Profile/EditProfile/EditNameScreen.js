@@ -1,4 +1,5 @@
 import { SafeAreaView, StyleSheet } from "react-native";
+import axios from "axios";
 import React, { useState } from "react";
 import EditField from "./EditFieldScreen";
 import { useAuth } from "../../../../context/auth";
@@ -11,8 +12,20 @@ const EditNameScreen = () => {
     setValue(text);
   };
 
-  const updateName = (event, value) => {
+  const updateName = (event) => {
     event.persist();
+    axios
+      .patch(
+        `http://192.168.100.2:8000/api/v1/users/update`,
+        {
+          name: value,
+        },
+        {
+          headers: { Authorization: `Bearer ${user?.token}` },
+        }
+      )
+      .then((res) => setValue(res.data.user.name))
+      .catch((err) => console.log(err));
   };
 
   return (

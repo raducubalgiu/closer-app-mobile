@@ -9,10 +9,10 @@ const CardProduct = (props) => {
     <View style={styles.card}>
       <Stack direction="row" align="start" sx={styles.cardLayout}>
         <View style={{ flex: 1, marginRight: 5 }}>
-          <Text style={styles.name}>
-            {props.name} - {props.option}
-          </Text>
-          <Text style={styles.description}>{props.description}</Text>
+          <Text style={styles.name}>{props.name}</Text>
+          {props.description && (
+            <Text style={styles.description}>{props.description}</Text>
+          )}
           <Text style={styles.price}>{props.price} RON</Text>
         </View>
         <OutlinedButton title="Rezerva" style={{ flex: 1 }} />

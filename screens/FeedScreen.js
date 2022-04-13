@@ -11,6 +11,12 @@ import { Icon } from "react-native-elements";
 import CardUserRecommend from "../components/customized/Cards/CardUserRecommend";
 import CardPost from "../components/customized/Cards/CardPost";
 import { Colors } from "../assets/styles/Colors";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import {
+  FeedFollowingTab,
+  FeedRecommendedTab,
+  FeedLastMinuteTab,
+} from "../components/customized/FeedTabs";
 
 const DUMMY_RECOMMEND_PROF = [
   {
@@ -205,18 +211,18 @@ const DUMMY_POSTS = [
   },
 ];
 
-const SocialScreen = () => {
+const FeedScreen = () => {
+  const Tab = createMaterialTopTabNavigator();
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.screen}>
       <SafeAreaView>
         <TouchableOpacity
           style={{
-            backgroundColor: "white",
-            padding: 10,
             marginHorizontal: 15,
             marginTop: 5,
-            marginBottom: 10,
-            borderRadius: 10,
+            backgroundColor: "#f1f1f1",
+            paddingHorizontal: 10,
+            paddingVertical: 8.5,
           }}
         >
           <View
@@ -236,20 +242,43 @@ const SocialScreen = () => {
               <Text
                 style={{
                   fontFamily: "Exo-Regular",
-                  marginLeft: 10,
+                  marginLeft: 15,
                   color: Colors.textLight,
                 }}
               >
-                Cauta profesionisti
+                Cauta
               </Text>
             </View>
-            <Icon type="antdesign" name="team" color={Colors.textDark} />
+            {/* <Icon type="antdesign" name="team" color={Colors.textLight} /> */}
           </View>
         </TouchableOpacity>
       </SafeAreaView>
-      <FlatList
+      <Tab.Navigator
+        initialRouteName="Following"
+        screenOptions={{
+          tabBarActiveTintColor: "#e91e63",
+          tabBarLabelStyle: { fontSize: 12 },
+        }}
+      >
+        <Tab.Screen
+          name="Following"
+          component={FeedFollowingTab}
+          options={{ tabBarLabel: "Urmaresti" }}
+        />
+        <Tab.Screen
+          name="Recommended"
+          component={FeedRecommendedTab}
+          options={{ tabBarLabel: "Recomandari" }}
+        />
+        <Tab.Screen
+          name="LastMinute"
+          component={FeedLastMinuteTab}
+          options={{ tabBarLabel: "Last Minute" }}
+        />
+      </Tab.Navigator>
+      {/* <FlatList
         ListHeaderComponent={
-          <View style={{ backgroundColor: "white", marginTop: 15 }}>
+          <View style={{ marginTop: 15 }}>
             <View style={{ alignItems: "center", marginBottom: 5 }}>
               <Icon
                 type="material"
@@ -283,7 +312,6 @@ const SocialScreen = () => {
           </View>
         }
         data={DUMMY_POSTS}
-        style={{ backgroundColor: "white" }}
         nestedScrollEnabled={true}
         keyExtractor={(item) => item._id}
         showsVerticalScrollIndicator={false}
@@ -298,14 +326,15 @@ const SocialScreen = () => {
             likes={item.likes}
           />
         )}
-      />
+      /> */}
     </View>
   );
 };
 
-export default SocialScreen;
+export default FeedScreen;
 
 const styles = StyleSheet.create({
+  screen: { flex: 1, backgroundColor: "white" },
   welcome: {
     fontFamily: "Exo-SemiBold",
     fontSize: 21,
@@ -320,7 +349,6 @@ const styles = StyleSheet.create({
   },
   container: {
     marginTop: 10,
-    backgroundColor: "white",
     flex: 1,
   },
   title: {

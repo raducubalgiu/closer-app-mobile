@@ -6,14 +6,14 @@ import {
   ActivityIndicator,
   View,
 } from "react-native";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
 import {
   OutlinedButton,
   ContainedButton,
   IconButton,
 } from "../../../components/core";
+import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
 import HeaderProfileGeneral from "../../../components/customized/Headers/HeaderProfileGeneral";
 import { Colors } from "../../../assets/styles/Colors";
 import { useAuth } from "../../../context/auth";
@@ -22,12 +22,33 @@ import { Stack } from "../../../components/core";
 import CardSuggestedPeople from "../../../components/customized/Cards/CardSuggestedPeople";
 
 const ProfileGeneralScreen = (props) => {
+  const { user } = useAuth();
   const { userId } = props.route.params;
   const [userDetails, setUserDetails] = useState(null);
+  const [posts, setPosts] = useState([]);
   const [follow, setFollow] = useState(true);
   const [loading, setLoading] = useState(false);
   const [suggestedPeople, setSuggestedPeople] = useState([]);
-  const { user } = useAuth();
+
+  useEffect(() => {
+    axios
+      .get(`http://192.168.100.2:8000/api/v1/users/${userId}`, {
+        headers: { Authorization: `Bearer ${user?.token}` },
+      })
+      .then((resp) => {
+        setUserDetails(resp.data.user);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get(`http://192.168.100.2:8000/api/v1/users/${userId}/get-posts`, {
+        headers: { Authorization: `Bearer ${user?.token}` },
+      })
+      .then((res) => setPosts(res.data.posts))
+      .catch((err) => console.log(err));
+  }, []);
 
   useEffect(() => {
     axios
@@ -43,7 +64,7 @@ const ProfileGeneralScreen = (props) => {
       .catch((error) => console.log(error));
   }, [user?._id, userId]);
 
-  const fetchUser = useCallback(() => {
+  const fetchUser = () => {
     axios
       .get(`http://192.168.100.2:8000/api/v1/users/${userId}`, {
         headers: { Authorization: `Bearer ${user?.token}` },
@@ -52,11 +73,7 @@ const ProfileGeneralScreen = (props) => {
         setUserDetails(resp.data.user);
       })
       .catch((error) => console.log(error));
-  }, [userId]);
-
-  useEffect(() => {
-    fetchUser();
-  }, [fetchUser]);
+  };
 
   const handleSuggested = () => {
     setLoading(true);
@@ -137,15 +154,7 @@ const ProfileGeneralScreen = (props) => {
         />
       )}
       {loading && (
-        <View
-          style={{
-            marginLeft: 5,
-            borderWidth: 1,
-            borderColor: "#ddd",
-            padding: 7,
-            borderRadius: 5,
-          }}
-        >
+        <View style={styles.activityIndicator}>
           <ActivityIndicator />
         </View>
       )}
@@ -179,7 +188,7 @@ const ProfileGeneralScreen = (props) => {
           />
         </Stack>
       )}
-      <TopTabNavigator />
+      <TopTabNavigator posts={posts} products={userDetails?.products} />
     </SafeAreaView>
   );
 };
@@ -191,22 +200,35 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
   },
-  unfollowBtn: { borderWidth: 1 },
+  unfollowBtn: {
+    borderWidth: 1,
+    borderRadius: 0,
+    paddingVertical: 10,
+    borderRadius: 2.5,
+  },
   followBtn: {
     backgroundColor: "white",
     borderWidth: 1,
     borderColor: "#ddd",
     paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 2.5,
   },
   followBtnText: { color: Colors.textDark, fontFamily: "Exo-SemiBold" },
-  btnMessage: { marginLeft: 5, borderWidth: 1, borderColor: "#ddd" },
+  btnMessage: {
+    marginLeft: 5,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 0,
+    paddingVertical: 10,
+    borderRadius: 2.5,
+  },
   iconBtn: {
     borderWidth: 1,
-    paddingVertical: 7,
-    paddingHorizontal: 10,
+    padding: 10,
     borderColor: "#ddd",
-    borderRadius: 5,
     marginLeft: 5,
+    borderRadius: 2.5,
   },
   suggestedTitle: {
     fontFamily: "Exo-Medium",
@@ -215,5 +237,12 @@ const styles = StyleSheet.create({
   },
   suggestedPeople: {
     margin: 15,
+  },
+  activityIndicator: {
+    marginLeft: 5,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    padding: 7,
+    borderRadius: 5,
   },
 });

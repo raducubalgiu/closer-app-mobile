@@ -52,7 +52,11 @@ const ServicesScreen = ({ route }) => {
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.servicesHeader}>
           <TouchableOpacity onPress={() => navigation.navigate("StackBase")}>
-            <Icon name="keyboard-arrow-left" size={25} />
+            <Icon
+              name="keyboard-arrow-left"
+              size={30}
+              color={Colors.textDark}
+            />
           </TouchableOpacity>
           <TouchableOpacity style={styles.searchDetailContainer}>
             <Icon name="search" size={18} color={Colors.textLight} />
@@ -136,7 +140,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "white",
     marginBottom: 15,
-    paddingHorizontal: 25,
+    paddingHorizontal: 15,
     marginTop: 10,
   },
   searchDetailContainer: {

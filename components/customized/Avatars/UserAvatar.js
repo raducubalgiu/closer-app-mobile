@@ -25,9 +25,9 @@ const UserAvatar = (props) => {
       {avatar}
       {props.withBadge && (
         <Badge
-          containerStyle={styles.badgeContainer}
+          containerStyle={{ ...styles.badgeContainer, ...props.badgeContainer }}
           badgeStyle={styles.badge}
-          value={<Icon name="plus" type="entypo" size={17} color="white" />}
+          value={<Icon {...props.badgeDetails} size={17} color="white" />}
         />
       )}
     </>

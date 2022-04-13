@@ -1,4 +1,10 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React from "react";
 import { Icon } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
@@ -22,9 +28,26 @@ const ProfileOverview = (props) => {
               user?.avatar !== undefined ? user?.avatar[0]?.url : undefined
             }
             withBadge={props.withBadge}
+            badgeDetails={{ name: "plus", type: "entypo" }}
           />
         </TouchableOpacity>
-        <Text style={styles.name}>@{user?.username}</Text>
+        <Stack direction="row">
+          <Text style={styles.name}>@{user?.username}</Text>
+          {user?.checkmark && (
+            <Icon
+              name="check"
+              type="antdesign"
+              size={10}
+              color="white"
+              style={{
+                backgroundColor: "#00ccff",
+                marginLeft: 5,
+                padding: 2.5,
+                borderRadius: 50,
+              }}
+            />
+          )}
+        </Stack>
         <Stack direction="row" justify="start">
           <Text style={styles.job}>{user?.job}</Text>
           {user?.role !== "subscriber" && (
@@ -40,6 +63,15 @@ const ProfileOverview = (props) => {
             <Text style={styles.ratingsAverage}>{user?.ratingsAverage}</Text>
           )}
         </Stack>
+      </Stack>
+      <Stack justify="center" align="center" sx={styles.servicesContainer}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          {user?.services?.map((service, i) => (
+            <Text key={i} style={styles.service}>
+              {service.name}
+            </Text>
+          ))}
+        </ScrollView>
       </Stack>
       <Stack direction="row" justify="between" sx={styles.statsContainer}>
         <StatsButton
@@ -104,11 +136,26 @@ const styles = StyleSheet.create({
     textTransform: "capitalize",
   },
   ratingsAverage: { fontFamily: "Exo-SemiBold", marginLeft: 2.5 },
+  servicesContainer: {
+    marginTop: 10,
+    marginBottom: 20,
+    marginHorizontal: 40,
+  },
+  service: {
+    fontFamily: "Exo-SemiBold",
+    borderWidth: 1,
+    borderColor: "#ddd",
+    paddingVertical: 2.5,
+    paddingHorizontal: 15,
+    marginRight: 10,
+    borderRadius: 10,
+    fontSize: 12,
+    color: Colors.textDark,
+  },
   statsContainer: {
     width: "100%",
     paddingHorizontal: 60,
-    marginTop: 20,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   buttonsContainer: {
     marginVertical: 10,

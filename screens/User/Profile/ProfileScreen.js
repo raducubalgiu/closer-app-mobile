@@ -1,9 +1,8 @@
-import { StyleSheet, View, SafeAreaView } from "react-native";
-import React, { useState, useEffect, useCallback } from "react";
+import { StyleSheet, SafeAreaView, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import BottomSheetPopup from "../../../components/customized/BottomSheets/BottomSheetPopup";
 import { AuthService } from "../../../services/AuthService";
-import MenuItem from "../../../components/customized/MenuItem/MenuItem";
 import { useNavigation } from "@react-navigation/native";
 import SwitchAccount from "../../../components/customized/SwitchAccount/SwitchAccount";
 import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
@@ -11,16 +10,19 @@ import OutlinedButton from "../../../components/core/Buttons/OutlinedButton";
 import HeaderProfile from "../../../components/customized/Headers/HeaderProfile";
 import { useAuth } from "../../../context/auth";
 import TopTabNavigator from "../../TopTabNavigator";
+import { Icon } from "react-native-elements";
+import { Colors } from "../../../assets/styles/Colors";
+import SettingsList from "../../../components/customized/Lists/SettingsList";
 
-const ProfileScreen = () => {
+const ProfileScreen = (props) => {
+  const { user } = useAuth();
+  const navigation = useNavigation();
   const [openSettings, setOpenSettings] = useState(false);
   const [openSwitch, setOpenSwitch] = useState(false);
-  const [completedSteps, setCompletedSteps] = useState(null);
-  const navigation = useNavigation();
   const [userDetails, setUserDetails] = useState(null);
-  const { user } = useAuth();
+  const [posts, setPosts] = useState([]);
 
-  const fetchUser = useCallback(() => {
+  useEffect(() => {
     axios
       .get(`http://192.168.100.2:8000/api/v1/users/${user?._id}`, {
         headers: { Authorization: `Bearer ${user?.token}` },
@@ -29,19 +31,6 @@ const ProfileScreen = () => {
         setUserDetails(resp.data.user);
       })
       .catch((error) => console.log(error));
-  }, []);
-
-  useEffect(() => {
-    fetchUser();
-  }, [fetchUser]);
-
-  useEffect(() => {
-    axios
-      .get(`http://192.168.100.2:8000/api/v1/users/${user?._id}/get-order`, {
-        headers: { Authorization: `Bearer ${user?.token}` },
-      })
-      .then((res) => setCompletedSteps(res.data.order))
-      .catch((err) => console.log(err));
   }, []);
 
   const closeSheet = () => {
@@ -53,11 +42,48 @@ const ProfileScreen = () => {
     if (!error) setUser(null);
   };
 
+  useEffect(() => {
+    axios
+      .get(`http://192.168.100.2:8000/api/v1/users/${user?._id}/get-posts`, {
+        headers: { Authorization: `Bearer ${user?.token}` },
+      })
+      .then((res) => setPosts(res.data.posts))
+      .catch((err) => console.log(err));
+  }, []);
+
   const buttons = (
-    <OutlinedButton
-      title="Editeaza profilul"
-      onPress={() => navigation.navigate("EditProfile")}
-    />
+    <>
+      <OutlinedButton
+        title="Editeaza profilul"
+        onPress={() => navigation.navigate("EditProfile")}
+        sx={styles.editBtn}
+      />
+      <TouchableOpacity
+        style={styles.savedBtn}
+        onPress={() => navigation.navigate("Saved")}
+      >
+        <Icon
+          name="bookmark"
+          type="feather"
+          size={20}
+          color={Colors.textDark}
+        />
+      </TouchableOpacity>
+      <Icon
+        name="instagram"
+        type="feather"
+        size={20}
+        style={styles.socialBtn}
+        color={Colors.textDark}
+      />
+      <Icon
+        name="youtube"
+        type="feather"
+        size={20}
+        style={styles.socialBtn}
+        color={Colors.textDark}
+      />
+    </>
   );
 
   return (
@@ -71,55 +97,23 @@ const ProfileScreen = () => {
       <ProfileOverview
         user={userDetails}
         withBadge={true}
+        badgeDetails={props.badgeDetails}
         actionButtons={buttons}
       />
-      <TopTabNavigator />
+      <TopTabNavigator
+        posts={posts}
+        products={userDetails?.products}
+        biography={userDetails?.description}
+        website={userDetails?.website}
+        address={userDetails?.location[0]?.startLocation?.address}
+      />
 
       <BottomSheetPopup
         open={openSettings}
         onClose={closeSheet}
         height={60}
         sheetBody={
-          openSettings && (
-            <View>
-              <MenuItem
-                iconName="setting"
-                iconType="antdesign"
-                text="Setari"
-                onPress={() => {
-                  navigation.navigate("Settings");
-                }}
-              />
-
-              <MenuItem
-                iconName="bars"
-                iconType="antdesign"
-                text="Programarile tale"
-                onPress={() => navigation.navigate("Schedules")}
-              />
-
-              <MenuItem
-                iconName="gift"
-                iconType="antdesign"
-                text="Discounturi"
-                onPress={() => navigation.navigate("Discounts")}
-              />
-
-              <MenuItem
-                iconName="exclamationcircleo"
-                iconType="antdesign"
-                text="Raporteaza o problema"
-                onPress={() => {}}
-              />
-
-              <MenuItem
-                iconName="logout"
-                iconType="antdesign"
-                text="Delogare"
-                onPress={handleLogout}
-              />
-            </View>
-          )
+          openSettings && <SettingsList onHandleLogout={handleLogout} />
         }
       />
       <BottomSheetPopup
@@ -138,5 +132,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
+  },
+  editBtn: {
+    borderColor: "#ddd",
+    borderWidth: 1,
+    paddingVertical: 10,
+    borderRadius: 0,
+  },
+  savedBtn: {
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    marginLeft: 5,
+  },
+  socialBtn: {
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    marginLeft: 5,
   },
 });

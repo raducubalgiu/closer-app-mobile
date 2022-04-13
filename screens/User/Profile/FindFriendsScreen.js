@@ -14,69 +14,6 @@ import { Colors } from "../../../assets/styles/Colors";
 import { useNavigation } from "@react-navigation/native";
 import * as Contacts from "expo-contacts";
 
-const users = [
-  {
-    _id: "1",
-    name: "Adina Pop",
-    channel: "Te urmareste",
-  },
-  {
-    _id: "2",
-    name: "Claudia Cernat",
-    channel: "Din contactele tale",
-  },
-  {
-    _id: "3",
-    name: "Gabriela Ionel",
-    channel: "Te urmareste",
-  },
-  {
-    _id: "4",
-    name: "Cristiano Ronaldo",
-    channel: "Te urmareste",
-  },
-  {
-    _id: "5",
-    name: "Anca Bizu",
-    channel: "Te urmareste",
-  },
-  {
-    _id: "6",
-    name: "Gabriela Ionel",
-    channel: "Te urmareste",
-  },
-  {
-    _id: "7",
-    name: "Cristiano Ronaldo",
-    channel: "Te urmareste",
-  },
-  {
-    _id: "8",
-    name: "Anca Bizu",
-    channel: "Te urmareste",
-  },
-  {
-    _id: "9",
-    name: "Anca Bizu",
-    channel: "Te urmareste",
-  },
-  {
-    _id: "10",
-    name: "Gabriela Ionel",
-    channel: "Te urmareste",
-  },
-  {
-    _id: "11",
-    name: "Cristiano Ronaldo",
-    channel: "Te urmareste",
-  },
-  {
-    _id: "12",
-    name: "Anca Bizu",
-    channel: "Te urmareste",
-  },
-];
-
 const FindFriendsScreen = () => {
   const [contacts, setContacts] = useState([]);
   const navigation = useNavigation();
@@ -97,8 +34,6 @@ const FindFriendsScreen = () => {
     })();
   }, []);
 
-  console.log("CONTACTS FROM STATE", contacts);
-
   return (
     <SafeAreaView style={styles.screen}>
       <HeaderReusable
@@ -107,17 +42,7 @@ const FindFriendsScreen = () => {
             <Icon name="arrow-back-ios" size={21} color={Colors.textDark} />
           </TouchableOpacity>
         }
-        secondBox={
-          <Text
-            style={{
-              fontFamily: "Exo-SemiBold",
-              color: Colors.textDark,
-              fontSize: 15,
-            }}
-          >
-            Gaseste prieteni
-          </Text>
-        }
+        secondBox={<Text style={styles.title}>Gaseste prieteni</Text>}
         thirdBox={null}
       />
       <View style={{ paddingHorizontal: 15, flex: 1 }}>
@@ -129,37 +54,14 @@ const FindFriendsScreen = () => {
             <CardFollowers
               username={item?.name}
               name={"Din contactele tale"}
-              sxBtn={{
-                backgroundColor: Colors.primary,
-                borderColor: Colors.primary,
-                borderRadius: 2.5,
-              }}
+              sxBtn={styles.btnFollow}
               sxBtnText={{ color: "white" }}
             />
           )}
           ListHeaderComponent={
-            <TouchableOpacity
-              style={{
-                backgroundColor: "#f1f1f1",
-                flexDirection: "row",
-                alignItems: "center",
-                paddingHorizontal: 10,
-                paddingVertical: 10,
-                borderRadius: 5,
-                marginVertical: 5,
-              }}
-            >
+            <TouchableOpacity style={styles.btn}>
               <Icon name="search" type="feather" size={16} />
-              <Text
-                style={{
-                  fontFamily: "Exo-Regular",
-                  color: Colors.textLight,
-                  marginLeft: 15,
-                  fontSize: 13.5,
-                }}
-              >
-                Cauta utilizatori
-              </Text>
+              <Text style={styles.findUsers}>Cauta utilizatori</Text>
             </TouchableOpacity>
           }
         />
@@ -174,5 +76,30 @@ const styles = StyleSheet.create({
   screen: {
     backgroundColor: "white",
     flex: 1,
+  },
+  title: {
+    fontFamily: "Exo-SemiBold",
+    color: Colors.textDark,
+    fontSize: 15,
+  },
+  btn: {
+    backgroundColor: "#f1f1f1",
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginVertical: 5,
+  },
+  btnFollow: {
+    backgroundColor: Colors.primary,
+    borderColor: Colors.primary,
+    borderRadius: 2.5,
+  },
+  findUsers: {
+    fontFamily: "Exo-Regular",
+    color: Colors.textLight,
+    marginLeft: 15,
+    fontSize: 13.5,
   },
 });

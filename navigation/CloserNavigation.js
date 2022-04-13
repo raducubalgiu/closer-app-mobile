@@ -15,9 +15,9 @@ import EditProfileScreen from "../screens/User/Profile/EditProfile/EditProfileSc
 import EditNameScreen from "../screens/User/Profile/EditProfile/EditNameScreen";
 import EditWebsiteScreen from "../screens/User/Profile/EditProfile/EditWebsiteScreen";
 import EditBioScreen from "../screens/User/Profile/EditProfile/EditBioScreen";
-import SettingsScreen from "../screens/User/Profile/SettingsProfileScreen";
-import SchedulesScreen from "../screens/User/Profile/SchedulesProfileScreen";
-import DiscountsScreen from "../screens/User/Profile/DiscountsProfileScreen";
+import SettingsScreen from "../screens/User/Profile/Settings/SettingsProfileScreen";
+import SchedulesScreen from "../screens/User/Profile/Settings/SchedulesProfileScreen";
+import DiscountsScreen from "../screens/User/Profile/Settings/DiscountsProfileScreen";
 import FindFriendsScreen from "../screens/User/Profile/FindFriendsScreen";
 import ProfileTabsScreen from "../screens/User/Profile/ProfileStatsTabs/ProfileTabsScreen";
 
@@ -29,7 +29,7 @@ import ServicesScreen from "../screens/ServicesScreen";
 import ExploreScreen from "../screens/ExploreScreen";
 import MessagesScreen from "../screens/MessagesScreen";
 import ServiceItemScreen from "../screens/ServiceItemScreen";
-import SocialScreen from "../screens/SocialScreen";
+import FeedScreen from "../screens/FeedScreen";
 
 // Auth
 import AuthScreen from "../screens/User/Auth/AuthScreen";
@@ -37,6 +37,7 @@ import LoginScreen from "../screens/User/Auth/LoginScreen";
 import RegisterScreen from "../screens/User/Auth/RegisterScreen";
 import UsernameScreen from "../screens/User/Auth/UsernameScreen";
 import RegisterBusinessScreen from "../screens/User/Auth/RegisterBusinessScreen";
+import SavedPostsScreen from "../screens/User/Profile/SavedPostsScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -107,6 +108,7 @@ const UserStackNavigator = () => {
       <Stack.Screen name="Discounts" component={DiscountsScreen} />
       <Stack.Screen name="ProfileTabsScreen" component={ProfileTabsScreen} />
       <Stack.Screen name="FindFriends" component={FindFriendsScreen} />
+      <Stack.Screen name="Saved" component={SavedPostsScreen} />
       <Stack.Screen name="ProfileGeneral" component={ProfileGeneralScreen} />
     </Stack.Navigator>
   );
@@ -129,7 +131,7 @@ const CloserNavigation = () => {
             } else if (route.name === "Explore") {
               iconType = "antdesign";
               iconName = focused ? "search1" : "search1";
-            } else if (route.name === "Social") {
+            } else if (route.name === "Feed") {
               iconType = "material";
               iconName = focused
                 ? "local-fire-department"
@@ -153,7 +155,7 @@ const CloserNavigation = () => {
       >
         <Tab.Screen name="Home" component={StackNavigator} />
         <Tab.Screen name="Explore" component={ExploreStackNavigator} />
-        <Tab.Screen name="Social" component={SocialScreen} />
+        <Tab.Screen name="Feed" component={FeedScreen} />
         <Tab.Screen name="Messages" component={MessagesScreen} />
         {user ? (
           <Tab.Screen name="User" component={UserStackNavigator} />

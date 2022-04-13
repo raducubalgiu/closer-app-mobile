@@ -4,90 +4,24 @@ import {
   Dimensions,
   TouchableOpacity,
   View,
+  Text,
 } from "react-native";
 import { Image, Icon } from "react-native-elements";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import CompleteProfile from "../../../components/customized/CompleteProfile/CompleteProfile";
 import NoFoundPosts from "../../../components/customized/NotFoundContent/NoFoundPosts";
-import axios from "axios";
-
-const posts = [
-  // {
-  //   _id: "1",
-  //   name: "Post 1",
-  //   image:
-  //     "https://www.menshairstylestoday.com/wp-content/uploads/2021/07/Comb-Over.jpg",
-  //   bookable: false,
-  // },
-  // {
-  //   _id: "2",
-  //   name: "Post 2",
-  //   image:
-  //     "https://hairmanz.com/wp-content/uploads/2021/04/professional-hairstyles-for-men-41.jpg",
-  //   bookable: true,
-  // },
-  // {
-  //   _id: "3",
-  //   name: "Post 3",
-  //   image:
-  //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYpti3O_kLfEDyzlwiIY0oiVM5WYw0eS1k3OhWjfevZQdlZsMs8xbIRVAhYN8osBZkBI8&usqp=CAU",
-  //   bookable: true,
-  // },
-  // {
-  //   _id: "4",
-  //   name: "Post 4",
-  //   image:
-  //     "https://i2.wp.com/therighthairstyles.com/wp-content/uploads/2015/03/8-spiky-taper-fade.jpg?resize=500%2C514&ssl=1",
-  //   bookable: false,
-  // },
-  // {
-  //   _id: "5",
-  //   name: "Post 1",
-  //   image:
-  //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCqq8hdtxInuBfD3zj2efUzW2CbMdjBadUFQ&usqp=CAU",
-  //   bookable: true,
-  // },
-  // {
-  //   _id: "6",
-  //   name: "Post 2",
-  //   image:
-  //     "https://www.thevoguetrends.com/wp-content/uploads/2020/09/118876408_645606756364171_8012788514961451206_n-1024x1024.jpg",
-  //   bookable: false,
-  // },
-  // {
-  //   _id: "7",
-  //   name: "Post 3",
-  //   image:
-  //     "https://urbanmenoutfits.com/wp-content/uploads/2018/11/medium-hairstyles-mid-skin-taper-fade-pompadour-02.jpg",
-  //   bookable: true,
-  // },
-  // {
-  //   _id: "8",
-  //   name: "Post 4",
-  //   image:
-  //     "https://www.bosshunting.com.au/wp-content/uploads/2020/03/Mens-Low-Fade-Haircut-819x1024.jpg",
-  //   bookable: false,
-  // },
-  // {
-  //   _id: "9",
-  //   name: "Post 4",
-  //   image:
-  //     "https://www.whatawink.com/blog/wp-content/uploads/2019/05/Long-spikes-and-partitioned-Hairstyles-For-Men-300x277.jpg",
-  //   bookable: true,
-  // },
-];
+import { Colors } from "../../../assets/styles/Colors";
 
 const { width } = Dimensions.get("window");
 
-const PostsProfileScreen = () => {
+const PostsProfileScreen = (props) => {
   const navigation = useNavigation();
 
   return (
     <FlatList
       style={{ backgroundColor: "white" }}
-      listKey="posts"
-      data={posts}
+      data={props?.posts}
       numColumns={3}
       keyExtractor={(item) => item._id}
       renderItem={({ item }) => (
@@ -98,22 +32,39 @@ const PostsProfileScreen = () => {
           <View style={{ position: "relative" }}>
             <Image
               containerStyle={styles.image}
-              source={{ uri: item?.image }}
+              source={{ uri: item?.images[0]?.url }}
             />
-            {item.bookable && (
+            {item?.bookable && (
               <View style={styles.bookable}>
                 <Icon
                   name="shopping"
                   type="material-community"
                   color="white"
                   size={20}
+                  style={{ marginLeft: 5 }}
+                />
+              </View>
+            )}
+            {item?.fixed && (
+              <View style={styles.fixed}>
+                <Text style={styles.fixedText}>Fixat</Text>
+              </View>
+            )}
+            {!item?.fixed && item?.postType === "video" && (
+              <View style={styles.type}>
+                <Icon
+                  name="video"
+                  type="feather"
+                  color="white"
+                  size={20}
+                  style={{ marginLeft: 5 }}
                 />
               </View>
             )}
           </View>
         </TouchableOpacity>
       )}
-      ListHeaderComponent={<NoFoundPosts />}
+      ListHeaderComponent={!props?.posts && <NoFoundPosts />}
       ListFooterComponent={<CompleteProfile />}
     />
   );
@@ -137,5 +88,26 @@ const styles = StyleSheet.create({
     zIndex: 10000,
     top: 5,
     right: 5,
+  },
+  fixed: {
+    position: "absolute",
+    zIndex: 10000,
+    bottom: 5,
+    left: 5,
+    backgroundColor: "white",
+    opacity: 0.8,
+    paddingHorizontal: 10,
+  },
+  fixedText: {
+    fontFamily: "Exo-SemiBold",
+    fontSize: 12,
+    //textTransform: "uppercase",
+    color: Colors.textDark,
+  },
+  type: {
+    position: "absolute",
+    zIndex: 10000,
+    bottom: 5,
+    left: 5,
   },
 });

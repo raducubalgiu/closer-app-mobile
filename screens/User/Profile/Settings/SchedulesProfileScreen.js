@@ -8,7 +8,7 @@ import {
 import React from "react";
 import { Divider, Icon } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
-import HeaderReusable from "../../../components/customized/Headers/HeaderReusable";
+import HeaderReusable from "../../../../components/customized/Headers/HeaderReusable";
 
 const SchedulesProfileScreen = () => {
   const navigation = useNavigation();

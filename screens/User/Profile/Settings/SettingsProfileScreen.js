@@ -8,9 +8,9 @@ import {
 import React from "react";
 import { Divider, Icon } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
-import HeaderReusable from "../../../components/customized/Headers/HeaderReusable";
+import HeaderReusable from "../../../../components/customized/Headers/HeaderReusable";
 
-const DiscountsProfileScreen = () => {
+const SettingsProfileScreen = () => {
   const navigation = useNavigation();
 
   return (
@@ -22,9 +22,7 @@ const DiscountsProfileScreen = () => {
           </TouchableOpacity>
         }
         secondBox={
-          <Text style={{ fontFamily: "Exo-Medium", fontSize: 17 }}>
-            Discounturi
-          </Text>
+          <Text style={{ fontFamily: "Exo-Medium", fontSize: 17 }}>Setari</Text>
         }
         thirdBox={<Icon name="arrow-back-ios" type="material" color="white" />}
       />
@@ -34,7 +32,7 @@ const DiscountsProfileScreen = () => {
   );
 };
 
-export default DiscountsProfileScreen;
+export default SettingsProfileScreen;
 
 const styles = StyleSheet.create({
   screen: {

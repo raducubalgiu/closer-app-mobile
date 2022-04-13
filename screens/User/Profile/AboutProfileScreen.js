@@ -4,38 +4,35 @@ import Stack from "../../../components/core/Containers/Stack";
 import { Colors } from "../../../assets/styles/Colors";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Icon } from "react-native-elements";
+import { AddressFormat } from "../../../utils/addressFormat";
 
-const AboutProfileScreen = () => {
+const AboutProfileScreen = (props) => {
+  const { biography, website, address } = props;
+
   return (
     <ScrollView style={styles.screen}>
       <Stack align="start" justify="start" sx={styles.container}>
         <Text style={styles.heading}>Biografie</Text>
-        <Text style={styles.bio}>
-          Suntem o echipa de profesionisti, dedicati, pasionati si iubim ceea ce
-          facem. Daca v-ati saturat de tehinicile...
-          <TouchableOpacity>
-            <Text style={styles.seeMoreBtn}>vezi mai mult</Text>
-          </TouchableOpacity>
-        </Text>
+        <Text style={styles.bio}>{biography ? biography : "N/A"}</Text>
       </Stack>
       <Stack align="start" justify="start" sx={styles.container}>
-        <Text style={styles.heading}>Alte detalii</Text>
-        <Stack direction="row" sx={{ marginTop: 5 }}>
+        <Text style={styles.heading}>Contact</Text>
+        <Stack direction="row" sx={styles.stack}>
           <Text style={styles.label}>Website:</Text>
           <TouchableOpacity style={{ marginLeft: 5 }}>
-            <Text style={styles.actionBtn}>www.trattoria.com</Text>
+            <Text style={styles.actionBtn}>{website ? website : "N/A"}</Text>
           </TouchableOpacity>
         </Stack>
-        <Stack direction="row" sx={{ marginTop: 5 }}>
+        {/* <Stack direction="row" sx={styles.stack}>
           <Text style={styles.label}>Angajat la </Text>
           <TouchableOpacity style={{ marginLeft: 5 }}>
             <Text style={styles.actionBtn}>@trattoria</Text>
           </TouchableOpacity>
-        </Stack>
-        <Stack direction="row" align="start" sx={{ marginTop: 5 }}>
+        </Stack> */}
+        <Stack direction="row" align="start" sx={styles.stack}>
           <Text style={styles.label}>Locatia:</Text>
           <Text style={styles.location}>
-            Strada Drumul Fermei, nr 97, Popesti Leordeni, Ilfov
+            {address ? AddressFormat(address) : "N/A"}
           </Text>
         </Stack>
         <Stack direction="row" sx={{ marginTop: 15 }}>
@@ -101,4 +98,5 @@ const styles = StyleSheet.create({
     fontSize: 13.5,
     color: Colors.primary,
   },
+  stack: { marginTop: 5 },
 });
