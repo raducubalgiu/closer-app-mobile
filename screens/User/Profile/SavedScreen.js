@@ -1,9 +1,4 @@
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-} from "react-native";
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Icon } from "react-native-elements";
 import React from "react";
 import HeaderReusable from "../../../components/customized/Headers/HeaderReusable";
@@ -12,8 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../../../assets/styles/Colors";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
-
-const SavedPostsScreen = () => {
+const SavedScreen = () => {
   const Tab = createMaterialTopTabNavigator();
   const navigation = useNavigation();
 
@@ -36,6 +30,10 @@ const SavedPostsScreen = () => {
             textTransform: "capitalize",
             fontSize: 14,
           },
+          tabBarIndicatorStyle: {
+            backgroundColor: Colors.textDark,
+          },
+          tabBarInactiveTintColor: "gray",
         }}
       >
         <Tab.Screen
@@ -54,12 +52,11 @@ const SavedPostsScreen = () => {
           options={{ tabBarLabel: "Oportunitati" }}
         />
       </Tab.Navigator>
-      
     </SafeAreaView>
   );
 };
 
-export default SavedPostsScreen;
+export default SavedScreen;
 
 const styles = StyleSheet.create({
   screen: {

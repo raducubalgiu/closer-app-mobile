@@ -37,7 +37,7 @@ import LoginScreen from "../screens/User/Auth/LoginScreen";
 import RegisterScreen from "../screens/User/Auth/RegisterScreen";
 import UsernameScreen from "../screens/User/Auth/UsernameScreen";
 import RegisterBusinessScreen from "../screens/User/Auth/RegisterBusinessScreen";
-import SavedPostsScreen from "../screens/User/Profile/SavedPostsScreen";
+import SavedScreen from "../screens/User/Profile/SavedScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -108,7 +108,7 @@ const UserStackNavigator = () => {
       <Stack.Screen name="Discounts" component={DiscountsScreen} />
       <Stack.Screen name="ProfileTabsScreen" component={ProfileTabsScreen} />
       <Stack.Screen name="FindFriends" component={FindFriendsScreen} />
-      <Stack.Screen name="Saved" component={SavedPostsScreen} />
+      <Stack.Screen name="Saved" component={SavedScreen} />
       <Stack.Screen name="ProfileGeneral" component={ProfileGeneralScreen} />
     </Stack.Navigator>
   );
