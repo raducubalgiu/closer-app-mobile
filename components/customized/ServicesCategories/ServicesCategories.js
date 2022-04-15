@@ -75,7 +75,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     paddingVertical: 10,
     paddingHorizontal: 10,
-    borderRadius: 20,
     marginVertical: 10,
   },
   headingContainer: {

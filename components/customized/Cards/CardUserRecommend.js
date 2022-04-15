@@ -25,14 +25,13 @@ export default CardUserRecommend;
 const styles = StyleSheet.create({
   button: {
     alignItems: "center",
-    paddingVertical: 40,
+    paddingVertical: 10,
     paddingHorizontal: 50,
     marginTop: 25,
     marginLeft: 20,
     borderColor: "#eee",
     borderWidth: 1,
-    borderTopLeftRadius: 20,
-    borderBottomRightRadius: 20,
+    borderRadius: 10,
   },
   name: {
     fontFamily: "Exo-Bold",

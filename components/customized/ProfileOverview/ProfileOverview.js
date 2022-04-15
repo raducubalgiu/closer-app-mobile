@@ -12,6 +12,7 @@ import { Colors } from "../../../assets/styles/Colors";
 import StatsButton from "../Buttons/StatsButton";
 import Stack from "../../core/Containers/Stack";
 import UserAvatar from "../Avatars/UserAvatar";
+import { Checkmark } from "../../core";
 
 const ProfileOverview = (props) => {
   const { user } = props;
@@ -33,20 +34,7 @@ const ProfileOverview = (props) => {
         </TouchableOpacity>
         <Stack direction="row">
           <Text style={styles.name}>@{user?.username}</Text>
-          {user?.checkmark && (
-            <Icon
-              name="check"
-              type="antdesign"
-              size={10}
-              color="white"
-              style={{
-                backgroundColor: "#00ccff",
-                marginLeft: 5,
-                padding: 2.5,
-                borderRadius: 50,
-              }}
-            />
-          )}
+          {user?.checkmark && <Checkmark />}
         </Stack>
         <Stack direction="row" justify="start">
           <Text style={styles.job}>{user?.job}</Text>

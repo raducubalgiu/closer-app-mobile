@@ -18,7 +18,7 @@ const CardCompleteProfile = (props) => {
         <Text style={styles.description}>{props.description}</Text>
       </Stack>
       <CardButton
-        title="Editeaza"
+        title={props.actionTitle}
         completed={props.completed}
         onPress={props.onPress}
       />

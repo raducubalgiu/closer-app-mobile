@@ -9,6 +9,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import { Colors } from "../assets/styles/Colors";
 
 const TopTabNavigator = (props) => {
+  const { role } = props;
   const Tab = createMaterialTopTabNavigator();
 
   const PostsProfile = () => <PostsProfileScreen posts={props?.posts} />;
@@ -19,7 +20,6 @@ const TopTabNavigator = (props) => {
     <AboutProfileScreen
       biography={props?.biography}
       website={props?.website}
-      address={props?.address}
     />
   );
 
@@ -61,9 +61,15 @@ const TopTabNavigator = (props) => {
       })}
     >
       <Tab.Screen name="Posts" component={PostsProfile} />
-      <Tab.Screen name="Products" component={ProductsProfile} />
-      <Tab.Screen name="Calendar" component={CalendarProfileScreen} />
-      <Tab.Screen name="Jobs" component={JobsProfileScreen} />
+      {role !== "subscriber" && (
+        <Tab.Screen name="Products" component={ProductsProfile} />
+      )}
+      {role !== "subscriber" && (
+        <Tab.Screen name="Calendar" component={CalendarProfileScreen} />
+      )}
+      {role !== "subscriber" && (
+        <Tab.Screen name="Jobs" component={JobsProfileScreen} />
+      )}
       <Tab.Screen name="About" component={AboutProfile} />
     </Tab.Navigator>
   );

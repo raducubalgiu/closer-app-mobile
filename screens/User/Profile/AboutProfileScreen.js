@@ -7,7 +7,7 @@ import { Icon } from "react-native-elements";
 import { AddressFormat } from "../../../utils/addressFormat";
 
 const AboutProfileScreen = (props) => {
-  const { biography, website, address } = props;
+  const { biography, website } = props;
 
   return (
     <ScrollView style={styles.screen}>
@@ -31,9 +31,7 @@ const AboutProfileScreen = (props) => {
         </Stack> */}
         <Stack direction="row" align="start" sx={styles.stack}>
           <Text style={styles.label}>Locatia:</Text>
-          <Text style={styles.location}>
-            {address ? AddressFormat(address) : "N/A"}
-          </Text>
+          <Text style={styles.location}>Adresa</Text>
         </Stack>
         <Stack direction="row" sx={{ marginTop: 15 }}>
           <Icon

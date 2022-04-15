@@ -7,3 +7,5 @@ export { default as MainButton } from "./Buttons/MainButton";
 export { default as Stack } from "./Containers/Stack";
 export { default as IconButton } from "./IconButton/IconButton";
 export { default as IconBackButton } from "./IconButton/IconBackButton";
+
+export { default as Checkmark } from "./Icons/Checkmark";

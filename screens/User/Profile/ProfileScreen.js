@@ -101,11 +101,11 @@ const ProfileScreen = (props) => {
         actionButtons={buttons}
       />
       <TopTabNavigator
+        role={userDetails?.role}
         posts={posts}
         products={userDetails?.products}
         biography={userDetails?.description}
         website={userDetails?.website}
-        address={userDetails?.location[0]?.startLocation?.address}
       />
 
       <BottomSheetPopup

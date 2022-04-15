@@ -126,21 +126,19 @@ const CloserNavigation = () => {
             let iconType;
 
             if (route.name === "Home") {
-              iconType = "antdesign";
+              iconType = "feather";
               iconName = focused ? "home" : "home";
             } else if (route.name === "Explore") {
-              iconType = "antdesign";
-              iconName = focused ? "search1" : "search1";
+              iconType = "feather";
+              iconName = focused ? "video" : "video";
             } else if (route.name === "Feed") {
-              iconType = "material";
-              iconName = focused
-                ? "local-fire-department"
-                : "local-fire-department";
+              iconType = "feather";
+              iconName = focused ? "search" : "search";
             } else if (route.name === "Messages") {
-              iconType = "ionicon";
-              iconName = focused ? "chatbubble-outline" : "chatbubble-outline";
+              iconType = "feather";
+              iconName = focused ? "message-square" : "message-square";
             } else if (route.name === "User") {
-              iconType = "antdesign";
+              iconType = "feather";
               iconName = focused ? "user" : "user";
             }
 

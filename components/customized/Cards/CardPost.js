@@ -1,39 +1,32 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import { Image, Avatar, Icon } from "react-native-elements";
+import { Image, Icon } from "react-native-elements";
 import { Colors } from "../../../assets/styles/Colors";
 import React from "react";
 import Stack from "../../core/Containers/Stack";
+import UserAvatar from "../Avatars/UserAvatar";
+import LikeIButton from "../Buttons/LikeIButton";
+import BookmarkIButton from "../Buttons/BookmarkIButton";
+import ShareIButton from "../Buttons/ShareIButton";
+import CommentsIButton from "../Buttons/CommentsIButton";
+import { Checkmark } from "../../core";
 
 const CardPost = (props) => {
   return (
     <View style={styles.container}>
-      <Stack direction="row" sx={styles.cardHeader}>
+      <Stack direction="row" sx={{ paddingHorizontal: 10 }}>
         <Stack direction="row" sx={styles.avatarContainer}>
-          <Avatar
-            size={35}
-            rounded
-            source={{
-              uri: `${props.avatar}`,
-            }}
-          />
+          <UserAvatar avatar={props.avatar} size={35} iconSize={15} />
           <Stack align="start">
             <Stack direction="row">
-              <Text style={styles.name}>{props.name}</Text>
+              <Text style={styles.name}>{props.username}</Text>
+              {props.checkmark && <Checkmark />}
               <Text style={styles.job}>{props.job}</Text>
             </Stack>
             <Text style={styles.date}>{props.date}</Text>
           </Stack>
         </Stack>
         <Stack direction="row">
-          <TouchableOpacity style={styles.followBtn}>
-            <Text style={styles.followBtnText}>Urmareste</Text>
-          </TouchableOpacity>
-          <Icon
-            type="entypo"
-            name="dots-three-horizontal"
-            style={{ marginRight: 10 }}
-            size={20}
-          />
+          <Icon type="entypo" name="dots-three-horizontal" size={20} />
         </Stack>
       </Stack>
       <Image
@@ -42,45 +35,41 @@ const CardPost = (props) => {
         }}
         style={styles.image}
       />
-      <View
-        style={{
-          padding: 10,
-        }}
-      >
-        <Text style={styles.description}>{props.description}</Text>
-      </View>
+      {props.bookable && (
+        <>
+          <Stack direction="row" sx={styles.bookableContainer}>
+            <TouchableOpacity>
+              <Text style={styles.bookable}>Rezerva instant</Text>
+            </TouchableOpacity>
+            <Icon name="keyboard-arrow-right" />
+          </Stack>
+        </>
+      )}
       <Stack direction="row" sx={styles.actionBtns}>
         <Text style={styles.likes}>{props.likes} aprecieri</Text>
         <Stack direction="row">
-          <TouchableOpacity>
-            <Icon
-              type="feather"
-              name="bookmark"
-              style={{ marginRight: 25 }}
-              size={22}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Icon
-              type="antdesign"
-              name="sharealt"
-              style={{ marginRight: 25 }}
-              size={22}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Icon
-              type="antdesign"
-              name="message1"
-              style={{ marginRight: 25 }}
-              size={22}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Icon type="antdesign" name="hearto" size={22} />
-          </TouchableOpacity>
+          <LikeIButton isLike={false} onPress={() => {}} />
+          <CommentsIButton onPress={() => {}} />
+          <ShareIButton onPress={() => {}} />
+          <BookmarkIButton isBookmark={false} onPress={() => {}} />
         </Stack>
       </Stack>
+      <Text style={styles.description}>
+        <Text style={{ fontFamily: "Exo-SemiBold" }}>{props.username}</Text>{" "}
+        {props.description}
+      </Text>
+      <TouchableOpacity style={{ paddingHorizontal: 10, marginTop: 5 }}>
+        <Stack direction="row" justify="start">
+          <Text style={styles.comments}>14 comentarii</Text>
+          <Icon
+            name="down"
+            type="antdesign"
+            size={14}
+            style={{ marginLeft: 5 }}
+            color={Colors.textLight}
+          />
+        </Stack>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -89,27 +78,19 @@ export default CardPost;
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 15,
-    borderTopLeftRadius: 20,
-    borderBottomRightRadius: 20,
-    borderWidth: 1,
-    borderColor: "#f1f1f1",
-  },
-  cardHeader: {
-    paddingVertical: 5,
+    marginBottom: 25,
   },
   avatarContainer: {
     marginVertical: 10,
-    paddingHorizontal: 10,
   },
   name: { fontFamily: "Exo-SemiBold", marginLeft: 10 },
   job: {
-    marginBottom: 5,
     marginLeft: 5,
     fontFamily: "Exo-SemiBold",
     color: Colors.primary,
+    textTransform: "capitalize",
   },
-  date: { marginLeft: 10, color: Colors.textLight },
+  date: { marginLeft: 10, color: Colors.textLight, fontSize: 13 },
   followBtn: {
     marginRight: 15,
     backgroundColor: "#eee",
@@ -125,15 +106,27 @@ const styles = StyleSheet.create({
   image: {
     aspectRatio: 1,
     width: "100%",
-    height: 300,
     flex: 1,
-    borderBottomLeftRadius: 20,
-    borderTopRightRadius: 20,
   },
-  likes: { fontFamily: "Exo-SemiBold", color: Colors.textDark },
-  description: { fontFamily: "Exo-Regular" },
+  likes: { color: Colors.textDark, fontWeight: "bold" },
+  description: {
+    flex: 1,
+    paddingHorizontal: 10,
+    color: Colors.textDark,
+  },
   actionBtns: {
-    paddingVertical: 17,
-    paddingHorizontal: 15,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
   },
+  bookableContainer: {
+    paddingHorizontal: 10,
+    paddingVertical: 7.5,
+    backgroundColor: "#f1f1f1",
+  },
+  bookable: {
+    color: Colors.textDark,
+    fontSize: 13.5,
+    fontFamily: "Exo-SemiBold",
+  },
+  comments: { color: Colors.textLight, marginTop: 2.5 },
 });

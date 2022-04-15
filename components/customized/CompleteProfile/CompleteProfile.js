@@ -12,6 +12,30 @@ const CompleteProfile = () => {
 
   const STEPS = [
     {
+      title: "Adauga locatia",
+      description: "Introdu locatia si incepe sa primesti clienti",
+      iconName: "navigation",
+      iconType: "feather",
+      completed: false,
+      navigation: "EditName",
+    },
+    {
+      title: "Adauga serviciile",
+      description: "Ce servicii oferi clientilor?",
+      iconName: "bulb1",
+      iconType: "antdesign",
+      completed: false,
+      navigation: "EditName",
+    },
+    {
+      title: "Adauga produsele",
+      description: "Adauga produsele aferente fiecarui serviciu oferit",
+      iconName: "rocket1",
+      iconType: "antdesign",
+      completed: false,
+      navigation: "EditName",
+    },
+    {
       title: "Include-ti numele",
       description: "Cum ar trebui sa iti spuna oamenii?",
       iconName: "user",
@@ -45,7 +69,7 @@ const CompleteProfile = () => {
         justify="start"
         sx={{ marginTop: 5, marginBottom: 15 }}
       >
-        <Text style={styles.counter}>0 / 4</Text>
+        <Text style={styles.counter}>0 / 6</Text>
         <Text style={styles.status}> FINALIZATE</Text>
       </Stack>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -59,6 +83,7 @@ const CompleteProfile = () => {
             title={step.title}
             description={step.description}
             completed={step.completed}
+            actionTitle={step.completed ? "Editeaza" : "Adauga"}
           />
         ))}
       </ScrollView>

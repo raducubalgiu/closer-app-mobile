@@ -188,7 +188,11 @@ const ProfileGeneralScreen = (props) => {
           />
         </Stack>
       )}
-      <TopTabNavigator posts={posts} products={userDetails?.products} />
+      <TopTabNavigator
+        posts={posts}
+        products={userDetails?.products}
+        role={userDetails?.role}
+      />
     </SafeAreaView>
   );
 };

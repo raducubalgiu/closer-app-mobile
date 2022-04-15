@@ -14,22 +14,40 @@ const FakeSearchBar = () => {
       <TouchableOpacity
         activeOpacity={1}
         onPress={() => navigation.navigate("Search")}
-        style={styles.fakeInput}
+        style={{ flexDirection: "row", flex: 1, alignItems: "center" }}
       >
-        <Icon name="search" style={styles.iconSearch} color="gray" size={17} />
+        <Icon name="search" type="feather" color={Colors.textDark} />
         <Text style={styles.fakeInputText}>{t("searchInputTitle")}</Text>
       </TouchableOpacity>
-      <Divider orientation="vertical" />
-      <View style={styles.datePicker}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Search")}
-          style={styles.datePickerDetails}
+      <Divider orientation="vertical" style={{ marginRight: 15 }} />
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Search")}
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          backgroundColor: "white",
+          borderRadius: 20,
+          paddingVertical: 5,
+          paddingHorizontal: 7.5,
+        }}
+      >
+        <Icon
+          name="clock"
+          type="feather"
+          size={17}
+          style={{ marginRight: 5 }}
+        />
+        <Text
+          style={{
+            marginRight: 5,
+            fontFamily: "Exo-SemiBold",
+            color: Colors.textDark,
+          }}
         >
-          <Icon name="access-time" size={18} />
-          <Text style={styles.datePickerTitle}>Acum</Text>
-          <Icon name="keyboard-arrow-down" />
-        </TouchableOpacity>
-      </View>
+          Acum
+        </Text>
+        <Icon name="keyboard-arrow-down" />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -44,40 +62,39 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     marginVertical: 10,
     marginHorizontal: 10,
+    backgroundColor: "#f1f1f1",
+    paddingVertical: 5,
+    paddingHorizontal: 5,
   },
   fakeInput: {
     flexDirection: "row",
     alignItems: "center",
     flex: 1,
-    paddingVertical: 7,
+    paddingVertical: 2.5,
     paddingHorizontal: 10,
     backgroundColor: "#f1f1f1",
     borderWidth: 2,
     borderColor: "#f1f1f1",
-    borderTopLeftRadius: 15,
-    borderBottomLeftRadius: 15,
   },
   fakeInputText: {
     marginLeft: 10,
-    fontSize: 14,
+    fontSize: 14.5,
     color: Colors.textLight,
     fontFamily: "Exo-Regular",
   },
   datePicker: {
     textAlign: "center",
-    paddingVertical: 6.5,
+    paddingVertical: 6,
     paddingHorizontal: 10,
-    backgroundColor: "#f1f1f1",
-    borderBottomRightRadius: 15,
-    borderTopRightRadius: 15,
   },
   datePickerDetails: {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "white",
-    paddingHorizontal: 8,
-    paddingVertical: 6,
-    borderRadius: 20,
+    paddingHorizontal: 5,
+    paddingVertical: 7,
+    backgroundColor: "#f1f1f1",
+    borderRadius: 10,
   },
   datePickerTitle: {
     textAlign: "center",

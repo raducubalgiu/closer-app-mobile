@@ -5,8 +5,9 @@ import {
   View,
   Text,
   FlatList,
+  RefreshControl,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { Divider } from "react-native-elements";
@@ -14,17 +15,17 @@ import FakeSearchBar from "../components/customized/FakeSearchBar/FakeSearchBar"
 import ServicesCategories from "../components/customized/ServicesCategories/ServicesCategories";
 import CardRecommended from "../components/customized/Cards/CardRecommended";
 import { Colors } from "../assets/styles/Colors";
-import { useAuth } from "../context/auth";
+
+const wait = (timeout) => {
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
 
 const HomeScreen = () => {
-  const height = Dimensions.get("window").height;
   const [locations, setLocations] = useState([]);
   const { t } = useTranslation();
-  const { user } = useAuth();
+  const [refreshing, setRefreshing] = React.useState(false);
 
-  console.log(user);
-
-  useEffect(() => {
+  const fetchRecommended = useCallback(() => {
     axios
       .get(
         `http://192.168.100.2:8000/api/v1/locations/get-recommended?latlng=26.100195,44.428286`
@@ -35,6 +36,18 @@ const HomeScreen = () => {
       .catch((error) => console.log(error));
   }, []);
 
+  useEffect(() => {
+    fetchRecommended();
+  }, [fetchRecommended]);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(1000).then(() => {
+      fetchRecommended();
+      setRefreshing(false);
+    });
+  }, []);
+
   return (
     <View style={styles.screen}>
       <SafeAreaView style={{ backgroundColor: "white" }}>
@@ -42,6 +55,9 @@ const HomeScreen = () => {
       </SafeAreaView>
 
       <FlatList
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
         ListHeaderComponent={
           <>
             <ServicesCategories />
@@ -58,7 +74,7 @@ const HomeScreen = () => {
           <CardRecommended
             id={item._id}
             name={item.name}
-            image={item.imageCover[0].url}
+            image={item.images[0].url}
             title={item.title}
             street={item.startLocation.address.street}
             number={item.startLocation.address.number}
