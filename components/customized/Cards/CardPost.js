@@ -48,17 +48,21 @@ const CardPost = (props) => {
       <Stack direction="row" sx={styles.actionBtns}>
         <Text style={styles.likes}>{props.likes} aprecieri</Text>
         <Stack direction="row">
-          <LikeIButton isLike={false} onPress={() => {}} />
-          <CommentsIButton onPress={() => {}} />
+          <LikeIButton isLike={props.isLike} onPress={() => {}} />
+          <CommentsIButton onPress={props.openComments} />
           <ShareIButton onPress={() => {}} />
-          <BookmarkIButton isBookmark={false} onPress={() => {}} />
+          <BookmarkIButton isBookmark={props.isBookmark} onPress={() => {}} />
         </Stack>
       </Stack>
       <Text style={styles.description}>
         <Text style={{ fontFamily: "Exo-SemiBold" }}>{props.username}</Text>{" "}
         {props.description}
       </Text>
-      <TouchableOpacity style={{ paddingHorizontal: 10, marginTop: 5 }}>
+      <TouchableOpacity
+        style={{ paddingHorizontal: 10, marginTop: 5 }}
+        activeOpacity={1}
+        onPress={props.openComments}
+      >
         <Stack direction="row" justify="start">
           <Text style={styles.comments}>14 comentarii</Text>
           <Icon
@@ -113,10 +117,13 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 10,
     color: Colors.textDark,
+    marginTop: 7.5,
   },
   actionBtns: {
-    paddingVertical: 10,
+    paddingVertical: 8.5,
     paddingHorizontal: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#f9f9f9",
   },
   bookableContainer: {
     paddingHorizontal: 10,

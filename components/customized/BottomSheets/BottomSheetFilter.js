@@ -7,15 +7,15 @@ import {
 } from "react-native";
 import React, { useCallback, useRef, useMemo } from "react";
 import BottomSheet, {
-  BottomSheetView,
   BottomSheetFooter,
+  BottomSheetView,
 } from "@gorhom/bottom-sheet";
 import { Icon } from "react-native-elements";
 import { Colors } from "../../../assets/styles/Colors";
 
 const BottomSheetFilter = (props) => {
   const sheetRef = useRef(null);
-  const snapPoints = useMemo(() => ["70%", "90%"], []);
+  const snapPoints = useMemo(() => ["75%", "90%"], []);
 
   const goNext = () => props.onGoNext();
   const mainButtonText = props.mainButtonText;
@@ -30,8 +30,9 @@ const BottomSheetFilter = (props) => {
           borderTopWidth: 1,
           borderTopColor: "#f1f1f1",
           backgroundColor: "white",
+          elevation: 5,
         }}
-        bottomInset={24}
+        bottomInset={40}
         children={
           <View>
             <View style={styles.footerContainer}>
@@ -62,6 +63,7 @@ const BottomSheetFilter = (props) => {
         <Text style={styles.title}>{props.screenSecondTitle}</Text>
       </View>
       <BottomSheet
+        style={{ flex: 1 }}
         ref={sheetRef}
         snapPoints={snapPoints}
         handleIndicatorStyle={styles.indicatorStyle}
@@ -73,7 +75,7 @@ const BottomSheetFilter = (props) => {
             name="chevron-back"
             type="ionicon"
             color={Colors.textDark}
-            size={20}
+            size={25}
           />
           <View>
             <Text style={styles.sheetFirstTitle}>{props.sheetFirstTitle}</Text>

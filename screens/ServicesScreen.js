@@ -51,7 +51,7 @@ const ServicesScreen = ({ route }) => {
     <View style={styles.screen}>
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.servicesHeader}>
-          <TouchableOpacity onPress={() => navigation.navigate("StackBase")}>
+          <TouchableOpacity onPress={() => navigation.navigate("Home")}>
             <Icon
               name="keyboard-arrow-left"
               size={30}

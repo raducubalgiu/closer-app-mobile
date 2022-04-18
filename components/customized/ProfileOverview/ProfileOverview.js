@@ -64,10 +64,9 @@ const ProfileOverview = (props) => {
       <Stack direction="row" justify="between" sx={styles.statsContainer}>
         <StatsButton
           onPress={() =>
-            navigation.navigate("ProfileTabsScreen", {
-              initialRoute: "Ratings",
-              userId: user?._id,
-              username: user?.username,
+            navigation.navigate("ProfileGeneralStack", {
+              screen: "ProfileTabsScreen",
+              params: { userId: user?._id, username: user?.username },
             })
           }
           labelStats="Ratinguri"
@@ -75,10 +74,9 @@ const ProfileOverview = (props) => {
         />
         <StatsButton
           onPress={() =>
-            navigation.navigate("ProfileTabsScreen", {
-              initialRoute: "Followers",
-              userId: user?._id,
-              username: user?.username,
+            navigation.navigate("ProfileGeneralStack", {
+              screen: "ProfileTabsScreen",
+              params: { userId: user?._id, username: user?.username },
             })
           }
           labelStats="Urmaritori"
@@ -86,10 +84,9 @@ const ProfileOverview = (props) => {
         />
         <StatsButton
           onPress={() =>
-            navigation.navigate("ProfileTabsScreen", {
-              initialRoute: "Following",
-              userId: user?._id,
-              username: user?.username,
+            navigation.navigate("ProfileGeneralStack", {
+              screen: "ProfileTabsScreen",
+              params: { userId: user?._id, username: user?.username },
             })
           }
           labelStats="Urmaresti"

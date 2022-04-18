@@ -29,7 +29,10 @@ const ExploreScreen = () => {
     if (user?._id === userId) {
       navigation.navigate("Profile");
     } else {
-      navigation.navigate("ProfileGeneral", { userId });
+      navigation.navigate("ProfileGeneralStack", {
+        screen: "ProfileGeneral",
+        params: { userId },
+      });
     }
   };
 

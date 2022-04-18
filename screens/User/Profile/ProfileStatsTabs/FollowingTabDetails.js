@@ -7,7 +7,10 @@ const FollowingTabDetails = (props) => {
   const navigation = useNavigation();
 
   const goToUser = (userId) => {
-    navigation.navigate("ProfileGeneral", { userId });
+    navigation.navigate("ProfileGeneralStack", {
+      screen: "ProfileGeneral",
+      params: { userId },
+    });
   };
 
   return (

@@ -5,6 +5,7 @@ import { Colors } from "../../../assets/styles/Colors";
 const FeedLabelButton = (props) => {
   return (
     <TouchableOpacity
+      onPress={props.onPress}
       style={
         props.isActive
           ? { ...styles.btnList, ...styles.activeBtn }
@@ -28,8 +29,8 @@ export default FeedLabelButton;
 
 const styles = StyleSheet.create({
   btnList: {
-    paddingVertical: 6,
-    paddingHorizontal: 15,
+    paddingVertical: 7,
+    paddingHorizontal: 20,
     borderWidth: 1,
     borderColor: "#ddd",
     marginRight: 7.5,

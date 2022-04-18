@@ -29,6 +29,7 @@ const FiltersServiceScreen = (props) => {
       sheetSecondTitle={option?.name}
       bottomSheetBody={
         <FlatList
+          bounces={false}
           data={filter?.options}
           keyExtractor={(item) => item._id}
           renderItem={({ item }) => (

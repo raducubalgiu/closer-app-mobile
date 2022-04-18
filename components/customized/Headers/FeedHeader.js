@@ -7,7 +7,7 @@ import { Colors } from "../../../assets/styles/Colors";
 import FeedLabelButton from "../Buttons/FeedLabelButton";
 import { useNavigation } from "@react-navigation/native";
 
-const FeedHeader = () => {
+const FeedHeader = (props) => {
   const navigation = useNavigation();
 
   return (
@@ -20,8 +20,7 @@ const FeedHeader = () => {
       >
         <FakeSearchBarSimple onPress={() => {}} />
         <TouchableOpacity
-          style={{ padding: 5, marginLeft: 10 }}
-          onPress={() => navigation.navigate("Saved")}
+          style={styles.bookmark}
         >
           <Icon
             name="bookmark-o"
@@ -47,9 +46,29 @@ const FeedHeader = () => {
           <Text style={styles.exploreText}>Exploreaza</Text>
         </Stack>
         <Divider orientation="vertical" style={{ marginHorizontal: 10 }} />
-        <FeedLabelButton isActive={true} text="Toate" />
-        <FeedLabelButton isActive={false} text="Urmaresti" />
-        <FeedLabelButton isActive={false} text="Oferte Last Minute" />
+        <FeedLabelButton
+          isActive={props.state.activeAll}
+          text="Toate"
+          onPress={() => {
+            props.dispatch({ type: "FETCH_ALL" });
+            props.fetchAllPosts();
+          }}
+        />
+        <FeedLabelButton
+          isActive={props.state.activeFollowings}
+          text="Urmaresti"
+          onPress={() => {
+            props.dispatch({ type: "FETCH_FOLLOWINGS" });
+            props.fetchFollowings();
+          }}
+        />
+        <FeedLabelButton
+          isActive={props.state.activeLastMinute}
+          text="Oferte Last Minute"
+          onPress={() => {
+            props.dispatch({ type: "FETCH_LAST_MINUTE" });
+          }}
+        />
       </ScrollView>
       <Divider />
     </>
@@ -62,11 +81,13 @@ const styles = StyleSheet.create({
   scrollView: {
     marginVertical: 7.5,
     marginHorizontal: 15,
+    backgroundColor: "white",
   },
+  bookmark: { padding: 5, marginLeft: 10 },
   explore: {
     borderWidth: 1,
     borderColor: "#f1f1f1",
-    paddingHorizontal: 10,
+    paddingHorizontal: 12.5,
     backgroundColor: "#f1f1f1",
   },
   exploreText: {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
@@ -33,7 +33,7 @@ const FiltersDateScreen = (props) => {
       screenFirstTitle="Selecteaza"
       screenSecondTitle="perioada"
       sheetFirstTitle={serviceName}
-      sheetSecondTitle="Acum -23 apr"
+      sheetSecondTitle="Acum - 23 apr"
       bottomSheetBody={<FilterDate />}
       mainButtonText="Inainte"
       disabled={disabled}

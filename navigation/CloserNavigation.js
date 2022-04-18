@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Icon } from "react-native-elements";
 import { useAuth } from "../context/auth";
+import { PortalProvider } from "@gorhom/portal";
 import "../i18next";
 
 import { Colors } from "../assets/styles/Colors";
@@ -42,14 +43,15 @@ import SavedScreen from "../screens/User/Profile/SavedScreen";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const StackNavigator = () => {
+const HomeStackNavigator = () => {
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
       }}
+      initialRouteName="Home"
     >
-      <Stack.Screen name="StackBase" component={HomeScreen} />
+      <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="Search" component={SearchScreen} />
       <Stack.Screen name="AllServices" component={ServicesNavigation} />
       <Stack.Screen name="FiltersDate" component={FiltersDateScreen} />
@@ -80,6 +82,20 @@ const AuthStackNavigator = () => {
   );
 };
 
+const ProfileStackNavigator = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName="ProfileGeneral"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="ProfileGeneral" component={ProfileGeneralScreen} />
+      <Stack.Screen name="ProfileTabsScreen" component={ProfileTabsScreen} />
+    </Stack.Navigator>
+  );
+};
+
 const ExploreStackNavigator = () => {
   return (
     <Stack.Navigator
@@ -88,9 +104,24 @@ const ExploreStackNavigator = () => {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="ExploreStack" component={ExploreScreen} />
-      <Stack.Screen name="ProfileTabsScreen" component={ProfileTabsScreen} />
-      <Stack.Screen name="ProfileGeneral" component={ProfileGeneralScreen} />
+      <Stack.Screen name="Explore" component={ExploreScreen} />
+      <Stack.Screen
+        name="ProfileGeneralStack"
+        component={ProfileStackNavigator}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const FeedStackNavigator = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName="Feed"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="Feed" component={FeedScreen} />
     </Stack.Navigator>
   );
 };
@@ -98,7 +129,11 @@ const ExploreStackNavigator = () => {
 const UserStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Profile" component={ProfileScreen} />
+      <Stack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        initialRouteName="Profile"
+      />
       <Stack.Screen name="EditProfile" component={EditProfileScreen} />
       <Stack.Screen name="EditName" component={EditNameScreen} />
       <Stack.Screen name="EditWebsite" component={EditWebsiteScreen} />
@@ -106,62 +141,90 @@ const UserStackNavigator = () => {
       <Stack.Screen name="Settings" component={SettingsScreen} />
       <Stack.Screen name="Schedules" component={SchedulesScreen} />
       <Stack.Screen name="Discounts" component={DiscountsScreen} />
-      <Stack.Screen name="ProfileTabsScreen" component={ProfileTabsScreen} />
       <Stack.Screen name="FindFriends" component={FindFriendsScreen} />
       <Stack.Screen name="Saved" component={SavedScreen} />
-      <Stack.Screen name="ProfileGeneral" component={ProfileGeneralScreen} />
+      <Stack.Screen
+        name="ProfileGeneralStack"
+        component={ProfileStackNavigator}
+      />
     </Stack.Navigator>
+  );
+};
+
+const RootStack = createNativeStackNavigator();
+
+const TabsScreen = () => {
+  return (
+    <Tab.Navigator
+      screenOptions={({ route, navigation }) => ({
+        tabBarIcon: ({ focused, color }) => {
+          let iconName;
+          let iconType;
+          if (route.name === "HomeStack") {
+            iconType = "feather";
+            iconName = focused ? "home" : "home";
+          } else if (route.name === "ExploreStack") {
+            iconType = "feather";
+            iconName = focused ? "video" : "video";
+          } else if (route.name === "FeedStack") {
+            iconType = "feather";
+            iconName = focused ? "search" : "search";
+          } else if (route.name === "Messages") {
+            iconType = "feather";
+            iconName = focused ? "bell" : "bell";
+          } else if (route.name === "UserStack") {
+            iconType = "feather";
+            iconName = focused ? "user" : "user";
+          }
+
+          // You can return any component that you like here!
+          return <Icon name={iconName} type={iconType} color={color} />;
+        },
+        tabBarActiveTintColor: Colors.primary,
+        tabBarInactiveTintColor: "gray",
+        headerShown: false,
+        tabBarShowLabel: false,
+        tabBarStyle: (navigation.getState()?.routes[0]?.state?.index === 2 ||
+          navigation.getState()?.routes[0]?.state?.index === 3) && {
+          display: "none",
+        },
+      })}
+    >
+      <Tab.Screen name="HomeStack" component={HomeStackNavigator} />
+      <Tab.Screen name="ExploreStack" component={ExploreStackNavigator} />
+      <Tab.Screen name="FeedStack" component={FeedStackNavigator} />
+      <Tab.Screen name="Messages" component={MessagesScreen} />
+      <Tab.Screen name="UserStack" component={UserStackNavigator} />
+    </Tab.Navigator>
   );
 };
 
 const CloserNavigation = () => {
   const { user } = useAuth();
-
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color }) => {
-            let iconName;
-            let iconType;
-
-            if (route.name === "Home") {
-              iconType = "feather";
-              iconName = focused ? "home" : "home";
-            } else if (route.name === "Explore") {
-              iconType = "feather";
-              iconName = focused ? "video" : "video";
-            } else if (route.name === "Feed") {
-              iconType = "feather";
-              iconName = focused ? "search" : "search";
-            } else if (route.name === "Messages") {
-              iconType = "feather";
-              iconName = focused ? "message-square" : "message-square";
-            } else if (route.name === "User") {
-              iconType = "feather";
-              iconName = focused ? "user" : "user";
-            }
-
-            // You can return any component that you like here!
-            return <Icon name={iconName} type={iconType} color={color} />;
-          },
-          tabBarActiveTintColor: Colors.primary,
-          tabBarInactiveTintColor: "gray",
-          headerShown: false,
-          tabBarShowLabel: false,
-        })}
-      >
-        <Tab.Screen name="Home" component={StackNavigator} />
-        <Tab.Screen name="Explore" component={ExploreStackNavigator} />
-        <Tab.Screen name="Feed" component={FeedScreen} />
-        <Tab.Screen name="Messages" component={MessagesScreen} />
-        {user ? (
-          <Tab.Screen name="User" component={UserStackNavigator} />
-        ) : (
-          <Tab.Screen name="User" component={AuthStackNavigator} />
-        )}
-      </Tab.Navigator>
-    </NavigationContainer>
+    <PortalProvider>
+      <NavigationContainer>
+        <RootStack.Navigator screenOptions={{ headerShown: false }}>
+          {user ? (
+            <RootStack.Screen
+              name="App"
+              component={TabsScreen}
+              options={{
+                animationEnabled: false,
+              }}
+            />
+          ) : (
+            <RootStack.Screen
+              name="AuthStack"
+              component={AuthStackNavigator}
+              options={{
+                animationEnabled: false,
+              }}
+            />
+          )}
+        </RootStack.Navigator>
+      </NavigationContainer>
+    </PortalProvider>
   );
 };
 

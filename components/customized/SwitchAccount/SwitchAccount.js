@@ -25,6 +25,7 @@ const SwitchAccount = () => {
         <Divider />
       </View>
       <FlatList
+        bounces={false}
         showsVerticalScrollIndicator={false}
         data={USERS}
         keyExtractor={(item) => item._id}
