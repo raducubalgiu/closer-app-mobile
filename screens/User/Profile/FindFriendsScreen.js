@@ -13,6 +13,7 @@ import CardFollowers from "../../../components/customized/Cards/CardFollowers";
 import { Colors } from "../../../assets/styles/Colors";
 import { useNavigation } from "@react-navigation/native";
 import * as Contacts from "expo-contacts";
+import FakeSearchBarSimple from "../../../components/customized/FakeSearchBar/FakeSearchBarSimple";
 
 const FindFriendsScreen = () => {
   const [contacts, setContacts] = useState([]);
@@ -58,12 +59,7 @@ const FindFriendsScreen = () => {
               sxBtnText={{ color: "white" }}
             />
           )}
-          ListHeaderComponent={
-            <TouchableOpacity style={styles.btn}>
-              <Icon name="search" type="feather" size={16} />
-              <Text style={styles.findUsers}>Cauta utilizatori</Text>
-            </TouchableOpacity>
-          }
+          ListHeaderComponent={<FakeSearchBarSimple />}
         />
       </View>
     </SafeAreaView>
@@ -95,11 +91,5 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
     borderColor: Colors.primary,
     borderRadius: 2.5,
-  },
-  findUsers: {
-    fontFamily: "Exo-Regular",
-    color: Colors.textLight,
-    marginLeft: 15,
-    fontSize: 13.5,
   },
 });

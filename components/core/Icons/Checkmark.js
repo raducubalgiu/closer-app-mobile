@@ -7,7 +7,7 @@ const Checkmark = (props) => {
     <Icon
       name="check"
       type="antdesign"
-      size={10}
+      size={props.size ? props.size : 10}
       color="white"
       style={{ ...styles.checkmark, ...props.sx }}
     />

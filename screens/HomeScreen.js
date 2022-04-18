@@ -25,20 +25,20 @@ const HomeScreen = () => {
   const { t } = useTranslation();
   const [refreshing, setRefreshing] = React.useState(false);
 
-  const fetchRecommended = useCallback(() => {
-    axios
-      .get(
-        `http://192.168.100.2:8000/api/v1/locations/get-recommended?latlng=26.100195,44.428286`
-      )
-      .then((resp) => {
-        setLocations(resp.data.services);
-      })
-      .catch((error) => console.log(error));
-  }, []);
+  // const fetchRecommended = useCallback(() => {
+  //   axios
+  //     .get(
+  //       `http://192.168.100.2:8000/api/v1/locations/get-recommended?latlng=26.100195,44.428286`
+  //     )
+  //     .then((resp) => {
+  //       setLocations(resp.data.services);
+  //     })
+  //     .catch((error) => console.log(error));
+  // }, []);
 
-  useEffect(() => {
-    fetchRecommended();
-  }, [fetchRecommended]);
+  // useEffect(() => {
+  //   fetchRecommended();
+  // }, [fetchRecommended]);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);

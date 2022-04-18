@@ -2,7 +2,7 @@ import { SafeAreaView, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Icon } from "react-native-elements";
 import React from "react";
 import HeaderReusable from "../../../components/customized/Headers/HeaderReusable";
-import { AllSavedTab, SavedVideoTab, OpportunitiesTab } from "./SavedTabs";
+import { AllSavedTab, SavedVideoTab, OpportunitiesTab } from "../../../components/customized/Tabs/SavedTabs";
 import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../../../assets/styles/Colors";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";

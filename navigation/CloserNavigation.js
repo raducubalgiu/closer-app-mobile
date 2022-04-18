@@ -202,8 +202,8 @@ const TabsScreen = () => {
 const CloserNavigation = () => {
   const { user } = useAuth();
   return (
-    <PortalProvider>
-      <NavigationContainer>
+    <NavigationContainer>
+      <PortalProvider>
         <RootStack.Navigator screenOptions={{ headerShown: false }}>
           {user ? (
             <RootStack.Screen
@@ -223,8 +223,8 @@ const CloserNavigation = () => {
             />
           )}
         </RootStack.Navigator>
-      </NavigationContainer>
-    </PortalProvider>
+      </PortalProvider>
+    </NavigationContainer>
   );
 };
 

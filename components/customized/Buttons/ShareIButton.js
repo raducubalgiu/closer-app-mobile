@@ -9,7 +9,7 @@ const ShareIButton = (props) => {
       onPress={props.onPress}
       style={{ ...styles.default, ...props.sx }}
     >
-      <Icon type="feather" name="send" size={props.size ? props.size : 24} />
+      <Icon type="feather" name="share" size={props.size ? props.size : 24} />
     </TouchableOpacity>
   );
 };
@@ -18,6 +18,6 @@ export default ShareIButton;
 
 const styles = StyleSheet.create({
   default: {
-    marginLeft: 20,
+    marginLeft: 22.5,
   },
 });

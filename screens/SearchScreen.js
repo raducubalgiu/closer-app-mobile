@@ -56,23 +56,24 @@ const SearchScreen = () => {
             fontFamily: "Exo-SemiBold",
             color: Colors.textDark,
             backgroundColor: "white",
-            padding: 15,
+            padding: 10,
             marginRight: 15,
           },
         }}
         autoFocus={true}
         containerStyle={{
-          backgroundColor: "white",
           borderStyle: "dashed",
           paddingHorizontal: 5,
         }}
         inputContainerStyle={
           Platform == "ios"
-            ? { backgroundColor: "white", borderRadius: "none" }
+            ? {
+                backgroundColor: "white",
+                borderRadius: "none",
+              }
             : { backgroundColor: "white" }
         }
         inputStyle={{
-          backgroundColor: "white",
           fontSize: 15,
           color: Colors.textLight,
           fontFamily: "Exo-Regular",

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Share } from "react-native";
 import { Image, Icon } from "react-native-elements";
 import { Colors } from "../../../assets/styles/Colors";
 import React from "react";
@@ -11,6 +11,25 @@ import CommentsIButton from "../Buttons/CommentsIButton";
 import { Checkmark } from "../../core";
 
 const CardPost = (props) => {
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: "Trimite catre",
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Stack direction="row" sx={{ paddingHorizontal: 10 }}>
@@ -50,8 +69,8 @@ const CardPost = (props) => {
         <Stack direction="row">
           <LikeIButton isLike={props.isLike} onPress={() => {}} />
           <CommentsIButton onPress={props.openComments} />
-          <ShareIButton onPress={() => {}} />
           <BookmarkIButton isBookmark={props.isBookmark} onPress={() => {}} />
+          <ShareIButton onPress={onShare} />
         </Stack>
       </Stack>
       <Text style={styles.description}>

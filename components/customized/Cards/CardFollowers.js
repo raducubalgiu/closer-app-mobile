@@ -9,8 +9,6 @@ const CardFollowers = (props) => {
     <Stack direction="row" sx={styles.container}>
       <TouchableOpacity style={styles.goToUser} onPress={props.onGoToUser}>
         <UserAvatar
-          iconSize={22}
-          size={50}
           avatar={
             props?.avatar !== undefined ? props?.avatar[0]?.url : undefined
           }

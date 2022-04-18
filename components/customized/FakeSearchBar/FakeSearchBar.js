@@ -16,7 +16,7 @@ const FakeSearchBar = () => {
         onPress={() => navigation.navigate("Search")}
         style={{ flexDirection: "row", flex: 1, alignItems: "center" }}
       >
-        <Icon name="search" type="feather" color={Colors.textDark} />
+        <Icon name="search" type="feather" color={Colors.textDark} size={20} />
         <Text style={styles.fakeInputText}>{t("searchInputTitle")}</Text>
       </TouchableOpacity>
       <Divider orientation="vertical" style={{ marginRight: 15 }} />
@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f1f1f1",
     paddingVertical: 5,
     paddingHorizontal: 5,
+    borderRadius: 5,
   },
   fakeInput: {
     flexDirection: "row",

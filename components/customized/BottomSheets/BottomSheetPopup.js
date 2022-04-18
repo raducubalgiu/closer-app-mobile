@@ -5,6 +5,7 @@ import {
   BottomSheetModalProvider,
   BottomSheetBackdrop,
 } from "@gorhom/bottom-sheet";
+import { Portal } from "@gorhom/portal";
 
 const BottomSheetPopup = (props) => {
   const bottomSheetModalRef = useRef(null);
@@ -37,22 +38,29 @@ const BottomSheetPopup = (props) => {
     }
   }, [props.open]);
 
+  const dismissHandler = () => {
+    props.onClose();
+    bottomSheetModalRef.current.close();
+  };
+
   return (
-    <BottomSheetModalProvider>
-      <View>
-        <BottomSheetModal
-          onChange={handleSheetChange}
-          ref={bottomSheetModalRef}
-          index={1}
-          snapPoints={snapPoints}
-          backdropComponent={renderBackdrop}
-          handleIndicatorStyle={styles.indicatorStyle}
-          onDismiss={props.onClose}
-        >
-          <View style={styles.container}>{props.sheetBody}</View>
-        </BottomSheetModal>
-      </View>
-    </BottomSheetModalProvider>
+    <Portal>
+      <BottomSheetModalProvider>
+        <View>
+          <BottomSheetModal
+            onChange={handleSheetChange}
+            ref={bottomSheetModalRef}
+            index={1}
+            snapPoints={snapPoints}
+            backdropComponent={renderBackdrop}
+            handleIndicatorStyle={styles.indicatorStyle}
+            onDismiss={dismissHandler}
+          >
+            <View style={styles.container}>{props.sheetBody}</View>
+          </BottomSheetModal>
+        </View>
+      </BottomSheetModalProvider>
+    </Portal>
   );
 };
 

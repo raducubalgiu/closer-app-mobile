@@ -1,12 +1,13 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Icon, Divider } from "react-native-elements";
 import React from "react";
+import { Colors } from "../../../assets/styles/Colors";
 
 const MenuItem = (props) => {
   return (
     <>
       <TouchableOpacity onPress={props.onPress} style={styles.container}>
-        <Icon name={props.iconName} type={props.iconType} />
+        <Icon name={props.iconName} type={props.iconType} size={22} />
         <View style={styles.button}>
           <Text style={styles.buttonText}>{props.text}</Text>
         </View>
@@ -29,5 +30,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontFamily: "Exo-Medium",
+    color: Colors.textDark,
+    fontSize: 13.5,
   },
 });

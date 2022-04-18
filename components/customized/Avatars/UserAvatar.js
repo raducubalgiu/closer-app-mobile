@@ -7,14 +7,22 @@ const UserAvatar = (props) => {
   let avatar;
   if (props?.avatar !== undefined) {
     avatar = (
-      <Avatar size={props.size} rounded source={{ uri: `${props?.avatar}` }} />
+      <Avatar
+        size={props.size ? props.size : 55}
+        rounded
+        source={{ uri: `${props?.avatar}` }}
+      />
     );
   } else {
     avatar = (
       <Avatar
-        size={props.size}
+        size={props.size ? props.size : 55}
         rounded
-        icon={{ name: "user", type: "font-awesome", size: props.iconSize }}
+        icon={{
+          name: "user",
+          type: "font-awesome",
+          size: props.iconSize ? props.iconSize : 30,
+        }}
         containerStyle={{ backgroundColor: "#ccc" }}
       />
     );

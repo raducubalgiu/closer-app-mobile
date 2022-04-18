@@ -85,11 +85,10 @@ const FeedScreen = () => {
               left: 0,
               right: 0,
               backgroundColor: "white",
-              paddingHorizontal: 15,
               transform: [{ translateY: headerTranslate }],
             }}
           >
-            <Stack direction="row" sx={{ height: 50 }}>
+            <Stack direction="row" sx={{ height: 50, paddingHorizontal: 15 }}>
               <FakeSearchBarSimple />
               <TouchableOpacity style={styles.bookmark}>
                 <Icon
@@ -100,12 +99,22 @@ const FeedScreen = () => {
                 />
               </TouchableOpacity>
             </Stack>
-            <View style={{ height: 50 }}>
+            <View
+              style={{
+                height: 50,
+                borderBottomWidth: 1,
+                borderBottomColor: "#f1f1f1",
+                borderTopWidth: 1,
+                borderTopColor: "#f1f1f1",
+                marginTop: 3,
+              }}
+            >
               <ScrollView
                 horizontal
                 style={{
                   marginVertical: 7.5,
                   backgroundColor: "white",
+                  paddingHorizontal: 15,
                 }}
                 showsHorizontalScrollIndicator={false}
               >

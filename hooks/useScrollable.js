@@ -2,7 +2,7 @@ import { Animated } from "react-native";
 import { useEffect, useRef } from "react";
 
 export const useScrollable = () => {
-  const CONTAINER_HEIGHT = 50;
+  const CONTAINER_HEIGHT = 54;
   const scrollY = useRef(new Animated.Value(0)).current;
   const offsetAnim = useRef(new Animated.Value(0)).current;
 

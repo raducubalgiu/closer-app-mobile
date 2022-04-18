@@ -39,6 +39,13 @@ const SettingsList = (props) => {
       />
 
       <MenuItem
+        iconName="sharealt"
+        iconType="antdesign"
+        text="Distribuie profilul"
+        onPress={() => navigation.navigate("Discounts")}
+      />
+
+      <MenuItem
         iconName="logout"
         iconType="antdesign"
         text="Delogare"

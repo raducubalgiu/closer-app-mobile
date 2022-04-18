@@ -22,6 +22,6 @@ export default BookmarkIButton;
 
 const styles = StyleSheet.create({
   default: {
-    marginLeft: 20,
+    marginLeft: 22.5,
   },
 });
