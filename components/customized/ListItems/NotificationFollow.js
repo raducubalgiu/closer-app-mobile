@@ -4,6 +4,7 @@ import { Checkmark, Stack } from "../../core";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import UserAvatar from "../Avatars/UserAvatar";
 import { Colors } from "../../../assets/styles/Colors";
+import FollowButton from "../../core/Buttons/FollowButton";
 
 const NotificationFollow = (props) => {
   return (
@@ -30,12 +31,7 @@ const NotificationFollow = (props) => {
           </Stack>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={{ ...styles.btn, ...props.sxBtn }}
-        onPress={props.onPress}
-      >
-        <Text style={{ ...styles.btnText, ...props.sxBtnText }}>Urmaresti</Text>
-      </TouchableOpacity>
+      <FollowButton followingId={props.followingId} />
     </Stack>
   );
 };
@@ -62,7 +58,7 @@ const styles = StyleSheet.create({
     borderColor: "#ddd",
     paddingVertical: 5,
     paddingHorizontal: 15,
-    borderRadius: 5,
+    borderRadius: 2.5,
   },
   btnText: {
     fontFamily: "Exo-SemiBold",

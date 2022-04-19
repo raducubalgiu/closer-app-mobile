@@ -20,13 +20,13 @@ import { useAuth } from "../../../context/auth";
 import TopTabNavigator from "../../TopTabNavigator";
 import { Stack } from "../../../components/core";
 import CardSuggestedPeople from "../../../components/customized/Cards/CardSuggestedPeople";
+import FollowButton from "../../../components/core/Buttons/FollowButton";
 
 const ProfileGeneralScreen = (props) => {
   const { user } = useAuth();
   const { userId } = props.route.params;
   const [userDetails, setUserDetails] = useState(null);
   const [posts, setPosts] = useState([]);
-  const [follow, setFollow] = useState(true);
   const [loading, setLoading] = useState(false);
   const [suggestedPeople, setSuggestedPeople] = useState([]);
 
@@ -49,20 +49,6 @@ const ProfileGeneralScreen = (props) => {
       .then((res) => setPosts(res.data.posts))
       .catch((err) => console.log(err));
   }, []);
-
-  useEffect(() => {
-    axios
-      .get(
-        `http://192.168.100.2:8000/api/v1/users/${user?._id}/follower/${userId}/followee/check-follow`,
-        {
-          headers: { Authorization: `Bearer ${user?.token}` },
-        }
-      )
-      .then((res) => {
-        setFollow(res.data.status);
-      })
-      .catch((error) => console.log(error));
-  }, [user?._id, userId]);
 
   const fetchUser = () => {
     axios
@@ -94,49 +80,13 @@ const ProfileGeneralScreen = (props) => {
       });
   };
 
-  const followHandler = () => {
-    if (!follow) {
-      axios
-        .post(
-          `http://192.168.100.2:8000/api/v1/users/follow`,
-          {
-            userId: user?._id,
-            followingId: userId,
-          },
-          {
-            headers: { Authorization: `Bearer ${user?.token}` },
-          }
-        )
-        .then(() => {
-          setFollow(true);
-          handleSuggested();
-          fetchUser();
-        })
-        .catch((error) => console.log(error));
-    }
-    if (follow) {
-      axios
-        .delete(
-          `http://192.168.100.2:8000/api/v1/users/${user?._id}/followee/${userId}/follower/unfollow`,
-          {
-            headers: { Authorization: `Bearer ${user?.token}` },
-          }
-        )
-        .then(() => {
-          setFollow(false);
-          fetchUser();
-        })
-        .catch((error) => console.log(error));
-    }
-  };
-
   const buttons = (
     <>
-      <ContainedButton
-        title={follow ? "Urmaresti" : "Urmareste"}
-        sx={follow ? styles.followBtn : styles.unfollowBtn}
-        sxText={follow && styles.followBtnText}
-        onPress={followHandler}
+      <FollowButton
+        size="lg"
+        followingId={userId}
+        fetchUser={fetchUser}
+        fetchSuggested={handleSuggested}
       />
       <OutlinedButton
         title="Mesaj"

@@ -22,6 +22,7 @@ const FollowersTabDetails = (props) => {
             avatar={item?.userId?.avatar}
             username={item?.userId?.username}
             name={item?.userId?.name}
+            followingId={item?.userId?._id}
           />
         )}
       />

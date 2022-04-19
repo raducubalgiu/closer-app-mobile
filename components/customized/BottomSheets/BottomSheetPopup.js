@@ -39,8 +39,8 @@ const BottomSheetPopup = (props) => {
   }, [props.open]);
 
   const dismissHandler = () => {
-    props.onClose();
     bottomSheetModalRef.current.close();
+    props.onClose();
   };
 
   return (

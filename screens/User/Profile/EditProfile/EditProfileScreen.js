@@ -23,9 +23,10 @@ const EditProfileScreen = () => {
   const navigation = useNavigation();
 
   const handleClose = () => setOpen(false);
-  const handleDeletePhoto = () => {
-    axios.patch(`http://192.168.100.2:8000/api/v1/users/${user?._id}`);
-  }
+
+  // const handleDeletePhoto = () => {
+  //   axios.patch(`http://192.168.100.2:8000/api/v1/users/${user?._id}`);
+  // };
 
   return (
     <>
@@ -109,7 +110,7 @@ const EditProfileScreen = () => {
         onClose={handleClose}
         sheetBody={
           <Stack>
-            <TouchableOpacity style={styles.sheetTitle} onPress={handleDeletePhoto}>
+            <TouchableOpacity style={styles.sheetTitle}>
               <Text style={styles.sheetText}>Sterge fotografia actuala</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.sheetTitle}>

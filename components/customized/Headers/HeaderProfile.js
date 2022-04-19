@@ -3,8 +3,11 @@ import React from "react";
 import { Icon } from "react-native-elements";
 import { IconButton, Stack } from "../../core";
 import { Colors } from "../../../assets/styles/Colors";
+import { useNavigation } from "@react-navigation/native";
 
 const HeaderProfile = (props) => {
+  const navigation = useNavigation();
+
   return (
     <Stack direction="row" sx={{ marginVertical: 10, marginHorizontal: 15 }}>
       <Stack direction="row">
@@ -30,7 +33,7 @@ const HeaderProfile = (props) => {
       </TouchableOpacity>
       <Stack direction="row">
         <IconButton
-          onPress={() => {}}
+          onPress={() => navigation.navigate("AddLocation")}
           size={30}
           iconName="add-circle-outline"
           iconType="ionicon"

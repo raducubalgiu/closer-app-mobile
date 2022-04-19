@@ -44,6 +44,7 @@ const NotificationsTab = () => {
             avatar={item?.avatar[0]?.url}
             date={item?.date}
             checkmark={item?.checkmark}
+            followingId={item?._id}
           />
         )}
       />

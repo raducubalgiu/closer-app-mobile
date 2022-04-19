@@ -121,7 +121,7 @@ const FilterDate = () => {
           theme={{
             textDayHeaderFontFamily: "Exo-Medium",
             textMonthFontFamily: "Exo-SemiBold",
-            textDayFontFamily: "Exo-Medium",
+            textDayFontFamily: "Exo-SemiBold",
             textDayFontSize: 14,
             arrowColor: Colors.primary,
             disabledArrowColor: "#f1f1f1",

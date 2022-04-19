@@ -6,7 +6,10 @@ import { Stack } from "../../core";
 
 const FakeSearchBarSimple = (props) => {
   return (
-    <TouchableOpacity style={styles.container} onPress={props.onPress}>
+    <TouchableOpacity
+      style={{ ...styles.container, ...props.sx }}
+      onPress={props.onPress}
+    >
       <Stack direction="row">
         <Stack direction="row">
           <Icon

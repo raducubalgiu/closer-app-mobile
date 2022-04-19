@@ -3,6 +3,7 @@ import React from "react";
 import UserAvatar from "../Avatars/UserAvatar";
 import Stack from "../../core/Containers/Stack";
 import { Colors } from "../../../assets/styles/Colors";
+import FollowButton from "../../core/Buttons/FollowButton";
 
 const CardFollowers = (props) => {
   return (
@@ -19,12 +20,7 @@ const CardFollowers = (props) => {
           <Text style={styles.name}>{props.name}</Text>
         </Stack>
       </TouchableOpacity>
-      <TouchableOpacity
-        style={{ ...styles.btn, ...props.sxBtn }}
-        onPress={props.onPress}
-      >
-        <Text style={{ ...styles.btnText, ...props.sxBtnText }}>Urmaresti</Text>
-      </TouchableOpacity>
+      <FollowButton followingId={props.followingId} />
     </Stack>
   );
 };

@@ -39,6 +39,7 @@ import RegisterScreen from "../screens/User/Auth/RegisterScreen";
 import UsernameScreen from "../screens/User/Auth/UsernameScreen";
 import RegisterBusinessScreen from "../screens/User/Auth/RegisterBusinessScreen";
 import SavedScreen from "../screens/User/Profile/SavedScreen";
+import AddLocationScreen from "../screens/User/Profile/CompleteProfile/AddLocationScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -134,6 +135,7 @@ const UserStackNavigator = () => {
         component={ProfileScreen}
         initialRouteName="Profile"
       />
+      <Stack.Screen name="AddLocation" component={AddLocationScreen} />
       <Stack.Screen name="EditProfile" component={EditProfileScreen} />
       <Stack.Screen name="EditName" component={EditNameScreen} />
       <Stack.Screen name="EditWebsite" component={EditWebsiteScreen} />
