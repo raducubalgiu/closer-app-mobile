@@ -17,7 +17,7 @@ const CompleteProfile = () => {
       iconName: "navigation",
       iconType: "feather",
       completed: false,
-      navigation: "EditName",
+      navigation: "AddLocation",
     },
     {
       title: "Adauga serviciile",
@@ -25,7 +25,7 @@ const CompleteProfile = () => {
       iconName: "bulb1",
       iconType: "antdesign",
       completed: false,
-      navigation: "EditName",
+      navigation: "AddServices",
     },
     {
       title: "Adauga produsele",
@@ -33,7 +33,7 @@ const CompleteProfile = () => {
       iconName: "rocket1",
       iconType: "antdesign",
       completed: false,
-      navigation: "EditName",
+      navigation: "AddProducts",
     },
     {
       title: "Include-ti numele",
@@ -72,7 +72,11 @@ const CompleteProfile = () => {
         <Text style={styles.counter}>0 / 6</Text>
         <Text style={styles.status}> FINALIZATE</Text>
       </Stack>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        bounces={false}
+      >
         {STEPS.map((step, i) => (
           <CardCompleteProfile
             key={i}

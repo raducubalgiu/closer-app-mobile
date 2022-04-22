@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Icon } from "react-native-elements";
 import { useAuth } from "../context/auth";
 import { PortalProvider } from "@gorhom/portal";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import "../i18next";
 
 import { Colors } from "../assets/styles/Colors";
@@ -40,6 +41,8 @@ import UsernameScreen from "../screens/User/Auth/UsernameScreen";
 import RegisterBusinessScreen from "../screens/User/Auth/RegisterBusinessScreen";
 import SavedScreen from "../screens/User/Profile/SavedScreen";
 import AddLocationScreen from "../screens/User/Profile/CompleteProfile/AddLocationScreen";
+import AddServicesScreen from "../screens/User/Profile/CompleteProfile/AddServicesScreen";
+import AddProductsScreen from "../screens/User/Profile/CompleteProfile/AddProductsScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -129,13 +132,19 @@ const FeedStackNavigator = () => {
 
 const UserStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       <Stack.Screen
         name="Profile"
         component={ProfileScreen}
         initialRouteName="Profile"
       />
       <Stack.Screen name="AddLocation" component={AddLocationScreen} />
+      <Stack.Screen name="AddServices" component={AddServicesScreen} />
+      <Stack.Screen name="AddProducts" component={AddProductsScreen} />
       <Stack.Screen name="EditProfile" component={EditProfileScreen} />
       <Stack.Screen name="EditName" component={EditNameScreen} />
       <Stack.Screen name="EditWebsite" component={EditWebsiteScreen} />
@@ -186,7 +195,8 @@ const TabsScreen = () => {
         tabBarInactiveTintColor: "gray",
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarStyle: (navigation.getState()?.routes[0]?.state?.index === 2 ||
+        tabBarStyle: (navigation.getState()?.routes[0]?.state?.index === 1 ||
+          navigation.getState()?.routes[0]?.state?.index === 2 ||
           navigation.getState()?.routes[0]?.state?.index === 3) && {
           display: "none",
         },

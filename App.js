@@ -4,6 +4,7 @@ import AppLoading from "expo-app-loading";
 import { enableScreens } from "react-native-screens";
 import CloserNavigation from "./navigation/CloserNavigation";
 import { AuthProvider } from "./context/auth";
+import { RootSiblingParent } from "react-native-root-siblings";
 import "./firebase/firebase.config";
 
 enableScreens();
@@ -37,7 +38,9 @@ const App = () => {
 
   return (
     <AuthProvider>
-      <CloserNavigation />
+      <RootSiblingParent>
+        <CloserNavigation />
+      </RootSiblingParent>
     </AuthProvider>
   );
 };

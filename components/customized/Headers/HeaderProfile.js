@@ -33,7 +33,7 @@ const HeaderProfile = (props) => {
       </TouchableOpacity>
       <Stack direction="row">
         <IconButton
-          onPress={() => navigation.navigate("AddLocation")}
+          onPress={() => navigation.navigate("AddProducts")}
           size={30}
           iconName="add-circle-outline"
           iconType="ionicon"
