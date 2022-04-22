@@ -19,19 +19,7 @@ const ProfileScreen = (props) => {
   const navigation = useNavigation();
   const [openSettings, setOpenSettings] = useState(false);
   const [openSwitch, setOpenSwitch] = useState(false);
-  const [userDetails, setUserDetails] = useState(null);
   const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get(`http://192.168.100.2:8000/api/v1/users/${user?._id}`, {
-        headers: { Authorization: `Bearer ${user?.token}` },
-      })
-      .then((resp) => {
-        setUserDetails(resp.data.user);
-      })
-      .catch((error) => console.log(error));
-  }, []);
 
   const closeSheet = () => {
     setOpenSwitch(false);
@@ -91,21 +79,21 @@ const ProfileScreen = (props) => {
       <HeaderProfile
         onGoToFindFriends={() => navigation.navigate("FindFriends")}
         onOpenSwitch={() => setOpenSwitch(true)}
-        name={userDetails?.name}
+        name={user?.name}
         onOpenSettings={() => setOpenSettings(true)}
       />
       <ProfileOverview
-        user={userDetails}
+        user={user}
         withBadge={true}
         badgeDetails={props.badgeDetails}
         actionButtons={buttons}
       />
       <TopTabNavigator
-        role={userDetails?.role}
+        role={user?.role}
         posts={posts}
-        products={userDetails?.products}
-        biography={userDetails?.description}
-        website={userDetails?.website}
+        products={user?.products}
+        biography={user?.description}
+        website={user?.website}
       />
 
       <BottomSheetPopup

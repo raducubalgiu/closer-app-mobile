@@ -53,7 +53,11 @@ const ProfileOverview = (props) => {
         </Stack>
       </Stack>
       <Stack justify="center" align="center" sx={styles.servicesContainer}>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        <ScrollView
+          bounces={false}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+        >
           {user?.services?.map((service, i) => (
             <Text key={i} style={styles.service}>
               {service.name}

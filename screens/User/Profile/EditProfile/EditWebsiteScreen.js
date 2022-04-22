@@ -1,17 +1,37 @@
 import { SafeAreaView, StyleSheet } from "react-native";
+import axios from "axios";
 import React, { useState } from "react";
 import EditField from "./EditFieldScreen";
 import { useAuth } from "../../../../context/auth";
+import { useNavigation } from "@react-navigation/native";
 
 const EditWebsiteScreen = () => {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   const [value, setValue] = useState("Website");
+  const navigation = useNavigation();
 
   const updateField = (text) => {
     setValue(text);
   };
 
-  const updateWebsite = async () => {};
+  const updateWebsite = () => {
+    axios
+      .patch(
+        `http://192.168.100.2:8000/api/v1/users/${user?._id}/update`,
+        {
+          website: value,
+        },
+        {
+          headers: { Authorization: `Bearer ${user?.token}` },
+        }
+      )
+      .then((res) => {
+        setValue(res.data.user.website);
+        setUser({ ...user, website: res.data.user.website });
+        navigation.goBack();
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <SafeAreaView style={styles.screen}>

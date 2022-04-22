@@ -15,30 +15,33 @@ import FakeSearchBar from "../components/customized/FakeSearchBar/FakeSearchBar"
 import ServicesCategories from "../components/customized/ServicesCategories/ServicesCategories";
 import CardRecommended from "../components/customized/Cards/CardRecommended";
 import { Colors } from "../assets/styles/Colors";
+import { useAuth } from "../context/auth";
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
 const HomeScreen = () => {
+  const { user } = useAuth();
   const [locations, setLocations] = useState([]);
   const { t } = useTranslation();
   const [refreshing, setRefreshing] = React.useState(false);
 
-  // const fetchRecommended = useCallback(() => {
-  //   axios
-  //     .get(
-  //       `http://192.168.100.2:8000/api/v1/locations/get-recommended?latlng=26.100195,44.428286`
-  //     )
-  //     .then((resp) => {
-  //       setLocations(resp.data.services);
-  //     })
-  //     .catch((error) => console.log(error));
-  // }, []);
+  const fetchRecommended = useCallback(() => {
+    axios
+      .get(
+        `http://192.168.100.2:8000/api/v1/users/get-recommended?latlng=26.100195,44.428286`,
+        { headers: { Authorization: `Bearer ${user?.token}` } }
+      )
+      .then((resp) => {
+        setLocations(resp.data.services);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
-  // useEffect(() => {
-  //   fetchRecommended();
-  // }, [fetchRecommended]);
+  useEffect(() => {
+    fetchRecommended();
+  }, [fetchRecommended]);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -47,6 +50,8 @@ const HomeScreen = () => {
       setRefreshing(false);
     });
   }, []);
+
+  console.log(locations);
 
   return (
     <View style={styles.screen}>
@@ -72,17 +77,18 @@ const HomeScreen = () => {
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
           <CardRecommended
-            id={item._id}
-            name={item.name}
-            image={item.images[0].url}
-            title={item.title}
-            street={item.startLocation.address.street}
-            number={item.startLocation.address.number}
-            county={item.startLocation.address.county}
-            distance={item.distance}
-            ratingsAverage={item.ratingsAverage}
-            ratingsQuantity={item.ratingsQuantity}
-            availableSeats={item.availableSeats}
+            id={item?._id}
+            name={item?.name}
+            image={item?.images[0]?.url}
+            title={item?.title}
+            street={item?.location?.street}
+            number={item?.location?.number}
+            county={item?.location?.county}
+            distance={item?.distance}
+            ratingsAverage={item?.ratingsAverage}
+            ratingsQuantity={item?.ratingsQuantity}
+            availableSeats={item?.availableSeats}
+            service={item?.services[0]?.name}
           />
         )}
       />

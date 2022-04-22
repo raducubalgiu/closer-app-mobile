@@ -3,10 +3,12 @@ import axios from "axios";
 import React, { useState } from "react";
 import EditField from "./EditFieldScreen";
 import { useAuth } from "../../../../context/auth";
+import { useNavigation } from "@react-navigation/native";
 
 const EditBioScreen = () => {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   const [value, setValue] = useState("Bio");
+  const navigation = useNavigation();
 
   const updateField = (text) => {
     setValue(text);
@@ -16,7 +18,7 @@ const EditBioScreen = () => {
     event.persist();
     axios
       .patch(
-        `http://192.168.100.2:8000/api/v1/users/update`,
+        `http://192.168.100.2:8000/api/v1/users/${user?._id}/update`,
         {
           description: value,
         },
@@ -24,14 +26,18 @@ const EditBioScreen = () => {
           headers: { Authorization: `Bearer ${user?.token}` },
         }
       )
-      .then((res) => setValue(res.data.user.description))
+      .then((res) => {
+        setValue(res.data.user.description);
+        setUser({ ...user, description: res.data.user.description });
+        navigation.goBack();
+      })
       .catch((err) => console.log(err));
   };
 
   return (
     <SafeAreaView style={styles.screen}>
       <EditField
-        field="Nume"
+        field="Biografie"
         onSave={updateBio}
         updateField={updateField}
         value={value}

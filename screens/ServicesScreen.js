@@ -17,8 +17,10 @@ import BottomSheetService from "../components/customized/BottomSheets/BottomShee
 import CardService from "../components/customized/Cards/CardService";
 import Map from "../components/customized/Map/Map";
 import { Colors } from "../assets/styles/Colors";
+import { useAuth } from "../context/auth";
 
 const ServicesScreen = ({ route }) => {
+  const { user } = useAuth();
   const [results, setResults] = useState(null);
   const [locations, setLocations] = useState([]);
   const [checked, setChecked] = useState(true);
@@ -38,7 +40,10 @@ const ServicesScreen = ({ route }) => {
   useEffect(() => {
     axios
       .get(
-        `http://192.168.100.2:8000/api/v1/locations/get-by-distance?serviceId=${serviceId}&latlng=26.100195,44.428286`
+        `http://192.168.100.2:8000/api/v1/users/get-by-distance?serviceId=${serviceId}&latlng=26.100195,44.428286`,
+        {
+          headers: { Authorization: `Bearer ${user?.token}` },
+        }
       )
       .then((resp) => {
         setLocations(resp.data.services);
@@ -46,6 +51,8 @@ const ServicesScreen = ({ route }) => {
       })
       .catch((error) => console.log(error));
   }, []);
+
+  console.log(locations);
 
   return (
     <View style={styles.screen}>
@@ -108,13 +115,13 @@ const ServicesScreen = ({ route }) => {
               renderItem={({ item }) => (
                 <>
                   <CardService
-                    id={item._id}
-                    distance={item.distance}
-                    image={item.imageCover[0].url}
-                    business={item.name}
-                    address={`${item.startLocation.address.street}, ${item.startLocation.address.number}, ${item.startLocation.address.county}`}
-                    ratingsAverage={item.ratingsAverage}
-                    ratingsQuantity={item.ratingsQuantity}
+                    id={item?._id}
+                    distance={item?.distance}
+                    image={item?.images[0]?.url}
+                    business={item?.name}
+                    address={`${item?.location?.street}, ${item?.location?.number}, ${item?.location?.city}, ${item?.location?.county}`}
+                    ratingsAverage={item?.ratingsAverage}
+                    ratingsQuantity={item?.ratingsQuantity}
                     service={serviceName}
                   />
                   <Divider />

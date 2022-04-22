@@ -6,7 +6,7 @@ import { useAuth } from "../../../context/auth";
 
 const FollowButton = (props) => {
   const [follow, setFollow] = useState(true);
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
 
   useEffect(() => {
     axios
@@ -42,6 +42,7 @@ const FollowButton = (props) => {
           setFollow(true);
           props.fetchUser ? props.fetchUser() : null;
           props.fetchSuggested ? props.fetchSuggested() : null;
+          setUser({ ...user, followingCount: user?.followingCount + 1 });
         })
         .catch((error) => {
           console.log(error);
@@ -59,6 +60,7 @@ const FollowButton = (props) => {
         .then(() => {
           setFollow(false);
           props.fetchUser ? props.fetchUser() : null;
+          setUser({ ...user, followingCount: user?.followingCount - 1 });
         })
         .catch((error) => console.log(error));
     }

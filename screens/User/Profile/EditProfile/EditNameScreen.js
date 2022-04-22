@@ -3,10 +3,12 @@ import axios from "axios";
 import React, { useState } from "react";
 import EditField from "./EditFieldScreen";
 import { useAuth } from "../../../../context/auth";
+import { useNavigation } from "@react-navigation/native";
 
 const EditNameScreen = () => {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   const [value, setValue] = useState(user?.name);
+  const navigation = useNavigation();
 
   const updateField = (text) => {
     setValue(text);
@@ -24,7 +26,11 @@ const EditNameScreen = () => {
           headers: { Authorization: `Bearer ${user?.token}` },
         }
       )
-      .then((res) => setValue(res.data.user.name))
+      .then((res) => {
+        setValue(res.data.user.name);
+        setUser({ ...user, name: res.data.user.name });
+        navigation.goBack();
+      })
       .catch((err) => console.log(err));
   };
 

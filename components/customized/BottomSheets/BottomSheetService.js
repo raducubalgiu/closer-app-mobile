@@ -30,14 +30,14 @@ const BottomSheetService = (props) => {
     ({ item }) => (
       <>
         <CardService
-          id={item._id}
+          id={item?._id}
           image={item?.images[0]?.url}
-          business={item.name}
-          distance={item.distance}
-          address={`${item.startLocation.address.street}, ${item.startLocation.address.number}, ${item.startLocation.address.county}`}
-          ratingsAverage={item.ratingsAverage}
-          ratingsQuantity={item.ratingsQuantity}
-          service={props.serviceName}
+          business={item?.name}
+          distance={item?.distance}
+          address={`${item?.location?.street}, ${item?.location?.number}, ${item?.location?.city}, ${item?.location?.county}`}
+          ratingsAverage={item?.ratingsAverage}
+          ratingsQuantity={item?.ratingsQuantity}
+          service={props?.serviceName}
         />
         <Divider />
       </>
@@ -61,6 +61,7 @@ const BottomSheetService = (props) => {
         </Text>
         <Divider width={2} color="#f1f1f1" style={styles.divider} />
         <BottomSheetFlatList
+          showsVerticalScrollIndicator={false}
           data={props.data}
           keyExtractor={(item) => item._id}
           renderItem={renderItem}

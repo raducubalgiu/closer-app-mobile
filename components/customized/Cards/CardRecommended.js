@@ -24,7 +24,7 @@ const CardRecommended = (props) => {
             <Image
               style={styles.cardImage}
               source={{
-                uri: props.image,
+                uri: `${props.image}`,
               }}
             />
           </View>
@@ -50,7 +50,7 @@ const CardRecommended = (props) => {
               {props.street}, {props.number}, {props.county}
             </Text>
             <View style={{ flexDirection: "row" }}>
-              <Text style={styles.cardTitle}>Tuns</Text>
+              <Text style={styles.cardTitle}>{props.service}</Text>
             </View>
             <View style={styles.ratingsContainer}>
               <Icon

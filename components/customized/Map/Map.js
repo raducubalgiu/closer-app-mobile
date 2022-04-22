@@ -189,8 +189,8 @@ const Map = (props) => {
         <Marker
           key={index}
           coordinate={{
-            latitude: marker.startLocation.coordinates[0],
-            longitude: marker.startLocation.coordinates[1],
+            latitude: marker.location.coordinates[0],
+            longitude: marker.location.coordinates[1],
           }}
           image={require("../../../assets/images/map_marker_yellow.png")}
         >
