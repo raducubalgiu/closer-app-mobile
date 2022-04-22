@@ -7,7 +7,8 @@ import { useNavigation } from "@react-navigation/native";
 
 const EditBioScreen = () => {
   const { user, setUser } = useAuth();
-  const [value, setValue] = useState("Bio");
+  const [value, setValue] = useState(user?.description);
+  const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
 
   const updateField = (text) => {
@@ -16,6 +17,7 @@ const EditBioScreen = () => {
 
   const updateBio = (event) => {
     event.persist();
+    setLoading(true);
     axios
       .patch(
         `http://192.168.100.2:8000/api/v1/users/${user?._id}/update`,
@@ -29,9 +31,13 @@ const EditBioScreen = () => {
       .then((res) => {
         setValue(res.data.user.description);
         setUser({ ...user, description: res.data.user.description });
+        setLoading(false);
         navigation.goBack();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
   };
 
   return (
@@ -42,6 +48,7 @@ const EditBioScreen = () => {
         updateField={updateField}
         value={value}
         fieldLength={40}
+        loading={loading}
       />
     </SafeAreaView>
   );

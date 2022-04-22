@@ -5,6 +5,7 @@ import { Divider } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../../../../assets/styles/Colors";
 import HeaderReusable from "../../../../components/customized/Headers/HeaderReusable";
+import { Stack } from "../../../../components/core";
 
 const EditFieldScreen = (props) => {
   const navigation = useNavigation();
@@ -54,6 +55,11 @@ const EditFieldScreen = (props) => {
       >
         {props.value.length} / {props.fieldLength}
       </Text>
+      {props.loading && (
+        <Stack>
+          <Text>Loading...</Text>
+        </Stack>
+      )}
     </>
   );
 };

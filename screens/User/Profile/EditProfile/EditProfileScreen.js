@@ -90,6 +90,7 @@ const EditProfileScreen = () => {
               resultText={
                 user?.description ? user?.description : "Adauga o descriere"
               }
+              resultTextLength={25}
               onPress={() => navigation.navigate("EditBio")}
             />
           </View>

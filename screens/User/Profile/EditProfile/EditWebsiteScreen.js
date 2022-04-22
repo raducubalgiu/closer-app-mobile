@@ -7,14 +7,17 @@ import { useNavigation } from "@react-navigation/native";
 
 const EditWebsiteScreen = () => {
   const { user, setUser } = useAuth();
-  const [value, setValue] = useState("Website");
+  const [value, setValue] = useState(user?.website);
+  const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
 
   const updateField = (text) => {
     setValue(text);
   };
 
-  const updateWebsite = () => {
+  const updateWebsite = (event) => {
+    event.persist();
+    setLoading(true);
     axios
       .patch(
         `http://192.168.100.2:8000/api/v1/users/${user?._id}/update`,
@@ -28,9 +31,13 @@ const EditWebsiteScreen = () => {
       .then((res) => {
         setValue(res.data.user.website);
         setUser({ ...user, website: res.data.user.website });
+        setLoading(false);
         navigation.goBack();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
   };
 
   return (
@@ -41,6 +48,7 @@ const EditWebsiteScreen = () => {
         updateField={updateField}
         value={value}
         fieldLength={80}
+        loading={loading}
       />
     </SafeAreaView>
   );

@@ -30,7 +30,7 @@ const HomeScreen = () => {
   const fetchRecommended = useCallback(() => {
     axios
       .get(
-        `http://192.168.100.2:8000/api/v1/users/get-recommended?latlng=26.100195,44.428286`,
+        `${process.env.BASE_ENDPOINT}/users/get-recommended?latlng=26.100195,44.428286`,
         { headers: { Authorization: `Bearer ${user?.token}` } }
       )
       .then((resp) => {
@@ -46,7 +46,6 @@ const HomeScreen = () => {
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     wait(1000).then(() => {
-      fetchRecommended();
       setRefreshing(false);
     });
   }, []);

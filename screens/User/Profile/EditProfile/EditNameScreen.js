@@ -1,13 +1,15 @@
-import { SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet, Text } from "react-native";
 import axios from "axios";
 import React, { useState } from "react";
 import EditField from "./EditFieldScreen";
 import { useAuth } from "../../../../context/auth";
 import { useNavigation } from "@react-navigation/native";
+import { Stack } from "../../../../components/core";
 
 const EditNameScreen = () => {
   const { user, setUser } = useAuth();
   const [value, setValue] = useState(user?.name);
+  const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
 
   const updateField = (text) => {
@@ -16,6 +18,7 @@ const EditNameScreen = () => {
 
   const updateName = (event) => {
     event.persist();
+    setLoading(true);
     axios
       .patch(
         `http://192.168.100.2:8000/api/v1/users/update`,
@@ -30,8 +33,12 @@ const EditNameScreen = () => {
         setValue(res.data.user.name);
         setUser({ ...user, name: res.data.user.name });
         navigation.goBack();
+        setLoading(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
   };
 
   return (
@@ -42,6 +49,7 @@ const EditNameScreen = () => {
         updateField={updateField}
         value={value}
         fieldLength={40}
+        loading={loading}
       />
     </SafeAreaView>
   );
