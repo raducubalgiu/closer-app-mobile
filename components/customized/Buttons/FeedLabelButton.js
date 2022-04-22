@@ -31,19 +31,19 @@ const styles = StyleSheet.create({
   btnList: {
     paddingVertical: 7,
     paddingHorizontal: 20,
-    borderWidth: 1,
+    borderWidth: 1.5,
     borderColor: "#ddd",
     marginRight: 7.5,
     borderRadius: 20,
   },
   btnText: {
     fontFamily: "Exo-Medium",
-    color: Colors.textLight,
+    color: Colors.textDark,
     fontSize: 13,
   },
   activeBtn: {
     backgroundColor: "#f1f1f1",
-    borderColor: "#f1f1f1",
+    borderColor: "#eee",
   },
   activeBtnText: {
     color: Colors.textDark,

@@ -17,7 +17,6 @@ import Header from "../../../../components/customized/Headers/Header";
 import { MainButton } from "../../../../components/core";
 import axios from "axios";
 import { useAuth } from "../../../../context/auth";
-import Toast from "react-native-root-toast";
 import { useNavigation } from "@react-navigation/native";
 
 const defaultValues = {
@@ -32,7 +31,6 @@ const defaultValues = {
 
 const AddLocationScreen = () => {
   const { user } = useAuth();
-  const [visible, setVisible] = useState(false);
   const [location, setLocation] = useState(defaultValues);
   const [images, setImages] = useState([]);
   const [blockApartment, setBlockApartment] = useState("");
@@ -64,7 +62,6 @@ const AddLocationScreen = () => {
         tooltipText="Adauga mai jos adresa la care iti desfasori activitatea si imagini de la locatie"
         tooltipContainer={{ width: 220, height: 80 }}
       />
-      <Toast visible={visible}>Ceva nu a mers cum trebuie..</Toast>
       <Divider color="#ddd" />
       <AutocompleteGoogle onSetLocation={handleSetLocation} />
       <ScrollView style={{ padding: 15 }} bounces={false}>

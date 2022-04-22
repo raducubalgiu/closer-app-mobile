@@ -20,6 +20,7 @@ const TopTabNavigator = (props) => {
     <AboutProfileScreen
       biography={props?.biography}
       website={props?.website}
+      location={props?.location}
     />
   );
 

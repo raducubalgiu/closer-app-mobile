@@ -1,4 +1,9 @@
-import { StyleSheet, SafeAreaView, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  SafeAreaView,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import BottomSheetPopup from "../../../components/customized/BottomSheets/BottomSheetPopup";
@@ -94,6 +99,7 @@ const ProfileScreen = (props) => {
         products={user?.products}
         biography={user?.description}
         website={user?.website}
+        location={user?.location}
       />
 
       <BottomSheetPopup

@@ -7,49 +7,51 @@ import {
   ScrollView,
 } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { MainButton, Stack } from "../../../../components/core";
 import Header from "../../../../components/customized/Headers/Header";
 import { useForm, Controller } from "react-hook-form";
 import TooltipTitle from "../../../../components/customized/ListItems/TooltipItem";
 import { Colors } from "../../../../assets/styles/Colors";
 import { Divider } from "react-native-elements";
-
-const DUMMY_SERVICES = [
-  {
-    _id: "1",
-    name: "Tuns",
-  },
-  {
-    _id: "2",
-    name: "Pensat",
-  },
-  {
-    _id: "3",
-    name: "Unghii",
-  },
-];
+import { useAuth } from "../../../../context/auth";
+import axios from "axios";
 
 const defaultValues = {
   name: "",
   description: "",
   price: "",
+  discount: "",
 };
 
 const AddProductsScreen = () => {
+  const { user } = useAuth();
+  const [filters, setFilters] = useState([]);
+  const [selectedService, setSelectedService] = useState("");
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm({ defaultValues });
 
+  const fetchFilters = useCallback(() => {
+    axios
+      .get(`${process.env.BASE_ENDPOINT}/services/${selectedService}/filters`)
+      .then((res) => setFilters(res.data.filters[0].options))
+      .catch((err) => console.log(err));
+  }, [selectedService]);
+
+  useEffect(() => {
+    fetchFilters();
+  }, [fetchFilters]);
+
   const placeholder = {
-    label: "Selecteaza serviciul aferent produsului",
+    label: "Selecteaza serviciul aferent produsului*",
     value: null,
     color: "#9EA0A4",
   };
   const placeholderOption = {
-    label: "Selecteaza categoria produsului",
+    label: "Selecteaza categoria produsului*",
     value: null,
     color: "#9EA0A4",
   };
@@ -77,9 +79,12 @@ const AddProductsScreen = () => {
             <RNPickerSelect
               placeholder={placeholder}
               useNativeAndroidPickerStyle={false}
-              onValueChange={(value) => {}}
+              onValueChange={(text) => {
+                setSelectedService(text);
+                fetchFilters();
+              }}
               style={pickerSelectStyles}
-              items={DUMMY_SERVICES.map((service) => {
+              items={user?.services.map((service) => {
                 return {
                   label: service?.name,
                   value: service?._id,
@@ -93,10 +98,10 @@ const AddProductsScreen = () => {
               useNativeAndroidPickerStyle={false}
               onValueChange={(value) => {}}
               style={pickerSelectStyles}
-              items={DUMMY_SERVICES.map((service) => {
+              items={filters.map((filter) => {
                 return {
-                  label: service?.name,
-                  value: service?._id,
+                  label: filter?.name,
+                  value: filter?._id,
                 };
               })}
             />
@@ -114,8 +119,7 @@ const AddProductsScreen = () => {
                   }}
                   onBlur={onBlur}
                   onChangeText={onChange}
-                  //value={location?.street}
-                  placeholder="Numele produsului"
+                  placeholder="Numele produsului*"
                   placeholderTextColor={"#9EA0A4"}
                 />
               )}
@@ -136,7 +140,6 @@ const AddProductsScreen = () => {
                   }}
                   onBlur={onBlur}
                   onChangeText={onChange}
-                  //value={location?.street}
                   placeholder="Scurta descriere"
                   placeholderTextColor={"#9EA0A4"}
                 />
@@ -158,12 +161,32 @@ const AddProductsScreen = () => {
                   }}
                   onBlur={onBlur}
                   onChangeText={onChange}
-                  //value={location?.street}
-                  placeholder="Pret"
+                  placeholder="Pret*"
                   placeholderTextColor={"#9EA0A4"}
                 />
               )}
               name="price"
+            />
+            {errors.street && <Text>This is required.</Text>}
+          </View>
+          <View style={{ marginBottom: 15, width: "100%" }}>
+            <Controller
+              control={control}
+              rules={{
+                required: true,
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  style={{
+                    ...styles.input,
+                  }}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  placeholder="Discount"
+                  placeholderTextColor={"#9EA0A4"}
+                />
+              )}
+              name="discount"
             />
             {errors.street && <Text>This is required.</Text>}
           </View>

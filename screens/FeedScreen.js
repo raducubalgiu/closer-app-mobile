@@ -20,7 +20,6 @@ import { useAuth } from "../context/auth";
 import { Stack } from "../components/core";
 import FakeSearchBarSimple from "../components/customized/FakeSearchBar/FakeSearchBarSimple";
 import FeedLabelButton from "../components/customized/Buttons/FeedLabelButton";
-import BottomSheetPopup from "../components/customized/BottomSheets/BottomSheetPopup";
 
 const FeedScreen = () => {
   const { postsState, dispatchPosts } = usePosts();
@@ -32,7 +31,6 @@ const FeedScreen = () => {
     headerTranslate,
   } = useScrollable();
   const { user } = useAuth();
-  const [openSheet, setOpenSheet] = useState(false);
   const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
   const [followingsPosts, setFollowingsPosts] = useState([]);
@@ -40,7 +38,7 @@ const FeedScreen = () => {
   const fetchAllPosts = useCallback(() => {
     setLoading(true);
     axios
-      .get(`http://192.168.100.2:8000/api/v1/posts`)
+      .get(`${process.env.BASE_ENDPOINT}/posts`)
       .then((res) => {
         setPosts(res.data.posts);
         setLoading(false);
@@ -54,9 +52,7 @@ const FeedScreen = () => {
   const fetchFollowings = () => {
     setLoading(true);
     axios
-      .get(
-        `http://192.168.100.2:8000/api/v1/users/${user?._id}/get-followings-posts`
-      )
+      .get(`${process.env.BASE_POINT}/users/${user?._id}/get-followings-posts`)
       .then((res) => {
         setFollowingsPosts(res.data.posts);
         setLoading(false);
@@ -70,8 +66,6 @@ const FeedScreen = () => {
   useEffect(() => {
     fetchAllPosts();
   }, [fetchAllPosts]);
-
-  const closeSheet = () => setOpenSheet(false);
 
   return (
     <>
@@ -88,7 +82,7 @@ const FeedScreen = () => {
               transform: [{ translateY: headerTranslate }],
             }}
           >
-            <Stack direction="row" sx={{ height: 50, paddingHorizontal: 15 }}>
+            {/* <Stack direction="row" sx={{ height: 50, paddingHorizontal: 15 }}>
               <FakeSearchBarSimple />
               <TouchableOpacity style={styles.bookmark}>
                 <Icon
@@ -98,14 +92,14 @@ const FeedScreen = () => {
                   color={Colors.textDark}
                 />
               </TouchableOpacity>
-            </Stack>
+            </Stack> */}
             <View
               style={{
                 height: 50,
-                borderBottomWidth: 1,
-                borderBottomColor: "#f1f1f1",
-                borderTopWidth: 1,
-                borderTopColor: "#f1f1f1",
+                //borderBottomWidth: 1,
+                //borderBottomColor: "#f1f1f1",
+                //borderTopWidth: 1,
+                //borderTopColor: "#f1f1f1",
                 marginTop: 3,
               }}
             >
@@ -120,12 +114,19 @@ const FeedScreen = () => {
               >
                 <Stack direction="row" sx={styles.explore}>
                   <Icon
-                    name="find"
-                    type="antdesign"
+                    name="search"
+                    type="feather"
                     color={Colors.textDark}
-                    size={20}
+                    size={24}
+                    style={{ marginRight: 22.5 }}
                   />
-                  <Text style={styles.exploreText}>Exploreaza</Text>
+                  <Icon
+                    name="bookmark-o"
+                    type="font-awesome"
+                    color={Colors.textDark}
+                    size={24}
+                  />
+                  {/* <Text style={styles.exploreText}>Exploreaza</Text> */}
                 </Stack>
                 <Divider
                   orientation="vertical"
@@ -166,7 +167,7 @@ const FeedScreen = () => {
           ListHeaderComponent={
             loading && <ActivityIndicator style={{ marginVertical: 20 }} />
           }
-          contentContainerStyle={{ marginTop: 100 }}
+          contentContainerStyle={{ marginTop: 60 }}
           onMomentumScrollBegin={onMomentumScrollBegin}
           onMomentumScrollEnd={onMomentumScrollEnd}
           onScrollEndDrag={onScrollEndDrag}
@@ -177,28 +178,21 @@ const FeedScreen = () => {
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (
             <CardPost
-              avatar={item.avatar}
-              username={item.user.username}
-              job={item.user.job}
+              avatar={item?.avatar}
+              username={item?.user?.username}
+              job={item?.user?.job}
               date={moment(item.createdAt).startOf("hour").fromNow()}
-              image={item.images[0].url}
-              description={item.description}
+              image={item?.images[0]?.url}
+              description={item?.description}
               likes={150}
-              bookable={item.bookable}
-              checkmark={item.checkmark}
-              isLike={false}
+              bookable={item?.bookable}
+              checkmark={item?.checkmark}
               isBookmark={false}
-              openComments={() => setOpenSheet(true)}
+              postId={item?._id}
             />
           )}
         />
       </View>
-      <BottomSheetPopup
-        open={openSheet}
-        onClose={closeSheet}
-        height={55}
-        sheetBody={openSheet && <Text>Comments</Text>}
-      />
     </>
   );
 };
@@ -234,10 +228,10 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   explore: {
-    borderWidth: 1,
-    borderColor: "#f1f1f1",
+    //borderWidth: 1,
+    //borderColor: "#f1f1f1",
     paddingHorizontal: 12.5,
-    backgroundColor: "#f1f1f1",
+    //backgroundColor: "#f1f1f1",
   },
   exploreText: {
     fontFamily: "Exo-Medium",

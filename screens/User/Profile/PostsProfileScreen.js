@@ -17,11 +17,13 @@ const { width } = Dimensions.get("window");
 
 const PostsProfileScreen = (props) => {
   const navigation = useNavigation();
+  const { posts } = props;
 
   return (
     <FlatList
+      ListHeaderComponent={posts.length === 0 && <NoFoundPosts />}
       style={{ backgroundColor: "white" }}
-      data={props?.posts}
+      data={posts}
       numColumns={3}
       keyExtractor={(item) => item._id}
       renderItem={({ item }) => (
@@ -64,7 +66,6 @@ const PostsProfileScreen = (props) => {
           </View>
         </TouchableOpacity>
       )}
-      ListHeaderComponent={!props?.posts && <NoFoundPosts />}
       ListFooterComponent={<CompleteProfile />}
     />
   );

@@ -142,6 +142,7 @@ const ProfileGeneralScreen = (props) => {
         posts={posts}
         products={userDetails?.products}
         role={userDetails?.role}
+        location={userDetails?.location}
       />
     </SafeAreaView>
   );

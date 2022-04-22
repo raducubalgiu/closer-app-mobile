@@ -7,20 +7,27 @@ import { Icon } from "react-native-elements";
 import { AddressFormat } from "../../../utils/addressFormat";
 
 const AboutProfileScreen = (props) => {
-  const { biography, website } = props;
+  const { biography, website, location } = props;
 
   return (
     <ScrollView style={styles.screen}>
       <Stack align="start" justify="start" sx={styles.container}>
         <Text style={styles.heading}>Biografie</Text>
-        <Text style={styles.bio}>{biography ? biography : "N/A"}</Text>
+        <Text style={styles.bio}>
+          {biography ? biography : "Inca nu a fost adaugata"}
+        </Text>
       </Stack>
       <Stack align="start" justify="start" sx={styles.container}>
         <Text style={styles.heading}>Contact</Text>
         <Stack direction="row" sx={styles.stack}>
           <Text style={styles.label}>Website:</Text>
           <TouchableOpacity style={{ marginLeft: 5 }}>
-            <Text style={styles.actionBtn}>{website ? website : "N/A"}</Text>
+            {website && <Text style={styles.actionBtn}>{website}</Text>}
+            {!website && (
+              <Text style={{ fontFamily: "Exo-Regular" }}>
+                Inca nu a fost adaugat
+              </Text>
+            )}
           </TouchableOpacity>
         </Stack>
         {/* <Stack direction="row" sx={styles.stack}>
@@ -31,7 +38,9 @@ const AboutProfileScreen = (props) => {
         </Stack> */}
         <Stack direction="row" align="start" sx={styles.stack}>
           <Text style={styles.label}>Locatia:</Text>
-          <Text style={styles.location}>Adresa</Text>
+          <Text style={styles.location}>
+            {location ? AddressFormat(location) : "Inca nu a fost adaugata"}
+          </Text>
         </Stack>
         <Stack direction="row" sx={{ marginTop: 15 }}>
           <Icon

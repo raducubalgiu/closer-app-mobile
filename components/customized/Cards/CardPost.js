@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, TouchableOpacity, Share } from "react-native";
 import { Image, Icon } from "react-native-elements";
 import { Colors } from "../../../assets/styles/Colors";
-import React from "react";
+import React, { useState } from "react";
 import Stack from "../../core/Containers/Stack";
 import UserAvatar from "../Avatars/UserAvatar";
 import LikeIButton from "../Buttons/LikeIButton";
@@ -11,6 +11,8 @@ import CommentsIButton from "../Buttons/CommentsIButton";
 import { Checkmark } from "../../core";
 
 const CardPost = (props) => {
+  const [likes, setLikes] = useState(props.likes);
+
   const onShare = async () => {
     try {
       const result = await Share.share({
@@ -65,9 +67,13 @@ const CardPost = (props) => {
         </>
       )}
       <Stack direction="row" sx={styles.actionBtns}>
-        <Text style={styles.likes}>{props.likes} aprecieri</Text>
+        <Text style={styles.likes}>{likes} aprecieri</Text>
         <Stack direction="row">
-          <LikeIButton isLike={props.isLike} onPress={() => {}} />
+          <LikeIButton
+            postId={props.postId}
+            onAddLike={() => setLikes((likes) => likes + 1)}
+            onRemoveLike={() => setLikes((likes) => likes - 1)}
+          />
           <CommentsIButton onPress={props.openComments} />
           <BookmarkIButton isBookmark={props.isBookmark} onPress={() => {}} />
           <ShareIButton onPress={onShare} />
@@ -80,7 +86,7 @@ const CardPost = (props) => {
       <TouchableOpacity
         style={{ paddingHorizontal: 10, marginTop: 5 }}
         activeOpacity={1}
-        onPress={props.openComments}
+        onPress={() => {}}
       >
         <Stack direction="row" justify="start">
           <Text style={styles.comments}>14 comentarii</Text>
