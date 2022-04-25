@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useLayoutEffect } from "react";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Icon } from "react-native-elements";
 import { useAuth } from "../context/auth";
-import { PortalProvider } from "@gorhom/portal";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import "../i18next";
 
@@ -43,9 +42,26 @@ import SavedScreen from "../screens/User/Profile/SavedScreen";
 import AddLocationScreen from "../screens/User/Profile/CompleteProfile/AddLocationScreen";
 import AddServicesScreen from "../screens/User/Profile/CompleteProfile/AddServicesScreen";
 import AddProductsScreen from "../screens/User/Profile/CompleteProfile/AddProductsScreen";
+import LikesScreen from "../screens/LikesScreen";
+import CommentsScreen from "../screens/User/Profile/CommentsScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+
+function hideTabs(route) {
+  const routeName = getFocusedRouteNameFromRoute(route);
+
+  switch (routeName) {
+    case "Comments":
+      return { display: "none" };
+    case "FiltersDate":
+      return { display: "none" };
+    case "FiltersService":
+      return { display: "none" };
+    default:
+      return { display: "block" };
+  }
+}
 
 const HomeStackNavigator = () => {
   return (
@@ -126,6 +142,8 @@ const FeedStackNavigator = () => {
       }}
     >
       <Stack.Screen name="Feed" component={FeedScreen} />
+      <Stack.Screen name="Likes" component={LikesScreen} />
+      <Stack.Screen name="Comments" component={CommentsScreen} />
     </Stack.Navigator>
   );
 };
@@ -167,7 +185,7 @@ const RootStack = createNativeStackNavigator();
 const TabsScreen = () => {
   return (
     <Tab.Navigator
-      screenOptions={({ route, navigation }) => ({
+      screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color }) => {
           let iconName;
           let iconType;
@@ -195,11 +213,7 @@ const TabsScreen = () => {
         tabBarInactiveTintColor: "gray",
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarStyle: (navigation.getState()?.routes[0]?.state?.index === 1 ||
-          navigation.getState()?.routes[0]?.state?.index === 2 ||
-          navigation.getState()?.routes[0]?.state?.index === 3) && {
-          display: "none",
-        },
+        tabBarStyle: hideTabs(route),
       })}
     >
       <Tab.Screen name="HomeStack" component={HomeStackNavigator} />
@@ -215,27 +229,25 @@ const CloserNavigation = () => {
   const { user } = useAuth();
   return (
     <NavigationContainer>
-      <PortalProvider>
-        <RootStack.Navigator screenOptions={{ headerShown: false }}>
-          {user ? (
-            <RootStack.Screen
-              name="App"
-              component={TabsScreen}
-              options={{
-                animationEnabled: false,
-              }}
-            />
-          ) : (
-            <RootStack.Screen
-              name="AuthStack"
-              component={AuthStackNavigator}
-              options={{
-                animationEnabled: false,
-              }}
-            />
-          )}
-        </RootStack.Navigator>
-      </PortalProvider>
+      <RootStack.Navigator screenOptions={{ headerShown: false }}>
+        {user ? (
+          <RootStack.Screen
+            name="App"
+            component={TabsScreen}
+            options={{
+              animationEnabled: false,
+            }}
+          />
+        ) : (
+          <RootStack.Screen
+            name="AuthStack"
+            component={AuthStackNavigator}
+            options={{
+              animationEnabled: false,
+            }}
+          />
+        )}
+      </RootStack.Navigator>
     </NavigationContainer>
   );
 };

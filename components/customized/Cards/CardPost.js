@@ -9,8 +9,10 @@ import BookmarkIButton from "../Buttons/BookmarkIButton";
 import ShareIButton from "../Buttons/ShareIButton";
 import CommentsIButton from "../Buttons/CommentsIButton";
 import { Checkmark } from "../../core";
+import { useNavigation } from "@react-navigation/native";
 
 const CardPost = (props) => {
+  const navigation = useNavigation();
   const [likes, setLikes] = useState(props.likesCount);
   const [comments, setComments] = useState(props.commentsCount);
 
@@ -67,14 +69,34 @@ const CardPost = (props) => {
         </>
       )}
       <Stack direction="row" sx={styles.actionBtns}>
-        <Text style={styles.likes}>{likes} aprecieri</Text>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("Likes", {
+              postId: props.postId,
+              followingId: props.userId,
+            })
+          }
+        >
+          <Text style={styles.likes}>{likes} aprecieri</Text>
+        </TouchableOpacity>
         <Stack direction="row">
           <LikeIButton
             postId={props.postId}
             onAddLike={() => setLikes((likes) => likes + 1)}
             onRemoveLike={() => setLikes((likes) => likes - 1)}
           />
-          <CommentsIButton onPress={props.openComments} />
+          <CommentsIButton
+            onPress={() =>
+              navigation.navigate("Comments", {
+                postId: props.postId,
+                description: props.description,
+                username: props.username,
+                date: props.date,
+                avatar: props.avatar,
+                focus: true,
+              })
+            }
+          />
           <BookmarkIButton isBookmark={props.isBookmark} onPress={() => {}} />
           <ShareIButton onPress={onShare} />
         </Stack>
@@ -89,20 +111,32 @@ const CardPost = (props) => {
         onPress={() => {}}
       >
         {comments > 0 && (
-          <Stack direction="row" justify="start">
-            <Text style={styles.comments}>
-              {comments > 1
-                ? `Vezi toate cele ${comments} comentarii`
-                : `Vezi 1 comentariu`}
-            </Text>
-            <Icon
-              name="down"
-              type="antdesign"
-              size={14}
-              style={{ marginLeft: 5 }}
-              color={Colors.textLight}
-            />
-          </Stack>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("Comments", {
+                postId: props.postId,
+                description: props.description,
+                username: props.username,
+                date: props.date,
+                avatar: props.avatar,
+              })
+            }
+          >
+            <Stack direction="row" justify="start">
+              <Text style={styles.comments}>
+                {comments > 1
+                  ? `Vezi toate cele ${comments} comentarii`
+                  : `Vezi 1 comentariu`}
+              </Text>
+              <Icon
+                name="down"
+                type="antdesign"
+                size={14}
+                style={{ marginLeft: 5 }}
+                color={Colors.textLight}
+              />
+            </Stack>
+          </TouchableOpacity>
         )}
       </TouchableOpacity>
       <Text style={styles.date}>{props.date}</Text>

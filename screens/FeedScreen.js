@@ -1,7 +1,7 @@
 import {
   SafeAreaView,
   StyleSheet,
-  View,
+  RefreshControl,
   Animated,
   ActivityIndicator,
   ScrollView,
@@ -24,6 +24,7 @@ const FeedScreen = () => {
   const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
   const [followingsPosts, setFollowingsPosts] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
 
   const fetchAllPosts = useCallback(() => {
     setLoading(true);
@@ -56,6 +57,17 @@ const FeedScreen = () => {
   useEffect(() => {
     fetchAllPosts();
   }, [fetchAllPosts]);
+
+  const wait = (timeout) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+  };
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(1000).then(() => {
+      setRefreshing(false);
+    });
+  }, []);
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -116,6 +128,10 @@ const FeedScreen = () => {
         ListHeaderComponent={
           loading && <ActivityIndicator style={{ marginVertical: 20 }} />
         }
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+        initialNumToRender={4}
         contentContainerStyle={{ marginTop: 5 }}
         data={posts}
         nestedScrollEnabled={true}
@@ -135,6 +151,7 @@ const FeedScreen = () => {
             checkmark={item?.checkmark}
             isBookmark={false}
             postId={item?._id}
+            userId={item?.user?._id}
           />
         )}
       />

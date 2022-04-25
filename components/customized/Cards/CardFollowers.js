@@ -4,8 +4,11 @@ import UserAvatar from "../Avatars/UserAvatar";
 import Stack from "../../core/Containers/Stack";
 import { Colors } from "../../../assets/styles/Colors";
 import FollowButton from "../../core/Buttons/FollowButton";
+import { useAuth } from "../../../context/auth";
 
 const CardFollowers = (props) => {
+  const { user } = useAuth();
+
   return (
     <Stack direction="row" sx={styles.container}>
       <TouchableOpacity style={styles.goToUser} onPress={props.onGoToUser}>
@@ -20,7 +23,9 @@ const CardFollowers = (props) => {
           <Text style={styles.name}>{props.name}</Text>
         </Stack>
       </TouchableOpacity>
-      <FollowButton followingId={props.followingId} />
+      {props.userId !== user?._id && (
+        <FollowButton followingId={props.userId} />
+      )}
     </Stack>
   );
 };

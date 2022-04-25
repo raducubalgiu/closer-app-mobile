@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#f1f1f1",
     paddingHorizontal: 15,
     paddingVertical: 9,
-    flex: 1,
   },
   text: {
     fontFamily: "Exo-Regular",

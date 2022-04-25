@@ -1,0 +1,165 @@
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  KeyboardAvoidingView,
+} from "react-native";
+import React, { useState, useEffect } from "react";
+import Header from "../../../components/customized/Headers/Header";
+import { Divider } from "react-native-elements";
+import axios from "axios";
+import { useAuth } from "../../../context/auth";
+import UserAvatar from "../../../components/customized/Avatars/UserAvatar";
+import { Colors } from "../../../assets/styles/Colors";
+import { FlatList } from "react-native-gesture-handler";
+import { IconButton } from "../../../components/core";
+import moment from "moment";
+
+const CommentsScreen = (props) => {
+  const { user } = useAuth();
+  const { postId, description, avatar, username, date, focus } =
+    props.route.params;
+  const [comments, setComments] = useState([]);
+  const [comment, setComment] = useState("");
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.BASE_ENDPOINT}/posts/${postId}/comments`)
+      .then((res) => setComments(res.data.comments))
+      .catch((err) => console.log(err));
+  }, []);
+
+  console.log(comments);
+
+  const handleComment = () => {
+    axios
+      .post(
+        `${process.env.BASE_ENDPOINT}/comments`,
+        {
+          comment,
+          post: postId,
+          user: user?._id,
+        },
+        { headers: { Authorization: `Bearer ${user?.token}` } }
+      )
+      .then((res) => {
+        console.log("LAST COMMENT", res.data.comment);
+        setComment("");
+      })
+      .catch((err) => console.log(err));
+  };
+
+  return (
+    <SafeAreaView style={styles.screen}>
+      <Header title="Comentarii" />
+      <Divider style={{ color: "#ddd" }} />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1, justifyContent: "space-between" }}
+      >
+        <View style={{ flex: 1 }}>
+          <FlatList
+            ListHeaderComponent={
+              <>
+                <View style={styles.headerCont}>
+                  <UserAvatar size={32.5} iconSize={15} avatar={avatar} />
+                  <View style={{ marginLeft: 10, flex: 1 }}>
+                    <Text>
+                      <Text style={styles.username}>{username}</Text>
+                      {description}
+                    </Text>
+                    <Text style={styles.date}>{date}</Text>
+                  </View>
+                </View>
+                <Divider />
+              </>
+            }
+            data={comments}
+            keyExtractor={(item) => item?._id}
+            renderItem={({ item }) => (
+              <View style={styles.commentsCont}>
+                <UserAvatar size={32.5} iconSize={15} />
+                <View style={{ marginLeft: 10 }}>
+                  <Text>
+                    <Text style={styles.username}>{item?.user?.username}</Text>
+                    {item?.comment}
+                  </Text>
+                  <Text style={styles.date}>
+                    {moment().startOf("hour").fromNow(item?.createdAt)}
+                  </Text>
+                </View>
+              </View>
+            )}
+          />
+        </View>
+        <Divider />
+        <View style={styles.inputCont}>
+          <UserAvatar size={50} iconSize={20} avatar={user?.avatar} />
+          <TextInput
+            onChangeText={(text) => setComment(text)}
+            autoCapitalize="sentences"
+            autoFocus={focus}
+            value={comment}
+            placeholder="Adauga un comentariu"
+            style={styles.input}
+          />
+          <IconButton
+            size={17.5}
+            iconName="arrowup"
+            iconType="antdesign"
+            sx={styles.iconBtn}
+            color="white"
+            onPress={handleComment}
+          />
+        </View>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
+  );
+};
+
+export default CommentsScreen;
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: "white",
+  },
+  headerCont: { flexDirection: "row", margin: 15 },
+  username: {
+    fontFamily: "Exo-SemiBold",
+    color: Colors.textDark,
+  },
+  date: {
+    fontFamily: "Exo-Medium",
+    color: Colors.textLight,
+    fontSize: 13,
+    marginTop: 5,
+  },
+  commentsCont: {
+    flexDirection: "row",
+    padding: 15,
+  },
+  inputCont: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+  },
+  input: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    padding: 12.5,
+    borderRadius: 25,
+    marginLeft: 10,
+  },
+  iconBtn: {
+    backgroundColor: Colors.primary,
+    padding: 7.5,
+    marginLeft: 10,
+    borderRadius: 50,
+  },
+});
