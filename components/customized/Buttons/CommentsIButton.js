@@ -11,7 +11,7 @@ const CommentsIButton = (props) => {
     >
       <Icon
         type="feather"
-        name="message-square"
+        name="message-circle"
         size={props.size ? props.size : 24}
       />
     </TouchableOpacity>

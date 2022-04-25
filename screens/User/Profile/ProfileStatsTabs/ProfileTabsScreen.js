@@ -25,7 +25,7 @@ const ProfileTabsScreen = (props) => {
 
   useEffect(() => {
     axios
-      .get(`http://192.168.100.2:8000/api/v1/users/${userId}/get-followers`, {
+      .get(`${process.env.BASE_ENDPOINT}/users/${userId}/get-followers`, {
         headers: { Authorization: `Bearer ${user?.token}` },
       })
       .then((res) => setFollowers(res.data.followers))
@@ -33,7 +33,7 @@ const ProfileTabsScreen = (props) => {
   }, []);
   useEffect(() => {
     axios
-      .get(`http://192.168.100.2:8000/api/v1/users/${userId}/get-followings`, {
+      .get(`${process.env.BASE_ENDPOINT}/users/${userId}/get-followings`, {
         headers: { Authorization: `Bearer ${user?.token}` },
       })
       .then((res) => setFollowings(res.data.followings))
@@ -41,7 +41,7 @@ const ProfileTabsScreen = (props) => {
   }, []);
   useEffect(() => {
     axios
-      .get(`http://192.168.100.2:8000/api/v1/users/${userId}/get-reviews`, {
+      .get(`${process.env.BASE_ENDPOINT}/users/${userId}/get-reviews`, {
         headers: { Authorization: `Bearer ${user?.token}` },
       })
       .then((res) => setReviews(res.data.reviews))

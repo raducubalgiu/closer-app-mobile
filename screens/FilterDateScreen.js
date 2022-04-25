@@ -14,7 +14,7 @@ const FiltersDateScreen = (props) => {
 
   const goNext = () => {
     axios
-      .get(`http://192.168.100.2:8000/api/v1/services/${serviceId}/filters`)
+      .get(`${process.env.BASE_ENDPOINT}/services/${serviceId}/filters`)
       .then((res) => {
         if (res.data.filters.length === 0) {
           navigation.navigate("Services", { serviceId, serviceName });

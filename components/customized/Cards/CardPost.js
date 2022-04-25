@@ -11,7 +11,8 @@ import CommentsIButton from "../Buttons/CommentsIButton";
 import { Checkmark } from "../../core";
 
 const CardPost = (props) => {
-  const [likes, setLikes] = useState(props.likes);
+  const [likes, setLikes] = useState(props.likesCount);
+  const [comments, setComments] = useState(props.commentsCount);
 
   const onShare = async () => {
     try {
@@ -41,9 +42,8 @@ const CardPost = (props) => {
             <Stack direction="row">
               <Text style={styles.name}>{props.username}</Text>
               {props.checkmark && <Checkmark />}
-              <Text style={styles.job}>{props.job}</Text>
             </Stack>
-            <Text style={styles.date}>{props.date}</Text>
+            <Text style={styles.job}>{props.job}</Text>
           </Stack>
         </Stack>
         <Stack direction="row">
@@ -88,17 +88,24 @@ const CardPost = (props) => {
         activeOpacity={1}
         onPress={() => {}}
       >
-        <Stack direction="row" justify="start">
-          <Text style={styles.comments}>14 comentarii</Text>
-          <Icon
-            name="down"
-            type="antdesign"
-            size={14}
-            style={{ marginLeft: 5 }}
-            color={Colors.textLight}
-          />
-        </Stack>
+        {comments > 0 && (
+          <Stack direction="row" justify="start">
+            <Text style={styles.comments}>
+              {comments > 1
+                ? `Vezi toate cele ${comments} comentarii`
+                : `Vezi 1 comentariu`}
+            </Text>
+            <Icon
+              name="down"
+              type="antdesign"
+              size={14}
+              style={{ marginLeft: 5 }}
+              color={Colors.textLight}
+            />
+          </Stack>
+        )}
       </TouchableOpacity>
+      <Text style={styles.date}>{props.date}</Text>
     </View>
   );
 };
@@ -114,12 +121,17 @@ const styles = StyleSheet.create({
   },
   name: { fontFamily: "Exo-SemiBold", marginLeft: 10 },
   job: {
-    marginLeft: 5,
+    marginLeft: 10,
     fontFamily: "Exo-SemiBold",
     color: Colors.primary,
     textTransform: "capitalize",
   },
-  date: { marginLeft: 10, color: Colors.textLight, fontSize: 13 },
+  date: {
+    marginLeft: 10,
+    color: Colors.textLight,
+    fontSize: 13,
+    marginTop: 5,
+  },
   followBtn: {
     marginRight: 15,
     backgroundColor: "#eee",
@@ -134,7 +146,7 @@ const styles = StyleSheet.create({
   },
   image: {
     aspectRatio: 1,
-    width: "100%",
+    //width: "100%",
     flex: 1,
   },
   likes: { color: Colors.textDark, fontWeight: "bold" },

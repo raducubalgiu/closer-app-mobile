@@ -1,9 +1,4 @@
-import {
-  StyleSheet,
-  SafeAreaView,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import { StyleSheet, SafeAreaView, TouchableOpacity } from "react-native";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import BottomSheetPopup from "../../../components/customized/BottomSheets/BottomSheetPopup";
@@ -37,7 +32,7 @@ const ProfileScreen = (props) => {
 
   useEffect(() => {
     axios
-      .get(`http://192.168.100.2:8000/api/v1/users/${user?._id}/get-posts`, {
+      .get(`${process.env.BASE_ENDPOINT}/users/${user?._id}/get-posts`, {
         headers: { Authorization: `Bearer ${user?.token}` },
       })
       .then((res) => setPosts(res.data.posts))

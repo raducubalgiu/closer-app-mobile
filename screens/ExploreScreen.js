@@ -18,7 +18,7 @@ const ExploreScreen = () => {
 
   useEffect(() => {
     axios
-      .get("http://192.168.100.2:8000/api/v1/users")
+      .get(`${process.env.BASE_ENDPOINT}/users`)
       .then((resp) => {
         setUsers(resp.data.users);
       })

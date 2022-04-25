@@ -12,7 +12,7 @@ const UsernameScreen = (props) => {
   const handleSubmit = async (data) => {
     try {
       const userResult = await axios.post(
-        `http://192.168.100.2:8000/api/v1/users/create-or-update-user`,
+        `${process.env.BASE_ENDPOINT}/users/create-or-update-user`,
         {
           username: data.username,
           role: props.route.params.role,
@@ -24,7 +24,25 @@ const UsernameScreen = (props) => {
         }
       );
 
-      const { _id, email, name, username, role, job, avatar } = userResult.data;
+      const {
+        _id,
+        name,
+        username,
+        email,
+        avatar,
+        images,
+        role,
+        description,
+        website,
+        job,
+        location,
+        employees,
+        services,
+        ratingsAverage,
+        ratingsQuantity,
+        followersCount,
+        followingCount,
+      } = userResult.data;
 
       // await axios.post(
       //   `http://192.168.100.2:8000/api/v1/orders`,
@@ -41,13 +59,23 @@ const UsernameScreen = (props) => {
 
       setUser({
         _id,
-        email,
         name,
         username,
-        role,
-        token: idTokenResult?.token,
-        job,
+        email,
         avatar: avatar[0]?.url,
+        images,
+        role,
+        description,
+        website,
+        job,
+        location,
+        employees,
+        services,
+        ratingsAverage,
+        ratingsQuantity,
+        followersCount,
+        followingCount,
+        token: idTokenResult?.token,
       });
     } catch (err) {
       console.log(err);

@@ -1,43 +1,19 @@
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-} from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import React, { useState } from "react";
-import { Divider, Icon } from "react-native-elements";
+import { Divider } from "react-native-elements";
 import { ProgressSteps } from "react-native-progress-steps";
-import { useNavigation } from "@react-navigation/native";
 import RegisterBusinessForm from "../components/Forms/RegisterBusinessForm";
 import RegisterLocationForm from "../components/Forms/RegisterLocationForm";
 import AddServicesForm from "../components/Forms/AddServicesForm";
-import HeaderReusable from "../components/customized/Headers/HeaderReusable";
 import { Colors } from "../assets/styles/Colors";
+import Header from "../components/customized/Headers/Header";
 
 const RegisterBusiness = (props) => {
   const [step, setStep] = useState(0);
-  const navigation = useNavigation();
 
   return (
     <SafeAreaView style={styles.screen}>
-      <View style={{ paddingHorizontal: 10 }}>
-        <HeaderReusable
-          firstBox={
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-              <Icon name="arrow-back-ios" type="material" size={20} />
-            </TouchableOpacity>
-          }
-          secondBox={
-            <Text style={{ fontFamily: "Exo-Medium", fontSize: 16 }}>
-              Inregistrare Business
-            </Text>
-          }
-          thirdBox={
-            <Icon name="arrow-back-ios" type="material" color="white" />
-          }
-        />
-      </View>
+      <Header title="Inregistrare business" />
       <Divider />
       <View style={{ flex: 1 }}>
         <ProgressSteps

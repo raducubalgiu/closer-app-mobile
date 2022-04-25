@@ -8,26 +8,12 @@ import {
 import React from "react";
 import { Divider, Icon } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
-import HeaderReusable from "../../../../components/customized/Headers/HeaderReusable";
+import Header from "../../../../components/customized/Headers/Header";
 
 const DiscountsProfileScreen = () => {
-  const navigation = useNavigation();
-
   return (
     <SafeAreaView style={styles.screen}>
-      <HeaderReusable
-        firstBox={
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Icon name="arrow-back-ios" type="material" size={20} />
-          </TouchableOpacity>
-        }
-        secondBox={
-          <Text style={{ fontFamily: "Exo-Medium", fontSize: 17 }}>
-            Discounturi
-          </Text>
-        }
-        thirdBox={<Icon name="arrow-back-ios" type="material" color="white" />}
-      />
+      <Header title="Discounturi" />
       <Divider />
       <View style={styles.container}></View>
     </SafeAreaView>

@@ -41,7 +41,7 @@ const AddLocationScreen = () => {
   const onSubmit = () => {
     axios
       .patch(
-        `http://192.168.100.2:8000/api/v1/users/${user?._id}/update`,
+        `${process.env.BASE_ENDPOINT}/users/${user?._id}/update`,
         {
           location: { ...location, blockApartment, type: "Point" },
         },

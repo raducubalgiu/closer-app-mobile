@@ -40,7 +40,7 @@ const ServicesScreen = ({ route }) => {
   useEffect(() => {
     axios
       .get(
-        `http://192.168.100.2:8000/api/v1/users/get-by-distance?serviceId=${serviceId}&latlng=26.100195,44.428286`,
+        `${process.env.BASE_ENDPOINT}/get-by-distance?serviceId=${serviceId}&latlng=26.100195,44.428286`,
         {
           headers: { Authorization: `Bearer ${user?.token}` },
         }
@@ -51,8 +51,6 @@ const ServicesScreen = ({ route }) => {
       })
       .catch((error) => console.log(error));
   }, []);
-
-  console.log(locations);
 
   return (
     <View style={styles.screen}>

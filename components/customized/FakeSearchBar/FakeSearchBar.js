@@ -22,14 +22,7 @@ const FakeSearchBar = () => {
       <Divider orientation="vertical" style={{ marginRight: 15 }} />
       <TouchableOpacity
         onPress={() => navigation.navigate("Search")}
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          backgroundColor: "white",
-          borderRadius: 20,
-          paddingVertical: 5,
-          paddingHorizontal: 7.5,
-        }}
+        style={styles.nowBtn}
       >
         <Icon
           name="clock"
@@ -37,15 +30,7 @@ const FakeSearchBar = () => {
           size={17}
           style={{ marginRight: 5 }}
         />
-        <Text
-          style={{
-            marginRight: 5,
-            fontFamily: "Exo-SemiBold",
-            color: Colors.textDark,
-          }}
-        >
-          Acum
-        </Text>
+        <Text style={styles.nowBtnText}>Acum</Text>
         <Icon name="keyboard-arrow-down" />
       </TouchableOpacity>
     </View>
@@ -109,5 +94,18 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: 7,
     borderRadius: 100,
+  },
+  nowBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "white",
+    borderRadius: 20,
+    paddingVertical: 5,
+    paddingHorizontal: 7.5,
+  },
+  nowBtnText: {
+    marginRight: 5,
+    fontFamily: "Exo-SemiBold",
+    color: Colors.textDark,
   },
 });

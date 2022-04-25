@@ -22,7 +22,7 @@ const ServicesNavigation = () => {
 
   useEffect(() => {
     axios
-      .get("http://192.168.100.2:8000/api/v1/categories")
+      .get(`${process.env.BASE_ENDPOINT}/categories`)
       .then((resp) => {
         setCategories(resp.data.categories);
       })

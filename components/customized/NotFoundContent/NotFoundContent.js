@@ -1,7 +1,6 @@
 import { StyleSheet, Text } from "react-native";
 import React from "react";
 import { Stack } from "../../core";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { Colors } from "../../../assets/styles/Colors";
 import CardButton from "../Buttons/CardButton";
 import { Icon } from "react-native-elements";
@@ -16,9 +15,7 @@ const NotFoundContent = (props) => {
         style={styles.icon}
       />
       <Text style={styles.title}>{props.title}</Text>
-      <Text style={styles.description}>
-        {props.description}
-      </Text>
+      <Text style={styles.description}>{props.description}</Text>
       <CardButton title="Adauga" />
     </Stack>
   );

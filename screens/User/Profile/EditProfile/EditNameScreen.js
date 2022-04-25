@@ -21,7 +21,7 @@ const EditNameScreen = () => {
     setLoading(true);
     axios
       .patch(
-        `http://192.168.100.2:8000/api/v1/users/update`,
+        `${process.env.BASE_ENDPOINT}/users/update`,
         {
           name: value,
         },

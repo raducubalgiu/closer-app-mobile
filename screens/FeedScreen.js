@@ -4,8 +4,6 @@ import {
   View,
   Animated,
   ActivityIndicator,
-  Text,
-  TouchableOpacity,
   ScrollView,
 } from "react-native";
 import { Icon, Divider } from "react-native-elements";
@@ -15,21 +13,13 @@ import CardPost from "../components/customized/Cards/CardPost";
 import { Colors } from "../assets/styles/Colors";
 import axios from "axios";
 import { usePosts } from "../hooks/usePosts";
-import { useScrollable } from "../hooks/useScrollable";
 import { useAuth } from "../context/auth";
 import { Stack } from "../components/core";
-import FakeSearchBarSimple from "../components/customized/FakeSearchBar/FakeSearchBarSimple";
 import FeedLabelButton from "../components/customized/Buttons/FeedLabelButton";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const FeedScreen = () => {
   const { postsState, dispatchPosts } = usePosts();
-  const {
-    scrollY,
-    onMomentumScrollBegin,
-    onMomentumScrollEnd,
-    onScrollEndDrag,
-    headerTranslate,
-  } = useScrollable();
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
@@ -68,144 +58,99 @@ const FeedScreen = () => {
   }, [fetchAllPosts]);
 
   return (
-    <>
-      <View style={styles.screen}>
-        <SafeAreaView style={styles.safeAreaView} />
-        <View style={styles.containerList}>
-          <Animated.View
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              backgroundColor: "white",
-              transform: [{ translateY: headerTranslate }],
-            }}
-          >
-            {/* <Stack direction="row" sx={{ height: 50, paddingHorizontal: 15 }}>
-              <FakeSearchBarSimple />
-              <TouchableOpacity style={styles.bookmark}>
-                <Icon
-                  name="bookmark-o"
-                  type="font-awesome"
-                  size={25}
-                  color={Colors.textDark}
-                />
-              </TouchableOpacity>
-            </Stack> */}
-            <View
-              style={{
-                height: 50,
-                //borderBottomWidth: 1,
-                //borderBottomColor: "#f1f1f1",
-                //borderTopWidth: 1,
-                //borderTopColor: "#f1f1f1",
-                marginTop: 3,
+    <SafeAreaView style={styles.screen}>
+      <Stack justify="start">
+        <ScrollView
+          horizontal
+          style={{
+            marginVertical: 7.5,
+            paddingHorizontal: 12.5,
+          }}
+          showsHorizontalScrollIndicator={false}
+        >
+          <Stack direction="row">
+            <TouchableOpacity style={{ marginRight: 20 }}>
+              <Icon
+                name="search"
+                type="feather"
+                color={Colors.textDark}
+                size={24}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Icon
+                name="video"
+                type="feather"
+                color={Colors.textDark}
+                size={24}
+              />
+            </TouchableOpacity>
+            <Divider orientation="vertical" style={{ marginHorizontal: 10 }} />
+            <FeedLabelButton
+              onPress={() => {
+                dispatchPosts({ type: "FETCH_ALL" });
+                fetchAllPosts();
               }}
-            >
-              <ScrollView
-                horizontal
-                style={{
-                  marginVertical: 7.5,
-                  backgroundColor: "white",
-                  paddingHorizontal: 15,
-                }}
-                showsHorizontalScrollIndicator={false}
-              >
-                <Stack direction="row" sx={styles.explore}>
-                  <Icon
-                    name="search"
-                    type="feather"
-                    color={Colors.textDark}
-                    size={24}
-                    style={{ marginRight: 22.5 }}
-                  />
-                  <Icon
-                    name="bookmark-o"
-                    type="font-awesome"
-                    color={Colors.textDark}
-                    size={24}
-                  />
-                  {/* <Text style={styles.exploreText}>Exploreaza</Text> */}
-                </Stack>
-                <Divider
-                  orientation="vertical"
-                  style={{ marginHorizontal: 10 }}
-                />
-                <FeedLabelButton
-                  onPress={() => {
-                    dispatchPosts({ type: "FETCH_ALL" });
-                    fetchAllPosts();
-                  }}
-                  isActive={postsState.activeAll}
-                  text="Toate"
-                />
-                <FeedLabelButton
-                  onPress={() => {
-                    dispatchPosts({ type: "FETCH_FOLLOWINGS" });
-                    fetchFollowings();
-                  }}
-                  isActive={postsState.activeFollowings}
-                  text="Urmaresti"
-                />
-                <FeedLabelButton
-                  onPress={() => {
-                    dispatchPosts({ type: "FETCH_LAST_MINUTE" });
-                  }}
-                  isActive={postsState.activeLastMinute}
-                  text="Oferte Last Minute"
-                />
-              </ScrollView>
-            </View>
-          </Animated.View>
-        </View>
-        <Animated.FlatList
-          onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-            { useNativeDriver: true }
-          )}
-          ListHeaderComponent={
-            loading && <ActivityIndicator style={{ marginVertical: 20 }} />
-          }
-          contentContainerStyle={{ marginTop: 60 }}
-          onMomentumScrollBegin={onMomentumScrollBegin}
-          onMomentumScrollEnd={onMomentumScrollEnd}
-          onScrollEndDrag={onScrollEndDrag}
-          scrollEventThrottle={16}
-          data={posts}
-          nestedScrollEnabled={true}
-          keyExtractor={(item) => item._id}
-          showsVerticalScrollIndicator={false}
-          renderItem={({ item }) => (
-            <CardPost
-              avatar={item?.avatar}
-              username={item?.user?.username}
-              job={item?.user?.job}
-              date={moment(item.createdAt).startOf("hour").fromNow()}
-              image={item?.images[0]?.url}
-              description={item?.description}
-              likes={150}
-              bookable={item?.bookable}
-              checkmark={item?.checkmark}
-              isBookmark={false}
-              postId={item?._id}
+              isActive={postsState.activeAll}
+              text="Toate"
             />
-          )}
-        />
-      </View>
-    </>
+            <FeedLabelButton
+              onPress={() => {
+                dispatchPosts({ type: "FETCH_FOLLOWINGS" });
+                fetchFollowings();
+              }}
+              isActive={postsState.activeFollowings}
+              text="Urmaresti"
+            />
+            <FeedLabelButton
+              onPress={() => {
+                dispatchPosts({ type: "FETCH_LAST_MINUTE" });
+              }}
+              isActive={postsState.activeLastMinute}
+              text="Oferte Last Minute"
+            />
+          </Stack>
+        </ScrollView>
+      </Stack>
+      <Animated.FlatList
+        ListHeaderComponent={
+          loading && <ActivityIndicator style={{ marginVertical: 20 }} />
+        }
+        contentContainerStyle={{ marginTop: 5 }}
+        data={posts}
+        nestedScrollEnabled={true}
+        keyExtractor={(item) => item._id}
+        showsVerticalScrollIndicator={false}
+        renderItem={({ item }) => (
+          <CardPost
+            avatar={item?.avatar}
+            username={item?.user?.username}
+            job={item?.user?.job}
+            date={moment(item.createdAt).startOf("hour").fromNow()}
+            image={item?.images[0]?.url}
+            description={item?.description}
+            likesCount={item?.likesCount}
+            commentsCount={item?.commentsCount}
+            bookable={item?.bookable}
+            checkmark={item?.checkmark}
+            isBookmark={false}
+            postId={item?._id}
+          />
+        )}
+      />
+    </SafeAreaView>
   );
 };
 
 export default FeedScreen;
 
 const styles = StyleSheet.create({
-  screen: {
-    backgroundColor: "white",
-    flex: 1,
+  screen: { backgroundColor: "white", flex: 1 },
+  exploreText: {
+    fontFamily: "Exo-Medium",
+    color: Colors.textDark,
+    marginLeft: 5,
   },
-  safeAreaView: { backgroundColor: "white", zIndex: 10000 },
-  containerList: { backgroundColor: "white", zIndex: 900 },
   contentContainerStyle: { marginTop: 50 },
   welcome: {
     fontFamily: "Exo-SemiBold",
@@ -226,16 +171,5 @@ const styles = StyleSheet.create({
     color: Colors.textDark,
     paddingLeft: 10,
     marginTop: 30,
-  },
-  explore: {
-    //borderWidth: 1,
-    //borderColor: "#f1f1f1",
-    paddingHorizontal: 12.5,
-    //backgroundColor: "#f1f1f1",
-  },
-  exploreText: {
-    fontFamily: "Exo-Medium",
-    color: Colors.textDark,
-    marginLeft: 5,
   },
 });

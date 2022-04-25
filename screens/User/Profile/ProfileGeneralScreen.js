@@ -8,11 +8,7 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {
-  OutlinedButton,
-  ContainedButton,
-  IconButton,
-} from "../../../components/core";
+import { OutlinedButton, IconButton } from "../../../components/core";
 import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
 import HeaderProfileGeneral from "../../../components/customized/Headers/HeaderProfileGeneral";
 import { Colors } from "../../../assets/styles/Colors";
@@ -32,7 +28,7 @@ const ProfileGeneralScreen = (props) => {
 
   useEffect(() => {
     axios
-      .get(`http://192.168.100.2:8000/api/v1/users/${userId}`, {
+      .get(`${process.env.BASE_ENDPOINT}/users/${userId}`, {
         headers: { Authorization: `Bearer ${user?.token}` },
       })
       .then((resp) => {
@@ -43,7 +39,7 @@ const ProfileGeneralScreen = (props) => {
 
   useEffect(() => {
     axios
-      .get(`http://192.168.100.2:8000/api/v1/users/${userId}/get-posts`, {
+      .get(`${process.env.BASE_ENDPOINT}/users/${userId}/get-posts`, {
         headers: { Authorization: `Bearer ${user?.token}` },
       })
       .then((res) => setPosts(res.data.posts))
@@ -52,7 +48,7 @@ const ProfileGeneralScreen = (props) => {
 
   const fetchUser = () => {
     axios
-      .get(`http://192.168.100.2:8000/api/v1/users/${userId}`, {
+      .get(`${process.env.BASE_ENDPOINT}/users/${userId}`, {
         headers: { Authorization: `Bearer ${user?.token}` },
       })
       .then((resp) => {
@@ -65,7 +61,7 @@ const ProfileGeneralScreen = (props) => {
     setLoading(true);
     axios
       .get(
-        `http://192.168.100.2:8000/api/v1/users/${userDetails?.job}/get-suggested`,
+        `${process.env.BASE_ENDPOINT}/users/${userDetails?.job}/get-suggested`,
         {
           headers: { Authorization: `Bearer ${user?.token}` },
         }

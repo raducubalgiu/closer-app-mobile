@@ -20,7 +20,7 @@ const EditBioScreen = () => {
     setLoading(true);
     axios
       .patch(
-        `http://192.168.100.2:8000/api/v1/users/${user?._id}/update`,
+        `${process.env.BASE_ENDPOINT}/users/${user?._id}/update`,
         {
           description: value,
         },

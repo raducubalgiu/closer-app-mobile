@@ -43,7 +43,7 @@ const LoginScreen = () => {
         const idTokenResult = await user?.getIdTokenResult();
 
         const userResult = await axios.post(
-          `http://192.168.100.2:8000/api/v1/users/create-or-update-user`,
+          `${process.env.BASE_ENDPOINT}/users/create-or-update-user`,
           {},
           {
             headers: {
@@ -56,27 +56,43 @@ const LoginScreen = () => {
 
         const {
           _id,
-          email,
-          username,
-          role,
           name,
-          job,
+          username,
+          email,
           avatar,
+          images,
+          role,
+          description,
+          website,
+          job,
+          location,
+          employees,
+          services,
           ratingsAverage,
           ratingsQuantity,
+          followersCount,
+          followingCount,
         } = userResult.data.user;
 
         setUser({
           _id,
-          email,
-          username,
-          role,
-          token: idTokenResult?.token,
           name,
-          job,
+          username,
+          email,
           avatar: avatar[0]?.url,
+          images,
+          role,
+          description,
+          website,
+          job,
+          location,
+          employees,
+          services,
           ratingsAverage,
           ratingsQuantity,
+          followersCount,
+          followingCount,
+          token: idTokenResult?.token,
         });
       }
     } catch (err) {
