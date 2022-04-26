@@ -12,7 +12,6 @@ import Header from "../../../../components/customized/Headers/Header";
 import { MainButton, Stack } from "../../../../components/core";
 import { Icon } from "react-native-elements";
 import TooltipTitle from "../../../../components/customized/ListItems/TooltipItem";
-import { Divider } from "react-native-elements/dist/divider/Divider";
 import axios from "axios";
 import { Colors } from "../../../../assets/styles/Colors";
 import { useAuth } from "../../../../context/auth";
@@ -70,8 +69,8 @@ const AddServicesScreen = () => {
         withTooltip={true}
         tooltipText="Serviciile de mai jos disponibile vor fi afisate in functie de domeniul tau de activitate"
         tooltipContainer={{ width: 230, height: 80 }}
+        divider={true}
       />
-      <Divider color="#ddd" />
       <Stack align="start" sx={{ margin: 15 }}>
         <TooltipTitle
           title="Servicii"

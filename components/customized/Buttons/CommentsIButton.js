@@ -10,9 +10,9 @@ const CommentsIButton = (props) => {
       style={{ ...styles.default, ...props.sx }}
     >
       <Icon
-        type="feather"
-        name="message-circle"
-        size={props.size ? props.size : 24}
+        type="fontisto"
+        name="hipchat"
+        size={props.size ? props.size : 22}
       />
     </TouchableOpacity>
   );

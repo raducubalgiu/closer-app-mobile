@@ -1,27 +1,21 @@
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity } from "react-native";
-import { Icon } from "react-native-elements";
+import { SafeAreaView, StyleSheet } from "react-native";
 import React from "react";
-import HeaderReusable from "../../../components/customized/Headers/HeaderReusable";
-import { AllSavedTab, SavedVideoTab, OpportunitiesTab } from "../../../components/customized/Tabs/SavedTabs";
+import {
+  AllSavedTab,
+  SavedVideoTab,
+  OpportunitiesTab,
+} from "../../../components/customized/Tabs/SavedTabs";
 import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../../../assets/styles/Colors";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import Header from "../../../components/customized/Headers/Header";
 
-const SavedScreen = () => {
+const BookmarksScreen = () => {
   const Tab = createMaterialTopTabNavigator();
-  const navigation = useNavigation();
 
   return (
     <SafeAreaView style={styles.screen}>
-      <HeaderReusable
-        firstBox={
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Icon name="arrow-back-ios" type="material" size={20} />
-          </TouchableOpacity>
-        }
-        secondBox={<Text style={styles.headerTitle}>Salvate</Text>}
-        thirdBox={<Icon name="arrow-back-ios" type="material" color="white" />}
-      />
+      <Header title="Salvate" />
       <Tab.Navigator
         initialRouteName="SavedAll"
         screenOptions={{
@@ -56,7 +50,7 @@ const SavedScreen = () => {
   );
 };
 
-export default SavedScreen;
+export default BookmarksScreen;
 
 const styles = StyleSheet.create({
   screen: {

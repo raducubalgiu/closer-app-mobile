@@ -1,11 +1,11 @@
-import React, { useLayoutEffect } from "react";
+import React from "react";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Icon } from "react-native-elements";
 import { useAuth } from "../context/auth";
-import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
+import { hideTabs } from "../utils/hideTabs";
 import "../i18next";
 
 import { Colors } from "../assets/styles/Colors";
@@ -38,7 +38,7 @@ import LoginScreen from "../screens/User/Auth/LoginScreen";
 import RegisterScreen from "../screens/User/Auth/RegisterScreen";
 import UsernameScreen from "../screens/User/Auth/UsernameScreen";
 import RegisterBusinessScreen from "../screens/User/Auth/RegisterBusinessScreen";
-import SavedScreen from "../screens/User/Profile/SavedScreen";
+import BookmarksScreen from "../screens/User/Profile/BookmarksScreen";
 import AddLocationScreen from "../screens/User/Profile/CompleteProfile/AddLocationScreen";
 import AddServicesScreen from "../screens/User/Profile/CompleteProfile/AddServicesScreen";
 import AddProductsScreen from "../screens/User/Profile/CompleteProfile/AddProductsScreen";
@@ -47,21 +47,6 @@ import CommentsScreen from "../screens/User/Profile/CommentsScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
-
-function hideTabs(route) {
-  const routeName = getFocusedRouteNameFromRoute(route);
-
-  switch (routeName) {
-    case "Comments":
-      return { display: "none" };
-    case "FiltersDate":
-      return { display: "none" };
-    case "FiltersService":
-      return { display: "none" };
-    default:
-      return { display: "block" };
-  }
-}
 
 const HomeStackNavigator = () => {
   return (
@@ -171,7 +156,7 @@ const UserStackNavigator = () => {
       <Stack.Screen name="Schedules" component={SchedulesScreen} />
       <Stack.Screen name="Discounts" component={DiscountsScreen} />
       <Stack.Screen name="FindFriends" component={FindFriendsScreen} />
-      <Stack.Screen name="Saved" component={SavedScreen} />
+      <Stack.Screen name="Bookmarks" component={BookmarksScreen} />
       <Stack.Screen
         name="ProfileGeneralStack"
         component={ProfileStackNavigator}
@@ -215,6 +200,7 @@ const TabsScreen = () => {
         tabBarShowLabel: false,
         tabBarStyle: hideTabs(route),
       })}
+      sceneContainerStyle={{ backgroundColor: "white" }}
     >
       <Tab.Screen name="HomeStack" component={HomeStackNavigator} />
       <Tab.Screen name="ExploreStack" component={ExploreStackNavigator} />

@@ -48,7 +48,7 @@ const ProfileScreen = (props) => {
       />
       <TouchableOpacity
         style={styles.savedBtn}
-        onPress={() => navigation.navigate("Saved")}
+        onPress={() => navigation.navigate("Bookmarks")}
       >
         <Icon
           name="bookmark"

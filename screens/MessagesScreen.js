@@ -1,6 +1,5 @@
 import { StyleSheet, View, SafeAreaView } from "react-native";
 import React from "react";
-import HeaderSimple from "../components/customized/Headers/HeaderSimple";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import NotificationsTab from "../components/customized/Tabs/NotificationsTabs/NotificationsTab";
 import MessagesTab from "../components/customized/Tabs/NotificationsTabs/MessagesTab";

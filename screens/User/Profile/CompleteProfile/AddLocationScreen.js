@@ -11,7 +11,7 @@ import { Colors } from "../../../../assets/styles/Colors";
 import TooltipTitle from "../../../../components/customized/ListItems/TooltipItem";
 import AutocompleteGoogle from "../../../../components/customized/AutocompleteGoogle/AutocompleteGoogle";
 import { Stack } from "../../../../components/core";
-import { Divider, Icon, Avatar, Badge } from "react-native-elements";
+import { Icon, Avatar, Badge } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 import Header from "../../../../components/customized/Headers/Header";
 import { MainButton } from "../../../../components/core";
@@ -61,8 +61,9 @@ const AddLocationScreen = () => {
         withTooltip={true}
         tooltipText="Adauga mai jos adresa la care iti desfasori activitatea si imagini de la locatie"
         tooltipContainer={{ width: 220, height: 80 }}
+        divider={true}
       />
-      <Divider color="#ddd" />
+      <Stack></Stack>
       <AutocompleteGoogle onSetLocation={handleSetLocation} />
       <ScrollView style={{ padding: 15 }} bounces={false}>
         <TooltipTitle
@@ -176,10 +177,10 @@ const AddLocationScreen = () => {
             </View>
           )}
         />
-        <View style={styles.actionButtons}>
-          <MainButton title="Salveaza" onPress={onSubmit} />
-        </View>
       </ScrollView>
+      <View style={styles.actionButtons}>
+        <MainButton title="Salveaza" onPress={onSubmit} />
+      </View>
     </SafeAreaView>
   );
 };
@@ -206,7 +207,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-end",
-    marginTop: 15,
+    margin: 15,
   },
   nextBtnStyle: {
     borderWidth: 2,

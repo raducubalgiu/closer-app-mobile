@@ -39,7 +39,7 @@ const CardPost = (props) => {
     <View style={styles.container}>
       <Stack direction="row" sx={{ paddingHorizontal: 10 }}>
         <Stack direction="row" sx={styles.avatarContainer}>
-          <UserAvatar avatar={props.avatar} size={35} iconSize={15} />
+          <UserAvatar avatar={props?.avatar} size={35} iconSize={15} />
           <Stack align="start">
             <Stack direction="row">
               <Text style={styles.name}>{props.username}</Text>
@@ -97,8 +97,8 @@ const CardPost = (props) => {
               })
             }
           />
-          <BookmarkIButton isBookmark={props.isBookmark} onPress={() => {}} />
           <ShareIButton onPress={onShare} />
+          <BookmarkIButton postId={props.postId} />
         </Stack>
       </Stack>
       <Text style={styles.description}>
@@ -156,8 +156,9 @@ const styles = StyleSheet.create({
   name: { fontFamily: "Exo-SemiBold", marginLeft: 10 },
   job: {
     marginLeft: 10,
-    fontFamily: "Exo-SemiBold",
-    color: Colors.primary,
+    fontFamily: "Exo-Regular",
+    color: Colors.textDark,
+    fontSize: 13,
     textTransform: "capitalize",
   },
   date: {

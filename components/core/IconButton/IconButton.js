@@ -1,6 +1,7 @@
 import { TouchableOpacity } from "react-native";
 import { Icon } from "react-native-elements";
 import React from "react";
+import { Colors } from "../../../assets/styles/Colors";
 
 const IconButton = (props) => {
   return (
@@ -10,10 +11,10 @@ const IconButton = (props) => {
       style={{ ...props.sx }}
     >
       <Icon
-        size={props.size}
         type={props.iconType}
         name={props.iconName}
-        color={props.color}
+        size={props.size ? props.size : 24}
+        color={props.color ? props.color : Colors.textDark}
       />
     </TouchableOpacity>
   );

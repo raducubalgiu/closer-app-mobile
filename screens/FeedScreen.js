@@ -6,17 +6,16 @@ import {
   ActivityIndicator,
   ScrollView,
 } from "react-native";
-import { Icon, Divider } from "react-native-elements";
+import { Divider } from "react-native-elements";
 import moment from "moment";
-import React, { useCallback, useEffect, useState, useRef } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import CardPost from "../components/customized/Cards/CardPost";
 import { Colors } from "../assets/styles/Colors";
 import axios from "axios";
 import { usePosts } from "../hooks/usePosts";
 import { useAuth } from "../context/auth";
-import { Stack } from "../components/core";
+import { IconButton, Stack } from "../components/core";
 import FeedLabelButton from "../components/customized/Buttons/FeedLabelButton";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 const FeedScreen = () => {
   const { postsState, dispatchPosts } = usePosts();
@@ -74,30 +73,17 @@ const FeedScreen = () => {
       <Stack justify="start">
         <ScrollView
           horizontal
-          style={{
-            marginVertical: 7.5,
-            paddingHorizontal: 12.5,
-          }}
+          style={styles.listHoriz}
           showsHorizontalScrollIndicator={false}
         >
           <Stack direction="row">
-            <TouchableOpacity style={{ marginRight: 20 }}>
-              <Icon
-                name="search"
-                type="feather"
-                color={Colors.textDark}
-                size={24}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Icon
-                name="video"
-                type="feather"
-                color={Colors.textDark}
-                size={24}
-              />
-            </TouchableOpacity>
-            <Divider orientation="vertical" style={{ marginHorizontal: 10 }} />
+            <IconButton
+              iconName="search"
+              iconType="feather"
+              sx={{ marginRight: 24 }}
+            />
+            <IconButton iconName="video" iconType="feather" />
+            <Divider orientation="vertical" style={{ marginHorizontal: 15 }} />
             <FeedLabelButton
               onPress={() => {
                 dispatchPosts({ type: "FETCH_ALL" });
@@ -126,20 +112,19 @@ const FeedScreen = () => {
       </Stack>
       <Animated.FlatList
         ListHeaderComponent={
-          loading && <ActivityIndicator style={{ marginVertical: 20 }} />
+          loading && <ActivityIndicator style={styles.spinner} />
         }
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
-        initialNumToRender={4}
         contentContainerStyle={{ marginTop: 5 }}
-        data={posts}
+        data={postsState.activeAll ? posts : followingsPosts}
         nestedScrollEnabled={true}
         keyExtractor={(item) => item._id}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
           <CardPost
-            avatar={item?.avatar}
+            avatar={item?.user?.avatar[0]?.url}
             username={item?.user?.username}
             job={item?.user?.job}
             date={moment(item.createdAt).startOf("hour").fromNow()}
@@ -188,5 +173,10 @@ const styles = StyleSheet.create({
     color: Colors.textDark,
     paddingLeft: 10,
     marginTop: 30,
+  },
+  spinner: { marginVertical: 20 },
+  listHoriz: {
+    marginVertical: 7.5,
+    paddingHorizontal: 12.5,
   },
 });

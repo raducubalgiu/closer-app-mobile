@@ -13,7 +13,6 @@ import Header from "../../../../components/customized/Headers/Header";
 import { useForm, Controller } from "react-hook-form";
 import TooltipTitle from "../../../../components/customized/ListItems/TooltipItem";
 import { Colors } from "../../../../assets/styles/Colors";
-import { Divider } from "react-native-elements";
 import { useAuth } from "../../../../context/auth";
 import axios from "axios";
 
@@ -65,8 +64,8 @@ const AddProductsScreen = () => {
         withTooltip={true}
         tooltipText="Este necesar sa adaugi minim un produs pentru a finaliza inscrierea"
         tooltipContainer={{ width: 220, height: 80 }}
+        divider={true}
       />
-      <Divider color="#ddd" />
       <ScrollView bounces={false} showsVerticalScrollIndicator={true}>
         <Stack align="start" sx={{ margin: 15 }}>
           <TooltipTitle

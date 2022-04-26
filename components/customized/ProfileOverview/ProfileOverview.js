@@ -25,9 +25,7 @@ const ProfileOverview = (props) => {
           <UserAvatar
             iconSize={37}
             size={95}
-            avatar={
-              user?.avatar !== undefined ? user?.avatar[0]?.url : undefined
-            }
+            avatar={user?.avatar !== undefined ? user?.avatar : undefined}
             withBadge={props.withBadge}
             badgeDetails={{ name: "plus", type: "entypo" }}
           />

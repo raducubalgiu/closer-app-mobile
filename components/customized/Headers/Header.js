@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Stack } from "../../core";
-import { Icon, Tooltip } from "react-native-elements";
+import { Icon, Tooltip, Divider } from "react-native-elements";
 import React from "react";
 import { Colors } from "../../../assets/styles/Colors";
 import { useNavigation } from "@react-navigation/native";
@@ -8,27 +8,30 @@ import { useNavigation } from "@react-navigation/native";
 const Header = (props) => {
   const navigation = useNavigation();
   return (
-    <Stack direction="row" sx={styles.container}>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Icon name="md-chevron-back" type="ionicon" />
-      </TouchableOpacity>
-      <Stack direction="row">
-        <Text style={styles.title}>{props.title}</Text>
-        {props.withTooltip && (
-          <Tooltip
-            backgroundColor={Colors.primary}
-            popover={<Text style={styles.popover}>{props.tooltipText}</Text>}
-            containerStyle={{
-              ...styles.tooltipBody,
-              ...props.tooltipContainer,
-            }}
-          >
-            <Icon name="info" type="feather" />
-          </Tooltip>
-        )}
+    <>
+      <Stack direction="row" sx={styles.container}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Icon name="md-chevron-back" type="ionicon" />
+        </TouchableOpacity>
+        <Stack direction="row">
+          <Text style={styles.title}>{props.title}</Text>
+          {props.withTooltip && (
+            <Tooltip
+              backgroundColor={Colors.primary}
+              popover={<Text style={styles.popover}>{props.tooltipText}</Text>}
+              containerStyle={{
+                ...styles.tooltipBody,
+                ...props.tooltipContainer,
+              }}
+            >
+              <Icon name="info" type="feather" />
+            </Tooltip>
+          )}
+        </Stack>
+        <Icon name="md-chevron-back" type="ionicon" color="white" />
       </Stack>
-      <Icon name="md-chevron-back" type="ionicon" color="white" />
-    </Stack>
+      {props.divider && <Divider style={{ color: "#ddd" }} />}
+    </>
   );
 };
 

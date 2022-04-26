@@ -31,8 +31,6 @@ const CommentsScreen = (props) => {
       .catch((err) => console.log(err));
   }, []);
 
-  console.log(comments);
-
   const handleComment = () => {
     axios
       .post(
@@ -45,8 +43,9 @@ const CommentsScreen = (props) => {
         { headers: { Authorization: `Bearer ${user?.token}` } }
       )
       .then((res) => {
-        console.log("LAST COMMENT", res.data.comment);
+        const commentRes = res.data.comment;
         setComment("");
+        console.log("COMMENT RES", commentRes);
       })
       .catch((err) => console.log(err));
   };
@@ -57,7 +56,7 @@ const CommentsScreen = (props) => {
       <Divider style={{ color: "#ddd" }} />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={{ flex: 1, justifyContent: "space-between" }}
+        style={styles.container}
       >
         <View style={{ flex: 1 }}>
           <FlatList
@@ -87,7 +86,7 @@ const CommentsScreen = (props) => {
                     {item?.comment}
                   </Text>
                   <Text style={styles.date}>
-                    {moment().startOf("hour").fromNow(item?.createdAt)}
+                    {moment(item?.createdAt).startOf("hour").fromNow()}
                   </Text>
                 </View>
               </View>
@@ -96,13 +95,13 @@ const CommentsScreen = (props) => {
         </View>
         <Divider />
         <View style={styles.inputCont}>
-          <UserAvatar size={50} iconSize={20} avatar={user?.avatar} />
+          <UserAvatar size={45} iconSize={20} avatar={user?.avatar} />
           <TextInput
             onChangeText={(text) => setComment(text)}
             autoCapitalize="sentences"
             autoFocus={focus}
             value={comment}
-            placeholder="Adauga un comentariu"
+            placeholder="Adauga un comentariu..."
             style={styles.input}
           />
           <IconButton
@@ -126,6 +125,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
   },
+  container: { flex: 1, justifyContent: "space-between" },
   headerCont: { flexDirection: "row", margin: 15 },
   username: {
     fontFamily: "Exo-SemiBold",

@@ -16,37 +16,36 @@ import BottomSheetPopup from "../../../../components/customized/BottomSheets/Bot
 import UserAvatar from "../../../../components/customized/Avatars/UserAvatar";
 import { Stack } from "../../../../components/core";
 import axios from "axios";
+import Header from "../../../../components/customized/Headers/Header";
 
 const EditProfileScreen = () => {
   const [open, setOpen] = useState(false);
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   const navigation = useNavigation();
 
   const handleClose = () => setOpen(false);
 
-  // const handleDeletePhoto = () => {
-  //   axios.patch(`http://192.168.100.2:8000/api/v1/users/${user?._id}`);
-  // };
+  const handleDeletePhoto = () => {
+    axios
+      .patch(
+        `${process.env.BASE_ENDPOINT}/users/${user?._id}/update`,
+        {
+          avatar: [],
+        },
+        {
+          headers: { Authorization: `Bearer ${user?.token}` },
+        }
+      )
+      .then(() => setUser({ ...user, avatar: undefined }))
+      .catch((err) => console.log(err));
+  };
+
+  console.log(user);
 
   return (
     <>
       <SafeAreaView style={styles.screen}>
-        <View style={styles.goBack}>
-          <TouchableOpacity
-            activeOpacity={1}
-            onPress={() => navigation.goBack()}
-          >
-            <Icon
-              name="arrow-back-ios"
-              size={20}
-              color={Colors.textDark}
-              style={{ marginLeft: 10 }}
-            />
-          </TouchableOpacity>
-          <Text style={styles.name}>{user?.name}</Text>
-          <Icon name="arrow-back" size={25} color="white" />
-        </View>
-        <Divider />
+        <Header title={user?.name} />
         <ScrollView style={{ flex: 1 }}>
           <Stack sx={{ marginVertical: 20 }}>
             <TouchableOpacity
@@ -82,14 +81,12 @@ const EditProfileScreen = () => {
             />
             <MenuITemBetween
               label="Site web"
-              resultText={user?.website ? user?.website : "Adauga un website"}
+              resultText={user?.website}
               onPress={() => navigation.navigate("EditWebsite")}
             />
             <MenuITemBetween
               label="Descriere"
-              resultText={
-                user?.description ? user?.description : "Adauga o descriere"
-              }
+              resultText={user?.description}
               resultTextLength={25}
               onPress={() => navigation.navigate("EditBio")}
             />
@@ -111,7 +108,10 @@ const EditProfileScreen = () => {
         onClose={handleClose}
         sheetBody={
           <Stack>
-            <TouchableOpacity style={styles.sheetTitle}>
+            <TouchableOpacity
+              style={styles.sheetTitle}
+              onPress={handleDeletePhoto}
+            >
               <Text style={styles.sheetText}>Sterge fotografia actuala</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.sheetTitle}>

@@ -1,12 +1,13 @@
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { Animated, StyleSheet, Pressable } from "react-native";
 import { Icon } from "react-native-elements";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../../context/auth";
 import axios from "axios";
 
 const LikeIButton = (props) => {
   const [liked, setLiked] = useState(false);
   const { user } = useAuth();
+  const animatedScale = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     axios
@@ -22,6 +23,14 @@ const LikeIButton = (props) => {
   }, [props.postId]);
 
   const likeHandler = () => {
+    animatedScale.setValue(0.8);
+    Animated.spring(animatedScale, {
+      toValue: 1,
+      bounciness: 15,
+      speed: 20,
+      useNativeDriver: true,
+    }).start();
+
     if (!liked) {
       axios
         .post(
@@ -51,19 +60,26 @@ const LikeIButton = (props) => {
     }
   };
 
+  useEffect(() => {
+    animatedScale.setValue(1);
+  }, []);
+
   return (
-    <TouchableOpacity
-      activeOpacity={1}
-      onPress={likeHandler}
-      style={{ ...styles.default, ...props.sx }}
-    >
-      <Icon
-        type="antdesign"
-        name={liked ? "heart" : "hearto"}
-        size={props.size ? props.size : 24}
-        color={liked ? "#F72A50" : ""}
-      />
-    </TouchableOpacity>
+    <Pressable onPress={likeHandler}>
+      <Animated.View
+        style={[
+          { ...styles.default, ...props.sx },
+          { transform: [{ scale: animatedScale }] },
+        ]}
+      >
+        <Icon
+          type="antdesign"
+          name={liked ? "heart" : "hearto"}
+          size={props.size ? props.size : 24}
+          color={liked ? "#F72A50" : ""}
+        />
+      </Animated.View>
+    </Pressable>
   );
 };
 

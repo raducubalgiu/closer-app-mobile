@@ -1,23 +1,13 @@
-import {
-  StyleSheet,
-  Text,
-  SafeAreaView,
-  FlatList,
-  View,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, SafeAreaView, FlatList, View } from "react-native";
 import React, { useEffect, useState } from "react";
-import HeaderReusable from "../../../components/customized/Headers/HeaderReusable";
-import { Icon } from "react-native-elements";
 import CardFollowers from "../../../components/customized/Cards/CardFollowers";
 import { Colors } from "../../../assets/styles/Colors";
-import { useNavigation } from "@react-navigation/native";
 import * as Contacts from "expo-contacts";
 import FakeSearchBarSimple from "../../../components/customized/FakeSearchBar/FakeSearchBarSimple";
+import Header from "../../../components/customized/Headers/Header";
 
 const FindFriendsScreen = () => {
   const [contacts, setContacts] = useState([]);
-  const navigation = useNavigation();
 
   useEffect(() => {
     (async () => {
@@ -36,17 +26,11 @@ const FindFriendsScreen = () => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.screen}>
-      <HeaderReusable
-        firstBox={
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Icon name="arrow-back-ios" size={21} color={Colors.textDark} />
-          </TouchableOpacity>
-        }
-        secondBox={<Text style={styles.title}>Gaseste prieteni</Text>}
-        thirdBox={null}
-      />
-      <View style={{ paddingHorizontal: 15, flex: 1 }}>
+    <>
+      <SafeAreaView style={styles.screen}>
+        <Header title="Gaseste prieteni" />
+      </SafeAreaView>
+      <View style={styles.container}>
         <FlatList
           showsVerticalScrollIndicator={false}
           data={contacts}
@@ -62,7 +46,7 @@ const FindFriendsScreen = () => {
           ListHeaderComponent={<FakeSearchBarSimple />}
         />
       </View>
-    </SafeAreaView>
+    </>
   );
 };
 
@@ -71,7 +55,6 @@ export default FindFriendsScreen;
 const styles = StyleSheet.create({
   screen: {
     backgroundColor: "white",
-    flex: 1,
   },
   title: {
     fontFamily: "Exo-SemiBold",
@@ -92,4 +75,5 @@ const styles = StyleSheet.create({
     borderColor: Colors.primary,
     borderRadius: 2.5,
   },
+  container: { paddingHorizontal: 15, flex: 1, backgroundColor: "white" },
 });
