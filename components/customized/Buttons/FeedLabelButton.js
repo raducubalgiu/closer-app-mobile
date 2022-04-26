@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     borderColor: "#ddd",
     marginRight: 7.5,
     borderRadius: 20,
-    paddingVertical: 7.5,
+    paddingVertical: 7,
     paddingHorizontal: 15,
   },
   btnText: {
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   },
   activeBtn: {
     backgroundColor: "#f1f1f1",
-    borderColor: "#eee",
+    borderColor: "#f1f1f1",
   },
   activeBtnText: {
     color: Colors.textDark,

@@ -82,7 +82,7 @@ const FeedScreen = () => {
               iconType="feather"
               sx={{ marginRight: 24 }}
             />
-            <IconButton iconName="video" iconType="feather" />
+            <IconButton iconName="plus-circle" iconType="feather" />
             <Divider orientation="vertical" style={{ marginHorizontal: 15 }} />
             <FeedLabelButton
               onPress={() => {
@@ -110,6 +110,7 @@ const FeedScreen = () => {
           </Stack>
         </ScrollView>
       </Stack>
+      {/* <Divider color="#ddd" /> */}
       <Animated.FlatList
         ListHeaderComponent={
           loading && <ActivityIndicator style={styles.spinner} />
