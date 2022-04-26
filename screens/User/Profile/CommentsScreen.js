@@ -52,8 +52,7 @@ const CommentsScreen = (props) => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Header title="Comentarii" />
-      <Divider style={{ color: "#ddd" }} />
+      <Header title="Comentarii" divider={true} />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.container}

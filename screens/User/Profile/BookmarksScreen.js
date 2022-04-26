@@ -5,7 +5,6 @@ import {
   SavedVideoTab,
   OpportunitiesTab,
 } from "../../../components/customized/Tabs/SavedTabs";
-import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../../../assets/styles/Colors";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Header from "../../../components/customized/Headers/Header";
@@ -19,14 +18,8 @@ const BookmarksScreen = () => {
       <Tab.Navigator
         initialRouteName="SavedAll"
         screenOptions={{
-          tabBarLabelStyle: {
-            fontFamily: "Exo-SemiBold",
-            textTransform: "capitalize",
-            fontSize: 14,
-          },
-          tabBarIndicatorStyle: {
-            backgroundColor: Colors.textDark,
-          },
+          tabBarLabelStyle: styles.labelStyle,
+          tabBarIndicatorStyle: styles.indicatorStyle,
           tabBarInactiveTintColor: "gray",
         }}
       >
@@ -61,5 +54,13 @@ const styles = StyleSheet.create({
     fontFamily: "Exo-Bold",
     fontSize: 16,
     color: Colors.textDark,
+  },
+  labelStyle: {
+    fontFamily: "Exo-SemiBold",
+    textTransform: "capitalize",
+    fontSize: 14,
+  },
+  indicatorStyle: {
+    backgroundColor: Colors.textDark,
   },
 });

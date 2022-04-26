@@ -1,14 +1,13 @@
-import { StyleSheet, Text, SafeAreaView } from "react-native";
+import { StyleSheet, SafeAreaView } from "react-native";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import HeaderReusable from "../../../../components/customized/Headers/HeaderReusable";
-import IconBackButton from "../../../../components/core/IconButton/IconBackButton";
 import FollowersTabDetails from "./FollowersTabDetails";
 import FollowingTabDetails from "./FollowingTabDetails";
 import RatingsTabDetails from "./RatingsTabDetails";
 import { Colors } from "../../../../assets/styles/Colors";
 import { useAuth } from "../../../../context/auth";
+import Header from "../../../../components/customized/Headers/Header";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -50,10 +49,7 @@ const ProfileTabsScreen = (props) => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <HeaderReusable
-        firstBox={<IconBackButton />}
-        secondBox={<Text style={styles.heading}>{username}</Text>}
-      />
+      <Header title={username} />
       <Tab.Navigator
         initialRouteName={initialRoute}
         screenOptions={{

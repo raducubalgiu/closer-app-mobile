@@ -1,20 +1,11 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  SafeAreaView,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, View, SafeAreaView } from "react-native";
 import React from "react";
-import { Divider, Icon } from "react-native-elements";
-import { useNavigation } from "@react-navigation/native";
 import Header from "../../../../components/customized/Headers/Header";
 
 const DiscountsProfileScreen = () => {
   return (
     <SafeAreaView style={styles.screen}>
-      <Header title="Discounturi" />
-      <Divider />
+      <Header title="Discounturi" divider={true} />
       <View style={styles.container}></View>
     </SafeAreaView>
   );

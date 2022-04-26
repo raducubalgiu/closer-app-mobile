@@ -46,8 +46,7 @@ const LikesScreen = (props) => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Header title="Aprecieri" />
-      <Divider style={{ color: "#ddd" }} />
+      <Header title="Aprecieri" divider={true} />
       <View style={styles.listContainer}>
         <FlatList
           style={{ paddingTop: 5 }}

@@ -10,7 +10,6 @@ const MessagesScreen = () => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      {/* <HeaderSimple /> */}
       <Tab.Navigator
         initialRouteName="Notifications"
         screenOptions={{
