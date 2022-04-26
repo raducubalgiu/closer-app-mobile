@@ -5,6 +5,8 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { Colors } from "../../../assets/styles/Colors";
+import { AddressFormat } from "../../../utils/addressFormat";
+import { trimFunc } from "../../../utils/trimFunc";
 
 const CardRecommended = (props) => {
   const navigation = useNavigation();
@@ -56,7 +58,7 @@ const CardRecommended = (props) => {
               <Icon
                 name="star"
                 type="antdesign"
-                size={18}
+                size={16}
                 color={Colors.primary}
               />
               <Text style={styles.cardRatingsAverage}>
@@ -88,20 +90,11 @@ const styles = StyleSheet.create({
   recommendItem: {
     flexDirection: "row",
     justifyContent: "flex-start",
-    //alignItems: "center",
-    // borderWidth: 1,
-    // borderColor: "#f1f1f1",
     borderRadius: 5,
   },
   cardImage: {
     flex: 1,
-    width: 120,
-    height: 80,
-    borderRadius: 15,
-    // borderTopLeftRadius: 5,
-    // borderBottomLeftRadius: 5,
-    // borderTopRightRadius: 5,
-    // borderBottomRightRadius: 5,
+    width: 130,
     //resizeMode: "contain",
   },
   cardInfo: {
@@ -118,7 +111,7 @@ const styles = StyleSheet.create({
   cardName: {
     flex: 1,
     color: Colors.textDark,
-    fontFamily: "Exo-Bold",
+    fontFamily: "Exo-SemiBold",
     fontSize: 14,
   },
   cardDistance: {
@@ -127,18 +120,18 @@ const styles = StyleSheet.create({
     color: Colors.textDark,
   },
   cardAddress: {
-    fontSize: 13,
+    fontSize: 12,
     marginTop: 2,
     color: Colors.textLight,
     fontFamily: "Exo-Medium",
   },
   cardTitle: {
-    fontSize: 11.5,
+    fontSize: 11,
     marginTop: 5,
     marginBottom: 5,
     backgroundColor: "#f1f1f1",
-    paddingVertical: 4,
-    paddingHorizontal: 12,
+    paddingVertical: 2,
+    paddingHorizontal: 10,
     color: Colors.textDark,
     fontFamily: "Exo-SemiBold",
   },
@@ -148,7 +141,7 @@ const styles = StyleSheet.create({
   },
   cardRatingsAverage: {
     marginLeft: 2,
-    fontSize: 13,
+    fontSize: 12,
     fontFamily: "Exo-Bold",
     color: Colors.textDark,
   },

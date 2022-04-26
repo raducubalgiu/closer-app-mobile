@@ -10,6 +10,7 @@ import ShareIButton from "../Buttons/ShareIButton";
 import CommentsIButton from "../Buttons/CommentsIButton";
 import { Checkmark } from "../../core";
 import { useNavigation } from "@react-navigation/native";
+import { Divider } from "react-native-elements/dist/divider/Divider";
 
 const CardPost = (props) => {
   const navigation = useNavigation();
@@ -62,7 +63,9 @@ const CardPost = (props) => {
         <>
           <Stack direction="row" sx={styles.bookableContainer}>
             <TouchableOpacity>
-              <Text style={styles.bookable}>Rezerva instant</Text>
+              <Text style={styles.bookable}>
+                Acest produs poate fi rezervat
+              </Text>
             </TouchableOpacity>
             <Icon name="keyboard-arrow-right" />
           </Stack>
@@ -181,7 +184,7 @@ const styles = StyleSheet.create({
   },
   image: {
     aspectRatio: 1,
-    //width: "100%",
+    width: "100%",
     flex: 1,
   },
   likes: { color: Colors.textDark, fontWeight: "bold" },

@@ -82,7 +82,7 @@ const FeedScreen = () => {
               iconType="feather"
               sx={{ marginRight: 24 }}
             />
-            <IconButton iconName="plus-circle" iconType="feather" />
+            <IconButton iconName="bell" iconType="feather" />
             <Divider orientation="vertical" style={{ marginHorizontal: 15 }} />
             <FeedLabelButton
               onPress={() => {

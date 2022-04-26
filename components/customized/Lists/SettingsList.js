@@ -9,6 +9,15 @@ const SettingsList = (props) => {
   return (
     <View>
       <MenuItem
+        iconName="thumbs-up"
+        iconType="feather"
+        text="Afacerea mea"
+        onPress={() => {
+          navigation.navigate("MyBusiness");
+        }}
+      />
+
+      <MenuItem
         iconName="setting"
         iconType="antdesign"
         text="Setari"

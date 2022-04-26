@@ -80,7 +80,9 @@ const ProfileScreen = (props) => {
         onGoToFindFriends={() => navigation.navigate("FindFriends")}
         onOpenSwitch={() => setOpenSwitch(true)}
         name={user?.name}
-        onOpenSettings={() => setOpenSettings(true)}
+        onOpenSettings={() => {
+          setOpenSettings(true);
+        }}
       />
       <ProfileOverview
         user={user}

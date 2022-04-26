@@ -68,7 +68,7 @@ const BookmarkIButton = (props) => {
       >
         <Icon
           type={bookmarked ? "feather" : "font-awesome"}
-          name={bookmarked ? "check-square" : "bookmark-o"}
+          name={bookmarked ? "check-circle" : "bookmark-o"}
           size={props.size ? props.size : 24}
         />
       </Animated.View>

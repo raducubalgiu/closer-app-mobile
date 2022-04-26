@@ -44,8 +44,20 @@ const CommentsScreen = (props) => {
       )
       .then((res) => {
         const commentRes = res.data.comment;
-        setComment("");
         console.log("COMMENT RES", commentRes);
+        setComment("");
+        setComments([
+          {
+            _id: commentRes?._id,
+            comment: commentRes?.comment,
+            user: {
+              username: user?.username,
+              avatar: user?.avatar,
+            },
+            createdAt: commentRes?.createdAt,
+          },
+          ...comments,
+        ]);
       })
       .catch((err) => console.log(err));
   };
@@ -78,7 +90,11 @@ const CommentsScreen = (props) => {
             keyExtractor={(item) => item?._id}
             renderItem={({ item }) => (
               <View style={styles.commentsCont}>
-                <UserAvatar size={32.5} iconSize={15} />
+                <UserAvatar
+                  size={32.5}
+                  iconSize={15}
+                  avatar={item?.user?.avatar[0]?.url}
+                />
                 <View style={{ marginLeft: 10 }}>
                   <Text>
                     <Text style={styles.username}>{item?.user?.username}</Text>

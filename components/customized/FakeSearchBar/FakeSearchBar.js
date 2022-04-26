@@ -49,8 +49,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     backgroundColor: "#f1f1f1",
     paddingVertical: 5,
-    paddingHorizontal: 5,
-    borderRadius: 5,
+    paddingHorizontal: 10,
   },
   fakeInput: {
     flexDirection: "row",
@@ -64,7 +63,7 @@ const styles = StyleSheet.create({
   },
   fakeInputText: {
     marginLeft: 10,
-    fontSize: 14.5,
+    fontSize: 14,
     color: Colors.textLight,
     fontFamily: "Exo-Regular",
   },

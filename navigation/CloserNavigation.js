@@ -44,6 +44,11 @@ import AddServicesScreen from "../screens/User/Profile/CompleteProfile/AddServic
 import AddProductsScreen from "../screens/User/Profile/CompleteProfile/AddProductsScreen";
 import LikesScreen from "../screens/LikesScreen";
 import CommentsScreen from "../screens/User/Profile/CommentsScreen";
+import MyBusinessScreen from "../screens/User/Profile/MyBusiness/MyBusinessScreen";
+import MyDashboardScreen from "../screens/User/Profile/MyBusiness/MyDashboardScreen";
+import MyCalendarScreen from "../screens/User/Profile/MyBusiness/MyCalendarScreen";
+import MyLocationScreen from "../screens/User/Profile/MyBusiness/MyLocationScreen";
+import MyProductsScreen from "../screens/User/Profile/MyBusiness/MyProductsScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -152,6 +157,11 @@ const UserStackNavigator = () => {
       <Stack.Screen name="EditName" component={EditNameScreen} />
       <Stack.Screen name="EditWebsite" component={EditWebsiteScreen} />
       <Stack.Screen name="EditBio" component={EditBioScreen} />
+      <Stack.Screen name="MyBusiness" component={MyBusinessScreen} />
+      <Stack.Screen name="MyDashboard" component={MyDashboardScreen} />
+      <Stack.Screen name="MyCalendar" component={MyCalendarScreen} />
+      <Stack.Screen name="MyLocation" component={MyLocationScreen} />
+      <Stack.Screen name="MyProducts" component={MyProductsScreen} />
       <Stack.Screen name="Settings" component={SettingsScreen} />
       <Stack.Screen name="Schedules" component={SchedulesScreen} />
       <Stack.Screen name="Discounts" component={DiscountsScreen} />

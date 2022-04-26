@@ -28,6 +28,14 @@ export const hideTabs = (route) => {
       return { display: "none" };
     case "Discounts":
       return { display: "none" };
+    case "MyDashboard":
+      return { display: "none" };
+    case "MyCalendar":
+      return { display: "none" };
+    case "MyLocation":
+      return { display: "none" };
+    case "MyProducts":
+      return { display: "none" };
     default:
       return { display: "block" };
   }
