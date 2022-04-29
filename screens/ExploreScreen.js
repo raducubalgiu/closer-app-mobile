@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Colors } from "../assets/styles/Colors";
+import theme from "../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
 import { useAuth } from "../context/auth";
 
@@ -50,7 +50,7 @@ const ExploreScreen = () => {
               justifyContent: "center",
               padding: 10,
               borderWidth: 1,
-              borderColor: Colors.primary,
+              borderColor: theme.lightColors.primary,
               margin: 10,
             }}
           >

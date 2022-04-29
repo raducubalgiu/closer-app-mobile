@@ -8,15 +8,13 @@ import {
 } from "react-native";
 import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
-import { Icon } from "react-native-elements/dist/icons/Icon";
-import { Switch } from "react-native-elements";
-import { Divider } from "react-native-elements/dist/divider/Divider";
+import { Icon, Switch, Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import BottomSheetService from "../components/customized/BottomSheets/BottomSheetService";
 import CardService from "../components/customized/Cards/CardService";
 import Map from "../components/customized/Map/Map";
-import { Colors } from "../assets/styles/Colors";
+import theme from "../assets/styles/theme";
 import { useAuth } from "../context/auth";
 
 const ServicesScreen = ({ route }) => {
@@ -60,11 +58,11 @@ const ServicesScreen = ({ route }) => {
             <Icon
               name="keyboard-arrow-left"
               size={30}
-              color={Colors.textDark}
+              color={theme.lightColors.black}
             />
           </TouchableOpacity>
           <TouchableOpacity style={styles.searchDetailContainer}>
-            <Icon name="search" size={18} color={Colors.textLight} />
+            <Icon name="search" size={18} color={theme.lightColors.grey0} />
             <Text style={styles.serviceText}>{serviceName},</Text>
             <Text style={styles.searchText}>6 feb, 16:30</Text>
           </TouchableOpacity>
@@ -162,12 +160,12 @@ const styles = StyleSheet.create({
   serviceText: {
     fontFamily: "Exo-Bold",
     marginLeft: 10,
-    color: Colors.darkLight,
+    color: theme.lightColors.black,
   },
   searchText: {
     fontFamily: "Exo-Medium",
     marginLeft: 5,
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
   },
   secondFilterContainer: {
     flexDirection: "row",

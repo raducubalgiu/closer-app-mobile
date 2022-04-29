@@ -1,4 +1,4 @@
-import { Icon } from "react-native-elements";
+import { Icon } from "@rneui/themed";
 import React from "react";
 import PostsProfileScreen from "./User/Profile/PostsProfileScreen";
 import ProductsProfileScreen from "./User/Profile/ProductsProfileScreen";
@@ -6,7 +6,7 @@ import CalendarProfileScreen from "./User/Profile/CalendarProfileScreen";
 import JobsProfileScreen from "./User/Profile/ProfileStatsTabs/JobsProfileScreen";
 import AboutProfileScreen from "./User/Profile/AboutProfileScreen";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { Colors } from "../assets/styles/Colors";
+import theme from "../assets/styles/theme";
 
 const TopTabNavigator = (props) => {
   const { role } = props;
@@ -52,12 +52,12 @@ const TopTabNavigator = (props) => {
             <Icon name={iconName} type={iconType} color={color} size={size} />
           );
         },
-        tabBarActiveTintColor: Colors.primary,
+        tabBarActiveTintColor: theme.lightColors.primary,
         tabBarInactiveTintColor: "gray",
         headerShown: false,
         tabBarShowLabel: false,
         tabBarIndicatorStyle: {
-          backgroundColor: Colors.textDark,
+          backgroundColor: theme.lightColors.black,
         },
       })}
     >

@@ -3,7 +3,7 @@ import React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import NotificationsTab from "../components/customized/Tabs/NotificationsTabs/NotificationsTab";
 import MessagesTab from "../components/customized/Tabs/NotificationsTabs/MessagesTab";
-import { Colors } from "../assets/styles/Colors";
+import theme from "../assets/styles/theme";
 
 const MessagesScreen = () => {
   const Tab = createMaterialTopTabNavigator();
@@ -19,7 +19,7 @@ const MessagesScreen = () => {
             fontSize: 14,
           },
           tabBarIndicatorStyle: {
-            backgroundColor: Colors.textDark,
+            backgroundColor: theme.lightColors.black,
           },
           tabBarInactiveTintColor: "gray",
         }}

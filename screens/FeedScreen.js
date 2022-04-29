@@ -6,11 +6,11 @@ import {
   ActivityIndicator,
   ScrollView,
 } from "react-native";
-import { Divider } from "react-native-elements";
+import { Divider } from "@rneui/themed";
 import moment from "moment";
 import React, { useCallback, useEffect, useState } from "react";
 import CardPost from "../components/customized/Cards/CardPost";
-import { Colors } from "../assets/styles/Colors";
+import theme from "../assets/styles/theme";
 import axios from "axios";
 import { usePosts } from "../hooks/usePosts";
 import { useAuth } from "../context/auth";
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
   screen: { backgroundColor: "white", flex: 1 },
   exploreText: {
     fontFamily: "Exo-Medium",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     marginLeft: 5,
   },
   contentContainerStyle: { marginTop: 50 },
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
   bookmark: { padding: 5, marginLeft: 10 },
   description: {
     fontFamily: "Exo-Regular",
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
     fontSize: 15,
     textAlign: "center",
     paddingHorizontal: 30,
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: "Exo-SemiBold",
     fontSize: 18,
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     paddingLeft: 10,
     marginTop: 30,
   },

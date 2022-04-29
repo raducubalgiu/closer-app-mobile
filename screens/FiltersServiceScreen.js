@@ -2,7 +2,7 @@ import { StyleSheet, Text, FlatList, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
-import { Colors } from "../assets/styles/Colors";
+import theme from "../assets/styles/theme";
 import BottomSheetFilter from "../components/customized/BottomSheets/BottomSheetFilter";
 
 const FiltersServiceScreen = (props) => {
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     textAlign: "center",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     fontFamily: "Exo-SemiBold",
   },
 });

@@ -6,11 +6,11 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
-import { Avatar, Image, Icon, Divider, Badge } from "react-native-elements";
+import { Avatar, Image, Icon, Divider, Badge } from "@rneui/themed";
 import { ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import CardProduct from "../components/customized/Cards/CardProduct";
-import { Colors } from "../assets/styles/Colors";
+import theme from "../assets/styles/theme";
 
 const images = [
   "https://images.unsplash.com/photo-1648288582532-7ca072ae2ee3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1631&q=80",
@@ -87,7 +87,7 @@ const ServiceItemScreen = (props) => {
                 style={{
                   fontFamily: "Exo-SemiBold",
                   fontSize: 19.5,
-                  color: Colors.textDark,
+                  color: theme.lightColors.black,
                 }}
               >
                 Trattoria Monza
@@ -102,7 +102,7 @@ const ServiceItemScreen = (props) => {
                 <Icon
                   name="star"
                   type="antdesign"
-                  color={Colors.primary}
+                  color={theme.lightColors.primary}
                   size={17}
                 />
                 <Text
@@ -126,7 +126,7 @@ const ServiceItemScreen = (props) => {
               <Icon
                 name="pushpino"
                 type="antdesign"
-                color={Colors.primary}
+                color={theme.lightColors.primary}
                 size={20}
               />
               <Text
@@ -142,7 +142,7 @@ const ServiceItemScreen = (props) => {
                 style={{
                   fontFamily: "Exo-Bold",
                   textTransform: "uppercase",
-                  color: Colors.primary,
+                  color: theme.lightColors.primary,
                   marginLeft: 10,
                 }}
               >
@@ -159,7 +159,7 @@ const ServiceItemScreen = (props) => {
               <Icon
                 name="form"
                 type="antdesign"
-                color={Colors.primary}
+                color={theme.lightColors.primary}
                 size={20}
               />
               <Text
@@ -182,7 +182,7 @@ const ServiceItemScreen = (props) => {
               <Icon
                 name="users"
                 type="feather"
-                color={Colors.primary}
+                color={theme.lightColors.primary}
                 size={20}
               />
               <Text
@@ -228,7 +228,7 @@ const ServiceItemScreen = (props) => {
               style={{
                 fontFamily: "Exo-Bold",
                 textTransform: "uppercase",
-                color: Colors.primary,
+                color: theme.lightColors.primary,
                 marginTop: 10,
               }}
             >
@@ -316,7 +316,7 @@ const styles = StyleSheet.create({
   },
   dotActive: {
     margin: 3,
-    color: Colors.primary,
+    color: theme.lightColors.primary,
   },
   dot: {
     margin: 3,
@@ -330,6 +330,6 @@ const styles = StyleSheet.create({
   name: {
     fontFamily: "Exo-Bold",
     fontSize: 21,
-    color: Colors.textDark,
+    color: theme.lightColors.black,
   },
 });

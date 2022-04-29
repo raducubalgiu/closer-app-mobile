@@ -8,12 +8,10 @@ import {
 } from "react-native";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Divider } from "react-native-elements/dist/divider/Divider";
-import { Icon } from "react-native-elements/dist/icons/Icon";
-import { Avatar } from "react-native-elements";
+import { Divider, Icon, Avatar } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import BackSearchFilter from "../components/customized/Headers/BackSearchFilter";
-import { Colors } from "../assets/styles/Colors";
+import theme from "../assets/styles/theme";
 
 const ServicesNavigation = () => {
   const [categories, setCategories] = useState([]);
@@ -101,7 +99,7 @@ const ServicesNavigation = () => {
                             style={{
                               fontFamily: "Exo-Regular",
                               fontSize: 12,
-                              color: Colors.textLight,
+                              color: theme.lightColors.grey0,
                             }}
                           >
                             5 rezultate

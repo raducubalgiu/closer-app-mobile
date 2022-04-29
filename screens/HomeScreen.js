@@ -1,7 +1,6 @@
 import {
   SafeAreaView,
   StyleSheet,
-  Dimensions,
   View,
   Text,
   FlatList,
@@ -10,11 +9,11 @@ import {
 import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
-import { Divider } from "react-native-elements";
+import { Divider } from "@rneui/themed";
 import FakeSearchBar from "../components/customized/FakeSearchBar/FakeSearchBar";
 import ServicesCategories from "../components/customized/ServicesCategories/ServicesCategories";
 import CardRecommended from "../components/customized/Cards/CardRecommended";
-import { Colors } from "../assets/styles/Colors";
+import theme from "../assets/styles/theme";
 import { useAuth } from "../context/auth";
 
 const wait = (timeout) => {
@@ -100,7 +99,7 @@ const styles = StyleSheet.create({
   sheetHeading: {
     paddingVertical: 15,
     paddingLeft: 15,
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     fontFamily: "Exo-SemiBold",
     fontSize: 15,
   },

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Divider, SearchBar } from "react-native-elements";
+import { Divider, SearchBar } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
 import { Platform } from "react-native";
 import {
@@ -9,10 +9,10 @@ import {
   Text,
   TouchableOpacity,
   FlatList,
+  View,
 } from "react-native";
-import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Colors } from "../assets/styles/Colors";
+import theme from "../assets/styles/theme";
 
 const SearchScreen = () => {
   const [initialServices, setInitialServices] = useState([]);
@@ -54,7 +54,7 @@ const SearchScreen = () => {
             fontSize: 13,
             fontWeight: "500",
             fontFamily: "Exo-SemiBold",
-            color: Colors.textDark,
+            color: theme.lightColors.black,
             backgroundColor: "white",
             padding: 10,
             marginRight: 15,
@@ -75,7 +75,7 @@ const SearchScreen = () => {
         }
         inputStyle={{
           fontSize: 15,
-          color: Colors.textLight,
+          color: theme.lightColors.grey0,
           fontFamily: "Exo-Regular",
         }}
         placeholder={t("searchInputTitle")}
@@ -196,11 +196,11 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     paddingLeft: 15,
     fontSize: 13,
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     fontFamily: "Exo-SemiBold",
   },
   categoryItem: {
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
     paddingLeft: 15,
   },
 });

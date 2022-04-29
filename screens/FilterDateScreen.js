@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
-import { Colors } from "../assets/styles/Colors";
+import theme from "../assets/styles/theme";
 import BottomSheetFilter from "../components/customized/BottomSheets/BottomSheetFilter";
 import FilterDate from "../components/customized/Filters/FilterDate";
 
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   buttonActive: {
-    borderColor: Colors.primary,
+    borderColor: theme.lightColors.primary,
   },
-  buttonText: { color: Colors.textDark, fontFamily: "Exo-Medium" },
+  buttonText: { color: theme.lightColors.black, fontFamily: "Exo-Medium" },
 });
