@@ -4,14 +4,14 @@ import {
   Text,
   TouchableOpacity,
   View,
+  TextInput,
 } from "react-native";
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-import { TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { AuthService } from "../../../services/AuthService";
-import { Divider } from "react-native-elements";
-import { Colors } from "../../../assets/styles/Colors";
+import { Divider } from "@rneui/themed";
+import theme from "../../../assets/styles/theme";
 import ButtonProvider from "../../../components/core/Buttons/ButtonProvider";
 import MainButton from "../../../components/core/Buttons/MainButton";
 import HeaderReusable from "../../../components/customized/Headers/HeaderReusable";
@@ -77,7 +77,7 @@ const RegisterBusinessScreen = () => {
               onChangeText={onChange}
               value={value}
               placeholder="Email"
-              placeholderTextColor={Colors.textLight}
+              placeholderTextColor={theme.lightColors.grey0}
             />
           )}
           name="email"
@@ -101,7 +101,7 @@ const RegisterBusinessScreen = () => {
               value={value}
               placeholder="Parola"
               secureTextEntry={true}
-              placeholderTextColor={Colors.textLight}
+              placeholderTextColor={theme.lightColors.grey0}
             />
           )}
           name="password"
@@ -139,7 +139,7 @@ const RegisterBusinessScreen = () => {
           onPress={() => {}}
           iconName="apple1"
           iconType="antdesign"
-          color={Colors.textDark}
+          color={theme.lightColors.black}
           text="Continua cu Apple"
         />
         <ButtonProvider
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
   mainHeading: {
     fontFamily: "Exo-SemiBold",
     fontSize: 25,
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     marginTop: 30,
     marginBottom: 25,
   },

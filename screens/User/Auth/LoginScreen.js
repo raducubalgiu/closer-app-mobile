@@ -4,14 +4,14 @@ import {
   Text,
   TouchableOpacity,
   View,
+  TextInput,
 } from "react-native";
 import React from "react";
 import axios from "axios";
 import { useForm, Controller } from "react-hook-form";
-import { TextInput } from "react-native";
-import { Divider } from "react-native-elements";
+import { Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 import { AuthService } from "../../../services/AuthService";
 import ButtonProvider from "../../../components/core/Buttons/ButtonProvider";
 import MainButton from "../../../components/core/Buttons/MainButton";
@@ -122,7 +122,7 @@ const LoginScreen = () => {
               onChangeText={onChange}
               value={value}
               placeholder="Email"
-              placeholderTextColor={Colors.textLight}
+              placeholderTextColor={theme.lightColors.grey0}
             />
           )}
           name="email"
@@ -146,7 +146,7 @@ const LoginScreen = () => {
               value={value}
               placeholder="Parola"
               secureTextEntry={true}
-              placeholderTextColor={Colors.textLight}
+              placeholderTextColor={theme.lightColors.grey0}
             />
           )}
           name="password"
@@ -183,7 +183,7 @@ const LoginScreen = () => {
           onPress={() => {}}
           iconName="apple1"
           iconType="antdesign"
-          color={Colors.textDark}
+          color={theme.lightColors.black}
           text="Continua cu Apple"
         />
         <ButtonProvider
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
   mainHeading: {
     fontFamily: "Exo-SemiBold",
     fontSize: 25,
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     marginTop: 30,
     marginBottom: 25,
   },

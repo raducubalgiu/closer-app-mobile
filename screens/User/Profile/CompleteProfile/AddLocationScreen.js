@@ -5,14 +5,14 @@ import {
   View,
   TouchableOpacity,
   FlatList,
+  ScrollView,
 } from "react-native";
 import React, { useState } from "react";
-import { Colors } from "../../../../assets/styles/Colors";
+import theme from "../../../../assets/styles/theme";
 import TooltipTitle from "../../../../components/customized/ListItems/TooltipItem";
 import AutocompleteGoogle from "../../../../components/customized/AutocompleteGoogle/AutocompleteGoogle";
 import { Stack } from "../../../../components/core";
-import { Icon, Avatar, Badge } from "react-native-elements";
-import { ScrollView } from "react-native-gesture-handler";
+import { Icon, Avatar, Badge } from "@rneui/themed";
 import Header from "../../../../components/customized/Headers/Header";
 import { MainButton } from "../../../../components/core";
 import axios from "axios";
@@ -77,7 +77,7 @@ const AddLocationScreen = () => {
               style={{ ...styles.input, ...styles.disabled }}
               value={location?.street}
               placeholder="Strada"
-              placeholderTextColor={Colors.textLight}
+              placeholderTextColor={theme.lightColors.grey0}
               editable={false}
             />
           </View>
@@ -86,7 +86,7 @@ const AddLocationScreen = () => {
               style={{ ...styles.input, ...styles.disabled }}
               value={location?.number}
               placeholder="Numar"
-              placeholderTextColor={Colors.textLight}
+              placeholderTextColor={theme.lightColors.grey0}
               editable={false}
             />
           </View>
@@ -96,7 +96,7 @@ const AddLocationScreen = () => {
             style={{ ...styles.input }}
             onChangeText={(text) => setBlockApartment(text)}
             placeholder="Bloc, scara, apartament"
-            placeholderTextColor={Colors.textLight}
+            placeholderTextColor={theme.lightColors.grey0}
           />
         </View>
         <Stack direction="row" sx={{ marginTop: 10 }}>
@@ -105,7 +105,7 @@ const AddLocationScreen = () => {
               style={{ ...styles.input, ...styles.disabled }}
               value={location?.city}
               placeholder="Oras"
-              placeholderTextColor={Colors.textLight}
+              placeholderTextColor={theme.lightColors.grey0}
               editable={false}
             />
           </View>
@@ -114,7 +114,7 @@ const AddLocationScreen = () => {
               style={{ ...styles.input, ...styles.disabled }}
               value={location?.county}
               placeholder="Judet"
-              placeholderTextColor={Colors.textLight}
+              placeholderTextColor={theme.lightColors.grey0}
               editable={false}
             />
           </View>
@@ -124,7 +124,7 @@ const AddLocationScreen = () => {
             style={{ ...styles.input, ...styles.disabled }}
             value={location?.country}
             placeholder="Tara"
-            placeholderTextColor={Colors.textLight}
+            placeholderTextColor={theme.lightColors.grey0}
             editable={false}
           />
         </View>
@@ -139,7 +139,7 @@ const AddLocationScreen = () => {
               name="plussquare"
               type="antdesign"
               size={27.5}
-              color={Colors.primary}
+              color={theme.lightColors.primary}
             />
           </TouchableOpacity>
         </Stack>
@@ -212,8 +212,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     paddingVertical: 10,
     paddingHorizontal: 15,
-    borderColor: Colors.primary,
-    backgroundColor: Colors.primary,
+    borderColor: theme.lightColors.primary,
+    backgroundColor: theme.lightColors.primary,
     marginRight: 10,
     borderRadius: 5,
   },
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     fontFamily: "Exo-Medium",
   },
   badgeStyle: {
-    backgroundColor: Colors.textDark,
+    backgroundColor: theme.lightColors.black,
     width: 22.5,
     height: 22.5,
     borderRadius: 50,

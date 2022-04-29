@@ -10,10 +10,10 @@ import RNPickerSelect from "react-native-picker-select";
 import React, { useState, useEffect } from "react";
 import Header from "../../../../components/customized/Headers/Header";
 import { MainButton, Stack } from "../../../../components/core";
-import { Icon } from "react-native-elements";
+import { Icon } from "@rneui/themed";
 import TooltipTitle from "../../../../components/customized/ListItems/TooltipItem";
 import axios from "axios";
-import { Colors } from "../../../../assets/styles/Colors";
+import theme from "../../../../assets/styles/theme";
 import { useAuth } from "../../../../context/auth";
 import { useNavigation } from "@react-navigation/native";
 
@@ -168,10 +168,10 @@ const styles = StyleSheet.create({
   addIcon: {
     marginLeft: 10,
     borderWidth: 1,
-    borderColor: Colors.primary,
+    borderColor: theme.lightColors.primary,
     padding: 7.5,
     borderRadius: 10,
-    backgroundColor: Colors.primary,
+    backgroundColor: theme.lightColors.primary,
   },
   name: { fontFamily: "Exo-Medium" },
 });

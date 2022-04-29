@@ -7,7 +7,7 @@ import {
 import React, { useEffect, useState } from "react";
 import Header from "../../../../components/customized/Headers/Header";
 import { IconButton, Stack, Modal } from "../../../../components/core";
-import { Colors } from "../../../../assets/styles/Colors";
+import theme from "../../../../assets/styles/theme";
 import CardProduct from "../../../../components/customized/Cards/CardProduct";
 import { useModal } from "../../../../hooks/useModal";
 import {
@@ -16,7 +16,7 @@ import {
 } from "../../../../components/customized/Forms";
 import axios from "axios";
 import { useAuth } from "../../../../context/auth";
-import { Divider } from "react-native-elements";
+import { Divider } from "@rneui/themed";
 
 const MyProductsScreen = () => {
   const { user } = useAuth();
@@ -71,7 +71,7 @@ const MyProductsScreen = () => {
             iconName="plussquare"
             iconType="antdesign"
             onPress={() => dispatch({ type: "ADD" })}
-            color={Colors.primary}
+            color={theme.lightColors.primary}
           />
         }
       />

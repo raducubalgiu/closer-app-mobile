@@ -3,7 +3,7 @@ import React from "react";
 import SearchBar from "react-native-elements/dist/searchbar/SearchBar-ios";
 import { Divider } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
-import { Colors } from "../../../../assets/styles/Colors";
+import theme from "../../../../assets/styles/theme";
 import HeaderReusable from "../../../../components/customized/Headers/HeaderReusable";
 import { Stack } from "../../../../components/core";
 
@@ -69,13 +69,13 @@ export default EditFieldScreen;
 const styles = StyleSheet.create({
   cancel: {
     fontFamily: "Exo-Medium",
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
     fontSize: 15,
   },
   field: { fontFamily: "Exo-SemiBold", fontSize: 17 },
   save: {
     fontFamily: "Exo-Bold",
-    color: Colors.primary,
+    color: theme.lightColors.primary,
     fontSize: 16,
   },
   containerStyle: {
@@ -95,6 +95,6 @@ const styles = StyleSheet.create({
   strokeLength: {
     paddingHorizontal: 10,
     fontFamily: "Exo-Medium",
-    color: Colors.primary,
+    color: theme.lightColors.grey0,
   },
 });

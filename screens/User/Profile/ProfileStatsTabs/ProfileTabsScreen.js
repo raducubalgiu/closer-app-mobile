@@ -4,7 +4,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import FollowersTabDetails from "./FollowersTabDetails";
 import FollowingTabDetails from "./FollowingTabDetails";
 import RatingsTabDetails from "./RatingsTabDetails";
-import { Colors } from "../../../../assets/styles/Colors";
+import theme from "../../../../assets/styles/theme";
 import Header from "../../../../components/customized/Headers/Header";
 
 const Tab = createMaterialTopTabNavigator();
@@ -18,7 +18,7 @@ const ProfileTabsScreen = (props) => {
       <Tab.Navigator
         initialRouteName={initialRoute}
         screenOptions={{
-          tabBarActiveTintColor: Colors.textDark,
+          tabBarActiveTintColor: theme.lightColors.black,
           tabBarLabelStyle: styles.tabLabel,
           tabBarStyle: styles.tabStyle,
           tabBarIndicatorStyle: styles.tabIndicator,
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontFamily: "Exo-Bold",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     fontSize: 16,
   },
   tabLabel: {
@@ -63,6 +63,6 @@ const styles = StyleSheet.create({
   },
   tabStyle: { backgroundColor: "white" },
   tabIndicator: {
-    backgroundColor: Colors.textDark,
+    backgroundColor: theme.lightColors.black,
   },
 });

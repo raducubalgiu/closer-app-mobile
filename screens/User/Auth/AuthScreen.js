@@ -1,8 +1,13 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Colors } from "../../../assets/styles/Colors";
-import { Divider, Icon } from "react-native-elements";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  Text,
+  SafeAreaView,
+} from "react-native";
+import theme from "../../../assets/styles/theme";
+import { Divider, Icon } from "@rneui/themed";
 import MenuItemBigger from "../../../components/customized/MenuItem/MenuItemBigger";
 import { useNavigation } from "@react-navigation/native";
 
@@ -88,7 +93,7 @@ const styles = StyleSheet.create({
   mainHeading: {
     fontFamily: "Exo-SemiBold",
     fontSize: 27,
-    color: Colors.textDark,
+    color: theme.lightColors.black,
   },
   mainBtnText: {
     textAlign: "center",
@@ -98,12 +103,12 @@ const styles = StyleSheet.create({
   },
   secondHeading: {
     fontFamily: "Exo-Medium",
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
     fontSize: 16,
     marginTop: 2.5,
   },
   mainBtn: {
-    backgroundColor: Colors.primary,
+    backgroundColor: theme.lightColors.primary,
     marginTop: 30,
     padding: 12.5,
     borderRadius: 5,
@@ -116,12 +121,12 @@ const styles = StyleSheet.create({
   textAction: {
     fontFamily: "Exo-Regular",
     fontSize: 14,
-    color: Colors.textDark,
+    color: theme.lightColors.black,
   },
   btnAction: {
     fontFamily: "Exo-SemiBold",
     fontSize: 15,
-    color: Colors.textDark,
+    color: theme.lightColors.black,
   },
   businessContainer: {
     flexDirection: "row",

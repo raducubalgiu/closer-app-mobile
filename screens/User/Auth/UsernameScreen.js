@@ -1,7 +1,7 @@
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import axios from "axios";
 import React from "react";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../context/auth";
 import InputCheck from "../../../components/core/Inputs/InputCheck";
 
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginVertical: 15,
     marginHorizontal: 10,
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
     fontSize: 15,
   },
   input: {

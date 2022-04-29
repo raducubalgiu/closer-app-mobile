@@ -1,10 +1,9 @@
-import { SafeAreaView, StyleSheet, Text } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import axios from "axios";
 import React, { useState } from "react";
 import EditField from "./EditFieldScreen";
 import { useAuth } from "../../../../context/auth";
 import { useNavigation } from "@react-navigation/native";
-import { Stack } from "../../../../components/core";
 
 const EditNameScreen = () => {
   const { user, setUser } = useAuth();

@@ -4,12 +4,12 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
+  SafeAreaView,
 } from "react-native";
 import React, { useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Icon, Divider } from "react-native-elements";
+import { Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
-import { Colors } from "../../../../assets/styles/Colors";
+import theme from "../../../../assets/styles/theme";
 import { useAuth } from "../../../../context/auth";
 import MenuITemBetween from "../../../../components/customized/MenuItem/MenuITemBetween";
 import BottomSheetPopup from "../../../../components/customized/BottomSheets/BottomSheetPopup";
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
   name: {
     fontFamily: "Exo-Bold",
     fontSize: 16,
-    color: Colors.textDark,
+    color: theme.lightColors.black,
   },
   sectionContainer: {
     paddingTop: 10,
@@ -157,14 +157,14 @@ const styles = StyleSheet.create({
   sectionHeading: {
     marginBottom: 10,
     fontFamily: "Exo-SemiBold",
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
     fontSize: 13,
     marginTop: 5,
   },
   text: {
     marginTop: 15,
     fontFamily: "Exo-Bold",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     fontSize: 15,
   },
   sheetTitle: {
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
   },
   sheetText: {
     fontFamily: "Exo-Medium",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
   },
   cancelBtn: {
     width: "100%",
@@ -186,6 +186,6 @@ const styles = StyleSheet.create({
   cancelBtnText: {
     textAlign: "center",
     fontFamily: "Exo-SemiBold",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
   },
 });

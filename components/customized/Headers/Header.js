@@ -11,7 +11,11 @@ const Header = (props) => {
     <>
       <Stack direction="row" sx={styles.container}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="md-chevron-back" type="ionicon" />
+          <Icon
+            name="md-chevron-back"
+            type="ionicon"
+            color={theme.lightColors.black}
+          />
         </TouchableOpacity>
         <Stack direction="row">
           <Text style={styles.title}>{props.title}</Text>
