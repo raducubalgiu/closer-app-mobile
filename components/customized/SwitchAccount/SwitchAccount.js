@@ -6,10 +6,9 @@ import {
   FlatList,
 } from "react-native";
 import React from "react";
-import { Divider } from "react-native-elements/dist/divider/Divider";
-import { Avatar, Icon } from "react-native-elements";
+import { Avatar, Icon, Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../context/auth";
 
 const SwitchAccount = () => {
@@ -54,7 +53,11 @@ const SwitchAccount = () => {
               </View>
             </View>
             <View>
-              <Icon name="check" type="andesign" color={Colors.primary} />
+              <Icon
+                name="check"
+                type="andesign"
+                color={theme.lightColors.primary}
+              />
             </View>
           </TouchableOpacity>
         )}
@@ -74,7 +77,7 @@ const SwitchAccount = () => {
               icon={{
                 name: "plus",
                 type: "feather",
-                color: Colors.textDark,
+                color: theme.lightColors.black,
                 size: 26,
               }}
               containerStyle={{ backgroundColor: "#eee" }}
@@ -93,7 +96,7 @@ const styles = StyleSheet.create({
   heading: {
     textAlign: "center",
     fontFamily: "Exo-SemiBold",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     marginBottom: 15,
   },
   item: {
@@ -107,7 +110,7 @@ const styles = StyleSheet.create({
     marginBottom: 2.5,
     fontSize: 15,
   },
-  job: { fontFamily: "Exo-Medium", color: Colors.textLight },
+  job: { fontFamily: "Exo-Medium", color: theme.lightColors.grey0 },
   actionBtn: {
     flexDirection: "row",
     alignItems: "center",

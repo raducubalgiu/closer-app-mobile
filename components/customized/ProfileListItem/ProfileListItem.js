@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import { Icon } from "react-native-elements";
+import { Icon } from "@rneui/themed";
 import React from "react";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 
 const ProfileListItem = (props) => {
   return (
@@ -34,6 +34,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  text: { fontFamily: "Exo-Medium", color: Colors.textDark, fontSize: 14 },
+  text: {
+    fontFamily: "Exo-Medium",
+    color: theme.lightColors.black,
+    fontSize: 14,
+  },
   icon: { backgroundColor: "#f1f1f1", padding: 3, borderRadius: 50 },
 });

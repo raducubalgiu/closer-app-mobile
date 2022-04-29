@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from "react-native";
 import MapView, { Marker, Callout, PROVIDER_GOOGLE } from "react-native-maps";
-import { Icon } from "react-native-elements";
+import { Icon } from "@rneui/themed";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 
 const Map = (props) => {
   const { t } = useTranslation();
@@ -206,7 +206,7 @@ const Map = (props) => {
                 <Icon
                   name="star"
                   type="antdesign"
-                  color={Colors.primary}
+                  color={theme.lightColors.primary}
                   size={17}
                 />
                 <Text style={styles.markerRatingsAverage}>
@@ -220,7 +220,7 @@ const Map = (props) => {
                 <Icon
                   name="location"
                   type="entypo"
-                  color={Colors.textLight}
+                  color={theme.lightColors.grey0}
                   size={17}
                 />
                 <Text style={styles.markerDistance}>
@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
   },
   priceName: {
     fontFamily: "Exo-SemiBold",
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
   },
   ratingsContainer: {
     flexDirection: "row",
@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
   markerRatingsQuantity: {
     marginLeft: 5,
     fontFamily: "Exo-Medium",
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
     fontSize: 12,
   },
   markerDistance: {
@@ -275,7 +275,7 @@ const styles = StyleSheet.create({
     fontFamily: "Exo-Medium",
     fontSize: 13,
     marginLeft: 5,
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
   },
   priceContainer: { flexDirection: "row", alignItems: "center" },
   priceText: {
@@ -285,7 +285,7 @@ const styles = StyleSheet.create({
   },
   from: {
     fontFamily: "Exo-Regular",
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
     marginLeft: 10,
     fontSize: 10,
   },

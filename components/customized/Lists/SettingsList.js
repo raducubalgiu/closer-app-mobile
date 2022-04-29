@@ -5,7 +5,7 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { ListItem, Icon } from "@rneui/themed";
 import { useAuth } from "../../../context/auth";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 
 const SettingsList = (props) => {
   const navigation = useNavigation();
@@ -81,9 +81,16 @@ const SettingsList = (props) => {
           ? () => navigation.navigate(item?.navigation)
           : item?.action
       }
-      containerStyle={{ paddingLeft: 0 }}
+      containerStyle={{
+        paddingLeft: 0,
+        backgroundColor: theme.lightColors.white,
+      }}
     >
-      <Icon name={item?.iconName} type={item?.iconType} />
+      <Icon
+        name={item?.iconName}
+        type={item?.iconType}
+        color={theme.lightColors.black}
+      />
       <ListItem.Content>
         <ListItem.Title style={styles.text}>{item?.title}</ListItem.Title>
       </ListItem.Content>
@@ -103,5 +110,9 @@ const SettingsList = (props) => {
 export default SettingsList;
 
 const styles = StyleSheet.create({
-  text: { fontFamily: "Exo-Medium", color: Colors.textDark, fontSize: 14.5 },
+  text: {
+    fontFamily: "Exo-Medium",
+    color: theme.lightColors.black,
+    fontSize: 14.5,
+  },
 });

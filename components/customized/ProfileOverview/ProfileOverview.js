@@ -6,9 +6,9 @@ import {
   View,
 } from "react-native";
 import React from "react";
-import { Icon } from "react-native-elements";
+import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 import StatsButton from "../Buttons/StatsButton";
 import Stack from "../../core/Containers/Stack";
 import UserAvatar from "../Avatars/UserAvatar";
@@ -42,7 +42,7 @@ const ProfileOverview = (props) => {
             <Icon
               type="antdesign"
               name="star"
-              color={Colors.primary}
+              color={theme.lightColors.primary}
               size={16}
               style={{ marginLeft: 7.5 }}
             />
@@ -112,14 +112,14 @@ const styles = StyleSheet.create({
   },
   name: {
     fontFamily: "Exo-SemiBold",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     fontSize: 16,
     marginTop: 5,
     marginBottom: 5,
   },
   business: {
     fontFamily: "Exo-SemiBold",
-    color: Colors.primary,
+    color: theme.lightColors.primary,
     marginLeft: 5,
     fontSize: 14,
     textTransform: "capitalize",
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
     borderRadius: 10,
     fontSize: 12,
-    color: Colors.textDark,
+    color: theme.lightColors.black,
   },
   statsContainer: {
     width: "100%",

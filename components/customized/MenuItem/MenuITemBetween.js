@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import { Icon } from "react-native-elements";
+import { Icon } from "@rneui/themed";
 import React from "react";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 import { trimFunc } from "../../../utils/trimFunc";
 
 const MenuITemBetween = (props) => {
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontFamily: "Exo-Medium",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     fontSize: 15,
   },
   button: { flexDirection: "row", alignItems: "center" },
@@ -37,6 +37,6 @@ const styles = StyleSheet.create({
     fontFamily: "Exo-Medium",
     marginRight: 10,
     fontSize: 14,
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
   },
 });

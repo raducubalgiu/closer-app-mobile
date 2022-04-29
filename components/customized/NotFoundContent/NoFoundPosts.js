@@ -1,7 +1,7 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import { Stack } from "../../core";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 
 const NoFoundPosts = (props) => {
   return (
@@ -28,14 +28,14 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: "Exo-SemiBold",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     marginBottom: 5,
   },
   description: {
     fontFamily: "Exo-Regular",
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
     marginBottom: 15,
     textAlign: "center",
   },
-  btnText: { fontFamily: "Exo-SemiBold", color: Colors.primary },
+  btnText: { fontFamily: "Exo-SemiBold", color: theme.lightColors.primary },
 });

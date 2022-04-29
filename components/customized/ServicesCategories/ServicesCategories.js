@@ -6,12 +6,12 @@ import {
   FlatList,
   Image,
 } from "react-native";
-import { Divider } from "react-native-elements";
+import { Divider } from "@rneui/themed";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 
 const ServicesCategories = () => {
   const { t } = useTranslation();
@@ -87,15 +87,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   servicesHeading: {
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     fontFamily: "Exo-SemiBold",
     fontSize: 15,
   },
   seeAllHeading: {
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     fontSize: 12,
     fontFamily: "Exo-SemiBold",
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
   },
   servicesTitle: {
     marginTop: 10,
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 13,
     fontFamily: "Exo-SemiBold",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     fontSize: 13,
   },
   serviceItem: {

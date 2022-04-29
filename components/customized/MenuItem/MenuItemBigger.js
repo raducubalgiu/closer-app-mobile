@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import { Icon, Divider } from "react-native-elements";
-import { Colors } from "../../../assets/styles/Colors";
+import { Icon, Divider } from "@rneui/themed";
+import theme from "../../../assets/styles/theme";
 import React from "react";
 
 const MenuItemBigger = (props) => {
@@ -10,7 +10,7 @@ const MenuItemBigger = (props) => {
         <Icon
           name={props.iconName}
           type={props.iconType}
-          color={Colors.textDark}
+          color={theme.lightColors.black}
           size={26}
         />
         <Text style={styles.textItem}>{props.text}</Text>
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   textItem: {
     fontFamily: "Exo-Regular",
     fontSize: 16,
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     marginLeft: 10,
   },
 });

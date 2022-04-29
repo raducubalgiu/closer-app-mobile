@@ -6,8 +6,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { Image, Icon } from "react-native-elements";
-import { Colors } from "../../../../assets/styles/Colors";
+import { Image, Icon } from "@rneui/themed";
+import theme from "../../../../assets/styles/theme";
 import axios from "axios";
 import { useAuth } from "../../../../context/auth";
 
@@ -25,8 +25,6 @@ const AllSavedTab = () => {
       .then((res) => setBookmarks(res.data.bookmarks))
       .catch((err) => console.log(err));
   }, []);
-
-  console.log(bookmarks);
 
   return (
     <View style={styles.container}>
@@ -96,7 +94,7 @@ const styles = StyleSheet.create({
     fontFamily: "Exo-SemiBold",
     fontSize: 12,
     //textTransform: "uppercase",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
   },
   type: {
     position: "absolute",

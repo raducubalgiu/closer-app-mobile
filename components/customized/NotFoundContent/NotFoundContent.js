@@ -1,9 +1,9 @@
 import { StyleSheet, Text } from "react-native";
 import React from "react";
 import { Stack } from "../../core";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 import CardButton from "../Buttons/CardButton";
-import { Icon } from "react-native-elements";
+import { Icon } from "@rneui/themed";
 
 const NotFoundContent = (props) => {
   return (
@@ -11,7 +11,7 @@ const NotFoundContent = (props) => {
       <Icon
         name={props.iconName}
         type={props.iconType}
-        color={Colors.textDark}
+        color={theme.lightColors.black}
         style={styles.icon}
       />
       <Text style={styles.title}>{props.title}</Text>
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: "Exo-SemiBold",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     fontSize: 16,
     marginBottom: 5,
   },
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     textAlign: "center",
     fontFamily: "Exo-Regular",
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
     fontSize: 13,
     marginBottom: 25,
   },

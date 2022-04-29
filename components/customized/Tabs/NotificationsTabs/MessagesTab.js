@@ -1,9 +1,14 @@
-import { StyleSheet, View, FlatList, RefreshControl } from "react-native";
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  RefreshControl,
+  TouchableOpacity,
+} from "react-native";
 import React, { useState, useCallback } from "react";
 import { Stack } from "../../../core";
 import FakeSearchBarSimple from "../../FakeSearchBar/FakeSearchBarSimple";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { Icon } from "react-native-elements";
+import { Icon } from "@rneui/themed";
 import MessageItem from "../../ListItems/MessageItem";
 
 const DUMMY_MESSAGES = [
