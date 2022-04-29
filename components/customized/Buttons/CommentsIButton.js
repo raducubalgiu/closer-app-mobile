@@ -7,12 +7,13 @@ const CommentsIButton = (props) => {
     <TouchableOpacity
       activeOpacity={1}
       onPress={props.onPress}
-      style={{ ...styles.default, ...props.sx }}
+      style={{ ...props.sx }}
     >
       <Icon
-        type="fontisto"
-        name="hipchat"
-        size={props.size ? props.size : 22}
+        type="ionicon"
+        name="chatbubble-ellipses-sharp"
+        size={props.size ? props.size : 35}
+        color="white"
       />
     </TouchableOpacity>
   );

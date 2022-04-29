@@ -5,6 +5,8 @@ import { enableScreens } from "react-native-screens";
 import CloserNavigation from "./navigation/CloserNavigation";
 import { AuthProvider } from "./context/auth";
 import { RootSiblingParent } from "react-native-root-siblings";
+import { ThemeProvider } from "@rneui/themed";
+import theme from "./assets/styles/theme";
 import "./firebase/firebase.config";
 
 enableScreens();
@@ -38,9 +40,11 @@ const App = () => {
 
   return (
     <AuthProvider>
-      <RootSiblingParent>
-        <CloserNavigation />
-      </RootSiblingParent>
+      <ThemeProvider theme={theme}>
+        <RootSiblingParent>
+          <CloserNavigation />
+        </RootSiblingParent>
+      </ThemeProvider>
     </AuthProvider>
   );
 };

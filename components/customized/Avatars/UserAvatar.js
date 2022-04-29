@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
-import { Avatar, Badge, Icon } from "react-native-elements";
+import { Avatar, Badge, Icon } from "@rneui/themed";
 import React from "react";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 
 const UserAvatar = (props) => {
   let avatar;
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     left: 75,
   },
   badge: {
-    backgroundColor: Colors.primary,
+    backgroundColor: theme.lightColors.primary,
     borderWidth: 2,
     borderColor: "white",
     width: 25,

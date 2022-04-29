@@ -1,5 +1,5 @@
 import { TouchableOpacity, StyleSheet, Text } from "react-native";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 
 const ContainedButton = (props) => {
   return (
@@ -26,11 +26,14 @@ const styles = StyleSheet.create({
     paddingVertical: 7.5,
     paddingHorizontal: 20,
     borderWidth: 2,
-    borderColor: Colors.primary,
+    borderColor: theme.lightColors.primary,
     borderRadius: 5,
   },
   buttonText: { color: "white", fontFamily: "Exo-Medium", textAlign: "center" },
-  active: { backgroundColor: Colors.primary, borderColor: Colors.primary },
+  active: {
+    backgroundColor: theme.lightColors.primary,
+    borderColor: theme.lightColors.primary,
+  },
   disabled: {
     backgroundColor: "#ccc",
     borderColor: "#ccc",

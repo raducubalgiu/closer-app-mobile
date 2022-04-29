@@ -14,12 +14,6 @@ export const hideTabs = (route) => {
       return { display: "none" };
     case "ProfileGeneral":
       return { display: "none" };
-    case "AddLocation":
-      return { display: "none" };
-    case "AddServices":
-      return { display: "none" };
-    case "AddProducts":
-      return { display: "none" };
     case "FindFriends":
       return { display: "none" };
     case "Bookmarks":
@@ -39,6 +33,14 @@ export const hideTabs = (route) => {
     case "MyLocation":
       return { display: "none" };
     case "MyProducts":
+      return { display: "none" };
+    case "AddLocation":
+      return { display: "none" };
+    case "AddServices":
+      return { display: "none" };
+    case "AddProducts":
+      return { display: "none" };
+    case "AddBusinessType":
       return { display: "none" };
     default:
       return { display: "block" };

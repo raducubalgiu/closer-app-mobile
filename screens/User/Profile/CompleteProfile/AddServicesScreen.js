@@ -16,25 +16,18 @@ import axios from "axios";
 import { Colors } from "../../../../assets/styles/Colors";
 import { useAuth } from "../../../../context/auth";
 import { useNavigation } from "@react-navigation/native";
-import Toast from "react-native-root-toast";
 
 const AddServicesScreen = () => {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   const [services, setServices] = useState([]);
-  const [selectedServices, setSelectedServices] = useState([]);
+  const [selectedServices, setSelectedServices] = useState(user?.services);
   const [service, setService] = useState(null);
-  const [visible, setVisible] = useState(false);
+  const [disabled, setDisabled] = useState(true);
   const navigation = useNavigation();
-
-  const placeholder = {
-    label: "Selecteaza un serviciu",
-    value: null,
-    color: "#9EA0A4",
-  };
 
   useEffect(() => {
     axios
-      .get(`http://192.168.100.2:8000/api/v1/services`)
+      .get(`${process.env.BASE_ENDPOINT}/services`)
       .then((res) => setServices(res.data.services))
       .catch((err) => console.log(err));
   }, []);
@@ -46,24 +39,60 @@ const AddServicesScreen = () => {
         { serviceId: service },
         { headers: { Authorization: `Bearer ${user?.token}` } }
       )
-      .then(() => {
-        setSelectedServices((selectedServices) =>
-          selectedServices.concat(service)
+      .then((res) => {
+        const servicesBackend = res.data.user.services;
+        const newService = servicesBackend.filter(
+          (services) => services._id === service
         );
+        setSelectedServices((selectedServices) =>
+          selectedServices.concat(newService)
+        );
+        setUser({ ...user, services: user.services.concat(newService) });
         setService(null);
       })
-      .catch(() => setVisible(true));
+      .catch((err) => console.log(err));
   };
 
   const removeServiceHandler = (serviceId) => {
-    console.log(serviceId);
+    axios
+      .patch(
+        `http://192.168.100.2:8000/api/v1/users/${user?._id}/remove-service`,
+        { serviceId },
+        { headers: { Authorization: `Bearer ${user?.token}` } }
+      )
+      .then(() => {
+        setSelectedServices((selectedServices) =>
+          selectedServices.filter((service) => service._id !== serviceId)
+        );
+        setUser({
+          ...user,
+          services: user.services.filter(
+            (services) => services._id !== serviceId
+          ),
+        });
+        setService(null);
+      })
+      .catch((err) => console.log(err));
   };
+
+  useEffect(() => {
+    if (selectedServices.length > 0) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  }, [selectedServices]);
 
   const saveServicesHandler = () => navigation.navigate("Profile");
 
+  const placeholder = {
+    label: "Selecteaza un serviciu",
+    value: null,
+    color: "#9EA0A4",
+  };
+
   return (
     <SafeAreaView style={styles.screen}>
-      <Toast visible={visible}>Ceva nu a mers cum trebuie..</Toast>
       <Header
         title="Adauga serviciile"
         withTooltip={true}
@@ -113,7 +142,11 @@ const AddServicesScreen = () => {
             </TouchableOpacity>
           </Stack>
         ))}
-        <MainButton title="Salveaza" onPress={saveServicesHandler} />
+        <MainButton
+          title="Salveaza"
+          onPress={saveServicesHandler}
+          disabled={disabled}
+        />
       </ScrollView>
     </SafeAreaView>
   );

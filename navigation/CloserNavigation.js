@@ -49,6 +49,7 @@ import MyDashboardScreen from "../screens/User/Profile/MyBusiness/MyDashboardScr
 import MyCalendarScreen from "../screens/User/Profile/MyBusiness/MyCalendarScreen";
 import MyLocationScreen from "../screens/User/Profile/MyBusiness/MyLocationScreen";
 import MyProductsScreen from "../screens/User/Profile/MyBusiness/MyProductsScreen";
+import AddBusinessTypeScreen from "../screens/User/Profile/CompleteProfile/AddBusinessTypeScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -153,6 +154,7 @@ const UserStackNavigator = () => {
       <Stack.Screen name="AddLocation" component={AddLocationScreen} />
       <Stack.Screen name="AddServices" component={AddServicesScreen} />
       <Stack.Screen name="AddProducts" component={AddProductsScreen} />
+      <Stack.Screen name="AddBusinessType" component={AddBusinessTypeScreen} />
       <Stack.Screen name="EditProfile" component={EditProfileScreen} />
       <Stack.Screen name="EditName" component={EditNameScreen} />
       <Stack.Screen name="EditWebsite" component={EditWebsiteScreen} />
@@ -223,8 +225,6 @@ const TabsScreen = () => {
 
 const CloserNavigation = () => {
   const { user } = useAuth();
-
-  console.log(user);
 
   return (
     <NavigationContainer>

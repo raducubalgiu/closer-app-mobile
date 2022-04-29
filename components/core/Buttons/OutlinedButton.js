@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 
 const OutlinedButton = (props) => {
   return (
@@ -23,11 +23,11 @@ const styles = StyleSheet.create({
     paddingVertical: 7.5,
     paddingHorizontal: 20,
     borderWidth: 2,
-    borderColor: Colors.primary,
+    borderColor: theme.lightColors.primary,
     borderRadius: 5,
   },
   buttonText: {
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     fontFamily: "Exo-SemiBold",
     textAlign: "center",
   },

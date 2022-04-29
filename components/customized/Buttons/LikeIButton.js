@@ -74,9 +74,9 @@ const LikeIButton = (props) => {
       >
         <Icon
           type="antdesign"
-          name={liked ? "heart" : "hearto"}
-          size={props.size ? props.size : 24}
-          color={liked ? "#F72A50" : ""}
+          name={"heart"}
+          size={props.size ? props.size : 35}
+          color={liked ? "#F72A50" : "white"}
         />
       </Animated.View>
     </Pressable>
@@ -87,6 +87,6 @@ export default LikeIButton;
 
 const styles = StyleSheet.create({
   default: {
-    marginLeft: 22.5,
+    opacity: 0.85,
   },
 });

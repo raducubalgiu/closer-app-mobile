@@ -1,7 +1,7 @@
 import { TouchableOpacity } from "react-native";
-import { Icon } from "react-native-elements";
+import { Icon } from "@rneui/themed";
 import React from "react";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 
 const IconButton = (props) => {
   return (
@@ -14,7 +14,7 @@ const IconButton = (props) => {
         type={props.iconType}
         name={props.iconName}
         size={props.size ? props.size : 24}
-        color={props.color ? props.color : Colors.textDark}
+        color={props.color ? props.color : theme.lightColors.black}
       />
     </TouchableOpacity>
   );

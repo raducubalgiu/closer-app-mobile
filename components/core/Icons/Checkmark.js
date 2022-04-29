@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
-import { Icon } from "react-native-elements";
+import { Icon } from "@rneui/themed";
 import React from "react";
+import theme from "../../../assets/styles/theme";
 
 const Checkmark = (props) => {
   return (
@@ -18,7 +19,7 @@ export default Checkmark;
 
 const styles = StyleSheet.create({
   checkmark: {
-    backgroundColor: "#00ccff",
+    backgroundColor: theme.lightColors.secondary,
     marginLeft: 5,
     padding: 2.5,
     borderRadius: 50,

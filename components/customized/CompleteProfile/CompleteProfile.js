@@ -12,6 +12,14 @@ const CompleteProfile = () => {
 
   const STEPS = [
     {
+      title: "Adauga tipul afacerii",
+      description: "Este necesar sa stim care este tipul business-ului tau",
+      iconName: "navigation",
+      iconType: "feather",
+      completed: false,
+      navigation: "AddBusinessType",
+    },
+    {
       title: "Adauga locatia",
       description: "Introdu locatia si incepe sa primesti clienti",
       iconName: "navigation",
@@ -69,7 +77,7 @@ const CompleteProfile = () => {
         justify="start"
         sx={{ marginTop: 5, marginBottom: 15 }}
       >
-        <Text style={styles.counter}>0 / 6</Text>
+        <Text style={styles.counter}>0 / 7</Text>
         <Text style={styles.status}> FINALIZATE</Text>
       </Stack>
       <ScrollView

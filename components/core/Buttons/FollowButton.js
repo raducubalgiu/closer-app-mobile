@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../context/auth";
 
 const FollowButton = (props) => {
@@ -11,7 +11,7 @@ const FollowButton = (props) => {
   useEffect(() => {
     axios
       .get(
-        `http://192.168.100.2:8000/api/v1/users/${user?._id}/follower/${props.followingId}/followee/check-follow`,
+        `${process.env.BASE_ENDPOINT}/users/${user?._id}/follower/${props.followingId}/followee/check-follow`,
         {
           headers: { Authorization: `Bearer ${user?.token}` },
         }
@@ -29,7 +29,7 @@ const FollowButton = (props) => {
     if (!follow) {
       axios
         .post(
-          `http://192.168.100.2:8000/api/v1/users/follow`,
+          `${process.env.BASE_ENDPOINT}/users/follow`,
           {
             userId: user?._id,
             followingId: props.followingId,
@@ -52,7 +52,7 @@ const FollowButton = (props) => {
     if (follow) {
       axios
         .delete(
-          `http://192.168.100.2:8000/api/v1/users/${user?._id}/followee/${props.followingId}/follower/unfollow`,
+          `${process.env.BASE_ENDPOINT}/users/${user?._id}/followee/${props.followingId}/follower/unfollow`,
           {
             headers: { Authorization: `Bearer ${user?.token}` },
           }
@@ -69,15 +69,15 @@ const FollowButton = (props) => {
   const styles = StyleSheet.create({
     btn: {
       borderWidth: 1,
-      borderColor: follow ? "#ddd" : Colors.primary,
+      borderColor: follow ? "#ddd" : theme.lightColors.primary,
       paddingVertical: props.size === "lg" ? 10 : 4.5,
       paddingHorizontal: props.size === "lg" ? 20 : 15,
       borderRadius: 2.5,
-      backgroundColor: follow ? "white" : Colors.primary,
+      backgroundColor: follow ? "white" : theme.lightColors.primary,
     },
     btnText: {
       fontFamily: "Exo-SemiBold",
-      color: follow ? Colors.textDark : "white",
+      color: follow ? theme.lightColors.black : "white",
       fontSize: 13,
     },
   });

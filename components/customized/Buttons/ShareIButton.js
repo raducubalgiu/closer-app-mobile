@@ -7,9 +7,14 @@ const ShareIButton = (props) => {
     <TouchableOpacity
       activeOpacity={1}
       onPress={props.onPress}
-      style={{ ...styles.default, ...props.sx }}
+      style={{ ...props.sx }}
     >
-      <Icon type="feather" name="share" size={props.size ? props.size : 24} />
+      <Icon
+        type="fontisto"
+        name="share-a"
+        size={props.size ? props.size : 25}
+        color="white"
+      />
     </TouchableOpacity>
   );
 };

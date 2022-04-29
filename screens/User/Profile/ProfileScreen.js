@@ -33,7 +33,6 @@ const ProfileScreen = (props) => {
       })
       .then((res) => {
         setPosts(res.data.posts);
-        console.log("POSTS!!!");
       })
       .catch((err) => console.log(err));
   }, []);

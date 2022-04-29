@@ -5,12 +5,12 @@ import {
   TextInput,
   ActivityIndicator,
 } from "react-native";
+import axios from "axios";
 import { useForm, Controller } from "react-hook-form";
 import ContainedButton from "../Buttons/ContainedButton";
 import React, { useEffect, useState } from "react";
-import { Colors } from "../../../assets/styles/Colors";
-import { Icon } from "react-native-elements";
-import axios from "axios";
+import theme from "../../../assets/styles/theme";
+import { Icon } from "@rneui/themed";
 
 const InputCheck = (props) => {
   const [loading, setLoading] = useState(false);
@@ -85,7 +85,7 @@ const InputCheck = (props) => {
               onChangeText={onChange}
               value={value}
               placeholder="Nume de utilizator"
-              placeholderTextColor={Colors.textLight}
+              placeholderTextColor={theme.lightColors.grey0}
             />
           )}
           name={inputName}
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   },
   input: { flex: 1, padding: 15 },
   error: {
-    color: Colors.danger,
+    color: theme.lightColors.error,
     fontFamily: "Exo-Regular",
     marginLeft: 10,
     marginTop: 5,

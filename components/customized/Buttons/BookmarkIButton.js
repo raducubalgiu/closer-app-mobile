@@ -3,6 +3,7 @@ import { Icon } from "react-native-elements";
 import React, { useEffect, useState, useRef } from "react";
 import { useAuth } from "../../../context/auth";
 import axios from "axios";
+import { Colors } from "../../../assets/styles/Colors";
 
 const BookmarkIButton = (props) => {
   const { user } = useAuth();
@@ -67,9 +68,10 @@ const BookmarkIButton = (props) => {
         ]}
       >
         <Icon
-          type={bookmarked ? "feather" : "font-awesome"}
-          name={bookmarked ? "check-circle" : "bookmark-o"}
+          type={"font-awesome"}
+          name={bookmarked ? "bookmark" : "bookmark-o"}
           size={props.size ? props.size : 24}
+          color={bookmarked && "#333333"}
         />
       </Animated.View>
     </Pressable>
@@ -80,6 +82,7 @@ export default BookmarkIButton;
 
 const styles = StyleSheet.create({
   default: {
-    marginLeft: 22.5,
+    marginLeft: 20,
+    padding: 5,
   },
 });

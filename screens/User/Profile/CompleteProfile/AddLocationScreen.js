@@ -63,7 +63,6 @@ const AddLocationScreen = () => {
         tooltipContainer={{ width: 220, height: 80 }}
         divider={true}
       />
-      <Stack></Stack>
       <AutocompleteGoogle onSetLocation={handleSetLocation} />
       <ScrollView style={{ padding: 15 }} bounces={false}>
         <TooltipTitle
