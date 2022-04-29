@@ -1,8 +1,8 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Stack } from "../../core";
-import { Icon, Tooltip, Divider } from "react-native-elements";
+import { Icon, Tooltip, Divider } from "@rneui/themed";
 import React from "react";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
 
 const Header = (props) => {
@@ -17,7 +17,7 @@ const Header = (props) => {
           <Text style={styles.title}>{props.title}</Text>
           {props.withTooltip && (
             <Tooltip
-              backgroundColor={Colors.primary}
+              backgroundColor={theme.lightColors.primary}
               popover={<Text style={styles.popover}>{props.tooltipText}</Text>}
               containerStyle={{
                 ...styles.tooltipBody,
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: "Exo-SemiBold",
     fontSize: 15,
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     marginRight: 10,
   },
   tooltipBody: { flex: 1 },

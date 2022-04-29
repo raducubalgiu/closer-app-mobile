@@ -1,9 +1,8 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 import { Checkmark, Stack } from "../../core";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import UserAvatar from "../Avatars/UserAvatar";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 import FollowButton from "../../core/Buttons/FollowButton";
 
 const NotificationFollow = (props) => {
@@ -45,12 +44,12 @@ const styles = StyleSheet.create({
   details: { marginLeft: 10, flex: 1 },
   name: {
     fontFamily: "Exo-SemiBold",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     fontSize: 14,
     marginRight: 5,
   },
   notification: {
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
     fontSize: 13.5,
   },
   btn: {
@@ -62,7 +61,7 @@ const styles = StyleSheet.create({
   },
   btnText: {
     fontFamily: "Exo-SemiBold",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     fontSize: 13,
   },
 });

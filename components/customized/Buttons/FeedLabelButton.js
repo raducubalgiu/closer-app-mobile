@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 
 const FeedLabelButton = (props) => {
   return (
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
   btnText: {
     fontFamily: "Exo-SemiBold",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     fontSize: 13,
   },
   activeBtn: {
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     borderColor: "#f1f1f1",
   },
   activeBtnText: {
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     fontFamily: "Exo-SemiBold",
   },
 });

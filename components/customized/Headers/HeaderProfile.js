@@ -1,8 +1,8 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
-import { Icon } from "react-native-elements";
+import { Icon } from "@rneui/themed";
 import { IconButton, Stack } from "../../core";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
 
 const HeaderProfile = (props) => {
@@ -37,14 +37,14 @@ const HeaderProfile = (props) => {
           size={30}
           iconName="add-circle-outline"
           iconType="ionicon"
-          color={Colors.textDark}
+          color={theme.lightColors.black}
         />
         <IconButton
           onPress={props.onOpenSettings}
           size={30}
           iconName="menu-outline"
           iconType="ionicon"
-          color={Colors.textDark}
+          color={theme.lightColors.black}
           sx={{ marginLeft: 15 }}
         />
       </Stack>

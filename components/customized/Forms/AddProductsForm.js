@@ -10,7 +10,7 @@ import axios from "axios";
 import RNPickerSelect from "react-native-picker-select";
 import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../../../context/auth";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 import { MainButton } from "../../core";
 
 const defaultValues = {
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     fontFamily: "Exo-Regular",
     fontSize: 14,
-    color: Colors.textDark,
+    color: theme.lightColors.black,
   },
 });
 
@@ -235,7 +235,7 @@ const pickerSelectStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ddd",
     borderRadius: 10,
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     paddingRight: 30,
     fontFamily: "Exo-Regular",
   },
@@ -246,7 +246,7 @@ const pickerSelectStyles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: "purple",
     borderRadius: 10,
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     fontFamily: "Exo-Regular",
     paddingRight: 30, // to ensure the text is never behind the icon
   },

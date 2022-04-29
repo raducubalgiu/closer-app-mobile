@@ -1,9 +1,9 @@
 import { StyleSheet, Text, TouchableOpacity, ScrollView } from "react-native";
 import React from "react";
 import FakeSearchBarSimple from "../FakeSearchBar/FakeSearchBarSimple";
-import { Icon, Divider } from "react-native-elements";
+import { Icon, Divider } from "@rneui/themed";
 import { Stack } from "../../core";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 import FeedLabelButton from "../Buttons/FeedLabelButton";
 import { useNavigation } from "@react-navigation/native";
 
@@ -19,14 +19,12 @@ const FeedHeader = (props) => {
         }}
       >
         <FakeSearchBarSimple onPress={() => {}} />
-        <TouchableOpacity
-          style={styles.bookmark}
-        >
+        <TouchableOpacity style={styles.bookmark}>
           <Icon
             name="bookmark-o"
             type="font-awesome"
             size={25}
-            color={Colors.textDark}
+            color={theme.lightColors.black}
           />
         </TouchableOpacity>
       </Stack>
@@ -40,7 +38,7 @@ const FeedHeader = (props) => {
           <Icon
             name="find"
             type="antdesign"
-            color={Colors.textDark}
+            color={theme.lightColors.black}
             size={20}
           />
           <Text style={styles.exploreText}>Exploreaza</Text>
@@ -92,7 +90,7 @@ const styles = StyleSheet.create({
   },
   exploreText: {
     fontFamily: "Exo-Medium",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     marginLeft: 5,
   },
 });

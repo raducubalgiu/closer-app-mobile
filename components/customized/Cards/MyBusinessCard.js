@@ -6,8 +6,8 @@ import {
   View,
 } from "react-native";
 import React from "react";
-import { Icon } from "react-native-elements";
-import { Colors } from "../../../assets/styles/Colors";
+import { Icon } from "@rneui/themed";
+import theme from "../../../assets/styles/theme";
 
 const width = Dimensions.get("window").width;
 
@@ -28,7 +28,7 @@ const MyBusinessCard = (props) => {
           name={props.iconName}
           type={props.iconType}
           size={props.size ? props.size : 30}
-          color={Colors.textDark}
+          color={theme.lightColors.black}
         />
         <Text style={styles.title}>{props.title}</Text>
         <Text style={styles.description}>{props.description}</Text>
@@ -53,11 +53,11 @@ const styles = StyleSheet.create({
     fontFamily: "Exo-SemiBold",
     marginVertical: 10,
     fontSize: 15,
-    color: Colors.textDark,
+    color: theme.lightColors.black,
   },
   description: {
     textAlign: "center",
     fontFamily: "Exo-Medium",
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
   },
 });

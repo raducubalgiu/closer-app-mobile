@@ -2,7 +2,7 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import UserAvatar from "../Avatars/UserAvatar";
 import { Stack } from "../../core";
 import React from "react";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 import { Checkmark } from "../../core";
 
 const MessageItem = (props) => {
@@ -33,16 +33,16 @@ const styles = StyleSheet.create({
   },
   name: {
     fontFamily: "Exo-Medium",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     fontSize: 14,
     marginRight: 5,
   },
   message: {
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
     fontSize: 13.5,
   },
   date: {
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
     marginLeft: 10,
   },
 });

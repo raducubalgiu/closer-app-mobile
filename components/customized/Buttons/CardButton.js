@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 
 const CardButton = (props) => {
   return (
@@ -39,13 +39,13 @@ const styles = StyleSheet.create({
     fontSize: 12.5,
   },
   completedBtn: {
-    backgroundColor: Colors.primary,
-    borderColor: Colors.primary,
+    backgroundColor: theme.lightColors.primary,
+    borderColor: theme.lightColors.primary,
   },
   incompletedBtn: {
     backgroundColor: "white",
     borderColor: "#ddd",
   },
   completedText: { color: "white" },
-  incompletedText: { color: Colors.textDark },
+  incompletedText: { color: theme.lightColors.black },
 });

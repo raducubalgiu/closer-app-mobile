@@ -1,12 +1,12 @@
 import { useRef, useMemo, useCallback } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { Divider } from "react-native-elements";
+import { Divider } from "@rneui/themed";
 import BottomSheet, {
   BottomSheetFlatList,
   BottomSheetBackdrop,
 } from "@gorhom/bottom-sheet";
 import { useTranslation } from "react-i18next";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 import CardService from "../Cards/CardService";
 
 const BottomSheetService = (props) => {
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   sheetHeading: {
     paddingVertical: 5,
     paddingLeft: 15,
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     fontFamily: "Exo-SemiBold",
     fontSize: 15,
     textAlign: "center",

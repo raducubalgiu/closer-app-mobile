@@ -1,9 +1,8 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import React, { useState } from "react";
-import { SearchBar } from "react-native-elements";
-import { Icon } from "react-native-elements";
+import { SearchBar, Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 
 const BackSearchFilter = () => {
   const [search, setSearch] = useState("");
@@ -22,7 +21,7 @@ const BackSearchFilter = () => {
           style={{
             padding: 15,
           }}
-          color={Colors.textDark}
+          color={theme.lightColors.black}
         />
       </TouchableOpacity>
       <SearchBar
@@ -43,7 +42,7 @@ const BackSearchFilter = () => {
         }}
         inputStyle={{
           fontSize: 16,
-          color: Colors.textLight,
+          color: theme.lightColors.grey0,
           fontFamily: "Exo-Regular",
         }}
       />

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { ContainedButton } from "../../core";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 import UserAvatar from "../../customized/Avatars/UserAvatar";
 
 const CardSuggestedPeople = (props) => {
@@ -43,23 +43,23 @@ const styles = StyleSheet.create({
   },
   name: {
     fontFamily: "Exo-Medium",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
   },
   username: {
     fontFamily: "Exo-Bold",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     marginTop: 5,
     marginBottom: 1,
   },
   followers: {
     fontFamily: "Exo-Medium",
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
     fontSize: 13,
     marginTop: 10,
   },
   job: {
     fontFamily: "Exo-SemiBold",
-    color: Colors.primary,
+    color: theme.lightColors.primary,
     textTransform: "capitalize",
   },
 });

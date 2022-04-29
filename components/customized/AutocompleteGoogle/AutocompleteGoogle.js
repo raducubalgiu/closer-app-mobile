@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import { GOOGLE_MAPS_API_KEY } from "@env";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import React from "react";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../context/auth";
 
 const AutocompleteGoogle = (props) => {
@@ -55,7 +55,7 @@ export default AutocompleteGoogle;
 const styles = StyleSheet.create({
   textInput: {
     height: 45,
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     fontSize: 15,
     borderRadius: 20,
     borderWidth: 1,

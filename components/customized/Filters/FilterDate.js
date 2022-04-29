@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Text, StyleSheet, TouchableOpacity, View } from "react-native";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 import { Stack } from "../../core";
 import { Calendar } from "react-native-calendars";
 import { LocaleConfig } from "react-native-calendars";
@@ -123,23 +123,26 @@ const FilterDate = () => {
             textMonthFontFamily: "Exo-SemiBold",
             textDayFontFamily: "Exo-SemiBold",
             textDayFontSize: 14,
-            arrowColor: Colors.primary,
+            arrowColor: theme.lightColors.primary,
             disabledArrowColor: "#f1f1f1",
           }}
           markedDates={{
             "2022-04-17": {
               startingDay: true,
-              color: Colors.primary,
+              color: theme.lightColors.primary,
               textColor: "white",
             },
-            "2022-04-18": { color: "#f1f1f1", textColor: Colors.textDark },
+            "2022-04-18": {
+              color: "#f1f1f1",
+              textColor: theme.lightColors.black,
+            },
             "2022-04-19": {
               color: "#f1f1f1",
-              textColor: Colors.textDark,
+              textColor: theme.lightColors.black,
             },
             "2022-04-20": {
               endingDay: true,
-              color: Colors.primary,
+              color: theme.lightColors.primary,
               textColor: "white",
             },
           }}
@@ -169,7 +172,7 @@ const styles = StyleSheet.create({
   active: { backgroundColor: "white" },
   buttonText: {
     fontFamily: "Exo-Medium",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     fontSize: 13,
   },
   buttonTextActive: { fontFamily: "Exo-SemiBold", fontSize: 13.5 },

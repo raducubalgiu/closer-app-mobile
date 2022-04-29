@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity, Share } from "react-native";
-import { Image, Icon, Avatar, Divider } from "react-native-elements";
-import { Colors } from "../../../assets/styles/Colors";
+import { Image, Icon, Divider } from "@rneui/themed";
+import theme from "../../../assets/styles/theme";
 import React, { useState } from "react";
 import Stack from "../../core/Containers/Stack";
 import UserAvatar from "../Avatars/UserAvatar";
@@ -208,13 +208,13 @@ const styles = StyleSheet.create({
   job: {
     marginLeft: 10,
     fontFamily: "Exo-Medium",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     fontSize: 13,
     textTransform: "capitalize",
   },
   date: {
     marginLeft: 10,
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
     fontSize: 13,
     marginTop: 5,
   },
@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 10,
   },
   followBtnText: {
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     fontFamily: "Exo-SemiBold",
     fontSize: 13,
   },
@@ -236,11 +236,11 @@ const styles = StyleSheet.create({
     height: 530,
     flex: 1,
   },
-  likes: { color: Colors.textDark, fontWeight: "bold" },
+  likes: { color: theme.lightColors.black, fontWeight: "bold" },
   description: {
     flex: 1,
     paddingHorizontal: 10,
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     marginTop: 7.5,
   },
   actionBtns: {
@@ -255,9 +255,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#f1f1f1",
   },
   bookable: {
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     fontSize: 13.5,
     fontFamily: "Exo-SemiBold",
   },
-  comments: { color: Colors.textLight, marginTop: 2.5 },
+  comments: { color: theme.lightColors.grey0, marginTop: 2.5 },
 });

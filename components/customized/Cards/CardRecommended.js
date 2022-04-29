@@ -1,10 +1,9 @@
 import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
-import { Divider } from "react-native-elements";
-import { Icon } from "react-native-elements";
+import { Icon, Divider } from "@rneui/themed";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 import { AddressFormat } from "../../../utils/addressFormat";
 import { trimFunc } from "../../../utils/trimFunc";
 
@@ -37,7 +36,7 @@ const CardRecommended = (props) => {
                 <Icon
                   style={{ marginRight: 5 }}
                   size={20}
-                  color={Colors.textLight}
+                  color={theme.lightColors.grey0}
                   type="antdesign"
                   name="pushpino"
                 />
@@ -59,7 +58,7 @@ const CardRecommended = (props) => {
                 name="star"
                 type="antdesign"
                 size={16}
-                color={Colors.primary}
+                color={theme.lightColors.primary}
               />
               <Text style={styles.cardRatingsAverage}>
                 {props.ratingsAverage}
@@ -110,19 +109,19 @@ const styles = StyleSheet.create({
   },
   cardName: {
     flex: 1,
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     fontFamily: "Exo-SemiBold",
     fontSize: 14,
   },
   cardDistance: {
     fontSize: 12,
     fontFamily: "Exo-Bold",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
   },
   cardAddress: {
     fontSize: 12,
     marginTop: 2,
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
     fontFamily: "Exo-Medium",
   },
   cardTitle: {
@@ -132,7 +131,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f1f1f1",
     paddingVertical: 2,
     paddingHorizontal: 10,
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     fontFamily: "Exo-SemiBold",
   },
   ratingsContainer: {
@@ -143,13 +142,13 @@ const styles = StyleSheet.create({
     marginLeft: 2,
     fontSize: 12,
     fontFamily: "Exo-Bold",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
   },
   cardRatingsQuantity: {
     marginLeft: 4,
     fontSize: 12,
     padding: 2,
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
     fontFamily: "Exo-Medium",
   },
 });

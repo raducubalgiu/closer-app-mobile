@@ -2,7 +2,7 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import UserAvatar from "../Avatars/UserAvatar";
 import Stack from "../../core/Containers/Stack";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 import FollowButton from "../../core/Buttons/FollowButton";
 import { useAuth } from "../../../context/auth";
 
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   },
   name: {
     fontFamily: "Exo-Medium",
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
     fontSize: 13.5,
   },
   goToUser: {
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   },
   btnText: {
     fontFamily: "Exo-SemiBold",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     fontSize: 13,
   },
 });

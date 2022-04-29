@@ -10,8 +10,8 @@ import BottomSheet, {
   BottomSheetFooter,
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
-import { Icon } from "react-native-elements";
-import { Colors } from "../../../assets/styles/Colors";
+import { Icon } from "@rneui/themed";
+import theme from "../../../assets/styles/theme";
 
 const BottomSheetFilter = (props) => {
   const sheetRef = useRef(null);
@@ -96,7 +96,7 @@ export default BottomSheetFilter;
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: Colors.primary,
+    backgroundColor: theme.lightColors.primary,
   },
   indicatorStyle: {
     backgroundColor: "#ddd",
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   sheetSecondTitle: {
-    color: Colors.textLight,
+    color: theme.lightColors.gray0,
     fontFamily: "Exo-Medium",
     marginTop: 5,
     textAlign: "center",
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   mainButton: {
     paddingVertical: 12,
     paddingHorizontal: 25,
-    backgroundColor: Colors.primary,
+    backgroundColor: theme.lightColors.primary,
     marginTop: 20,
     borderRadius: 5,
   },

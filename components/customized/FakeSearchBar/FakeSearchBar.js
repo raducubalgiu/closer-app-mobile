@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import { Icon, Divider } from "react-native-elements";
+import { Icon, Divider } from "@rneui/themed";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 
 const FakeSearchBar = () => {
   const { t } = useTranslation();
@@ -16,7 +16,12 @@ const FakeSearchBar = () => {
         onPress={() => navigation.navigate("Search")}
         style={{ flexDirection: "row", flex: 1, alignItems: "center" }}
       >
-        <Icon name="search" type="feather" color={Colors.textDark} size={20} />
+        <Icon
+          name="search"
+          type="feather"
+          color={theme.lightColors.black}
+          size={20}
+        />
         <Text style={styles.fakeInputText}>{t("searchInputTitle")}</Text>
       </TouchableOpacity>
       <Divider orientation="vertical" style={{ marginRight: 15 }} />
@@ -29,9 +34,10 @@ const FakeSearchBar = () => {
           type="feather"
           size={17}
           style={{ marginRight: 5 }}
+          color={theme.lightColors.black}
         />
         <Text style={styles.nowBtnText}>Acum</Text>
-        <Icon name="keyboard-arrow-down" />
+        <Icon name="keyboard-arrow-down" color={theme.lightColors.black} />
       </TouchableOpacity>
     </View>
   );
@@ -64,7 +70,7 @@ const styles = StyleSheet.create({
   fakeInputText: {
     marginLeft: 10,
     fontSize: 14,
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
     fontFamily: "Exo-Regular",
   },
   datePicker: {
@@ -87,7 +93,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
     fontSize: 13,
     fontFamily: "Exo-SemiBold",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
   },
   iconSearch: {
     backgroundColor: "white",
@@ -105,6 +111,6 @@ const styles = StyleSheet.create({
   nowBtnText: {
     marginRight: 5,
     fontFamily: "Exo-SemiBold",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
   },
 });

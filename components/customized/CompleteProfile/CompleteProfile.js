@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Stack } from "../../core";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 import CardCompleteProfile from "../Cards/CardCompleteProfile";
 import { useAuth } from "../../../context/auth";
 import { useNavigation } from "@react-navigation/native";
@@ -109,17 +109,17 @@ const styles = StyleSheet.create({
   container: { margin: 15, flex: 1 },
   title: {
     fontFamily: "Exo-Medium",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     fontSize: 15,
   },
   counter: {
     fontFamily: "Exo-SemiBold",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     fontSize: 12.5,
   },
   status: {
     fontFamily: "Exo-SemiBold",
-    color: Colors.primary,
+    color: theme.lightColors.primary,
     fontSize: 12,
   },
 });

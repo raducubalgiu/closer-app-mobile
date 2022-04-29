@@ -1,5 +1,5 @@
-import { StyleSheet, TouchableOpacity } from "react-native";
-import { Icon } from "react-native-elements";
+import { TouchableOpacity } from "react-native";
+import { Icon } from "@rneui/themed";
 import React from "react";
 
 const ShareIButton = (props) => {
@@ -20,9 +20,3 @@ const ShareIButton = (props) => {
 };
 
 export default ShareIButton;
-
-const styles = StyleSheet.create({
-  default: {
-    marginLeft: 22.5,
-  },
-});

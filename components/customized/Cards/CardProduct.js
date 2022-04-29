@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { Colors } from "../../../assets/styles/Colors";
 import OutlinedButton from "../../core/Buttons/OutlinedButton";
 import { Stack } from "../../core";
+import theme from "../../../assets/styles/theme";
 
 const CardProduct = (props) => {
   return (
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   },
   description: {
     fontFamily: "Exo-Regular",
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
   },
   price: {
     fontFamily: "Exo-Bold",
@@ -56,10 +56,10 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderWidth: 2,
-    borderColor: Colors.primary,
+    borderColor: theme.lightColors.primary,
   },
   buttonText: {
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     fontFamily: "Exo-Medium",
   },
 });

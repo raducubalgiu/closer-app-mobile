@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 
 const StatsButton = (props) => {
   return (
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   container: { alignItems: "center" },
   statsText: {
     fontFamily: "Exo-Medium",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     fontSize: 13,
     marginTop: 5,
   },

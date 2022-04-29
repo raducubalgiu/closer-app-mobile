@@ -1,5 +1,5 @@
-import { StyleSheet, TouchableOpacity } from "react-native";
-import { Icon } from "react-native-elements";
+import { TouchableOpacity } from "react-native";
+import { Icon } from "@rneui/themed";
 import React from "react";
 
 const CommentsIButton = (props) => {
@@ -20,9 +20,3 @@ const CommentsIButton = (props) => {
 };
 
 export default CommentsIButton;
-
-const styles = StyleSheet.create({
-  default: {
-    marginLeft: 22.5,
-  },
-});

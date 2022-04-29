@@ -2,7 +2,7 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import { Icon } from "react-native-elements";
 import { IconButton, Stack } from "../../core";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
 
 const HeaderProfileGeneral = (props) => {
@@ -25,14 +25,14 @@ const HeaderProfileGeneral = (props) => {
           onPress={props.onOpenSettings}
           iconName="bells"
           iconType="antdesign"
-          color={Colors.textDark}
+          color={theme.lightColors.black}
         />
         <IconButton
           onPress={props.onOpenSettings}
           size={25}
           iconName="ellipsis-horizontal"
           iconType="ionicon"
-          color={Colors.textDark}
+          color={theme.lightColors.black}
           sx={{ marginLeft: 15 }}
         />
       </Stack>

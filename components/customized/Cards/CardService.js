@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
-import { Icon } from "react-native-elements";
+import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 
 const CardService = (props) => {
   const navigation = useNavigation();
@@ -34,7 +34,7 @@ const CardService = (props) => {
               name="star"
               type="antdesign"
               size={17}
-              color={Colors.primary}
+              color={theme.lightColors.primary}
             />
             <Text style={styles.ratingsAverage}>{props.ratingsAverage}</Text>
             <Text style={styles.ratingsQuantity}>
@@ -57,7 +57,7 @@ const CardService = (props) => {
             name="pushpino"
             type="antdesign"
             size={20}
-            color={Colors.textLight}
+            color={theme.lightColors.grey0}
           />
           <Text style={styles.distance}>
             {props.distance < 1
@@ -100,11 +100,11 @@ const styles = StyleSheet.create({
   business: {
     fontSize: 16,
     fontFamily: "Exo-ExtraBold",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
   },
   address: {
     fontFamily: "Exo-SemiBold",
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
     marginTop: 1,
     fontSize: 13,
   },
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     fontFamily: "Exo-Medium",
     marginLeft: 7.5,
     fontSize: 12,
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
   },
   serviceContainer: {
     flexDirection: "row",
@@ -162,6 +162,6 @@ const styles = StyleSheet.create({
     fontFamily: "Exo-SemiBold",
     marginLeft: 5,
     fontSize: 13,
-    color: Colors.textDark,
+    color: theme.lightColors.black,
   },
 });

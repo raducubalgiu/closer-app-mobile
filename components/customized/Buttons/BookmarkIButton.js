@@ -1,9 +1,8 @@
 import { StyleSheet, Animated, Pressable } from "react-native";
-import { Icon } from "react-native-elements";
 import React, { useEffect, useState, useRef } from "react";
-import { useAuth } from "../../../context/auth";
 import axios from "axios";
-import { Colors } from "../../../assets/styles/Colors";
+import { Icon } from "@rneui/themed";
+import { useAuth } from "../../../context/auth";
 
 const BookmarkIButton = (props) => {
   const { user } = useAuth();

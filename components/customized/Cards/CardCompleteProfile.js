@@ -1,7 +1,7 @@
 import { StyleSheet, Text } from "react-native";
 import { Stack } from "../../core";
 import React from "react";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 import CardButton from "../Buttons/CardButton";
 import AvatarComplete from "../Avatars/AvatarComplete";
 
@@ -42,13 +42,13 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: "Exo-SemiBold",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     textAlign: "center",
     marginBottom: 2.5,
   },
   description: {
     fontFamily: "Exo-Regular",
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
     fontSize: 12,
     textAlign: "center",
     maxWidth: 170,

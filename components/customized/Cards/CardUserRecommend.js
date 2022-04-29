@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { Avatar } from "react-native-elements";
+import { Avatar } from "@rneui/themed";
 import React from "react";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 import OutlinedButton from "../../core/Buttons/OutlinedButton";
 
 const CardUserRecommend = (props) => {
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     fontFamily: "Exo-Bold",
     marginTop: 10,
     fontSize: 16,
-    color: Colors.textDark,
+    color: theme.lightColors.black,
   },
   followersCount: {
     fontFamily: "Exo-SemiBold",
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
   job: {
     fontFamily: "Exo-Medium",
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
     marginTop: 2,
   },
 });

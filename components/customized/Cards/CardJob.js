@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { Icon } from "react-native-elements";
-import { Colors } from "../../../assets/styles/Colors";
+import { Icon } from "@rneui/themed";
+import theme from "../../../assets/styles/theme";
 import { Stack } from "../../core";
 import { OutlinedButton } from "../../core";
 
@@ -17,7 +17,7 @@ const CardJob = (props) => {
               name="clockcircleo"
               type="antdesign"
               size={20}
-              color={Colors.textDark}
+              color={theme.lightColors.black}
             />
             <Text style={styles.priority}>Prioritate {props?.priority}</Text>
           </Stack>
@@ -43,12 +43,12 @@ const styles = StyleSheet.create({
   firstBox: { paddingRight: 10, flex: 1 },
   name: {
     fontFamily: "Exo-SemiBold",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     marginBottom: 1,
     fontSize: 16,
   },
   description: {
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
     fontFamily: "Exo-Regular",
     marginBottom: 10,
     fontSize: 13,
@@ -56,6 +56,6 @@ const styles = StyleSheet.create({
   priority: {
     fontFamily: "Exo-SemiBold",
     marginLeft: 10,
-    color: Colors.primary,
+    color: theme.lightColors.primary,
   },
 });

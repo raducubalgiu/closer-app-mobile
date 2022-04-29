@@ -1,8 +1,8 @@
 import { Animated, StyleSheet, Pressable } from "react-native";
-import { Icon } from "react-native-elements";
+import { Icon } from "@rneui/themed";
+import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../../context/auth";
-import axios from "axios";
 
 const LikeIButton = (props) => {
   const [liked, setLiked] = useState(false);

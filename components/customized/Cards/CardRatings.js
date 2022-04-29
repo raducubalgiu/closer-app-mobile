@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { AirbnbRating, Divider } from "react-native-elements";
+import { AirbnbRating, Divider } from "@rneui/themed";
 import UserAvatar from "../Avatars/UserAvatar";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 import Stack from "../../core/Containers/Stack";
 
 const CardRatings = (props) => {
@@ -32,8 +32,8 @@ const CardRatings = (props) => {
           reviews={["Nesatisfacator", "Acceptabil", "Ok", "Bun", "Senzational"]}
           size={15}
           defaultRating={props.rating}
-          reviewColor={Colors.textDark}
-          selectedColor={Colors.primary}
+          reviewColor={theme.lightColors.black}
+          selectedColor={theme.lightColors.primary}
           reviewSize={15}
         />
         <Text style={styles.service}>{props.service}</Text>
@@ -60,12 +60,12 @@ const styles = StyleSheet.create({
   },
   date: {
     fontFamily: "Exo-Medium",
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
     fontSize: 13,
   },
   service: {
     fontFamily: "Exo-SemiBold",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     borderWidth: 1,
     borderColor: "#ccc",
     paddingVertical: 5,
@@ -76,6 +76,6 @@ const styles = StyleSheet.create({
     fontFamily: "Exo-Medium",
     fontSize: 14,
     marginVertical: 10,
-    color: Colors.textDark,
+    color: theme.lightColors.black,
   },
 });

@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
-import { Avatar, Badge, Icon } from "react-native-elements";
+import { Avatar, Badge, Icon } from "@rneui/themed";
 import React from "react";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 
 const AvatarComplete = (props) => {
   return (
@@ -12,7 +12,7 @@ const AvatarComplete = (props) => {
           name: props.iconName,
           type: props.iconType,
           size: 25,
-          color: Colors.textDark,
+          color: theme.lightColors.black,
         }}
         containerStyle={styles.avatarContainer}
       />

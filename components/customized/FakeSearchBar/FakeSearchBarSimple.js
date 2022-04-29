@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import { Icon } from "react-native-elements";
+import { Icon } from "@rneui/themed";
 import React from "react";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 import { Stack } from "../../core";
 
 const FakeSearchBarSimple = (props) => {
@@ -16,7 +16,7 @@ const FakeSearchBarSimple = (props) => {
             type="antdesign"
             name="search1"
             size={18}
-            color={Colors.textLight}
+            color={theme.lightColors.grey0}
           />
           <Text style={styles.text}>Cauta</Text>
         </Stack>
@@ -37,6 +37,6 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: "Exo-Regular",
     marginLeft: 15,
-    color: Colors.textLight,
+    color: theme.lightColors.grey0,
   },
 });
