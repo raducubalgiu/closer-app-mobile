@@ -22,11 +22,15 @@ export const hideTabs = (route) => {
       return { display: "none" };
     case "FindFriends":
       return { display: "none" };
+    case "Bookmarks":
+      return { display: "none" };
     case "Settings":
       return { display: "none" };
     case "Schedules":
       return { display: "none" };
     case "Discounts":
+      return { display: "none" };
+    case "MyBusiness":
       return { display: "none" };
     case "MyDashboard":
       return { display: "none" };

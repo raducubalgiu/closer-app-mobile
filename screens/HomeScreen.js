@@ -50,6 +50,8 @@ const HomeScreen = () => {
     });
   }, []);
 
+  console.log(user);
+
   return (
     <View style={styles.screen}>
       <SafeAreaView style={{ backgroundColor: "white" }}>

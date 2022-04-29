@@ -28,7 +28,6 @@ const AutocompleteGoogle = (props) => {
       returnKeyType={"search"}
       enablePoweredByContainer={false}
       onPress={(data, details = null) => {
-        console.log(details);
         props.onSetLocation({
           street: details?.address_components[1]?.long_name,
           number: details?.address_components[0]?.long_name,

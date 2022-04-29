@@ -9,3 +9,5 @@ export { default as IconButton } from "./IconButton/IconButton";
 export { default as IconBackButton } from "./IconButton/IconBackButton";
 
 export { default as Checkmark } from "./Icons/Checkmark";
+
+export { default as Modal } from "./Modal/Modal";

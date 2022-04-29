@@ -1,8 +1,7 @@
-import { StyleSheet, SafeAreaView, TouchableOpacity } from "react-native";
-import React, { useState, useEffect } from "react";
+import { StyleSheet, SafeAreaView, TouchableOpacity, View } from "react-native";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import BottomSheetPopup from "../../../components/customized/BottomSheets/BottomSheetPopup";
-import { AuthService } from "../../../services/AuthService";
 import { useNavigation } from "@react-navigation/native";
 import SwitchAccount from "../../../components/customized/SwitchAccount/SwitchAccount";
 import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
@@ -13,6 +12,7 @@ import TopTabNavigator from "../../TopTabNavigator";
 import { Icon } from "react-native-elements";
 import { Colors } from "../../../assets/styles/Colors";
 import SettingsList from "../../../components/customized/Lists/SettingsList";
+import { FAB } from "@rneui/themed";
 
 const ProfileScreen = (props) => {
   const { user } = useAuth();
@@ -21,21 +21,20 @@ const ProfileScreen = (props) => {
   const [openSwitch, setOpenSwitch] = useState(false);
   const [posts, setPosts] = useState([]);
 
-  const closeSheet = () => {
+  const closeSheet = useCallback(() => {
     setOpenSwitch(false);
     setOpenSettings(false);
-  };
-  const handleLogout = async () => {
-    const { error } = await AuthService.logout();
-    if (!error) setUser(null);
-  };
+  }, []);
 
   useEffect(() => {
     axios
       .get(`${process.env.BASE_ENDPOINT}/users/${user?._id}/get-posts`, {
         headers: { Authorization: `Bearer ${user?.token}` },
       })
-      .then((res) => setPosts(res.data.posts))
+      .then((res) => {
+        setPosts(res.data.posts);
+        console.log("POSTS!!!");
+      })
       .catch((err) => console.log(err));
   }, []);
 
@@ -74,6 +73,24 @@ const ProfileScreen = (props) => {
     </>
   );
 
+  const sheetSettings = (
+    <BottomSheetPopup
+      open={openSettings}
+      onClose={closeSheet}
+      height={60}
+      sheetBody={openSettings && <SettingsList />}
+    />
+  );
+
+  const sheetSwitch = (
+    <BottomSheetPopup
+      open={openSwitch}
+      onClose={closeSheet}
+      height={40}
+      sheetBody={openSwitch && <SwitchAccount />}
+    />
+  );
+
   return (
     <SafeAreaView style={styles.container}>
       <HeaderProfile
@@ -99,20 +116,16 @@ const ProfileScreen = (props) => {
         location={user?.location}
       />
 
-      <BottomSheetPopup
-        open={openSettings}
-        onClose={closeSheet}
-        height={60}
-        sheetBody={
-          openSettings && <SettingsList onHandleLogout={handleLogout} />
-        }
+      <FAB
+        visible={true}
+        icon={{ name: "calendar", type: "feather", color: "white" }}
+        color={Colors.primary}
+        placement="right"
+        onPress={() => navigation.navigate("MyCalendar")}
       />
-      <BottomSheetPopup
-        open={openSwitch}
-        onClose={closeSheet}
-        height={40}
-        sheetBody={openSwitch && <SwitchAccount />}
-      />
+
+      {sheetSettings}
+      {sheetSwitch}
     </SafeAreaView>
   );
 };

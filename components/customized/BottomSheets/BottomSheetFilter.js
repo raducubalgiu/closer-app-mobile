@@ -85,9 +85,7 @@ const BottomSheetFilter = (props) => {
           </View>
           <Icon name="chevron-back" type="ionicon" color="white" />
         </View>
-        <BottomSheetView style={{ flex: 1 }}>
-          {props.bottomSheetBody}
-        </BottomSheetView>
+        <BottomSheetView style={{ flex: 1 }} children={props.bottomSheetBody} />
       </BottomSheet>
     </SafeAreaView>
   );

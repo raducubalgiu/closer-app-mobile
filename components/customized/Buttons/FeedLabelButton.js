@@ -29,19 +29,20 @@ export default FeedLabelButton;
 
 const styles = StyleSheet.create({
   btnList: {
-    borderWidth: 1.5,
+    borderWidth: 1,
     borderColor: "#ddd",
     marginRight: 7.5,
     borderRadius: 20,
-    paddingVertical: 7,
+    paddingVertical: 6.5,
     paddingHorizontal: 15,
   },
   btnText: {
-    fontFamily: "Exo-Medium",
+    fontFamily: "Exo-SemiBold",
     color: Colors.textDark,
     fontSize: 13,
   },
   activeBtn: {
+    borderWidth: 1.25,
     backgroundColor: "#f1f1f1",
     borderColor: "#f1f1f1",
   },

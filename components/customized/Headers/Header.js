@@ -28,7 +28,11 @@ const Header = (props) => {
             </Tooltip>
           )}
         </Stack>
-        <Icon name="md-chevron-back" type="ionicon" color="white" />
+        {props.actionBtn ? (
+          props.actionBtn
+        ) : (
+          <Icon name="md-chevron-back" type="ionicon" color="white" />
+        )}
       </Stack>
       {props.divider && <Divider style={{ color: "#ddd" }} />}
     </>

@@ -28,7 +28,7 @@ const FollowingTabDetails = (props) => {
 
   return (
     <View style={styles.screen}>
-      <FlatList
+      {/* <FlatList
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
@@ -45,7 +45,7 @@ const FollowingTabDetails = (props) => {
             followingId={item?.followingId?._id}
           />
         )}
-      />
+      /> */}
     </View>
   );
 };

@@ -75,16 +75,6 @@ export const AuthService = {
       };
     }
   },
-
-  logout: async () => {
-    try {
-      await signOut(getAuth());
-    } catch (error) {
-      return {
-        error: error.message,
-      };
-    }
-  },
   updateUserName: async (name) => {
     try {
       const { user } = await updateProfile(getAuth().currentUser, {

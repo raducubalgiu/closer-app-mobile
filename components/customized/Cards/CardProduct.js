@@ -15,7 +15,11 @@ const CardProduct = (props) => {
           )}
           <Text style={styles.price}>{props.price} RON</Text>
         </View>
-        <OutlinedButton title="Rezerva" style={{ flex: 1 }} />
+        {props.bookingBtn ? (
+          <OutlinedButton title="Rezerva" style={{ flex: 1 }} />
+        ) : (
+          props.actionBtns
+        )}
       </Stack>
     </View>
   );

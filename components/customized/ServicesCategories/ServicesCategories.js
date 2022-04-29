@@ -55,7 +55,7 @@ const ServicesCategories = () => {
               <Image
                 style={styles.image}
                 source={{
-                  uri: item.logo[0].url,
+                  uri: item?.logo[0]?.url,
                 }}
               />
             </TouchableOpacity>

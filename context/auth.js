@@ -16,6 +16,7 @@ export const AuthProvider = (props) => {
             const {
               _id,
               name,
+              business,
               username,
               email,
               avatar,
@@ -27,15 +28,13 @@ export const AuthProvider = (props) => {
               location,
               employees,
               services,
-              ratingsAverage,
-              ratingsQuantity,
-              followersCount,
-              followingCount,
+              counter,
             } = res.data.user;
             if (username) {
               setUser({
                 _id,
                 name,
+                business: business?.name,
                 username,
                 email,
                 avatar: avatar[0]?.url,
@@ -47,10 +46,10 @@ export const AuthProvider = (props) => {
                 location,
                 employees,
                 services,
-                ratingsAverage,
-                ratingsQuantity,
-                followersCount,
-                followingCount,
+                ratingsAverage: counter?.ratingsAverage,
+                ratingsQuantity: counter?.ratingsQuantity,
+                followersCount: counter?.followersCount,
+                followingCount: counter?.followingCount,
                 token: idTokenResult?.token,
               });
             }

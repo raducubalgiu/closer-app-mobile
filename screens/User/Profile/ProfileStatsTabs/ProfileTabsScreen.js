@@ -1,51 +1,16 @@
 import { StyleSheet, SafeAreaView } from "react-native";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import FollowersTabDetails from "./FollowersTabDetails";
 import FollowingTabDetails from "./FollowingTabDetails";
 import RatingsTabDetails from "./RatingsTabDetails";
 import { Colors } from "../../../../assets/styles/Colors";
-import { useAuth } from "../../../../context/auth";
 import Header from "../../../../components/customized/Headers/Header";
 
 const Tab = createMaterialTopTabNavigator();
 
 const ProfileTabsScreen = (props) => {
-  const { user } = useAuth();
-  const { initialRoute, userId, username } = props.route.params;
-  const [followers, setFollowers] = useState([]);
-  const [followings, setFollowings] = useState([]);
-  const [reviews, setReviews] = useState([]);
-
-  const FollowersTab = () => <FollowersTabDetails followers={followers} />;
-  const FollowingsTab = () => <FollowingTabDetails followings={followings} />;
-  const RatingsTab = () => <RatingsTabDetails reviews={reviews} />;
-
-  useEffect(() => {
-    axios
-      .get(`${process.env.BASE_ENDPOINT}/users/${userId}/get-followers`, {
-        headers: { Authorization: `Bearer ${user?.token}` },
-      })
-      .then((res) => setFollowers(res.data.followers))
-      .catch((err) => console.log(err));
-  }, []);
-  useEffect(() => {
-    axios
-      .get(`${process.env.BASE_ENDPOINT}/users/${userId}/get-followings`, {
-        headers: { Authorization: `Bearer ${user?.token}` },
-      })
-      .then((res) => setFollowings(res.data.followings))
-      .catch((err) => console.log(err));
-  }, []);
-  useEffect(() => {
-    axios
-      .get(`${process.env.BASE_ENDPOINT}/users/${userId}/get-reviews`, {
-        headers: { Authorization: `Bearer ${user?.token}` },
-      })
-      .then((res) => setReviews(res.data.reviews))
-      .catch((err) => console.log(err));
-  }, []);
+  const { initialRoute, username } = props.route.params;
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -61,17 +26,17 @@ const ProfileTabsScreen = (props) => {
       >
         <Tab.Screen
           name="Ratings"
-          component={RatingsTab}
+          component={RatingsTabDetails}
           options={{ tabBarLabel: "Recenzii" }}
         />
         <Tab.Screen
           name="Followers"
-          component={FollowersTab}
+          component={FollowersTabDetails}
           options={{ tabBarLabel: "Urmaritori" }}
         />
         <Tab.Screen
           name="Following"
-          component={FollowingsTab}
+          component={FollowingTabDetails}
           options={{ tabBarLabel: "Urmaresti" }}
         />
       </Tab.Navigator>

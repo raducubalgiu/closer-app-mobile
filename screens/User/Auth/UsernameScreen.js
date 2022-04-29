@@ -15,7 +15,9 @@ const UsernameScreen = (props) => {
         `${process.env.BASE_ENDPOINT}/users/create-or-update-user`,
         {
           username: data.username,
+          name: data.username,
           role: props.route.params.role,
+          business: props.route.params.business,
         },
         {
           headers: {
@@ -27,6 +29,7 @@ const UsernameScreen = (props) => {
       const {
         _id,
         name,
+        business,
         username,
         email,
         avatar,
@@ -38,28 +41,12 @@ const UsernameScreen = (props) => {
         location,
         employees,
         services,
-        ratingsAverage,
-        ratingsQuantity,
-        followersCount,
-        followingCount,
       } = userResult.data;
-
-      // await axios.post(
-      //   `http://192.168.100.2:8000/api/v1/orders`,
-      //   {
-      //     nameStep: { name, completed: true },
-      //     user: _id,
-      //   },
-      //   {
-      //     headers: {
-      //       Authorization: "Bearer " + idTokenResult?.token,
-      //     },
-      //   }
-      // );
 
       setUser({
         _id,
         name,
+        business: business?.name,
         username,
         email,
         avatar: avatar[0]?.url,
@@ -71,10 +58,10 @@ const UsernameScreen = (props) => {
         location,
         employees,
         services,
-        ratingsAverage,
-        ratingsQuantity,
-        followersCount,
-        followingCount,
+        ratingsAverage: 4.5,
+        ratingsQuantity: 0,
+        followersCount: 0,
+        followingCount: 0,
         token: idTokenResult?.token,
       });
     } catch (err) {
@@ -91,7 +78,7 @@ const UsernameScreen = (props) => {
         </Text>
       </View>
       <InputCheck
-        endpoint="http://192.168.100.2:8000/api/v1/users/check-username"
+        endpoint={`${process.env.BASE_ENDPOINT}/users/check-username`}
         inputName="username"
         onSubmit={handleSubmit}
       />

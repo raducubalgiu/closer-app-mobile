@@ -1,4 +1,4 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet } from "react-native";
 import { Avatar, Badge, Icon } from "react-native-elements";
 import React from "react";
 import { Colors } from "../../../assets/styles/Colors";

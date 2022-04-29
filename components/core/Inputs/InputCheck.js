@@ -70,9 +70,6 @@ const InputCheck = (props) => {
     if (status === "success") props.onSubmit(data);
   };
 
-  console.log("STATUS!!!!", status);
-  console.log("INPUT", input);
-
   return (
     <View style={styles.container}>
       <View style={styles.inputCheck}>

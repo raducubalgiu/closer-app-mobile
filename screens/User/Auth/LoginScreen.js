@@ -52,11 +52,10 @@ const LoginScreen = () => {
           }
         );
 
-        console.log(userResult.data.user);
-
         const {
           _id,
           name,
+          business,
           username,
           email,
           avatar,
@@ -68,10 +67,7 @@ const LoginScreen = () => {
           location,
           employees,
           services,
-          ratingsAverage,
-          ratingsQuantity,
-          followersCount,
-          followingCount,
+          counter,
         } = userResult.data.user;
 
         setUser({
@@ -79,6 +75,7 @@ const LoginScreen = () => {
           name,
           username,
           email,
+          business: business?.name,
           avatar: avatar[0]?.url,
           images,
           role,
@@ -88,10 +85,10 @@ const LoginScreen = () => {
           location,
           employees,
           services,
-          ratingsAverage,
-          ratingsQuantity,
-          followersCount,
-          followingCount,
+          ratingsAverage: counter?.ratingsAverage,
+          ratingsQuantity: counter?.ratingsQuantity,
+          followersCount: counter?.followersCount,
+          followingCount: counter?.followingCount,
           token: idTokenResult?.token,
         });
       }

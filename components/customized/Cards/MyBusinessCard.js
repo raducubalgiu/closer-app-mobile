@@ -1,7 +1,15 @@
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Dimensions,
+  View,
+} from "react-native";
 import React from "react";
 import { Icon } from "react-native-elements";
 import { Colors } from "../../../assets/styles/Colors";
+
+const width = Dimensions.get("window").width;
 
 const MyBusinessCard = (props) => {
   return (
@@ -9,14 +17,22 @@ const MyBusinessCard = (props) => {
       style={{ ...styles.container, ...props.sx }}
       onPress={props.onPress}
     >
-      <Icon
-        name={props.iconName}
-        type={props.iconType}
-        size={props.size ? props.size : 30}
-        color={Colors.textDark}
-      />
-      <Text style={styles.title}>{props.title}</Text>
-      <Text style={styles.description}>{props.description}</Text>
+      <View
+        style={{
+          width: "100%",
+          maxWidth: width / 2,
+          alignItems: "center",
+        }}
+      >
+        <Icon
+          name={props.iconName}
+          type={props.iconType}
+          size={props.size ? props.size : 30}
+          color={Colors.textDark}
+        />
+        <Text style={styles.title}>{props.title}</Text>
+        <Text style={styles.description}>{props.description}</Text>
+      </View>
     </TouchableOpacity>
   );
 };
@@ -27,10 +43,11 @@ const styles = StyleSheet.create({
   container: {
     borderWidth: 1,
     borderColor: "#ddd",
-    flex: 1,
     borderRadius: 10,
     padding: 20,
     alignItems: "center",
+    margin: 5,
+    flex: 1,
   },
   title: {
     fontFamily: "Exo-SemiBold",

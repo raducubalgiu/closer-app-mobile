@@ -41,7 +41,11 @@ const RegisterScreen = () => {
 
       if (user && !error) {
         const idTokenResult = await user.getIdTokenResult();
-        navigation.navigate("Username", { role: "subscriber", idTokenResult });
+        navigation.navigate("Username", {
+          role: "subscriber",
+          business: undefined,
+          idTokenResult,
+        });
       }
     } catch (err) {
       console.log(err);

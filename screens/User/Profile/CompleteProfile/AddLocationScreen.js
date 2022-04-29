@@ -30,7 +30,7 @@ const defaultValues = {
 };
 
 const AddLocationScreen = () => {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   const [location, setLocation] = useState(defaultValues);
   const [images, setImages] = useState([]);
   const [blockApartment, setBlockApartment] = useState("");
@@ -48,7 +48,7 @@ const AddLocationScreen = () => {
         { headers: { Authorization: `Bearer ${user?.token}` } }
       )
       .then((res) => {
-        console.log(res.data.user);
+        setUser({ ...user, location: res.data.user.location });
         navigation.navigate("Profile");
       })
       .catch(() => setVisible(true));

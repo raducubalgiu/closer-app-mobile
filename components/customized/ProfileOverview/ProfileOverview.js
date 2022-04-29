@@ -35,7 +35,9 @@ const ProfileOverview = (props) => {
           {user?.checkmark && <Checkmark />}
         </Stack>
         <Stack direction="row" justify="start">
-          <Text style={styles.job}>{user?.job}</Text>
+          {user?.business && (
+            <Text style={styles.business}>{user?.business}</Text>
+          )}
           {user?.role !== "subscriber" && (
             <Icon
               type="antdesign"
@@ -115,7 +117,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 5,
   },
-  job: {
+  business: {
     fontFamily: "Exo-SemiBold",
     color: Colors.primary,
     marginLeft: 5,

@@ -41,7 +41,11 @@ const RegisterBusinessScreen = () => {
 
       if (user && !error) {
         const idTokenResult = await user.getIdTokenResult();
-        navigation.navigate("Username", { role: "admin", idTokenResult });
+        navigation.navigate("Username", {
+          role: "admin",
+          business: process.env.DEFAULT_BUSINESS,
+          idTokenResult,
+        });
       }
     } catch (err) {
       console.log(err);

@@ -110,7 +110,7 @@ const FeedScreen = () => {
           </Stack>
         </ScrollView>
       </Stack>
-      {/* <Divider color="#ddd" /> */}
+      <Divider color="#ddd" />
       <Animated.FlatList
         ListHeaderComponent={
           loading && <ActivityIndicator style={styles.spinner} />

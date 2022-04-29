@@ -204,7 +204,7 @@ const TabsScreen = () => {
           // You can return any component that you like here!
           return <Icon name={iconName} type={iconType} color={color} />;
         },
-        tabBarActiveTintColor: Colors.primary,
+        tabBarActiveTintColor: Colors.textDark,
         tabBarInactiveTintColor: "gray",
         headerShown: false,
         tabBarShowLabel: false,
@@ -223,6 +223,9 @@ const TabsScreen = () => {
 
 const CloserNavigation = () => {
   const { user } = useAuth();
+
+  console.log(user);
+
   return (
     <NavigationContainer>
       <RootStack.Navigator screenOptions={{ headerShown: false }}>

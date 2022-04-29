@@ -12,7 +12,7 @@ const FollowersTabDetails = (props) => {
 
   return (
     <View style={styles.screen}>
-      <FlatList
+      {/* <FlatList
         data={props?.followers}
         keyExtractor={(item) => item?._id}
         renderItem={({ item }) => (
@@ -25,7 +25,7 @@ const FollowersTabDetails = (props) => {
             followingId={item?.userId?._id}
           />
         )}
-      />
+      /> */}
     </View>
   );
 };
