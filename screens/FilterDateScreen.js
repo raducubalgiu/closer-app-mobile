@@ -8,9 +8,25 @@ import FilterDate from "../components/customized/Filters/FilterDate";
 
 const FiltersDateScreen = (props) => {
   const { serviceId, serviceName } = props.route.params;
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [disabled, setDisabled] = useState(false);
   const [active, setActive] = useState(true);
   const navigation = useNavigation();
+
+  const handleDate = (day) => {
+    if (startDate === "" && endDate === "") {
+      setStartDate(day.dateString);
+    } else if (startDate !== "" && endDate === "") {
+      setEndDate(day.dateString);
+    } else if (startDate !== "" && day < startDate) {
+      setStartDate(day.dateString);
+      setEndDate("");
+    } else {
+      setStartDate(day.dateString);
+      setEndDate("");
+    }
+  };
 
   const goNext = () => {
     axios
@@ -33,8 +49,16 @@ const FiltersDateScreen = (props) => {
       screenFirstTitle="Selecteaza"
       screenSecondTitle="perioada"
       sheetFirstTitle={serviceName}
-      sheetSecondTitle="Acum - 23 apr"
-      bottomSheetBody={<FilterDate />}
+      sheetSecondTitle="23 mai - 30 iunie"
+      bottomSheetBody={
+        <FilterDate
+          startDate={startDate}
+          setStartDate={setStartDate}
+          endDate={endDate}
+          setEndDate={setEndDate}
+          handleDate={handleDate}
+        />
+      }
       mainButtonText="Inainte"
       disabled={disabled}
       onGoBack={() => navigation.goBack()}

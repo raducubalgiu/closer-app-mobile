@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet, Keyboard } from "react-native";
 import axios from "axios";
 import React, { useState } from "react";
 import EditField from "./EditFieldScreen";
@@ -17,6 +17,7 @@ const EditNameScreen = () => {
 
   const updateName = (event) => {
     event.persist();
+    Keyboard.dismiss();
     setLoading(true);
     axios
       .patch(

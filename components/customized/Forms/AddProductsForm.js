@@ -81,6 +81,7 @@ const AddProductsForm = (props) => {
             setSelectedService(service);
             fetchFilters();
           }}
+          value={selectedService}
           items={user?.services}
         />
       </View>
@@ -88,6 +89,7 @@ const AddProductsForm = (props) => {
         <InputSelect
           placeholder="Selecteaza categoria produsului"
           onValueChange={(option) => setSelectedOption(option)}
+          value={selectedOption}
           items={filters}
         />
       </View>

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
+import moment from "moment";
 import { Text, StyleSheet, TouchableOpacity, View } from "react-native";
 import theme from "../../../assets/styles/theme";
 import { Stack } from "../../core";
@@ -48,22 +49,25 @@ LocaleConfig.locales["ro"] = {
 };
 LocaleConfig.defaultLocale = "ro";
 
-const FilterDate = () => {
+const FilterDate = (props) => {
   const [calendar, setCalendar] = useState(true);
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const minDate = moment().format("YYYY-MM-DD");
+  const maxDate = moment().add(90, "days").format("YYYY-MM-DD");
 
-  const handleDate = (day) => {
-    if (startDate !== "") {
-      setEndDate(day.dateString);
-    } else {
-      setStartDate(day.dateString);
-    }
-  };
-
-  let date;
-  date = new Date();
-  console.log("NEW DATE", date);
+  const marked = useMemo(() => {
+    return {
+      [props.startDate]: {
+        startingDay: true,
+        color: theme.lightColors.primary,
+        textColor: "white",
+      },
+      [props.endDate]: {
+        endingDay: true,
+        color: theme.lightColors.primary,
+        textColor: "white",
+      },
+    };
+  }, [props.startDate, props.endDate]);
 
   return (
     <View style={{ flex: 1 }}>
@@ -108,15 +112,14 @@ const FilterDate = () => {
 
       {calendar && (
         <Calendar
-          onDayPress={(day) => handleDate(day)}
-          disableArrowLeft={true}
+          onDayPress={(day) => props.handleDate(day)}
+          disableArrowLeft={false}
+          disableArrowRight={false}
           hideExtraDays={true}
-          pastScrollRange={0}
-          futureScrollRange={2}
-          scrollEnabled={true}
+          disableAllTouchEventsForDisabledDays
           firstDay={1}
-          minDate={"2022-04-17"}
-          maxDate={"2022-06-30"}
+          minDate={minDate}
+          maxDate={maxDate}
           markingType={"period"}
           theme={{
             textDayHeaderFontFamily: "Exo-Medium",
@@ -126,26 +129,7 @@ const FilterDate = () => {
             arrowColor: theme.lightColors.primary,
             disabledArrowColor: "#f1f1f1",
           }}
-          markedDates={{
-            "2022-04-17": {
-              startingDay: true,
-              color: theme.lightColors.primary,
-              textColor: "white",
-            },
-            "2022-04-18": {
-              color: "#f1f1f1",
-              textColor: theme.lightColors.black,
-            },
-            "2022-04-19": {
-              color: "#f1f1f1",
-              textColor: theme.lightColors.black,
-            },
-            "2022-04-20": {
-              endingDay: true,
-              color: theme.lightColors.primary,
-              textColor: "white",
-            },
-          }}
+          markedDates={marked}
         />
       )}
       {!calendar && <Text>Dupa ora 18:00</Text>}

@@ -74,12 +74,16 @@ const AddBusinessTypeScreen = () => {
       />
       <Stack sx={{ margin: 15, flex: 1 }}>
         <Stack sx={{ width: "100%" }}>
+          <Stack sx={{ marginBottom: 10, width: "100%" }}>
+            <InputSelect
+              value={selectedCategory}
+              placeholder="Selecteaza categoria principala"
+              onValueChange={(category) => setSelectedCategory(category)}
+              items={categories}
+            />
+          </Stack>
           <InputSelect
-            placeholder="Selecteaza categoria principala"
-            onValueChange={(category) => setSelectedCategory(category)}
-            items={categories}
-          />
-          <InputSelect
+            value={selectedBusiness}
             placeholder="Selecteaza tipul afacerii"
             onValueChange={(business) => setSelectedBusiness(business)}
             items={businesses}

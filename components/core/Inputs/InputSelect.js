@@ -16,6 +16,7 @@ const InputSelect = (props) => {
       onValueChange={(text) => props.onValueChange(text)}
       style={{ ...styles }}
       doneText="Gata"
+      value={props.value}
       items={props?.items?.map((item) => {
         return {
           label: item?.name,
@@ -39,7 +40,6 @@ const styles = StyleSheet.create({
     color: "black",
     paddingRight: 30,
     fontFamily: "Exo-Medium",
-    marginBottom: 10,
   },
   inputAndroid: {
     fontSize: 15,
@@ -52,6 +52,5 @@ const styles = StyleSheet.create({
     fontFamily: "Exo-Medium",
     paddingRight: 30,
     fontFamily: "Exo-Medium",
-    marginBottom: 10,
   },
 });

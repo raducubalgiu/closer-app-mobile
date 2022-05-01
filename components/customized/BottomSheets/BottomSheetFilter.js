@@ -121,10 +121,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   sheetSecondTitle: {
-    color: theme.lightColors.gray0,
+    color: theme.lightColors.grey0,
     fontFamily: "Exo-Medium",
     marginTop: 5,
     textAlign: "center",
+    fontSize: 13,
     marginBottom: 15,
   },
   footerContainer: {

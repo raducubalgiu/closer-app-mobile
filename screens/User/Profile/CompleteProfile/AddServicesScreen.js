@@ -104,6 +104,7 @@ const AddServicesScreen = () => {
         <Stack direction="row" sx={{ width: "100%" }}>
           <View style={{ flex: 1 }}>
             <InputSelect
+              value={service}
               placeholder="Selecteaza un serviciu"
               onValueChange={(value) => setService(value)}
               items={services}
@@ -125,7 +126,12 @@ const AddServicesScreen = () => {
             <TouchableOpacity
               onPress={() => removeServiceHandler(service?._id)}
             >
-              <Icon name="minuscircleo" type="antdesign" size={22.5} />
+              <Icon
+                name="minuscircleo"
+                type="antdesign"
+                size={22.5}
+                color={theme.lightColors.black}
+              />
             </TouchableOpacity>
           </Stack>
         ))}
