@@ -1,6 +1,5 @@
 import { StyleSheet, SafeAreaView, TouchableOpacity, View } from "react-native";
 import React, { useState, useEffect, useCallback } from "react";
-import axios from "axios";
 import BottomSheetPopup from "../../../components/customized/BottomSheets/BottomSheetPopup";
 import { useNavigation } from "@react-navigation/native";
 import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
@@ -16,21 +15,9 @@ const ProfileScreen = (props) => {
   const { user } = useAuth();
   const navigation = useNavigation();
   const [openSettings, setOpenSettings] = useState(false);
-  const [posts, setPosts] = useState([]);
 
   const closeSheet = useCallback(() => {
     setOpenSettings(false);
-  }, []);
-
-  useEffect(() => {
-    axios
-      .get(`${process.env.BASE_ENDPOINT}/users/${user?._id}/get-posts`, {
-        headers: { Authorization: `Bearer ${user?.token}` },
-      })
-      .then((res) => {
-        setPosts(res.data.posts);
-      })
-      .catch((err) => console.log(err));
   }, []);
 
   const buttons = (
@@ -92,7 +79,7 @@ const ProfileScreen = (props) => {
       />
       <TopTabNavigator
         role={user?.role}
-        posts={posts}
+        userId={user?._id}
         products={user?.products}
         biography={user?.description}
         website={user?.website}

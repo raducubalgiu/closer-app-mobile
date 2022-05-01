@@ -71,7 +71,7 @@ const AddBusinessTypeScreen = () => {
       )
       .then((res) => {
         const { name } = res.data.user.business;
-        setUser({ ...user, business: name });
+        setUser({ ...user, business: { name } });
         navigation.navigate("Profile");
       })
       .catch((err) => console.log(err));

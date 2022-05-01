@@ -29,6 +29,7 @@ export const AuthProvider = (props) => {
               employees,
               services,
               counter,
+              validated,
             } = res.data.user;
             if (username) {
               setUser({
@@ -48,6 +49,7 @@ export const AuthProvider = (props) => {
                 services,
                 counter,
                 token: idTokenResult?.token,
+                validated,
               });
             }
           })

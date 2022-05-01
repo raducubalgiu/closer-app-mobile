@@ -6,22 +6,41 @@ import {
   View,
   Text,
 } from "react-native";
-import { Image, Icon } from "react-native-elements";
-import React from "react";
+import { Image, Icon } from "@rneui/themed";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import CompleteProfile from "../../../components/customized/CompleteProfile/CompleteProfile";
 import NoFoundPosts from "../../../components/customized/NotFoundContent/NoFoundPosts";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
+import { useAuth } from "../../../context/auth";
 
 const { width } = Dimensions.get("window");
 
 const PostsProfileScreen = (props) => {
+  const { user } = useAuth();
+  const [posts, setPosts] = useState([]);
   const navigation = useNavigation();
-  const { posts } = props;
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.BASE_ENDPOINT}/users/${props.userId}/get-posts`, {
+        headers: { Authorization: `Bearer ${user?.token}` },
+      })
+      .then((res) => {
+        setPosts(res.data.posts);
+      })
+      .catch((err) => console.log(err));
+  }, [props.userId]);
+
+  let noFoundPosts;
+  if (posts.length === 0 && user?._id === props.userId) {
+    noFoundPosts = <NoFoundPosts />;
+  }
 
   return (
     <FlatList
-      ListHeaderComponent={posts.length === 0 && <NoFoundPosts />}
+      ListHeaderComponent={noFoundPosts}
       style={{ backgroundColor: "white" }}
       data={posts}
       numColumns={3}
@@ -103,7 +122,7 @@ const styles = StyleSheet.create({
     fontFamily: "Exo-SemiBold",
     fontSize: 12,
     //textTransform: "uppercase",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
   },
   type: {
     position: "absolute",

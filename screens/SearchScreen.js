@@ -5,14 +5,14 @@ import {
   TouchableOpacity,
   FlatList,
   View,
-  Platform,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Divider, SearchBar } from "@rneui/themed";
+import { Divider } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../assets/styles/theme";
+import SearchBarInput from "../components/core/Inputs/SearchBarInput";
 
 const SearchScreen = () => {
   const [initialServices, setInitialServices] = useState([]);
@@ -44,47 +44,13 @@ const SearchScreen = () => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <SearchBar
-        onCancel={() => navigation.goBack()}
-        platform="ios"
-        cancelButtonTitle={t("cancel")}
-        cancelButtonProps={{
-          color: "gray",
-          buttonTextStyle: {
-            fontSize: 13,
-            fontWeight: "500",
-            fontFamily: "Exo-SemiBold",
-            color: theme.lightColors.black,
-            backgroundColor: "white",
-            padding: 10,
-            marginRight: 15,
-          },
-        }}
-        autoFocus={true}
-        containerStyle={{
-          borderStyle: "dashed",
-          paddingHorizontal: 5,
-        }}
-        inputContainerStyle={
-          Platform == "ios"
-            ? {
-                backgroundColor: "white",
-                borderRadius: "none",
-              }
-            : { backgroundColor: "white" }
-        }
-        inputStyle={{
-          fontSize: 15,
-          color: theme.lightColors.grey0,
-          fontFamily: "Exo-Regular",
-        }}
-        searchIcon={{ color: theme.lightColors.black }}
-        placeholder={t("searchInputTitle")}
-        onChangeText={updateSearch}
-        value={search}
-        placeholderTextColor={{ color: theme.lightColors.grey0 }}
-      />
       <View style={styles.container}>
+        <SearchBarInput
+          autoFocus={true}
+          placeholder="Ce serviciu cauti?"
+          value={search}
+          updateValue={updateSearch}
+        />
         {search == "" ? (
           <View>
             <Text style={styles.heading}>{t("suggested")}</Text>
@@ -179,15 +145,15 @@ export default SearchScreen;
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+    backgroundColor: "white",
   },
   container: {
     flex: 1,
-    backgroundColor: "white",
+    paddingHorizontal: 15,
   },
   heading: {
     textTransform: "uppercase",
     fontFamily: "Exo-SemiBold",
-    paddingLeft: 15,
     paddingTop: 15,
     paddingBottom: 10,
   },
@@ -196,13 +162,11 @@ const styles = StyleSheet.create({
   },
   serviceItem: {
     textTransform: "uppercase",
-    paddingLeft: 15,
     fontSize: 13,
     color: theme.lightColors.black,
     fontFamily: "Exo-SemiBold",
   },
   categoryItem: {
     color: theme.lightColors.grey0,
-    paddingLeft: 15,
   },
 });

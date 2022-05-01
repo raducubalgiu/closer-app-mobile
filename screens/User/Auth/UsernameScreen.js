@@ -41,6 +41,7 @@ const UsernameScreen = (props) => {
         location,
         employees,
         services,
+        validated,
       } = userResult.data;
 
       setUser({
@@ -65,6 +66,7 @@ const UsernameScreen = (props) => {
           followingCount: 0,
         },
         token: idTokenResult?.token,
+        validated,
       });
     } catch (err) {
       console.log(err);

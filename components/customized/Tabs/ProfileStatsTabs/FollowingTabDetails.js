@@ -3,8 +3,10 @@ import React, { useState } from "react";
 import CardFollowers from "../../Cards/CardFollowers";
 import { useNavigation } from "@react-navigation/native";
 import FakeSearchBarSimple from "../../FakeSearchBar/FakeSearchBarSimple";
+import SearchBarInput from "../../../core/Inputs/SearchBarInput";
 
 const FollowingTabDetails = (props) => {
+  const [search, setSearch] = useState("");
   const [refreshing, setRefreshing] = useState(false);
   const navigation = useNavigation();
 
@@ -13,6 +15,10 @@ const FollowingTabDetails = (props) => {
       screen: "ProfileGeneral",
       params: { userId },
     });
+  };
+
+  const updateSearch = (text) => {
+    setSearch(text);
   };
 
   const wait = (timeout) => {
@@ -28,6 +34,12 @@ const FollowingTabDetails = (props) => {
 
   return (
     <View style={styles.screen}>
+      <SearchBarInput
+        showCancel={false}
+        placeholder="Cauta"
+        value={search}
+        updateValue={updateSearch}
+      />
       {/* <FlatList
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

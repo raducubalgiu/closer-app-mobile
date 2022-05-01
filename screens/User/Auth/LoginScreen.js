@@ -68,6 +68,7 @@ const LoginScreen = () => {
           employees,
           services,
           counter,
+          validated,
         } = userResult.data.user;
 
         setUser({
@@ -87,6 +88,7 @@ const LoginScreen = () => {
           services,
           counter,
           token: idTokenResult?.token,
+          validated,
         });
       }
     } catch (err) {

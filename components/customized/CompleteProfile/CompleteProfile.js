@@ -5,10 +5,40 @@ import theme from "../../../assets/styles/theme";
 import CardCompleteProfile from "../Cards/CardCompleteProfile";
 import { useAuth } from "../../../context/auth";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 
 const CompleteProfile = () => {
   const navigation = useNavigation();
   const { user } = useAuth();
+  // const [steps, setSteps] = useState([]);
+
+  // useEffect(() => {
+  //   axios
+  //     .get(`${process.env.BASE_ENDPOINT}/users/${user?._id}/get-order`)
+  //     .then((res) => {
+  //       const {
+  //         name,
+  //         biography,
+  //         avatar,
+  //         businessType,
+  //         location,
+  //         services,
+  //         products,
+  //       } = res.data.order;
+  //       setSteps([
+  //         name,
+  //         biography,
+  //         avatar,
+  //         businessType,
+  //         location,
+  //         services,
+  //         products,
+  //       ]);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, [user?._id]);
+
+  // console.log(steps);
 
   const STEPS = [
     {

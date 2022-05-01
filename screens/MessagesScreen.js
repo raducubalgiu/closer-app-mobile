@@ -13,11 +13,7 @@ const MessagesScreen = () => {
       <Tab.Navigator
         initialRouteName="Notifications"
         screenOptions={{
-          tabBarLabelStyle: {
-            fontFamily: "Exo-SemiBold",
-            textTransform: "capitalize",
-            fontSize: 14,
-          },
+          tabBarLabelStyle: styles.tabBarStyle,
           tabBarIndicatorStyle: {
             backgroundColor: theme.lightColors.black,
           },
@@ -45,5 +41,10 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: "white",
+  },
+  tabBarStyle: {
+    fontFamily: "Exo-SemiBold",
+    textTransform: "capitalize",
+    fontSize: 14,
   },
 });

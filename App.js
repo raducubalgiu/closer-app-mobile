@@ -41,9 +41,7 @@ const App = () => {
   return (
     <AuthProvider>
       <ThemeProvider theme={theme}>
-        <RootSiblingParent>
-          <CloserNavigation />
-        </RootSiblingParent>
+        <CloserNavigation />
       </ThemeProvider>
     </AuthProvider>
   );

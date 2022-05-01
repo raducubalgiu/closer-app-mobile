@@ -12,7 +12,7 @@ const TopTabNavigator = (props) => {
   const { role } = props;
   const Tab = createMaterialTopTabNavigator();
 
-  const PostsProfile = () => <PostsProfileScreen posts={props?.posts} />;
+  const PostsProfile = () => <PostsProfileScreen userId={props.userId} />;
   const ProductsProfile = () => (
     <ProductsProfileScreen products={props?.products} />
   );

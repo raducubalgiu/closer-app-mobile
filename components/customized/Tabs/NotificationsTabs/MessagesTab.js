@@ -10,6 +10,7 @@ import { Stack } from "../../../core";
 import FakeSearchBarSimple from "../../FakeSearchBar/FakeSearchBarSimple";
 import { Icon } from "@rneui/themed";
 import MessageItem from "../../ListItems/MessageItem";
+import SearchBarInput from "../../../core/Inputs/SearchBarInput";
 
 const DUMMY_MESSAGES = [
   {
@@ -107,6 +108,11 @@ const DUMMY_MESSAGES = [
 
 const MessagesTab = () => {
   const [refreshing, setRefreshing] = useState(false);
+  const [search, setSearch] = useState("");
+
+  const updateSearch = (text) => {
+    setSearch(text);
+  };
 
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -128,7 +134,12 @@ const MessagesTab = () => {
           paddingBottom: 10,
         }}
       >
-        <FakeSearchBarSimple />
+        <SearchBarInput
+          showCancel={false}
+          placeholder="Cauta"
+          value={search}
+          updateValue={updateSearch}
+        />
         <TouchableOpacity style={{ marginLeft: 10 }}>
           <Icon name="edit" type="feather" />
         </TouchableOpacity>

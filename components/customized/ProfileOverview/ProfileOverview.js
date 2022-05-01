@@ -18,8 +18,6 @@ const ProfileOverview = (props) => {
   const { user, withBadge } = props;
   const navigation = useNavigation();
 
-  console.log(user);
-
   return (
     <View style={styles.container}>
       <Stack justify="center" align="center">
