@@ -1,7 +1,7 @@
 import { StyleSheet, FlatList } from "react-native";
 import React from "react";
-import NotFoundContent from "../../../../components/customized/NotFoundContent/NotFoundContent";
-import CardJob from "../../../../components/customized/Cards/CardJob";
+import NotFoundContent from "../../../components/customized/NotFoundContent/NotFoundContent";
+import CardJob from "../../../components/customized/Cards/CardJob";
 
 const jobs = [
   // {

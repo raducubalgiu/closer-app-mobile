@@ -74,7 +74,7 @@ const BottomSheetFilter = (props) => {
             onPress={props.onGoBack}
             name="chevron-back"
             type="ionicon"
-            color={Colors.textDark}
+            color={theme.lightColors.black}
             size={25}
           />
           <View>

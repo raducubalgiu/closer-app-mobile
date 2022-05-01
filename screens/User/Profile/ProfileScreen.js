@@ -9,16 +9,26 @@ import OutlinedButton from "../../../components/core/Buttons/OutlinedButton";
 import HeaderProfile from "../../../components/customized/Headers/HeaderProfile";
 import { useAuth } from "../../../context/auth";
 import TopTabNavigator from "../../TopTabNavigator";
-import { Icon } from "react-native-elements";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 import SettingsList from "../../../components/customized/Lists/SettingsList";
-import { FAB } from "@rneui/themed";
+import { FAB, Icon } from "@rneui/themed";
 
 const ProfileScreen = (props) => {
   const { user } = useAuth();
+  const {
+    _id,
+    business,
+    followersCount,
+    followingCount,
+    ratingsAverage,
+    ratingsQuantity,
+    username,
+    services,
+    avatar,
+    role,
+  } = user;
   const navigation = useNavigation();
   const [openSettings, setOpenSettings] = useState(false);
-  const [openSwitch, setOpenSwitch] = useState(false);
   const [posts, setPosts] = useState([]);
 
   const closeSheet = useCallback(() => {
@@ -52,7 +62,7 @@ const ProfileScreen = (props) => {
           name="bookmark"
           type="feather"
           size={20}
-          color={Colors.textDark}
+          color={theme.lightColors.black}
         />
       </TouchableOpacity>
       <Icon
@@ -60,14 +70,14 @@ const ProfileScreen = (props) => {
         type="feather"
         size={20}
         style={styles.socialBtn}
-        color={Colors.textDark}
+        color={theme.lightColors.black}
       />
       <Icon
         name="youtube"
         type="feather"
         size={20}
         style={styles.socialBtn}
-        color={Colors.textDark}
+        color={theme.lightColors.black}
       />
     </>
   );
@@ -78,15 +88,6 @@ const ProfileScreen = (props) => {
       onClose={closeSheet}
       height={60}
       sheetBody={openSettings && <SettingsList />}
-    />
-  );
-
-  const sheetSwitch = (
-    <BottomSheetPopup
-      open={openSwitch}
-      onClose={closeSheet}
-      height={40}
-      sheetBody={openSwitch && <SwitchAccount />}
     />
   );
 
@@ -101,7 +102,17 @@ const ProfileScreen = (props) => {
         }}
       />
       <ProfileOverview
-        user={user}
+        userId={_id}
+        username={username}
+        checkmark={false}
+        followersCount={followersCount}
+        followingCount={followingCount}
+        avatar={avatar?.url}
+        business={business?.name}
+        role={role}
+        ratingsAverage={ratingsAverage}
+        ratingsQuantity={ratingsQuantity}
+        services={services}
         withBadge={true}
         badgeDetails={props.badgeDetails}
         actionButtons={buttons}
@@ -118,13 +129,11 @@ const ProfileScreen = (props) => {
       <FAB
         visible={true}
         icon={{ name: "calendar", type: "feather", color: "white" }}
-        color={Colors.primary}
+        color={theme.lightColors.primary}
         placement="right"
         onPress={() => navigation.navigate("MyCalendar")}
       />
-
       {sheetSettings}
-      {sheetSwitch}
     </SafeAreaView>
   );
 };

@@ -28,7 +28,11 @@ const Header = (props) => {
                 ...props.tooltipContainer,
               }}
             >
-              <Icon name="info" type="feather" />
+              <Icon
+                name="info"
+                type="feather"
+                color={theme.lightColors.black}
+              />
             </Tooltip>
           )}
         </Stack>

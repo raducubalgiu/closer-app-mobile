@@ -1,6 +1,6 @@
 import { StyleSheet, View, FlatList } from "react-native";
 import React from "react";
-import CardFollowers from "../../../../components/customized/Cards/CardFollowers";
+import CardFollowers from "../../Cards/CardFollowers";
 import { useNavigation } from "@react-navigation/native";
 
 const FollowersTabDetails = (props) => {

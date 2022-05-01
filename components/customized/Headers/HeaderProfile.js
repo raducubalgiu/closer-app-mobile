@@ -25,12 +25,7 @@ const HeaderProfile = (props) => {
           color="white"
         />
       </Stack>
-      <TouchableOpacity onPress={props.onOpenSwitch}>
-        <Stack direction="row" justify="start">
-          <Text style={styles.name}>{props?.name}</Text>
-          <Icon name="keyboard-arrow-down" type="material" />
-        </Stack>
-      </TouchableOpacity>
+      <Text style={styles.name}>{props?.name}</Text>
       <Stack direction="row">
         <IconButton
           onPress={() => navigation.navigate("AddProducts")}

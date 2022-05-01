@@ -100,6 +100,7 @@ const SettingsList = (props) => {
   return (
     <BottomSheetFlatList
       data={items}
+      contentContainerStyle={{ marginHorizontal: 20 }}
       keyExtractor={(item) => item?._id}
       renderItem={renderItem}
       bounces={false}

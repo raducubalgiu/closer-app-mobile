@@ -92,6 +92,7 @@ const AddBusinessTypeScreen = () => {
             useNativeAndroidPickerStyle={false}
             onValueChange={(category) => setSelectedCategory(category)}
             style={{ ...pickerSelectStyles }}
+            doneText="Gata"
             items={categories.map((category) => {
               return {
                 label: category?.name,

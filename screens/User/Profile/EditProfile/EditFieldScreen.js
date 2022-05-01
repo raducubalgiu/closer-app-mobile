@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
-import SearchBar from "react-native-elements/dist/searchbar/SearchBar-ios";
+import { SearchBar } from "@rneui/themed";
 import { Divider } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../../assets/styles/theme";
@@ -11,7 +11,6 @@ const EditFieldScreen = (props) => {
   const navigation = useNavigation();
 
   const updateField = (text) => {
-    // Validation Here
     props.updateField(text);
   };
 

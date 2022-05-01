@@ -4,8 +4,16 @@ import React from "react";
 import theme from "../../../assets/styles/theme";
 
 const UserAvatar = (props) => {
+  const checkAvatar = (avatar) => {
+    if (avatar === undefined || avatar.length === 0) {
+      return undefined;
+    } else {
+      return avatar;
+    }
+  };
+
   let avatar;
-  if (props?.avatar !== undefined) {
+  if (checkAvatar(props?.avatar)) {
     avatar = (
       <Avatar
         size={props.size ? props.size : 55}

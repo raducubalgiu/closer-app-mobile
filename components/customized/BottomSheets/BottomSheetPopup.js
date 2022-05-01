@@ -53,9 +53,8 @@ const BottomSheetPopup = (props) => {
           backdropComponent={renderBackdrop}
           handleIndicatorStyle={styles.indicatorStyle}
           onDismiss={dismissHandler}
-        >
-          <View style={styles.container}>{props.sheetBody}</View>
-        </BottomSheetModal>
+          children={props.sheetBody}
+        />
       </View>
     </BottomSheetModalProvider>
   );

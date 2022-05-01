@@ -1,8 +1,8 @@
 import { StyleSheet, View, FlatList, RefreshControl } from "react-native";
 import React, { useState } from "react";
-import CardFollowers from "../../../../components/customized/Cards/CardFollowers";
+import CardFollowers from "../../Cards/CardFollowers";
 import { useNavigation } from "@react-navigation/native";
-import FakeSearchBarSimple from "../../../../components/customized/FakeSearchBar/FakeSearchBarSimple";
+import FakeSearchBarSimple from "../../FakeSearchBar/FakeSearchBarSimple";
 
 const FollowingTabDetails = (props) => {
   const [refreshing, setRefreshing] = useState(false);

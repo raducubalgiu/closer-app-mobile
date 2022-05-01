@@ -31,8 +31,8 @@ const EditNameScreen = () => {
       .then((res) => {
         setValue(res.data.user.name);
         setUser({ ...user, name: res.data.user.name });
-        navigation.goBack();
         setLoading(false);
+        navigation.goBack();
       })
       .catch((err) => {
         console.log(err);

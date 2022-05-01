@@ -12,7 +12,11 @@ const MenuITemBetween = (props) => {
         <Text style={styles.buttonText}>
           {trimFunc(props.resultText, props.resultTextLength)}
         </Text>
-        <Icon name="keyboard-arrow-right" size={17} />
+        <Icon
+          name="keyboard-arrow-right"
+          size={17}
+          color={theme.lightColors.grey0}
+        />
       </TouchableOpacity>
     </View>
   );

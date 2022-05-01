@@ -34,7 +34,7 @@ export const AuthProvider = (props) => {
               setUser({
                 _id,
                 name,
-                business: business?.name,
+                business: business,
                 username,
                 email,
                 avatar: avatar[0]?.url,

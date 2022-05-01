@@ -22,6 +22,18 @@ const ProfileGeneralScreen = (props) => {
   const { user } = useAuth();
   const { userId } = props.route.params;
   const [userDetails, setUserDetails] = useState(null);
+  const {
+    _id,
+    business,
+    followersCount,
+    followingCount,
+    ratingsAverage,
+    ratingsQuantity,
+    username,
+    services,
+    avatar,
+    role,
+  } = userDetails;
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [suggestedPeople, setSuggestedPeople] = useState([]);
@@ -35,7 +47,7 @@ const ProfileGeneralScreen = (props) => {
         setUserDetails(resp.data.user);
       })
       .catch((error) => console.log(error));
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     axios
@@ -51,17 +63,17 @@ const ProfileGeneralScreen = (props) => {
       .get(`${process.env.BASE_ENDPOINT}/users/${userId}`, {
         headers: { Authorization: `Bearer ${user?.token}` },
       })
-      .then((resp) => {
-        setUserDetails(resp.data.user);
+      .then((res) => {
+        setUserDetails(res.data.user);
       })
-      .catch((error) => console.log(error));
+      .catch((err) => console.log(err));
   };
 
   const handleSuggested = () => {
     setLoading(true);
     axios
       .get(
-        `${process.env.BASE_ENDPOINT}/users/${userDetails?.job}/get-suggested`,
+        `${process.env.BASE_ENDPOINT}/users/${userDetails?.business?._id}/get-suggested`,
         {
           headers: { Authorization: `Bearer ${user?.token}` },
         }
@@ -71,7 +83,7 @@ const ProfileGeneralScreen = (props) => {
         setLoading(false);
       })
       .catch((err) => {
-        console.log(error);
+        console.log(err);
         setLoading(false);
       });
   };
@@ -111,8 +123,19 @@ const ProfileGeneralScreen = (props) => {
     <SafeAreaView style={styles.container}>
       <HeaderProfileGeneral name={userDetails?.name} />
       <ProfileOverview
-        user={userDetails}
+        userId={userDetails?._id}
+        username={userDetails?.username}
+        checkmark={false}
+        followersCount={userDetails?.followersCount}
+        followingCount={userDetails?.followingCount}
+        avatar={userDetails?.avatar?.url}
+        business={userDetails?.business?.name}
+        role={userDetails?.role}
+        ratingsAverage={userDetails?.ratingsAverage}
+        ratingsQuantity={userDetails?.ratingsQuantity}
+        services={userDetails?.services}
         withBadge={false}
+        badgeDetails={props.badgeDetails}
         actionButtons={buttons}
       />
       {suggestedPeople.length !== 0 && (
@@ -126,7 +149,7 @@ const ProfileGeneralScreen = (props) => {
             renderItem={({ item }) => (
               <CardSuggestedPeople
                 title={item?.name}
-                job={item?.job}
+                business={item?.business?.name}
                 noFollowers={item?.followersCount}
                 username={item?.username}
               />

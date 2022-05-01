@@ -20,7 +20,7 @@ import SettingsScreen from "../screens/User/Profile/Settings/SettingsProfileScre
 import SchedulesScreen from "../screens/User/Profile/Settings/SchedulesProfileScreen";
 import DiscountsScreen from "../screens/User/Profile/Settings/DiscountsProfileScreen";
 import FindFriendsScreen from "../screens/User/Profile/FindFriendsScreen";
-import ProfileTabsScreen from "../screens/User/Profile/ProfileStatsTabs/ProfileTabsScreen";
+import ProfileTabsScreen from "../components/customized/Tabs/ProfileStatsTabs/ProfileTabsScreen";
 
 import SearchScreen from "../screens/SearchScreen";
 import FiltersDateScreen from "../screens/FilterDateScreen";

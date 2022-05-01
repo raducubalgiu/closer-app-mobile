@@ -3,7 +3,7 @@ import React from "react";
 import PostsProfileScreen from "./User/Profile/PostsProfileScreen";
 import ProductsProfileScreen from "./User/Profile/ProductsProfileScreen";
 import CalendarProfileScreen from "./User/Profile/CalendarProfileScreen";
-import JobsProfileScreen from "./User/Profile/ProfileStatsTabs/JobsProfileScreen";
+import JobsProfileScreen from "./User/Profile/JobsProfileScreen";
 import AboutProfileScreen from "./User/Profile/AboutProfileScreen";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import theme from "../assets/styles/theme";

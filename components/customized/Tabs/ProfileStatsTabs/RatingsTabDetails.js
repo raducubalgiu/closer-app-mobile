@@ -1,6 +1,6 @@
 import { StyleSheet, FlatList } from "react-native";
 import React from "react";
-import CardRatings from "../../../../components/customized/Cards/CardRatings";
+import CardRatings from "../../Cards/CardRatings";
 
 const RatingsTabDetails = (props) => {
   return (

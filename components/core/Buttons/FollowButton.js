@@ -7,15 +7,13 @@ import { useAuth } from "../../../context/auth";
 const FollowButton = (props) => {
   const [follow, setFollow] = useState(true);
   const { user, setUser } = useAuth();
+  const FOLLOW_ENDPOINT = `${process.env.BASE_ENDPOINT}/users/${user?._id}/follower/${props.followingId}/followee/follows`;
 
   useEffect(() => {
     axios
-      .get(
-        `${process.env.BASE_ENDPOINT}/users/${user?._id}/follower/${props.followingId}/followee/check-follow`,
-        {
-          headers: { Authorization: `Bearer ${user?.token}` },
-        }
-      )
+      .get(FOLLOW_ENDPOINT, {
+        headers: { Authorization: `Bearer ${user?.token}` },
+      })
       .then((res) => {
         setFollow(res.data.status);
       })
@@ -28,16 +26,9 @@ const FollowButton = (props) => {
   const followHandler = () => {
     if (!follow) {
       axios
-        .post(
-          `${process.env.BASE_ENDPOINT}/users/follow`,
-          {
-            userId: user?._id,
-            followingId: props.followingId,
-          },
-          {
-            headers: { Authorization: `Bearer ${user?.token}` },
-          }
-        )
+        .post(FOLLOW_ENDPOINT, {
+          headers: { Authorization: `Bearer ${user?.token}` },
+        })
         .then(() => {
           setFollow(true);
           props.fetchUser ? props.fetchUser() : null;
@@ -51,12 +42,9 @@ const FollowButton = (props) => {
     }
     if (follow) {
       axios
-        .delete(
-          `${process.env.BASE_ENDPOINT}/users/${user?._id}/followee/${props.followingId}/follower/unfollow`,
-          {
-            headers: { Authorization: `Bearer ${user?.token}` },
-          }
-        )
+        .delete(FOLLOW_ENDPOINT, {
+          headers: { Authorization: `Bearer ${user?.token}` },
+        })
         .then(() => {
           setFollow(false);
           props.fetchUser ? props.fetchUser() : null;

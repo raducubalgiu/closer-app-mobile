@@ -17,7 +17,7 @@ const CardSuggestedPeople = (props) => {
         />
       </View>
       <Text style={styles.username}>@{props.username}</Text>
-      <Text style={styles.job}>{props.job}</Text>
+      <Text style={styles.job}>{props.business}</Text>
       <Text style={styles.followers}>{props.noFollowers} urmaritori</Text>
       <ContainedButton
         title="Urmareste"

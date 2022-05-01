@@ -1,8 +1,3 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Divider, SearchBar } from "@rneui/themed";
-import { useTranslation } from "react-i18next";
-import { Platform } from "react-native";
 import {
   SafeAreaView,
   StyleSheet,
@@ -10,7 +5,12 @@ import {
   TouchableOpacity,
   FlatList,
   View,
+  Platform,
 } from "react-native";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Divider, SearchBar } from "@rneui/themed";
+import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../assets/styles/theme";
 
@@ -78,9 +78,11 @@ const SearchScreen = () => {
           color: theme.lightColors.grey0,
           fontFamily: "Exo-Regular",
         }}
+        searchIcon={{ color: theme.lightColors.black }}
         placeholder={t("searchInputTitle")}
         onChangeText={updateSearch}
         value={search}
+        placeholderTextColor={{ color: theme.lightColors.grey0 }}
       />
       <View style={styles.container}>
         {search == "" ? (
