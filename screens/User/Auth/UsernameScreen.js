@@ -46,10 +46,10 @@ const UsernameScreen = (props) => {
       setUser({
         _id,
         name,
-        business: business,
+        business,
         username,
         email,
-        avatar: avatar[0]?.url,
+        avatar,
         images,
         role,
         description,
@@ -58,10 +58,12 @@ const UsernameScreen = (props) => {
         location,
         employees,
         services,
-        ratingsAverage: 4.5,
-        ratingsQuantity: 0,
-        followersCount: 0,
-        followingCount: 0,
+        counter: {
+          ratingsAverage: 4.5,
+          ratingsQuantity: 0,
+          followersCount: 0,
+          followingCount: 0,
+        },
         token: idTokenResult?.token,
       });
     } catch (err) {

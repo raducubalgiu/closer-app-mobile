@@ -3,7 +3,6 @@ import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import BottomSheetPopup from "../../../components/customized/BottomSheets/BottomSheetPopup";
 import { useNavigation } from "@react-navigation/native";
-import SwitchAccount from "../../../components/customized/SwitchAccount/SwitchAccount";
 import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
 import OutlinedButton from "../../../components/core/Buttons/OutlinedButton";
 import HeaderProfile from "../../../components/customized/Headers/HeaderProfile";
@@ -15,24 +14,11 @@ import { FAB, Icon } from "@rneui/themed";
 
 const ProfileScreen = (props) => {
   const { user } = useAuth();
-  const {
-    _id,
-    business,
-    followersCount,
-    followingCount,
-    ratingsAverage,
-    ratingsQuantity,
-    username,
-    services,
-    avatar,
-    role,
-  } = user;
   const navigation = useNavigation();
   const [openSettings, setOpenSettings] = useState(false);
   const [posts, setPosts] = useState([]);
 
   const closeSheet = useCallback(() => {
-    setOpenSwitch(false);
     setOpenSettings(false);
   }, []);
 
@@ -95,24 +81,11 @@ const ProfileScreen = (props) => {
     <SafeAreaView style={styles.container}>
       <HeaderProfile
         onGoToFindFriends={() => navigation.navigate("FindFriends")}
-        onOpenSwitch={() => setOpenSwitch(true)}
         name={user?.name}
-        onOpenSettings={() => {
-          setOpenSettings(true);
-        }}
+        onOpenSettings={() => setOpenSettings(true)}
       />
       <ProfileOverview
-        userId={_id}
-        username={username}
-        checkmark={false}
-        followersCount={followersCount}
-        followingCount={followingCount}
-        avatar={avatar?.url}
-        business={business?.name}
-        role={role}
-        ratingsAverage={ratingsAverage}
-        ratingsQuantity={ratingsQuantity}
-        services={services}
+        user={user}
         withBadge={true}
         badgeDetails={props.badgeDetails}
         actionButtons={buttons}

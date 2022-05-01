@@ -85,10 +85,7 @@ const LoginScreen = () => {
           location,
           employees,
           services,
-          ratingsAverage: counter?.ratingsAverage,
-          ratingsQuantity: counter?.ratingsQuantity,
-          followersCount: counter?.followersCount,
-          followingCount: counter?.followingCount,
+          counter,
           token: idTokenResult?.token,
         });
       }

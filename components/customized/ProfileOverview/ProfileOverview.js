@@ -15,7 +15,10 @@ import UserAvatar from "../Avatars/UserAvatar";
 import { Checkmark } from "../../core";
 
 const ProfileOverview = (props) => {
+  const { user, withBadge } = props;
   const navigation = useNavigation();
+
+  console.log(user);
 
   return (
     <View style={styles.container}>
@@ -24,20 +27,20 @@ const ProfileOverview = (props) => {
           <UserAvatar
             iconSize={37}
             size={95}
-            avatar={props?.avatar}
-            withBadge={props?.withBadge}
+            avatar={user?.avatar}
+            withBadge={withBadge}
             badgeDetails={{ name: "plus", type: "entypo" }}
           />
         </TouchableOpacity>
         <Stack direction="row">
-          <Text style={styles.name}>@{props?.username}</Text>
-          {props?.checkmark && <Checkmark />}
+          <Text style={styles.name}>@{user?.username}</Text>
+          {user?.checkmark && <Checkmark />}
         </Stack>
         <Stack direction="row" justify="start">
-          {props?.business && (
-            <Text style={styles.business}>{props?.business}</Text>
+          {user?.business && (
+            <Text style={styles.business}>{user?.business?.name}</Text>
           )}
-          {props?.role !== "subscriber" && (
+          {user?.role !== "subscriber" && (
             <Icon
               type="antdesign"
               name="star"
@@ -46,8 +49,10 @@ const ProfileOverview = (props) => {
               style={{ marginLeft: 7.5 }}
             />
           )}
-          {props?.role !== "subscriber" && (
-            <Text style={styles.ratingsAverage}>{props?.ratingsAverage}</Text>
+          {user?.role !== "subscriber" && (
+            <Text style={styles.ratingsAverage}>
+              {user?.counter?.ratingsAverage}
+            </Text>
           )}
         </Stack>
       </Stack>
@@ -57,7 +62,7 @@ const ProfileOverview = (props) => {
           horizontal
           showsHorizontalScrollIndicator={false}
         >
-          {props?.services?.map((service, i) => (
+          {user?.services?.map((service, i) => (
             <Text key={i} style={styles.service}>
               {service?.name}
             </Text>
@@ -70,42 +75,42 @@ const ProfileOverview = (props) => {
             navigation.navigate("ProfileGeneralStack", {
               screen: "ProfileTabsScreen",
               params: {
-                userId: props?.userId,
-                username: props?.username,
+                userId: user?._id,
+                username: user?.username,
                 initialRoute: "Ratings",
               },
             })
           }
           labelStats="Ratinguri"
-          statsNo={props?.ratingsQuantity}
+          statsNo={user?.counter?.ratingsQuantity}
         />
         <StatsButton
           onPress={() =>
             navigation.navigate("ProfileGeneralStack", {
               screen: "ProfileTabsScreen",
               params: {
-                userId: props?.userId,
-                username: props?.username,
+                userId: user?._id,
+                username: user?.username,
                 initialRoute: "Followers",
               },
             })
           }
           labelStats="Urmaritori"
-          statsNo={props?.followersCount}
+          statsNo={user?.counter?.followersCount}
         />
         <StatsButton
           onPress={() =>
             navigation.navigate("ProfileGeneralStack", {
               screen: "ProfileTabsScreen",
               params: {
-                userId: props?.userId,
-                username: props?.username,
+                userId: user?._id,
+                username: user?.username,
                 initialRoute: "Following",
               },
             })
           }
           labelStats="Urmaresti"
-          statsNo={props?.followingCount}
+          statsNo={user?.counter?.followingCount}
         />
       </Stack>
       <Stack direction="row" justify="center" sx={styles.buttonsContainer}>
