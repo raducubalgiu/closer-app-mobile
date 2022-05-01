@@ -13,9 +13,7 @@ const CardRatings = (props) => {
           <UserAvatar
             iconSize={20}
             size={45}
-            avatar={
-              props?.avatar !== undefined ? props?.avatar[0]?.url : undefined
-            }
+            avatar={props?.avatar}
             withBadge={false}
           />
           <View style={{ marginLeft: 10 }}>
