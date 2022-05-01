@@ -7,7 +7,7 @@ import { useAuth } from "../../../context/auth";
 const FollowButton = (props) => {
   const [follow, setFollow] = useState(true);
   const { user, setUser } = useAuth();
-  const FOLLOW_ENDPOINT = `${process.env.BASE_ENDPOINT}/users/${user?._id}/follower/${props.followingId}/followee/follows`;
+  const FOLLOW_ENDPOINT = `${process.env.BASE_ENDPOINT}/users/${user?._id}/follower/${props.followeeId}/followee/follows`;
 
   useEffect(() => {
     axios

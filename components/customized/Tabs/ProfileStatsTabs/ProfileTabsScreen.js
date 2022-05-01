@@ -10,7 +10,12 @@ import Header from "../../Headers/Header";
 const Tab = createMaterialTopTabNavigator();
 
 const ProfileTabsScreen = (props) => {
+  const { userId } = props.route.params;
   const { initialRoute, username } = props.route.params;
+
+  const RatingsDetails = () => <RatingsTabDetails userId={userId} />;
+  const FollowersDetails = () => <FollowersTabDetails userId={userId} />;
+  const FollowingsDetails = () => <FollowingTabDetails userId={userId} />;
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -26,17 +31,17 @@ const ProfileTabsScreen = (props) => {
       >
         <Tab.Screen
           name="Ratings"
-          component={RatingsTabDetails}
+          component={RatingsDetails}
           options={{ tabBarLabel: "Recenzii" }}
         />
         <Tab.Screen
           name="Followers"
-          component={FollowersTabDetails}
+          component={FollowersDetails}
           options={{ tabBarLabel: "Urmaritori" }}
         />
         <Tab.Screen
           name="Following"
-          component={FollowingTabDetails}
+          component={FollowingsDetails}
           options={{ tabBarLabel: "Urmaresti" }}
         />
       </Tab.Navigator>

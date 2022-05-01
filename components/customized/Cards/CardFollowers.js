@@ -12,19 +12,14 @@ const CardFollowers = (props) => {
   return (
     <Stack direction="row" sx={styles.container}>
       <TouchableOpacity style={styles.goToUser} onPress={props.onGoToUser}>
-        <UserAvatar
-          avatar={
-            props?.avatar !== undefined ? props?.avatar[0]?.url : undefined
-          }
-          withBadge={false}
-        />
+        <UserAvatar avatar={props.avatar} withBadge={false} />
         <Stack align="start" sx={{ marginLeft: 10 }}>
           <Text style={styles.username}>{props.username}</Text>
           <Text style={styles.name}>{props.name}</Text>
         </Stack>
       </TouchableOpacity>
-      {props.userId !== user?._id && (
-        <FollowButton followingId={props.userId} />
+      {props.followeeId !== user?._id && (
+        <FollowButton followeeId={props.followeeId} />
       )}
     </Stack>
   );
@@ -33,7 +28,7 @@ const CardFollowers = (props) => {
 export default CardFollowers;
 
 const styles = StyleSheet.create({
-  container: { marginTop: 15 },
+  container: { marginBottom: 15 },
   username: {
     fontFamily: "Exo-SemiBold",
     fontSize: 13.5,
