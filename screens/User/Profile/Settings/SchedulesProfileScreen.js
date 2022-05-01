@@ -1,6 +1,6 @@
 import { StyleSheet, View, SafeAreaView } from "react-native";
 import React from "react";
-import Header from "../../../../components/customized/Headers/Header";
+import { Header } from "../../../../components/core";
 
 const SchedulesProfileScreen = () => {
   return (

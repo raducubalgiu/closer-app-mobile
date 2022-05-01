@@ -12,7 +12,7 @@ export const hideTabs = (route) => {
       return { display: "none" };
     case "EditProfile":
       return { display: "none" };
-    case "ProfileGeneral":
+    case "EditPhotoLibrary":
       return { display: "none" };
     case "FindFriends":
       return { display: "none" };

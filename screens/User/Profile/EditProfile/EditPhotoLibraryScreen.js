@@ -1,20 +1,19 @@
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { Header } from "../../../../components/core";
 
-const MyDashboardScreen = () => {
+const EditPhotoLibraryScreen = () => {
   return (
     <SafeAreaView style={styles.screen}>
-      <Header title="Dashboard" />
+      <Text>EditPhotoLibraryScreen</Text>
     </SafeAreaView>
   );
 };
 
-export default MyDashboardScreen;
+export default EditPhotoLibraryScreen;
 
 const styles = StyleSheet.create({
   screen: {
-    backgroundColor: "white",
     flex: 1,
+    backgroundColor: "white",
   },
 });

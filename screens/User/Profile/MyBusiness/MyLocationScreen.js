@@ -1,6 +1,6 @@
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import Header from "../../../../components/customized/Headers/Header";
+import { Header } from "../../../../components/core";
 
 const MyLocationScreen = () => {
   return (

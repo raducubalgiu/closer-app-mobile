@@ -1,6 +1,6 @@
 import { StyleSheet, SafeAreaView, FlatList, Dimensions } from "react-native";
 import React from "react";
-import Header from "../../../../components/customized/Headers/Header";
+import { Header } from "../../../../components/core";
 import MyBusinessCard from "../../../../components/customized/Cards/MyBusinessCard";
 import { useNavigation } from "@react-navigation/native";
 

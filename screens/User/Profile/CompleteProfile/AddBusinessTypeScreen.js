@@ -1,8 +1,12 @@
 import { SafeAreaView, StyleSheet } from "react-native";
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
-import Header from "../../../../components/customized/Headers/Header";
-import { InputSelect, Stack, MainButton } from "../../../../components/core";
+import {
+  InputSelect,
+  Stack,
+  MainButton,
+  Header,
+} from "../../../../components/core";
 import { useAuth } from "../../../../context/auth";
 import { useNavigation } from "@react-navigation/native";
 

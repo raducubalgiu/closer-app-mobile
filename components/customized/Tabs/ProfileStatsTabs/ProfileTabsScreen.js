@@ -5,7 +5,7 @@ import FollowersTabDetails from "./FollowersTabDetails";
 import FollowingTabDetails from "./FollowingTabDetails";
 import RatingsTabDetails from "./RatingsTabDetails";
 import theme from "../../../../assets/styles/theme";
-import Header from "../../Headers/Header";
+import { Header } from "../../../core";
 
 const Tab = createMaterialTopTabNavigator();
 

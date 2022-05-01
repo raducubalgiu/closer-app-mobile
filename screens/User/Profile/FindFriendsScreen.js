@@ -4,7 +4,7 @@ import CardFollowers from "../../../components/customized/Cards/CardFollowers";
 import { Colors } from "../../../assets/styles/Colors";
 import * as Contacts from "expo-contacts";
 import FakeSearchBarSimple from "../../../components/customized/FakeSearchBar/FakeSearchBarSimple";
-import Header from "../../../components/customized/Headers/Header";
+import { Header } from "../../../components/core";
 
 const FindFriendsScreen = () => {
   const [contacts, setContacts] = useState([]);

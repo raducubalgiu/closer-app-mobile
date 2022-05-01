@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import { Stack } from "../../core";
+import { Stack } from "..";
 import { Icon, Tooltip, Divider } from "@rneui/themed";
 import React from "react";
 import theme from "../../../assets/styles/theme";

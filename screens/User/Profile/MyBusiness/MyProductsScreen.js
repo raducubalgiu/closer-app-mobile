@@ -5,8 +5,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import Header from "../../../../components/customized/Headers/Header";
-import { IconButton, Stack, Modal } from "../../../../components/core";
+import { IconButton, Stack, Modal, Header } from "../../../../components/core";
 import theme from "../../../../assets/styles/theme";
 import CardProduct from "../../../../components/customized/Cards/CardProduct";
 import { useModal } from "../../../../hooks/useModal";

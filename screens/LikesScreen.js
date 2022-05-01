@@ -7,7 +7,7 @@ import {
   RefreshControl,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import Header from "../components/customized/Headers/Header";
+import { Header } from "../components/core";
 import FakeSearchBarSimple from "../components/customized/FakeSearchBar/FakeSearchBarSimple";
 import axios from "axios";
 import CardFollowers from "../components/customized/Cards/CardFollowers";

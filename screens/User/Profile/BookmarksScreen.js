@@ -7,7 +7,7 @@ import {
 } from "../../../components/customized/Tabs/SavedTabs";
 import { Colors } from "../../../assets/styles/Colors";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import Header from "../../../components/customized/Headers/Header";
+import { Header } from "../../../components/core";
 
 const BookmarksScreen = () => {
   const Tab = createMaterialTopTabNavigator();

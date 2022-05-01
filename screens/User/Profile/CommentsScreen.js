@@ -5,16 +5,15 @@ import {
   View,
   TextInput,
   KeyboardAvoidingView,
+  FlatList,
 } from "react-native";
 import React, { useState, useEffect } from "react";
-import Header from "../../../components/customized/Headers/Header";
 import { Divider } from "react-native-elements";
 import axios from "axios";
 import { useAuth } from "../../../context/auth";
 import UserAvatar from "../../../components/customized/Avatars/UserAvatar";
 import { Colors } from "../../../assets/styles/Colors";
-import { FlatList } from "react-native-gesture-handler";
-import { IconButton } from "../../../components/core";
+import { IconButton, Header } from "../../../components/core";
 import moment from "moment";
 
 const CommentsScreen = (props) => {

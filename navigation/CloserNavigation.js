@@ -16,6 +16,7 @@ import EditProfileScreen from "../screens/User/Profile/EditProfile/EditProfileSc
 import EditNameScreen from "../screens/User/Profile/EditProfile/EditNameScreen";
 import EditWebsiteScreen from "../screens/User/Profile/EditProfile/EditWebsiteScreen";
 import EditBioScreen from "../screens/User/Profile/EditProfile/EditBioScreen";
+import EditPhotoLibraryScreen from "../screens/User/Profile/EditProfile/EditPhotoLibraryScreen";
 import SettingsScreen from "../screens/User/Profile/Settings/SettingsProfileScreen";
 import SchedulesScreen from "../screens/User/Profile/Settings/SchedulesProfileScreen";
 import DiscountsScreen from "../screens/User/Profile/Settings/DiscountsProfileScreen";
@@ -159,6 +160,10 @@ const UserStackNavigator = () => {
       <Stack.Screen name="EditName" component={EditNameScreen} />
       <Stack.Screen name="EditWebsite" component={EditWebsiteScreen} />
       <Stack.Screen name="EditBio" component={EditBioScreen} />
+      <Stack.Screen
+        name="EditPhotoLibrary"
+        component={EditPhotoLibraryScreen}
+      />
       <Stack.Screen name="MyBusiness" component={MyBusinessScreen} />
       <Stack.Screen name="MyDashboard" component={MyDashboardScreen} />
       <Stack.Screen name="MyCalendar" component={MyCalendarScreen} />

@@ -14,9 +14,8 @@ import { useAuth } from "../../../../context/auth";
 import MenuITemBetween from "../../../../components/customized/MenuItem/MenuITemBetween";
 import BottomSheetPopup from "../../../../components/customized/BottomSheets/BottomSheetPopup";
 import UserAvatar from "../../../../components/customized/Avatars/UserAvatar";
-import { Stack } from "../../../../components/core";
+import { Stack, Header } from "../../../../components/core";
 import axios from "axios";
-import Header from "../../../../components/customized/Headers/Header";
 
 const EditProfileScreen = () => {
   const [open, setOpen] = useState(false);
@@ -39,8 +38,6 @@ const EditProfileScreen = () => {
       .then(() => setUser({ ...user, avatar: undefined }))
       .catch((err) => console.log(err));
   };
-
-  console.log(user);
 
   return (
     <>
@@ -117,10 +114,13 @@ const EditProfileScreen = () => {
             <TouchableOpacity style={styles.sheetTitle}>
               <Text style={styles.sheetText}>Adauga o fotografie</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.sheetTitle}>
+            <TouchableOpacity
+              style={styles.sheetTitle}
+              onPress={() => navigation.navigate("EditPhotoLibrary")}
+            >
               <Text style={styles.sheetText}>Alege din biblioteca</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.cancelBtn} onPress={handleClose}>
+            <TouchableOpacity style={styles.cancelBtn}>
               <Text style={styles.cancelBtnText}>Renunta</Text>
             </TouchableOpacity>
           </Stack>

@@ -1,7 +1,6 @@
 import { SafeAreaView, StyleSheet, ScrollView } from "react-native";
 import React from "react";
-import { Stack } from "../../../../components/core";
-import Header from "../../../../components/customized/Headers/Header";
+import { Stack, Header } from "../../../../components/core";
 import TooltipTitle from "../../../../components/customized/ListItems/TooltipItem";
 import theme from "../../../../assets/styles/theme";
 import AddProductsForm from "../../../../components/customized/Forms/AddProductsForm";

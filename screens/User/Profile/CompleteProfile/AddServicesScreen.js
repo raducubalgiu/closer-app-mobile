@@ -6,10 +6,13 @@ import {
   View,
   ScrollView,
 } from "react-native";
-import RNPickerSelect from "react-native-picker-select";
 import React, { useState, useEffect } from "react";
-import Header from "../../../../components/customized/Headers/Header";
-import { MainButton, Stack, InputSelect } from "../../../../components/core";
+import {
+  MainButton,
+  Stack,
+  InputSelect,
+  Header,
+} from "../../../../components/core";
 import { Icon } from "@rneui/themed";
 import TooltipTitle from "../../../../components/customized/ListItems/TooltipItem";
 import axios from "axios";
