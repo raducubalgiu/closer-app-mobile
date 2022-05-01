@@ -12,7 +12,7 @@ import { Divider } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../assets/styles/theme";
-import SearchBarInput from "../components/core/Inputs/SearchBarInput";
+import { SearchBarInput } from "../components/core";
 
 const SearchScreen = () => {
   const [initialServices, setInitialServices] = useState([]);

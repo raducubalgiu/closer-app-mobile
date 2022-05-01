@@ -1,16 +1,10 @@
-import {
-  StyleSheet,
-  View,
-  FlatList,
-  RefreshControl,
-} from "react-native";
+import { StyleSheet, View, FlatList, RefreshControl } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import CardFollowers from "../../Cards/CardFollowers";
 import { useNavigation } from "@react-navigation/native";
-import SearchBarInput from "../../../core/Inputs/SearchBarInput";
 import axios from "axios";
 import { useAuth } from "../../../../context/auth";
-import { Spinner } from "../../../core";
+import { Spinner, SearchBarInput } from "../../../core";
 
 const FollowingTabDetails = (props) => {
   const { user } = useAuth();

@@ -7,11 +7,10 @@ import {
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
-import RNPickerSelect from "react-native-picker-select";
 import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../../../context/auth";
 import theme from "../../../assets/styles/theme";
-import { MainButton } from "../../core";
+import { MainButton, InputSelect } from "../../core";
 
 const defaultValues = {
   name: "",
@@ -33,26 +32,17 @@ const AddProductsForm = (props) => {
   } = useForm({ defaultValues });
 
   const fetchFilters = useCallback(() => {
-    axios
-      .get(`${process.env.BASE_ENDPOINT}/services/${selectedService}/filters`)
-      .then((res) => setFilters(res.data.filters[0].options))
-      .catch((err) => console.log(err));
+    if (selectedService) {
+      axios
+        .get(`${process.env.BASE_ENDPOINT}/services/${selectedService}/filters`)
+        .then((res) => setFilters(res.data.filters[0].options))
+        .catch((err) => console.log(err));
+    }
   }, [selectedService]);
 
   useEffect(() => {
     fetchFilters();
   }, [fetchFilters]);
-
-  const placeholder = {
-    label: "Selecteaza serviciul aferent produsului*",
-    value: null,
-    color: "#9EA0A4",
-  };
-  const placeholderOption = {
-    label: "Selecteaza categoria produsului*",
-    value: null,
-    color: "#9EA0A4",
-  };
 
   const onSubmit = (data) => {
     setLoading(true);
@@ -82,39 +72,23 @@ const AddProductsForm = (props) => {
       });
   };
 
-  console.log(selectedOption);
-
   return (
     <>
       <View style={styles.row}>
-        <RNPickerSelect
-          placeholder={placeholder}
-          useNativeAndroidPickerStyle={false}
+        <InputSelect
+          placeholder="Selecteaza serviciul aferent produsului*"
           onValueChange={(service) => {
             setSelectedService(service);
             fetchFilters();
           }}
-          style={pickerSelectStyles}
-          items={user?.services.map((service) => {
-            return {
-              label: service?.name,
-              value: service?._id,
-            };
-          })}
+          items={user?.services}
         />
       </View>
       <View style={styles.row}>
-        <RNPickerSelect
-          placeholder={placeholderOption}
-          useNativeAndroidPickerStyle={false}
+        <InputSelect
+          placeholder="Selecteaza categoria produsului"
           onValueChange={(option) => setSelectedOption(option)}
-          style={pickerSelectStyles}
-          items={filters.map((filter) => {
-            return {
-              label: filter?.name,
-              value: filter?._id,
-            };
-          })}
+          items={filters}
         />
       </View>
       <View style={styles.row}>
@@ -224,30 +198,5 @@ const styles = StyleSheet.create({
     fontFamily: "Exo-Regular",
     fontSize: 14,
     color: theme.lightColors.black,
-  },
-});
-
-const pickerSelectStyles = StyleSheet.create({
-  inputIOS: {
-    fontSize: 14,
-    paddingVertical: 12,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 10,
-    color: theme.lightColors.black,
-    paddingRight: 30,
-    fontFamily: "Exo-Regular",
-  },
-  inputAndroid: {
-    fontSize: 14,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    borderWidth: 0.5,
-    borderColor: "purple",
-    borderRadius: 10,
-    color: theme.lightColors.black,
-    fontFamily: "Exo-Regular",
-    paddingRight: 30, // to ensure the text is never behind the icon
   },
 });

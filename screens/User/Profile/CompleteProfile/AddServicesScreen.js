@@ -9,7 +9,7 @@ import {
 import RNPickerSelect from "react-native-picker-select";
 import React, { useState, useEffect } from "react";
 import Header from "../../../../components/customized/Headers/Header";
-import { MainButton, Stack } from "../../../../components/core";
+import { MainButton, Stack, InputSelect } from "../../../../components/core";
 import { Icon } from "@rneui/themed";
 import TooltipTitle from "../../../../components/customized/ListItems/TooltipItem";
 import axios from "axios";
@@ -85,12 +85,6 @@ const AddServicesScreen = () => {
 
   const saveServicesHandler = () => navigation.navigate("Profile");
 
-  const placeholder = {
-    label: "Selecteaza un serviciu",
-    value: null,
-    color: "#9EA0A4",
-  };
-
   return (
     <SafeAreaView style={styles.screen}>
       <Header
@@ -109,17 +103,10 @@ const AddServicesScreen = () => {
         />
         <Stack direction="row" sx={{ width: "100%" }}>
           <View style={{ flex: 1 }}>
-            <RNPickerSelect
-              placeholder={placeholder}
-              useNativeAndroidPickerStyle={false}
+            <InputSelect
+              placeholder="Selecteaza un serviciu"
               onValueChange={(value) => setService(value)}
-              style={pickerSelectStyles}
-              items={services.map((service) => {
-                return {
-                  label: service?.name,
-                  value: service?._id,
-                };
-              })}
+              items={services}
             />
           </View>
           <TouchableOpacity style={styles.addIcon} onPress={addServiceHandler}>
@@ -174,30 +161,4 @@ const styles = StyleSheet.create({
     backgroundColor: theme.lightColors.primary,
   },
   name: { fontFamily: "Exo-Medium" },
-});
-
-const pickerSelectStyles = StyleSheet.create({
-  inputIOS: {
-    fontSize: 15,
-    paddingVertical: 12,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 10,
-    color: "black",
-    paddingRight: 30,
-    fontFamily: "Exo-Medium",
-  },
-  inputAndroid: {
-    fontSize: 15,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    borderWidth: 0.5,
-    borderColor: "purple",
-    borderRadius: 10,
-    color: "black",
-    fontFamily: "Exo-Medium",
-    paddingRight: 30, // to ensure the text is never behind the icon
-    fontFamily: "Exo-Medium",
-  },
 });

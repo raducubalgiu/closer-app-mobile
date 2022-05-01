@@ -4,8 +4,7 @@ import CardFollowers from "../../Cards/CardFollowers";
 import { useNavigation } from "@react-navigation/native";
 import { useAuth } from "../../../../context/auth";
 import axios from "axios";
-import SearchBarInput from "../../../core/Inputs/SearchBarInput";
-import { Spinner } from "../../../core";
+import { Spinner, SearchBarInput } from "../../../core";
 
 const FollowersTabDetails = (props) => {
   const { user } = useAuth();

@@ -13,3 +13,6 @@ export { default as Checkmark } from "./Icons/Checkmark";
 export { default as Modal } from "./Modal/Modal";
 
 export { default as Spinner } from "./Spinner/Spinner";
+
+export { default as InputSelect } from "./Inputs/InputSelect";
+export { default as SearchBarInput } from "./Inputs/SearchBarInput";
