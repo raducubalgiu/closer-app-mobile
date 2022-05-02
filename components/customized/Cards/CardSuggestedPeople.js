@@ -1,14 +1,13 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
-import { ContainedButton } from "../../core";
+import { ContainedButton, CustomAvatar } from "../../core";
 import theme from "../../../assets/styles/theme";
-import UserAvatar from "../../customized/Avatars/UserAvatar";
 
 const CardSuggestedPeople = (props) => {
   return (
     <TouchableOpacity style={styles.container}>
       <View>
-        <UserAvatar
+        <CustomAvatar
           avatar={props?.avatar}
           size={85}
           withBadge={false}

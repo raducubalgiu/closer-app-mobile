@@ -13,8 +13,7 @@ import theme from "../../../../assets/styles/theme";
 import { useAuth } from "../../../../context/auth";
 import MenuITemBetween from "../../../../components/customized/MenuItem/MenuITemBetween";
 import BottomSheetPopup from "../../../../components/customized/BottomSheets/BottomSheetPopup";
-import UserAvatar from "../../../../components/customized/Avatars/UserAvatar";
-import { Stack, Header } from "../../../../components/core";
+import { Stack, Header, CustomAvatar } from "../../../../components/core";
 import axios from "axios";
 
 const EditProfileScreen = () => {
@@ -50,7 +49,7 @@ const EditProfileScreen = () => {
               onPress={() => setOpen(true)}
             >
               <View>
-                <UserAvatar
+                <CustomAvatar
                   avatar={user?.avatar}
                   size={95}
                   iconSize={35}

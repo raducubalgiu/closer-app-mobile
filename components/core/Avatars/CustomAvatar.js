@@ -3,7 +3,7 @@ import { Avatar, Badge, Icon } from "@rneui/themed";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 
-const UserAvatar = (props) => {
+const CustomAvatar = (props) => {
   const checkAvatar = (avatar) => {
     if (avatar === undefined || avatar.length === 0) {
       return undefined;
@@ -50,7 +50,7 @@ const UserAvatar = (props) => {
   );
 };
 
-export default UserAvatar;
+export default CustomAvatar;
 
 const styles = StyleSheet.create({
   badgeContainer: {

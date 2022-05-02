@@ -1,14 +1,12 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import UserAvatar from "../Avatars/UserAvatar";
-import { Stack } from "../../core";
+import { Stack, Checkmark, CustomAvatar } from "../../core";
 import React from "react";
 import theme from "../../../assets/styles/theme";
-import { Checkmark } from "../../core";
 
 const MessageItem = (props) => {
   return (
     <TouchableOpacity style={styles.container}>
-      <UserAvatar avatar={props.avatar} />
+      <CustomAvatar avatar={props.avatar} />
       <Stack align="start" sx={{ marginLeft: 10 }}>
         <Stack direction="row">
           <Text style={styles.name}>{props.user}</Text>

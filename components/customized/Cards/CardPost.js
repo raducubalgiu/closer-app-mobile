@@ -2,8 +2,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Share } from "react-native";
 import { Image, Icon, Divider } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 import React, { useState } from "react";
-import Stack from "../../core/Containers/Stack";
-import UserAvatar from "../Avatars/UserAvatar";
+import { Stack, CustomAvatar } from "../../core";
 import LikeIButton from "../Buttons/LikeIButton";
 import BookmarkIButton from "../Buttons/BookmarkIButton";
 import ShareIButton from "../Buttons/ShareIButton";
@@ -39,7 +38,7 @@ const CardPost = (props) => {
     <View style={styles.container}>
       <Stack direction="row" sx={{ paddingHorizontal: 10 }}>
         <Stack direction="row" sx={styles.avatarContainer}>
-          <UserAvatar avatar={props?.avatar} size={35} iconSize={15} />
+          <CustomAvatar avatar={props?.avatar} size={35} iconSize={15} />
           <Stack align="start">
             <Stack direction="row">
               <Text style={styles.name}>{props.username}</Text>

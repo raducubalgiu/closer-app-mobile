@@ -42,6 +42,8 @@ const PostsProfileScreen = (props) => {
     <FlatList
       ListHeaderComponent={noFoundPosts}
       style={{ backgroundColor: "white" }}
+      bounces={false}
+      showsVerticalScrollIndicator={false}
       data={posts}
       numColumns={3}
       keyExtractor={(item) => item._id}

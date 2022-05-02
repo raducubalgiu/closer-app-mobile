@@ -1,13 +1,12 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { Avatar } from "@rneui/themed";
 import React from "react";
 import theme from "../../../assets/styles/theme";
-import OutlinedButton from "../../core/Buttons/OutlinedButton";
+import { CustomAvatar, OutlinedButton } from "../../core";
 
 const CardUserRecommend = (props) => {
   return (
     <TouchableOpacity style={styles.button}>
-      <Avatar size={64} rounded source={{ uri: `${props.avatar}` }} />
+      <CustomAvatar size={64} avatar={props?.avatar} />
       <Text style={styles.name}>{props.name}</Text>
       <Text style={styles.followersCount}>
         {props.followersCount} urmaritori

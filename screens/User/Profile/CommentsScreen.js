@@ -11,9 +11,13 @@ import React, { useState, useEffect } from "react";
 import { Divider } from "react-native-elements";
 import axios from "axios";
 import { useAuth } from "../../../context/auth";
-import UserAvatar from "../../../components/customized/Avatars/UserAvatar";
 import { Colors } from "../../../assets/styles/Colors";
-import { IconButton, Header } from "../../../components/core";
+import {
+  IconButton,
+  Header,
+  UserAvatar,
+  CustomAvatar,
+} from "../../../components/core";
 import moment from "moment";
 
 const CommentsScreen = (props) => {
@@ -73,7 +77,7 @@ const CommentsScreen = (props) => {
             ListHeaderComponent={
               <>
                 <View style={styles.headerCont}>
-                  <UserAvatar size={32.5} iconSize={15} avatar={avatar} />
+                  <CustomAvatar size={32.5} iconSize={15} avatar={avatar} />
                   <View style={{ marginLeft: 10, flex: 1 }}>
                     <Text>
                       <Text style={styles.username}>{username}</Text>

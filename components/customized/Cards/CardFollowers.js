@@ -1,7 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
-import UserAvatar from "../Avatars/UserAvatar";
-import Stack from "../../core/Containers/Stack";
+import { Stack, CustomAvatar } from "../../core";
 import theme from "../../../assets/styles/theme";
 import FollowButton from "../../core/Buttons/FollowButton";
 import { useAuth } from "../../../context/auth";
@@ -12,7 +11,7 @@ const CardFollowers = (props) => {
   return (
     <Stack direction="row" sx={styles.container}>
       <TouchableOpacity style={styles.goToUser} onPress={props.onGoToUser}>
-        <UserAvatar avatar={props.avatar} withBadge={false} />
+        <CustomAvatar avatar={props.avatar} withBadge={false} />
         <Stack align="start" sx={{ marginLeft: 10 }}>
           <Text style={styles.username}>{props.username}</Text>
           <Text style={styles.name}>{props.name}</Text>

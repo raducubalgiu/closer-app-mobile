@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
-import { Checkmark, Stack } from "../../core";
-import UserAvatar from "../Avatars/UserAvatar";
+import { Checkmark, Stack, CustomAvatar } from "../../core";
 import theme from "../../../assets/styles/theme";
 import FollowButton from "../../core/Buttons/FollowButton";
 
@@ -14,7 +13,7 @@ const NotificationFollow = (props) => {
         }}
       >
         <TouchableOpacity style={{ flexDirection: "row" }}>
-          <UserAvatar avatar={props.avatar} />
+          <CustomAvatar avatar={props.avatar} />
           <Stack
             direction="column"
             align="start"

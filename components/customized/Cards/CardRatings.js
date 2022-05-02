@@ -1,16 +1,15 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { AirbnbRating, Divider } from "@rneui/themed";
-import UserAvatar from "../Avatars/UserAvatar";
 import theme from "../../../assets/styles/theme";
-import Stack from "../../core/Containers/Stack";
+import { Stack, CustomAvatar } from "../../core";
 
 const CardRatings = (props) => {
   return (
     <View style={styles.container}>
       <Stack direction="row" align="start">
         <Stack direction="row">
-          <UserAvatar
+          <CustomAvatar
             iconSize={20}
             size={45}
             avatar={props?.avatar}

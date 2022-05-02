@@ -10,6 +10,8 @@ export { default as IconBackButton } from "./IconButton/IconBackButton";
 
 export { default as Header } from "./Header/Header";
 
+export { default as CustomAvatar } from "./Avatars/CustomAvatar";
+
 export { default as Checkmark } from "./Icons/Checkmark";
 
 export { default as Modal } from "./Modal/Modal";

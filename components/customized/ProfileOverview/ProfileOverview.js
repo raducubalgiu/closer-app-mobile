@@ -10,19 +10,18 @@ import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";
 import StatsButton from "../Buttons/StatsButton";
-import Stack from "../../core/Containers/Stack";
-import UserAvatar from "../Avatars/UserAvatar";
-import { Checkmark } from "../../core";
+import { Checkmark, CustomAvatar, Stack } from "../../core";
 
 const ProfileOverview = (props) => {
   const { user, withBadge } = props;
+  const { counter, business } = user;
   const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
       <Stack justify="center" align="center">
         <TouchableOpacity>
-          <UserAvatar
+          <CustomAvatar
             iconSize={37}
             size={95}
             avatar={user?.avatar}
@@ -35,9 +34,7 @@ const ProfileOverview = (props) => {
           {user?.checkmark && <Checkmark />}
         </Stack>
         <Stack direction="row" justify="start">
-          {user?.business && (
-            <Text style={styles.business}>{user?.business?.name}</Text>
-          )}
+          {business && <Text style={styles.business}>{business?.name}</Text>}
           {user?.role !== "subscriber" && (
             <Icon
               type="antdesign"
@@ -49,7 +46,7 @@ const ProfileOverview = (props) => {
           )}
           {user?.role !== "subscriber" && (
             <Text style={styles.ratingsAverage}>
-              {user?.counter?.ratingsAverage}
+              {counter?.ratingsAverage?.toFixed(1)}
             </Text>
           )}
         </Stack>
@@ -80,7 +77,7 @@ const ProfileOverview = (props) => {
             })
           }
           labelStats="Ratinguri"
-          statsNo={user?.counter?.ratingsQuantity}
+          statsNo={counter?.ratingsQuantity}
         />
         <StatsButton
           onPress={() =>
@@ -108,7 +105,7 @@ const ProfileOverview = (props) => {
             })
           }
           labelStats="Urmaresti"
-          statsNo={user?.counter?.followingCount}
+          statsNo={counter?.followingCount}
         />
       </Stack>
       <Stack direction="row" justify="center" sx={styles.buttonsContainer}>

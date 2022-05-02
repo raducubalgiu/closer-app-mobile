@@ -10,7 +10,11 @@ const AboutProfileScreen = (props) => {
   const { biography, website, location } = props;
 
   return (
-    <ScrollView style={styles.screen}>
+    <ScrollView
+      style={styles.screen}
+      bounces={false}
+      showsVerticalScrollIndicator={false}
+    >
       <Stack align="start" justify="start" sx={styles.container}>
         <Text style={styles.heading}>Biografie</Text>
         <Text style={styles.bio}>

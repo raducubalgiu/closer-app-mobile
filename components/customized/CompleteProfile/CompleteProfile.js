@@ -136,7 +136,7 @@ const CompleteProfile = () => {
 export default CompleteProfile;
 
 const styles = StyleSheet.create({
-  container: { margin: 15, flex: 1 },
+  container: { paddingVertical: 15, paddingLeft: 15, flex: 1 },
   title: {
     fontFamily: "Exo-Medium",
     color: theme.lightColors.black,
