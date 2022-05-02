@@ -12,9 +12,10 @@ const Header = (props) => {
       <Stack direction="row" sx={styles.container}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon
-            name="md-chevron-back"
-            type="ionicon"
+            name="chevron-thin-left"
+            type="entypo"
             color={theme.lightColors.black}
+            size={22.5}
           />
         </TouchableOpacity>
         <Stack direction="row">
@@ -36,13 +37,12 @@ const Header = (props) => {
             </Tooltip>
           )}
         </Stack>
-        {props.actionBtn ? (
-          props.actionBtn
-        ) : (
-          <Icon name="md-chevron-back" type="ionicon" color="white" />
+        {props.actionBtn && props.actionBtn}
+        {!props.actionBtn && (
+          <Icon name="chevron-thin-right" type="entypo" color="white" />
         )}
       </Stack>
-      {props.divider && <Divider style={{ color: "#ddd" }} />}
+      {props.divider && <Divider color="#ddd" />}
     </>
   );
 };

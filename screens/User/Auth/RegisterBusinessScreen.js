@@ -12,10 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import { AuthService } from "../../../services/AuthService";
 import { Divider } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
-import ButtonProvider from "../../../components/core/Buttons/ButtonProvider";
-import MainButton from "../../../components/core/Buttons/MainButton";
-import HeaderReusable from "../../../components/customized/Headers/HeaderReusable";
-import IconBackButton from "../../../components/core/IconButton/IconBackButton";
+import { Header, MainButton, ButtonProvider } from "../../../components/core";
 
 const RegisterBusinessScreen = () => {
   const navigation = useNavigation();
@@ -54,12 +51,8 @@ const RegisterBusinessScreen = () => {
 
   return (
     <SafeAreaView style={styles.screen}>
+      <Header />
       <View style={styles.loginContainer}>
-        <HeaderReusable
-          firstBox={<IconBackButton />}
-          secondBox={null}
-          thirdBox={null}
-        />
         <Text style={styles.mainHeading}>Inregistrare</Text>
         <Controller
           control={control}

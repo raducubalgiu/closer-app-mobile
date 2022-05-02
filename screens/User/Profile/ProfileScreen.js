@@ -9,7 +9,7 @@ import React, { useState, useCallback } from "react";
 import BottomSheetPopup from "../../../components/customized/BottomSheets/BottomSheetPopup";
 import { useNavigation } from "@react-navigation/native";
 import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
-import OutlinedButton from "../../../components/core/Buttons/OutlinedButton";
+import { OutlinedButton, Protected } from "../../../components/core";
 import HeaderProfile from "../../../components/customized/Headers/HeaderProfile";
 import { useAuth } from "../../../context/auth";
 import TopTabNavigator from "../../TopTabNavigator";
@@ -95,13 +95,15 @@ const ProfileScreen = (props) => {
           />
         </View>
       </ScrollView>
-      <FAB
-        visible={true}
-        icon={{ name: "calendar", type: "feather", color: "white" }}
-        color={theme.lightColors.primary}
-        placement="right"
-        onPress={() => navigation.navigate("MyCalendar")}
-      />
+      <Protected roles={[process.env.MAIN_ROLE, process.env.SECOND_ROLE]}>
+        <FAB
+          visible={true}
+          icon={{ name: "calendar", type: "feather", color: "white" }}
+          color={theme.lightColors.primary}
+          placement="right"
+          onPress={() => navigation.navigate("MyCalendar")}
+        />
+      </Protected>
       {sheetSettings}
     </SafeAreaView>
   );

@@ -10,7 +10,7 @@ import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";
 import StatsButton from "../Buttons/StatsButton";
-import { Checkmark, CustomAvatar, Stack } from "../../core";
+import { Checkmark, CustomAvatar, Protected, Stack } from "../../core";
 
 const ProfileOverview = (props) => {
   const { user, withBadge } = props;
@@ -34,8 +34,8 @@ const ProfileOverview = (props) => {
           {user?.checkmark && <Checkmark />}
         </Stack>
         <Stack direction="row" justify="start">
-          {business && <Text style={styles.business}>{business?.name}</Text>}
-          {user?.role !== "subscriber" && (
+          <Protected roles={[process.env.MAIN_ROLE, process.env.SECOND_ROLE]}>
+            {business && <Text style={styles.business}>{business?.name}</Text>}
             <Icon
               type="antdesign"
               name="star"
@@ -43,12 +43,10 @@ const ProfileOverview = (props) => {
               size={16}
               style={{ marginLeft: 7.5 }}
             />
-          )}
-          {user?.role !== "subscriber" && (
             <Text style={styles.ratingsAverage}>
               {counter?.ratingsAverage?.toFixed(1)}
             </Text>
-          )}
+          </Protected>
         </Stack>
       </Stack>
       <Stack justify="center" align="center" sx={styles.servicesContainer}>
@@ -65,20 +63,28 @@ const ProfileOverview = (props) => {
         </ScrollView>
       </Stack>
       <Stack direction="row" justify="between" sx={styles.statsContainer}>
-        <StatsButton
-          onPress={() =>
-            navigation.navigate("ProfileGeneralStack", {
-              screen: "ProfileTabsScreen",
-              params: {
-                userId: user?._id,
-                username: user?.username,
-                initialRoute: "Ratings",
-              },
-            })
-          }
-          labelStats="Ratinguri"
-          statsNo={counter?.ratingsQuantity}
-        />
+        <Protected roles={[process.env.MAIN_ROLE, process.env.SECOND_ROLE]}>
+          <StatsButton
+            onPress={() =>
+              navigation.navigate("ProfileGeneralStack", {
+                screen: "ProfileTabsScreen",
+                params: {
+                  userId: user?._id,
+                  username: user?.username,
+                  initialRoute: "Ratings",
+                },
+              })
+            }
+            labelStats="Ratinguri"
+            statsNo={counter?.ratingsQuantity}
+          />
+        </Protected>
+        <Protected roles={[process.env.THIRD_ROLE]}>
+          <StatsButton
+            labelStats="Postari"
+            statsNo={counter?.ratingsQuantity}
+          />
+        </Protected>
         <StatsButton
           onPress={() =>
             navigation.navigate("ProfileGeneralStack", {

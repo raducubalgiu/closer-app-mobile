@@ -13,10 +13,7 @@ import { Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";
 import { AuthService } from "../../../services/AuthService";
-import ButtonProvider from "../../../components/core/Buttons/ButtonProvider";
-import MainButton from "../../../components/core/Buttons/MainButton";
-import HeaderReusable from "../../../components/customized/Headers/HeaderReusable";
-import IconBackButton from "../../../components/core/IconButton/IconBackButton";
+import { Header, MainButton, ButtonProvider } from "../../../components/core";
 import { useAuth } from "../../../context/auth";
 
 const LoginScreen = () => {
@@ -98,12 +95,8 @@ const LoginScreen = () => {
 
   return (
     <SafeAreaView style={styles.screen}>
+      <Header />
       <View style={styles.loginContainer}>
-        <HeaderReusable
-          firstBox={<IconBackButton />}
-          secondBox={null}
-          thirdBox={null}
-        />
         <Text style={styles.mainHeading}>Autentificare</Text>
         <Controller
           control={control}

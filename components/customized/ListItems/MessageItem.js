@@ -1,15 +1,15 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Stack, Checkmark, CustomAvatar } from "../../core";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import theme from "../../../assets/styles/theme";
 
 const MessageItem = (props) => {
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={props.onPress}>
       <CustomAvatar avatar={props.avatar} />
       <Stack align="start" sx={{ marginLeft: 10 }}>
         <Stack direction="row">
-          <Text style={styles.name}>{props.user}</Text>
+          <Text style={styles.name}>{props.name}</Text>
           {props.checkmark && <Checkmark size={8} />}
         </Stack>
         <Stack direction="row">

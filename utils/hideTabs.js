@@ -6,6 +6,8 @@ export const hideTabs = (route) => {
   switch (routeName) {
     case "Comments":
       return { display: "none" };
+    case "MessageItem":
+      return { display: "none" };
     case "FiltersDate":
       return { display: "none" };
     case "FiltersService":

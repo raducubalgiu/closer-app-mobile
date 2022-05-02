@@ -73,7 +73,7 @@ const ProfileGeneralScreen = (props) => {
     setLoading(true);
     axios
       .get(
-        `${process.env.BASE_ENDPOINT}/users/${userDetails?.business?._id}/get-suggested`,
+        `${process.env.BASE_ENDPOINT}/users/${user?._id}/businesses/${userDetails?.business?._id}/get-suggested`,
         {
           headers: { Authorization: `Bearer ${user?.token}` },
         }

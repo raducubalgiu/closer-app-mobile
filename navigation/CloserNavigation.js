@@ -30,6 +30,7 @@ import ServicesNavigation from "../screens/ServicesNavigationScreen";
 import ServicesScreen from "../screens/ServicesScreen";
 import ExploreScreen from "../screens/ExploreScreen";
 import MessagesScreen from "../screens/MessagesScreen";
+import MessageItemScreen from "../screens/MessageItemScreen";
 import ServiceItemScreen from "../screens/ServiceItemScreen";
 import FeedScreen from "../screens/FeedScreen";
 
@@ -74,40 +75,6 @@ const HomeStackNavigator = () => {
   );
 };
 
-const AuthStackNavigator = () => {
-  return (
-    <Stack.Navigator
-      initialRouteName="Auth"
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <Stack.Screen name="Auth" component={AuthScreen} />
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Register" component={RegisterScreen} />
-      <Stack.Screen name="Username" component={UsernameScreen} />
-      <Stack.Screen
-        name="RegisterBusiness"
-        component={RegisterBusinessScreen}
-      />
-    </Stack.Navigator>
-  );
-};
-
-const ProfileStackNavigator = () => {
-  return (
-    <Stack.Navigator
-      initialRouteName="ProfileGeneral"
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <Stack.Screen name="ProfileGeneral" component={ProfileGeneralScreen} />
-      <Stack.Screen name="ProfileTabsScreen" component={ProfileTabsScreen} />
-    </Stack.Navigator>
-  );
-};
-
 const ExploreStackNavigator = () => {
   return (
     <Stack.Navigator
@@ -136,6 +103,40 @@ const FeedStackNavigator = () => {
       <Stack.Screen name="Feed" component={FeedScreen} />
       <Stack.Screen name="Likes" component={LikesScreen} />
       <Stack.Screen name="Comments" component={CommentsScreen} />
+    </Stack.Navigator>
+  );
+};
+
+const MessagesStackNavigator = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName="Messages"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="Messages" component={MessagesScreen} />
+      <Stack.Screen name="MessageItem" component={MessageItemScreen} />
+    </Stack.Navigator>
+  );
+};
+
+const AuthStackNavigator = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName="Auth"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="Auth" component={AuthScreen} />
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Register" component={RegisterScreen} />
+      <Stack.Screen name="Username" component={UsernameScreen} />
+      <Stack.Screen
+        name="RegisterBusiness"
+        component={RegisterBusinessScreen}
+      />
     </Stack.Navigator>
   );
 };
@@ -182,6 +183,20 @@ const UserStackNavigator = () => {
   );
 };
 
+const ProfileStackNavigator = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName="ProfileGeneral"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="ProfileGeneral" component={ProfileGeneralScreen} />
+      <Stack.Screen name="ProfileTabsScreen" component={ProfileTabsScreen} />
+    </Stack.Navigator>
+  );
+};
+
 const RootStack = createNativeStackNavigator();
 
 const TabsScreen = () => {
@@ -200,7 +215,7 @@ const TabsScreen = () => {
           } else if (route.name === "FeedStack") {
             iconType = "feather";
             iconName = focused ? "search" : "search";
-          } else if (route.name === "Messages") {
+          } else if (route.name === "MessagesStack") {
             iconType = "feather";
             iconName = focused ? "bell" : "bell";
           } else if (route.name === "UserStack") {
@@ -222,7 +237,7 @@ const TabsScreen = () => {
       <Tab.Screen name="HomeStack" component={HomeStackNavigator} />
       <Tab.Screen name="ExploreStack" component={ExploreStackNavigator} />
       <Tab.Screen name="FeedStack" component={FeedStackNavigator} />
-      <Tab.Screen name="Messages" component={MessagesScreen} />
+      <Tab.Screen name="MessagesStack" component={MessagesStackNavigator} />
       <Tab.Screen name="UserStack" component={UserStackNavigator} />
     </Tab.Navigator>
   );
