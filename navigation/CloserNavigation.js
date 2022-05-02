@@ -3,7 +3,7 @@ import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Icon } from "react-native-elements";
+import { Icon } from "@rneui/themed";
 import { useAuth } from "../context/auth";
 import { hideTabs } from "../utils/hideTabs";
 import "../i18next";

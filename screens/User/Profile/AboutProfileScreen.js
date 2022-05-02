@@ -3,7 +3,7 @@ import React from "react";
 import Stack from "../../../components/core/Containers/Stack";
 import { Colors } from "../../../assets/styles/Colors";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { Icon } from "react-native-elements";
+import { Icon } from "@rneui/themed";
 import { AddressFormat } from "../../../utils/addressFormat";
 
 const AboutProfileScreen = (props) => {

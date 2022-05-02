@@ -8,10 +8,10 @@ import {
   FlatList,
 } from "react-native";
 import React, { useState, useEffect } from "react";
-import { Divider } from "react-native-elements";
+import { Divider } from "@rneui/themed";
 import axios from "axios";
 import { useAuth } from "../../../context/auth";
-import { Colors } from "../../../assets/styles/Colors";
+import theme from "../../../assets/styles/theme";
 import {
   IconButton,
   Header,
@@ -147,11 +147,11 @@ const styles = StyleSheet.create({
   headerCont: { flexDirection: "row", margin: 15 },
   username: {
     fontFamily: "Exo-SemiBold",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
   },
   date: {
     fontFamily: "Exo-Medium",
-    color: Colors.textLight,
+    color: theme.lightColors.grey0t,
     fontSize: 13,
     marginTop: 5,
   },
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   iconBtn: {
-    backgroundColor: Colors.primary,
+    backgroundColor: theme.lightColors.primary,
     padding: 7.5,
     marginLeft: 10,
     borderRadius: 50,
