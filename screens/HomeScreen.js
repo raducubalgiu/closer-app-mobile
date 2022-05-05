@@ -24,7 +24,7 @@ const HomeScreen = () => {
   const { user } = useAuth();
   const [locations, setLocations] = useState([]);
   const { t } = useTranslation();
-  const [refreshing, setRefreshing] = React.useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   const fetchRecommended = useCallback(() => {
     axios
@@ -42,63 +42,70 @@ const HomeScreen = () => {
     fetchRecommended();
   }, [fetchRecommended]);
 
-  const onRefresh = React.useCallback(() => {
+  const onRefresh = useCallback(() => {
     setRefreshing(true);
     wait(1000).then(() => {
       setRefreshing(false);
     });
   }, []);
 
-  return (
-    <View style={styles.screen}>
-      <SafeAreaView style={{ backgroundColor: "white" }}>
-        <FakeSearchBar />
-      </SafeAreaView>
+  const renderRecommended = ({ item }) => {
+    const { images, counter } = item;
 
-      <FlatList
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-        ListHeaderComponent={
-          <>
-            <ServicesCategories />
-            <View style={{ backgroundColor: "white", borderTopLeftRadius: 20 }}>
-              <Text style={styles.sheetHeading}>{t("nearYou")}</Text>
-              <Divider width={2} color="#f1f1f1" style={styles.divider} />
-            </View>
-          </>
-        }
-        data={locations}
-        keyExtractor={(item) => item._id}
-        showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => (
-          <CardRecommended
-            id={item?._id}
-            name={item?.name}
-            image={item?.images[0]?.url}
-            title={item?.title}
-            street={item?.location?.street}
-            number={item?.location?.number}
-            county={item?.location?.county}
-            distance={item?.distance}
-            ratingsAverage={item?.ratingsAverage}
-            ratingsQuantity={item?.ratingsQuantity}
-            availableSeats={item?.availableSeats}
-            service={item?.services[0]?.name}
-          />
-        )}
+    return (
+      <CardRecommended
+        id={item?._id}
+        name={item?.name}
+        image={images[0]?.url}
+        title={item?.title}
+        address={item?.location}
+        distance={item?.distance}
+        ratingsAverage={counter[0]?.ratingsAverage}
+        ratingsQuantity={counter[0]?.ratingsQuantity}
+        availableSeats={item?.availableSeats}
+        service={item?.services[0]?.name}
       />
-    </View>
+    );
+  };
+
+  return (
+    <SafeAreaView style={styles.screen}>
+      <View style={styles.container}>
+        <FakeSearchBar />
+        <FlatList
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          ListHeaderComponent={
+            <>
+              <ServicesCategories />
+              <View>
+                <Text style={styles.sheetHeading}>{t("nearYou")}</Text>
+                <Divider width={2} color="#f1f1f1" style={styles.divider} />
+              </View>
+            </>
+          }
+          data={locations}
+          keyExtractor={(item) => item._id}
+          showsVerticalScrollIndicator={false}
+          renderItem={renderRecommended}
+        />
+      </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   screen: {
+    backgroundColor: "white",
+    flex: 1,
+  },
+  container: {
+    paddingHorizontal: 15,
     flex: 1,
   },
   sheetHeading: {
     paddingVertical: 15,
-    paddingLeft: 15,
     color: theme.lightColors.black,
     fontFamily: "Exo-SemiBold",
     fontSize: 15,

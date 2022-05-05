@@ -44,7 +44,6 @@ const ServicesNavigation = () => {
                 activeOpacity={1}
                 onPress={handleAccordion}
                 style={{
-                  backgroundColor: "#f1f1f1",
                   flexDirection: "row",
                   alignItems: "center",
                   justifyContent: "space-between",
@@ -124,11 +123,9 @@ export default ServicesNavigation;
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+    backgroundColor: "white",
   },
   servicesContainer: {
-    backgroundColor: "white",
     marginTop: 15,
-    borderTopColor: "#ddd",
-    borderTopWidth: 0.5,
   },
 });

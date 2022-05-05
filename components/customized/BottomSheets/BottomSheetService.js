@@ -8,6 +8,7 @@ import BottomSheet, {
 import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";
 import CardService from "../Cards/CardService";
+import { AddressFormat } from "../../../utils/addressFormat";
 
 const BottomSheetService = (props) => {
   const { t } = useTranslation();
@@ -34,9 +35,9 @@ const BottomSheetService = (props) => {
           image={item?.images[0]?.url}
           business={item?.name}
           distance={item?.distance}
-          address={`${item?.location?.street}, ${item?.location?.number}, ${item?.location?.city}, ${item?.location?.county}`}
-          ratingsAverage={item?.ratingsAverage}
-          ratingsQuantity={item?.ratingsQuantity}
+          address={AddressFormat(item?.location)}
+          ratingsAverage={item?.counter[0]?.ratingsAverage}
+          ratingsQuantity={item?.counter[0]?.ratingsQuantity}
           service={props?.serviceName}
         />
         <Divider />

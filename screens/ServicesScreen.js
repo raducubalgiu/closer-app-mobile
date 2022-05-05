@@ -16,6 +16,7 @@ import CardService from "../components/customized/Cards/CardService";
 import Map from "../components/customized/Map/Map";
 import theme from "../assets/styles/theme";
 import { useAuth } from "../context/auth";
+import { AddressFormat } from "../utils/addressFormat";
 
 const ServicesScreen = ({ route }) => {
   const { user } = useAuth();
@@ -25,7 +26,7 @@ const ServicesScreen = ({ route }) => {
   const [sheetStep, setSheetStep] = useState(0);
   const navigation = useNavigation();
   const { t } = useTranslation();
-  const { serviceId, serviceName, option } = route.params;
+  const { serviceId, serviceName, optionId } = route.params;
 
   const handleSheetChange = useCallback((index) => {
     setSheetStep(index);
@@ -35,10 +36,10 @@ const ServicesScreen = ({ route }) => {
     setChecked(!checked);
   };
 
-  useEffect(() => {
+  const fetchLocations = useCallback(() => {
     axios
       .get(
-        `${process.env.BASE_ENDPOINT}/get-by-distance?serviceId=${serviceId}&latlng=26.100195,44.428286`,
+        `${process.env.BASE_ENDPOINT}/users/get-by-distance?latlng=26.100195,44.428286&serviceId=${serviceId}&option=${optionId}`,
         {
           headers: { Authorization: `Bearer ${user?.token}` },
         }
@@ -48,7 +49,11 @@ const ServicesScreen = ({ route }) => {
         setResults(resp.data.results);
       })
       .catch((error) => console.log(error));
-  }, []);
+  }, [serviceId]);
+
+  useEffect(() => {
+    fetchLocations();
+  }, [fetchLocations]);
 
   return (
     <View style={styles.screen}>
@@ -75,15 +80,15 @@ const ServicesScreen = ({ route }) => {
           />
           <TouchableOpacity style={styles.secondFilter}>
             <Text style={styles.filterText}>{t("price")}</Text>
-            <Icon name="keyboard-arrow-down" />
+            <Icon name="keyboard-arrow-down" color={theme.lightColors.black} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.secondFilter}>
             <Text style={styles.filterText}>{t("distance")}</Text>
-            <Icon name="keyboard-arrow-down" />
+            <Icon name="keyboard-arrow-down" color={theme.lightColors.black} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.secondFilter}>
             <Text style={styles.filterText}>{t("rating")}</Text>
-            <Icon name="keyboard-arrow-down" />
+            <Icon name="keyboard-arrow-down" color={theme.lightColors.black} />
           </TouchableOpacity>
         </View>
         <Divider />
@@ -106,7 +111,7 @@ const ServicesScreen = ({ route }) => {
           <View>
             <FlatList
               data={locations}
-              keyExtractor={(item) => item._id}
+              keyExtractor={(item) => item.products?._id}
               showsVerticalScrollIndicator={false}
               renderItem={({ item }) => (
                 <>
@@ -115,9 +120,9 @@ const ServicesScreen = ({ route }) => {
                     distance={item?.distance}
                     image={item?.images[0]?.url}
                     business={item?.name}
-                    address={`${item?.location?.street}, ${item?.location?.number}, ${item?.location?.city}, ${item?.location?.county}`}
-                    ratingsAverage={item?.ratingsAverage}
-                    ratingsQuantity={item?.ratingsQuantity}
+                    address={AddressFormat(item?.location)}
+                    ratingsAverage={item?.counter[0]?.ratingsAverage}
+                    ratingsQuantity={item?.counter[0]?.ratingsQuantity}
                     service={serviceName}
                   />
                   <Divider />

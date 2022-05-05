@@ -3,6 +3,7 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { Icon } from "@rneui/themed";
 import { useAuth } from "../../../context/auth";
+import theme from "../../../assets/styles/theme";
 
 const BookmarkIButton = (props) => {
   const { user } = useAuth();
@@ -70,7 +71,7 @@ const BookmarkIButton = (props) => {
           type={"font-awesome"}
           name={bookmarked ? "bookmark" : "bookmark-o"}
           size={props.size ? props.size : 24}
-          color={bookmarked && "#333333"}
+          color={bookmarked ? "#333333" : theme.lightColors.black}
         />
       </Animated.View>
     </Pressable>

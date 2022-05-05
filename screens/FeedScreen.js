@@ -68,6 +68,26 @@ const FeedScreen = () => {
     });
   }, []);
 
+  console.log(posts);
+
+  const post = ({ item }) => (
+    <CardPost
+      avatar={item?.user?.avatar[0]?.url}
+      username={item?.user?.username}
+      job={item?.user?.job}
+      date={moment(item.createdAt).startOf("hour").fromNow()}
+      image={item?.images[0]?.url}
+      description={item?.description}
+      likesCount={item?.likesCount}
+      commentsCount={item?.commentsCount}
+      bookable={item?.bookable}
+      checkmark={item?.checkmark}
+      isBookmark={false}
+      postId={item?._id}
+      userId={item?.user?._id}
+    />
+  );
+
   return (
     <SafeAreaView style={styles.screen}>
       <Stack justify="start">
@@ -119,27 +139,11 @@ const FeedScreen = () => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
         contentContainerStyle={{ marginTop: 5 }}
-        data={postsState.activeAll ? posts : followingsPosts}
+        data={posts}
         nestedScrollEnabled={true}
         keyExtractor={(item) => item._id}
         showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => (
-          <CardPost
-            avatar={item?.user?.avatar[0]?.url}
-            username={item?.user?.username}
-            job={item?.user?.job}
-            date={moment(item.createdAt).startOf("hour").fromNow()}
-            image={item?.images[0]?.url}
-            description={item?.description}
-            likesCount={item?.likesCount}
-            commentsCount={item?.commentsCount}
-            bookable={item?.bookable}
-            checkmark={item?.checkmark}
-            isBookmark={false}
-            postId={item?._id}
-            userId={item?.user?._id}
-          />
-        )}
+        renderItem={post}
       />
     </SafeAreaView>
   );

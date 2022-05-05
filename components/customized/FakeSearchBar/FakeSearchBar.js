@@ -10,7 +10,7 @@ const FakeSearchBar = () => {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.screen}>
+    <View style={styles.container}>
       <TouchableOpacity
         activeOpacity={1}
         onPress={() => navigation.navigate("Search")}
@@ -32,7 +32,7 @@ const FakeSearchBar = () => {
         <Icon
           name="clock"
           type="feather"
-          size={17}
+          size={15}
           style={{ marginRight: 5 }}
           color={theme.lightColors.black}
         />
@@ -46,23 +46,22 @@ const FakeSearchBar = () => {
 export default FakeSearchBar;
 
 const styles = StyleSheet.create({
-  screen: {
+  container: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: "white",
     marginVertical: 10,
-    marginHorizontal: 10,
     backgroundColor: "#f1f1f1",
-    paddingVertical: 5,
-    paddingHorizontal: 10,
+    paddingVertical: 6,
+    paddingHorizontal: 15,
   },
   fakeInput: {
     flexDirection: "row",
     alignItems: "center",
     flex: 1,
-    paddingVertical: 2.5,
-    paddingHorizontal: 10,
+    paddingVertical: 2,
+    paddingHorizontal: 15,
     backgroundColor: "#f1f1f1",
     borderWidth: 2,
     borderColor: "#f1f1f1",
@@ -75,7 +74,7 @@ const styles = StyleSheet.create({
   },
   datePicker: {
     textAlign: "center",
-    paddingVertical: 6,
+    paddingVertical: 5,
     paddingHorizontal: 10,
   },
   datePickerDetails: {
@@ -105,12 +104,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "white",
     borderRadius: 20,
-    paddingVertical: 5,
+    paddingVertical: 2.5,
     paddingHorizontal: 7.5,
   },
   nowBtnText: {
     marginRight: 5,
     fontFamily: "Exo-SemiBold",
     color: theme.lightColors.black,
+    fontSize: 13.5,
   },
 });

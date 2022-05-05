@@ -71,11 +71,9 @@ export default ServicesCategories;
 
 const styles = StyleSheet.create({
   servicesContainer: {
-    backgroundColor: "white",
-    marginVertical: 10,
     paddingVertical: 10,
-    paddingHorizontal: 10,
-    marginVertical: 10,
+    marginTop: 5,
+    flex: 1,
   },
   headingContainer: {
     display: "flex",
@@ -84,7 +82,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingBottom: 20,
     paddingTop: 5,
-    paddingHorizontal: 10,
   },
   servicesHeading: {
     color: theme.lightColors.black,
@@ -92,8 +89,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   seeAllHeading: {
-    color: theme.lightColors.black,
-    fontSize: 12,
+    fontSize: 12.5,
     fontFamily: "Exo-SemiBold",
     color: theme.lightColors.grey0,
   },

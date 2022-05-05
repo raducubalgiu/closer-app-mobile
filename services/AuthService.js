@@ -2,10 +2,8 @@ import {
   GoogleAuthProvider,
   getAuth,
   signInWithPopup,
-  signOut,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  updateProfile,
   sendPasswordResetEmail,
 } from "firebase/auth";
 
@@ -73,17 +71,6 @@ export const AuthService = {
       return {
         error: error.message,
       };
-    }
-  },
-  updateUserName: async (name) => {
-    try {
-      const { user } = await updateProfile(getAuth().currentUser, {
-        displayName: name,
-      });
-
-      return user;
-    } catch (error) {
-      return error;
     }
   },
 };

@@ -49,6 +49,28 @@ const RegisterScreen = () => {
     }
   };
 
+  const registerWithGoogle = async () => {
+    try {
+      const { user, error } = await AuthService.loginWithGoogle();
+
+      if (error) {
+        console.log(error);
+        return;
+      }
+
+      if (user && !error) {
+        const idTokenResult = await user.getIdTokenResult();
+        navigation.navigate("Username", {
+          role: "subscriber",
+          business: undefined,
+          idTokenResult,
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.screen}>
       <Header />
@@ -122,7 +144,7 @@ const RegisterScreen = () => {
         <Divider style={{ marginTop: 20, marginBottom: 35 }} />
 
         <ButtonProvider
-          onPress={() => {}}
+          onPress={registerWithGoogle}
           iconName="googleplus"
           iconType="antdesign"
           color="#DB4437"

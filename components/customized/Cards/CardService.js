@@ -4,6 +4,7 @@ import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";
+import { trimFunc } from "../../../utils/trimFunc";
 
 const CardService = (props) => {
   const navigation = useNavigation();
@@ -28,7 +29,7 @@ const CardService = (props) => {
       <View style={styles.cardContent}>
         <View style={styles.cardContentFlex}>
           <Text style={styles.business}>{props.business}</Text>
-          <Text style={styles.address}>{props.address} </Text>
+          <Text style={styles.address}>{trimFunc(props.address, 60)} </Text>
           <View style={styles.ratingsContainer}>
             <Icon
               name="star"
@@ -36,13 +37,12 @@ const CardService = (props) => {
               size={17}
               color={theme.lightColors.primary}
             />
-            <Text style={styles.ratingsAverage}>{props.ratingsAverage}</Text>
+            <Text style={styles.ratingsAverage}>
+              {props.ratingsAverage.toFixed(1)}
+            </Text>
             <Text style={styles.ratingsQuantity}>
               {props.ratingsQuantity} {t("reviews")}
             </Text>
-          </View>
-          <View style={styles.serviceContainer}>
-            <Text style={styles.service}>{props.service}</Text>
           </View>
           <View style={styles.priceContainer}>
             <Text style={styles.priceLabel}>de la</Text>
@@ -99,11 +99,11 @@ const styles = StyleSheet.create({
   cardContentFlex: {},
   business: {
     fontSize: 16,
-    fontFamily: "Exo-ExtraBold",
+    fontFamily: "Exo-SemiBold",
     color: theme.lightColors.black,
   },
   address: {
-    fontFamily: "Exo-SemiBold",
+    fontFamily: "Exo-Medium",
     color: theme.lightColors.grey0,
     marginTop: 1,
     fontSize: 13,
@@ -129,10 +129,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   service: {
-    fontFamily: "Exo-Bold",
+    fontFamily: "Exo-SemiBold",
     backgroundColor: "#f1f1f1",
     padding: 5,
-    fontSize: 12.5,
+    fontSize: 12,
   },
   priceContainer: {
     flexDirection: "row",

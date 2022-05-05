@@ -4,6 +4,8 @@ export const hideTabs = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route);
 
   switch (routeName) {
+    case "Services":
+      return { display: "none" };
     case "Comments":
       return { display: "none" };
     case "MessageItem":

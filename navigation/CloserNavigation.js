@@ -66,9 +66,9 @@ const HomeStackNavigator = () => {
     >
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="Search" component={SearchScreen} />
-      <Stack.Screen name="AllServices" component={ServicesNavigation} />
       <Stack.Screen name="FiltersDate" component={FiltersDateScreen} />
       <Stack.Screen name="FiltersService" component={FiltersServiceScreen} />
+      <Stack.Screen name="AllServices" component={ServicesNavigation} />
       <Stack.Screen name="Services" component={ServicesScreen} />
       <Stack.Screen name="ServiceItem" component={ServiceItemScreen} />
     </Stack.Navigator>
@@ -206,13 +206,13 @@ const TabsScreen = () => {
         tabBarIcon: ({ focused, color }) => {
           let iconName;
           let iconType;
-          if (route.name === "HomeStack") {
+          if (route.name === "FeedStack") {
             iconType = "feather";
             iconName = focused ? "home" : "home";
           } else if (route.name === "ExploreStack") {
             iconType = "feather";
             iconName = focused ? "video" : "video";
-          } else if (route.name === "FeedStack") {
+          } else if (route.name === "HomeStack") {
             iconType = "feather";
             iconName = focused ? "search" : "search";
           } else if (route.name === "MessagesStack") {
@@ -234,9 +234,9 @@ const TabsScreen = () => {
       })}
       sceneContainerStyle={{ backgroundColor: "white" }}
     >
-      <Tab.Screen name="HomeStack" component={HomeStackNavigator} />
-      <Tab.Screen name="ExploreStack" component={ExploreStackNavigator} />
       <Tab.Screen name="FeedStack" component={FeedStackNavigator} />
+      <Tab.Screen name="ExploreStack" component={ExploreStackNavigator} />
+      <Tab.Screen name="HomeStack" component={HomeStackNavigator} />
       <Tab.Screen name="MessagesStack" component={MessagesStackNavigator} />
       <Tab.Screen name="UserStack" component={UserStackNavigator} />
     </Tab.Navigator>

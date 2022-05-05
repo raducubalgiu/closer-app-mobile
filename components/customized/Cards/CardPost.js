@@ -150,7 +150,7 @@ const CardPost = (props) => {
           >
             Poti rezerva acest produs
           </Text>
-          <Icon name="keyboard-arrow-right" />
+          <Icon name="keyboard-arrow-right" color={theme.lightColors.black} />
         </Stack>
         <BookmarkIButton />
       </Stack>

@@ -7,6 +7,7 @@ import InputCheck from "../../../components/core/Inputs/InputCheck";
 
 const UsernameScreen = (props) => {
   const { idTokenResult } = props.route.params;
+  const { displayName, photoURL } = idTokenResult;
   const { setUser } = useAuth();
 
   const handleSubmit = async (data) => {
@@ -15,7 +16,8 @@ const UsernameScreen = (props) => {
         `${process.env.BASE_ENDPOINT}/users/create-or-update-user`,
         {
           username: data.username,
-          name: data.username,
+          name: displayName ? displayName : data.username,
+          avatar: photoURL ? photoURL : [],
           role: props.route.params.role,
           business: props.route.params.business,
         },

@@ -48,7 +48,7 @@ const CardRecommended = (props) => {
               </View>
             </View>
             <Text style={styles.cardAddress}>
-              {props.street}, {props.number}, {props.county}
+              {trimFunc(AddressFormat(props.address), 30)}
             </Text>
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.cardTitle}>{props.service}</Text>
@@ -61,7 +61,7 @@ const CardRecommended = (props) => {
                 color={theme.lightColors.primary}
               />
               <Text style={styles.cardRatingsAverage}>
-                {props.ratingsAverage}
+                {props.ratingsAverage.toFixed(1)}
               </Text>
               <Text style={styles.cardRatingsQuantity}>
                 {props.ratingsQuantity} {t("reviews")}
@@ -84,7 +84,6 @@ const styles = StyleSheet.create({
   },
   cardItem: {
     paddingVertical: 15,
-    paddingHorizontal: 15,
   },
   recommendItem: {
     flexDirection: "row",
@@ -95,11 +94,12 @@ const styles = StyleSheet.create({
     flex: 1,
     width: 130,
     //resizeMode: "contain",
+    borderRadius: 5,
   },
   cardInfo: {
     flex: 1,
     paddingVertical: 5,
-    paddingHorizontal: 10,
+    marginLeft: 10,
   },
   distanceContainer: { flexDirection: "row", alignItems: "center" },
   cardNameDistance: {
@@ -128,7 +128,9 @@ const styles = StyleSheet.create({
     fontSize: 11,
     marginTop: 5,
     marginBottom: 5,
-    backgroundColor: "#f1f1f1",
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 5,
     paddingVertical: 2,
     paddingHorizontal: 10,
     color: theme.lightColors.black,

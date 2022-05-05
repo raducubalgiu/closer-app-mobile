@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     margin: 10,
   },
-  input: { flex: 1, padding: 15 },
+  input: { flex: 1, paddingHorizontal: 15 },
   sendBtnText: {
     fontFamily: "Exo-Bold",
     color: theme.lightColors.primary,

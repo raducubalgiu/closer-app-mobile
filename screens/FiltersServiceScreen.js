@@ -14,12 +14,12 @@ const FiltersServiceScreen = (props) => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.BASE_ENDPOINT}/services/${serviceId}/filters`)
+      .get(`${process.env.BASE_ENDPOINT}/services/${serviceId}`)
       .then((res) => {
-        setFilter(res.data.filters[0]);
+        setFilter(res.data.service.filters[0]);
       })
       .catch((error) => console.log(error));
-  }, []);
+  }, [serviceId]);
 
   return (
     <BottomSheetFilter
@@ -64,7 +64,7 @@ const FiltersServiceScreen = (props) => {
         navigation.navigate("Services", {
           serviceId,
           serviceName,
-          option: option?._id,
+          optionId: option?._id,
         })
       }
     />
