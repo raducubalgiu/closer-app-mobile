@@ -1,5 +1,5 @@
 import { StyleSheet, SafeAreaView } from "react-native";
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import FollowersTabDetails from "./FollowersTabDetails";
 import FollowingTabDetails from "./FollowingTabDetails";

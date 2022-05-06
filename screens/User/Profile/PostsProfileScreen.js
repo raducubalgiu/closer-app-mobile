@@ -6,9 +6,10 @@ import {
   View,
   Text,
 } from "react-native";
-import { Image, Icon } from "@rneui/themed";
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import { Image, Icon } from "@rneui/themed";
+import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import CompleteProfile from "../../../components/customized/CompleteProfile/CompleteProfile";
 import NoFoundPosts from "../../../components/customized/NotFoundContent/NoFoundPosts";
@@ -18,23 +19,27 @@ import { useAuth } from "../../../context/auth";
 const { width } = Dimensions.get("window");
 
 const PostsProfileScreen = (props) => {
-  const { user } = useAuth();
   const [posts, setPosts] = useState([]);
+  const { user } = useAuth();
+  const { userId } = props;
   const navigation = useNavigation();
 
-  useEffect(() => {
-    axios
-      .get(`${process.env.BASE_ENDPOINT}/users/${props.userId}/get-posts`, {
-        headers: { Authorization: `Bearer ${user?.token}` },
-      })
-      .then((res) => {
-        setPosts(res.data.posts);
-      })
-      .catch((err) => console.log(err));
-  }, [props.userId]);
+  useFocusEffect(
+    React.useCallback(() => {
+      axios
+        .get(`${process.env.BASE_ENDPOINT}/users/${userId}/get-posts`, {
+          headers: { Authorization: `Bearer ${user?.token}` },
+        })
+        .then((res) => {
+          console.log("FETCH POSTS");
+          setPosts(res.data.posts);
+        })
+        .catch((err) => console.log(err));
+    }, [userId, user])
+  );
 
   let noFoundPosts;
-  if (posts.length === 0 && user?._id === props.userId) {
+  if (posts.length === 0) {
     noFoundPosts = <NoFoundPosts />;
   }
 

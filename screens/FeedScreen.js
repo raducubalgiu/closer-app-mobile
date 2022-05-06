@@ -6,9 +6,10 @@ import {
   ActivityIndicator,
   ScrollView,
 } from "react-native";
+import { useScrollToTop } from "@react-navigation/native";
 import { Divider } from "@rneui/themed";
 import moment from "moment";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useRef } from "react";
 import CardPost from "../components/customized/Cards/CardPost";
 import theme from "../assets/styles/theme";
 import axios from "axios";
@@ -24,6 +25,8 @@ const FeedScreen = () => {
   const [posts, setPosts] = useState([]);
   const [followingsPosts, setFollowingsPosts] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
+  const ref = useRef(null);
+  useScrollToTop(ref);
 
   const fetchAllPosts = useCallback(() => {
     setLoading(true);
@@ -67,8 +70,6 @@ const FeedScreen = () => {
       setRefreshing(false);
     });
   }, []);
-
-  console.log(posts);
 
   const post = ({ item }) => (
     <CardPost
@@ -132,6 +133,7 @@ const FeedScreen = () => {
       </Stack>
       <Divider color="#ddd" />
       <Animated.FlatList
+        ref={ref}
         ListHeaderComponent={
           loading && <ActivityIndicator style={styles.spinner} />
         }

@@ -73,10 +73,10 @@ const LikeIButton = (props) => {
         ]}
       >
         <Icon
-          type="antdesign"
-          name={"heart"}
-          size={props.size ? props.size : 35}
-          color={liked ? "#F72A50" : "white"}
+          type={liked ? "antdesign" : "feather"}
+          name="heart"
+          size={props.size ? props.size : 25}
+          color={liked ? "#F72A50" : "black"}
         />
       </Animated.View>
     </Pressable>

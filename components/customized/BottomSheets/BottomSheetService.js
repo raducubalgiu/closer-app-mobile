@@ -38,6 +38,7 @@ const BottomSheetService = (props) => {
           address={AddressFormat(item?.location)}
           ratingsAverage={item?.counter[0]?.ratingsAverage}
           ratingsQuantity={item?.counter[0]?.ratingsQuantity}
+          minPrice={item?.minPrice}
           service={props?.serviceName}
         />
         <Divider />

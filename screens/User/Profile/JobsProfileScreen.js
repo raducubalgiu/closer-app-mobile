@@ -38,18 +38,19 @@ if (jobs.length === 0) {
 
 const JobsProfileScreen = () => {
   return (
-    <FlatList
-      data={jobs}
-      keyExtractor={(item) => item?._id}
-      renderItem={({ item }) => (
-        <CardJob
-          name={item?.name}
-          description={item?.description}
-          priority={item?.priority}
-        />
-      )}
-      ListHeaderComponent={noFoundContent}
-    />
+    <></>
+    // <FlatList
+    //   data={jobs}
+    //   keyExtractor={(item) => item?._id}
+    //   renderItem={({ item }) => (
+    //     <CardJob
+    //       name={item?.name}
+    //       description={item?.description}
+    //       priority={item?.priority}
+    //     />
+    //   )}
+    //   ListHeaderComponent={noFoundContent}
+    // />
   );
 };
 

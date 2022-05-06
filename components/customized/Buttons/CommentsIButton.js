@@ -1,6 +1,7 @@
 import { TouchableOpacity } from "react-native";
 import { Icon } from "@rneui/themed";
 import React from "react";
+import theme from "../../../assets/styles/theme";
 
 const CommentsIButton = (props) => {
   return (
@@ -10,10 +11,10 @@ const CommentsIButton = (props) => {
       style={{ ...props.sx }}
     >
       <Icon
-        type="ionicon"
-        name="chatbubble-ellipses-sharp"
-        size={props.size ? props.size : 35}
-        color="white"
+        type="feather"
+        name="message-circle"
+        size={props.size ? props.size : 24}
+        color={theme.lightColors.black}
       />
     </TouchableOpacity>
   );

@@ -46,7 +46,7 @@ const CardService = (props) => {
           </View>
           <View style={styles.priceContainer}>
             <Text style={styles.priceLabel}>de la</Text>
-            <Text style={styles.price}>50 Lei</Text>
+            <Text style={styles.price}>{props.minPrice} Lei</Text>
           </View>
           {/* <Text style={styles.warning}>
             Grabeste-te! Au mai ramas 1 locuri libere

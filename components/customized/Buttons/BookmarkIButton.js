@@ -68,8 +68,8 @@ const BookmarkIButton = (props) => {
         ]}
       >
         <Icon
-          type={"font-awesome"}
-          name={bookmarked ? "bookmark" : "bookmark-o"}
+          type={bookmarked ? "font-awesome" : "feather"}
+          name={bookmarked ? "bookmark" : "bookmark"}
           size={props.size ? props.size : 24}
           color={bookmarked ? "#333333" : theme.lightColors.black}
         />

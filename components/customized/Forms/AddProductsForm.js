@@ -17,11 +17,12 @@ const defaultValues = {
   description: "",
   price: "",
   discount: "",
+  duration: "",
 };
 
 const AddProductsForm = (props) => {
   const { user } = useAuth();
-  const [filters, setFilters] = useState([]);
+  const [options, setOptions] = useState([]);
   const [selectedService, setSelectedService] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
   const [loading, setLoading] = useState(false);
@@ -31,22 +32,18 @@ const AddProductsForm = (props) => {
     formState: { errors },
   } = useForm({ defaultValues });
 
-  const fetchFilters = useCallback(() => {
-    if (selectedService) {
-      axios
-        .get(`${process.env.BASE_ENDPOINT}/services/${selectedService}/filters`)
-        .then((res) => setFilters(res.data.filters[0].options))
-        .catch((err) => console.log(err));
-    }
-  }, [selectedService]);
-
   useEffect(() => {
-    fetchFilters();
-  }, [fetchFilters]);
+    axios
+      .get(`${process.env.BASE_ENDPOINT}/services/${selectedService}`)
+      .then((res) => {
+        setOptions(res.data.service.filters[0].options);
+      })
+      .catch((error) => console.log(error));
+  }, [selectedService]);
 
   const onSubmit = (data) => {
     setLoading(true);
-    const { description, price, discount, name } = data;
+    const { description, price, discount, name, duration } = data;
     axios
       .post(
         `${process.env.BASE_ENDPOINT}/users/${user?._id}/products`,
@@ -57,6 +54,7 @@ const AddProductsForm = (props) => {
           discount,
           service: selectedService,
           option: selectedOption,
+          duration,
         },
         {
           headers: { Authorization: `Bearer ${user?.token}` },
@@ -79,7 +77,6 @@ const AddProductsForm = (props) => {
           placeholder="Selecteaza serviciul aferent produsului*"
           onValueChange={(service) => {
             setSelectedService(service);
-            fetchFilters();
           }}
           value={selectedService}
           items={user?.services}
@@ -90,7 +87,7 @@ const AddProductsForm = (props) => {
           placeholder="Selecteaza categoria produsului"
           onValueChange={(option) => setSelectedOption(option)}
           value={selectedOption}
-          items={filters}
+          items={options}
         />
       </View>
       <View style={styles.row}>
@@ -112,7 +109,7 @@ const AddProductsForm = (props) => {
           )}
           name="name"
         />
-        {errors.street && <Text>This is required.</Text>}
+        {errors.name && <Text>This is required.</Text>}
       </View>
       <View style={styles.row}>
         <Controller
@@ -133,7 +130,28 @@ const AddProductsForm = (props) => {
           )}
           name="description"
         />
-        {errors.street && <Text>This is required.</Text>}
+        {errors.description && <Text>This is required.</Text>}
+      </View>
+      <View style={styles.row}>
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={{
+                ...styles.input,
+              }}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              placeholder="Durata"
+              placeholderTextColor={"#9EA0A4"}
+            />
+          )}
+          name="duration"
+        />
+        {errors.duration && <Text>This is required.</Text>}
       </View>
       <View style={styles.row}>
         <Controller
@@ -154,14 +172,11 @@ const AddProductsForm = (props) => {
           )}
           name="price"
         />
-        {errors.street && <Text>This is required.</Text>}
+        {errors.price && <Text>This is required.</Text>}
       </View>
       <View style={styles.row}>
         <Controller
           control={control}
-          rules={{
-            required: true,
-          }}
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
               style={{
@@ -175,7 +190,6 @@ const AddProductsForm = (props) => {
           )}
           name="discount"
         />
-        {errors.street && <Text>This is required.</Text>}
       </View>
       <View style={styles.row}>
         <MainButton

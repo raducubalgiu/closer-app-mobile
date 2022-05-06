@@ -1,4 +1,5 @@
 import { StyleSheet, View, FlatList } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import React, { useCallback, useEffect, useState } from "react";
 import CardFollowers from "../../Cards/CardFollowers";
 import { useNavigation } from "@react-navigation/native";
@@ -13,25 +14,27 @@ const FollowersTabDetails = (props) => {
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
 
-  const fetchFollowers = useCallback(() => {
-    setLoading(true);
-    axios
-      .get(`${process.env.BASE_ENDPOINT}/users/${props.userId}/get-followers`, {
-        headers: { Authorization: `Bearer ${user?.token}` },
-      })
-      .then((res) => {
-        setFollowers(res.data.followers);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
-  }, [props.userId, user?.token]);
-
-  useEffect(() => {
-    fetchFollowers();
-  }, [fetchFollowers]);
+  useFocusEffect(
+    React.useCallback(() => {
+      setLoading(true);
+      axios
+        .get(
+          `${process.env.BASE_ENDPOINT}/users/${props.userId}/get-followers`,
+          {
+            headers: { Authorization: `Bearer ${user?.token}` },
+          }
+        )
+        .then((res) => {
+          console.log("Fetch followers");
+          setFollowers(res.data.followers);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoading(false);
+        });
+    }, [props.userId, user?.token])
+  );
 
   const updateSearch = (text) => setSearch(text);
 

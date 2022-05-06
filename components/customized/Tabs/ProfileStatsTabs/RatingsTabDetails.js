@@ -1,4 +1,5 @@
 import { StyleSheet, FlatList } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import CardRatings from "../../Cards/CardRatings";
 import axios from "axios";
@@ -11,21 +12,25 @@ const RatingsTabDetails = (props) => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`${process.env.BASE_ENDPOINT}/users/${props.userId}/reviews`, {
-        headers: { Authorization: `Bearer ${user?.token}` },
-      })
-      .then((res) => {
-        setReviews(res.data.reviews);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
-  }, [props.userId, user?.token]);
+  useFocusEffect(
+    React.useCallback(() => {
+      setLoading(true);
+      axios
+        .get(`${process.env.BASE_ENDPOINT}/users/${props.userId}/reviews`, {
+          headers: { Authorization: `Bearer ${user?.token}` },
+        })
+        .then((res) => {
+          console.log("Fetch Ratings");
+          setReviews(res.data.reviews);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoading(false);
+        });
+
+    }, [props.userId, user?.token])
+  );
 
   return (
     <>

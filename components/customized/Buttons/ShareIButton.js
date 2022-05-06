@@ -1,6 +1,7 @@
 import { TouchableOpacity } from "react-native";
 import { Icon } from "@rneui/themed";
 import React from "react";
+import theme from "../../../assets/styles/theme";
 
 const ShareIButton = (props) => {
   return (
@@ -10,10 +11,10 @@ const ShareIButton = (props) => {
       style={{ ...props.sx }}
     >
       <Icon
-        type="fontisto"
-        name="share-a"
-        size={props.size ? props.size : 25}
-        color="white"
+        type="feather"
+        name="send"
+        size={props.size ? props.size : 24}
+        color={theme.lightColors.black}
       />
     </TouchableOpacity>
   );

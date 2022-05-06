@@ -6,7 +6,7 @@ import {
   FlatList,
   RefreshControl,
 } from "react-native";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { Divider } from "@rneui/themed";
@@ -15,6 +15,7 @@ import ServicesCategories from "../components/customized/ServicesCategories/Serv
 import CardRecommended from "../components/customized/Cards/CardRecommended";
 import theme from "../assets/styles/theme";
 import { useAuth } from "../context/auth";
+import { useScrollToTop } from "@react-navigation/native";
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -25,6 +26,9 @@ const HomeScreen = () => {
   const [locations, setLocations] = useState([]);
   const { t } = useTranslation();
   const [refreshing, setRefreshing] = useState(false);
+  const ref = useRef(null);
+
+  useScrollToTop(ref);
 
   const fetchRecommended = useCallback(() => {
     axios
@@ -73,6 +77,7 @@ const HomeScreen = () => {
       <View style={styles.container}>
         <FakeSearchBar />
         <FlatList
+          ref={ref}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }

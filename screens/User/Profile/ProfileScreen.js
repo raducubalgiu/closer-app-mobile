@@ -1,10 +1,4 @@
-import {
-  StyleSheet,
-  SafeAreaView,
-  TouchableOpacity,
-  ScrollView,
-  View,
-} from "react-native";
+import { StyleSheet, SafeAreaView, TouchableOpacity, View } from "react-native";
 import React, { useState, useCallback } from "react";
 import BottomSheetPopup from "../../../components/customized/BottomSheets/BottomSheetPopup";
 import { useNavigation } from "@react-navigation/native";
@@ -25,6 +19,19 @@ const ProfileScreen = (props) => {
   const closeSheet = useCallback(() => {
     setOpenSettings(false);
   }, []);
+
+  console.log("RENDER PROFILE SCREEN!");
+
+  const tabsNavigator = (
+    <TopTabNavigator
+      role={user?.role}
+      userId={user?._id}
+      // products={user?.products}
+      // biography={user?.description}
+      // website={user?.website}
+      // location={user?.location}
+    />
+  );
 
   const buttons = (
     <>
@@ -77,24 +84,13 @@ const ProfileScreen = (props) => {
         name={user?.name}
         onOpenSettings={() => setOpenSettings(true)}
       />
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <ProfileOverview
-          user={user}
-          withBadge={true}
-          badgeDetails={props.badgeDetails}
-          actionButtons={buttons}
-        />
-        <View style={{ flex: 1, height: 700 }}>
-          <TopTabNavigator
-            role={user?.role}
-            userId={user?._id}
-            products={user?.products}
-            biography={user?.description}
-            website={user?.website}
-            location={user?.location}
-          />
-        </View>
-      </ScrollView>
+      <ProfileOverview
+        user={user}
+        withBadge={true}
+        badgeDetails={props.badgeDetails}
+        actionButtons={buttons}
+      />
+      <View style={{ flex: 1, height: 700 }}>{tabsNavigator}</View>
       <Protected roles={[process.env.MAIN_ROLE, process.env.SECOND_ROLE]}>
         <FAB
           visible={true}

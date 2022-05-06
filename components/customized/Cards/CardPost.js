@@ -6,7 +6,6 @@ import { Stack, CustomAvatar } from "../../core";
 import LikeIButton from "../Buttons/LikeIButton";
 import BookmarkIButton from "../Buttons/BookmarkIButton";
 import ShareIButton from "../Buttons/ShareIButton";
-import CommentsIButton from "../Buttons/CommentsIButton";
 import { Checkmark } from "../../core";
 import { useNavigation } from "@react-navigation/native";
 
@@ -44,7 +43,7 @@ const CardPost = (props) => {
               <Text style={styles.name}>{props.username}</Text>
               {props.checkmark && <Checkmark />}
             </Stack>
-            <Text style={styles.job}>{props.job}</Text>
+            <Text style={styles.job}>Service Auto</Text>
           </Stack>
         </Stack>
       </Stack>
@@ -55,81 +54,6 @@ const CardPost = (props) => {
           }}
           style={styles.image}
         />
-        <View
-          style={{
-            position: "absolute",
-            bottom: 70,
-            right: 15,
-          }}
-        >
-          <Stack sx={{ marginBottom: 20 }}>
-            <LikeIButton
-              postId={props.postId}
-              onAddLike={() => setLikes((likes) => likes + 1)}
-              onRemoveLike={() => setLikes((likes) => likes - 1)}
-              sx={{ marginBottom: 5 }}
-            />
-            <Text
-              style={{
-                fontFamily: "Exo-ExtraBold",
-                color: "white",
-              }}
-            >
-              {likes}
-            </Text>
-          </Stack>
-          <Stack sx={{ marginBottom: 20 }}>
-            <CommentsIButton
-              onPress={() =>
-                navigation.navigate("Comments", {
-                  postId: props.postId,
-                  description: props.description,
-                  username: props.username,
-                  date: props.date,
-                  avatar: props.avatar,
-                  focus: true,
-                })
-              }
-              sx={{ marginBottom: 5 }}
-            />
-            <Text
-              style={{
-                fontFamily: "Exo-ExtraBold",
-                color: "white",
-              }}
-            >
-              {comments}
-            </Text>
-          </Stack>
-          <Stack>
-            <ShareIButton onPress={onShare} sx={{ marginBottom: 5 }} />
-            <Text
-              style={{
-                fontFamily: "Exo-ExtraBold",
-                color: "white",
-              }}
-            >
-              0
-            </Text>
-          </Stack>
-        </View>
-        <Stack
-          align="start"
-          sx={{ position: "absolute", bottom: 15, left: 15 }}
-        >
-          <Text style={{ fontFamily: "Exo-SemiBold", color: "white" }}>
-            @{props.username}
-          </Text>
-          <Text
-            style={{
-              fontFamily: "Exo-Regular",
-              color: "white",
-              marginTop: 2.5,
-            }}
-          >
-            {props.description}
-          </Text>
-        </Stack>
       </View>
       {props.bookable && (
         <>
@@ -143,19 +67,31 @@ const CardPost = (props) => {
           </Stack>
         </>
       )}
-      <Stack direction="row" sx={{ marginHorizontal: 15, paddingVertical: 5 }}>
+      <Stack direction="row" sx={styles.btnsContainer}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Likes", { postId: props.postId })}
+        >
+          <Text style={styles.likes}>{likes} aprecieri</Text>
+        </TouchableOpacity>
         <Stack direction="row">
-          <Text
-            style={{ fontFamily: "Exo-Medium", marginRight: 10, fontSize: 13 }}
-          >
-            Poti rezerva acest produs
-          </Text>
-          <Icon name="keyboard-arrow-right" color={theme.lightColors.black} />
+          <LikeIButton
+            postId={props.postId}
+            onAddLike={() => setLikes((likes) => likes + 1)}
+            onRemoveLike={() => setLikes((likes) => likes - 1)}
+            sx={{ marginLeft: 20 }}
+          />
+          <ShareIButton onPress={onShare} sx={{ marginLeft: 20 }} />
+          <BookmarkIButton />
         </Stack>
-        <BookmarkIButton />
       </Stack>
       <Divider color="#ddd" />
-      {/* <TouchableOpacity
+      <Stack align="start" sx={{ paddingHorizontal: 15, paddingVertical: 10 }}>
+        <Text>
+          <Text style={styles.username}>{props.username}</Text>
+          <Text style={styles.description}>{props.description}</Text>
+        </Text>
+      </Stack>
+      <TouchableOpacity
         style={{ paddingHorizontal: 10, marginTop: 5 }}
         activeOpacity={1}
         onPress={() => {}}
@@ -188,7 +124,7 @@ const CardPost = (props) => {
             </Stack>
           </TouchableOpacity>
         )}
-      </TouchableOpacity> */}
+      </TouchableOpacity>
     </View>
   );
 };
@@ -204,6 +140,10 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   name: { fontFamily: "Exo-SemiBold", marginLeft: 10 },
+  username: {
+    fontWeight: "bold",
+    color: theme.lightColors.black,
+  },
   job: {
     marginLeft: 10,
     fontFamily: "Exo-Medium",
@@ -211,6 +151,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     textTransform: "capitalize",
   },
+  btnsContainer: { paddingHorizontal: 15, paddingVertical: 2.5 },
   date: {
     marginLeft: 10,
     color: theme.lightColors.grey0,
@@ -232,7 +173,6 @@ const styles = StyleSheet.create({
   image: {
     aspectRatio: 1,
     width: "100%",
-    height: 530,
     flex: 1,
   },
   likes: { color: theme.lightColors.black, fontWeight: "bold" },
@@ -240,7 +180,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 10,
     color: theme.lightColors.black,
-    marginTop: 7.5,
   },
   actionBtns: {
     paddingVertical: 5,

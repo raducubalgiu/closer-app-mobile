@@ -121,6 +121,7 @@ const ServicesScreen = ({ route }) => {
                     image={item?.images[0]?.url}
                     business={item?.name}
                     address={AddressFormat(item?.location)}
+                    minPrice={item?.minPrice}
                     ratingsAverage={item?.counter[0]?.ratingsAverage}
                     ratingsQuantity={item?.counter[0]?.ratingsQuantity}
                     service={serviceName}

@@ -10,53 +10,54 @@ const AboutProfileScreen = (props) => {
   const { biography, website, location } = props;
 
   return (
-    <ScrollView
-      style={styles.screen}
-      bounces={false}
-      showsVerticalScrollIndicator={false}
-    >
-      <Stack align="start" justify="start" sx={styles.container}>
-        <Text style={styles.heading}>Biografie</Text>
-        <Text style={styles.bio}>
-          {biography ? biography : "Inca nu a fost adaugata"}
-        </Text>
-      </Stack>
-      <Stack align="start" justify="start" sx={styles.container}>
-        <Text style={styles.heading}>Contact</Text>
-        <Stack direction="row" sx={styles.stack}>
-          <Text style={styles.label}>Website:</Text>
-          <TouchableOpacity style={{ marginLeft: 5 }}>
-            {website && <Text style={styles.actionBtn}>{website}</Text>}
-            {!website && (
-              <Text style={{ fontFamily: "Exo-Regular" }}>
-                Inca nu a fost adaugat
-              </Text>
-            )}
-          </TouchableOpacity>
-        </Stack>
-        {/* <Stack direction="row" sx={styles.stack}>
-          <Text style={styles.label}>Angajat la </Text>
-          <TouchableOpacity style={{ marginLeft: 5 }}>
-            <Text style={styles.actionBtn}>@trattoria</Text>
-          </TouchableOpacity>
-        </Stack> */}
-        <Stack direction="row" align="start" sx={styles.stack}>
-          <Text style={styles.label}>Locatia:</Text>
-          <Text style={styles.location}>
-            {location ? AddressFormat(location) : "Inca nu a fost adaugata"}
-          </Text>
-        </Stack>
-        <Stack direction="row" sx={{ marginTop: 15 }}>
-          <Icon
-            name="pushpino"
-            type="antdesign"
-            color={Colors.textDark}
-            size={22.5}
-          />
-          <Text style={styles.distance}>la 5 km de tine</Text>
-        </Stack>
-      </Stack>
-    </ScrollView>
+    <></>
+    // <ScrollView
+    //   style={styles.screen}
+    //   bounces={false}
+    //   showsVerticalScrollIndicator={false}
+    // >
+    //   <Stack align="start" justify="start" sx={styles.container}>
+    //     <Text style={styles.heading}>Biografie</Text>
+    //     <Text style={styles.bio}>
+    //       {biography ? biography : "Inca nu a fost adaugata"}
+    //     </Text>
+    //   </Stack>
+    //   <Stack align="start" justify="start" sx={styles.container}>
+    //     <Text style={styles.heading}>Contact</Text>
+    //     <Stack direction="row" sx={styles.stack}>
+    //       <Text style={styles.label}>Website:</Text>
+    //       <TouchableOpacity style={{ marginLeft: 5 }}>
+    //         {website && <Text style={styles.actionBtn}>{website}</Text>}
+    //         {!website && (
+    //           <Text style={{ fontFamily: "Exo-Regular" }}>
+    //             Inca nu a fost adaugat
+    //           </Text>
+    //         )}
+    //       </TouchableOpacity>
+    //     </Stack>
+    //     {/* <Stack direction="row" sx={styles.stack}>
+    //       <Text style={styles.label}>Angajat la </Text>
+    //       <TouchableOpacity style={{ marginLeft: 5 }}>
+    //         <Text style={styles.actionBtn}>@trattoria</Text>
+    //       </TouchableOpacity>
+    //     </Stack> */}
+    //     <Stack direction="row" align="start" sx={styles.stack}>
+    //       <Text style={styles.label}>Locatia:</Text>
+    //       <Text style={styles.location}>
+    //         {location ? AddressFormat(location) : "Inca nu a fost adaugata"}
+    //       </Text>
+    //     </Stack>
+    //     <Stack direction="row" sx={{ marginTop: 15 }}>
+    //       <Icon
+    //         name="pushpino"
+    //         type="antdesign"
+    //         color={Colors.textDark}
+    //         size={22.5}
+    //       />
+    //       <Text style={styles.distance}>la 5 km de tine</Text>
+    //     </Stack>
+    //   </Stack>
+    // </ScrollView>
   );
 };
 

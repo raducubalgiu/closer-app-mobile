@@ -1,20 +1,26 @@
 import { Icon } from "@rneui/themed";
-import React from "react";
 import PostsProfileScreen from "./User/Profile/PostsProfileScreen";
-import ProductsProfileScreen from "./User/Profile/ProductsProfileScreen";
+import React, { useCallback, useMemo } from "react";
 import CalendarProfileScreen from "./User/Profile/CalendarProfileScreen";
 import JobsProfileScreen from "./User/Profile/JobsProfileScreen";
 import AboutProfileScreen from "./User/Profile/AboutProfileScreen";
+import ProductsProfileScreen from "./User/Profile/ProductsProfileScreen";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import theme from "../assets/styles/theme";
 
 const TopTabNavigator = (props) => {
-  const { role } = props;
+  const { role, userId } = props;
   const Tab = createMaterialTopTabNavigator();
 
-  const PostsProfile = () => <PostsProfileScreen userId={props.userId} />;
-  const ProductsProfile = () => (
-    <ProductsProfileScreen products={props?.products} />
+  console.log("RENDER TOP TABS");
+
+  const PostsProfile = useCallback(
+    () => <PostsProfileScreen userId={userId} />,
+    [userId]
+  );
+  const ProductsProfile = useCallback(
+    () => <ProductsProfileScreen userId={userId} />,
+    [userId]
   );
   const AboutProfile = () => (
     <AboutProfileScreen
@@ -62,15 +68,9 @@ const TopTabNavigator = (props) => {
       })}
     >
       <Tab.Screen name="Posts" component={PostsProfile} />
-      {role !== "subscriber" && (
-        <Tab.Screen name="Products" component={ProductsProfile} />
-      )}
-      {role !== "subscriber" && (
-        <Tab.Screen name="Calendar" component={CalendarProfileScreen} />
-      )}
-      {role !== "subscriber" && (
-        <Tab.Screen name="Jobs" component={JobsProfileScreen} />
-      )}
+      <Tab.Screen name="Products" component={ProductsProfile} />
+      <Tab.Screen name="Calendar" component={CalendarProfileScreen} />
+      <Tab.Screen name="Jobs" component={JobsProfileScreen} />
       <Tab.Screen name="About" component={AboutProfile} />
     </Tab.Navigator>
   );
