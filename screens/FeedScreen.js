@@ -16,7 +16,7 @@ import axios from "axios";
 import { usePosts } from "../hooks/usePosts";
 import { useAuth } from "../context/auth";
 import { IconButton, Stack } from "../components/core";
-import FeedLabelButton from "../components/customized/Buttons/FeedLabelButton";
+import FeedLabelButton from "../components/core/Buttons/FeedLabelButton";
 
 const FeedScreen = () => {
   const { postsState, dispatchPosts } = usePosts();
@@ -29,8 +29,9 @@ const FeedScreen = () => {
   useScrollToTop(ref);
 
   const fetchAllPosts = useCallback(() => {
+    console.log("FETCH POSTS");
     setLoading(true);
-    axios
+    const unsubscribe = axios
       .get(`${process.env.BASE_ENDPOINT}/posts`)
       .then((res) => {
         setPosts(res.data.posts);
@@ -40,12 +41,20 @@ const FeedScreen = () => {
         console.log(err);
         setLoading(false);
       });
+    return () => unsubscribe();
   }, []);
 
-  const fetchFollowings = () => {
+  useEffect(() => {
+    fetchAllPosts();
+  }, [fetchAllPosts]);
+
+  const fetchFollowings = useCallback(() => {
+    console.log("FETCH_FOLLOWINGS_POSTS!");
     setLoading(true);
-    axios
-      .get(`${process.env.BASE_POINT}/users/${user?._id}/get-followings-posts`)
+    const unsubscribe = axios
+      .get(
+        `${process.env.BASE_ENDPOINT}/users/${user?._id}/get-followings-posts`
+      )
       .then((res) => {
         setFollowingsPosts(res.data.posts);
         setLoading(false);
@@ -54,11 +63,9 @@ const FeedScreen = () => {
         console.log(err);
         setLoading(false);
       });
-  };
 
-  useEffect(() => {
-    fetchAllPosts();
-  }, [fetchAllPosts]);
+    return () => unsubscribe();
+  }, []);
 
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -71,23 +78,49 @@ const FeedScreen = () => {
     });
   }, []);
 
-  const post = ({ item }) => (
-    <CardPost
-      avatar={item?.user?.avatar[0]?.url}
-      username={item?.user?.username}
-      job={item?.user?.job}
-      date={moment(item.createdAt).startOf("hour").fromNow()}
-      image={item?.images[0]?.url}
-      description={item?.description}
-      likesCount={item?.likesCount}
-      commentsCount={item?.commentsCount}
-      bookable={item?.bookable}
-      checkmark={item?.checkmark}
-      isBookmark={false}
-      postId={item?._id}
-      userId={item?.user?._id}
-    />
-  );
+  const renderAllPosts = ({ item }) => {
+    const { user } = item;
+
+    return (
+      <CardPost
+        postId={item?._id}
+        userId={user?._id}
+        avatar={user?.avatar[0]?.url}
+        username={user?.username}
+        job={user?.business?.name}
+        date={moment(item?.createdAt).startOf("hour").fromNow()}
+        image={item?.images[0]?.url}
+        description={item?.description}
+        likesCount={item?.likesCount}
+        commentsCount={item?.commentsCount}
+        bookable={item?.bookable}
+        checkmark={item?.checkmark}
+        isBookmark={false}
+      />
+    );
+  };
+
+  const renderFollowingPosts = ({ item }) => {
+    const { post, user } = item;
+
+    return (
+      <CardPost
+        postId={post?._id}
+        userId={user?._id}
+        avatar={user?.avatar[0]?.url}
+        username={user?.username}
+        job={user?.business?.name}
+        date={moment(post?.createdAt).startOf("hour").fromNow()}
+        image={post?.images[0]?.url}
+        description={post?.description}
+        likesCount={post?.likesCount}
+        commentsCount={post?.commentsCount}
+        bookable={post?.bookable}
+        checkmark={post?.checkmark}
+        isBookmark={false}
+      />
+    );
+  };
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -141,11 +174,15 @@ const FeedScreen = () => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
         contentContainerStyle={{ marginTop: 5 }}
-        data={posts}
+        data={postsState.activeAll ? posts : followingsPosts}
         nestedScrollEnabled={true}
-        keyExtractor={(item) => item._id}
+        keyExtractor={
+          postsState.activeAll ? (item) => item._id : (item) => item.post._id
+        }
         showsVerticalScrollIndicator={false}
-        renderItem={post}
+        renderItem={
+          postsState.activeAll ? renderAllPosts : renderFollowingPosts
+        }
       />
     </SafeAreaView>
   );

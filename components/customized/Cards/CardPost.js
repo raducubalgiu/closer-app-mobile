@@ -1,13 +1,16 @@
 import { StyleSheet, Text, View, TouchableOpacity, Share } from "react-native";
 import { Image, Icon, Divider } from "@rneui/themed";
+import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";
 import React, { useState } from "react";
-import { Stack, CustomAvatar } from "../../core";
-import LikeIButton from "../Buttons/LikeIButton";
-import BookmarkIButton from "../Buttons/BookmarkIButton";
-import ShareIButton from "../Buttons/ShareIButton";
-import { Checkmark } from "../../core";
-import { useNavigation } from "@react-navigation/native";
+import {
+  LikeIButton,
+  BookmarkIButton,
+  ShareIButton,
+  Checkmark,
+  Stack,
+  CustomAvatar,
+} from "../../core";
 
 const CardPost = (props) => {
   const navigation = useNavigation();

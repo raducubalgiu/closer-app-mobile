@@ -9,7 +9,7 @@ import React from "react";
 import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";
-import StatsButton from "../Buttons/StatsButton";
+import StatsButton from "../../core/Buttons/StatsButton";
 import { Checkmark, CustomAvatar, Protected, Stack } from "../../core";
 
 const ProfileOverview = (props) => {

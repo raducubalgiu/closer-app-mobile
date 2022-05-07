@@ -2,7 +2,7 @@ import { StyleSheet, Text } from "react-native";
 import React from "react";
 import { Stack } from "../../core";
 import theme from "../../../assets/styles/theme";
-import CardButton from "../Buttons/CardButton";
+import CardButton from "../../core/Buttons/CardButton";
 import { Icon } from "@rneui/themed";
 
 const NotFoundContent = (props) => {
