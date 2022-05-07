@@ -2,12 +2,13 @@ import {
   SafeAreaView,
   StyleSheet,
   RefreshControl,
-  Animated,
   ActivityIndicator,
   ScrollView,
+  Animated,
+  View,
 } from "react-native";
 import { useScrollToTop } from "@react-navigation/native";
-import { Divider } from "@rneui/themed";
+import { Divider, Avatar } from "@rneui/themed";
 import moment from "moment";
 import React, { useCallback, useEffect, useState, useRef } from "react";
 import CardPost from "../components/customized/Cards/CardPost";
@@ -17,6 +18,7 @@ import { usePosts } from "../hooks/usePosts";
 import { useAuth } from "../context/auth";
 import { IconButton, Stack } from "../components/core";
 import FeedLabelButton from "../components/core/Buttons/FeedLabelButton";
+import { useTranslation } from "react-i18next";
 
 const FeedScreen = () => {
   const { postsState, dispatchPosts } = usePosts();
@@ -27,6 +29,7 @@ const FeedScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
   const ref = useRef(null);
   useScrollToTop(ref);
+  const { t } = useTranslation();
 
   const fetchAllPosts = useCallback(() => {
     console.log("FETCH POSTS");
@@ -95,7 +98,6 @@ const FeedScreen = () => {
         commentsCount={item?.commentsCount}
         bookable={item?.bookable}
         checkmark={item?.checkmark}
-        isBookmark={false}
       />
     );
   };
@@ -117,10 +119,13 @@ const FeedScreen = () => {
         commentsCount={post?.commentsCount}
         bookable={post?.bookable}
         checkmark={post?.checkmark}
-        isBookmark={false}
       />
     );
   };
+
+  const refreshControl = (
+    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+  );
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -144,7 +149,7 @@ const FeedScreen = () => {
                 fetchAllPosts();
               }}
               isActive={postsState.activeAll}
-              text="Toate"
+              text={t("explore")}
             />
             <FeedLabelButton
               onPress={() => {
@@ -152,38 +157,38 @@ const FeedScreen = () => {
                 fetchFollowings();
               }}
               isActive={postsState.activeFollowings}
-              text="Urmaresti"
+              text={t("following")}
             />
             <FeedLabelButton
               onPress={() => {
                 dispatchPosts({ type: "FETCH_LAST_MINUTE" });
               }}
               isActive={postsState.activeLastMinute}
-              text="Oferte Last Minute"
+              text={t("lastMinute")}
             />
           </Stack>
         </ScrollView>
       </Stack>
       <Divider color="#ddd" />
-      <Animated.FlatList
-        ref={ref}
-        ListHeaderComponent={
-          loading && <ActivityIndicator style={styles.spinner} />
-        }
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-        contentContainerStyle={{ marginTop: 5 }}
-        data={postsState.activeAll ? posts : followingsPosts}
-        nestedScrollEnabled={true}
-        keyExtractor={
-          postsState.activeAll ? (item) => item._id : (item) => item.post._id
-        }
-        showsVerticalScrollIndicator={false}
-        renderItem={
-          postsState.activeAll ? renderAllPosts : renderFollowingPosts
-        }
-      />
+      <View style={{ flex: 1 }}>
+        <Animated.FlatList
+          ref={ref}
+          ListHeaderComponent={
+            loading && <ActivityIndicator style={styles.spinner} />
+          }
+          refreshControl={refreshControl}
+          contentContainerStyle={{ marginTop: 5 }}
+          data={postsState.activeAll ? posts : followingsPosts}
+          nestedScrollEnabled={true}
+          keyExtractor={
+            postsState.activeAll ? (item) => item._id : (item) => item.post._id
+          }
+          showsVerticalScrollIndicator={false}
+          renderItem={
+            postsState.activeAll ? renderAllPosts : renderFollowingPosts
+          }
+        />
+      </View>
     </SafeAreaView>
   );
 };

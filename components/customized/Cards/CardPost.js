@@ -84,7 +84,7 @@ const CardPost = (props) => {
             sx={{ marginLeft: 20 }}
           />
           <ShareIButton onPress={onShare} sx={{ marginLeft: 20 }} />
-          <BookmarkIButton />
+          <BookmarkIButton postId={props.postId} />
         </Stack>
       </Stack>
       <Divider color="#ddd" />

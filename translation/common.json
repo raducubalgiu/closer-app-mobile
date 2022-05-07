@@ -32,5 +32,8 @@
   "findService": "Caută serviciu..",
   "from": "de la",
   "suggested": "Sugerate",
-  "selectPeriod": "Selectează perioada"
+  "selectPeriod": "Selectează perioada",
+  "explore": "Explorează",
+  "following": "Urmăreşti",
+  "lastMinute": "Oferte Last Minute"
 }
