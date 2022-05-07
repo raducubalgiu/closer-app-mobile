@@ -12,12 +12,7 @@ import { Divider } from "@rneui/themed";
 import axios from "axios";
 import { useAuth } from "../../../context/auth";
 import theme from "../../../assets/styles/theme";
-import {
-  IconButton,
-  Header,
-  UserAvatar,
-  CustomAvatar,
-} from "../../../components/core";
+import { IconButton, Header, CustomAvatar } from "../../../components/core";
 import moment from "moment";
 
 const CommentsScreen = (props) => {
@@ -26,7 +21,7 @@ const CommentsScreen = (props) => {
     props.route.params;
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
-
+  
   useEffect(() => {
     axios
       .get(`${process.env.BASE_ENDPOINT}/posts/${postId}/comments`)
@@ -93,7 +88,7 @@ const CommentsScreen = (props) => {
             keyExtractor={(item) => item?._id}
             renderItem={({ item }) => (
               <View style={styles.commentsCont}>
-                <UserAvatar
+                <CustomAvatar
                   size={32.5}
                   iconSize={15}
                   avatar={item?.user?.avatar[0]?.url}
@@ -113,7 +108,7 @@ const CommentsScreen = (props) => {
         </View>
         <Divider />
         <View style={styles.inputCont}>
-          <UserAvatar size={45} iconSize={20} avatar={user?.avatar} />
+          <CustomAvatar size={45} iconSize={20} avatar={user?.avatar} />
           <TextInput
             onChangeText={(text) => setComment(text)}
             autoCapitalize="sentences"

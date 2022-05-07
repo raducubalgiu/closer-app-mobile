@@ -14,7 +14,6 @@ import { Checkmark, CustomAvatar, Protected, Stack } from "../../core";
 
 const ProfileOverview = (props) => {
   const { user, withBadge } = props;
-  const { counter, business } = user;
   const navigation = useNavigation();
 
   return (
@@ -34,8 +33,13 @@ const ProfileOverview = (props) => {
           {user?.checkmark && <Checkmark />}
         </Stack>
         <Stack direction="row" justify="start">
-          <Protected roles={[process.env.MAIN_ROLE, process.env.SECOND_ROLE]}>
-            {business && <Text style={styles.business}>{business?.name}</Text>}
+          <Protected
+            user={user}
+            roles={[process.env.MAIN_ROLE, process.env.SECOND_ROLE]}
+          >
+            {user?.business && (
+              <Text style={styles.business}>{user?.business?.name}</Text>
+            )}
             <Icon
               type="antdesign"
               name="star"
@@ -44,7 +48,7 @@ const ProfileOverview = (props) => {
               style={{ marginLeft: 7.5 }}
             />
             <Text style={styles.ratingsAverage}>
-              {counter?.ratingsAverage?.toFixed(1)}
+              {user?.counter?.ratingsAverage?.toFixed(1)}
             </Text>
           </Protected>
         </Stack>
@@ -63,7 +67,10 @@ const ProfileOverview = (props) => {
         </ScrollView>
       </Stack>
       <Stack direction="row" justify="between" sx={styles.statsContainer}>
-        <Protected roles={[process.env.MAIN_ROLE, process.env.SECOND_ROLE]}>
+        <Protected
+          user={user}
+          roles={[process.env.MAIN_ROLE, process.env.SECOND_ROLE]}
+        >
           <StatsButton
             onPress={() =>
               navigation.navigate("ProfileGeneralStack", {
@@ -76,13 +83,13 @@ const ProfileOverview = (props) => {
               })
             }
             labelStats="Ratinguri"
-            statsNo={counter?.ratingsQuantity}
+            statsNo={user?.counter?.ratingsQuantity}
           />
         </Protected>
-        <Protected roles={[process.env.THIRD_ROLE]}>
+        <Protected user={user} roles={[process.env.THIRD_ROLE]}>
           <StatsButton
             labelStats="Postari"
-            statsNo={counter?.ratingsQuantity}
+            statsNo={user?.counter?.ratingsQuantity}
           />
         </Protected>
         <StatsButton
@@ -111,7 +118,7 @@ const ProfileOverview = (props) => {
             })
           }
           labelStats="Urmaresti"
-          statsNo={counter?.followingCount}
+          statsNo={user?.counter?.followingCount}
         />
       </Stack>
       <Stack direction="row" justify="center" sx={styles.buttonsContainer}>

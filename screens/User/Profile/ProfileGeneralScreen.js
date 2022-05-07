@@ -17,46 +17,28 @@ import TopTabNavigator from "../../TopTabNavigator";
 import { Stack } from "../../../components/core";
 import CardSuggestedPeople from "../../../components/customized/Cards/CardSuggestedPeople";
 import FollowButton from "../../../components/core/Buttons/FollowButton";
+import { useFocusEffect } from "@react-navigation/native";
 
 const ProfileGeneralScreen = (props) => {
   const { user } = useAuth();
   const { userId } = props.route.params;
   const [userDetails, setUserDetails] = useState(null);
-  const {
-    _id,
-    business,
-    followersCount,
-    followingCount,
-    ratingsAverage,
-    ratingsQuantity,
-    username,
-    services,
-    avatar,
-    role,
-  } = userDetails;
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [suggestedPeople, setSuggestedPeople] = useState([]);
 
-  useEffect(() => {
-    axios
-      .get(`${process.env.BASE_ENDPOINT}/users/${userId}`, {
-        headers: { Authorization: `Bearer ${user?.token}` },
-      })
-      .then((resp) => {
-        setUserDetails(resp.data.user);
-      })
-      .catch((error) => console.log(error));
-  }, [userId]);
-
-  useEffect(() => {
-    axios
-      .get(`${process.env.BASE_ENDPOINT}/users/${userId}/get-posts`, {
-        headers: { Authorization: `Bearer ${user?.token}` },
-      })
-      .then((res) => setPosts(res.data.posts))
-      .catch((err) => console.log(err));
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      axios
+        .get(`${process.env.BASE_ENDPOINT}/users/${userId}`, {
+          headers: { Authorization: `Bearer ${user?.token}` },
+        })
+        .then((resp) => {
+          setUserDetails(resp.data.user);
+        })
+        .catch((error) => console.log(error));
+    }, [userId])
+  );
 
   const fetchUser = () => {
     axios
@@ -87,6 +69,8 @@ const ProfileGeneralScreen = (props) => {
         setLoading(false);
       });
   };
+
+  console.log(userDetails);
 
   const buttons = (
     <>
@@ -119,22 +103,15 @@ const ProfileGeneralScreen = (props) => {
     </>
   );
 
+  const tabsNavigator = (
+    <TopTabNavigator userId={userId} role={userDetails?.role} />
+  );
+
   return (
     <SafeAreaView style={styles.container}>
       <HeaderProfileGeneral name={userDetails?.name} />
       <ProfileOverview
-        userId={userDetails?._id}
-        username={userDetails?.username}
-        checkmark={false}
-        followersCount={userDetails?.followersCount}
-        followingCount={userDetails?.followingCount}
-        avatar={userDetails?.avatar?.url}
-        business={userDetails?.business?.name}
-        role={userDetails?.role}
-        ratingsAverage={userDetails?.ratingsAverage}
-        ratingsQuantity={userDetails?.ratingsQuantity}
-        services={userDetails?.services}
-        withBadge={false}
+        user={userDetails}
         badgeDetails={props.badgeDetails}
         actionButtons={buttons}
       />
@@ -157,12 +134,7 @@ const ProfileGeneralScreen = (props) => {
           />
         </Stack>
       )}
-      <TopTabNavigator
-        posts={posts}
-        products={userDetails?.products}
-        role={userDetails?.role}
-        location={userDetails?.location}
-      />
+      {tabsNavigator}
     </SafeAreaView>
   );
 };

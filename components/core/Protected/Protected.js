@@ -1,9 +1,8 @@
 import React from "react";
-import { useAuth } from "../../../context/auth";
 
 const Protected = (props) => {
   const { roles } = props;
-  const { user } = useAuth();
+  const { user } = props;
 
   let visible = false;
 

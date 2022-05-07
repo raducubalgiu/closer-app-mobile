@@ -3,6 +3,7 @@ import { Image, Icon, Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   LikeIButton,
   BookmarkIButton,
@@ -11,11 +12,15 @@ import {
   Stack,
   CustomAvatar,
 } from "../../core";
+import { useAuth } from "../../../context/auth";
+import { trimFunc } from "../../../utils";
 
 const CardPost = (props) => {
+  const { user } = useAuth();
   const navigation = useNavigation();
   const [likes, setLikes] = useState(props.likesCount);
   const [comments, setComments] = useState(props.commentsCount);
+  const { t } = useTranslation();
 
   const onShare = async () => {
     try {
@@ -36,37 +41,52 @@ const CardPost = (props) => {
     }
   };
 
+  const goToUser = (userId) => {
+    if (user?._id === userId) {
+      navigation.navigate("Profile");
+    } else {
+      navigation.navigate("ProfileGeneralStack", {
+        screen: "ProfileGeneral",
+        params: { userId },
+      });
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Stack direction="row" sx={{ paddingHorizontal: 10 }}>
-        <Stack direction="row" sx={styles.avatarContainer}>
-          <CustomAvatar avatar={props?.avatar} size={35} iconSize={15} />
-          <Stack align="start">
-            <Stack direction="row">
-              <Text style={styles.name}>{props.username}</Text>
-              {props.checkmark && <Checkmark />}
+        <TouchableOpacity onPress={() => goToUser(props.userId)}>
+          <Stack direction="row" sx={styles.avatarContainer}>
+            <CustomAvatar avatar={props?.avatar} size={35} iconSize={15} />
+            <Stack align="start">
+              <Stack direction="row">
+                <Text style={styles.name}>{props.username}</Text>
+                {props.checkmark && <Checkmark />}
+              </Stack>
+              <Text style={styles.job}>Service Auto</Text>
             </Stack>
-            <Text style={styles.job}>Service Auto</Text>
           </Stack>
-        </Stack>
+        </TouchableOpacity>
       </Stack>
       <View>
         <Image
           source={{
             uri: `${props.image}`,
           }}
-          style={styles.image}
+          style={
+            !props.bookable
+              ? { ...styles.image, height: 450 }
+              : { ...styles.image }
+          }
         />
       </View>
       {props.bookable && (
         <>
           <Stack direction="row" sx={styles.bookableContainer}>
             <TouchableOpacity>
-              <Text style={styles.bookable}>
-                Acest produs poate fi rezervat
-              </Text>
+              <Text style={styles.bookable}>{t("book")}</Text>
             </TouchableOpacity>
-            <Icon name="keyboard-arrow-right" />
+            <Icon name="keyboard-arrow-right" color={theme.lightColors.black} />
           </Stack>
         </>
       )}
@@ -81,53 +101,80 @@ const CardPost = (props) => {
             postId={props.postId}
             onAddLike={() => setLikes((likes) => likes + 1)}
             onRemoveLike={() => setLikes((likes) => likes - 1)}
-            sx={{ marginLeft: 20 }}
+            sx={{ marginLeft: 15 }}
           />
-          <ShareIButton onPress={onShare} sx={{ marginLeft: 20 }} />
-          <BookmarkIButton postId={props.postId} />
+          <BookmarkIButton postId={props.postId} sx={{ marginLeft: 15 }} />
+          <ShareIButton onPress={onShare} sx={{ marginLeft: 15 }} />
         </Stack>
       </Stack>
       <Divider color="#ddd" />
-      <Stack align="start" sx={{ paddingHorizontal: 15, paddingVertical: 10 }}>
+      <Stack align="start" sx={{ paddingHorizontal: 15, paddingTop: 10 }}>
         <Text>
-          <Text style={styles.username}>{props.username}</Text>
-          <Text style={styles.description}>{props.description}</Text>
+          <Text style={styles.description}>
+            {trimFunc(props.description, 120)}
+          </Text>
         </Text>
       </Stack>
+      {comments > 0 && (
+        <TouchableOpacity
+          style={styles.commentsContainer}
+          onPress={() =>
+            navigation.navigate("Comments", {
+              postId: props.postId,
+              description: props.description,
+              username: props.username,
+              date: props.date,
+              avatar: props.avatar,
+            })
+          }
+        >
+          <Stack direction="row" justify="start">
+            <Text style={styles.comments}>
+              {comments > 1
+                ? `Vezi toate cele ${comments} comentarii`
+                : `${t("seeOneComment")}`}
+            </Text>
+            <Icon
+              name="down"
+              type="antdesign"
+              size={14}
+              style={{ marginLeft: 5 }}
+              color={theme.lightColors.grey0}
+            />
+          </Stack>
+        </TouchableOpacity>
+      )}
       <TouchableOpacity
-        style={{ paddingHorizontal: 10, marginTop: 5 }}
-        activeOpacity={1}
-        onPress={() => {}}
+        style={{ paddingHorizontal: 15, marginTop: 10 }}
+        onPress={() =>
+          navigation.navigate("Comments", {
+            postId: props.postId,
+            description: props.description,
+            avatar: props.avatar,
+            username: props.username,
+            date: props.date,
+            focus: true,
+          })
+        }
       >
-        {comments > 0 && (
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate("Comments", {
-                postId: props.postId,
-                description: props.description,
-                username: props.username,
-                date: props.date,
-                avatar: props.avatar,
-              })
-            }
-          >
-            <Stack direction="row" justify="start">
-              <Text style={styles.comments}>
-                {comments > 1
-                  ? `Vezi toate cele ${comments} comentarii`
-                  : `Vezi 1 comentariu`}
-              </Text>
-              <Icon
-                name="down"
-                type="antdesign"
-                size={14}
-                style={{ marginLeft: 5 }}
-                color={Colors.textLight}
-              />
-            </Stack>
-          </TouchableOpacity>
-        )}
+        <Stack direction="row" justify="start">
+          <CustomAvatar size={30} iconSize={10} avatar={user?.avatar} />
+          <Text style={styles.addCommText}>{t("addComment")}</Text>
+        </Stack>
       </TouchableOpacity>
+      <Stack direction="row" sx={{ marginTop: 7.5, marginHorizontal: 15 }}>
+        <Text style={styles.date}>{props.date}</Text>
+        {props.bookable && (
+          <Stack direction="row">
+            <Icon
+              name="enviromento"
+              type="antdesign"
+              color={theme.lightColors.grey0}
+            />
+            <Text style={styles.distanceText}>{t("at")} 5 km</Text>
+          </Stack>
+        )}
+      </Stack>
     </View>
   );
 };
@@ -156,10 +203,8 @@ const styles = StyleSheet.create({
   },
   btnsContainer: { paddingHorizontal: 15, paddingVertical: 2.5 },
   date: {
-    marginLeft: 10,
     color: theme.lightColors.grey0,
     fontSize: 13,
-    marginTop: 5,
   },
   followBtn: {
     marginRight: 15,
@@ -191,7 +236,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "#f9f9f9",
   },
   bookableContainer: {
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
     paddingVertical: 7.5,
     backgroundColor: "#f1f1f1",
   },
@@ -200,5 +245,22 @@ const styles = StyleSheet.create({
     fontSize: 13.5,
     fontFamily: "Exo-SemiBold",
   },
-  comments: { color: theme.lightColors.grey0, marginTop: 2.5 },
+  commentsContainer: { paddingHorizontal: 15, marginTop: 5 },
+  comments: { color: theme.lightColors.grey0, fontSize: 13 },
+  addCommText: {
+    color: theme.lightColors.grey0,
+    marginLeft: 5,
+    borderWidth: 0.5,
+    borderColor: "#ddd",
+    paddingVertical: 7.5,
+    paddingHorizontal: 10,
+    flex: 1,
+    borderRadius: 15,
+  },
+  distanceText: {
+    fontSize: 13,
+    fontWeight: "bold",
+    marginLeft: 5,
+    color: theme.lightColors.black,
+  },
 });

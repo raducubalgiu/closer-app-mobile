@@ -8,8 +8,7 @@ import {
   View,
 } from "react-native";
 import { useScrollToTop } from "@react-navigation/native";
-import { Divider, Avatar } from "@rneui/themed";
-import moment from "moment";
+import { Divider } from "@rneui/themed";
 import React, { useCallback, useEffect, useState, useRef } from "react";
 import CardPost from "../components/customized/Cards/CardPost";
 import theme from "../assets/styles/theme";
@@ -19,6 +18,7 @@ import { useAuth } from "../context/auth";
 import { IconButton, Stack } from "../components/core";
 import FeedLabelButton from "../components/core/Buttons/FeedLabelButton";
 import { useTranslation } from "react-i18next";
+import { dateFormat } from "../utils";
 
 const FeedScreen = () => {
   const { postsState, dispatchPosts } = usePosts();
@@ -91,7 +91,7 @@ const FeedScreen = () => {
         avatar={user?.avatar[0]?.url}
         username={user?.username}
         job={user?.business?.name}
-        date={moment(item?.createdAt).startOf("hour").fromNow()}
+        date={dateFormat(item?.createdAt)}
         image={item?.images[0]?.url}
         description={item?.description}
         likesCount={item?.likesCount}
@@ -112,7 +112,7 @@ const FeedScreen = () => {
         avatar={user?.avatar[0]?.url}
         username={user?.username}
         job={user?.business?.name}
-        date={moment(post?.createdAt).startOf("hour").fromNow()}
+        date={moment(post?.createdAt).startOf("hour").fromNow().lang("ro")}
         image={post?.images[0]?.url}
         description={post?.description}
         likesCount={post?.likesCount}

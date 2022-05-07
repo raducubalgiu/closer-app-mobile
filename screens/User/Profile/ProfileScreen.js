@@ -86,7 +86,7 @@ const ProfileScreen = (props) => {
       />
       <ProfileOverview
         user={user}
-        withBadge={true}
+        withBadge
         badgeDetails={props.badgeDetails}
         actionButtons={buttons}
       />

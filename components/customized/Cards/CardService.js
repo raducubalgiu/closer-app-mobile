@@ -48,16 +48,13 @@ const CardService = (props) => {
             <Text style={styles.priceLabel}>de la</Text>
             <Text style={styles.price}>{props.minPrice} Lei</Text>
           </View>
-          {/* <Text style={styles.warning}>
-            Grabeste-te! Au mai ramas 1 locuri libere
-          </Text> */}
         </View>
         <View style={styles.distanceContainer}>
           <Icon
-            name="pushpino"
+            name="enviromento"
             type="antdesign"
             size={20}
-            color={theme.lightColors.grey0}
+            color={theme.lightColors.black}
           />
           <Text style={styles.distance}>
             {props.distance < 1
