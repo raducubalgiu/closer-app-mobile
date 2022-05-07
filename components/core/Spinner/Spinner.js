@@ -2,9 +2,9 @@ import { ActivityIndicator } from "react-native";
 import React from "react";
 import Stack from "../Containers/Stack";
 
-const Spinner = () => {
+const Spinner = (props) => {
   return (
-    <Stack justify="center" sx={{ flex: 1 }}>
+    <Stack justify="center" sx={{ flex: 1, ...props.sx }}>
       <ActivityIndicator />
     </Stack>
   );

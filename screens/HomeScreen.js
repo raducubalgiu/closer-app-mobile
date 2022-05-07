@@ -16,6 +16,7 @@ import CardRecommended from "../components/customized/Cards/CardRecommended";
 import theme from "../assets/styles/theme";
 import { useAuth } from "../context/auth";
 import { useScrollToTop } from "@react-navigation/native";
+import { getMonth } from "../utils/calendar";
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));

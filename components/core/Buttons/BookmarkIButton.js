@@ -9,13 +9,13 @@ const BookmarkIButton = (props) => {
   const { user } = useAuth();
   const [bookmarked, setBookmarked] = useState(false);
   const animatedScale = useRef(new Animated.Value(0)).current;
+  const BOOKMARK_ENDPOINT = `${process.env.BASE_ENDPOINT}/users/${user?._id}/posts/${props.postId}/bookmarks`;
 
   useEffect(() => {
     axios
-      .get(
-        `${process.env.BASE_ENDPOINT}/users/${user?._id}/posts/${props.postId}/check-bookmark`,
-        { headers: { Authorization: `Bearer ${user?.token}` } }
-      )
+      .get(BOOKMARK_ENDPOINT, {
+        headers: { Authorization: `Bearer ${user?.token}` },
+      })
       .then((res) => {
         setBookmarked(res.data.status);
       })
@@ -34,22 +34,22 @@ const BookmarkIButton = (props) => {
     if (!bookmarked) {
       axios
         .post(
-          `${process.env.BASE_ENDPOINT}/users/${user?._id}/bookmarks`,
-          {
-            post: props.postId,
-          },
+          BOOKMARK_ENDPOINT,
+          {},
           {
             headers: { Authorization: `Bearer ${user?.token}` },
           }
         )
         .then(() => setBookmarked(true))
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+          console.log(err.message);
+        });
     } else {
       axios
-        .delete(
-          `${process.env.BASE_ENDPOINT}/users/${user?._id}/posts/${props.postId}/delete-bookmark`,
-          { headers: { Authorization: `Bearer ${user?.token}` } }
-        )
+        .delete(BOOKMARK_ENDPOINT, {
+          headers: { Authorization: `Bearer ${user?.token}` },
+        })
         .then((res) => setBookmarked(res.data.status))
         .catch((err) => console.log(err));
     }

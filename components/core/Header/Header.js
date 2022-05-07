@@ -5,7 +5,7 @@ import React from "react";
 import theme from "../../../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
 
-const Header = (props) => {
+export const Header = (props) => {
   const navigation = useNavigation();
   return (
     <>
@@ -46,8 +46,6 @@ const Header = (props) => {
     </>
   );
 };
-
-export default Header;
 
 const styles = StyleSheet.create({
   container: { paddingVertical: 10, paddingHorizontal: 15 },

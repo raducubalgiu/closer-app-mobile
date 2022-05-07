@@ -57,6 +57,8 @@ export const AuthProvider = (props) => {
       }
     });
 
+    console.log("USER FROM CONTEXT!!!!", user);
+
     return () => unsubscribe();
   }, []);
 

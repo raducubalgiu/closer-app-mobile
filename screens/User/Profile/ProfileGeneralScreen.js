@@ -70,13 +70,11 @@ const ProfileGeneralScreen = (props) => {
       });
   };
 
-  console.log(userDetails);
-
   const buttons = (
     <>
       <FollowButton
         size="lg"
-        followingId={userId}
+        followeeId={userId}
         fetchUser={fetchUser}
         fetchSuggested={handleSuggested}
       />

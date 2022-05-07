@@ -9,7 +9,7 @@ const HeaderProfile = (props) => {
   const navigation = useNavigation();
 
   return (
-    <Stack direction="row" sx={{ marginVertical: 10, marginHorizontal: 15 }}>
+    <Stack direction="row" sx={{ paddingVertical: 10, paddingHorizontal: 15 }}>
       <Stack direction="row">
         <IconButton
           onPress={props.onGoToFindFriends}

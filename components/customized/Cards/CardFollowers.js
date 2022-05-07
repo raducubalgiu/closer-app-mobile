@@ -4,13 +4,25 @@ import { Stack, CustomAvatar } from "../../core";
 import theme from "../../../assets/styles/theme";
 import FollowButton from "../../core/Buttons/FollowButton";
 import { useAuth } from "../../../context/auth";
+import { useNavigation } from "@react-navigation/native";
 
 const CardFollowers = (props) => {
+  const navigation = useNavigation();
   const { user } = useAuth();
+
+  const goToUser = (userId) => {
+    navigation.push("ProfileGeneralStack", {
+      screen: "ProfileGeneral",
+      params: { userId },
+    });
+  };
 
   return (
     <Stack direction="row" sx={styles.container}>
-      <TouchableOpacity style={styles.goToUser} onPress={props.onGoToUser}>
+      <TouchableOpacity
+        style={styles.goToUser}
+        onPress={() => goToUser(props.followeeId)}
+      >
         <CustomAvatar avatar={props.avatar} withBadge={false} />
         <Stack align="start" sx={{ marginLeft: 10 }}>
           <Text style={styles.username}>{props.username}</Text>

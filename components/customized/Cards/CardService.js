@@ -51,8 +51,8 @@ const CardService = (props) => {
         </View>
         <View style={styles.distanceContainer}>
           <Icon
-            name="enviromento"
-            type="antdesign"
+            name="map-pin"
+            type="feather"
             size={20}
             color={theme.lightColors.black}
           />

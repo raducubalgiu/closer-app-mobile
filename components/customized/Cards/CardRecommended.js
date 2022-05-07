@@ -4,8 +4,7 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";
-import { AddressFormat } from "../../../utils/addressFormat";
-import { trimFunc } from "../../../utils/trimFunc";
+import { AddressFormat, trimFunc } from "../../../utils";
 
 const CardRecommended = (props) => {
   const navigation = useNavigation();
@@ -37,8 +36,8 @@ const CardRecommended = (props) => {
                   style={{ marginRight: 5 }}
                   size={20}
                   color={theme.lightColors.grey0}
-                  type="antdesign"
-                  name="pushpino"
+                  type="feather"
+                  name="map-pin"
                 />
                 <Text style={styles.cardDistance}>
                   {props.distance < 1000

@@ -2,7 +2,6 @@ import {
   SafeAreaView,
   StyleSheet,
   RefreshControl,
-  ActivityIndicator,
   ScrollView,
   Animated,
   View,
@@ -15,7 +14,7 @@ import theme from "../assets/styles/theme";
 import axios from "axios";
 import { usePosts } from "../hooks/usePosts";
 import { useAuth } from "../context/auth";
-import { IconButton, Stack } from "../components/core";
+import { IconButton, Spinner, Stack } from "../components/core";
 import FeedLabelButton from "../components/core/Buttons/FeedLabelButton";
 import { useTranslation } from "react-i18next";
 import { dateFormat } from "../utils";
@@ -26,58 +25,63 @@ const FeedScreen = () => {
   const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
   const [followingsPosts, setFollowingsPosts] = useState([]);
-  const [refreshing, setRefreshing] = useState(false);
   const ref = useRef(null);
   useScrollToTop(ref);
   const { t } = useTranslation();
 
   const fetchAllPosts = useCallback(() => {
-    console.log("FETCH POSTS");
-    setLoading(true);
-    const unsubscribe = axios
-      .get(`${process.env.BASE_ENDPOINT}/posts`)
-      .then((res) => {
-        setPosts(res.data.posts);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
-    return () => unsubscribe();
-  }, []);
+    if (postsState.activeAll) {
+      setLoading(true);
+      const unsubscribe = axios
+        .get(`${process.env.BASE_ENDPOINT}/posts`)
+        .then((res) => {
+          setPosts(res.data.posts);
+          setLoading(false);
+        })
+        .catch((err) => {
+          setLoading(false);
+        });
+      return () => unsubscribe();
+    }
+  }, [postsState.activeAll]);
 
   useEffect(() => {
     fetchAllPosts();
   }, [fetchAllPosts]);
 
   const fetchFollowings = useCallback(() => {
-    console.log("FETCH_FOLLOWINGS_POSTS!");
-    setLoading(true);
-    const unsubscribe = axios
-      .get(
-        `${process.env.BASE_ENDPOINT}/users/${user?._id}/get-followings-posts`
-      )
-      .then((res) => {
-        setFollowingsPosts(res.data.posts);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
+    if (postsState.activeFollowings) {
+      setLoading(true);
+      const unsubscribe = axios
+        .get(
+          `${process.env.BASE_ENDPOINT}/users/${user?._id}/get-followings-posts`
+        )
+        .then((res) => {
+          setFollowingsPosts(res.data.posts);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoading(false);
+        });
 
-    return () => unsubscribe();
-  }, []);
+      return () => unsubscribe();
+    }
+  }, [postsState.activeFollowings]);
+
+  useEffect(() => {
+    fetchFollowings();
+  }, [fetchFollowings]);
 
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
   };
 
   const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
+    setLoading(true);
     wait(1000).then(() => {
-      setRefreshing(false);
+      setLoading(false);
+      fetchAllPosts();
     });
   }, []);
 
@@ -112,7 +116,7 @@ const FeedScreen = () => {
         avatar={user?.avatar[0]?.url}
         username={user?.username}
         job={user?.business?.name}
-        date={moment(post?.createdAt).startOf("hour").fromNow().lang("ro")}
+        date={dateFormat(post?.createdAt)}
         image={post?.images[0]?.url}
         description={post?.description}
         likesCount={post?.likesCount}
@@ -124,7 +128,7 @@ const FeedScreen = () => {
   };
 
   const refreshControl = (
-    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+    <RefreshControl loading={loading} onRefresh={onRefresh} />
   );
 
   return (
@@ -174,7 +178,7 @@ const FeedScreen = () => {
         <Animated.FlatList
           ref={ref}
           ListHeaderComponent={
-            loading && <ActivityIndicator style={styles.spinner} />
+            loading && <Spinner sx={{ paddingVertical: 10 }} />
           }
           refreshControl={refreshControl}
           contentContainerStyle={{ marginTop: 5 }}

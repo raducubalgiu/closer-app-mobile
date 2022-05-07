@@ -71,10 +71,6 @@ const HomeStackNavigator = () => {
       <Stack.Screen name="AllServices" component={ServicesNavigation} />
       <Stack.Screen name="Services" component={ServicesScreen} />
       <Stack.Screen name="ServiceItem" component={ServiceItemScreen} />
-      <Stack.Screen
-        name="ProfileGeneralStack"
-        component={ProfileStackNavigator}
-      />
     </Stack.Navigator>
   );
 };
@@ -103,6 +99,10 @@ const FeedStackNavigator = () => {
       <Stack.Screen name="Feed" component={FeedScreen} />
       <Stack.Screen name="Likes" component={LikesScreen} />
       <Stack.Screen name="Comments" component={CommentsScreen} />
+      <Stack.Screen
+        name="ProfileGeneralStack"
+        component={ProfileStackNavigator}
+      />
     </Stack.Navigator>
   );
 };

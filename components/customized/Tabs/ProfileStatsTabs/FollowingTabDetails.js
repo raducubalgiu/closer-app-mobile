@@ -37,13 +37,6 @@ const FollowingTabDetails = (props) => {
     fetchFollowings();
   }, [fetchFollowings]);
 
-  const goToUser = (userId) => {
-    navigation.navigate("ProfileGeneralStack", {
-      screen: "ProfileGeneral",
-      params: { userId },
-    });
-  };
-
   const updateSearch = (text) => {
     setSearch(text);
   };
@@ -79,7 +72,6 @@ const FollowingTabDetails = (props) => {
           keyExtractor={(item) => item?._id}
           renderItem={({ item }) => (
             <CardFollowers
-              onGoToUser={() => goToUser(item?._id)}
               avatar={item?.followeeId?.avatar?.url}
               username={item?.followeeId?.username}
               name={item?.followeeId?.name}

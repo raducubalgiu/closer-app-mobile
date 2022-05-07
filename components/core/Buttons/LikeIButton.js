@@ -12,7 +12,7 @@ const LikeIButton = (props) => {
   useEffect(() => {
     axios
       .get(
-        `${process.env.BASE_ENDPOINT}/users/${props.postId}/post/${user?._id}/user/check-like`,
+        `${process.env.BASE_ENDPOINT}/users/${user?._id}/posts/${props.postId}/likes`,
         { headers: { Authorization: `Bearer ${user?.token}` } }
       )
       .then((res) => {
@@ -34,10 +34,9 @@ const LikeIButton = (props) => {
     if (!liked) {
       axios
         .post(
-          `${process.env.BASE_ENDPOINT}/users/like`,
+          `${process.env.BASE_ENDPOINT}/users/${user?._id}/posts/${props.postId}/likes`,
           {
             postId: props.postId,
-            userId: user?._id,
           },
           { headers: { Authorization: `Bearer ${user?.token}` } }
         )
@@ -49,7 +48,7 @@ const LikeIButton = (props) => {
     } else {
       axios
         .delete(
-          `${process.env.BASE_ENDPOINT}/users/${props.postId}/post/${user?._id}/user/unlike`,
+          `${process.env.BASE_ENDPOINT}/users/${user?._id}/posts/${props.postId}/likes`,
           { headers: { Authorization: `Bearer ${user?.token}` } }
         )
         .then((res) => {

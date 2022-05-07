@@ -12,7 +12,6 @@ const FollowersTabDetails = (props) => {
   const [search, setSearch] = useState("");
   const [followers, setFollowers] = useState([]);
   const [loading, setLoading] = useState(false);
-  const navigation = useNavigation();
 
   useFocusEffect(
     React.useCallback(() => {
@@ -38,10 +37,6 @@ const FollowersTabDetails = (props) => {
 
   const updateSearch = (text) => setSearch(text);
 
-  const goToUser = (userId) => {
-    navigation.navigate("ProfileGeneral", { userId });
-  };
-
   return (
     <View style={styles.screen}>
       {loading && <Spinner />}
@@ -59,7 +54,6 @@ const FollowersTabDetails = (props) => {
           keyExtractor={(item) => item?._id}
           renderItem={({ item }) => (
             <CardFollowers
-              onGoToUser={() => goToUser(item?._id)}
               avatar={item?.userId?.avatar}
               username={item?.userId?.username}
               name={item?.userId?.name}

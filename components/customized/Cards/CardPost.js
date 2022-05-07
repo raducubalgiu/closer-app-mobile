@@ -158,7 +158,7 @@ const CardPost = (props) => {
         }
       >
         <Stack direction="row" justify="start">
-          <CustomAvatar size={30} iconSize={10} avatar={user?.avatar} />
+          <CustomAvatar size={30} iconSize={15} avatar={user?.avatar} />
           <Text style={styles.addCommText}>{t("addComment")}</Text>
         </Stack>
       </TouchableOpacity>
