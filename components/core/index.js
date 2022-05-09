@@ -14,8 +14,9 @@ export { default as StatsButton } from "./Buttons/StatsButton";
 export { default as Stack } from "./Containers/Stack";
 export { default as IconButton } from "./IconButton/IconButton";
 export { default as IconBackButton } from "./IconButton/IconBackButton";
+export { default as ButtonGroup } from "./ButtonGroup/ButtonGroup";
 
-export { Header } from "./Header/Header";
+export { default as Header } from "./Header/Header";
 
 export { default as CustomAvatar } from "./Avatars/CustomAvatar";
 

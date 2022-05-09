@@ -21,7 +21,7 @@ const LikesScreen = (props) => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${process.env.BASE_ENDPOINT}/posts/${postId}/likes`)
+      .get(`${process.env.BASE_ENDPOINT}/posts/${postId}/get-likes`)
       .then((res) => {
         setLikes(res.data.likes);
         setLoading(false);

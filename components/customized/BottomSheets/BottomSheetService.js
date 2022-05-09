@@ -1,5 +1,5 @@
 import { useRef, useMemo, useCallback } from "react";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { Divider } from "@rneui/themed";
 import BottomSheet, {
   BottomSheetFlatList,

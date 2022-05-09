@@ -1,11 +1,11 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import { Stack } from "..";
+import { Stack } from "../index";
 import { Icon, Tooltip, Divider } from "@rneui/themed";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
 
-export const Header = (props) => {
+const Header = (props) => {
   const navigation = useNavigation();
   return (
     <>
@@ -46,6 +46,8 @@ export const Header = (props) => {
     </>
   );
 };
+
+export default Header;
 
 const styles = StyleSheet.create({
   container: { paddingVertical: 10, paddingHorizontal: 15 },

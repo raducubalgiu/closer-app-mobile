@@ -5,7 +5,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Icon } from "@rneui/themed";
 import { useAuth } from "../context/auth";
-import { hideTabs } from "../utils/hideTabs";
 import "../i18next";
 
 import { Colors } from "../assets/styles/Colors";
@@ -65,11 +64,6 @@ const HomeStackNavigator = () => {
       initialRouteName="Home"
     >
       <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="Search" component={SearchScreen} />
-      <Stack.Screen name="FiltersDate" component={FiltersDateScreen} />
-      <Stack.Screen name="FiltersService" component={FiltersServiceScreen} />
-      <Stack.Screen name="AllServices" component={ServicesNavigation} />
-      <Stack.Screen name="Services" component={ServicesScreen} />
       <Stack.Screen name="ServiceItem" component={ServiceItemScreen} />
     </Stack.Navigator>
   );
@@ -98,7 +92,6 @@ const FeedStackNavigator = () => {
     >
       <Stack.Screen name="Feed" component={FeedScreen} />
       <Stack.Screen name="Likes" component={LikesScreen} />
-      <Stack.Screen name="Comments" component={CommentsScreen} />
       <Stack.Screen
         name="ProfileGeneralStack"
         component={ProfileStackNavigator}
@@ -116,7 +109,6 @@ const MessagesStackNavigator = () => {
       }}
     >
       <Stack.Screen name="Messages" component={MessagesScreen} />
-      <Stack.Screen name="MessageItem" component={MessageItemScreen} />
     </Stack.Navigator>
   );
 };
@@ -153,23 +145,6 @@ const UserStackNavigator = () => {
         component={ProfileScreen}
         initialRouteName="Profile"
       />
-      <Stack.Screen name="AddLocation" component={AddLocationScreen} />
-      <Stack.Screen name="AddServices" component={AddServicesScreen} />
-      <Stack.Screen name="AddProducts" component={AddProductsScreen} />
-      <Stack.Screen name="AddBusinessType" component={AddBusinessTypeScreen} />
-      <Stack.Screen name="EditProfile" component={EditProfileScreen} />
-      <Stack.Screen name="EditName" component={EditNameScreen} />
-      <Stack.Screen name="EditWebsite" component={EditWebsiteScreen} />
-      <Stack.Screen name="EditBio" component={EditBioScreen} />
-      <Stack.Screen
-        name="EditPhotoLibrary"
-        component={EditPhotoLibraryScreen}
-      />
-      <Stack.Screen name="MyBusiness" component={MyBusinessScreen} />
-      <Stack.Screen name="MyDashboard" component={MyDashboardScreen} />
-      <Stack.Screen name="MyCalendar" component={MyCalendarScreen} />
-      <Stack.Screen name="MyLocation" component={MyLocationScreen} />
-      <Stack.Screen name="MyProducts" component={MyProductsScreen} />
       <Stack.Screen name="Settings" component={SettingsScreen} />
       <Stack.Screen name="Schedules" component={SchedulesScreen} />
       <Stack.Screen name="Discounts" component={DiscountsScreen} />
@@ -230,7 +205,6 @@ const TabsScreen = () => {
         tabBarInactiveTintColor: "gray",
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarStyle: hideTabs(route),
       })}
       sceneContainerStyle={{ backgroundColor: "white" }}
     >
@@ -248,25 +222,46 @@ const CloserNavigation = () => {
 
   return (
     <NavigationContainer>
-      <RootStack.Navigator screenOptions={{ headerShown: false }}>
-        {user ? (
-          <RootStack.Screen
-            name="App"
-            component={TabsScreen}
-            options={{
-              animationEnabled: false,
-            }}
+      {user && (
+        <RootStack.Navigator screenOptions={{ headerShown: false }}>
+          <RootStack.Screen name="App" component={TabsScreen} />
+          <Stack.Screen name="Search" component={SearchScreen} />
+          <Stack.Screen name="FiltersDate" component={FiltersDateScreen} />
+          <Stack.Screen
+            name="FiltersService"
+            component={FiltersServiceScreen}
           />
-        ) : (
+          <Stack.Screen name="AllServices" component={ServicesNavigation} />
+          <Stack.Screen name="Services" component={ServicesScreen} />
+          <RootStack.Screen name="AddLocation" component={AddLocationScreen} />
+          <RootStack.Screen name="AddServices" component={AddServicesScreen} />
+          <RootStack.Screen name="AddProducts" component={AddProductsScreen} />
           <RootStack.Screen
-            name="AuthStack"
-            component={AuthStackNavigator}
-            options={{
-              animationEnabled: false,
-            }}
+            name="AddBusinessType"
+            component={AddBusinessTypeScreen}
           />
-        )}
-      </RootStack.Navigator>
+          <RootStack.Screen name="EditProfile" component={EditProfileScreen} />
+          <Stack.Screen name="EditName" component={EditNameScreen} />
+          <Stack.Screen name="EditWebsite" component={EditWebsiteScreen} />
+          <Stack.Screen name="EditBio" component={EditBioScreen} />
+          <Stack.Screen
+            name="EditPhotoLibrary"
+            component={EditPhotoLibraryScreen}
+          />
+          <Stack.Screen name="MyBusiness" component={MyBusinessScreen} />
+          <Stack.Screen name="MyDashboard" component={MyDashboardScreen} />
+          <Stack.Screen name="MyCalendar" component={MyCalendarScreen} />
+          <Stack.Screen name="MyLocation" component={MyLocationScreen} />
+          <Stack.Screen name="MyProducts" component={MyProductsScreen} />
+          <Stack.Screen name="Comments" component={CommentsScreen} />
+          <Stack.Screen name="MessageItem" component={MessageItemScreen} />
+        </RootStack.Navigator>
+      )}
+      {!user && (
+        <RootStack.Navigator screenOptions={{ headerShown: false }}>
+          <RootStack.Screen name="AuthStack" component={AuthStackNavigator} />
+        </RootStack.Navigator>
+      )}
     </NavigationContainer>
   );
 };

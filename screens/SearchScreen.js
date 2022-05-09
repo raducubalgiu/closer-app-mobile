@@ -14,7 +14,8 @@ import { useNavigation } from "@react-navigation/native";
 import theme from "../assets/styles/theme";
 import { SearchBarInput } from "../components/core";
 
-const SearchScreen = () => {
+const SearchScreen = ({ route }) => {
+  const { period } = route.params;
   const [initialServices, setInitialServices] = useState([]);
   const [filteredServices, setFilteredServices] = useState([]);
   const [search, setSearch] = useState("");
@@ -47,7 +48,7 @@ const SearchScreen = () => {
       <View style={styles.container}>
         <SearchBarInput
           autoFocus={true}
-          placeholder="Ce serviciu cauti?"
+          placeholder={t("whatServiceLooking")}
           value={search}
           updateValue={updateSearch}
         />
@@ -120,12 +121,13 @@ const SearchScreen = () => {
               keyExtractor={(item) => item._id}
               renderItem={({ item }) => (
                 <TouchableOpacity
-                  onPress={() =>
+                  onPress={() => {
                     navigation.navigate("FiltersDate", {
                       serviceId: item._id,
                       serviceName: item.name,
-                    })
-                  }
+                      period,
+                    });
+                  }}
                   style={styles.item}
                 >
                   <Text style={styles.serviceItem}>{item.name}</Text>

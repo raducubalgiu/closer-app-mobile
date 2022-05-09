@@ -7,13 +7,19 @@ import {
   KeyboardAvoidingView,
   FlatList,
 } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Divider } from "@rneui/themed";
 import axios from "axios";
 import { useAuth } from "../../../context/auth";
 import theme from "../../../assets/styles/theme";
-import { IconButton, Header, CustomAvatar } from "../../../components/core";
-import moment from "moment";
+import {
+  IconButton,
+  Header,
+  CustomAvatar,
+  Spinner,
+} from "../../../components/core";
+import { useFocusEffect } from "@react-navigation/native";
+import { dateFormat } from "../../../utils";
 
 const CommentsScreen = (props) => {
   const { user } = useAuth();
@@ -21,13 +27,23 @@ const CommentsScreen = (props) => {
     props.route.params;
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
-  
-  useEffect(() => {
-    axios
-      .get(`${process.env.BASE_ENDPOINT}/posts/${postId}/comments`)
-      .then((res) => setComments(res.data.comments))
-      .catch((err) => console.log(err));
-  }, []);
+  const [loading, setLoading] = useState(false);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setLoading(true);
+      axios
+        .get(`${process.env.BASE_ENDPOINT}/posts/${postId}/get-comments`)
+        .then((res) => {
+          setComments(res.data.comments);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoading(false);
+        });
+    }, [postId])
+  );
 
   const handleComment = () => {
     axios
@@ -68,43 +84,48 @@ const CommentsScreen = (props) => {
         style={styles.container}
       >
         <View style={{ flex: 1 }}>
-          <FlatList
-            ListHeaderComponent={
-              <>
-                <View style={styles.headerCont}>
-                  <CustomAvatar size={32.5} iconSize={15} avatar={avatar} />
-                  <View style={{ marginLeft: 10, flex: 1 }}>
+          {loading && <Spinner />}
+          {!loading && (
+            <FlatList
+              ListHeaderComponent={
+                <>
+                  <View style={styles.headerCont}>
+                    <CustomAvatar size={32.5} iconSize={15} avatar={avatar} />
+                    <View style={{ marginLeft: 10, flex: 1 }}>
+                      <Text>
+                        <Text style={styles.username}>{username}</Text>
+                        {description}
+                      </Text>
+                      <Text style={styles.date}>{date}</Text>
+                    </View>
+                  </View>
+                  <Divider />
+                </>
+              }
+              data={comments}
+              keyExtractor={(item) => item?._id}
+              renderItem={({ item }) => (
+                <View style={styles.commentsCont}>
+                  <CustomAvatar
+                    size={32.5}
+                    iconSize={15}
+                    avatar={item?.user?.avatar[0]?.url}
+                  />
+                  <View style={{ marginLeft: 10 }}>
                     <Text>
-                      <Text style={styles.username}>{username}</Text>
-                      {description}
+                      <Text style={styles.username}>
+                        {item?.user?.username}
+                      </Text>
+                      {item?.comment}
                     </Text>
-                    <Text style={styles.date}>{date}</Text>
+                    <Text style={styles.date}>
+                      {dateFormat(item?.createdAt)}
+                    </Text>
                   </View>
                 </View>
-                <Divider />
-              </>
-            }
-            data={comments}
-            keyExtractor={(item) => item?._id}
-            renderItem={({ item }) => (
-              <View style={styles.commentsCont}>
-                <CustomAvatar
-                  size={32.5}
-                  iconSize={15}
-                  avatar={item?.user?.avatar[0]?.url}
-                />
-                <View style={{ marginLeft: 10 }}>
-                  <Text>
-                    <Text style={styles.username}>{item?.user?.username}</Text>
-                    {item?.comment}
-                  </Text>
-                  <Text style={styles.date}>
-                    {moment(item?.createdAt).startOf("hour").fromNow()}
-                  </Text>
-                </View>
-              </View>
-            )}
-          />
+              )}
+            />
+          )}
         </View>
         <Divider />
         <View style={styles.inputCont}>

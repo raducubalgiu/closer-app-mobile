@@ -13,7 +13,11 @@ const FakeSearchBar = () => {
     <View style={styles.container}>
       <TouchableOpacity
         activeOpacity={1}
-        onPress={() => navigation.navigate("Search")}
+        onPress={() =>
+          navigation.navigate("Search", {
+            period: { type: "calendar", code: 0 },
+          })
+        }
         style={{ flexDirection: "row", flex: 1, alignItems: "center" }}
       >
         <Icon
@@ -26,7 +30,11 @@ const FakeSearchBar = () => {
       </TouchableOpacity>
       <Divider orientation="vertical" style={{ marginRight: 15 }} />
       <TouchableOpacity
-        onPress={() => navigation.navigate("Search")}
+        onPress={() =>
+          navigation.navigate("Search", {
+            period: { type: "now", code: 1 },
+          })
+        }
         style={styles.nowBtn}
       >
         <Icon
@@ -36,7 +44,7 @@ const FakeSearchBar = () => {
           style={{ marginRight: 5 }}
           color={theme.lightColors.black}
         />
-        <Text style={styles.nowBtnText}>Acum</Text>
+        <Text style={styles.nowBtnText}>{t("now")}</Text>
         <Icon name="keyboard-arrow-down" color={theme.lightColors.black} />
       </TouchableOpacity>
     </View>
