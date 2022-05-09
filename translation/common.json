@@ -40,5 +40,10 @@
   "addComment": "Adaugă un comentariu...",
   "at": "La",
   "now": "Acum",
-  "whatServiceLooking": "Ce serviciu cauţi?"
+  "whatServiceLooking": "Ce serviciu cauţi?",
+  "calendar": "Calendar",
+  "after18": "După ora 18:00",
+  "anyHour": "Orice oră",
+  "pickHour": "Alege ora",
+  "next": "Înainte"
 }

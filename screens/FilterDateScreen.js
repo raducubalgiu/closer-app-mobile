@@ -46,11 +46,11 @@ const FiltersDateScreen = ({ route }) => {
   };
 
   const dateButtons = [
-    { title: "Calendar" },
-    { title: "Acum" },
-    { title: "Dupa 18:00" },
+    { title: t("calendar") },
+    { title: t("now") },
+    { title: t("after18") },
   ];
-  const hoursButtons = [{ title: "Orice ora" }, { title: "Alege ora" }];
+  const hoursButtons = [{ title: t("anyHour") }, { title: t("pickHour") }];
   const handleDateBtns = useCallback((index) => {
     setActiveBtn(index);
   }, []);
@@ -84,7 +84,7 @@ const FiltersDateScreen = ({ route }) => {
             onPress={goNext}
             style={disabled ? disabledStyle : styles.mainButton}
           >
-            <Text style={styles.mainButtonText}>Inainte</Text>
+            <Text style={styles.mainButtonText}>{t("next")}</Text>
           </TouchableOpacity>
         </Stack>
       </BottomSheetFooter>
@@ -97,9 +97,9 @@ const FiltersDateScreen = ({ route }) => {
       case 0:
         return `${startDate} - ${endDate}`;
       case 1:
-        return "Acum";
+        return t("now");
       case 2:
-        return "Oricand dupa ora 18:00";
+        return t("after18");
       default:
         return `${startDate} - ${endDate}`;
     }
