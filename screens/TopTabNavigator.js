@@ -66,6 +66,7 @@ const TopTabNavigator = (props) => {
           backgroundColor: theme.lightColors.black,
         },
       })}
+      sceneContainerStyle={{ backgroundColor: "white" }}
     >
       <Tab.Screen name="Posts" component={PostsProfile} />
       <Tab.Screen name="Products" component={ProductsProfile} />

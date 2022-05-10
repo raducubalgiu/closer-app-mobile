@@ -22,11 +22,11 @@ import BottomSheet, {
 import { Stack } from "../components/core";
 import { SheetHeader } from "../components/customized";
 
-const FiltersServiceScreen = (props) => {
+const FiltersServiceScreen = ({ route }) => {
   const navigation = useNavigation();
   const sheetRef = useRef(null);
   const snapPoints = useMemo(() => ["75%", "90%"], []);
-  const { serviceId, serviceName } = props.route.params;
+  const { serviceId, serviceName, period } = route.params;
   const [filter, setFilter] = useState(null);
   const [disabled, setDisabled] = useState(true);
   const [option, setOption] = useState("");
@@ -53,6 +53,7 @@ const FiltersServiceScreen = (props) => {
                 serviceId,
                 serviceName,
                 optionId: option?._id,
+                period,
               })
             }
             style={disabled ? disabledStyle : styles.mainButton}

@@ -3,22 +3,30 @@ import React from "react";
 import OutlinedButton from "../../core/Buttons/OutlinedButton";
 import { Stack } from "../../core";
 import theme from "../../../assets/styles/theme";
+import { trimFunc } from "../../../utils";
+import { useTranslation } from "react-i18next";
 
 const CardProduct = (props) => {
+  const { t } = useTranslation();
+
   return (
     <View style={styles.card}>
       <Stack direction="row" align="start" sx={styles.cardLayout}>
         <View style={{ flex: 1, marginRight: 5 }}>
           <Text style={styles.name}>{props.name}</Text>
           {props.description && (
-            <Text style={styles.description}>{props.description}</Text>
+            <Text style={styles.description}>
+              {trimFunc(props.description, 100)}
+            </Text>
           )}
+          <Text style={styles.description}>30 de minute</Text>
           <Text style={styles.price}>{props.price} RON</Text>
         </View>
-        {props.bookingBtn ? (
-          <OutlinedButton title="Rezerva" style={{ flex: 1 }} />
-        ) : (
-          props.actionBtns
+        {props.canBook && (
+          <OutlinedButton title={t("book")} style={{ flex: 1 }} />
+        )}
+        {!props.canBook && (
+          <OutlinedButton title={t("edit")} style={{ flex: 1 }} />
         )}
       </Stack>
     </View>
@@ -32,9 +40,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
     backgroundColor: "white",
     padding: 15,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: "#eee",
+    //borderRadius: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
     marginHorizontal: 10,
   },
   cardLayout: { flex: 1 },

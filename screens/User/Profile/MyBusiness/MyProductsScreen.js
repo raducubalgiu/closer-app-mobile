@@ -16,6 +16,7 @@ import {
 import axios from "axios";
 import { useAuth } from "../../../../context/auth";
 import { Divider } from "@rneui/themed";
+import { useNavigation } from "@react-navigation/native";
 
 const MyProductsScreen = () => {
   const { user } = useAuth();
@@ -23,6 +24,7 @@ const MyProductsScreen = () => {
   const [productId, setProductId] = useState("");
   const [loading, setLoading] = useState(false);
   const { state, dispatch } = useModal();
+  const navigation = useNavigation();
 
   useEffect(() => {
     setLoading(true);
@@ -69,7 +71,7 @@ const MyProductsScreen = () => {
           <IconButton
             iconName="plussquare"
             iconType="antdesign"
-            onPress={() => dispatch({ type: "ADD" })}
+            onPress={() => navigation.navigate("AddProducts")}
             color={theme.lightColors.primary}
           />
         }

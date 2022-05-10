@@ -29,6 +29,35 @@ const FiltersDateScreen = ({ route }) => {
   const { calendar, startDate, endDate } = useCalendarList();
   const { t } = useTranslation();
 
+  const navigate = (activeBtn) => {
+    switch (activeBtn) {
+      case 0:
+        return {
+          code: 0,
+          type: "calendar",
+          startDate,
+          endDate,
+        };
+      case 1:
+        return {
+          code: 1,
+          type: t("now"),
+        };
+      case 2:
+        return {
+          code: 2,
+          type: t("after18"),
+        };
+      default:
+        return {
+          code: 0,
+          type: "calendar",
+          startDate,
+          endDate,
+        };
+    }
+  };
+
   const goNext = () => {
     axios
       .get(`${process.env.BASE_ENDPOINT}/services/${serviceId}/filters`)
@@ -39,6 +68,7 @@ const FiltersDateScreen = ({ route }) => {
           navigation.navigate("FiltersService", {
             serviceId,
             serviceName,
+            period: navigate(activeBtn),
           });
         }
       })
@@ -73,12 +103,18 @@ const FiltersDateScreen = ({ route }) => {
   const renderFooter = useCallback(
     (props) => (
       <BottomSheetFooter {...props}>
-        <Stack direction="row" sx={styles.footerContainer}>
-          <ButtonGroup
-            buttons={hoursButtons}
-            onPress={handleHoursBtns}
-            activeButton={activeHours}
-          />
+        <Stack
+          direction="row"
+          sx={styles.footerContainer}
+          justify={activeBtn === 0 ? "between" : "end"}
+        >
+          {activeBtn === 0 && (
+            <ButtonGroup
+              buttons={hoursButtons}
+              onPress={handleHoursBtns}
+              activeButton={activeHours}
+            />
+          )}
           <TouchableOpacity
             disabled={disabled}
             onPress={goNext}

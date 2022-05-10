@@ -49,7 +49,6 @@ const BottomSheetService = (props) => {
 
   return (
     <BottomSheet
-      style={styles.bottomSheet}
       ref={sheetRef}
       snapPoints={snapPoints}
       onChange={props.onHandleSheetChange}
@@ -90,15 +89,4 @@ const styles = StyleSheet.create({
     height: 5,
   },
   divider: { paddingBottom: 5, marginBottom: 5 },
-  bottomSheet: {
-    shadowColor: "#c9c5c5",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.8,
-    shadowRadius: 10,
-
-    elevation: 11,
-  },
 });

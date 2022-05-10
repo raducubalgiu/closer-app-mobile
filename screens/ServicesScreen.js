@@ -26,7 +26,8 @@ const ServicesScreen = ({ route }) => {
   const [sheetStep, setSheetStep] = useState(0);
   const navigation = useNavigation();
   const { t } = useTranslation();
-  const { serviceId, serviceName, optionId } = route.params;
+  const { serviceId, serviceName, optionId, period } = route.params;
+  const { code, type, startDate, endDate } = period;
 
   const handleSheetChange = useCallback((index) => {
     setSheetStep(index);
@@ -55,6 +56,10 @@ const ServicesScreen = ({ route }) => {
     fetchLocations();
   }, [fetchLocations]);
 
+  const displayPeriod = (startDate, endDate) => {
+    return "Calendar";
+  };
+
   return (
     <View style={styles.screen}>
       <SafeAreaView style={{ flex: 1 }}>
@@ -69,7 +74,9 @@ const ServicesScreen = ({ route }) => {
           <TouchableOpacity style={styles.searchDetailContainer}>
             <Icon name="search" size={18} color={theme.lightColors.grey0} />
             <Text style={styles.serviceText}>{serviceName},</Text>
-            <Text style={styles.searchText}>6 feb, 16:30</Text>
+            <Text style={styles.searchText}>
+              {code === 0 ? displayPeriod(startDate, endDate) : type}
+            </Text>
           </TouchableOpacity>
         </View>
         <View style={styles.secondFilterContainer}>

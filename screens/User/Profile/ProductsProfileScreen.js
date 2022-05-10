@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import axios from "axios";
 import CardProduct from "../../../components/customized/Cards/CardProduct";
 import React, { useState } from "react";
@@ -44,6 +44,8 @@ const ProductsProfileScreen = (props) => {
     );
   }
 
+  console.log(user?._id);
+
   return (
     <>
       {!loading && (
@@ -57,6 +59,7 @@ const ProductsProfileScreen = (props) => {
               description={item.description}
               price={item.price}
               option={item.option[0].name}
+              canBook={item?.user !== user?._id}
             />
           )}
           ListHeaderComponent={noFoundContent}
@@ -68,5 +71,3 @@ const ProductsProfileScreen = (props) => {
 };
 
 export default ProductsProfileScreen;
-
-const styles = StyleSheet.create({});
