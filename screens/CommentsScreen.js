@@ -10,16 +10,16 @@ import {
 import React, { useState } from "react";
 import { Divider } from "@rneui/themed";
 import axios from "axios";
-import { useAuth } from "../../../context/auth";
-import theme from "../../../assets/styles/theme";
+import { useAuth } from "../context/auth";
+import theme from "../assets/styles/theme";
 import {
   IconButton,
   Header,
   CustomAvatar,
   Spinner,
-} from "../../../components/core";
+} from "../components/core";
 import { useFocusEffect } from "@react-navigation/native";
-import { dateFormat } from "../../../utils";
+import { dateFormat } from "../utils";
 
 const CommentsScreen = (props) => {
   const { user } = useAuth();

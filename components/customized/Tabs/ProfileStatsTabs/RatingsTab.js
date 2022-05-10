@@ -1,13 +1,13 @@
 import { StyleSheet, FlatList } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import CardRatings from "../../Cards/CardRatings";
 import axios from "axios";
 import moment from "moment";
 import { useAuth } from "../../../../context/auth";
 import { Spinner } from "../../../core";
 
-const RatingsTabDetails = (props) => {
+export const RatingsTab = (props) => {
   const { user } = useAuth();
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -28,7 +28,6 @@ const RatingsTabDetails = (props) => {
           console.log(err);
           setLoading(false);
         });
-
     }, [props.userId, user?.token])
   );
 
@@ -54,7 +53,5 @@ const RatingsTabDetails = (props) => {
     </>
   );
 };
-
-export default RatingsTabDetails;
 
 const styles = StyleSheet.create({});

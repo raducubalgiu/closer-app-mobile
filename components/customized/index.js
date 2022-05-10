@@ -1,5 +1,9 @@
 export { SheetHeader } from "./Headers/SheetHeader";
 
+export { TopTabContainer } from "./Tabs/TopTabContainer/TopTabContainer";
+export { AllSavedTab } from "./Tabs/SavedTabs/AllSavedTab";
+export { OpportunitiesTab } from "./Tabs/SavedTabs/OpportunitiesTab";
+export { SavedVideoTab } from "./Tabs/SavedTabs/SavedVideoTab";
 export { SearchHashtagsTab } from "./Tabs/SearchTabs/SearchHashtagsTab";
 export { SearchJobsTab } from "./Tabs/SearchTabs/SearchJobsTab";
 export { SearchServicesTab } from "./Tabs/SearchTabs/SearchServicesTab";
@@ -11,3 +15,6 @@ export { ProductsProfileTab } from "./Tabs/ProfileTabs/ProductsProfileTab";
 export { AboutProfileTab } from "./Tabs/ProfileTabs/AboutProfileTab";
 export { JobsProfileTab } from "./Tabs/ProfileTabs/JobsProfileTab";
 export { CalendarProfileTab } from "./Tabs/ProfileTabs/CalendarProfileTab";
+export { FollowersTab } from "./Tabs/ProfileStatsTabs/FollowersTab";
+export { FollowingsTab } from "./Tabs/ProfileStatsTabs/FollowingsTab";
+export { RatingsTab } from "./Tabs/ProfileStatsTabs/RatingsTab";

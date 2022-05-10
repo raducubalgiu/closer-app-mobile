@@ -6,13 +6,12 @@ import axios from "axios";
 import { useAuth } from "../../../../context/auth";
 import { Spinner, SearchBarInput } from "../../../core";
 
-const FollowingTabDetails = (props) => {
+export const FollowingsTab = (props) => {
   const { user } = useAuth();
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [followings, setFollowings] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
-  const navigation = useNavigation();
 
   const fetchFollowings = useCallback(() => {
     setLoading(true);
@@ -83,8 +82,6 @@ const FollowingTabDetails = (props) => {
     </View>
   );
 };
-
-export default FollowingTabDetails;
 
 const styles = StyleSheet.create({
   screen: {

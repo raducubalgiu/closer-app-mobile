@@ -74,7 +74,7 @@ const ProfileOverview = (props) => {
           <StatsButton
             onPress={() =>
               navigation.navigate("ProfileGeneralStack", {
-                screen: "ProfileTabsScreen",
+                screen: "ProfileStats",
                 params: {
                   userId: user?._id,
                   username: user?.username,
@@ -95,7 +95,7 @@ const ProfileOverview = (props) => {
         <StatsButton
           onPress={() =>
             navigation.navigate("ProfileGeneralStack", {
-              screen: "ProfileTabsScreen",
+              screen: "ProfileStats",
               params: {
                 userId: user?._id,
                 username: user?.username,
@@ -109,7 +109,7 @@ const ProfileOverview = (props) => {
         <StatsButton
           onPress={() =>
             navigation.navigate("ProfileGeneralStack", {
-              screen: "ProfileTabsScreen",
+              screen: "ProfileStats",
               params: {
                 userId: user?._id,
                 username: user?.username,

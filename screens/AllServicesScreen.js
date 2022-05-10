@@ -13,7 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import BackSearchFilter from "../components/customized/Headers/BackSearchFilter";
 import theme from "../assets/styles/theme";
 
-const ServicesNavigation = () => {
+const AllServicesScreen = () => {
   const [categories, setCategories] = useState([]);
   const [isOpen, setIsOpen] = useState(true);
   const navigation = useNavigation();
@@ -118,7 +118,7 @@ const ServicesNavigation = () => {
   );
 };
 
-export default ServicesNavigation;
+export default AllServicesScreen;
 
 const styles = StyleSheet.create({
   screen: {

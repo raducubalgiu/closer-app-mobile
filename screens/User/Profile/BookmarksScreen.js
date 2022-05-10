@@ -4,7 +4,8 @@ import {
   AllSavedTab,
   SavedVideoTab,
   OpportunitiesTab,
-} from "../../../components/customized/Tabs/SavedTabs";
+  TopTabContainer,
+} from "../../../components/customized/index";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { Header } from "../../../components/core";
 import theme from "../../../assets/styles/theme";
@@ -15,14 +16,7 @@ const BookmarksScreen = () => {
   return (
     <SafeAreaView style={styles.screen}>
       <Header title="Salvate" />
-      <Tab.Navigator
-        initialRouteName="SavedAll"
-        screenOptions={{
-          tabBarLabelStyle: styles.labelStyle,
-          tabBarIndicatorStyle: styles.indicatorStyle,
-          tabBarInactiveTintColor: "gray",
-        }}
-      >
+      <TopTabContainer initialRouteName="SavedAll">
         <Tab.Screen
           name="SavedAll"
           component={AllSavedTab}
@@ -38,7 +32,7 @@ const BookmarksScreen = () => {
           component={OpportunitiesTab}
           options={{ tabBarLabel: "Oportunitati" }}
         />
-      </Tab.Navigator>
+      </TopTabContainer>
     </SafeAreaView>
   );
 };

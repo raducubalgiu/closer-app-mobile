@@ -13,7 +13,7 @@ import { useAuth } from "../../../../context/auth";
 
 const { width } = Dimensions.get("window");
 
-const AllSavedTab = () => {
+export const AllSavedTab = () => {
   const { user } = useAuth();
   const [bookmarks, setBookmarks] = useState([]);
 
@@ -57,8 +57,6 @@ const AllSavedTab = () => {
     </View>
   );
 };
-
-export default AllSavedTab;
 
 const styles = StyleSheet.create({
   container: {

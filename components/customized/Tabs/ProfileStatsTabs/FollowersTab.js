@@ -1,13 +1,12 @@
 import { StyleSheet, View, FlatList } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 import CardFollowers from "../../Cards/CardFollowers";
-import { useNavigation } from "@react-navigation/native";
 import { useAuth } from "../../../../context/auth";
 import axios from "axios";
 import { Spinner, SearchBarInput } from "../../../core";
 
-const FollowersTabDetails = (props) => {
+export const FollowersTab = (props) => {
   const { user } = useAuth();
   const [search, setSearch] = useState("");
   const [followers, setFollowers] = useState([]);
@@ -65,8 +64,6 @@ const FollowersTabDetails = (props) => {
     </View>
   );
 };
-
-export default FollowersTabDetails;
 
 const styles = StyleSheet.create({
   screen: {

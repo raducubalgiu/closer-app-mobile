@@ -19,14 +19,12 @@ import SettingsScreen from "../screens/User/Profile/Settings/SettingsProfileScre
 import SchedulesScreen from "../screens/User/Profile/Settings/SchedulesProfileScreen";
 import DiscountsScreen from "../screens/User/Profile/Settings/DiscountsProfileScreen";
 import FindFriendsScreen from "../screens/User/Profile/FindFriendsScreen";
-import ProfileTabsScreen from "../components/customized/Tabs/ProfileStatsTabs/ProfileTabsScreen";
 
 import SearchServicesScreen from "../screens/SearchServicesScreen";
 import SearchPostsScreen from "../screens/SearchPostsScreen";
 import SearchAllScreen from "../screens/SearchAllScreen";
 import FiltersDateScreen from "../screens/FilterDateScreen";
 import FiltersServiceScreen from "../screens/FiltersServiceScreen";
-import ServicesNavigation from "../screens/ServicesNavigationScreen";
 import ServicesScreen from "../screens/ServicesScreen";
 import ExploreScreen from "../screens/ExploreScreen";
 import MessagesScreen from "../screens/MessagesScreen";
@@ -45,7 +43,7 @@ import AddLocationScreen from "../screens/User/Profile/CompleteProfile/AddLocati
 import AddServicesScreen from "../screens/User/Profile/CompleteProfile/AddServicesScreen";
 import AddProductsScreen from "../screens/User/Profile/CompleteProfile/AddProductsScreen";
 import LikesScreen from "../screens/LikesScreen";
-import CommentsScreen from "../screens/User/Profile/CommentsScreen";
+import CommentsScreen from "../screens/CommentsScreen";
 import MyBusinessScreen from "../screens/User/Profile/MyBusiness/MyBusinessScreen";
 import MyDashboardScreen from "../screens/User/Profile/MyBusiness/MyDashboardScreen";
 import MyCalendarScreen from "../screens/User/Profile/MyBusiness/MyCalendarScreen";
@@ -53,6 +51,8 @@ import MyLocationScreen from "../screens/User/Profile/MyBusiness/MyLocationScree
 import MyProductsScreen from "../screens/User/Profile/MyBusiness/MyProductsScreen";
 import AddBusinessTypeScreen from "../screens/User/Profile/CompleteProfile/AddBusinessTypeScreen";
 import theme from "../assets/styles/theme";
+import AllServicesScreen from "../screens/AllServicesScreen";
+import ProfileStatsScreen from "../screens/User/Profile/ProfileStatsScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -169,7 +169,7 @@ const ProfileStackNavigator = () => {
       }}
     >
       <Stack.Screen name="ProfileGeneral" component={ProfileGeneralScreen} />
-      <Stack.Screen name="ProfileTabsScreen" component={ProfileTabsScreen} />
+      <Stack.Screen name="ProfileStats" component={ProfileStatsScreen} />
     </Stack.Navigator>
   );
 };
@@ -236,7 +236,7 @@ const CloserNavigation = () => {
             name="FiltersService"
             component={FiltersServiceScreen}
           />
-          <Stack.Screen name="AllServices" component={ServicesNavigation} />
+          <Stack.Screen name="AllServices" component={AllServicesScreen} />
           <Stack.Screen name="Services" component={ServicesScreen} />
           <RootStack.Screen name="AddLocation" component={AddLocationScreen} />
           <RootStack.Screen name="AddServices" component={AddServicesScreen} />
