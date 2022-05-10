@@ -6,8 +6,8 @@ import {
   Animated,
   View,
 } from "react-native";
-import { useScrollToTop } from "@react-navigation/native";
-import { Divider } from "@rneui/themed";
+import { useNavigation, useScrollToTop } from "@react-navigation/native";
+import { Divider, Badge } from "@rneui/themed";
 import React, { useCallback, useEffect, useState, useRef } from "react";
 import CardPost from "../components/customized/Cards/CardPost";
 import theme from "../assets/styles/theme";
@@ -25,6 +25,7 @@ const FeedScreen = () => {
   const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
   const [followingsPosts, setFollowingsPosts] = useState([]);
+  const navigation = useNavigation();
   const ref = useRef(null);
   useScrollToTop(ref);
   const { t } = useTranslation();
@@ -134,18 +135,23 @@ const FeedScreen = () => {
   return (
     <SafeAreaView style={styles.screen}>
       <Stack justify="start">
-        <ScrollView
-          horizontal
-          style={styles.listHoriz}
-          showsHorizontalScrollIndicator={false}
-        >
-          <Stack direction="row">
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <Stack direction="row" sx={styles.listHoriz}>
             <IconButton
               iconName="search"
               iconType="feather"
               sx={{ marginRight: 24 }}
+              onPress={() => navigation.navigate("SearchPosts")}
             />
-            <IconButton iconName="bell" iconType="feather" />
+            <View>
+              <IconButton iconName="bell" iconType="feather" />
+              <Badge
+                badgeStyle={{
+                  backgroundColor: "#F72A50",
+                }}
+                containerStyle={styles.badgeContainer}
+              />
+            </View>
             <Divider orientation="vertical" style={{ marginHorizontal: 15 }} />
             <FeedLabelButton
               onPress={() => {
@@ -169,6 +175,20 @@ const FeedScreen = () => {
               }}
               isActive={postsState.activeLastMinute}
               text={t("lastMinute")}
+            />
+            <FeedLabelButton
+              onPress={() => {
+                dispatchPosts({ type: "FETCH_JOBS" });
+              }}
+              isActive={postsState.activeJobs}
+              text={t("jobs")}
+            />
+            <FeedLabelButton
+              onPress={() => {
+                dispatchPosts({ type: "FETCH_VIDEO" });
+              }}
+              isActive={postsState.activeVideo}
+              text={t("videoContent")}
             />
           </Stack>
         </ScrollView>
@@ -231,5 +251,10 @@ const styles = StyleSheet.create({
   listHoriz: {
     marginVertical: 7.5,
     paddingHorizontal: 12.5,
+  },
+  badgeContainer: {
+    position: "absolute",
+    top: -5,
+    right: -5,
   },
 });

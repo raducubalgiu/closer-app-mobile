@@ -14,7 +14,7 @@ const FakeSearchBar = () => {
       <TouchableOpacity
         activeOpacity={1}
         onPress={() =>
-          navigation.navigate("Search", {
+          navigation.navigate("SearchServices", {
             period: { type: "calendar", code: 0 },
           })
         }
@@ -26,12 +26,12 @@ const FakeSearchBar = () => {
           color={theme.lightColors.black}
           size={20}
         />
-        <Text style={styles.fakeInputText}>{t("searchInputTitle")}</Text>
+        <Text style={styles.fakeInputText}>{t("searchService")}</Text>
       </TouchableOpacity>
       <Divider orientation="vertical" style={{ marginRight: 15 }} />
       <TouchableOpacity
         onPress={() =>
-          navigation.navigate("Search", {
+          navigation.navigate("SearchServices", {
             period: { type: "now", code: 1 },
           })
         }
@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f1f1f1",
     paddingVertical: 6,
     paddingHorizontal: 15,
+    borderRadius: 2.5,
   },
   fakeInput: {
     flexDirection: "row",
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
   },
   fakeInputText: {
     marginLeft: 10,
-    fontSize: 14,
+    fontSize: 14.5,
     color: theme.lightColors.grey0,
     fontFamily: "Exo-Regular",
   },

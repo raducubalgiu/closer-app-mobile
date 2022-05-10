@@ -1,5 +1,6 @@
 {
-  "searchInputTitle": "Ce serviciu cauţi?",
+  "searchService": "Ce serviciu cauţi?",
+  "search": "Caută",
   "nearYou": "Disponibil acum",
   "servicesHeading": "Servicii populare",
   "availableSeats": "locuri disponibile",
@@ -46,5 +47,8 @@
   "anyHour": "Orice oră",
   "pickHour": "Alege ora",
   "next": "Înainte",
-  "edit": "Editează"
+  "edit": "Editează",
+  "recentSearch": "Căutări recente",
+  "jobs": "Job-uri",
+  "videoContent": "Conţinut video"
 }

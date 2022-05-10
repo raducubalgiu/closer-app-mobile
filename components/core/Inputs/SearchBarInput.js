@@ -2,17 +2,12 @@ import { StyleSheet } from "react-native";
 import { SearchBar } from "@rneui/themed";
 import React from "react";
 import theme from "../../../assets/styles/theme";
-import { useTranslation } from "react-i18next";
-import { useNavigation } from "@react-navigation/native";
 
 const SearchBarInput = (props) => {
-  const { t } = useTranslation();
-  const navigation = useNavigation();
-
   return (
     <SearchBar
-      onCancel={() => navigation.goBack()}
-      cancelButtonTitle={t("cancel")}
+      onCancel={props.onPress}
+      cancelButtonTitle={props.cancelButtonTitle}
       cancelButtonProps={
         props.showCancel === false
           ? {
@@ -41,12 +36,13 @@ export default SearchBarInput;
 const styles = StyleSheet.create({
   containerStyle: {
     borderStyle: "dotted",
-    height: 67.5,
+    height: 65,
+    flex: 1,
   },
   inputContainerStyle: {
     backgroundColor: "#f1f1f1",
     flex: 1,
-    borderRadius: 0,
+    borderRadius: 2.5,
     marginLeft: 0,
   },
   inputStyle: {
@@ -56,8 +52,8 @@ const styles = StyleSheet.create({
   },
   cancelBtnText: {
     fontSize: 13.5,
-    fontFamily: "Exo-SemiBold",
-    color: theme.lightColors.black,
+    fontFamily: "Exo-Bold",
+    color: theme.lightColors.primary,
     backgroundColor: "white",
     padding: 10,
   },

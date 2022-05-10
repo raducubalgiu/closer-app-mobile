@@ -12,15 +12,19 @@ import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import theme from "../../../assets/styles/theme";
+import { useAuth } from "../../../context/auth";
 
 const ServicesCategories = () => {
+  const { user } = useAuth();
   const { t } = useTranslation();
   const navigation = useNavigation();
   const [services, setServices] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`${process.env.BASE_ENDPOINT}/services`)
+      .get(`${process.env.BASE_ENDPOINT}/services`, {
+        headers: { Authorization: `Bearer ${user?.token}` },
+      })
       .then((resp) => {
         setServices(resp.data.services);
       })

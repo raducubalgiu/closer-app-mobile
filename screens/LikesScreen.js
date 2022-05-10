@@ -57,9 +57,10 @@ const LikesScreen = (props) => {
           ListHeaderComponent={
             <>
               {loading && <ActivityIndicator />}
-              {!loading && <FakeSearchBarSimple />}
+              {!loading && likes.length > 20 && <FakeSearchBarSimple />}
             </>
           }
+          contentContainerStyle={{ marginTop: 10 }}
           data={likes}
           keyExtractor={(item) => item?._id}
           renderItem={({ item }) => (

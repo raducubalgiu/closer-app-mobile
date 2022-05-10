@@ -22,7 +22,9 @@ import DiscountsScreen from "../screens/User/Profile/Settings/DiscountsProfileSc
 import FindFriendsScreen from "../screens/User/Profile/FindFriendsScreen";
 import ProfileTabsScreen from "../components/customized/Tabs/ProfileStatsTabs/ProfileTabsScreen";
 
-import SearchScreen from "../screens/SearchScreen";
+import SearchServicesScreen from "../screens/SearchServicesScreen";
+import SearchPostsScreen from "../screens/SearchPostsScreen";
+import SearchAllScreen from "../screens/SearchAllScreen";
 import FiltersDateScreen from "../screens/FilterDateScreen";
 import FiltersServiceScreen from "../screens/FiltersServiceScreen";
 import ServicesNavigation from "../screens/ServicesNavigationScreen";
@@ -225,7 +227,10 @@ const CloserNavigation = () => {
       {user && (
         <RootStack.Navigator screenOptions={{ headerShown: false }}>
           <RootStack.Screen name="App" component={TabsScreen} />
-          <Stack.Screen name="Search" component={SearchScreen} />
+          <Stack.Screen
+            name="SearchServices"
+            component={SearchServicesScreen}
+          />
           <Stack.Screen name="FiltersDate" component={FiltersDateScreen} />
           <Stack.Screen
             name="FiltersService"
@@ -255,6 +260,8 @@ const CloserNavigation = () => {
           <Stack.Screen name="MyProducts" component={MyProductsScreen} />
           <Stack.Screen name="Comments" component={CommentsScreen} />
           <Stack.Screen name="MessageItem" component={MessageItemScreen} />
+          <Stack.Screen name="SearchPosts" component={SearchPostsScreen} />
+          <Stack.Screen name="SearchAll" component={SearchAllScreen} />
         </RootStack.Navigator>
       )}
       {!user && (

@@ -5,9 +5,9 @@ import {
   SavedVideoTab,
   OpportunitiesTab,
 } from "../../../components/customized/Tabs/SavedTabs";
-import { Colors } from "../../../assets/styles/Colors";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { Header } from "../../../components/core";
+import theme from "../../../assets/styles/theme";
 
 const BookmarksScreen = () => {
   const Tab = createMaterialTopTabNavigator();
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontFamily: "Exo-Bold",
     fontSize: 16,
-    color: Colors.textDark,
+    color: theme.lightColors.black,
   },
   labelStyle: {
     fontFamily: "Exo-SemiBold",
@@ -61,6 +61,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   indicatorStyle: {
-    backgroundColor: Colors.textDark,
+    backgroundColor: theme.lightColors.black,
   },
 });

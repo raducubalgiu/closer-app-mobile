@@ -19,7 +19,7 @@ import BottomSheet, {
   BottomSheetView,
   BottomSheetFooter,
 } from "@gorhom/bottom-sheet";
-import { Stack } from "../components/core";
+import { Stack, Spinner } from "../components/core";
 import { SheetHeader } from "../components/customized";
 
 const FiltersServiceScreen = ({ route }) => {
@@ -27,17 +27,23 @@ const FiltersServiceScreen = ({ route }) => {
   const sheetRef = useRef(null);
   const snapPoints = useMemo(() => ["75%", "90%"], []);
   const { serviceId, serviceName, period } = route.params;
+  const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState(null);
   const [disabled, setDisabled] = useState(true);
   const [option, setOption] = useState("");
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`${process.env.BASE_ENDPOINT}/services/${serviceId}`)
       .then((res) => {
         setFilter(res.data.service.filters[0]);
+        setLoading(false);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, [serviceId]);
 
   const disabledStyle = { ...styles.mainButton, backgroundColor: "#ccc" };
@@ -83,35 +89,38 @@ const FiltersServiceScreen = ({ route }) => {
             title={`Filtru - ${filter?.name}`}
             description={option?.name}
           />
-          <FlatList
-            bounces={false}
-            data={filter?.options}
-            keyExtractor={(item) => item._id}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                activeOpacity={1}
-                onPress={() => {
-                  setDisabled(false);
-                  setOption(item);
-                }}
-                style={
-                  item._id !== option._id
-                    ? styles.button
-                    : { ...styles.button, backgroundColor: "#bbb" }
-                }
-              >
-                <Text
+          {loading && <Spinner />}
+          {!loading && (
+            <FlatList
+              bounces={false}
+              data={filter?.options}
+              keyExtractor={(item) => item._id}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  activeOpacity={1}
+                  onPress={() => {
+                    setDisabled(false);
+                    setOption(item);
+                  }}
                   style={
                     item._id !== option._id
-                      ? styles.buttonText
-                      : { ...styles.buttonText, color: "white" }
+                      ? styles.button
+                      : { ...styles.button, backgroundColor: "#bbb" }
                   }
                 >
-                  {item?.name}
-                </Text>
-              </TouchableOpacity>
-            )}
-          />
+                  <Text
+                    style={
+                      item._id !== option._id
+                        ? styles.buttonText
+                        : { ...styles.buttonText, color: "white" }
+                    }
+                  >
+                    {item?.name}
+                  </Text>
+                </TouchableOpacity>
+              )}
+            />
+          )}
         </BottomSheetView>
       </BottomSheet>
     </SafeAreaView>
