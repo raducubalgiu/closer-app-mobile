@@ -1,11 +1,13 @@
-import { Icon } from "@rneui/themed";
-import PostsProfileScreen from "./User/Profile/PostsProfileScreen";
-import React, { useCallback, useMemo } from "react";
-import CalendarProfileScreen from "./User/Profile/CalendarProfileScreen";
-import JobsProfileScreen from "./User/Profile/JobsProfileScreen";
-import AboutProfileScreen from "./User/Profile/AboutProfileScreen";
-import ProductsProfileScreen from "./User/Profile/ProductsProfileScreen";
+import React, { useCallback } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { Icon } from "@rneui/themed";
+import {
+  PostsProfileTab,
+  ProductsProfileTab,
+  AboutProfileTab,
+  JobsProfileTab,
+  CalendarProfileTab,
+} from "../components/customized";
 import theme from "../assets/styles/theme";
 
 const TopTabNavigator = (props) => {
@@ -15,15 +17,15 @@ const TopTabNavigator = (props) => {
   console.log("RENDER TOP TABS");
 
   const PostsProfile = useCallback(
-    () => <PostsProfileScreen userId={userId} />,
+    () => <PostsProfileTab userId={userId} />,
     [userId]
   );
   const ProductsProfile = useCallback(
-    () => <ProductsProfileScreen userId={userId} />,
+    () => <ProductsProfileTab userId={userId} />,
     [userId]
   );
   const AboutProfile = () => (
-    <AboutProfileScreen
+    <AboutProfileTab
       biography={props?.biography}
       website={props?.website}
       location={props?.location}
@@ -70,8 +72,8 @@ const TopTabNavigator = (props) => {
     >
       <Tab.Screen name="Posts" component={PostsProfile} />
       <Tab.Screen name="Products" component={ProductsProfile} />
-      <Tab.Screen name="Calendar" component={CalendarProfileScreen} />
-      <Tab.Screen name="Jobs" component={JobsProfileScreen} />
+      <Tab.Screen name="Calendar" component={CalendarProfileTab} />
+      <Tab.Screen name="Jobs" component={JobsProfileTab} />
       <Tab.Screen name="About" component={AboutProfile} />
     </Tab.Navigator>
   );

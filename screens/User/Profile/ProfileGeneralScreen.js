@@ -102,7 +102,13 @@ const ProfileGeneralScreen = (props) => {
   );
 
   const tabsNavigator = (
-    <TopTabNavigator userId={userId} role={userDetails?.role} />
+    <TopTabNavigator
+      userId={userId}
+      role={userDetails?.role}
+      biography={userDetails?.description}
+      website={userDetails?.website}
+      location={userDetails?.location}
+    />
   );
 
   return (

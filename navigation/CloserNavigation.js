@@ -7,7 +7,6 @@ import { Icon } from "@rneui/themed";
 import { useAuth } from "../context/auth";
 import "../i18next";
 
-import { Colors } from "../assets/styles/Colors";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/User/Profile/ProfileScreen";
 import ProfileGeneralScreen from "../screens/User/Profile/ProfileGeneralScreen";
@@ -53,6 +52,7 @@ import MyCalendarScreen from "../screens/User/Profile/MyBusiness/MyCalendarScree
 import MyLocationScreen from "../screens/User/Profile/MyBusiness/MyLocationScreen";
 import MyProductsScreen from "../screens/User/Profile/MyBusiness/MyProductsScreen";
 import AddBusinessTypeScreen from "../screens/User/Profile/CompleteProfile/AddBusinessTypeScreen";
+import theme from "../assets/styles/theme";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -203,7 +203,7 @@ const TabsScreen = () => {
           // You can return any component that you like here!
           return <Icon name={iconName} type={iconType} color={color} />;
         },
-        tabBarActiveTintColor: Colors.textDark,
+        tabBarActiveTintColor: theme.lightColors.black,
         tabBarInactiveTintColor: "gray",
         headerShown: false,
         tabBarShowLabel: false,

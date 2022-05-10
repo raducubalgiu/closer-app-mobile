@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import NotFoundContent from "../../../components/customized/NotFoundContent/NotFoundContent";
+import NotFoundContent from "../../NotFoundContent/NotFoundContent";
 
-const CalendarProfileScreen = () => {
+export const CalendarProfileTab = () => {
   return (
     <NotFoundContent
       iconName="calendar"
@@ -12,7 +12,5 @@ const CalendarProfileScreen = () => {
     />
   );
 };
-
-export default CalendarProfileScreen;
 
 const styles = StyleSheet.create({});

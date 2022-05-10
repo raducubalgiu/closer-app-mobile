@@ -11,14 +11,14 @@ import { useFocusEffect } from "@react-navigation/native";
 import { Image, Icon } from "@rneui/themed";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import CompleteProfile from "../../../components/customized/CompleteProfile/CompleteProfile";
-import NoFoundPosts from "../../../components/customized/NotFoundContent/NoFoundPosts";
-import theme from "../../../assets/styles/theme";
-import { useAuth } from "../../../context/auth";
+import CompleteProfile from "../../CompleteProfile/CompleteProfile";
+import NoFoundPosts from "../../NotFoundContent/NoFoundPosts";
+import theme from "../../../../assets/styles/theme";
+import { useAuth } from "../../../../context/auth";
 
 const { width } = Dimensions.get("window");
 
-const PostsProfileScreen = (props) => {
+export const PostsProfileTab = (props) => {
   const [posts, setPosts] = useState([]);
   const { user } = useAuth();
   const { userId } = props;
@@ -96,8 +96,6 @@ const PostsProfileScreen = (props) => {
     />
   );
 };
-
-export default PostsProfileScreen;
 
 const styles = StyleSheet.create({
   box: {

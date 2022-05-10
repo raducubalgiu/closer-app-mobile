@@ -1,13 +1,13 @@
 import { FlatList, StyleSheet, View } from "react-native";
 import axios from "axios";
-import CardProduct from "../../../components/customized/Cards/CardProduct";
+import CardProduct from "../../Cards/CardProduct";
 import React, { useState } from "react";
-import NotFoundContent from "../../../components/customized/NotFoundContent/NotFoundContent";
+import NotFoundContent from "../../NotFoundContent/NotFoundContent";
 import { useFocusEffect } from "@react-navigation/native";
-import { useAuth } from "../../../context/auth";
-import { Spinner } from "../../../components/core";
+import { useAuth } from "../../../../context/auth";
+import { Spinner } from "../../../core";
 
-const ProductsProfileScreen = (props) => {
+export const ProductsProfileTab = (props) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState([]);
   const { user } = useAuth();
@@ -69,5 +69,3 @@ const ProductsProfileScreen = (props) => {
     </>
   );
 };
-
-export default ProductsProfileScreen;

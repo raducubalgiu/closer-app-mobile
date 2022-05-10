@@ -26,10 +26,9 @@ const ProfileScreen = (props) => {
     <TopTabNavigator
       role={user?.role}
       userId={user?._id}
-      // products={user?.products}
-      // biography={user?.description}
-      // website={user?.website}
-      // location={user?.location}
+      biography={user?.description}
+      website={user?.website}
+      location={user?.location}
     />
   );
 

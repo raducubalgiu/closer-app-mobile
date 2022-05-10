@@ -1,7 +1,7 @@
 import { StyleSheet, FlatList } from "react-native";
 import React from "react";
-import NotFoundContent from "../../../components/customized/NotFoundContent/NotFoundContent";
-import CardJob from "../../../components/customized/Cards/CardJob";
+import NotFoundContent from "../../NotFoundContent/NotFoundContent";
+import CardJob from "../../Cards/CardJob";
 
 const jobs = [
   // {
@@ -36,7 +36,7 @@ if (jobs.length === 0) {
   );
 }
 
-const JobsProfileScreen = () => {
+export const JobsProfileTab = () => {
   return (
     <></>
     // <FlatList
@@ -53,7 +53,5 @@ const JobsProfileScreen = () => {
     // />
   );
 };
-
-export default JobsProfileScreen;
 
 const styles = StyleSheet.create({});
