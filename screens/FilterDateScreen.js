@@ -33,24 +33,24 @@ const FiltersDateScreen = ({ route }) => {
     switch (activeBtn) {
       case 0:
         return {
-          code: 0,
+          code: process.env.CALENDAR_CODE,
           type: "calendar",
           startDate,
           endDate,
         };
       case 1:
         return {
-          code: 1,
+          code: process.env.NOW_CODE,
           type: t("now"),
         };
       case 2:
         return {
-          code: 2,
+          code: process.env.AFTER_18_CODE,
           type: t("after18"),
         };
       default:
         return {
-          code: 0,
+          code: process.env.CALENDAR_CODE,
           type: "calendar",
           startDate,
           endDate,

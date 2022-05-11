@@ -1,11 +1,10 @@
 import { StyleSheet, Text, View, ScrollView } from "react-native";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Stack } from "../../core";
 import theme from "../../../assets/styles/theme";
 import CardCompleteProfile from "../Cards/CardCompleteProfile";
 import { useAuth } from "../../../context/auth";
 import { useNavigation } from "@react-navigation/native";
-import axios from "axios";
 
 const CompleteProfile = () => {
   const navigation = useNavigation();

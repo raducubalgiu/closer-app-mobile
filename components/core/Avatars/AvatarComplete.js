@@ -3,7 +3,7 @@ import { Avatar, Badge, Icon } from "@rneui/themed";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 
-const AvatarComplete = (props) => {
+export const AvatarComplete = (props) => {
   return (
     <View>
       <Avatar
@@ -26,8 +26,6 @@ const AvatarComplete = (props) => {
     </View>
   );
 };
-
-export default AvatarComplete;
 
 const styles = StyleSheet.create({
   avatarContainer: {

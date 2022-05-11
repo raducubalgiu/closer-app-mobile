@@ -1,6 +1,6 @@
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
-import HeaderReusable from "../../../../components/customized/Headers/HeaderReusable";
+import HeaderReusable from "../../../../components/customized/Layout/Headers/HeaderReusable";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../../assets/styles/theme";
 

@@ -1,3 +1,6 @@
+export { Accordion } from "./Accordion/Accordion";
+
+export { ButtonFilter } from "./Buttons/ButtonFilter";
 export { default as MainButton } from "./Buttons/MainButton";
 export { default as OutlinedButton } from "./Buttons/OutlinedButton";
 export { default as ContainedButton } from "./Buttons/ContainedButton";
@@ -19,6 +22,7 @@ export { default as ButtonGroup } from "./ButtonGroup/ButtonGroup";
 export { default as Header } from "./Header/Header";
 
 export { default as CustomAvatar } from "./Avatars/CustomAvatar";
+export { AvatarComplete } from "./Avatars/AvatarComplete";
 
 export { default as Checkmark } from "./Icons/Checkmark";
 

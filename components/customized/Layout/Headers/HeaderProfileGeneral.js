@@ -1,43 +1,36 @@
 import { StyleSheet, Text } from "react-native";
 import React from "react";
 import { Icon } from "@rneui/themed";
-import { IconButton, Stack } from "../../core";
-import theme from "../../../assets/styles/theme";
+import { IconButton, Stack } from "../../../core";
+import theme from "../../../../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
 
-const HeaderProfile = (props) => {
+const HeaderProfileGeneral = (props) => {
   const navigation = useNavigation();
 
   return (
-    <Stack direction="row" sx={{ paddingVertical: 10, paddingHorizontal: 15 }}>
+    <Stack direction="row" sx={{ marginVertical: 20, marginHorizontal: 20 }}>
       <Stack direction="row">
         <IconButton
-          onPress={props.onGoToFindFriends}
-          iconName="adduser"
-          iconType="antdesign"
-          size={27}
+          onPress={() => navigation.goBack()}
+          iconName="arrow-back-ios"
+          size={21}
+          sx={{ marginRight: 15 }}
         />
-        <Icon
-          style={{ marginLeft: 15 }}
-          size={30}
-          type="ionicon"
-          name="add-circle-outline"
-          color="white"
-        />
+        <Icon name="bells" type="antdesign" color="white" />
       </Stack>
       <Text style={styles.name}>{props?.name}</Text>
       <Stack direction="row">
         <IconButton
-          onPress={() => navigation.navigate("AddProducts")}
-          size={30}
-          iconName="add-circle-outline"
-          iconType="ionicon"
+          onPress={props.onOpenSettings}
+          iconName="bells"
+          iconType="antdesign"
           color={theme.lightColors.black}
         />
         <IconButton
           onPress={props.onOpenSettings}
-          size={30}
-          iconName="menu-outline"
+          size={25}
+          iconName="ellipsis-horizontal"
           iconType="ionicon"
           color={theme.lightColors.black}
           sx={{ marginLeft: 15 }}
@@ -47,7 +40,7 @@ const HeaderProfile = (props) => {
   );
 };
 
-export default HeaderProfile;
+export default HeaderProfileGeneral;
 
 const styles = StyleSheet.create({
   name: { fontFamily: "Exo-Medium", fontSize: 15 },

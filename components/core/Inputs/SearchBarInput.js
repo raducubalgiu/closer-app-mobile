@@ -4,6 +4,34 @@ import React from "react";
 import theme from "../../../assets/styles/theme";
 
 const SearchBarInput = (props) => {
+  const styles = StyleSheet.create({
+    containerStyle: {
+      borderStyle: "dotted",
+      height: props.height ? props.height : 65,
+      flex: 1,
+    },
+    inputContainerStyle: {
+      backgroundColor: "#f1f1f1",
+      flex: 1,
+      borderRadius: 2.5,
+      marginLeft: 0,
+    },
+    inputStyle: {
+      fontSize: 15,
+      color: theme.lightColors.grey0,
+      fontFamily: "Exo-Regular",
+    },
+    cancelBtnText: {
+      fontSize: 13.5,
+      fontFamily: "Exo-Bold",
+      color: theme.lightColors.primary,
+      backgroundColor: "white",
+      padding: 10,
+    },
+    searchIcon: { color: theme.lightColors.black },
+    placeholderColor: { color: theme.lightColors.grey0 },
+  });
+
   return (
     <SearchBar
       onCancel={props.onPress}
@@ -27,36 +55,9 @@ const SearchBarInput = (props) => {
       autoFocus={props.autoFocus}
       value={props.value}
       onChangeText={props.updateValue}
+      showLoading={props.showLoading ? true : false}
     />
   );
 };
 
 export default SearchBarInput;
-
-const styles = StyleSheet.create({
-  containerStyle: {
-    borderStyle: "dotted",
-    height: 65,
-    flex: 1,
-  },
-  inputContainerStyle: {
-    backgroundColor: "#f1f1f1",
-    flex: 1,
-    borderRadius: 2.5,
-    marginLeft: 0,
-  },
-  inputStyle: {
-    fontSize: 15,
-    color: theme.lightColors.grey0,
-    fontFamily: "Exo-Regular",
-  },
-  cancelBtnText: {
-    fontSize: 13.5,
-    fontFamily: "Exo-Bold",
-    color: theme.lightColors.primary,
-    backgroundColor: "white",
-    padding: 10,
-  },
-  searchIcon: { color: theme.lightColors.black },
-  placeholderColor: { color: theme.lightColors.grey0 },
-});

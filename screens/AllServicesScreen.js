@@ -1,118 +1,130 @@
 import {
   StyleSheet,
   Text,
-  View,
   SafeAreaView,
   TouchableOpacity,
-  FlatList,
+  ScrollView,
+  View,
 } from "react-native";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Divider, Icon, Avatar } from "@rneui/themed";
-import { useNavigation } from "@react-navigation/native";
-import BackSearchFilter from "../components/customized/Headers/BackSearchFilter";
+import React, { useCallback, useEffect, useState } from "react";
+import { Icon } from "@rneui/themed";
+import { Accordion, Stack, SearchBarInput, Spinner } from "../components/core";
 import theme from "../assets/styles/theme";
+import { useTranslation } from "react-i18next";
+import { useNavigation } from "@react-navigation/native";
+import { Divider } from "@rneui/base";
 
 const AllServicesScreen = () => {
+  const [search, setSearch] = useState("");
   const [categories, setCategories] = useState([]);
-  const [isOpen, setIsOpen] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [loadingSearch, setLoadingSearch] = useState(false);
+  const { t } = useTranslation();
   const navigation = useNavigation();
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`${process.env.BASE_ENDPOINT}/categories`)
       .then((resp) => {
         setCategories(resp.data.categories);
+        setLoading(false);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
   }, []);
 
-  const handleAccordion = () => {
-    setIsOpen((isOpen) => !isOpen);
-  };
+  const updateSearch = useCallback(
+    (search) => {
+      setSearch(search);
+      if (search) {
+        //   axios
+        //     .get(`${process.env.BASE_ENDPOINT}/services/search/?name=${search}`, {
+        //       headers: { Authorization: `Bearer ${user?.token}` },
+        //     })
+        //     .then((res) => {
+        //       setServices(res.data.services);
+        //     })
+        //     .catch((err) => console.log(err));
+        // } else {
+        //   setServices([]);
+      }
+    },
+    [search]
+  );
+
+  const ServiceItem = ({ name, _id, servicesCount }) => (
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate("Services", {
+          serviceId: _id,
+          serviceName: name,
+          period: {
+            code: process.env.ANYTIME_CODE,
+            type: t("anytime"),
+          },
+        })
+      }
+      style={{
+        marginTop: 15,
+      }}
+    >
+      <Text style={styles.service}>{name}</Text>
+      <Text style={styles.results}>{servicesCount}</Text>
+      <Divider color="#ddd" style={{ marginTop: 15 }} />
+    </TouchableOpacity>
+  );
 
   return (
     <SafeAreaView style={styles.screen}>
-      <BackSearchFilter />
       <View style={styles.servicesContainer}>
-        <FlatList
-          data={categories}
-          keyExtractor={(item) => item._id}
-          renderItem={({ item }) => (
-            <View>
-              <TouchableOpacity
-                activeOpacity={1}
-                onPress={handleAccordion}
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  padding: 10,
-                }}
+        <Stack direction="row" justify="start">
+          <TouchableOpacity
+            style={{ marginRight: 10 }}
+            onPress={() => navigation.goBack()}
+          >
+            <Icon
+              name="chevron-thin-left"
+              type="entypo"
+              color={theme.lightColors.black}
+              size={22.5}
+            />
+          </TouchableOpacity>
+          <SearchBarInput
+            autoFocus={false}
+            placeholder={t("search")}
+            value={search}
+            updateValue={updateSearch}
+            cancelButtonTitle={""}
+            height={60}
+            showLoading={loadingSearch}
+          />
+        </Stack>
+        {loading && <Spinner />}
+        {!loading && (
+          <ScrollView showsVerticalScrollIndicator={false}>
+            {categories.map((category, i) => (
+              <Accordion
+                key={i}
+                title={category?.name}
+                initExpand={true}
+                sx={styles.accordion}
               >
-                <Text style={{ fontFamily: "Exo-Medium" }}>{item.name}</Text>
-                <Icon
-                  size={18}
-                  name={isOpen ? "keyboard-arrow-up" : "keyboard-arrow-down"}
-                  style={{ backgroundColor: "white", borderRadius: 50 }}
-                />
-              </TouchableOpacity>
-
-              {isOpen && (
-                <FlatList
-                  data={item.services}
-                  keyExtractor={(item) => item._id}
-                  renderItem={({ item }) => (
-                    <View style={{ paddingHorizontal: 15 }}>
-                      <TouchableOpacity
-                        onPress={() =>
-                          navigation.navigate("Services", {
-                            serviceId: item._id,
-                          })
-                        }
-                        activeOpacity={1}
-                        style={{
-                          flexDirection: "row",
-                          alignItems: "center",
-                          paddingVertical: 15,
-                        }}
-                      >
-                        <Avatar
-                          size={40}
-                          rounded
-                          source={{
-                            uri: `${item.image}`,
-                          }}
-                          title={item.name}
-                        ></Avatar>
-                        <View style={{ marginLeft: 10 }}>
-                          <Text
-                            style={{
-                              fontFamily: "Exo-Medium",
-                              textTransform: "uppercase",
-                            }}
-                          >
-                            {item.name}
-                          </Text>
-                          <Text
-                            style={{
-                              fontFamily: "Exo-Regular",
-                              fontSize: 12,
-                              color: theme.lightColors.grey0,
-                            }}
-                          >
-                            5 rezultate
-                          </Text>
-                        </View>
-                      </TouchableOpacity>
-                      <Divider />
-                    </View>
-                  )}
-                />
-              )}
-            </View>
-          )}
-        />
+                {category?.services?.map((service, i) => (
+                  <ServiceItem
+                    key={i}
+                    name={service?.name}
+                    _id={service?._id}
+                    servicesCount={`100 rezultate`}
+                  />
+                ))}
+              </Accordion>
+            ))}
+          </ScrollView>
+        )}
       </View>
     </SafeAreaView>
   );
@@ -126,6 +138,22 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   servicesContainer: {
-    marginTop: 15,
+    paddingHorizontal: 15,
+    flex: 1,
+  },
+  accordion: {
+    marginTop: 10,
+    backgroundColor: "#f1f1f1",
+    paddingVertical: 10,
+    paddingHorizontal: 5,
+    borderRadius: 2.5,
+  },
+  service: {
+    fontFamily: "Exo-Bold",
+    textTransform: "uppercase",
+    color: theme.lightColors.black,
+  },
+  results: {
+    fontFamily: "Exo-Medium",
   },
 });

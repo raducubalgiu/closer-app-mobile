@@ -1,4 +1,4 @@
-export { SheetHeader } from "./Headers/SheetHeader";
+export { SheetHeader } from "./Layout/Headers/SheetHeader";
 
 export { TopTabContainer } from "./Tabs/TopTabContainer/TopTabContainer";
 export { AllSavedTab } from "./Tabs/SavedTabs/AllSavedTab";
@@ -18,3 +18,5 @@ export { CalendarProfileTab } from "./Tabs/ProfileTabs/CalendarProfileTab";
 export { FollowersTab } from "./Tabs/ProfileStatsTabs/FollowersTab";
 export { FollowingsTab } from "./Tabs/ProfileStatsTabs/FollowingsTab";
 export { RatingsTab } from "./Tabs/ProfileStatsTabs/RatingsTab";
+
+export { HeaderServices } from "../customized/Layout/Headers/HeaderServices";

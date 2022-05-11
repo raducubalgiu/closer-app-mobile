@@ -1,23 +1,23 @@
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import React from "react";
 import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
+import theme from "../../../assets/styles/theme";
 
-const IconBackButton = () => {
+const IconBackButton = (props) => {
   const navigation = useNavigation();
 
   return (
-    <TouchableOpacity style={styles.btn} onPress={() => navigation.goBack()}>
-      <Icon name="arrow-back-ios" size={20} />
+    <TouchableOpacity
+      onPress={props.onPress ? props.onPress : () => navigation.goBack()}
+    >
+      <Icon
+        name="keyboard-arrow-left"
+        size={props.size ? props.size : 30}
+        color={theme.lightColors.black}
+      />
     </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  btn: {
-    paddingVertical: 5,
-    paddingRight: 5,
-  },
-});
 
 export default IconBackButton;

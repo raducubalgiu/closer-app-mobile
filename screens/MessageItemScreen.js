@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import HeaderMessageItem from "../components/customized/Headers/HeaderMessageItem";
+import HeaderMessageItem from "../components/customized/Layout/Headers/HeaderMessageItem";
 import { useAuth } from "../context/auth";
 import axios from "axios";
 import { Stack } from "../components/core";

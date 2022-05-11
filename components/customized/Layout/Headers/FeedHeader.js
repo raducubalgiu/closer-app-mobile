@@ -1,10 +1,10 @@
 import { StyleSheet, Text, TouchableOpacity, ScrollView } from "react-native";
 import React from "react";
-import FakeSearchBarSimple from "../FakeSearchBar/FakeSearchBarSimple";
+import FakeSearchBarSimple from "../../FakeSearchBar/FakeSearchBarSimple";
 import { Icon, Divider } from "@rneui/themed";
-import { Stack } from "../../core";
-import theme from "../../../assets/styles/theme";
-import FeedLabelButton from "../../core/Buttons/FeedLabelButton";
+import { Stack } from "../../../core";
+import theme from "../../../../assets/styles/theme";
+import FeedLabelButton from "../../../core/Buttons/FeedLabelButton";
 import { useNavigation } from "@react-navigation/native";
 
 const FeedHeader = (props) => {

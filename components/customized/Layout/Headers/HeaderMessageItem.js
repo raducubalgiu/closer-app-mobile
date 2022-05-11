@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Icon, Divider } from "@rneui/themed";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 import React from "react";
-import { Stack, CustomAvatar } from "../../core";
+import { Stack, CustomAvatar } from "../../../core";
 import { useNavigation } from "@react-navigation/native";
 
 const HeaderMessageItem = (props) => {

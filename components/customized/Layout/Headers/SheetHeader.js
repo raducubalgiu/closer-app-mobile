@@ -1,9 +1,9 @@
 import { StyleSheet, Text } from "react-native";
 import React from "react";
 import { Icon } from "@rneui/themed";
-import { Stack } from "../../core";
+import { Stack } from "../../../core";
 import { useNavigation } from "@react-navigation/native";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 
 export const SheetHeader = ({ title, description }) => {
   const navigation = useNavigation();

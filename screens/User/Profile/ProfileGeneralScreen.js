@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { OutlinedButton, IconButton } from "../../../components/core";
 import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
-import HeaderProfileGeneral from "../../../components/customized/Headers/HeaderProfileGeneral";
+import HeaderProfileGeneral from "../../../components/customized/Layout/Headers/HeaderProfileGeneral";
 import { Colors } from "../../../assets/styles/Colors";
 import { useAuth } from "../../../context/auth";
 import TopTabNavigator from "../../TopTabNavigator";

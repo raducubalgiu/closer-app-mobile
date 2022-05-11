@@ -4,7 +4,7 @@ import BottomSheetPopup from "../../../components/customized/BottomSheets/Bottom
 import { useNavigation } from "@react-navigation/native";
 import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
 import { OutlinedButton, Protected } from "../../../components/core";
-import HeaderProfile from "../../../components/customized/Headers/HeaderProfile";
+import HeaderProfile from "../../../components/customized/Layout/Headers/HeaderProfile";
 import { useAuth } from "../../../context/auth";
 import TopTabNavigator from "../../TopTabNavigator";
 import theme from "../../../assets/styles/theme";
@@ -36,7 +36,9 @@ const ProfileScreen = (props) => {
     <>
       <OutlinedButton
         title="Editeaza profilul"
-        onPress={() => navigation.navigate("EditProfile")}
+        onPress={() => {
+          navigation.navigate("EditProfile");
+        }}
         sx={styles.editBtn}
       />
       <TouchableOpacity
