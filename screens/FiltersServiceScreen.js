@@ -14,13 +14,13 @@ import React, {
 } from "react";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
-import theme from "../assets/styles/theme";
 import BottomSheet, {
   BottomSheetView,
   BottomSheetFooter,
 } from "@gorhom/bottom-sheet";
 import { Stack, Spinner } from "../components/core";
 import { SheetHeader } from "../components/customized";
+import theme from "../assets/styles/theme";
 
 const FiltersServiceScreen = ({ route }) => {
   const navigation = useNavigation();

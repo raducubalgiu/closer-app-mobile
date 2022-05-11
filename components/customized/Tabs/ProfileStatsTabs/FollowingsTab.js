@@ -65,6 +65,7 @@ export const FollowingsTab = (props) => {
               placeholder="Cauta"
               value={search}
               updateValue={updateSearch}
+              height={60}
             />
           }
           data={followings}

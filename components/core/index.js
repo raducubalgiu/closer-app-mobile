@@ -12,7 +12,7 @@ export { default as LikeIButton } from "./Buttons/LikeIButton";
 export { default as CommentsIButton } from "./Buttons/CommentsIButton";
 export { default as ShareIButton } from "./Buttons/ShareIButton";
 export { default as BookmarkIButton } from "./Buttons/BookmarkIButton";
-export { default as StatsButton } from "./Buttons/StatsButton";
+export { StatsButton } from "./Buttons/StatsButton";
 
 export { default as Stack } from "./Containers/Stack";
 export { default as IconButton } from "./IconButton/IconButton";

@@ -9,12 +9,19 @@ import React from "react";
 import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";
-import StatsButton from "../../core/Buttons/StatsButton";
-import { Checkmark, CustomAvatar, Protected, Stack } from "../../core";
+import {
+  Checkmark,
+  CustomAvatar,
+  Protected,
+  Stack,
+  StatsButton,
+} from "../../core";
+import { useTranslation } from "react-i18next";
 
 const ProfileOverview = (props) => {
   const { user, withBadge } = props;
   const navigation = useNavigation();
+  const { t } = useTranslation();
 
   return (
     <View style={styles.container}>
@@ -82,13 +89,13 @@ const ProfileOverview = (props) => {
                 },
               })
             }
-            labelStats="Ratinguri"
+            labelStats={t("reviews")}
             statsNo={user?.counter?.ratingsQuantity}
           />
         </Protected>
         <Protected user={user} roles={[process.env.THIRD_ROLE]}>
           <StatsButton
-            labelStats="Postari"
+            labelStats={t("posts")}
             statsNo={user?.counter?.ratingsQuantity}
           />
         </Protected>
@@ -103,7 +110,7 @@ const ProfileOverview = (props) => {
               },
             })
           }
-          labelStats="Urmaritori"
+          labelStats={t("followers")}
           statsNo={user?.counter?.followersCount}
         />
         <StatsButton
@@ -117,7 +124,7 @@ const ProfileOverview = (props) => {
               },
             })
           }
-          labelStats="Urmaresti"
+          labelStats={t("following")}
           statsNo={user?.counter?.followingCount}
         />
       </Stack>

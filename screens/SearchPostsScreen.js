@@ -50,6 +50,7 @@ const SearchPostsScreen = () => {
             updateValue={updateSearch}
             cancelButtonTitle={t("search")}
             onPress={() => navigation.navigate("SearchAll", { search })}
+            height={60}
           />
         </Stack>
         <View>

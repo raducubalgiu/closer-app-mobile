@@ -1,22 +1,13 @@
 import { StyleSheet, Text } from "react-native";
 import React from "react";
 import { Icon } from "@rneui/themed";
-import { Stack } from "../../../core";
-import { useNavigation } from "@react-navigation/native";
+import { IconBackButton, Stack } from "../../../core";
 import theme from "../../../../assets/styles/theme";
 
 export const SheetHeader = ({ title, description }) => {
-  const navigation = useNavigation();
-
   return (
     <Stack direction="row" sx={styles.sheetOverview}>
-      <Icon
-        onPress={() => navigation.goBack()}
-        name="chevron-back"
-        type="ionicon"
-        color={theme.lightColors.black}
-        size={25}
-      />
+      <IconBackButton size={20} />
       <Stack>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{description}</Text>

@@ -12,9 +12,9 @@ const IconBackButton = (props) => {
       onPress={props.onPress ? props.onPress : () => navigation.goBack()}
     >
       <Icon
-        name="keyboard-arrow-left"
-        size={props.size ? props.size : 30}
-        color={theme.lightColors.black}
+        name="arrow-back-ios"
+        size={props.size ? props.size : 21}
+        color={props.color ? props.color : theme.lightColors.black}
       />
     </TouchableOpacity>
   );

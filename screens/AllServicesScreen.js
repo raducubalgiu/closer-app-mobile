@@ -73,7 +73,6 @@ const AllServicesScreen = () => {
       }}
     >
       <Text style={styles.service}>{name}</Text>
-      <Text style={styles.results}>{servicesCount}</Text>
       <Divider color="#ddd" style={{ marginTop: 15 }} />
     </TouchableOpacity>
   );
@@ -144,12 +143,12 @@ const styles = StyleSheet.create({
   accordion: {
     marginTop: 10,
     backgroundColor: "#f1f1f1",
-    paddingVertical: 10,
+    paddingVertical: 7.5,
     paddingHorizontal: 5,
     borderRadius: 2.5,
   },
   service: {
-    fontFamily: "Exo-Bold",
+    fontFamily: "Exo-SemiBold",
     textTransform: "uppercase",
     color: theme.lightColors.black,
   },

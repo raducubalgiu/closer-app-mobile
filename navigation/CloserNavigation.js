@@ -53,6 +53,7 @@ import AddBusinessTypeScreen from "../screens/User/Profile/CompleteProfile/AddBu
 import theme from "../assets/styles/theme";
 import AllServicesScreen from "../screens/AllServicesScreen";
 import ProfileStatsScreen from "../screens/User/Profile/ProfileStatsScreen";
+import NotificationsScreen from "../screens/NotificationsScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -262,6 +263,7 @@ const CloserNavigation = () => {
           <Stack.Screen name="MessageItem" component={MessageItemScreen} />
           <Stack.Screen name="SearchPosts" component={SearchPostsScreen} />
           <Stack.Screen name="SearchAll" component={SearchAllScreen} />
+          <Stack.Screen name="Notifications" component={NotificationsScreen} />
         </RootStack.Navigator>
       )}
       {!user && (

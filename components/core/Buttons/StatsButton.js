@@ -2,7 +2,7 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 
-const StatsButton = (props) => {
+export const StatsButton = (props) => {
   return (
     <TouchableOpacity
       activeOpacity={1}
@@ -16,8 +16,6 @@ const StatsButton = (props) => {
     </TouchableOpacity>
   );
 };
-
-export default StatsButton;
 
 const styles = StyleSheet.create({
   container: { alignItems: "center" },

@@ -144,7 +144,11 @@ const FeedScreen = () => {
               onPress={() => navigation.navigate("SearchPosts")}
             />
             <View>
-              <IconButton iconName="bell" iconType="feather" />
+              <IconButton
+                iconName="bell"
+                iconType="feather"
+                onPress={() => navigation.navigate("Notifications")}
+              />
               <Badge
                 badgeStyle={{
                   backgroundColor: "#F72A50",

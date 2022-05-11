@@ -44,11 +44,12 @@ export default CardRatings;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
-    marginTop: 15,
+    marginVertical: 15,
     marginHorizontal: 15,
     padding: 20,
     borderRadius: 10,
+    borderWidth: 0.5,
+    borderColor: "#ddd",
   },
   name: {
     fontFamily: "Exo-SemiBold",

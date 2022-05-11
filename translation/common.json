@@ -30,7 +30,7 @@
   "result": "rezultate",
   "seeProfile": "Vezi profilul",
   "book": "Rezervă",
-  "reviews": "de recenzii",
+  "reviews": "Recenzii",
   "findService": "Caută serviciu..",
   "from": "de la",
   "suggested": "Sugerate",
@@ -53,5 +53,8 @@
   "jobs": "Job-uri",
   "videoContent": "Conţinut video",
   "anytime": "Oricând",
-  "myMessages": "Mesajele mele"
+  "myMessages": "Mesajele mele",
+  "notifications": "Notificări",
+  "followers": "Urmăritori",
+  "posts": "Postări"
 }

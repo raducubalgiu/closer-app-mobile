@@ -4,27 +4,21 @@ import { Icon, Tooltip, Divider } from "@rneui/themed";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
+import IconBackButton from "../IconButton/IconBackButton";
 
 const Header = (props) => {
   const navigation = useNavigation();
+
+  const handleBack = () => navigation.goBack();
 
   return (
     <>
       <Stack direction="row" sx={styles.container}>
         <TouchableOpacity
-          onPress={
-            !props.hideBtnLeft
-              ? () => {
-                  navigation.goBack();
-                }
-              : null
-          }
+          onPress={!props.hideBtnLeft ? () => handleBack : null}
         >
-          <Icon
-            name="chevron-thin-left"
-            type="entypo"
+          <IconBackButton
             color={!props.hideBtnLeft ? theme.lightColors.black : "white"}
-            size={22.5}
           />
         </TouchableOpacity>
         <Stack direction="row">
