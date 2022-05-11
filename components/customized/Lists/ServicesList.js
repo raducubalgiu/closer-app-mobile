@@ -6,15 +6,16 @@ import {
   FlatList,
   Image,
 } from "react-native";
-import { Divider } from "@rneui/themed";
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Divider } from "@rneui/themed";
+import { useAuth } from "../../../context/auth";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
-import axios from "axios";
 import theme from "../../../assets/styles/theme";
-import { useAuth } from "../../../context/auth";
+import { Stack } from "../../core";
 
-const ServicesCategories = () => {
+export const ServicesList = () => {
   const { user } = useAuth();
   const { t } = useTranslation();
   const navigation = useNavigation();
@@ -32,13 +33,13 @@ const ServicesCategories = () => {
   }, []);
 
   return (
-    <View style={styles.servicesContainer}>
-      <View style={styles.headingContainer}>
-        <Text style={styles.servicesHeading}>{t("servicesHeading")}</Text>
+    <View style={styles.container}>
+      <Stack direction="row" sx={styles.headingContainer}>
+        <Text style={styles.heading}>{t("servicesHeading")}</Text>
         <TouchableOpacity onPress={() => navigation.navigate("AllServices")}>
-          <Text style={styles.seeAllHeading}>{t("seeAll")}</Text>
+          <Text style={styles.seeAll}>{t("seeAll")}</Text>
         </TouchableOpacity>
-      </View>
+      </Stack>
       <Divider />
       <FlatList
         nestedScrollEnabled={true}
@@ -71,28 +72,22 @@ const ServicesCategories = () => {
   );
 };
 
-export default ServicesCategories;
-
 const styles = StyleSheet.create({
-  servicesContainer: {
+  container: {
     paddingVertical: 10,
     marginTop: 5,
     flex: 1,
   },
   headingContainer: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
     paddingBottom: 20,
     paddingTop: 5,
   },
-  servicesHeading: {
+  heading: {
     color: theme.lightColors.black,
     fontFamily: "Exo-SemiBold",
     fontSize: 15,
   },
-  seeAllHeading: {
+  seeAll: {
     fontSize: 12.5,
     fontFamily: "Exo-SemiBold",
     color: theme.lightColors.grey0,

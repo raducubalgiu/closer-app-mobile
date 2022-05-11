@@ -20,3 +20,5 @@ export { FollowingsTab } from "./Tabs/ProfileStatsTabs/FollowingsTab";
 export { RatingsTab } from "./Tabs/ProfileStatsTabs/RatingsTab";
 
 export { HeaderServices } from "../customized/Layout/Headers/HeaderServices";
+
+export { ServicesList } from "./Lists/ServicesList";

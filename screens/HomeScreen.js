@@ -11,11 +11,11 @@ import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { Divider } from "@rneui/themed";
 import FakeSearchBar from "../components/customized/FakeSearchBar/FakeSearchBar";
-import ServicesCategories from "../components/customized/ServicesCategories/ServicesCategories";
 import CardRecommended from "../components/customized/Cards/CardRecommended";
 import theme from "../assets/styles/theme";
 import { useAuth } from "../context/auth";
 import { useScrollToTop } from "@react-navigation/native";
+import { ServicesList } from "../components/customized";
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -84,7 +84,7 @@ const HomeScreen = () => {
           }
           ListHeaderComponent={
             <>
-              <ServicesCategories />
+              <ServicesList />
               <View>
                 <Text style={styles.sheetHeading}>{t("nearYou")}</Text>
                 <Divider width={2} color="#f1f1f1" style={styles.divider} />
