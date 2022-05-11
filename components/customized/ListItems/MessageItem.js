@@ -1,11 +1,11 @@
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { Stack, Checkmark, CustomAvatar } from "../../core";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import theme from "../../../assets/styles/theme";
 
-const MessageItem = (props) => {
+export const MessageItem = (props) => {
   return (
-    <TouchableOpacity style={styles.container} onPress={props.onPress}>
+    <Stack direction="row" sx={styles.container}>
       <CustomAvatar avatar={props.avatar} />
       <Stack align="start" sx={{ marginLeft: 10 }}>
         <Stack direction="row">
@@ -17,17 +17,14 @@ const MessageItem = (props) => {
           <Text style={styles.date}>{props.date}</Text>
         </Stack>
       </Stack>
-    </TouchableOpacity>
+    </Stack>
   );
 };
 
-export default MessageItem;
-
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    alignItems: "center",
     marginBottom: 15,
+    flex: 1,
   },
   name: {
     fontFamily: "Exo-Medium",

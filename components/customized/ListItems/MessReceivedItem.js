@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   message: {
     borderRadius: 25,
     marginLeft: 10,
-    padding: 12.5,
+    padding: 10,
     borderWidth: 1,
     borderColor: "#ddd",
   },

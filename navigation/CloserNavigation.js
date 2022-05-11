@@ -194,7 +194,7 @@ const TabsScreen = () => {
             iconName = focused ? "search" : "search";
           } else if (route.name === "MessagesStack") {
             iconType = "feather";
-            iconName = focused ? "bell" : "bell";
+            iconName = focused ? "message-circle" : "message-circle";
           } else if (route.name === "UserStack") {
             iconType = "feather";
             iconName = focused ? "user" : "user";

@@ -23,4 +23,6 @@ export { RatingsTab } from "./Tabs/ProfileStatsTabs/RatingsTab";
 
 export { HeaderServices } from "../customized/Layout/Headers/HeaderServices";
 
+export { MessageItem } from "../customized/ListItems/MessageItem";
+
 export { ServicesList } from "./Lists/ServicesList";

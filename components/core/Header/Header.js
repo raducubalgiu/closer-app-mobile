@@ -7,14 +7,23 @@ import { useNavigation } from "@react-navigation/native";
 
 const Header = (props) => {
   const navigation = useNavigation();
+
   return (
     <>
       <Stack direction="row" sx={styles.container}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity
+          onPress={
+            !props.hideBtnLeft
+              ? () => {
+                  navigation.goBack();
+                }
+              : null
+          }
+        >
           <Icon
             name="chevron-thin-left"
             type="entypo"
-            color={theme.lightColors.black}
+            color={!props.hideBtnLeft ? theme.lightColors.black : "white"}
             size={22.5}
           />
         </TouchableOpacity>

@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     backgroundColor: "#f1f1f1",
     marginLeft: 10,
-    padding: 12.5,
+    padding: 10,
   },
   messageText: {
     fontFamily: "Exo-Medium",
