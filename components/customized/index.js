@@ -1,3 +1,5 @@
+export { AutocompleteGoogle } from "./AutocompleteGoogle/AutocompleteGoogle";
+
 export { SheetHeader } from "./Layout/Headers/SheetHeader";
 
 export { TopTabContainer } from "./Tabs/TopTabContainer/TopTabContainer";

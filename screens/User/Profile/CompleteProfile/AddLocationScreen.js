@@ -10,7 +10,7 @@ import {
 import React, { useState } from "react";
 import theme from "../../../../assets/styles/theme";
 import TooltipTitle from "../../../../components/customized/ListItems/TooltipItem";
-import AutocompleteGoogle from "../../../../components/customized/AutocompleteGoogle/AutocompleteGoogle";
+import { AutocompleteGoogle } from "../../../../components/customized";
 import { Stack, Header, MainButton } from "../../../../components/core";
 import { Icon, Avatar, Badge } from "@rneui/themed";
 import axios from "axios";

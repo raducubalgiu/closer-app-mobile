@@ -3,11 +3,8 @@ import { GOOGLE_MAPS_API_KEY } from "@env";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import React from "react";
 import theme from "../../../assets/styles/theme";
-import { useAuth } from "../../../context/auth";
 
-const AutocompleteGoogle = (props) => {
-  const { user } = useAuth();
-
+export const AutocompleteGoogle = ({ onSetLocation }) => {
   return (
     <GooglePlacesAutocomplete
       styles={{
@@ -28,7 +25,7 @@ const AutocompleteGoogle = (props) => {
       returnKeyType={"search"}
       enablePoweredByContainer={false}
       onPress={(data, details = null) => {
-        props.onSetLocation({
+        onSetLocation({
           street: details?.address_components[1]?.long_name,
           number: details?.address_components[0]?.long_name,
           city: details?.address_components[2]?.long_name,
@@ -49,8 +46,6 @@ const AutocompleteGoogle = (props) => {
     />
   );
 };
-
-export default AutocompleteGoogle;
 
 const styles = StyleSheet.create({
   textInput: {
