@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList } from "react-native";
 import axios from "axios";
 import CardProduct from "../../Cards/CardProduct";
 import React, { useState } from "react";
@@ -44,7 +44,38 @@ export const ProductsProfileTab = (props) => {
     );
   }
 
-  console.log(user?._id);
+  const deleteProductHandler = (productId) => {
+    axios
+      .delete(
+        `${process.env.BASE_ENDPOINT}/users/${user?._id}/products/${productId}`,
+        {
+          headers: { Authorization: `Bearer ${user?.token}` },
+        }
+      )
+      .then(() =>
+        setProducts((products) =>
+          products.filter((product) => product._id !== productId)
+        )
+      )
+      .catch((err) => console.log(err));
+  };
+
+  const renderProducts = ({ item }) => (
+    <CardProduct
+      name={item.name}
+      description={item.description}
+      price={item.price}
+      option={item.option[0].name}
+      canBook={item?.user !== user?._id}
+      duration={item?.duration}
+      onEditProduct={() =>
+        navigation.navigate("EditProduct", {
+          product: item,
+        })
+      }
+      onDeleteProduct={() => deleteProductHandler(item?._id)}
+    />
+  );
 
   return (
     <>
@@ -53,15 +84,7 @@ export const ProductsProfileTab = (props) => {
           data={products}
           keyExtractor={(item) => item._id}
           showsVerticalScrollIndicator={false}
-          renderItem={({ item }) => (
-            <CardProduct
-              name={item.name}
-              description={item.description}
-              price={item.price}
-              option={item.option[0].name}
-              canBook={item?.user !== user?._id}
-            />
-          )}
+          renderItem={renderProducts}
           ListHeaderComponent={noFoundContent}
         />
       )}

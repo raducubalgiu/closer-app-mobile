@@ -1,14 +1,13 @@
 import React, { useCallback } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { Icon } from "@rneui/themed";
 import {
   PostsProfileTab,
   ProductsProfileTab,
   AboutProfileTab,
   JobsProfileTab,
   CalendarProfileTab,
+  TopTabContainer,
 } from "../components/customized";
-import theme from "../assets/styles/theme";
 
 const TopTabNavigator = (props) => {
   const { role, userId } = props;
@@ -33,41 +32,9 @@ const TopTabNavigator = (props) => {
   );
 
   const topTab = (
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color }) => {
-          let iconName;
-          let iconType;
-          let size;
-
-          if (route.name === "Posts") {
-            iconType = "feather";
-            iconName = focused ? "grid" : "grid";
-          } else if (route.name === "Products") {
-            iconType = "feather";
-            iconName = focused ? "shopping-bag" : "shopping-bag";
-          } else if (route.name === "Calendar") {
-            iconType = "feather";
-            iconName = focused ? "calendar" : "calendar";
-          } else if (route.name === "Jobs") {
-            iconType = "feather";
-            iconName = focused ? "briefcase" : "briefcase";
-          } else if (route.name === "About") {
-            iconType = "feather";
-            iconName = focused ? "user-check" : "user-check";
-          }
-          return (
-            <Icon name={iconName} type={iconType} color={color} size={size} />
-          );
-        },
-        tabBarActiveTintColor: theme.lightColors.primary,
-        tabBarInactiveTintColor: "gray",
-        headerShown: false,
-        tabBarShowLabel: false,
-        tabBarIndicatorStyle: {
-          backgroundColor: theme.lightColors.black,
-        },
-      })}
+    <TopTabContainer
+      initialRouteName="Posts"
+      profileTabs={true}
       sceneContainerStyle={{ backgroundColor: "white" }}
     >
       <Tab.Screen name="Posts" component={PostsProfile} />
@@ -75,7 +42,7 @@ const TopTabNavigator = (props) => {
       <Tab.Screen name="Calendar" component={CalendarProfileTab} />
       <Tab.Screen name="Jobs" component={JobsProfileTab} />
       <Tab.Screen name="About" component={AboutProfile} />
-    </Tab.Navigator>
+    </TopTabContainer>
   );
 
   return <>{topTab}</>;

@@ -1,6 +1,10 @@
 export { AutocompleteGoogle } from "./AutocompleteGoogle/AutocompleteGoogle";
 
 export { SheetHeader } from "./Layout/Headers/SheetHeader";
+export { HeaderProfile } from "./Layout/Headers/HeaderProfile";
+export { HeaderProfileGeneral } from "./Layout/Headers/HeaderProfileGeneral";
+
+export { ProfileOverview } from "./ProfileOverview/ProfileOverview";
 
 export { TopTabContainer } from "./Tabs/TopTabContainer/TopTabContainer";
 export { AllSavedTab } from "./Tabs/SavedTabs/AllSavedTab";
@@ -26,3 +30,4 @@ export { HeaderServices } from "../customized/Layout/Headers/HeaderServices";
 export { MessageItem } from "../customized/ListItems/MessageItem";
 
 export { ServicesList } from "./Lists/ServicesList";
+export { SettingsList } from "./Lists/SettingsList";

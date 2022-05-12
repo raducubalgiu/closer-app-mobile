@@ -6,26 +6,37 @@ import {
   ActivityIndicator,
   View,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState, useCallback } from "react";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import axios from "axios";
-import { OutlinedButton, IconButton } from "../../../components/core";
-import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
-import HeaderProfileGeneral from "../../../components/customized/Layout/Headers/HeaderProfileGeneral";
-import { Colors } from "../../../assets/styles/Colors";
-import { useAuth } from "../../../context/auth";
-import TopTabNavigator from "../../TopTabNavigator";
-import { Stack } from "../../../components/core";
-import CardSuggestedPeople from "../../../components/customized/Cards/CardSuggestedPeople";
-import FollowButton from "../../../components/core/Buttons/FollowButton";
 import { useFocusEffect } from "@react-navigation/native";
+import {
+  Stack,
+  FollowButton,
+  OutlinedButton,
+  IconButton,
+} from "../../../components/core";
+import {
+  ProfileOverview,
+  HeaderProfileGeneral,
+  TopTabContainer,
+  PostsProfileTab,
+  CalendarProfileTab,
+  ProductsProfileTab,
+  AboutProfileTab,
+  JobsProfileTab,
+} from "../../../components/customized";
+import { useAuth } from "../../../context/auth";
+import CardSuggestedPeople from "../../../components/customized/Cards/CardSuggestedPeople";
+import theme from "../../../assets/styles/theme";
 
 const ProfileGeneralScreen = (props) => {
   const { user } = useAuth();
   const { userId } = props.route.params;
   const [userDetails, setUserDetails] = useState(null);
-  const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [suggestedPeople, setSuggestedPeople] = useState([]);
+  const Tab = createMaterialTopTabNavigator();
 
   useFocusEffect(
     React.useCallback(() => {
@@ -33,8 +44,8 @@ const ProfileGeneralScreen = (props) => {
         .get(`${process.env.BASE_ENDPOINT}/users/${userId}`, {
           headers: { Authorization: `Bearer ${user?.token}` },
         })
-        .then((resp) => {
-          setUserDetails(resp.data.user);
+        .then((res) => {
+          setUserDetails(res.data.user);
         })
         .catch((error) => console.log(error));
     }, [userId])
@@ -87,7 +98,7 @@ const ProfileGeneralScreen = (props) => {
         <IconButton
           sx={styles.iconBtn}
           size={20}
-          color={Colors.textDark}
+          color={theme.lightColors.black}
           iconType="antdesign"
           iconName="addusergroup"
           onPress={handleSuggested}
@@ -101,13 +112,28 @@ const ProfileGeneralScreen = (props) => {
     </>
   );
 
-  const tabsNavigator = (
-    <TopTabNavigator
-      userId={userId}
-      role={userDetails?.role}
+  const PostsProfile = useCallback(
+    () => <PostsProfileTab userId={userId} />,
+    [userId]
+  );
+  const ProductsProfile = useCallback(
+    () => <ProductsProfileTab userId={userId} />,
+    [userId]
+  );
+  const AboutProfile = () => (
+    <AboutProfileTab
       biography={userDetails?.description}
       website={userDetails?.website}
       location={userDetails?.location}
+    />
+  );
+
+  const renderSuggested = ({ item }) => (
+    <CardSuggestedPeople
+      title={item?.name}
+      business={item?.business?.name}
+      noFollowers={item?.followersCount}
+      username={item?.username}
     />
   );
 
@@ -127,18 +153,19 @@ const ProfileGeneralScreen = (props) => {
             horizontal
             data={suggestedPeople}
             keyExtractor={(item) => item?._id}
-            renderItem={({ item }) => (
-              <CardSuggestedPeople
-                title={item?.name}
-                business={item?.business?.name}
-                noFollowers={item?.followersCount}
-                username={item?.username}
-              />
-            )}
+            renderItem={renderSuggested}
           />
         </Stack>
       )}
-      {tabsNavigator}
+      <View style={styles.tabsCont}>
+        <TopTabContainer initialRouteName="Posts" profileTabs={true}>
+          <Tab.Screen name="Posts" component={PostsProfile} />
+          <Tab.Screen name="Products" component={ProductsProfile} />
+          <Tab.Screen name="Calendar" component={CalendarProfileTab} />
+          <Tab.Screen name="Jobs" component={JobsProfileTab} />
+          <Tab.Screen name="About" component={AboutProfile} />
+        </TopTabContainer>
+      </View>
     </SafeAreaView>
   );
 };
@@ -164,7 +191,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 2.5,
   },
-  followBtnText: { color: Colors.textDark, fontFamily: "Exo-SemiBold" },
+  followBtnText: { color: theme.lightColors.black, fontFamily: "Exo-SemiBold" },
   btnMessage: {
     marginLeft: 5,
     borderWidth: 1,
@@ -182,7 +209,7 @@ const styles = StyleSheet.create({
   },
   suggestedTitle: {
     fontFamily: "Exo-Medium",
-    color: Colors.textLight,
+    color: theme.lightColors.black,
     marginBottom: 5,
   },
   suggestedPeople: {
@@ -195,4 +222,5 @@ const styles = StyleSheet.create({
     padding: 7,
     borderRadius: 5,
   },
+  tabsCont: { flex: 1, height: 700 },
 });

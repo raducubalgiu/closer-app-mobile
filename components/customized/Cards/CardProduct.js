@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import OutlinedButton from "../../core/Buttons/OutlinedButton";
-import { Stack } from "../../core";
+import { Stack, IconButton } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { trimFunc } from "../../../utils";
 import { useDuration } from "../../../hooks";
@@ -10,14 +10,22 @@ import { useTranslation } from "react-i18next";
 const CardProduct = (props) => {
   const { t } = useTranslation();
 
+  const duration = props?.duration ? useDuration(props?.duration) : "";
+  let renderDuration;
+  if (duration) {
+    renderDuration = (
+      <Text style={styles.description}>
+        {t("duration")}: {duration}
+      </Text>
+    );
+  }
+
   return (
     <View style={styles.card}>
       <Stack direction="row" align="start" sx={styles.cardLayout}>
         <View style={styles.descriptionCont}>
           <Text style={styles.name}>{props.name}</Text>
-          <Text style={styles.description}>
-            {t("duration")}: {useDuration(props.duration)}
-          </Text>
+          {renderDuration}
           {props.description && (
             <Text style={styles.description}>
               {trimFunc(props.description, 100)}
@@ -28,7 +36,21 @@ const CardProduct = (props) => {
           </Text>
         </View>
         {props.canBook && <OutlinedButton title={t("book")} />}
-        {!props.canBook && <OutlinedButton title={t("edit")} />}
+        {!props.canBook && (
+          <Stack direction="row">
+            <IconButton
+              iconName="edit"
+              iconType="antdesign"
+              onPress={props.onEditProduct}
+            />
+            <IconButton
+              iconName="delete"
+              iconType="antdesign"
+              onPress={props.onDeleteProduct}
+              sx={{ marginLeft: 20 }}
+            />
+          </Stack>
+        )}
       </Stack>
     </View>
   );

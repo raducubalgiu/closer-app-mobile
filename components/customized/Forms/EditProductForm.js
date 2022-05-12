@@ -20,11 +20,10 @@ const defaultValues = {
   discount: "",
 };
 
-const EditProductForm = (props) => {
+const EditProductForm = ({ product }) => {
   const { user } = useAuth();
-  const [product, setProduct] = useState(null);
   const [filters, setFilters] = useState([]);
-  const [selectedService, setSelectedService] = useState("");
+  const [selectedService, setSelectedService] = useState(product._id);
   const [loading, setLoading] = useState(false);
   const {
     control,
@@ -58,20 +57,6 @@ const EditProductForm = (props) => {
     setLoading(true);
     const { description, price, discount, name } = data;
   };
-
-  console.log(product);
-
-  useEffect(() => {
-    axios
-      .get(
-        `${process.env.BASE_ENDPOINT}/users/${user?._id}/products/${props.productId}`,
-        { headers: { Authorization: `Bearer ${user?.token}` } }
-      )
-      .then((res) => setProduct(res.data.product))
-      .catch((err) => console.log(err));
-  }, []);
-
-  console.log(product);
 
   return (
     <>

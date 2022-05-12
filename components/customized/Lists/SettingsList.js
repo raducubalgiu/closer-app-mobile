@@ -7,7 +7,7 @@ import { ListItem, Icon } from "@rneui/themed";
 import { useAuth } from "../../../context/auth";
 import theme from "../../../assets/styles/theme";
 
-const SettingsList = (props) => {
+export const SettingsList = (props) => {
   const navigation = useNavigation();
   const { setUser } = useAuth();
   const auth = getAuth();
@@ -107,8 +107,6 @@ const SettingsList = (props) => {
     />
   );
 };
-
-export default SettingsList;
 
 const styles = StyleSheet.create({
   text: {

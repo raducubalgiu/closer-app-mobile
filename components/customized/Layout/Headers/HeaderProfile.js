@@ -5,7 +5,7 @@ import { IconButton, Stack } from "../../../core";
 import theme from "../../../../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
 
-const HeaderProfile = (props) => {
+export const HeaderProfile = (props) => {
   const navigation = useNavigation();
 
   return (
@@ -46,8 +46,6 @@ const HeaderProfile = (props) => {
     </Stack>
   );
 };
-
-export default HeaderProfile;
 
 const styles = StyleSheet.create({
   name: { fontFamily: "Exo-Medium", fontSize: 15 },

@@ -1,36 +1,43 @@
-import { StyleSheet, SafeAreaView, TouchableOpacity, View } from "react-native";
+import { StyleSheet, SafeAreaView, View } from "react-native";
 import React, { useState, useCallback } from "react";
-import BottomSheetPopup from "../../../components/customized/BottomSheets/BottomSheetPopup";
 import { useNavigation } from "@react-navigation/native";
-import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
-import { OutlinedButton, Protected } from "../../../components/core";
-import HeaderProfile from "../../../components/customized/Layout/Headers/HeaderProfile";
-import { useAuth } from "../../../context/auth";
-import TopTabNavigator from "../../TopTabNavigator";
-import theme from "../../../assets/styles/theme";
-import SettingsList from "../../../components/customized/Lists/SettingsList";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { FAB, Icon } from "@rneui/themed";
+import BottomSheetPopup from "../../../components/customized/BottomSheets/BottomSheetPopup";
+import { OutlinedButton, Protected, Button } from "../../../components/core";
+import {
+  TopTabContainer,
+  ProfileOverview,
+  SettingsList,
+  PostsProfileTab,
+  AboutProfileTab,
+  HeaderProfile,
+} from "../../../components/customized";
+import { useAuth } from "../../../context/auth";
+import theme from "../../../assets/styles/theme";
 
 const ProfileScreen = (props) => {
   const { user } = useAuth();
   const navigation = useNavigation();
   const [openSettings, setOpenSettings] = useState(false);
+  const Tab = createMaterialTopTabNavigator();
 
-  const closeSheet = useCallback(() => {
-    setOpenSettings(false);
-  }, []);
+  const PostsProfile = useCallback(
+    () => <PostsProfileTab userId={user?._id} />,
+    [user?._id]
+  );
 
-  console.log("RENDER PROFILE SCREEN!");
-
-  const tabsNavigator = (
-    <TopTabNavigator
-      role={user?.role}
-      userId={user?._id}
+  const AboutProfile = () => (
+    <AboutProfileTab
       biography={user?.description}
       website={user?.website}
       location={user?.location}
     />
   );
+
+  const closeSheet = useCallback(() => {
+    setOpenSettings(false);
+  }, []);
 
   const buttons = (
     <>
@@ -41,7 +48,7 @@ const ProfileScreen = (props) => {
         }}
         sx={styles.editBtn}
       />
-      <TouchableOpacity
+      <Button
         style={styles.savedBtn}
         onPress={() => navigation.navigate("Bookmarks")}
       >
@@ -51,7 +58,7 @@ const ProfileScreen = (props) => {
           size={20}
           color={theme.lightColors.black}
         />
-      </TouchableOpacity>
+      </Button>
       <Icon
         name="instagram"
         type="feather"
@@ -91,7 +98,12 @@ const ProfileScreen = (props) => {
         badgeDetails={props.badgeDetails}
         actionButtons={buttons}
       />
-      <View style={{ flex: 1, height: 700 }}>{tabsNavigator}</View>
+      <View style={styles.tabsCont}>
+        <TopTabContainer initialRouteName="Posts" profileTabs={true}>
+          <Tab.Screen name="Posts" component={PostsProfile} />
+          <Tab.Screen name="About" component={AboutProfile} />
+        </TopTabContainer>
+      </View>
       <Protected roles={[process.env.MAIN_ROLE, process.env.SECOND_ROLE]}>
         <FAB
           visible={true}
@@ -131,4 +143,5 @@ const styles = StyleSheet.create({
     borderColor: "#ddd",
     marginLeft: 5,
   },
+  tabsCont: { flex: 1, height: 700 },
 });

@@ -54,6 +54,7 @@ import theme from "../assets/styles/theme";
 import AllServicesScreen from "../screens/AllServicesScreen";
 import ProfileStatsScreen from "../screens/User/Profile/ProfileStatsScreen";
 import NotificationsScreen from "../screens/NotificationsScreen";
+import EditProductScreen from "../screens/User/Profile/MyBusiness/EditProductScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -242,6 +243,7 @@ const CloserNavigation = () => {
           <RootStack.Screen name="AddLocation" component={AddLocationScreen} />
           <RootStack.Screen name="AddServices" component={AddServicesScreen} />
           <RootStack.Screen name="AddProducts" component={AddProductsScreen} />
+          <RootStack.Screen name="EditProduct" component={EditProductScreen} />
           <RootStack.Screen
             name="AddBusinessType"
             component={AddBusinessTypeScreen}

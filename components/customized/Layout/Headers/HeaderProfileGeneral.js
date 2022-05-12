@@ -1,37 +1,28 @@
 import { StyleSheet, Text } from "react-native";
 import React from "react";
 import { Icon } from "@rneui/themed";
-import { IconButton, Stack } from "../../../core";
+import { IconBackButton, IconButton, Stack } from "../../../core";
 import theme from "../../../../assets/styles/theme";
-import { useNavigation } from "@react-navigation/native";
 
-const HeaderProfileGeneral = (props) => {
-  const navigation = useNavigation();
-
+export const HeaderProfileGeneral = (props) => {
   return (
-    <Stack direction="row" sx={{ marginVertical: 20, marginHorizontal: 20 }}>
+    <Stack direction="row" sx={styles.container}>
       <Stack direction="row">
-        <IconButton
-          onPress={() => navigation.goBack()}
-          iconName="arrow-back-ios"
-          size={21}
-          sx={{ marginRight: 15 }}
-        />
+        <IconBackButton />
         <Icon name="bells" type="antdesign" color="white" />
       </Stack>
       <Text style={styles.name}>{props?.name}</Text>
       <Stack direction="row">
         <IconButton
           onPress={props.onOpenSettings}
-          iconName="bells"
-          iconType="antdesign"
+          iconName="bell"
+          iconType="feather"
           color={theme.lightColors.black}
         />
         <IconButton
           onPress={props.onOpenSettings}
-          size={25}
-          iconName="ellipsis-horizontal"
-          iconType="ionicon"
+          iconName="more-horizontal"
+          iconType="feather"
           color={theme.lightColors.black}
           sx={{ marginLeft: 15 }}
         />
@@ -40,8 +31,7 @@ const HeaderProfileGeneral = (props) => {
   );
 };
 
-export default HeaderProfileGeneral;
-
 const styles = StyleSheet.create({
+  container: { marginVertical: 20, marginHorizontal: 20 },
   name: { fontFamily: "Exo-Medium", fontSize: 15 },
 });

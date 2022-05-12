@@ -1,11 +1,6 @@
 import { FlatList, SafeAreaView, StyleSheet } from "react-native";
 import React, { useEffect, useState } from "react";
-import {
-  IconButton,
-  Stack,
-  Header,
-  Spinner,
-} from "../../../../components/core";
+import { IconButton, Header, Spinner } from "../../../../components/core";
 import theme from "../../../../assets/styles/theme";
 import CardProduct from "../../../../components/customized/Cards/CardProduct";
 import axios from "axios";
@@ -15,7 +10,6 @@ import { useNavigation } from "@react-navigation/native";
 const MyProductsScreen = ({ route }) => {
   const { user } = useAuth();
   const [products, setProducts] = useState([]);
-  const [productId, setProductId] = useState("");
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
 
@@ -59,6 +53,21 @@ const MyProductsScreen = ({ route }) => {
       .catch((err) => console.log(err));
   };
 
+  const renderProducts = ({ item }) => (
+    <CardProduct
+      name={item?.name}
+      description={item?.description}
+      price={item?.price}
+      duration={item?.duration}
+      onEditProduct={() =>
+        navigation.navigate("EditProduct", {
+          product: item,
+        })
+      }
+      onDeleteProduct={() => deleteProductHandler(item?._id)}
+    />
+  );
+
   return (
     <SafeAreaView style={styles.screen}>
       <Header
@@ -78,31 +87,7 @@ const MyProductsScreen = ({ route }) => {
         data={products}
         keyExtractor={(item) => item?._id}
         contentContainerStyle={{ marginTop: 10 }}
-        renderItem={({ item }) => (
-          <CardProduct
-            name={item?.name}
-            description={item?.description}
-            price={item?.price}
-            duration={item?.duration}
-            actionBtns={
-              <Stack direction="row">
-                <IconButton
-                  iconName="edit"
-                  iconType="antdesign"
-                  onPress={() => {
-                    setProductId(item?._id);
-                  }}
-                />
-                <IconButton
-                  iconName="delete"
-                  iconType="antdesign"
-                  onPress={() => deleteProductHandler(item?._id)}
-                  sx={{ marginLeft: 20 }}
-                />
-              </Stack>
-            }
-          />
-        )}
+        renderItem={renderProducts}
       />
     </SafeAreaView>
   );

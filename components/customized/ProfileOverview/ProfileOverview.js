@@ -18,7 +18,7 @@ import {
 } from "../../core";
 import { useTranslation } from "react-i18next";
 
-const ProfileOverview = (props) => {
+export const ProfileOverview = (props) => {
   const { user, withBadge } = props;
   const navigation = useNavigation();
   const { t } = useTranslation();
@@ -134,8 +134,6 @@ const ProfileOverview = (props) => {
     </View>
   );
 };
-
-export default ProfileOverview;
 
 const styles = StyleSheet.create({
   container: {
