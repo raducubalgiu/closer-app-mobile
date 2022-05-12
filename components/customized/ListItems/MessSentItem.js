@@ -1,7 +1,9 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Dimensions } from "react-native";
 import theme from "../../../assets/styles/theme";
 import { Stack } from "../../core";
 import React from "react";
+
+const width = Dimensions.get("window").width;
 
 const MessSentItem = (props) => {
   return (
@@ -19,7 +21,7 @@ const styles = StyleSheet.create({
   message: {
     borderRadius: 25,
     backgroundColor: "#f1f1f1",
-    marginLeft: 10,
+    marginLeft: width / 4,
     padding: 10,
   },
   messageText: {

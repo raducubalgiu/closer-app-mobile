@@ -1,5 +1,6 @@
 export { Accordion } from "./Accordion/Accordion";
 
+export { Button } from "./Buttons/Button";
 export { ButtonFilter } from "./Buttons/ButtonFilter";
 export { default as MainButton } from "./Buttons/MainButton";
 export { default as OutlinedButton } from "./Buttons/OutlinedButton";

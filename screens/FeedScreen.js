@@ -198,25 +198,21 @@ const FeedScreen = () => {
         </ScrollView>
       </Stack>
       <Divider color="#ddd" />
-      <View style={{ flex: 1 }}>
-        <Animated.FlatList
-          ref={ref}
-          ListHeaderComponent={
-            loading && <Spinner sx={{ paddingVertical: 10 }} />
-          }
-          refreshControl={refreshControl}
-          contentContainerStyle={{ marginTop: 5 }}
-          data={postsState.activeAll ? posts : followingsPosts}
-          nestedScrollEnabled={true}
-          keyExtractor={
-            postsState.activeAll ? (item) => item._id : (item) => item.post._id
-          }
-          showsVerticalScrollIndicator={false}
-          renderItem={
-            postsState.activeAll ? renderAllPosts : renderFollowingPosts
-          }
-        />
-      </View>
+      <Animated.FlatList
+        ref={ref}
+        ListHeaderComponent={loading && <Spinner sx={styles.spinner} />}
+        refreshControl={refreshControl}
+        contentContainerStyle={{ marginTop: 5 }}
+        data={postsState.activeAll ? posts : followingsPosts}
+        nestedScrollEnabled={true}
+        keyExtractor={
+          postsState.activeAll ? (item) => item._id : (item) => item.post._id
+        }
+        showsVerticalScrollIndicator={false}
+        renderItem={
+          postsState.activeAll ? renderAllPosts : renderFollowingPosts
+        }
+      />
     </SafeAreaView>
   );
 };
@@ -251,7 +247,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     marginTop: 30,
   },
-  spinner: { marginVertical: 20 },
+  spinner: { paddingVertical: 10 },
   listHoriz: {
     marginVertical: 7.5,
     paddingHorizontal: 12.5,

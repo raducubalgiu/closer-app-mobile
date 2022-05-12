@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Icon, Divider } from "@rneui/themed";
 import theme from "../../../../assets/styles/theme";
 import React from "react";
-import { Stack, CustomAvatar } from "../../../core";
+import { Stack, CustomAvatar, IconBackButton } from "../../../core";
 import { useNavigation } from "@react-navigation/native";
 
 const HeaderMessageItem = (props) => {
@@ -13,12 +13,7 @@ const HeaderMessageItem = (props) => {
       <Stack direction="row" sx={styles.container}>
         <Stack direction="row">
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Icon
-              name="chevron-thin-left"
-              type="entypo"
-              color={theme.lightColors.black}
-              size={22.5}
-            />
+            <IconBackButton />
           </TouchableOpacity>
           <Stack direction="row" sx={{ marginLeft: 15 }}>
             <CustomAvatar size={40} avatar={props.avatar} />

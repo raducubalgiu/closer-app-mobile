@@ -6,18 +6,18 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Keyboard,
-  TouchableOpacity,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import HeaderMessageItem from "../components/customized/Layout/Headers/HeaderMessageItem";
 import { useAuth } from "../context/auth";
 import axios from "axios";
-import { Stack } from "../components/core";
+import { Stack, Button } from "../components/core";
 import { v4 as uuidv4 } from "uuid";
 import "react-native-get-random-values";
 import theme from "../assets/styles/theme";
 import MessReceivedItem from "../components/customized/ListItems/MessReceivedItem";
 import MessSentItem from "../components/customized/ListItems/MessSentItem";
+import { Icon } from "@rneui/base";
 
 const MessageItemScreen = (props) => {
   const [messages, setMessages] = useState([]);
@@ -106,15 +106,20 @@ const MessageItemScreen = (props) => {
           renderItem={renderItem}
         />
         <Stack direction="row" sx={styles.inputContainer}>
-          <TextInput
-            onChangeText={(text) => setMessage(text)}
-            value={message}
-            style={styles.input}
-            placeholder="Trimite mesaj"
-          />
-          <TouchableOpacity style={{ padding: 15 }} onPress={handleSendMessage}>
+          <Stack direction="row" justify="start" sx={{ flex: 1 }}>
+            <Button onPress={() => {}}>
+              <Icon name="camera" type="feather" />
+            </Button>
+            <TextInput
+              onChangeText={(text) => setMessage(text)}
+              value={message}
+              style={styles.input}
+              placeholder="Trimite mesaj"
+            />
+          </Stack>
+          <Button onPress={handleSendMessage}>
             <Text style={styles.sendBtnText}>Trimite</Text>
-          </TouchableOpacity>
+          </Button>
         </Stack>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -132,9 +137,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ddd",
     borderRadius: 25,
-    margin: 10,
+    marginHorizontal: 10,
+    marginBottom: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 12.5,
   },
-  input: { flex: 1, paddingHorizontal: 15 },
+  input: { flex: 1, marginLeft: 10 },
   sendBtnText: {
     fontFamily: "Exo-Bold",
     color: theme.lightColors.primary,

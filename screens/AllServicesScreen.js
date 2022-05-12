@@ -1,15 +1,14 @@
-import {
-  StyleSheet,
-  Text,
-  SafeAreaView,
-  TouchableOpacity,
-  ScrollView,
-  View,
-} from "react-native";
+import { StyleSheet, Text, SafeAreaView, ScrollView, View } from "react-native";
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { Icon } from "@rneui/themed";
-import { Accordion, Stack, SearchBarInput, Spinner } from "../components/core";
+import {
+  Accordion,
+  Stack,
+  SearchBarInput,
+  Spinner,
+  Button,
+} from "../components/core";
 import theme from "../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
@@ -57,7 +56,7 @@ const AllServicesScreen = () => {
   );
 
   const ServiceItem = ({ name, _id, servicesCount }) => (
-    <TouchableOpacity
+    <Button
       onPress={() =>
         navigation.navigate("Services", {
           serviceId: _id,
@@ -68,30 +67,27 @@ const AllServicesScreen = () => {
           },
         })
       }
-      style={{
+      sx={{
         marginTop: 15,
       }}
     >
       <Text style={styles.service}>{name}</Text>
       <Divider color="#ddd" style={{ marginTop: 15 }} />
-    </TouchableOpacity>
+    </Button>
   );
 
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.servicesContainer}>
         <Stack direction="row" justify="start">
-          <TouchableOpacity
-            style={{ marginRight: 10 }}
-            onPress={() => navigation.goBack()}
-          >
+          <Button sx={{ marginRight: 10 }} onPress={() => navigation.goBack()}>
             <Icon
               name="chevron-thin-left"
               type="entypo"
               color={theme.lightColors.black}
               size={22.5}
             />
-          </TouchableOpacity>
+          </Button>
           <SearchBarInput
             autoFocus={false}
             placeholder={t("search")}
