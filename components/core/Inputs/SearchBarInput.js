@@ -56,6 +56,7 @@ const SearchBarInput = (props) => {
       value={props.value}
       onChangeText={props.updateValue}
       showLoading={props.showLoading ? true : false}
+      clearIcon={{ color: theme.lightColors.divider }}
     />
   );
 };

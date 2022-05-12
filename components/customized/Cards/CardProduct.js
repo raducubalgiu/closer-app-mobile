@@ -4,6 +4,7 @@ import OutlinedButton from "../../core/Buttons/OutlinedButton";
 import { Stack } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { trimFunc } from "../../../utils";
+import { useDuration } from "../../../hooks";
 import { useTranslation } from "react-i18next";
 
 const CardProduct = (props) => {
@@ -12,22 +13,22 @@ const CardProduct = (props) => {
   return (
     <View style={styles.card}>
       <Stack direction="row" align="start" sx={styles.cardLayout}>
-        <View style={{ flex: 1, marginRight: 5 }}>
+        <View style={styles.descriptionCont}>
           <Text style={styles.name}>{props.name}</Text>
+          <Text style={styles.description}>
+            {t("duration")}: {useDuration(props.duration)}
+          </Text>
           {props.description && (
             <Text style={styles.description}>
               {trimFunc(props.description, 100)}
             </Text>
           )}
-          <Text style={styles.description}>30 de minute</Text>
-          <Text style={styles.price}>{props.price} RON</Text>
+          <Text style={styles.price}>
+            {props.price} {t("ron")}
+          </Text>
         </View>
-        {props.canBook && (
-          <OutlinedButton title={t("book")} style={{ flex: 1 }} />
-        )}
-        {!props.canBook && (
-          <OutlinedButton title={t("edit")} style={{ flex: 1 }} />
-        )}
+        {props.canBook && <OutlinedButton title={t("book")} />}
+        {!props.canBook && <OutlinedButton title={t("edit")} />}
       </Stack>
     </View>
   );
@@ -40,7 +41,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     backgroundColor: "white",
     padding: 15,
-    //borderRadius: 20,
     borderBottomWidth: 1,
     borderBottomColor: "#eee",
     marginHorizontal: 10,
@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginBottom: 1,
   },
+  descriptionCont: { flex: 1, marginRight: 5 },
   description: {
     fontFamily: "Exo-Regular",
     color: theme.lightColors.grey0,

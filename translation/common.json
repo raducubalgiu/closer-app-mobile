@@ -56,5 +56,12 @@
   "myMessages": "Mesajele mele",
   "notifications": "Notificări",
   "followers": "Urmăritori",
-  "posts": "Postări"
+  "posts": "Postări",
+  "offMinutes": "de minute",
+  "minutes": "minute",
+  "minute": "minut",
+  "duration": "Durată",
+  "ron": "RON",
+  "usd": "USD",
+  "eur": "EUR"
 }

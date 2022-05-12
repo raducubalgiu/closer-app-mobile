@@ -26,7 +26,7 @@ const AddProductsScreen = () => {
             tooltipText="In aceasta sectiune vei adauga minim un produs, iar pe celelalte le vei adauga din panoul de bord"
             tooltipDimensions={{ width: 250, height: 80 }}
           />
-          <AddProductsForm onAddProduct={() => navigation.goBack()} />
+          <AddProductsForm />
         </Stack>
       </ScrollView>
     </SafeAreaView>

@@ -11,6 +11,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../../../context/auth";
 import theme from "../../../assets/styles/theme";
 import { MainButton, InputSelect } from "../../core";
+import { useNavigation } from "@react-navigation/native";
 
 const defaultValues = {
   name: "",
@@ -31,6 +32,7 @@ const AddProductsForm = (props) => {
     handleSubmit,
     formState: { errors },
   } = useForm({ defaultValues });
+  const navigation = useNavigation();
 
   useEffect(() => {
     axios
@@ -62,12 +64,17 @@ const AddProductsForm = (props) => {
       )
       .then((res) => {
         setLoading(false);
-        props.onAddProduct(res.data.product);
+        navigation.navigate({
+          name: "MyProducts",
+          params: { product: res.data.product },
+          merge: true,
+        });
       })
       .catch((err) => {
         console.log(err);
         setLoading(false);
       });
+    setLoading(false);
   };
 
   return (
