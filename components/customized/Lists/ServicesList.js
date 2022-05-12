@@ -28,6 +28,7 @@ export const ServicesList = () => {
       })
       .then((resp) => {
         setServices(resp.data.services);
+        console.log("FetchServices");
       })
       .catch((error) => console.log(error));
   }, []);

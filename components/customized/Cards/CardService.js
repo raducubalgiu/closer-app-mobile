@@ -25,6 +25,13 @@ const CardService = (props) => {
             uri: props.image,
           }}
         />
+        <Icon
+          name="video"
+          type="feather"
+          containerStyle={styles.iconVideo}
+          color="white"
+          size={18}
+        />
       </View>
       <View style={styles.cardContent}>
         <View style={styles.cardContentFlex}>
@@ -160,5 +167,11 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     fontSize: 13,
     color: theme.lightColors.black,
+  },
+  iconVideo: {
+    position: "absolute",
+    top: 5,
+    right: 5,
+    zIndex: 1000,
   },
 });
