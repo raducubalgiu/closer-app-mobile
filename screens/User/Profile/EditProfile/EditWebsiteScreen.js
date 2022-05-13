@@ -4,12 +4,14 @@ import React, { useState } from "react";
 import EditField from "./EditFieldScreen";
 import { useAuth } from "../../../../hooks/auth";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 const EditWebsiteScreen = () => {
   const { user, setUser } = useAuth();
   const [value, setValue] = useState(user?.website);
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
+  const { t } = useTranslation();
 
   const updateField = (text) => {
     setValue(text);
@@ -44,7 +46,7 @@ const EditWebsiteScreen = () => {
   return (
     <SafeAreaView style={styles.screen}>
       <EditField
-        field="Website"
+        field={t("website")}
         onSave={updateWebsite}
         updateField={updateField}
         value={value}

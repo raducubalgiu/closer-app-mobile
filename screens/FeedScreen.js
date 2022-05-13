@@ -130,7 +130,7 @@ const FeedScreen = () => {
         username={user?.username}
         job={user?.business?.name}
         date={dateFormat(post?.createdAt)}
-        image={item?.images[0]?.url}
+        image={post?.images[0]?.url}
         description={post?.description}
         likesCount={post?.likesCount}
         commentsCount={post?.commentsCount}

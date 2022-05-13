@@ -1,11 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  ScrollView,
-  SafeAreaView,
-} from "react-native";
+import { StyleSheet, Text, View, ScrollView, SafeAreaView } from "react-native";
 import React, { useState } from "react";
 import { Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
@@ -13,13 +6,20 @@ import theme from "../../../../assets/styles/theme";
 import { useAuth } from "../../../../hooks/auth";
 import MenuITemBetween from "../../../../components/customized/MenuItem/MenuITemBetween";
 import BottomSheetPopup from "../../../../components/customized/BottomSheets/BottomSheetPopup";
-import { Stack, Header, CustomAvatar } from "../../../../components/core";
+import {
+  Stack,
+  Header,
+  CustomAvatar,
+  Button,
+} from "../../../../components/core";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 const EditProfileScreen = () => {
   const [open, setOpen] = useState(false);
   const { user, setUser } = useAuth();
   const navigation = useNavigation();
+  const { t } = useTranslation();
 
   const handleClose = () => setOpen(false);
 
@@ -44,10 +44,7 @@ const EditProfileScreen = () => {
         <Header title={user?.name} />
         <ScrollView style={{ flex: 1 }}>
           <Stack sx={{ marginVertical: 20 }}>
-            <TouchableOpacity
-              style={{ alignItems: "center" }}
-              onPress={() => setOpen(true)}
-            >
+            <Button sx={{ alignItems: "center" }} onPress={() => setOpen(true)}>
               <View>
                 <CustomAvatar
                   avatar={user?.avatar}
@@ -60,28 +57,28 @@ const EditProfileScreen = () => {
                   }}
                 />
               </View>
-              <Text style={styles.text}>Schimba fotografia</Text>
-            </TouchableOpacity>
+              <Text style={styles.text}>{t("changePhoto")}</Text>
+            </Button>
           </Stack>
           <View style={styles.sectionContainer}>
-            <Text style={styles.sectionHeading}>Despre tine</Text>
+            <Text style={styles.sectionHeading}>{t("aboutYou")}</Text>
             <MenuITemBetween
-              label="Nume"
+              label={t("name")}
               resultText={user?.name}
               onPress={() => navigation.navigate("EditName")}
             />
             <MenuITemBetween
-              label="Nume utilizator"
+              label={t("username")}
               resultText={user?.username}
               onPress={() => navigation.navigate("EditUsername")}
             />
             <MenuITemBetween
-              label="Site web"
+              label={t("website")}
               resultText={user?.website}
               onPress={() => navigation.navigate("EditWebsite")}
             />
             <MenuITemBetween
-              label="Descriere"
+              label={t("description")}
               resultText={user?.description}
               resultTextLength={25}
               onPress={() => navigation.navigate("EditBio")}
@@ -93,7 +90,7 @@ const EditProfileScreen = () => {
             <MenuITemBetween label="Instagram" resultText="raducu__balgiu" />
             <MenuITemBetween
               label="Youtube"
-              resultText="Adauga contul de Youtube"
+              resultText={t("addYoutubeAccount")}
             />
           </View>
         </ScrollView>
@@ -103,25 +100,22 @@ const EditProfileScreen = () => {
         height={40}
         onClose={handleClose}
         sheetBody={
-          <Stack>
-            <TouchableOpacity
-              style={styles.sheetTitle}
-              onPress={handleDeletePhoto}
-            >
-              <Text style={styles.sheetText}>Sterge fotografia actuala</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.sheetTitle}>
-              <Text style={styles.sheetText}>Adauga o fotografie</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.sheetTitle}
+          <Stack sx={{ padding: 15 }}>
+            <Button sx={styles.sheetTitle} onPress={handleDeletePhoto}>
+              <Text style={styles.sheetText}>{t("erasePhoto")}</Text>
+            </Button>
+            <Button sx={styles.sheetTitle}>
+              <Text style={styles.sheetText}>{t("addPhoto")}</Text>
+            </Button>
+            <Button
+              sx={styles.sheetTitle}
               onPress={() => navigation.navigate("EditPhotoLibrary")}
             >
-              <Text style={styles.sheetText}>Alege din biblioteca</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.cancelBtn}>
-              <Text style={styles.cancelBtnText}>Renunta</Text>
-            </TouchableOpacity>
+              <Text style={styles.sheetText}>{t("chooseFromLibrary")}</Text>
+            </Button>
+            <Button sx={styles.cancelBtn}>
+              <Text style={styles.cancelBtnText}>{t("cancel")}</Text>
+            </Button>
           </Stack>
         }
       />

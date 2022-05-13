@@ -152,7 +152,6 @@ const UserStackNavigator = () => {
       <Stack.Screen name="Settings" component={SettingsScreen} />
       <Stack.Screen name="Schedules" component={SchedulesScreen} />
       <Stack.Screen name="Discounts" component={DiscountsScreen} />
-      <Stack.Screen name="FindFriends" component={FindFriendsScreen} />
       <Stack.Screen name="Bookmarks" component={BookmarksScreen} />
       <Stack.Screen
         name="ProfileGeneralStack"
@@ -266,6 +265,7 @@ const CloserNavigation = () => {
           <Stack.Screen name="SearchPosts" component={SearchPostsScreen} />
           <Stack.Screen name="SearchAll" component={SearchAllScreen} />
           <Stack.Screen name="Notifications" component={NotificationsScreen} />
+          <Stack.Screen name="FindFriends" component={FindFriendsScreen} />
         </RootStack.Navigator>
       )}
       {!user && (

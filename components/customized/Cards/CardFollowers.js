@@ -6,7 +6,7 @@ import FollowButton from "../../core/Buttons/FollowButton";
 import { useAuth } from "../../../hooks/auth";
 import { useNavigation } from "@react-navigation/native";
 
-const CardFollowers = (props) => {
+export const CardFollowers = (props) => {
   const navigation = useNavigation();
   const { user } = useAuth();
 
@@ -32,8 +32,6 @@ const CardFollowers = (props) => {
     </Stack>
   );
 };
-
-export default CardFollowers;
 
 const styles = StyleSheet.create({
   container: { marginBottom: 15 },

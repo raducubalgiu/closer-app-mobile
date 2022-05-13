@@ -63,5 +63,22 @@
   "duration": "Durată",
   "ron": "RON",
   "usd": "USD",
-  "eur": "EUR"
+  "eur": "EUR",
+  "name": "Nume",
+  "username": "Nume utilizator",
+  "biography": "Biografie",
+  "changePhoto": "Schimbă fotografia",
+  "aboutYou": "Despre tine",
+  "website": "Site web",
+  "description": "Descriere",
+  "addYoutubeAccount": "Adaugă contul de Youtube",
+  "erasePhoto": "Şterge fotografia",
+  "addPhoto": "Adaugă o fotografie",
+  "chooseFromLibrary": "Alege din librărie",
+  "yourProfile": "Profilul tău",
+  "dontHaveAccount": "Nu ai cont?",
+  "signUp": "Înscrie-te",
+  "connect": "Conectează-te",
+  "connectIntoAccountTitle": "Conectează-te pentru a începe să rezervi servicii",
+  "haveAccount": "Deţii un business? Începe să primeşti clienţi imediat"
 }

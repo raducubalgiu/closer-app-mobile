@@ -27,6 +27,7 @@ export { RatingsTab } from "./Tabs/ProfileStatsTabs/RatingsTab";
 
 export { CardPost } from "./Cards/CardPost";
 export { CardRecentSearch } from "./Cards/CardRecentSearch";
+export { CardFollowers } from "./Cards/CardFollowers";
 
 export { HeaderServices } from "../customized/Layout/Headers/HeaderServices";
 

@@ -1,12 +1,13 @@
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { Icon, Divider } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 import React from "react";
+import { Button } from "../../core";
 
 const MenuItemBigger = (props) => {
   return (
     <>
-      <TouchableOpacity style={styles.container} onPress={props.onPress}>
+      <Button style={styles.container} onPress={props.onPress}>
         <Icon
           name={props.iconName}
           type={props.iconType}
@@ -14,7 +15,7 @@ const MenuItemBigger = (props) => {
           size={26}
         />
         <Text style={styles.textItem}>{props.text}</Text>
-      </TouchableOpacity>
+      </Button>
       <Divider />
     </>
   );

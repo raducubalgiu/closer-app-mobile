@@ -1,10 +1,9 @@
 import { StyleSheet, SafeAreaView, FlatList, View } from "react-native";
 import React, { useEffect, useState } from "react";
-import CardFollowers from "../../../components/customized/Cards/CardFollowers";
-import { Colors } from "../../../assets/styles/Colors";
+import { CardFollowers } from "../../../components/customized";
+import theme from "../../../assets/styles/theme";
 import * as Contacts from "expo-contacts";
-import FakeSearchBarSimple from "../../../components/customized/FakeSearchBar/FakeSearchBarSimple";
-import { Header } from "../../../components/core";
+import { Header, SearchBarInput } from "../../../components/core";
 
 const FindFriendsScreen = () => {
   const [contacts, setContacts] = useState([]);
@@ -25,6 +24,15 @@ const FindFriendsScreen = () => {
     })();
   }, []);
 
+  const renderPerson = ({ item }) => (
+    <CardFollowers
+      username={item?.name}
+      name={"Din contactele tale"}
+      sxBtn={styles.btnFollow}
+      sxBtnText={{ color: "white" }}
+    />
+  );
+
   return (
     <>
       <SafeAreaView style={styles.screen}>
@@ -35,15 +43,8 @@ const FindFriendsScreen = () => {
           showsVerticalScrollIndicator={false}
           data={contacts}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <CardFollowers
-              username={item?.name}
-              name={"Din contactele tale"}
-              sxBtn={styles.btnFollow}
-              sxBtnText={{ color: "white" }}
-            />
-          )}
-          ListHeaderComponent={<FakeSearchBarSimple />}
+          renderItem={renderPerson}
+          ListHeaderComponent={<SearchBarInput />}
         />
       </View>
     </>
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: "Exo-SemiBold",
-    color: Colors.textDark,
+    color: theme.lightColors.black,
     fontSize: 15,
   },
   btn: {
@@ -71,8 +72,8 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   btnFollow: {
-    backgroundColor: Colors.primary,
-    borderColor: Colors.primary,
+    backgroundColor: theme.lightColors.primary,
+    borderColor: theme.lightColors.primary,
     borderRadius: 2.5,
   },
   container: { paddingHorizontal: 15, flex: 1, backgroundColor: "white" },

@@ -4,12 +4,14 @@ import React, { useState } from "react";
 import EditField from "./EditFieldScreen";
 import { useAuth } from "../../../../hooks/auth";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 const EditNameScreen = () => {
   const { user, setUser } = useAuth();
   const [value, setValue] = useState(user?.name);
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
+  const { t } = useTranslation();
 
   const updateField = (text) => {
     setValue(text);
@@ -44,7 +46,7 @@ const EditNameScreen = () => {
   return (
     <SafeAreaView style={styles.screen}>
       <EditField
-        field="Nume"
+        field={t("name")}
         onSave={updateName}
         updateField={updateField}
         value={value}

@@ -1,10 +1,10 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { SearchBar, Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../../assets/styles/theme";
 import HeaderReusable from "../../../../components/customized/Layout/Headers/HeaderReusable";
-import { Spinner, Stack } from "../../../../components/core";
+import { Button, Spinner } from "../../../../components/core";
 
 const EditFieldScreen = (props) => {
   const navigation = useNavigation();
@@ -17,15 +17,15 @@ const EditFieldScreen = (props) => {
     <>
       <HeaderReusable
         firstBox={
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Text style={styles.cancel}>Anuleaza</Text>
-          </TouchableOpacity>
+          <Button onPress={() => navigation.goBack()}>
+            <Text sx={styles.cancel}>Anuleaza</Text>
+          </Button>
         }
         secondBox={<Text style={styles.field}>{props.field}</Text>}
         thirdBox={
-          <TouchableOpacity onPress={props.onSave}>
+          <Button onPress={props.onSave}>
             <Text style={styles.save}>Salveaza</Text>
-          </TouchableOpacity>
+          </Button>
         }
       />
       <Divider />

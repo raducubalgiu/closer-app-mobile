@@ -66,6 +66,30 @@ const FiltersServiceScreen = ({ route }) => {
     [disabled]
   );
 
+  const renderOption = ({ item }) => (
+    <Button
+      onPress={() => {
+        setDisabled(false);
+        setOption(item);
+      }}
+      sx={
+        item._id !== option._id
+          ? styles.button
+          : { ...styles.button, backgroundColor: "#bbb" }
+      }
+    >
+      <Text
+        style={
+          item._id !== option._id
+            ? styles.buttonText
+            : { ...styles.buttonText, color: "white" }
+        }
+      >
+        {item?.name}
+      </Text>
+    </Button>
+  );
+
   return (
     <SafeAreaView style={styles.screen}>
       <Stack align="start" sx={{ margin: 25 }}>
@@ -89,30 +113,7 @@ const FiltersServiceScreen = ({ route }) => {
               bounces={false}
               data={filter?.options}
               keyExtractor={(item) => item._id}
-              renderItem={({ item }) => (
-                <TouchableOpacity
-                  activeOpacity={1}
-                  onPress={() => {
-                    setDisabled(false);
-                    setOption(item);
-                  }}
-                  style={
-                    item._id !== option._id
-                      ? styles.button
-                      : { ...styles.button, backgroundColor: "#bbb" }
-                  }
-                >
-                  <Text
-                    style={
-                      item._id !== option._id
-                        ? styles.buttonText
-                        : { ...styles.buttonText, color: "white" }
-                    }
-                  >
-                    {item?.name}
-                  </Text>
-                </TouchableOpacity>
-              )}
+              renderItem={renderOption}
             />
           )}
         </BottomSheetView>

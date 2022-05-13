@@ -1,61 +1,49 @@
 import React from "react";
-import {
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  Text,
-  SafeAreaView,
-} from "react-native";
+import { StyleSheet, View, Text, SafeAreaView } from "react-native";
 import theme from "../../../assets/styles/theme";
 import { Divider, Icon } from "@rneui/themed";
 import MenuItemBigger from "../../../components/customized/MenuItem/MenuItemBigger";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
+import { Stack, Button } from "../../../components/core";
 
 const AuthScreen = () => {
   const navigation = useNavigation();
+  const { t } = useTranslation();
 
   return (
     <SafeAreaView style={styles.screen}>
-      <View style={styles.header}>
-        <Text style={styles.mainHeading}>Profilul tău</Text>
-        <Text style={styles.secondHeading}>
-          Conectează-te pentru a începe să rezervi servicii
-        </Text>
-      </View>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("Login")}
-        style={styles.mainBtn}
-      >
-        <Text style={styles.mainBtnText}>Conectează-te</Text>
-      </TouchableOpacity>
-      <View style={styles.registerText}>
-        <Text style={styles.textAction}>Nu ai un cont?</Text>
-        <TouchableOpacity
-          style={{ marginLeft: 5 }}
+      <Stack align="start" sx={styles.header}>
+        <Text style={styles.mainHeading}>{t("yourProfile")}</Text>
+        <Text style={styles.secondHeading}>{t("connectIntoAccountTitle")}</Text>
+      </Stack>
+      <Button onPress={() => navigation.navigate("Login")} sx={styles.mainBtn}>
+        <Text style={styles.mainBtnText}>{t("connect")}</Text>
+      </Button>
+      <Stack direction="row" justify="start" sx={styles.registerText}>
+        <Text style={styles.textAction}>{t("dontHaveAccount")}</Text>
+        <Button
+          sx={{ marginLeft: 5 }}
           onPress={() => navigation.navigate("Register")}
         >
-          <Text style={styles.btnAction}>Înscrie-te</Text>
-        </TouchableOpacity>
-      </View>
+          <Text style={styles.btnAction}>{t("signUp")}</Text>
+        </Button>
+      </Stack>
       <Divider />
-      <View style={styles.businessContainer}>
+      <Stack direction="row" sx={styles.businessContainer}>
         <Icon
           name="wallet"
           type="antdesign"
           size={35}
           color={theme.lightColors.black}
         />
-        <View style={{ marginLeft: 20, flex: 1 }}>
-          <Text style={styles.businessText}>
-            Detii un business? Incepe sa primesti clienti imediat
-          </Text>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("RegisterBusiness")}
-          >
-            <Text style={styles.registerBtnText}>Inregistreaza</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+        <Stack align="start" sx={{ marginLeft: 20, flex: 1 }}>
+          <Text style={styles.businessText}>{t("haveAccount")}</Text>
+          <Button onPress={() => navigation.navigate("RegisterBusiness")}>
+            <Text style={styles.registerBtnText}>{t("register")}</Text>
+          </Button>
+        </Stack>
+      </Stack>
       <Divider />
       <View style={{ marginTop: 20, marginHorizontal: 20 }}>
         <MenuItemBigger
@@ -118,8 +106,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   registerText: {
-    flexDirection: "row",
-    alignItems: "center",
     marginVertical: 20,
   },
   textAction: {
@@ -134,8 +120,6 @@ const styles = StyleSheet.create({
     color: theme.lightColors.black,
   },
   businessContainer: {
-    flexDirection: "row",
-    alignItems: "center",
     marginVertical: 10,
     paddingVertical: 10,
     marginHorizontal: 20,
