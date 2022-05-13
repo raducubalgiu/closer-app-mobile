@@ -30,6 +30,7 @@ export const AuthProvider = (props) => {
               services,
               counter,
               validated,
+              checkmark,
             } = res.data.user;
             if (username) {
               setUser({
@@ -38,7 +39,7 @@ export const AuthProvider = (props) => {
                 business: business,
                 username,
                 email,
-                avatar: avatar[0]?.url,
+                avatar,
                 images,
                 role,
                 description,
@@ -50,6 +51,7 @@ export const AuthProvider = (props) => {
                 counter,
                 token: idTokenResult?.token,
                 validated,
+                checkmark,
               });
             }
           })

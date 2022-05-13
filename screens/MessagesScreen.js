@@ -75,7 +75,7 @@ const MessagesScreen = () => {
           userId: item?._id,
           name: item?.name,
           username: item?.username,
-          avatar: item?.avatar[0]?.url,
+          avatar: item?.avatar,
           socket,
         })
       }
@@ -83,7 +83,7 @@ const MessagesScreen = () => {
     >
       <MessageItem
         name={item?.name}
-        avatar={item?.avatar[0]?.url}
+        avatar={item?.avatar}
         checkmark={false}
         message={"Hello World"}
         date={"15s"}

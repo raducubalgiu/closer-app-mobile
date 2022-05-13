@@ -139,7 +139,10 @@ const ProfileGeneralScreen = (props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <HeaderProfileGeneral name={userDetails?.name} />
+      <HeaderProfileGeneral
+        name={userDetails?.name}
+        checkmark={userDetails?.checkmark}
+      />
       <ProfileOverview
         user={userDetails}
         badgeDetails={props.badgeDetails}

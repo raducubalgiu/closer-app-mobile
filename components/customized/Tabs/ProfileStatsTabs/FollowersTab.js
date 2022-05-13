@@ -36,6 +36,19 @@ export const FollowersTab = (props) => {
 
   const updateSearch = (text) => setSearch(text);
 
+  const renderPerson = ({ item }) => {
+    const { avatar, username, name, _id } = item.userId;
+
+    return (
+      <CardFollowers
+        avatar={avatar}
+        username={username}
+        name={name}
+        followeeId={_id}
+      />
+    );
+  };
+
   return (
     <View style={styles.screen}>
       {loading && <Spinner />}
@@ -52,14 +65,7 @@ export const FollowersTab = (props) => {
           }
           data={followers}
           keyExtractor={(item) => item?._id}
-          renderItem={({ item }) => (
-            <CardFollowers
-              avatar={item?.userId?.avatar}
-              username={item?.userId?.username}
-              name={item?.userId?.name}
-              followeeId={item?.userId?._id}
-            />
-          )}
+          renderItem={renderPerson}
         />
       )}
     </View>

@@ -39,6 +39,8 @@ const ProfileScreen = (props) => {
     setOpenSettings(false);
   }, []);
 
+  console.log(user);
+
   const buttons = (
     <>
       <OutlinedButton
@@ -88,6 +90,7 @@ const ProfileScreen = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <HeaderProfile
+        checkmark={user?.checkmark}
         onGoToFindFriends={() => navigation.navigate("FindFriends")}
         name={user?.name}
         onOpenSettings={() => setOpenSettings(true)}

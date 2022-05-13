@@ -4,25 +4,27 @@ import React from "react";
 import theme from "../../../assets/styles/theme";
 
 const CustomAvatar = (props) => {
-  const checkAvatar = (avatar) => {
+  const hasAvatar = (avatar) => {
     if (avatar === undefined || avatar.length === 0) {
       return undefined;
     } else {
-      return avatar;
+      return true;
     }
   };
 
-  let avatar;
-  if (checkAvatar(props?.avatar)) {
-    avatar = (
+  console.log(props.avatar);
+
+  let showAvatar;
+  if (hasAvatar(props?.avatar)) {
+    showAvatar = (
       <Avatar
         size={props.size ? props.size : 55}
         rounded
-        source={{ uri: `${props?.avatar}` }}
+        source={{ uri: `${props?.avatar[0]?.url}` }}
       />
     );
   } else {
-    avatar = (
+    showAvatar = (
       <Avatar
         size={props.size ? props.size : 55}
         rounded
@@ -38,7 +40,7 @@ const CustomAvatar = (props) => {
 
   return (
     <>
-      {avatar}
+      {showAvatar}
       {props.withBadge && (
         <Badge
           containerStyle={{ ...styles.badgeContainer, ...props.badgeContainer }}

@@ -35,10 +35,7 @@ export const ProfileOverview = (props) => {
             badgeDetails={{ name: "plus", type: "entypo" }}
           />
         </TouchableOpacity>
-        <Stack direction="row">
-          <Text style={styles.name}>@{user?.username}</Text>
-          {user?.checkmark && <Checkmark />}
-        </Stack>
+        <Text style={styles.name}>@{user?.username}</Text>
         <Stack direction="row" justify="start">
           <Protected
             user={user}

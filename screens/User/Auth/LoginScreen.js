@@ -74,7 +74,7 @@ const LoginScreen = () => {
           username,
           email,
           business: business,
-          avatar: avatar[0]?.url,
+          avatar,
           images,
           role,
           description,

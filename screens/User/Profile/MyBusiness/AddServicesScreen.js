@@ -30,7 +30,9 @@ const AddServicesScreen = () => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.BASE_ENDPOINT}/services`)
+      .get(`${process.env.BASE_ENDPOINT}/services`, {
+        headers: { Authorization: `Bearer ${user?.token}` },
+      })
       .then((res) => setServices(res.data.services))
       .catch((err) => console.log(err));
   }, []);

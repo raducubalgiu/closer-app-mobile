@@ -63,7 +63,7 @@ const CardPost = (props) => {
                 <Text style={styles.name}>{props.username}</Text>
                 {props.checkmark && <Checkmark />}
               </Stack>
-              <Text style={styles.job}>Service Auto</Text>
+              {/* <Text style={styles.job}>Service Auto</Text> */}
             </Stack>
           </Stack>
         </TouchableOpacity>
@@ -158,7 +158,7 @@ const CardPost = (props) => {
         }
       >
         <Stack direction="row" justify="start">
-          <CustomAvatar size={30} iconSize={15} avatar={user?.avatar} />
+          <CustomAvatar size={22.5} iconSize={10} avatar={user?.avatar} />
           <Text style={styles.addCommText}>{t("addComment")}</Text>
         </Stack>
       </TouchableOpacity>
@@ -252,10 +252,11 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     borderWidth: 0.5,
     borderColor: "#ddd",
-    paddingVertical: 7.5,
+    paddingVertical: 6,
     paddingHorizontal: 10,
     flex: 1,
     borderRadius: 15,
+    fontSize: 13,
   },
   distanceText: {
     fontSize: 13,

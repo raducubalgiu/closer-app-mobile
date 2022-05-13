@@ -1,7 +1,7 @@
 import { StyleSheet, Text } from "react-native";
 import React from "react";
 import { Icon } from "@rneui/themed";
-import { IconBackButton, IconButton, Stack } from "../../../core";
+import { IconBackButton, IconButton, Stack, Checkmark } from "../../../core";
 import theme from "../../../../assets/styles/theme";
 
 export const HeaderProfileGeneral = (props) => {
@@ -11,7 +11,10 @@ export const HeaderProfileGeneral = (props) => {
         <IconBackButton />
         <Icon name="bells" type="antdesign" color="white" />
       </Stack>
-      <Text style={styles.name}>{props?.name}</Text>
+      <Stack direction="row">
+        <Text style={styles.name}>{props?.name}</Text>
+        {props.checkmark && <Checkmark />}
+      </Stack>
       <Stack direction="row">
         <IconButton
           onPress={props.onOpenSettings}

@@ -31,22 +31,28 @@ export const RatingsTab = (props) => {
     }, [props.userId, user?.token])
   );
 
+  const renderRatings = ({ item }) => {
+    const { reviewer, rating, review, createdAt } = item;
+
+    return (
+      <CardRatings
+        avatar={reviewer?.avatar}
+        name={reviewer?.name}
+        date={moment(createdAt).format("LL")}
+        rating={rating}
+        review={review}
+        service={"Tuns"}
+      />
+    );
+  };
+
   return (
     <>
       {!loading && (
         <FlatList
           data={reviews}
           keyExtractor={(item) => item?._id}
-          renderItem={({ item }) => (
-            <CardRatings
-              avatar={item?.reviewer?.avatar?.url}
-              name={item?.reviewer?.name}
-              date={moment(item?.createdAt).format("LL")}
-              rating={item?.rating}
-              review={item?.review}
-              service={"Tuns"}
-            />
-          )}
+          renderItem={renderRatings}
         />
       )}
       {loading && <Spinner />}

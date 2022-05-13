@@ -51,6 +51,19 @@ export const FollowingsTab = (props) => {
     });
   }, []);
 
+  const renderPerson = ({ item }) => {
+    const { avatar, username, name, _id } = item.followeeId;
+
+    return (
+      <CardFollowers
+        avatar={avatar}
+        username={username}
+        name={name}
+        followeeId={_id}
+      />
+    );
+  };
+
   return (
     <View style={styles.screen}>
       {loading && <Spinner />}
@@ -70,14 +83,7 @@ export const FollowingsTab = (props) => {
           }
           data={followings}
           keyExtractor={(item) => item?._id}
-          renderItem={({ item }) => (
-            <CardFollowers
-              avatar={item?.followeeId?.avatar?.url}
-              username={item?.followeeId?.username}
-              name={item?.followeeId?.name}
-              followeeId={item?.followeeId?._id}
-            />
-          )}
+          renderItem={renderPerson}
         />
       )}
     </View>

@@ -17,6 +17,7 @@ import { useAuth } from "../context/auth";
 import { IconButton, Spinner, Stack } from "../components/core";
 import FeedLabelButton from "../components/core/Buttons/FeedLabelButton";
 import { useTranslation } from "react-i18next";
+import { useFocusEffect } from "@react-navigation/native";
 import { dateFormat } from "../utils";
 
 const FeedScreen = () => {
@@ -41,14 +42,17 @@ const FeedScreen = () => {
         })
         .catch((err) => {
           setLoading(false);
+          console.log(err);
         });
       return () => unsubscribe();
     }
   }, [postsState.activeAll]);
 
-  useEffect(() => {
-    fetchAllPosts();
-  }, [fetchAllPosts]);
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchAllPosts();
+    }, [fetchAllPosts])
+  );
 
   const fetchFollowings = useCallback(() => {
     if (postsState.activeFollowings) {
@@ -70,9 +74,11 @@ const FeedScreen = () => {
     }
   }, [postsState.activeFollowings]);
 
-  useEffect(() => {
-    fetchFollowings();
-  }, [fetchFollowings]);
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchFollowings();
+    }, [fetchFollowings])
+  );
 
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -93,7 +99,7 @@ const FeedScreen = () => {
       <CardPost
         postId={item?._id}
         userId={user?._id}
-        avatar={user?.avatar[0]?.url}
+        avatar={user?.avatar}
         username={user?.username}
         job={user?.business?.name}
         date={dateFormat(item?.createdAt)}
@@ -102,7 +108,7 @@ const FeedScreen = () => {
         likesCount={item?.likesCount}
         commentsCount={item?.commentsCount}
         bookable={item?.bookable}
-        checkmark={item?.checkmark}
+        checkmark={user?.checkmark}
       />
     );
   };
@@ -114,7 +120,7 @@ const FeedScreen = () => {
       <CardPost
         postId={post?._id}
         userId={user?._id}
-        avatar={user?.avatar[0]?.url}
+        avatar={user?.avatar}
         username={user?.username}
         job={user?.business?.name}
         date={dateFormat(post?.createdAt)}

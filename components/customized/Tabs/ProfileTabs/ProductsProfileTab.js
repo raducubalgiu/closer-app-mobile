@@ -82,6 +82,7 @@ export const ProductsProfileTab = (props) => {
       {!loading && (
         <FlatList
           data={products}
+          bounces={false}
           keyExtractor={(item) => item._id}
           showsVerticalScrollIndicator={false}
           renderItem={renderProducts}

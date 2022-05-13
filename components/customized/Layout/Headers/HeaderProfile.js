@@ -1,7 +1,7 @@
 import { StyleSheet, Text } from "react-native";
 import React from "react";
 import { Icon } from "@rneui/themed";
-import { IconButton, Stack } from "../../../core";
+import { Checkmark, IconButton, Stack } from "../../../core";
 import theme from "../../../../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
 
@@ -25,7 +25,10 @@ export const HeaderProfile = (props) => {
           color="white"
         />
       </Stack>
-      <Text style={styles.name}>{props?.name}</Text>
+      <Stack direction="row">
+        <Text style={styles.name}>{props?.name}</Text>
+        {props.checkmark && <Checkmark />}
+      </Stack>
       <Stack direction="row">
         <IconButton
           onPress={() => navigation.navigate("AddProducts")}

@@ -8,7 +8,7 @@ const Checkmark = (props) => {
     <Icon
       name="check"
       type="antdesign"
-      size={props.size ? props.size : 10}
+      size={props.size ? props.size : 8.5}
       color="white"
       style={{ ...styles.checkmark, ...props.sx }}
     />
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   checkmark: {
     backgroundColor: theme.lightColors.secondary,
     marginLeft: 5,
-    padding: 2.5,
+    padding: 1.5,
     borderRadius: 50,
   },
 });
