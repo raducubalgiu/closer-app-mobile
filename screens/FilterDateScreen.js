@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import { TouchableOpacity, Text, StyleSheet, SafeAreaView } from "react-native";
+import { Text, StyleSheet, SafeAreaView } from "react-native";
 import theme from "../assets/styles/theme";
 import React, {
   useCallback,
@@ -13,7 +13,7 @@ import BottomSheet, {
   BottomSheetView,
   BottomSheetFooter,
 } from "@gorhom/bottom-sheet";
-import { Stack, ButtonGroup } from "../components/core";
+import { Stack, ButtonGroup, Button } from "../components/core";
 import { SheetHeader } from "../components/customized";
 import { useCalendarList } from "../hooks";
 import { useTranslation } from "react-i18next";
@@ -115,13 +115,13 @@ const FiltersDateScreen = ({ route }) => {
               activeButton={activeHours}
             />
           )}
-          <TouchableOpacity
+          <Button
             disabled={disabled}
             onPress={goNext}
             style={disabled ? disabledStyle : styles.mainButton}
           >
             <Text style={styles.mainButtonText}>{t("next")}</Text>
-          </TouchableOpacity>
+          </Button>
         </Stack>
       </BottomSheetFooter>
     ),

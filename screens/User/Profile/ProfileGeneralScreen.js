@@ -81,6 +81,9 @@ const ProfileGeneralScreen = (props) => {
       });
   };
 
+  const admin =
+    userDetails?.role === "admin" || userDetails?.role === "employee";
+
   const buttons = (
     <>
       <FollowButton
@@ -163,9 +166,11 @@ const ProfileGeneralScreen = (props) => {
       <View style={styles.tabsCont}>
         <TopTabContainer initialRouteName="Posts" profileTabs={true}>
           <Tab.Screen name="Posts" component={PostsProfile} />
-          <Tab.Screen name="Products" component={ProductsProfile} />
-          <Tab.Screen name="Calendar" component={CalendarProfileTab} />
-          <Tab.Screen name="Jobs" component={JobsProfileTab} />
+          {admin && <Tab.Screen name="Products" component={ProductsProfile} />}
+          {admin && (
+            <Tab.Screen name="Calendar" component={CalendarProfileTab} />
+          )}
+          {admin && <Tab.Screen name="Jobs" component={JobsProfileTab} />}
           <Tab.Screen name="About" component={AboutProfile} />
         </TopTabContainer>
       </View>

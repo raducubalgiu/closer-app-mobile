@@ -18,6 +18,7 @@ export { FeedLabelButton } from "./Buttons/FeedLabelButton";
 export { default as Stack } from "./Containers/Stack";
 export { default as IconButton } from "./IconButton/IconButton";
 export { default as IconBackButton } from "./IconButton/IconBackButton";
+export { IconButtonEdit } from "./IconButton/IconButtonEdit";
 export { default as ButtonGroup } from "./ButtonGroup/ButtonGroup";
 
 export { default as Header } from "./Header/Header";

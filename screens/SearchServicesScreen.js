@@ -1,18 +1,11 @@
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  FlatList,
-  View,
-} from "react-native";
+import { SafeAreaView, StyleSheet, Text, FlatList } from "react-native";
 import React, { useState } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../assets/styles/theme";
-import { SearchBarInput, Stack } from "../components/core";
-import { useAuth } from "../hooks/auth";
+import { Button, SearchBarInput, Stack } from "../components/core";
+import { useAuth } from "../hooks";
 
 const SUGGESTED_SERVICES = [
   {
@@ -56,6 +49,22 @@ const SearchServicesScreen = ({ route }) => {
     }
   };
 
+  const renderSuggested = ({ item }) => (
+    <Button
+      onPress={() => {
+        navigation.navigate("FiltersDate", {
+          serviceId: item._id,
+          serviceName: item.name,
+          period,
+        });
+      }}
+      sx={styles.item}
+    >
+      <Text style={styles.serviceItem}>{item.name}</Text>
+      <Text style={styles.categoryItem}>{item.category[0].name}</Text>
+    </Button>
+  );
+
   return (
     <SafeAreaView style={styles.screen}>
       <Stack direction="row" justify="start" sx={{ marginHorizontal: 15 }}>
@@ -68,32 +77,18 @@ const SearchServicesScreen = ({ route }) => {
           onPress={() => navigation.goBack()}
         />
       </Stack>
-      <View style={styles.container}>
-        <View>
+      <Stack align="start" sx={styles.container}>
+        <Stack align="start">
           {services.length === 0 && (
             <Text style={styles.heading}>{t("suggested")}</Text>
           )}
           <FlatList
             data={services.length > 0 ? services : SUGGESTED_SERVICES}
             keyExtractor={(item) => item._id}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate("FiltersDate", {
-                    serviceId: item._id,
-                    serviceName: item.name,
-                    period,
-                  });
-                }}
-                style={styles.item}
-              >
-                <Text style={styles.serviceItem}>{item.name}</Text>
-                <Text style={styles.categoryItem}>{item.category[0].name}</Text>
-              </TouchableOpacity>
-            )}
+            renderItem={renderSuggested}
           />
-        </View>
-      </View>
+        </Stack>
+      </Stack>
     </SafeAreaView>
   );
 };

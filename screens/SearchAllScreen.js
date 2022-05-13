@@ -1,10 +1,8 @@
-import { SafeAreaView, StyleSheet, View, TouchableOpacity } from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import React from "react";
-import { Stack, SearchBarInput } from "../components/core";
-import { Icon } from "@rneui/themed";
+import { Stack, SearchBarInput, IconBackButton } from "../components/core";
 import theme from "../assets/styles/theme";
 import { useTranslation } from "react-i18next";
-import { useNavigation } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import {
   SearchHashtagsTab,
@@ -13,12 +11,12 @@ import {
   SearchUsersTab,
   SearchVideoTab,
   SearchPopularTab,
+  TopTabContainer,
 } from "../components/customized";
 
 const SearchAllScreen = ({ route }) => {
   const { search } = route.params;
   const { t } = useTranslation();
-  const navigation = useNavigation();
 
   const Tab = createMaterialTopTabNavigator();
 
@@ -26,33 +24,14 @@ const SearchAllScreen = ({ route }) => {
     <SafeAreaView style={styles.screen}>
       <View style={styles.container}>
         <Stack direction="row" justify="start">
-          <TouchableOpacity
-            style={{ marginRight: 10 }}
-            onPress={() => navigation.goBack()}
-          >
-            <Icon
-              name="chevron-thin-left"
-              type="entypo"
-              color={theme.lightColors.black}
-              size={22.5}
-            />
-          </TouchableOpacity>
+          <IconBackButton />
           <SearchBarInput
             value={search}
             cancelButtonTitle={t("search")}
             onPress={() => {}}
           />
         </Stack>
-        <Tab.Navigator
-          initialRouteName="SearchPopular"
-          screenOptions={{
-            tabBarLabelStyle: styles.labelStyle,
-            tabBarIndicatorStyle: styles.indicatorStyle,
-            tabBarInactiveTintColor: "gray",
-            tabBarScrollEnabled: true,
-          }}
-          sceneContainerStyle={{ backgroundColor: "white" }}
-        >
+        <TopTabContainer initialRouteName="SearchPopular" tabBarScrollEnabled>
           <Tab.Screen
             name="SearchPopular"
             component={SearchPopularTab}
@@ -83,7 +62,7 @@ const SearchAllScreen = ({ route }) => {
             component={SearchHashtagsTab}
             options={{ tabBarLabel: "Hashtaguri" }}
           />
-        </Tab.Navigator>
+        </TopTabContainer>
       </View>
     </SafeAreaView>
   );

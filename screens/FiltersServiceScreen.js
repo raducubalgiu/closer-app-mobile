@@ -1,10 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  SafeAreaView,
-} from "react-native";
+import { StyleSheet, Text, FlatList, SafeAreaView } from "react-native";
 import React, {
   useEffect,
   useState,
@@ -18,7 +12,7 @@ import BottomSheet, {
   BottomSheetView,
   BottomSheetFooter,
 } from "@gorhom/bottom-sheet";
-import { Stack, Spinner } from "../components/core";
+import { Stack, Spinner, Button } from "../components/core";
 import { SheetHeader } from "../components/customized";
 import theme from "../assets/styles/theme";
 
@@ -52,7 +46,7 @@ const FiltersServiceScreen = ({ route }) => {
     (props) => (
       <BottomSheetFooter {...props}>
         <Stack direction="row" justify="end" sx={styles.footerContainer}>
-          <TouchableOpacity
+          <Button
             disabled={disabled}
             onPress={() =>
               navigation.navigate("Services", {
@@ -65,7 +59,7 @@ const FiltersServiceScreen = ({ route }) => {
             style={disabled ? disabledStyle : styles.mainButton}
           >
             <Text style={styles.mainButtonText}>Inainte</Text>
-          </TouchableOpacity>
+          </Button>
         </Stack>
       </BottomSheetFooter>
     ),

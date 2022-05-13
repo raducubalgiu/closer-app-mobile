@@ -8,6 +8,7 @@ export const TopTabContainer = ({
   children,
   initialRouteName,
   profileTabs,
+  tabBarScrollEnabled,
 }) => {
   const Tab = createMaterialTopTabNavigator();
 
@@ -53,6 +54,7 @@ export const TopTabContainer = ({
       tabBarLabelStyle: styles.tabLabel,
       tabBarStyle: styles.tabStyle,
       tabBarIndicatorStyle: styles.tabIndicator,
+      tabBarScrollEnabled,
     };
   }
 

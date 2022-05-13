@@ -3,7 +3,6 @@ import {
   FlatList,
   RefreshControl,
   SafeAreaView,
-  TouchableOpacity,
   View,
 } from "react-native";
 import React, { useState, useCallback, useEffect, useRef } from "react";
@@ -11,15 +10,14 @@ import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { io } from "socket.io-client";
 import { useAuth } from "../hooks/auth";
-import { Icon } from "@rneui/themed";
 import { MessageItem } from "../components/customized";
 import {
   SearchBarInput,
   Header,
   SwipableItem,
   Spinner,
+  IconButtonEdit,
 } from "../components/core";
-import theme from "../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 
 const MessagesScreen = () => {
@@ -96,15 +94,7 @@ const MessagesScreen = () => {
       <View style={styles.container}>
         <Header
           title={t("myMessages")}
-          actionBtn={
-            <TouchableOpacity>
-              <Icon
-                name="edit"
-                type="feather"
-                color={theme.lightColors.black}
-              />
-            </TouchableOpacity>
-          }
+          actionBtn={<IconButtonEdit onPress={() => {}} />}
           hideBtnLeft={true}
         />
         {loading && <Spinner />}

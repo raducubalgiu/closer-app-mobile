@@ -1,16 +1,8 @@
-import {
-  SafeAreaView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  Text,
-  FlatList,
-} from "react-native";
-import { SearchBarInput, Stack } from "../components/core";
-import { Icon } from "@rneui/themed";
+import { SafeAreaView, StyleSheet, View, Text, FlatList } from "react-native";
+import { IconBackButton, SearchBarInput, Stack } from "../components/core";
+import { CardRecentSearch } from "../components/customized";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import theme from "../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
 
 const RECENT_SEARCH = [
@@ -28,21 +20,15 @@ const SearchPostsScreen = () => {
     setSearch(search);
   };
 
+  const renderRecent = ({ item }) => (
+    <CardRecentSearch onPress={() => {}} word={item?.word} />
+  );
+
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.container}>
         <Stack direction="row" justify="start">
-          <TouchableOpacity
-            style={{ marginRight: 10 }}
-            onPress={() => navigation.goBack()}
-          >
-            <Icon
-              name="chevron-thin-left"
-              type="entypo"
-              color={theme.lightColors.black}
-              size={22.5}
-            />
-          </TouchableOpacity>
+          <IconBackButton sx={{ marginRight: 10 }} />
           <SearchBarInput
             autoFocus={true}
             placeholder={t("search")}
@@ -58,22 +44,7 @@ const SearchPostsScreen = () => {
           <FlatList
             data={RECENT_SEARCH}
             keyExtractor={(item) => item._id}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                style={styles.item}
-                onPress={() => navigation.navigate("SearchAll", { search })}
-              >
-                <Stack direction="row" justify="start">
-                  <Icon
-                    name="search"
-                    type="feather"
-                    color={theme.lightColors.grey0}
-                    size={17.5}
-                  />
-                  <Text style={styles.searchItem}>{item.word}</Text>
-                </Stack>
-              </TouchableOpacity>
-            )}
+            renderItem={renderRecent}
           />
         </View>
       </View>
@@ -97,13 +68,5 @@ const styles = StyleSheet.create({
     fontFamily: "Exo-SemiBold",
     marginVertical: 10,
     fontSize: 13.5,
-  },
-  item: {
-    paddingVertical: 10,
-  },
-  searchItem: {
-    fontFamily: "Exo-Medium",
-    color: theme.lightColors.black,
-    marginLeft: 10,
   },
 });
