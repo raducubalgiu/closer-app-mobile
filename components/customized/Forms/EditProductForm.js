@@ -9,7 +9,7 @@ import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
 import RNPickerSelect from "react-native-picker-select";
 import React, { useState, useEffect, useCallback } from "react";
-import { useAuth } from "../../../context/auth";
+import { useAuth } from "../../../hooks/auth";
 import theme from "../../../assets/styles/theme";
 import { MainButton } from "../../core";
 

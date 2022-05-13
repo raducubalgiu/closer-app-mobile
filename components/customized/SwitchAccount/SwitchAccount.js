@@ -9,7 +9,7 @@ import React from "react";
 import { Avatar, Icon, Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";
-import { useAuth } from "../../../context/auth";
+import { useAuth } from "../../../hooks/auth";
 
 const SwitchAccount = () => {
   const { user } = useAuth();

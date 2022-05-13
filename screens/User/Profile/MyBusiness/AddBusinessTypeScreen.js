@@ -7,7 +7,7 @@ import {
   MainButton,
   Header,
 } from "../../../../components/core";
-import { useAuth } from "../../../../context/auth";
+import { useAuth } from "../../../../hooks/auth";
 import { useNavigation } from "@react-navigation/native";
 
 const AddBusinessTypeScreen = () => {

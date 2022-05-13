@@ -3,7 +3,7 @@ import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import { enableScreens } from "react-native-screens";
 import CloserNavigation from "./navigation/CloserNavigation";
-import { AuthProvider } from "./context/auth";
+import { AuthProvider } from "./hooks/auth";
 import { RootSiblingParent } from "react-native-root-siblings";
 import { ThemeProvider } from "@rneui/themed";
 import theme from "./assets/styles/theme";

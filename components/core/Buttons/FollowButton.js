@@ -2,7 +2,7 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import theme from "../../../assets/styles/theme";
-import { useAuth } from "../../../context/auth";
+import { useAuth } from "../../../hooks/auth";
 
 const FollowButton = (props) => {
   const [follow, setFollow] = useState(true);

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import CardRatings from "../../Cards/CardRatings";
 import axios from "axios";
 import moment from "moment";
-import { useAuth } from "../../../../context/auth";
+import { useAuth } from "../../../../hooks/auth";
 import { Spinner } from "../../../core";
 
 export const RatingsTab = (props) => {

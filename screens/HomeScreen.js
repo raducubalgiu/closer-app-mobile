@@ -13,7 +13,7 @@ import { Divider } from "@rneui/themed";
 import FakeSearchBar from "../components/customized/FakeSearchBar/FakeSearchBar";
 import CardRecommended from "../components/customized/Cards/CardRecommended";
 import theme from "../assets/styles/theme";
-import { useAuth } from "../context/auth";
+import { useAuth } from "../hooks/auth";
 import { useScrollToTop } from "@react-navigation/native";
 import { ServicesList } from "../components/customized";
 

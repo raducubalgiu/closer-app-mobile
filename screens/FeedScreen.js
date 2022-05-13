@@ -6,18 +6,24 @@ import {
   Animated,
   View,
 } from "react-native";
-import { useNavigation, useScrollToTop } from "@react-navigation/native";
+import React, { useCallback, useState, useRef } from "react";
+import {
+  useNavigation,
+  useScrollToTop,
+  useFocusEffect,
+} from "@react-navigation/native";
 import { Divider, Badge } from "@rneui/themed";
-import React, { useCallback, useEffect, useState, useRef } from "react";
-import CardPost from "../components/customized/Cards/CardPost";
 import theme from "../assets/styles/theme";
 import axios from "axios";
-import { usePosts } from "../hooks/usePosts";
-import { useAuth } from "../context/auth";
-import { IconButton, Spinner, Stack } from "../components/core";
-import FeedLabelButton from "../components/core/Buttons/FeedLabelButton";
+import { usePosts, useAuth } from "../hooks/index";
+import {
+  IconButton,
+  Spinner,
+  Stack,
+  FeedLabelButton,
+} from "../components/core";
+import { CardPost } from "../components/customized";
 import { useTranslation } from "react-i18next";
-import { useFocusEffect } from "@react-navigation/native";
 import { dateFormat } from "../utils";
 
 const FeedScreen = () => {
@@ -124,7 +130,7 @@ const FeedScreen = () => {
         username={user?.username}
         job={user?.business?.name}
         date={dateFormat(post?.createdAt)}
-        image={post?.images[0]?.url}
+        image={item?.images[0]?.url}
         description={post?.description}
         likesCount={post?.likesCount}
         commentsCount={post?.commentsCount}

@@ -2,30 +2,26 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 
-const FeedLabelButton = (props) => {
+export const FeedLabelButton = ({ isActive, text, onPress }) => {
   return (
     <TouchableOpacity
-      onPress={props.onPress}
+      onPress={onPress}
       style={
-        props.isActive
-          ? { ...styles.btnList, ...styles.activeBtn }
-          : styles.btnList
+        isActive ? { ...styles.btnList, ...styles.activeBtn } : styles.btnList
       }
     >
       <Text
         style={
-          props.isActive
+          isActive
             ? { ...styles.btnText, ...styles.activeBtnText }
             : styles.btnText
         }
       >
-        {props.text}
+        {text}
       </Text>
     </TouchableOpacity>
   );
 };
-
-export default FeedLabelButton;
 
 const styles = StyleSheet.create({
   btnList: {

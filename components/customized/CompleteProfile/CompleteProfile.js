@@ -3,7 +3,7 @@ import React from "react";
 import { Stack } from "../../core";
 import theme from "../../../assets/styles/theme";
 import CardCompleteProfile from "../Cards/CardCompleteProfile";
-import { useAuth } from "../../../context/auth";
+import { useAuth } from "../../../hooks/auth";
 import { useNavigation } from "@react-navigation/native";
 
 const CompleteProfile = () => {

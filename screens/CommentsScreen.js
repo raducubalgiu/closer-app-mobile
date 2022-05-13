@@ -10,7 +10,7 @@ import {
 import React, { useState } from "react";
 import { Divider } from "@rneui/themed";
 import axios from "axios";
-import { useAuth } from "../context/auth";
+import { useAuth } from "../hooks/auth";
 import theme from "../assets/styles/theme";
 import {
   IconButton,

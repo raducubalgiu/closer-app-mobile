@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../assets/styles/theme";
 import { SearchBarInput, Stack } from "../components/core";
-import { useAuth } from "../context/auth";
+import { useAuth } from "../hooks/auth";
 
 const SUGGESTED_SERVICES = [
   {

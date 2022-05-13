@@ -2,7 +2,7 @@ import { SafeAreaView, StyleSheet, Keyboard } from "react-native";
 import axios from "axios";
 import React, { useState } from "react";
 import EditField from "./EditFieldScreen";
-import { useAuth } from "../../../../context/auth";
+import { useAuth } from "../../../../hooks/auth";
 import { useNavigation } from "@react-navigation/native";
 
 const EditNameScreen = () => {

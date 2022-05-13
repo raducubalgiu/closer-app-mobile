@@ -13,7 +13,7 @@ import {
   AboutProfileTab,
   HeaderProfile,
 } from "../../../components/customized";
-import { useAuth } from "../../../context/auth";
+import { useAuth } from "../../../hooks/auth";
 import theme from "../../../assets/styles/theme";
 
 const ProfileScreen = (props) => {

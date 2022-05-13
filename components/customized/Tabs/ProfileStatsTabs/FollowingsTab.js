@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import CardFollowers from "../../Cards/CardFollowers";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import { useAuth } from "../../../../context/auth";
+import { useAuth } from "../../../../hooks/auth";
 import { Spinner, SearchBarInput } from "../../../core";
 
 export const FollowingsTab = (props) => {

@@ -14,7 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import CompleteProfile from "../../CompleteProfile/CompleteProfile";
 import NoFoundPosts from "../../NotFoundContent/NoFoundPosts";
 import theme from "../../../../assets/styles/theme";
-import { useAuth } from "../../../../context/auth";
+import { useAuth } from "../../../../hooks/auth";
 
 const { width } = Dimensions.get("window");
 
@@ -39,8 +39,13 @@ export const PostsProfileTab = (props) => {
   );
 
   let noFoundPosts;
-  if (posts.length === 0) {
+  if (posts.length === 0 && user?._id === userId) {
     noFoundPosts = <NoFoundPosts />;
+  }
+
+  let completeProfile;
+  if (user?._id === userId) {
+    completeProfile = <CompleteProfile />;
   }
 
   return (
@@ -92,7 +97,7 @@ export const PostsProfileTab = (props) => {
           </View>
         </TouchableOpacity>
       )}
-      ListFooterComponent={<CompleteProfile />}
+      ListFooterComponent={completeProfile}
     />
   );
 };

@@ -4,7 +4,7 @@ import { IconButton, Header, Spinner } from "../../../../components/core";
 import theme from "../../../../assets/styles/theme";
 import CardProduct from "../../../../components/customized/Cards/CardProduct";
 import axios from "axios";
-import { useAuth } from "../../../../context/auth";
+import { useAuth } from "../../../../hooks/auth";
 import { useNavigation } from "@react-navigation/native";
 
 const MyProductsScreen = ({ route }) => {

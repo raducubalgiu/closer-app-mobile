@@ -1,9 +1,9 @@
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import React from "react";
-import { Stack, CustomAvatar } from "../../core";
+import { Stack, CustomAvatar, Button } from "../../core";
 import theme from "../../../assets/styles/theme";
 import FollowButton from "../../core/Buttons/FollowButton";
-import { useAuth } from "../../../context/auth";
+import { useAuth } from "../../../hooks/auth";
 import { useNavigation } from "@react-navigation/native";
 
 const CardFollowers = (props) => {
@@ -19,16 +19,13 @@ const CardFollowers = (props) => {
 
   return (
     <Stack direction="row" sx={styles.container}>
-      <TouchableOpacity
-        style={styles.goToUser}
-        onPress={() => goToUser(props.followeeId)}
-      >
+      <Button sx={styles.goToUser} onPress={() => goToUser(props.followeeId)}>
         <CustomAvatar avatar={props.avatar} withBadge={false} />
         <Stack align="start" sx={{ marginLeft: 10 }}>
           <Text style={styles.username}>{props.username}</Text>
           <Text style={styles.name}>{props.name}</Text>
         </Stack>
-      </TouchableOpacity>
+      </Button>
       {props.followeeId !== user?._id && (
         <FollowButton followeeId={props.followeeId} />
       )}

@@ -14,7 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";
 import { AuthService } from "../../../services/AuthService";
 import { Header, MainButton, ButtonProvider } from "../../../components/core";
-import { useAuth } from "../../../context/auth";
+import { useAuth } from "../../../hooks/auth";
 
 const LoginScreen = () => {
   const { setUser } = useAuth();

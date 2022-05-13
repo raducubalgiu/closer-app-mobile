@@ -26,7 +26,7 @@ import {
   AboutProfileTab,
   JobsProfileTab,
 } from "../../../components/customized";
-import { useAuth } from "../../../context/auth";
+import { useAuth } from "../../../hooks/auth";
 import CardSuggestedPeople from "../../../components/customized/Cards/CardSuggestedPeople";
 import theme from "../../../assets/styles/theme";
 

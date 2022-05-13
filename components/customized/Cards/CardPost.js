@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, Share } from "react-native";
+import { StyleSheet, Text, View, Share } from "react-native";
 import { Image, Icon, Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";
@@ -11,11 +11,12 @@ import {
   Checkmark,
   Stack,
   CustomAvatar,
+  Button,
 } from "../../core";
-import { useAuth } from "../../../context/auth";
+import { useAuth } from "../../../hooks/auth";
 import { trimFunc } from "../../../utils";
 
-const CardPost = (props) => {
+export const CardPost = (props) => {
   const { user } = useAuth();
   const navigation = useNavigation();
   const [likes, setLikes] = useState(props.likesCount);
@@ -55,7 +56,7 @@ const CardPost = (props) => {
   return (
     <View style={styles.container}>
       <Stack direction="row" sx={{ paddingHorizontal: 10 }}>
-        <TouchableOpacity onPress={() => goToUser(props.userId)}>
+        <Button onPress={() => goToUser(props.userId)}>
           <Stack direction="row" sx={styles.avatarContainer}>
             <CustomAvatar avatar={props?.avatar} size={35} iconSize={15} />
             <Stack align="start">
@@ -66,7 +67,7 @@ const CardPost = (props) => {
               {/* <Text style={styles.job}>Service Auto</Text> */}
             </Stack>
           </Stack>
-        </TouchableOpacity>
+        </Button>
       </Stack>
       <View>
         <Image
@@ -83,19 +84,19 @@ const CardPost = (props) => {
       {props.bookable && (
         <>
           <Stack direction="row" sx={styles.bookableContainer}>
-            <TouchableOpacity>
+            <Button>
               <Text style={styles.bookable}>{t("book")}</Text>
-            </TouchableOpacity>
+            </Button>
             <Icon name="keyboard-arrow-right" color={theme.lightColors.black} />
           </Stack>
         </>
       )}
       <Stack direction="row" sx={styles.btnsContainer}>
-        <TouchableOpacity
+        <Button
           onPress={() => navigation.navigate("Likes", { postId: props.postId })}
         >
           <Text style={styles.likes}>{likes} aprecieri</Text>
-        </TouchableOpacity>
+        </Button>
         <Stack direction="row">
           <LikeIButton
             postId={props.postId}
@@ -116,8 +117,8 @@ const CardPost = (props) => {
         </Text>
       </Stack>
       {comments > 0 && (
-        <TouchableOpacity
-          style={styles.commentsContainer}
+        <Button
+          sx={styles.commentsContainer}
           onPress={() =>
             navigation.navigate("Comments", {
               postId: props.postId,
@@ -142,10 +143,10 @@ const CardPost = (props) => {
               color={theme.lightColors.grey0}
             />
           </Stack>
-        </TouchableOpacity>
+        </Button>
       )}
-      <TouchableOpacity
-        style={{ paddingHorizontal: 15, marginTop: 10 }}
+      <Button
+        sx={{ paddingHorizontal: 15, marginTop: 10 }}
         onPress={() =>
           navigation.navigate("Comments", {
             postId: props.postId,
@@ -161,7 +162,7 @@ const CardPost = (props) => {
           <CustomAvatar size={22.5} iconSize={10} avatar={user?.avatar} />
           <Text style={styles.addCommText}>{t("addComment")}</Text>
         </Stack>
-      </TouchableOpacity>
+      </Button>
       <Stack direction="row" sx={{ marginTop: 7.5, marginHorizontal: 15 }}>
         <Text style={styles.date}>{props.date}</Text>
         {props.bookable && (
@@ -178,8 +179,6 @@ const CardPost = (props) => {
     </View>
   );
 };
-
-export default CardPost;
 
 const styles = StyleSheet.create({
   container: {

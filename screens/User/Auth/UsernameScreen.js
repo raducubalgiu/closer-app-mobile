@@ -2,7 +2,7 @@ import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import axios from "axios";
 import React from "react";
 import theme from "../../../assets/styles/theme";
-import { useAuth } from "../../../context/auth";
+import { useAuth } from "../../../hooks/auth";
 import InputCheck from "../../../components/core/Inputs/InputCheck";
 
 const UsernameScreen = (props) => {

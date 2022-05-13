@@ -10,7 +10,7 @@ import React, { useState } from "react";
 import { Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../../assets/styles/theme";
-import { useAuth } from "../../../../context/auth";
+import { useAuth } from "../../../../hooks/auth";
 import MenuITemBetween from "../../../../components/customized/MenuItem/MenuITemBetween";
 import BottomSheetPopup from "../../../../components/customized/BottomSheets/BottomSheetPopup";
 import { Stack, Header, CustomAvatar } from "../../../../components/core";

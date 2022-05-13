@@ -14,7 +14,7 @@ import { AutocompleteGoogle } from "../../../../components/customized";
 import { Stack, Header, MainButton } from "../../../../components/core";
 import { Icon, Avatar, Badge } from "@rneui/themed";
 import axios from "axios";
-import { useAuth } from "../../../../context/auth";
+import { useAuth } from "../../../../hooks/auth";
 import { useNavigation } from "@react-navigation/native";
 
 const defaultValues = {

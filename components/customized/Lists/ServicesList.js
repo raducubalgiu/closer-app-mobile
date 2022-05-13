@@ -9,7 +9,7 @@ import {
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Divider } from "@rneui/themed";
-import { useAuth } from "../../../context/auth";
+import { useAuth } from "../../../hooks/auth";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";

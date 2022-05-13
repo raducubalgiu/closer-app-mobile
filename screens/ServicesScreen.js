@@ -5,7 +5,7 @@ import { Divider } from "@rneui/themed";
 import BottomSheetService from "../components/customized/BottomSheets/BottomSheetService";
 import CardService from "../components/customized/Cards/CardService";
 import Map from "../components/customized/Map/Map";
-import { useAuth } from "../context/auth";
+import { useAuth } from "../hooks/auth";
 import { AddressFormat } from "../utils/addressFormat";
 import { HeaderServices } from "../components/customized";
 

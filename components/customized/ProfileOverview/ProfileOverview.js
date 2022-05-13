@@ -1,20 +1,14 @@
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";
 import {
-  Checkmark,
   CustomAvatar,
   Protected,
   Stack,
   StatsButton,
+  IconStar,
+  Button,
 } from "../../core";
 import { useTranslation } from "react-i18next";
 
@@ -26,7 +20,7 @@ export const ProfileOverview = (props) => {
   return (
     <View style={styles.container}>
       <Stack justify="center" align="center">
-        <TouchableOpacity>
+        <Button>
           <CustomAvatar
             iconSize={37}
             size={95}
@@ -34,7 +28,7 @@ export const ProfileOverview = (props) => {
             withBadge={withBadge}
             badgeDetails={{ name: "plus", type: "entypo" }}
           />
-        </TouchableOpacity>
+        </Button>
         <Text style={styles.name}>@{user?.username}</Text>
         <Stack direction="row" justify="start">
           <Protected
@@ -42,15 +36,11 @@ export const ProfileOverview = (props) => {
             roles={[process.env.MAIN_ROLE, process.env.SECOND_ROLE]}
           >
             {user?.business && (
-              <Text style={styles.business}>{user?.business?.name}</Text>
+              <>
+                <Text style={styles.business}>{user?.business?.name}</Text>
+                <IconStar sx={styles.star} />
+              </>
             )}
-            <Icon
-              type="antdesign"
-              name="star"
-              color={theme.lightColors.primary}
-              size={16}
-              style={{ marginLeft: 7.5 }}
-            />
             <Text style={styles.ratingsAverage}>
               {user?.counter?.ratingsAverage?.toFixed(1)}
             </Text>
@@ -175,4 +165,5 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     marginVertical: 10,
   },
+  star: { marginLeft: 7.5 },
 });

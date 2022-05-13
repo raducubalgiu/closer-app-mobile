@@ -17,7 +17,7 @@ import { Icon } from "@rneui/themed";
 import TooltipTitle from "../../../../components/customized/ListItems/TooltipItem";
 import axios from "axios";
 import theme from "../../../../assets/styles/theme";
-import { useAuth } from "../../../../context/auth";
+import { useAuth } from "../../../../hooks/auth";
 import { useNavigation } from "@react-navigation/native";
 
 const AddServicesScreen = () => {

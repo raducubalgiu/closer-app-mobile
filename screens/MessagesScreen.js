@@ -10,7 +10,7 @@ import React, { useState, useCallback, useEffect, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { io } from "socket.io-client";
-import { useAuth } from "../context/auth";
+import { useAuth } from "../hooks/auth";
 import { Icon } from "@rneui/themed";
 import { MessageItem } from "../components/customized";
 import {

@@ -4,7 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Icon } from "@rneui/themed";
-import { useAuth } from "../context/auth";
+import { useAuth } from "../hooks/auth";
 import "../i18next";
 
 import HomeScreen from "../screens/HomeScreen";

@@ -4,7 +4,7 @@ import CardProduct from "../../Cards/CardProduct";
 import React, { useState } from "react";
 import NotFoundContent from "../../NotFoundContent/NotFoundContent";
 import { useFocusEffect } from "@react-navigation/native";
-import { useAuth } from "../../../../context/auth";
+import { useAuth } from "../../../../hooks/auth";
 import { Spinner } from "../../../core";
 
 export const ProductsProfileTab = (props) => {
@@ -33,7 +33,7 @@ export const ProductsProfileTab = (props) => {
   );
 
   let noFoundContent;
-  if (products?.length === 0) {
+  if (products?.length === 0 && user?._id === userId) {
     noFoundContent = (
       <NotFoundContent
         iconName="shoppingcart"

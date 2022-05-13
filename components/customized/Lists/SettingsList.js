@@ -4,7 +4,7 @@ import { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { ListItem, Icon } from "@rneui/themed";
-import { useAuth } from "../../../context/auth";
+import { useAuth } from "../../../hooks/auth";
 import theme from "../../../assets/styles/theme";
 
 export const SettingsList = (props) => {

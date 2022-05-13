@@ -2,7 +2,7 @@ import { StyleSheet, Animated, Pressable } from "react-native";
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { Icon } from "@rneui/themed";
-import { useAuth } from "../../../context/auth";
+import { useAuth } from "../../../hooks/auth";
 import theme from "../../../assets/styles/theme";
 
 const BookmarkIButton = (props) => {

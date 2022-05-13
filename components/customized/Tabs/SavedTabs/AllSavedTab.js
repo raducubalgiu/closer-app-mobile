@@ -9,7 +9,7 @@ import React, { useEffect, useState } from "react";
 import { Image, Icon } from "@rneui/themed";
 import theme from "../../../../assets/styles/theme";
 import axios from "axios";
-import { useAuth } from "../../../../context/auth";
+import { useAuth } from "../../../../hooks/auth";
 
 const { width } = Dimensions.get("window");
 
