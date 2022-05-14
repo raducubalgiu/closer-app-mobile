@@ -1,13 +1,13 @@
-import { StyleSheet, FlatList } from "react-native";
+import { FlatList } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useState } from "react";
-import CardRatings from "../../Cards/CardRatings";
+import { CardRatings } from "../../../customized";
 import axios from "axios";
 import moment from "moment";
-import { useAuth } from "../../../../hooks/auth";
+import { useAuth } from "../../../../hooks";
 import { Spinner } from "../../../core";
 
-export const RatingsTab = (props) => {
+export const RatingsTab = ({ userId }) => {
   const { user } = useAuth();
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -16,11 +16,10 @@ export const RatingsTab = (props) => {
     React.useCallback(() => {
       setLoading(true);
       axios
-        .get(`${process.env.BASE_ENDPOINT}/users/${props.userId}/reviews`, {
+        .get(`${process.env.BASE_ENDPOINT}/users/${userId}/reviews`, {
           headers: { Authorization: `Bearer ${user?.token}` },
         })
         .then((res) => {
-          console.log("Fetch Ratings");
           setReviews(res.data.reviews);
           setLoading(false);
         })
@@ -28,7 +27,7 @@ export const RatingsTab = (props) => {
           console.log(err);
           setLoading(false);
         });
-    }, [props.userId, user?.token])
+    }, [userId, user?.token])
   );
 
   const renderRatings = ({ item }) => {
@@ -59,5 +58,3 @@ export const RatingsTab = (props) => {
     </>
   );
 };
-
-const styles = StyleSheet.create({});

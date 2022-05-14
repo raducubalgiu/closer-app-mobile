@@ -1,12 +1,11 @@
 import { StyleSheet, Text } from "react-native";
 import React from "react";
-import { Stack, CustomAvatar, Button } from "../../core";
+import { Stack, CustomAvatar, Button, FollowButton } from "../../core";
 import theme from "../../../assets/styles/theme";
-import FollowButton from "../../core/Buttons/FollowButton";
 import { useAuth } from "../../../hooks/auth";
 import { useNavigation } from "@react-navigation/native";
 
-export const CardFollowers = (props) => {
+export const CardFollowers = ({ avatar, followeeId, username, name }) => {
   const navigation = useNavigation();
   const { user } = useAuth();
 
@@ -19,16 +18,14 @@ export const CardFollowers = (props) => {
 
   return (
     <Stack direction="row" sx={styles.container}>
-      <Button sx={styles.goToUser} onPress={() => goToUser(props.followeeId)}>
-        <CustomAvatar avatar={props.avatar} withBadge={false} />
+      <Button sx={styles.goToUser} onPress={() => goToUser(followeeId)}>
+        <CustomAvatar avatar={avatar} withBadge={false} />
         <Stack align="start" sx={{ marginLeft: 10 }}>
-          <Text style={styles.username}>{props.username}</Text>
-          <Text style={styles.name}>{props.name}</Text>
+          <Text style={styles.username}>{username}</Text>
+          <Text style={styles.name}>{name}</Text>
         </Stack>
       </Button>
-      {props.followeeId !== user?._id && (
-        <FollowButton followeeId={props.followeeId} />
-      )}
+      {followeeId !== user?._id && <FollowButton followeeId={followeeId} />}
     </Stack>
   );
 };

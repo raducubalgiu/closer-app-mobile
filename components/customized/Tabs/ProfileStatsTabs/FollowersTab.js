@@ -1,7 +1,7 @@
 import { StyleSheet, View, FlatList } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useState } from "react";
-import CardFollowers from "../../Cards/CardFollowers";
+import { CardFollowers } from "../../../customized";
 import { useAuth } from "../../../../hooks/auth";
 import axios from "axios";
 import { Spinner, SearchBarInput } from "../../../core";

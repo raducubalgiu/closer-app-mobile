@@ -4,7 +4,14 @@ import { AirbnbRating, Divider } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 import { Stack, CustomAvatar } from "../../core";
 
-const CardRatings = (props) => {
+export const CardRatings = ({
+  avatar,
+  name,
+  date,
+  rating,
+  service,
+  review,
+}) => {
   return (
     <View style={styles.container}>
       <Stack direction="row" align="start">
@@ -12,12 +19,12 @@ const CardRatings = (props) => {
           <CustomAvatar
             iconSize={20}
             size={45}
-            avatar={props?.avatar}
+            avatar={avatar}
             withBadge={false}
           />
           <View style={{ marginLeft: 10 }}>
-            <Text style={styles.name}>{props.name}</Text>
-            <Text style={styles.date}>{props.date}</Text>
+            <Text style={styles.name}>{name}</Text>
+            <Text style={styles.date}>{date}</Text>
           </View>
         </Stack>
       </Stack>
@@ -28,19 +35,17 @@ const CardRatings = (props) => {
           count={5}
           reviews={["Nesatisfacator", "Acceptabil", "Ok", "Bun", "Senzational"]}
           size={15}
-          defaultRating={props.rating}
+          defaultRating={rating}
           reviewColor={theme.lightColors.black}
           selectedColor={theme.lightColors.primary}
           reviewSize={15}
         />
-        <Text style={styles.service}>{props.service}</Text>
+        <Text style={styles.service}>{service}</Text>
       </Stack>
-      <Text style={styles.review}>{props.review}</Text>
+      <Text style={styles.review}>{review}</Text>
     </View>
   );
 };
-
-export default CardRatings;
 
 const styles = StyleSheet.create({
   container: {

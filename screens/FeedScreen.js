@@ -22,7 +22,7 @@ import {
   Stack,
   FeedLabelButton,
 } from "../components/core";
-import { CardPost } from "../components/customized";
+import { CardPost, CardPostVideo } from "../components/customized";
 import { useTranslation } from "react-i18next";
 import { dateFormat } from "../utils";
 
@@ -101,22 +101,21 @@ const FeedScreen = () => {
   const renderAllPosts = ({ item }) => {
     const { user } = item;
 
-    return (
-      <CardPost
-        postId={item?._id}
-        userId={user?._id}
-        avatar={user?.avatar}
-        username={user?.username}
-        job={user?.business?.name}
-        date={dateFormat(item?.createdAt)}
-        image={item?.images[0]?.url}
-        description={item?.description}
-        likesCount={item?.likesCount}
-        commentsCount={item?.commentsCount}
-        bookable={item?.bookable}
-        checkmark={user?.checkmark}
-      />
-    );
+    <CardPost
+      postId={item?._id}
+      userId={user?._id}
+      avatar={user?.avatar}
+      username={user?.username}
+      job={user?.business?.name}
+      date={dateFormat(item?.createdAt)}
+      image={item?.images[0]?.url}
+      description={item?.description}
+      likesCount={item?.likesCount}
+      commentsCount={item?.commentsCount}
+      bookable={item?.bookable}
+      checkmark={user?.checkmark}
+      postType={item?.postType}
+    />;
   };
 
   const renderFollowingPosts = ({ item }) => {
