@@ -15,13 +15,16 @@ import {
 } from "../../core";
 import { useAuth } from "../../../hooks/auth";
 import { trimFunc } from "../../../utils";
+import { Video, AVPlaybackStatus } from "expo-av";
 
-export const CardPost = (props) => {
+export const CardPostVideo = (props) => {
   const { user } = useAuth();
   const navigation = useNavigation();
   const [likes, setLikes] = useState(props.likesCount);
   const [comments, setComments] = useState(props.commentsCount);
   const { t } = useTranslation();
+  const video = React.useRef(null);
+  const [status, setStatus] = React.useState({});
 
   const onShare = async () => {
     try {
@@ -70,15 +73,18 @@ export const CardPost = (props) => {
         </Button>
       </Stack>
       <View>
-        <Image
+        <Video
+          ref={video}
+          style={styles.video}
           source={{
             uri: `${props.image}`,
           }}
-          style={
-            !props.bookable
-              ? { ...styles.image, height: 450 }
-              : { ...styles.image }
-          }
+          useNativeControls={false}
+          resizeMode="cover"
+          isLooping
+          onPlaybackStatusUpdate={(status) => setStatus(() => status)}
+          shouldPlay={true}
+          onTouchStart={() => console.log("Start")}
         />
       </View>
       {props.bookable && (
@@ -221,6 +227,11 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     width: "100%",
     flex: 1,
+  },
+  video: {
+    alignSelf: "center",
+    width: "100%",
+    height: 500,
   },
   likes: { color: theme.lightColors.black, fontWeight: "bold" },
   description: {

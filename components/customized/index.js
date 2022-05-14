@@ -25,7 +25,7 @@ export { FollowersTab } from "./Tabs/ProfileStatsTabs/FollowersTab";
 export { FollowingsTab } from "./Tabs/ProfileStatsTabs/FollowingsTab";
 export { RatingsTab } from "./Tabs/ProfileStatsTabs/RatingsTab";
 
-export { CardPost } from "./Cards/CardPost";
+export { CardPost } from "./Cards/CardPost/CardPost";
 export { CardRecentSearch } from "./Cards/CardRecentSearch";
 export { CardPostVideo } from "./Cards/CardPostVideo";
 export { CardFollowers } from "./Cards/CardFollowers";

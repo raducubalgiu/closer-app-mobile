@@ -40,16 +40,6 @@ const AllServicesScreen = () => {
     (search) => {
       setSearch(search);
       if (search) {
-        //   axios
-        //     .get(`${process.env.BASE_ENDPOINT}/services/search/?name=${search}`, {
-        //       headers: { Authorization: `Bearer ${user?.token}` },
-        //     })
-        //     .then((res) => {
-        //       setServices(res.data.services);
-        //     })
-        //     .catch((err) => console.log(err));
-        // } else {
-        //   setServices([]);
       }
     },
     [search]

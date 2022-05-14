@@ -22,7 +22,7 @@ import {
   Stack,
   FeedLabelButton,
 } from "../components/core";
-import { CardPost, CardPostVideo } from "../components/customized";
+import { CardPost } from "../components/customized";
 import { useTranslation } from "react-i18next";
 import { dateFormat } from "../utils";
 
@@ -113,8 +113,7 @@ const FeedScreen = () => {
       likesCount={item?.likesCount}
       commentsCount={item?.commentsCount}
       bookable={item?.bookable}
-      checkmark={user?.checkmark}
-      postType={item?.postType}
+      checkmark={item?.checkmark}
     />;
   };
 
@@ -135,6 +134,7 @@ const FeedScreen = () => {
         commentsCount={post?.commentsCount}
         bookable={post?.bookable}
         checkmark={post?.checkmark}
+        postType={post?.postType}
       />
     );
   };
