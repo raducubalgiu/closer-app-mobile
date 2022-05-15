@@ -2,24 +2,33 @@ import { StyleSheet, View } from "react-native";
 import { Image } from "@rneui/themed";
 import React from "react";
 import { Video, AVPlaybackStatus } from "expo-av";
-import {
-  CardPostHeader,
-  CardPostButtons,
-  CardPostFooter,
-} from "./CardPostHeader";
+import CardPostHeader from "./CardPostHeader";
+import CardPostButtons from "./CardPostButtons";
+import CardPostFooter from "./CardPostFooter";
 
 export const CardPost = (props) => {
   const videoRef = React.useRef(null);
   const [status, setStatus] = React.useState({});
+  const {
+    userId,
+    avatar,
+    username,
+    checkmark,
+    bookable,
+    postId,
+    likesCount,
+    description,
+    date,
+    commentsCount,
+    postType,
+  } = props;
 
   const image = (
     <Image
       source={{
         uri: `${props.image}`,
       }}
-      style={
-        !props.bookable ? { ...styles.image, height: 450 } : { ...styles.image }
-      }
+      style={!bookable ? { ...styles.image, height: 450 } : { ...styles.image }}
     />
   );
 
@@ -36,31 +45,32 @@ export const CardPost = (props) => {
       onPlaybackStatusUpdate={(status) => setStatus(() => status)}
       shouldPlay={true}
       onTouchStart={() => console.log("Start")}
+      isMuted={false}
     />
   );
 
   return (
     <View style={styles.container}>
       <CardPostHeader
-        userId={props.userId}
-        avatar={props.avatar}
-        username={props.username}
-        checkmark={props.checkmark}
+        userId={userId}
+        avatar={avatar}
+        username={username}
+        checkmark={checkmark}
       />
-      <View>{props.postType === "video" ? video : image}</View>
+      <View>{postType === "video" ? video : image}</View>
       <CardPostButtons
-        bookable={props.bookable}
-        postId={props.postId}
-        likesCount={props.likesCount}
+        bookable={bookable}
+        postId={postId}
+        likesCount={likesCount}
       />
       <CardPostFooter
-        postId={props.postId}
-        description={props.description}
-        username={props.username}
-        date={props.date}
-        avatar={props.avatar}
-        bookable={props.bookable}
-        commentsCount={props.commentsCount}
+        postId={postId}
+        description={description}
+        username={username}
+        date={date}
+        avatar={avatar}
+        bookable={bookable}
+        commentsCount={commentsCount}
       />
     </View>
   );

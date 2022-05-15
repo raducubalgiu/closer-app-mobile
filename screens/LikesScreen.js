@@ -3,17 +3,18 @@ import {
   SafeAreaView,
   StyleSheet,
   View,
-  ActivityIndicator,
   RefreshControl,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { Header } from "../components/core";
+import { Header, Spinner } from "../components/core";
 import FakeSearchBarSimple from "../components/customized/FakeSearchBar/FakeSearchBarSimple";
 import axios from "axios";
-import CardFollowers from "../components/customized/Cards/CardFollowers";
+import { CardFollowers } from "../components/customized";
+import { useAuth } from "../hooks";
 
 const LikesScreen = (props) => {
-  const { postId, followingId } = props.route.params;
+  const { user } = useAuth();
+  const { postId } = props.route.params;
   const [likes, setLikes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -30,6 +31,7 @@ const LikesScreen = (props) => {
         console.log(err);
         setLoading(false);
       });
+    setLoading(false);
   }, []);
 
   const wait = (timeout) => {
@@ -43,6 +45,16 @@ const LikesScreen = (props) => {
     });
   }, []);
 
+  const renderPerson = ({ item }) => (
+    <CardFollowers
+      avatar={item?.user?.avatar}
+      username={item?.user?.username}
+      name={item?.user?.name}
+      followeeId={item?.user?._id}
+      userId={user?._id}
+    />
+  );
+
   return (
     <SafeAreaView style={styles.screen}>
       <Header title="Aprecieri" divider={true} />
@@ -55,25 +67,12 @@ const LikesScreen = (props) => {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
           ListHeaderComponent={
-            <>
-              {loading && <ActivityIndicator />}
-              {!loading && likes.length > 20 && <FakeSearchBarSimple />}
-            </>
+            <>{!loading && likes.length > 20 && <FakeSearchBarSimple />}</>
           }
           contentContainerStyle={{ marginTop: 10 }}
           data={likes}
           keyExtractor={(item) => item?._id}
-          renderItem={({ item }) => (
-            <CardFollowers
-              onGoToUser={() => {}}
-              onFollowUser={() => {}}
-              avatar={item?.user?.avatar}
-              username={item?.user?.username}
-              name={item?.user?.name}
-              followingId={followingId}
-              userId={item?.user?._id}
-            />
-          )}
+          renderItem={loading ? <Spinner /> : renderPerson}
         />
       </View>
     </SafeAreaView>

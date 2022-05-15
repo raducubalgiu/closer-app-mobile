@@ -7,7 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import theme from "../../../../assets/styles/theme";
 
-export const CardPostFooter = ({
+const CardPostFooter = ({
   postId,
   description,
   username,
@@ -83,6 +83,8 @@ export const CardPostFooter = ({
     </>
   );
 };
+
+export default CardPostFooter;
 
 const styles = StyleSheet.create({
   description: {

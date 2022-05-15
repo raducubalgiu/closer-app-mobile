@@ -10,15 +10,13 @@ import {
 import theme from "../../../assets/styles/theme";
 import { Header } from "../../../components/core";
 
-const Tab = createMaterialTopTabNavigator();
+const ProfileStatsScreen = ({ route }) => {
+  const { initialRoute, username, userId } = route.params;
+  const Tab = createMaterialTopTabNavigator();
 
-const ProfileStatsScreen = (props) => {
-  const { userId } = props.route.params;
-  const { initialRoute, username } = props.route.params;
-
-  const RatingsDetails = () => <RatingsTab userId={userId} />;
-  const FollowersDetails = () => <FollowersTab userId={userId} />;
-  const FollowingsDetails = () => <FollowingsTab userId={userId} />;
+  const Ratings = () => <RatingsTab userId={userId} />;
+  const Followers = () => <FollowersTab userId={userId} />;
+  const Followings = () => <FollowingsTab userId={userId} />;
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -26,17 +24,17 @@ const ProfileStatsScreen = (props) => {
       <TopTabContainer initialRouteName={initialRoute}>
         <Tab.Screen
           name="Ratings"
-          component={RatingsDetails}
+          component={Ratings}
           options={{ tabBarLabel: "Recenzii" }}
         />
         <Tab.Screen
           name="Followers"
-          component={FollowersDetails}
+          component={Followers}
           options={{ tabBarLabel: "Urmaritori" }}
         />
         <Tab.Screen
           name="Following"
-          component={FollowingsDetails}
+          component={Followings}
           options={{ tabBarLabel: "Urmaresti" }}
         />
       </TopTabContainer>

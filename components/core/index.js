@@ -28,6 +28,8 @@ export { AvatarComplete } from "./Avatars/AvatarComplete";
 
 export { default as Checkmark } from "./Icons/Checkmark";
 export { IconStar } from "./Icons/IconStar";
+export { IconBook } from "./Icons/IconBook";
+export { iconVideo } from "./Icons/IconVideo";
 
 export { default as Modal } from "./Modal/Modal";
 

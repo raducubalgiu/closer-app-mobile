@@ -12,8 +12,6 @@ const CustomAvatar = (props) => {
     }
   };
 
-  console.log(props.avatar);
-
   let showAvatar;
   if (hasAvatar(props?.avatar)) {
     showAvatar = (

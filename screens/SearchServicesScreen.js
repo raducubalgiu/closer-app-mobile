@@ -49,7 +49,7 @@ const SearchServicesScreen = ({ route }) => {
     }
   };
 
-  const renderSuggested = ({ item }) => (
+  const renderSuggested = ({ item }) => {
     <Button
       onPress={() => {
         navigation.navigate("FiltersDate", {
@@ -61,7 +61,23 @@ const SearchServicesScreen = ({ route }) => {
       sx={styles.item}
     >
       <Text style={styles.serviceItem}>{item.name}</Text>
-      <Text style={styles.categoryItem}>{item.category[0].name}</Text>
+      <Text style={styles.categoryItem}>{item.category.name}</Text>
+    </Button>;
+  };
+
+  const renderServices = ({ item }) => (
+    <Button
+      onPress={() => {
+        navigation.navigate("FiltersDate", {
+          serviceId: item._id,
+          serviceName: item.name,
+          period,
+        });
+      }}
+      sx={styles.item}
+    >
+      <Text style={styles.serviceItem}>{item.name}</Text>
+      <Text style={styles.categoryItem}>{item.categoryName}</Text>
     </Button>
   );
 
@@ -85,7 +101,7 @@ const SearchServicesScreen = ({ route }) => {
           <FlatList
             data={services.length > 0 ? services : SUGGESTED_SERVICES}
             keyExtractor={(item) => item._id}
-            renderItem={renderSuggested}
+            renderItem={services.length > 0 ? renderServices : renderSuggested}
           />
         </Stack>
       </Stack>

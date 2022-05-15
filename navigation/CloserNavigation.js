@@ -4,7 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Icon } from "@rneui/themed";
-import { useAuth } from "../hooks/auth";
+import { useAuth } from "../hooks";
 import "../i18next";
 
 import HomeScreen from "../screens/HomeScreen";
@@ -31,6 +31,7 @@ import MessagesScreen from "../screens/MessagesScreen";
 import MessageItemScreen from "../screens/MessageItemScreen";
 import ServiceItemScreen from "../screens/ServiceItemScreen";
 import FeedScreen from "../screens/FeedScreen";
+import PostScreen from "../screens/PostScreen";
 
 // Auth
 import AuthScreen from "../screens/User/Auth/AuthScreen";
@@ -96,6 +97,7 @@ const FeedStackNavigator = () => {
     >
       <Stack.Screen name="Feed" component={FeedScreen} />
       <Stack.Screen name="Likes" component={LikesScreen} />
+      <Stack.Screen name="SearchPosts" component={SearchPostsScreen} />
       <Stack.Screen
         name="ProfileGeneralStack"
         component={ProfileStackNavigator}
@@ -152,6 +154,7 @@ const UserStackNavigator = () => {
       <Stack.Screen name="Settings" component={SettingsScreen} />
       <Stack.Screen name="Schedules" component={SchedulesScreen} />
       <Stack.Screen name="Discounts" component={DiscountsScreen} />
+      <Stack.Screen name="FindFriends" component={FindFriendsScreen} />
       <Stack.Screen name="Bookmarks" component={BookmarksScreen} />
       <Stack.Screen
         name="ProfileGeneralStack"
@@ -262,10 +265,9 @@ const CloserNavigation = () => {
           <Stack.Screen name="MyProducts" component={MyProductsScreen} />
           <Stack.Screen name="Comments" component={CommentsScreen} />
           <Stack.Screen name="MessageItem" component={MessageItemScreen} />
-          <Stack.Screen name="SearchPosts" component={SearchPostsScreen} />
           <Stack.Screen name="SearchAll" component={SearchAllScreen} />
           <Stack.Screen name="Notifications" component={NotificationsScreen} />
-          <Stack.Screen name="FindFriends" component={FindFriendsScreen} />
+          <Stack.Screen name="Post" component={PostScreen} />
         </RootStack.Navigator>
       )}
       {!user && (

@@ -170,8 +170,8 @@ const styles = StyleSheet.create({
   },
   iconVideo: {
     position: "absolute",
-    top: 5,
-    right: 5,
+    bottom: 5,
+    left: 10,
     zIndex: 1000,
   },
 });

@@ -101,20 +101,23 @@ const FeedScreen = () => {
   const renderAllPosts = ({ item }) => {
     const { user } = item;
 
-    <CardPost
-      postId={item?._id}
-      userId={user?._id}
-      avatar={user?.avatar}
-      username={user?.username}
-      job={user?.business?.name}
-      date={dateFormat(item?.createdAt)}
-      image={item?.images[0]?.url}
-      description={item?.description}
-      likesCount={item?.likesCount}
-      commentsCount={item?.commentsCount}
-      bookable={item?.bookable}
-      checkmark={item?.checkmark}
-    />;
+    return (
+      <CardPost
+        postId={item?._id}
+        userId={user?._id}
+        avatar={user?.avatar}
+        username={user?.username}
+        job={user?.business?.name}
+        date={dateFormat(item?.createdAt)}
+        image={item?.images[0]?.url}
+        description={item?.description}
+        likesCount={item?.likesCount}
+        commentsCount={item?.commentsCount}
+        bookable={item?.bookable}
+        checkmark={item?.checkmark}
+        postType={item?.postType}
+      />
+    );
   };
 
   const renderFollowingPosts = ({ item }) => {
@@ -211,7 +214,7 @@ const FeedScreen = () => {
       <Divider color="#ddd" />
       <Animated.FlatList
         ref={ref}
-        ListHeaderComponent={loading && <Spinner sx={styles.spinner} />}
+        //ListHeaderComponent={loading && <Spinner sx={styles.spinner} />}
         refreshControl={refreshControl}
         contentContainerStyle={{ marginTop: 5 }}
         data={postsState.activeAll ? posts : followingsPosts}

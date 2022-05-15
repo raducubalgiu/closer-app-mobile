@@ -15,6 +15,7 @@ import CompleteProfile from "../../CompleteProfile/CompleteProfile";
 import NoFoundPosts from "../../NotFoundContent/NoFoundPosts";
 import theme from "../../../../assets/styles/theme";
 import { useAuth } from "../../../../hooks/auth";
+import { Video, AVPlaybackStatus } from "expo-av";
 
 const { width } = Dimensions.get("window");
 
@@ -23,6 +24,8 @@ export const PostsProfileTab = (props) => {
   const { user } = useAuth();
   const { userId } = props;
   const navigation = useNavigation();
+  const videoRef = React.useRef(null);
+  const [status, setStatus] = React.useState({});
 
   useFocusEffect(
     React.useCallback(() => {
@@ -60,12 +63,27 @@ export const PostsProfileTab = (props) => {
       renderItem={({ item }) => (
         <TouchableOpacity
           style={styles.box}
-          onPress={() => navigation.navigate("Products")}
+          onPress={() =>
+            navigation.navigate("Post", {
+              postId: item._id,
+              userId: item.user._id,
+            })
+          }
         >
           <View style={{ position: "relative" }}>
-            <Image
-              containerStyle={styles.image}
-              source={{ uri: item?.images[0]?.url }}
+            <Video
+              ref={videoRef}
+              style={styles.image}
+              source={{
+                uri: `${item?.images[0]?.url}`,
+              }}
+              useNativeControls={false}
+              resizeMode="cover"
+              isLooping
+              onPlaybackStatusUpdate={(status) => setStatus(() => status)}
+              shouldPlay={false}
+              onTouchStart={() => console.log("Start")}
+              isMuted={false}
             />
             {item?.bookable && (
               <View style={styles.bookable}>

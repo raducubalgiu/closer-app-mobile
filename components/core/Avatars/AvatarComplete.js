@@ -18,9 +18,9 @@ export const AvatarComplete = (props) => {
       />
       {props.withBadge && (
         <Badge
-          status="success"
           containerStyle={styles.badgeContainer}
           value={<Icon name="check" type="entypo" size={10} color="white" />}
+          badgeStyle={{ backgroundColor: theme.lightColors.success }}
         />
       )}
     </View>

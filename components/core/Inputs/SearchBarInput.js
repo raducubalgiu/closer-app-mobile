@@ -24,7 +24,7 @@ const SearchBarInput = (props) => {
     cancelBtnText: {
       fontSize: 13.5,
       fontFamily: "Exo-Bold",
-      color: theme.lightColors.primary,
+      color: theme.lightColors.black,
       backgroundColor: "white",
       padding: 10,
     },

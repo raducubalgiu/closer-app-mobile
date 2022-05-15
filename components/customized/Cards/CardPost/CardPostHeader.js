@@ -1,23 +1,17 @@
 import { StyleSheet, Text } from "react-native";
 import React from "react";
 import { Stack, Checkmark, CustomAvatar, Button } from "../../../core";
-import { useAuth } from "../../../../hooks";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../../assets/styles/theme";
 
-export const CardPostHeader = ({ userId, avatar, username, checkmark }) => {
-  const { user } = useAuth();
+const CardPostHeader = ({ userId, avatar, username, checkmark }) => {
   const navigation = useNavigation();
 
   const goToUser = (userId) => {
-    if (user?._id === userId) {
-      navigation.navigate("Profile");
-    } else {
-      navigation.navigate("ProfileGeneralStack", {
-        screen: "ProfileGeneral",
-        params: { userId },
-      });
-    }
+    navigation.push("ProfileGeneralStack", {
+      screen: "ProfileGeneral",
+      params: { userId },
+    });
   };
 
   return (
@@ -37,6 +31,8 @@ export const CardPostHeader = ({ userId, avatar, username, checkmark }) => {
     </Stack>
   );
 };
+
+export default CardPostHeader;
 
 const styles = StyleSheet.create({
   avatarContainer: {

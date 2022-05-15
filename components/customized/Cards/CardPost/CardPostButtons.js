@@ -12,7 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import theme from "../../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 
-export const CardPostButtons = ({ bookable, postId, likesCount }) => {
+const CardPostButtons = ({ bookable, postId, likesCount }) => {
   const [likes, setLikes] = useState(likesCount);
   const navigation = useNavigation();
   const { t } = useTranslation();
@@ -71,6 +71,8 @@ export const CardPostButtons = ({ bookable, postId, likesCount }) => {
     </>
   );
 };
+
+export default CardPostButtons;
 
 const styles = StyleSheet.create({
   bookable: {
