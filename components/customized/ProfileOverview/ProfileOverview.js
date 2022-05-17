@@ -10,6 +10,7 @@ import {
   IconStar,
   Button,
 } from "../../core";
+import { MAIN_ROLE, SECOND_ROLE, THIRD_ROLE } from "@env";
 import { useTranslation } from "react-i18next";
 
 export const ProfileOverview = (props) => {
@@ -31,10 +32,7 @@ export const ProfileOverview = (props) => {
         </Button>
         <Text style={styles.name}>@{user?.username}</Text>
         <Stack direction="row" justify="start">
-          <Protected
-            user={user}
-            roles={[process.env.MAIN_ROLE, process.env.SECOND_ROLE]}
-          >
+          <Protected userRole={user?.role} roles={[MAIN_ROLE, SECOND_ROLE]}>
             {user?.business && (
               <>
                 <Text style={styles.business}>{user?.business?.name}</Text>
@@ -61,10 +59,7 @@ export const ProfileOverview = (props) => {
         </ScrollView>
       </Stack>
       <Stack direction="row" justify="between" sx={styles.statsContainer}>
-        <Protected
-          user={user}
-          roles={[process.env.MAIN_ROLE, process.env.SECOND_ROLE]}
-        >
+        <Protected userRole={user?.role} roles={[MAIN_ROLE, SECOND_ROLE]}>
           <StatsButton
             onPress={() =>
               navigation.navigate("ProfileGeneralStack", {
@@ -80,7 +75,7 @@ export const ProfileOverview = (props) => {
             statsNo={user?.counter?.ratingsQuantity}
           />
         </Protected>
-        <Protected user={user} roles={[process.env.THIRD_ROLE]}>
+        <Protected userRole={user?.role} roles={[THIRD_ROLE]}>
           <StatsButton
             labelStats={t("posts")}
             statsNo={user?.counter?.ratingsQuantity}

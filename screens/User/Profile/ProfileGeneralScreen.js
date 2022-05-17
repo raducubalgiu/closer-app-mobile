@@ -128,6 +128,7 @@ const ProfileGeneralScreen = (props) => {
       biography={userDetails?.description}
       website={userDetails?.website}
       location={userDetails?.location}
+      role={userDetails?.role}
     />
   );
 

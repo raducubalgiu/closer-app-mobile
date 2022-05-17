@@ -86,5 +86,9 @@
   "somethingWentWrong": "Ceva nu a mers cum trebuie",
   "addName": "Adaugă numele",
   "addWebsite": "Adaugă website",
-  "addBiography": "Adaugă biografia"
+  "addBiography": "Adaugă biografia",
+  "addUsername": "Adaugă nume utilizator",
+  "notAdded": "Incă nu a fost adaugat",
+  "contact": "Contact",
+  "location": "Locaţia"
 }

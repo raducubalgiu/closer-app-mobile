@@ -14,6 +14,7 @@ import {
   HeaderProfile,
 } from "../../../components/customized";
 import { useAuth } from "../../../hooks/auth";
+import { MAIN_ROLE, SECOND_ROLE } from "@env";
 import theme from "../../../assets/styles/theme";
 
 const ProfileScreen = (props) => {
@@ -32,6 +33,7 @@ const ProfileScreen = (props) => {
       biography={user?.description}
       website={user?.website}
       location={user?.location}
+      role={user?.role}
     />
   );
 
@@ -105,7 +107,7 @@ const ProfileScreen = (props) => {
           <Tab.Screen name="About" component={AboutProfile} />
         </TopTabContainer>
       </View>
-      <Protected roles={[process.env.MAIN_ROLE, process.env.SECOND_ROLE]}>
+      <Protected roles={[MAIN_ROLE, SECOND_ROLE]} userRole={user?.role}>
         <FAB
           visible={true}
           icon={{ name: "calendar", type: "feather", color: "white" }}

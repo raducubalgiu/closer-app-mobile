@@ -56,6 +56,7 @@ import AllServicesScreen from "../screens/AllServicesScreen";
 import ProfileStatsScreen from "../screens/User/Profile/ProfileStatsScreen";
 import NotificationsScreen from "../screens/NotificationsScreen";
 import EditProductScreen from "../screens/User/Profile/MyBusiness/EditProductScreen";
+import EditUsernameScreen from "../screens/User/Profile/EditProfile/EditUsernameScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -254,6 +255,7 @@ const CloserNavigation = () => {
           <Stack.Screen name="EditName" component={EditNameScreen} />
           <Stack.Screen name="EditWebsite" component={EditWebsiteScreen} />
           <Stack.Screen name="EditBio" component={EditBioScreen} />
+          <Stack.Screen name="EditUsername" component={EditUsernameScreen} />
           <Stack.Screen
             name="EditPhotoLibrary"
             component={EditPhotoLibraryScreen}

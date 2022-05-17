@@ -40,7 +40,7 @@ const InputCheck = (props) => {
           setStatus(res.data.status);
         })
         .catch((err) => console.log(err));
-    }, 500);
+    }, 1000);
 
     return () => {
       clearTimeout(identifier);

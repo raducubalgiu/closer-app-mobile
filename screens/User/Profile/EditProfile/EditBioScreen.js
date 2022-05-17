@@ -69,7 +69,7 @@ const EditBioScreen = () => {
         style={
           bio.length < 200
             ? styles.strokeLength
-            : { ...styles.strokeLength, color: "red" }
+            : { ...styles.strokeLength, color: "#F72A50" }
         }
       >
         {bio.length} / 200
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   textArea: {
-    height: 130,
+    height: 100,
     justifyContent: "flex-start",
     padding: 10,
     fontFamily: "Exo-Medium",
@@ -101,5 +101,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     fontFamily: "Exo-Medium",
     color: theme.lightColors.grey0,
+    marginTop: 10,
   },
 });

@@ -2,13 +2,15 @@ import React from "react";
 
 const Protected = (props) => {
   const { roles } = props;
-  const { user } = props;
+  const { userRole } = props;
 
   let visible = false;
 
-  if (roles.includes(user?.role)) {
+  if (roles.includes(userRole)) {
     visible = true;
   } else if (roles === undefined) {
+    visible = false;
+  } else {
     visible = false;
   }
 

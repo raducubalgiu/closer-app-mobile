@@ -26,7 +26,7 @@ export const InputEdit = ({ value, fieldLength, placeholder, updateValue }) => {
         style={
           value.length < fieldLength
             ? styles.strokeLength
-            : { ...styles.strokeLength, color: "red" }
+            : { ...styles.strokeLength, color: "#F72A50" }
         }
       >
         {value.length} / {fieldLength}
