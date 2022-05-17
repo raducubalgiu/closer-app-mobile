@@ -3,25 +3,16 @@ import {
   StyleSheet,
   RefreshControl,
   ScrollView,
-  Animated,
   View,
+  FlatList,
 } from "react-native";
-import React, { useCallback, useState, useRef } from "react";
-import {
-  useNavigation,
-  useScrollToTop,
-  useFocusEffect,
-} from "@react-navigation/native";
+import React, { useCallback, useState, useRef, useEffect } from "react";
+import { useNavigation, useScrollToTop } from "@react-navigation/native";
 import { Divider, Badge } from "@rneui/themed";
 import theme from "../assets/styles/theme";
 import axios from "axios";
 import { usePosts, useAuth } from "../hooks/index";
-import {
-  IconButton,
-  Spinner,
-  Stack,
-  FeedLabelButton,
-} from "../components/core";
+import { IconButton, Stack, FeedLabelButton } from "../components/core";
 import { CardPost } from "../components/customized";
 import { useTranslation } from "react-i18next";
 import { dateFormat } from "../utils";
@@ -38,27 +29,19 @@ const FeedScreen = () => {
   const { t } = useTranslation();
 
   const fetchAllPosts = useCallback(() => {
-    if (postsState.activeAll) {
-      setLoading(true);
-      const unsubscribe = axios
-        .get(`${process.env.BASE_ENDPOINT}/posts`)
-        .then((res) => {
-          setPosts(res.data.posts);
-          setLoading(false);
-        })
-        .catch((err) => {
-          setLoading(false);
-          console.log(err);
-        });
-      return () => unsubscribe();
-    }
-  }, [postsState.activeAll]);
+    axios
+      .get(`${process.env.BASE_ENDPOINT}/posts`)
+      .then((res) => {
+        setPosts(res.data.posts);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      fetchAllPosts();
-    }, [fetchAllPosts])
-  );
+  useEffect(() => {
+    fetchAllPosts();
+  }, [fetchAllPosts]);
 
   const fetchFollowings = useCallback(() => {
     if (postsState.activeFollowings) {
@@ -80,27 +63,8 @@ const FeedScreen = () => {
     }
   }, [postsState.activeFollowings]);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      fetchFollowings();
-    }, [fetchFollowings])
-  );
-
-  const wait = (timeout) => {
-    return new Promise((resolve) => setTimeout(resolve, timeout));
-  };
-
-  const onRefresh = React.useCallback(() => {
-    setLoading(true);
-    wait(1000).then(() => {
-      setLoading(false);
-      fetchAllPosts();
-    });
-  }, []);
-
-  const renderAllPosts = ({ item }) => {
+  const renderAllPosts = useCallback(({ item }) => {
     const { user } = item;
-
     return (
       <CardPost
         postId={item?._id}
@@ -118,33 +82,43 @@ const FeedScreen = () => {
         postType={item?.postType}
       />
     );
-  };
+  }, []);
 
-  const renderFollowingPosts = ({ item }) => {
-    const { post, user } = item;
-
-    return (
-      <CardPost
-        postId={post?._id}
-        userId={user?._id}
-        avatar={user?.avatar}
-        username={user?.username}
-        job={user?.business?.name}
-        date={dateFormat(post?.createdAt)}
-        image={post?.images[0]?.url}
-        description={post?.description}
-        likesCount={post?.likesCount}
-        commentsCount={post?.commentsCount}
-        bookable={post?.bookable}
-        checkmark={post?.checkmark}
-        postType={post?.postType}
-      />
-    );
-  };
+  const keyExtractor = useCallback((item) => item?._id, []);
 
   const refreshControl = (
     <RefreshControl loading={loading} onRefresh={onRefresh} />
   );
+  const wait = (timeout) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+  };
+  const onRefresh = React.useCallback(() => {
+    wait(1000).then(() => {
+      fetchAllPosts();
+    });
+  }, []);
+
+  // const renderFollowingPosts = ({ item }) => {
+  //   const { post, user } = item;
+
+  //   return (
+  //     <CardPost
+  //       postId={post?._id}
+  //       userId={user?._id}
+  //       avatar={user?.avatar}
+  //       username={user?.username}
+  //       job={user?.business?.name}
+  //       date={dateFormat(post?.createdAt)}
+  //       image={post?.images[0]?.url}
+  //       description={post?.description}
+  //       likesCount={post?.likesCount}
+  //       commentsCount={post?.commentsCount}
+  //       bookable={post?.bookable}
+  //       checkmark={post?.checkmark}
+  //       postType={post?.postType}
+  //     />
+  //   );
+  // };
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -212,20 +186,16 @@ const FeedScreen = () => {
         </ScrollView>
       </Stack>
       <Divider color="#ddd" />
-      <Animated.FlatList
+      <FlatList
         ref={ref}
-        //ListHeaderComponent={loading && <Spinner sx={styles.spinner} />}
         refreshControl={refreshControl}
-        contentContainerStyle={{ marginTop: 5 }}
-        data={postsState.activeAll ? posts : followingsPosts}
+        data={posts}
         nestedScrollEnabled={true}
-        keyExtractor={
-          postsState.activeAll ? (item) => item._id : (item) => item.post._id
-        }
+        keyExtractor={keyExtractor}
         showsVerticalScrollIndicator={false}
-        renderItem={
-          postsState.activeAll ? renderAllPosts : renderFollowingPosts
-        }
+        maxToRenderPerBatch={2}
+        initialNumToRender={2}
+        renderItem={renderAllPosts}
       />
     </SafeAreaView>
   );

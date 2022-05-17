@@ -37,3 +37,5 @@ export { MessageItem } from "../customized/ListItems/MessageItem";
 
 export { ServicesList } from "./Lists/ServicesList";
 export { SettingsList } from "./Lists/SettingsList";
+
+export { VideoItem } from "./VideoItem/VideoItem";

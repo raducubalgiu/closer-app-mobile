@@ -24,7 +24,7 @@ const CardPostHeader = ({ userId, avatar, username, checkmark }) => {
               <Text style={styles.name}>{username}</Text>
               {checkmark && <Checkmark />}
             </Stack>
-            {/* <Text style={styles.job}>Service Auto</Text> */}
+            <Text style={styles.job}>Service Auto</Text>
           </Stack>
         </Stack>
       </Button>

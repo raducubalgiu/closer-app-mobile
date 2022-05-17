@@ -38,7 +38,6 @@ const NotificationsScreen = () => {
           }}
           useNativeControls={false}
           resizeMode="cover"
-          isLooping
           onPlaybackStatusUpdate={(status) => setStatus(() => status)}
           shouldPlay={play}
           isMuted={isMuted}

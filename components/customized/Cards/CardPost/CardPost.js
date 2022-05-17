@@ -1,53 +1,35 @@
 import { StyleSheet, View } from "react-native";
 import { Image } from "@rneui/themed";
 import React from "react";
-import { Video, AVPlaybackStatus } from "expo-av";
 import CardPostHeader from "./CardPostHeader";
 import CardPostButtons from "./CardPostButtons";
 import CardPostFooter from "./CardPostFooter";
+import VideoItem from "../../VideoItem/VideoItem";
 
-export const CardPost = (props) => {
-  const videoRef = React.useRef(null);
-  const [status, setStatus] = React.useState({});
-  const {
-    userId,
-    avatar,
-    username,
-    checkmark,
-    bookable,
-    postId,
-    likesCount,
-    description,
-    date,
-    commentsCount,
-    postType,
-  } = props;
-
-  const image = (
+export const CardPost = ({
+  userId,
+  avatar,
+  username,
+  checkmark,
+  bookable,
+  postId,
+  likesCount,
+  description,
+  date,
+  commentsCount,
+  postType,
+  image,
+}) => {
+  const renderImage = (
     <Image
       source={{
-        uri: `${props.image}`,
+        uri: `${image}`,
       }}
       style={!bookable ? { ...styles.image, height: 450 } : { ...styles.image }}
     />
   );
 
-  const video = (
-    <Video
-      ref={videoRef}
-      style={styles.video}
-      source={{
-        uri: `${props.image}`,
-      }}
-      useNativeControls={false}
-      resizeMode="cover"
-      isLooping
-      onPlaybackStatusUpdate={(status) => setStatus(() => status)}
-      shouldPlay={true}
-      onTouchStart={() => console.log("Start")}
-      isMuted={false}
-    />
-  );
+  const renderVideo = <VideoItem videoUrl={`${image}`} sx={{ height: 500 }} />;
 
   return (
     <View style={styles.container}>
@@ -57,7 +39,7 @@ export const CardPost = (props) => {
         username={username}
         checkmark={checkmark}
       />
-      <View>{postType === "video" ? video : image}</View>
+      <View>{postType === "video" ? renderVideo : renderImage}</View>
       <CardPostButtons
         bookable={bookable}
         postId={postId}

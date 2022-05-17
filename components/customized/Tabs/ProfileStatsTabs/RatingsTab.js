@@ -14,6 +14,7 @@ export const RatingsTab = ({ userId }) => {
 
   useFocusEffect(
     React.useCallback(() => {
+      if (loading) return;
       setLoading(true);
       axios
         .get(`${process.env.BASE_ENDPOINT}/users/${userId}/reviews`, {
@@ -25,6 +26,9 @@ export const RatingsTab = ({ userId }) => {
         })
         .catch((err) => {
           console.log(err);
+          setLoading(false);
+        })
+        .finally(() => {
           setLoading(false);
         });
     }, [userId, user?.token])

@@ -33,9 +33,11 @@ const CardPostFooter = ({
   return (
     <>
       <Stack align="start" sx={{ paddingHorizontal: 15, paddingTop: 10 }}>
-        <Text>
-          <Text style={styles.description}>{trimFunc(description, 120)}</Text>
-        </Text>
+        {description && (
+          <Text>
+            <Text style={styles.description}>{trimFunc(description, 120)}</Text>
+          </Text>
+        )}
       </Stack>
       {comments > 0 && (
         <Button

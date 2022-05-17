@@ -39,8 +39,6 @@ const ProfileScreen = (props) => {
     setOpenSettings(false);
   }, []);
 
-  console.log(user);
-
   const buttons = (
     <>
       <OutlinedButton
