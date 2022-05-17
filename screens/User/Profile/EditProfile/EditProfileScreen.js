@@ -46,16 +46,7 @@ const EditProfileScreen = () => {
           <Stack sx={{ marginVertical: 20 }}>
             <Button sx={{ alignItems: "center" }} onPress={() => setOpen(true)}>
               <View>
-                <CustomAvatar
-                  avatar={user?.avatar}
-                  size={95}
-                  iconSize={35}
-                  withBadge={true}
-                  badgeDetails={{
-                    name: "plus",
-                    type: "entypo",
-                  }}
-                />
+                <CustomAvatar avatar={user?.avatar} size={95} iconSize={35}  />
               </View>
               <Text style={styles.text}>{t("changePhoto")}</Text>
             </Button>

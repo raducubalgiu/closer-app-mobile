@@ -7,6 +7,7 @@
   "availableTables": "mese disponibile",
   "seeAll": "Vezi tot",
   "cancel": "Renunţă",
+  "save": "Salvează",
   "delete": "Şterge",
   "administrateYourAccount": "Administraţi-vă contul",
   "gifts": "Cadouri",
@@ -81,5 +82,9 @@
   "connect": "Conectează-te",
   "connectIntoAccountTitle": "Conectează-te pentru a începe să rezervi servicii",
   "haveAccount": "Deţii un business? Începe să primeşti clienţi imediat",
-  "likes": "aprecieri"
+  "likes": "aprecieri",
+  "somethingWentWrong": "Ceva nu a mers cum trebuie",
+  "addName": "Adaugă numele",
+  "addWebsite": "Adaugă website",
+  "addBiography": "Adaugă biografia"
 }

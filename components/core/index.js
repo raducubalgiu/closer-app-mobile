@@ -37,7 +37,9 @@ export { default as Spinner } from "./Spinner/Spinner";
 
 export { default as InputSelect } from "./Inputs/InputSelect";
 export { default as SearchBarInput } from "./Inputs/SearchBarInput";
+export { InputEdit } from "./Inputs/InputEdit";
 
 export { default as Protected } from "./Protected/Protected";
 
 export { SwipableItem } from "./SwipableItem/SwipableItem";
+export { Feedback } from "./Feedback/Feedback";

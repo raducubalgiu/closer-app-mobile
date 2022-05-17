@@ -1,58 +1,55 @@
 import { SafeAreaView, StyleSheet, Keyboard } from "react-native";
 import axios from "axios";
 import React, { useState } from "react";
-import EditField from "./EditFieldScreen";
 import { useAuth } from "../../../../hooks/auth";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
+import { Feedback, InputEdit, Spinner } from "../../../../components/core";
+import { HeaderEdit } from "../../../../components/customized";
 
 const EditWebsiteScreen = () => {
   const { user, setUser } = useAuth();
-  const [value, setValue] = useState(user?.website);
+  const [website, setWebsite] = useState(user?.website);
   const [loading, setLoading] = useState(false);
+  const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const navigation = useNavigation();
   const { t } = useTranslation();
 
-  const updateField = (text) => {
-    setValue(text);
-  };
-
-  const updateWebsite = (event) => {
-    event.persist();
+  const updateWebsite = () => {
     Keyboard.dismiss();
     setLoading(true);
     axios
       .patch(
         `${process.env.BASE_ENDPOINT}/users/${user?._id}/update`,
         {
-          website: value,
+          website,
         },
         {
           headers: { Authorization: `Bearer ${user?.token}` },
         }
       )
       .then((res) => {
-        setValue(res.data.user.website);
         setUser({ ...user, website: res.data.user.website });
         setLoading(false);
         navigation.goBack();
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         setLoading(false);
+        setFeedback({ visible: true, message: t("somethingWentWrong") });
       });
   };
 
   return (
     <SafeAreaView style={styles.screen}>
-      <EditField
-        field={t("website")}
-        onSave={updateWebsite}
-        updateField={updateField}
-        value={value}
-        fieldLength={80}
-        loading={loading}
+      <HeaderEdit title={t("website")} onSave={updateWebsite} />
+      <Feedback feedback={feedback} setFeedback={setFeedback} />
+      <InputEdit
+        placeholder={t("addWebsite")}
+        value={website}
+        fieldLength={40}
+        updateValue={(website) => setWebsite(website)}
       />
+      {loading && <Spinner />}
     </SafeAreaView>
   );
 };

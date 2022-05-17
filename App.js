@@ -4,7 +4,6 @@ import AppLoading from "expo-app-loading";
 import { enableScreens } from "react-native-screens";
 import CloserNavigation from "./navigation/CloserNavigation";
 import { AuthProvider } from "./hooks/auth";
-import { RootSiblingParent } from "react-native-root-siblings";
 import { ThemeProvider } from "@rneui/themed";
 import theme from "./assets/styles/theme";
 import "./firebase/firebase.config";
