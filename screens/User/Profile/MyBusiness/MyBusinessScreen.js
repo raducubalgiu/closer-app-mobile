@@ -34,6 +34,14 @@ const MyBusinessScreen = () => {
     },
     {
       _id: "4",
+      title: "Servicii",
+      iconName: "trending-up",
+      iconType: "feather",
+      description: "Poti edita oricand serviciile tale",
+      navigation: "AddServices",
+    },
+    {
+      _id: "5",
       title: "Produse",
       iconName: "shopping-bag",
       iconType: "feather",
@@ -41,7 +49,7 @@ const MyBusinessScreen = () => {
       navigation: "MyProducts",
     },
     {
-      _id: "5",
+      _id: "6",
       title: "Joburi",
       iconName: "briefcase",
       iconType: "feather",

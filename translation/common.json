@@ -83,12 +83,19 @@
   "connectIntoAccountTitle": "Conectează-te pentru a începe să rezervi servicii",
   "haveAccount": "Deţii un business? Începe să primeşti clienţi imediat",
   "likes": "aprecieri",
-  "somethingWentWrong": "Ceva nu a mers cum trebuie",
   "addName": "Adaugă numele",
   "addWebsite": "Adaugă website",
   "addBiography": "Adaugă biografia",
   "addUsername": "Adaugă nume utilizator",
   "notAdded": "Incă nu a fost adaugat",
   "contact": "Contact",
-  "location": "Locaţia"
+  "location": "Locaţia",
+  "services": "Servicii",
+  "addServices": "Adaugă servicii",
+  "myServices": "Serviciile mele",
+  "somethingWentWrongLater": "Ceva nu a mers cum trebuie. Revin-o mai târziu",
+  "serviceAddedMessage": "Ai adăugat cu success serviciul selectat",
+  "serviceRemovedMessage": "Ai eliminat cu success serviciul selectat",
+  "selectService": "Selectează un serviciu",
+  "alreadyServiceAdded": "Ai adăugat deja acest serviciu"
 }

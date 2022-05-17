@@ -1,32 +1,26 @@
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  ScrollView,
-} from "react-native";
+import { SafeAreaView, StyleSheet, Text, View, ScrollView } from "react-native";
 import React, { useState, useEffect } from "react";
 import {
-  MainButton,
   Stack,
   InputSelect,
   Header,
+  Feedback,
+  Button,
 } from "../../../../components/core";
 import { Icon } from "@rneui/themed";
 import TooltipTitle from "../../../../components/customized/ListItems/TooltipItem";
 import axios from "axios";
 import theme from "../../../../assets/styles/theme";
 import { useAuth } from "../../../../hooks/auth";
-import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 const AddServicesScreen = () => {
   const { user, setUser } = useAuth();
+  const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const [services, setServices] = useState([]);
   const [selectedServices, setSelectedServices] = useState(user?.services);
   const [service, setService] = useState(null);
-  const [disabled, setDisabled] = useState(true);
-  const navigation = useNavigation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     axios
@@ -34,13 +28,23 @@ const AddServicesScreen = () => {
         headers: { Authorization: `Bearer ${user?.token}` },
       })
       .then((res) => setServices(res.data.services))
-      .catch((err) => console.log(err));
+      .catch(() =>
+        setFeedback({ visible: true, message: t("somethingWentWrongLater") })
+      );
   }, []);
 
   const addServiceHandler = () => {
+    if (selectedServices.filter((el) => el._id === service).length > 0) {
+      setFeedback({
+        visible: true,
+        message: t("alreadyServiceAdded"),
+      });
+      return;
+    }
+
     axios
       .patch(
-        `http://192.168.100.2:8000/api/v1/users/${user?._id}/add-service`,
+        `${process.env.BASE_ENDPOINT}/users/${user?._id}/add-service`,
         { serviceId: service },
         { headers: { Authorization: `Bearer ${user?.token}` } }
       )
@@ -54,14 +58,20 @@ const AddServicesScreen = () => {
         );
         setUser({ ...user, services: user.services.concat(newService) });
         setService(null);
+        setFeedback({
+          visible: true,
+          message: t("serviceAddedMessage"),
+        });
       })
-      .catch((err) => console.log(err));
+      .catch(() =>
+        setFeedback({ visible: true, message: t("somethingWentWrong") })
+      );
   };
 
   const removeServiceHandler = (serviceId) => {
     axios
       .patch(
-        `http://192.168.100.2:8000/api/v1/users/${user?._id}/remove-service`,
+        `${process.env.BASE_ENDPOINT}/users/${user?._id}/remove-service`,
         { serviceId },
         { headers: { Authorization: `Bearer ${user?.token}` } }
       )
@@ -76,32 +86,23 @@ const AddServicesScreen = () => {
           ),
         });
         setService(null);
+        setFeedback({
+          visible: true,
+          message: t("serviceRemovedMessage"),
+        });
       })
-      .catch((err) => console.log(err));
+      .catch(() =>
+        setFeedback({ visible: true, message: t("somethingWentWrong") })
+      );
   };
-
-  useEffect(() => {
-    if (selectedServices.length > 0) {
-      setDisabled(false);
-    } else {
-      setDisabled(true);
-    }
-  }, [selectedServices]);
-
-  const saveServicesHandler = () => navigation.navigate("Profile");
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Header
-        title="Adauga serviciile"
-        withTooltip={true}
-        tooltipText="Serviciile de mai jos disponibile vor fi afisate in functie de domeniul tau de activitate"
-        tooltipContainer={{ width: 230, height: 80 }}
-        divider={true}
-      />
+      <Header title={t("myServices")} divider={true} />
+      <Feedback feedback={feedback} setFeedback={setFeedback} />
       <Stack align="start" sx={{ margin: 15 }}>
         <TooltipTitle
-          title="Servicii"
+          title={t("services")}
           sx={{ marginBottom: 25 }}
           tooltipText="Selecteaza din lista de mai jos serviicile pe care le desfasori la locatie"
           tooltipDimensions={{ width: 220, height: 80 }}
@@ -110,14 +111,18 @@ const AddServicesScreen = () => {
           <View style={{ flex: 1 }}>
             <InputSelect
               value={service}
-              placeholder="Selecteaza un serviciu"
+              placeholder={t("selectService")}
               onValueChange={(value) => setService(value)}
               items={services}
             />
           </View>
-          <TouchableOpacity style={styles.addIcon} onPress={addServiceHandler}>
-            <Icon name="add-outline" type="ionicon" size={25} color="white" />
-          </TouchableOpacity>
+          <Button
+            sx={!service ? styles.disabledBtn : styles.addIcon}
+            onPress={addServiceHandler}
+            disabled={!service}
+          >
+            <Icon name="add-outline" type="ionicon" size={25} />
+          </Button>
         </Stack>
       </Stack>
       <ScrollView
@@ -128,23 +133,16 @@ const AddServicesScreen = () => {
         {selectedServices.map((service, i) => (
           <Stack direction="row" sx={styles.service} key={i}>
             <Text style={styles.name}>{service?.name}</Text>
-            <TouchableOpacity
-              onPress={() => removeServiceHandler(service?._id)}
-            >
+            <Button onPress={() => removeServiceHandler(service?._id)}>
               <Icon
                 name="minuscircleo"
                 type="antdesign"
                 size={22.5}
                 color={theme.lightColors.black}
               />
-            </TouchableOpacity>
+            </Button>
           </Stack>
         ))}
-        <MainButton
-          title="Salveaza"
-          onPress={saveServicesHandler}
-          disabled={disabled}
-        />
       </ScrollView>
     </SafeAreaView>
   );
@@ -170,6 +168,14 @@ const styles = StyleSheet.create({
     padding: 7.5,
     borderRadius: 10,
     backgroundColor: theme.lightColors.primary,
+  },
+  disabledBtn: {
+    marginLeft: 10,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    padding: 7.5,
+    borderRadius: 10,
+    backgroundColor: "#ddd",
   },
   name: { fontFamily: "Exo-Medium" },
 });
