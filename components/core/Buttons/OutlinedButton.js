@@ -2,20 +2,17 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 
-const OutlinedButton = (props) => {
+export const OutlinedButton = ({ title, onPress, sx, sxText }) => {
   return (
     <TouchableOpacity
-      onPress={props.onPress}
-      style={{ ...styles.button, ...props.sx }}
+      activeOpacity={1}
+      onPress={onPress}
+      style={{ ...styles.button, ...sx }}
     >
-      <Text style={{ ...styles.buttonText, ...props.sxText }}>
-        {props.title}
-      </Text>
+      <Text style={{ ...styles.buttonText, ...sxText }}>{title}</Text>
     </TouchableOpacity>
   );
 };
-
-export default OutlinedButton;
 
 const styles = StyleSheet.create({
   button: {

@@ -4,11 +4,8 @@ import { Stack, Header } from "../../../../components/core";
 import TooltipTitle from "../../../../components/customized/ListItems/TooltipItem";
 import theme from "../../../../assets/styles/theme";
 import AddProductsForm from "../../../../components/customized/Forms/AddProductsForm";
-import { useNavigation } from "@react-navigation/native";
 
 const AddProductsScreen = () => {
-  const navigation = useNavigation();
-
   return (
     <SafeAreaView style={styles.screen}>
       <Header

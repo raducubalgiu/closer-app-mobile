@@ -96,6 +96,10 @@
   "somethingWentWrongLater": "Ceva nu a mers cum trebuie. Revin-o mai târziu",
   "serviceAddedMessage": "Ai adăugat cu success serviciul selectat",
   "serviceRemovedMessage": "Ai eliminat cu success serviciul selectat",
+  "productAddedMessage": "Ai adăugat cu success un nou produs",
+  "productRemovedMessage": "Ai eliminat cu success produsul selectat",
   "selectService": "Selectează un serviciu",
-  "alreadyServiceAdded": "Ai adăugat deja acest serviciu"
+  "alreadyServiceAdded": "Ai adăugat deja acest serviciu",
+  "myBusiness": "Afacerea mea",
+  "myProducts": "Produsele mele"
 }

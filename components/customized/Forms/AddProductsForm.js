@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "../../../hooks/auth";
 import theme from "../../../assets/styles/theme";
 import { MainButton, InputSelect } from "../../core";
@@ -35,17 +35,19 @@ const AddProductsForm = (props) => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    axios
-      .get(`${process.env.BASE_ENDPOINT}/services/${selectedService}`)
-      .then((res) => {
-        setOptions(res.data.service.filters[0].options);
-      })
-      .catch((error) => console.log(error));
+    if (selectedService) {
+      axios
+        .get(`${process.env.BASE_ENDPOINT}/services/${selectedService}`)
+        .then((res) => {
+          setOptions(res.data.service.filters[0].options);
+        })
+        .catch((error) => console.log(error));
+    }
   }, [selectedService]);
 
   const onSubmit = (data) => {
-    setLoading(true);
     const { description, price, discount, name, duration } = data;
+
     axios
       .post(
         `${process.env.BASE_ENDPOINT}/users/${user?._id}/products`,
@@ -63,7 +65,6 @@ const AddProductsForm = (props) => {
         }
       )
       .then((res) => {
-        setLoading(false);
         navigation.navigate({
           name: "MyProducts",
           params: { product: res.data.product },
@@ -72,9 +73,7 @@ const AddProductsForm = (props) => {
       })
       .catch((err) => {
         console.log(err);
-        setLoading(false);
       });
-    setLoading(false);
   };
 
   return (
@@ -89,14 +88,16 @@ const AddProductsForm = (props) => {
           items={user?.services}
         />
       </View>
-      <View style={styles.row}>
-        <InputSelect
-          placeholder="Selecteaza categoria produsului"
-          onValueChange={(option) => setSelectedOption(option)}
-          value={selectedOption}
-          items={options}
-        />
-      </View>
+      {options.length > 0 && (
+        <View style={styles.row}>
+          <InputSelect
+            placeholder="Selecteaza categoria produsului"
+            onValueChange={(option) => setSelectedOption(option)}
+            value={selectedOption}
+            items={options}
+          />
+        </View>
+      )}
       <View style={styles.row}>
         <Controller
           control={control}

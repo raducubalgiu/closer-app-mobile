@@ -30,6 +30,7 @@ export { CardPostGrid } from "./Cards/CardPostGrid/CardPostGrid";
 export { CardRecentSearch } from "./Cards/CardRecentSearch";
 export { CardFollowers } from "./Cards/CardFollowers";
 export { CardRatings } from "./Cards/CardRatings";
+export { CardProduct } from "./Cards/CardProduct";
 
 export { HeaderServices } from "../customized/Layout/Headers/HeaderServices";
 export { HeaderEdit } from "../customized/Layout/Headers/HeaderEdit";

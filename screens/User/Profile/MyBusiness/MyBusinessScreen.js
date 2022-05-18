@@ -1,11 +1,13 @@
-import { StyleSheet, SafeAreaView, FlatList, Dimensions } from "react-native";
+import { StyleSheet, SafeAreaView, FlatList } from "react-native";
 import React from "react";
 import { Header } from "../../../../components/core";
 import MyBusinessCard from "../../../../components/customized/Cards/MyBusinessCard";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 const MyBusinessScreen = () => {
   const navigation = useNavigation();
+  const { t } = useTranslation();
 
   const SCREENS = [
     {
@@ -58,24 +60,26 @@ const MyBusinessScreen = () => {
     },
   ];
 
+  const renderCard = ({ item }) => (
+    <MyBusinessCard
+      title={item.title}
+      iconName={item?.iconName}
+      iconType={item?.iconType}
+      description={item?.description}
+      onPress={() => navigation.navigate(`${item?.navigation}`)}
+    />
+  );
+
   return (
     <SafeAreaView style={styles.screen}>
-      <Header title="Panoul de bord" />
+      <Header title={t("myBusiness")} />
       <FlatList
         data={SCREENS}
         keyExtractor={(item) => item?._id}
         contentContainerStyle={{ margin: 10 }}
         bounces={false}
         numColumns={2}
-        renderItem={({ item }) => (
-          <MyBusinessCard
-            title={item.title}
-            iconName={item?.iconName}
-            iconType={item?.iconType}
-            description={item?.description}
-            onPress={() => navigation.navigate(`${item?.navigation}`)}
-          />
-        )}
+        renderItem={renderCard}
       />
     </SafeAreaView>
   );

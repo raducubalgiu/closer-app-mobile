@@ -23,7 +23,7 @@ const defaultValues = {
 const EditProductForm = ({ product }) => {
   const { user } = useAuth();
   const [filters, setFilters] = useState([]);
-  const [selectedService, setSelectedService] = useState(product._id);
+  const [selectedService, setSelectedService] = useState(product.service._id);
   const [loading, setLoading] = useState(false);
   const {
     control,

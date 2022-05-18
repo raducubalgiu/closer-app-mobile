@@ -1,43 +1,65 @@
-import { FlatList, SafeAreaView, StyleSheet } from "react-native";
-import React, { useEffect, useState } from "react";
-import { IconButton, Header, Spinner } from "../../../../components/core";
-import theme from "../../../../assets/styles/theme";
-import CardProduct from "../../../../components/customized/Cards/CardProduct";
+import { FlatList, SafeAreaView, Text, StyleSheet } from "react-native";
+import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import { useAuth } from "../../../../hooks/auth";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
+import {
+  Header,
+  Button,
+  Feedback,
+  IconButtonAdd,
+  Spinner,
+  Stack,
+} from "../../../../components/core";
+import { CardProduct } from "../../../../components/customized";
+import theme from "../../../../assets/styles/theme";
+import { useAuth } from "../../../../hooks/auth";
 
 const MyProductsScreen = ({ route }) => {
   const { user } = useAuth();
   const [products, setProducts] = useState([]);
+  const product = route.params?.product;
+  const [feedback, setFeedback] = useState({ visible: false, message: "" });
+  const [activeService, setActiveService] = useState(user?.services[0]?._id);
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
+  const { t } = useTranslation();
 
   useEffect(() => {
-    if (route.params?.product) {
-      console.log(route.params.product);
-      setProducts([route.params?.product, ...products]);
+    if (product) {
+      setActiveService(product.service);
+      fetchProducts();
+      setFeedback({
+        visible: true,
+        message: t("productAddedMessage"),
+      });
     }
-  }, [route.params?.product]);
+  }, [product]);
 
-  useEffect(() => {
+  const fetchProducts = useCallback(() => {
     setLoading(true);
     axios
-      .get(`${process.env.BASE_ENDPOINT}/users/${user?._id}/products`, {
-        headers: { Authorization: `Bearer ${user?.token}` },
-      })
+      .get(
+        `${process.env.BASE_ENDPOINT}/users/${user?._id}/services/${activeService}/products`,
+        {
+          headers: { Authorization: `Bearer ${user?.token}` },
+        }
+      )
       .then((res) => {
         setProducts(res.data.products);
         setLoading(false);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        setFeedback({ visible: true, message: t("somethingWentWrongLater") });
         setLoading(false);
       });
-    setLoading(false);
-  }, []);
+  }, [activeService]);
 
-  const deleteProductHandler = (productId) => {
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
+
+  const deleteProductHandler = useCallback((productId) => {
     axios
       .delete(
         `${process.env.BASE_ENDPOINT}/users/${user?._id}/products/${productId}`,
@@ -45,13 +67,55 @@ const MyProductsScreen = ({ route }) => {
           headers: { Authorization: `Bearer ${user?.token}` },
         }
       )
-      .then(() =>
+      .then(() => {
         setProducts((products) =>
           products.filter((product) => product._id !== productId)
-        )
-      )
-      .catch((err) => console.log(err));
-  };
+        );
+        setFeedback({ visible: true, message: t("productRemovedMessage") });
+      })
+      .catch(() =>
+        setFeedback({ visible: true, message: t("somethingWentWrong") })
+      );
+  }, []);
+
+  const goToAddProduct = () => navigation.navigate("AddProducts");
+  const handleChangeService = useCallback(
+    (service) => setActiveService(service),
+    []
+  );
+  const activeStyle = { ...styles.button, ...styles.activeBtn };
+  const activeTxtStyle = { ...styles.btnText, ...styles.activeBtnText };
+
+  const renderService = ({ item }) => (
+    <Button
+      sx={item._id === activeService ? activeStyle : styles.button}
+      onPress={() => handleChangeService(item?._id)}
+    >
+      <Text
+        style={item._id === activeService ? activeTxtStyle : styles.btnText}
+      >
+        {item.name}
+      </Text>
+    </Button>
+  );
+
+  const renderHeader = (
+    <>
+      <FlatList
+        horizontal
+        data={user?.services}
+        keyExtractor={(item) => item?._id}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.headerContainer}
+        renderItem={renderService}
+      />
+      {loading && (
+        <Stack sx={{ marginVertical: 10 }}>
+          <Spinner />
+        </Stack>
+      )}
+    </>
+  );
 
   const renderProducts = ({ item }) => (
     <CardProduct
@@ -59,6 +123,7 @@ const MyProductsScreen = ({ route }) => {
       description={item?.description}
       price={item?.price}
       duration={item?.duration}
+      option={item?.option?.name}
       onEditProduct={() =>
         navigation.navigate("EditProduct", {
           product: item,
@@ -71,19 +136,18 @@ const MyProductsScreen = ({ route }) => {
   return (
     <SafeAreaView style={styles.screen}>
       <Header
-        title="Produsele mele"
-        withTooltip={true}
+        title={t("myProducts")}
         actionBtn={
-          <IconButton
-            iconName="plussquare"
-            iconType="antdesign"
-            onPress={() => navigation.navigate("AddProducts")}
-            color={theme.lightColors.primary}
+          <IconButtonAdd
+            onPress={goToAddProduct}
+            disabled={user.services.length === 0}
           />
         }
+        divider
       />
+      <Feedback feedback={feedback} setFeedback={setFeedback} />
       <FlatList
-        ListHeaderComponent={loading && <Spinner />}
+        ListHeaderComponent={renderHeader}
         data={products}
         keyExtractor={(item) => item?._id}
         contentContainerStyle={{ marginTop: 10 }}
@@ -101,4 +165,19 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   divider: { marginTop: 10, marginBottom: 20 },
+  headerContainer: { marginTop: 10 },
+  button: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: "#f1f1f1",
+    borderRadius: 2.5,
+    marginLeft: 15,
+  },
+  activeBtn: {
+    backgroundColor: theme.lightColors.primary,
+  },
+  btnText: {
+    fontFamily: "Exo-SemiBold",
+  },
+  activeBtnText: { color: "white" },
 });

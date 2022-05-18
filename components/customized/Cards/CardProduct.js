@@ -1,62 +1,53 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import React from "react";
-import OutlinedButton from "../../core/Buttons/OutlinedButton";
-import { Stack, IconButton } from "../../core";
+import { Stack, IconButtonEdit, OutlinedButton } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { trimFunc } from "../../../utils";
 import { useDuration } from "../../../hooks";
 import { useTranslation } from "react-i18next";
+import { IconButtonDelete } from "../../core/IconButton/IconButtonDelete";
 
-const CardProduct = (props) => {
+export const CardProduct = ({
+  name,
+  duration,
+  description,
+  price,
+  canBook,
+  option,
+  onEditProduct,
+  onDeleteProduct,
+}) => {
   const { t } = useTranslation();
-
-  const duration = props?.duration ? useDuration(props?.duration) : "";
-  let renderDuration;
-  if (duration) {
-    renderDuration = (
-      <Text style={styles.description}>
-        {t("duration")}: {duration}
-      </Text>
-    );
-  }
+  const currDuration = duration ? useDuration(duration) : "";
 
   return (
-    <View style={styles.card}>
-      <Stack direction="row" align="start" sx={styles.cardLayout}>
-        <View style={styles.descriptionCont}>
-          <Text style={styles.name}>{props.name}</Text>
-          {renderDuration}
-          {props.description && (
-            <Text style={styles.description}>
-              {trimFunc(props.description, 100)}
-            </Text>
-          )}
-          <Text style={styles.price}>
-            {props.price} {t("ron")}
+    <Stack sx={styles.card}>
+      <Stack direction="row" align="start" sx={styles.container}>
+        <Stack align="start" sx={styles.descriptionCont}>
+          <Text style={styles.name}>{name}</Text>
+          {option && <Text style={styles.option}>{option}</Text>}
+          <Text style={styles.description}>
+            {t("duration")}: {currDuration}
           </Text>
-        </View>
-        {props.canBook && <OutlinedButton title={t("book")} />}
-        {!props.canBook && (
+          <Text style={styles.description}>{trimFunc(description, 100)}</Text>
+          <Text style={styles.price}>
+            {price} {t("ron")}
+          </Text>
+        </Stack>
+        {canBook && <OutlinedButton title={t("book")} />}
+        {!canBook && (
           <Stack direction="row">
-            <IconButton
-              iconName="edit"
-              iconType="antdesign"
-              onPress={props.onEditProduct}
-            />
-            <IconButton
-              iconName="delete"
-              iconType="antdesign"
-              onPress={props.onDeleteProduct}
+            <IconButtonEdit onPress={onEditProduct} />
+            <IconButtonDelete
+              onPress={onDeleteProduct}
               sx={{ marginLeft: 20 }}
             />
           </Stack>
         )}
       </Stack>
-    </View>
+    </Stack>
   );
 };
-
-export default CardProduct;
 
 const styles = StyleSheet.create({
   card: {
@@ -67,11 +58,16 @@ const styles = StyleSheet.create({
     borderBottomColor: "#eee",
     marginHorizontal: 10,
   },
-  cardLayout: { flex: 1 },
+  container: { flex: 1 },
   name: {
     fontFamily: "Exo-SemiBold",
     fontSize: 15,
     marginBottom: 1,
+  },
+  option: {
+    fontFamily: "Exo-SemiBold",
+    color: theme.lightColors.primary,
+    fontSize: 15,
   },
   descriptionCont: { flex: 1, marginRight: 5 },
   description: {

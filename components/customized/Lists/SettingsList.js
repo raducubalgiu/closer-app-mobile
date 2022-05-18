@@ -6,11 +6,13 @@ import { useNavigation } from "@react-navigation/native";
 import { ListItem, Icon } from "@rneui/themed";
 import { useAuth } from "../../../hooks/auth";
 import theme from "../../../assets/styles/theme";
+import { useTranslation } from "react-i18next";
 
-export const SettingsList = (props) => {
+export const SettingsList = () => {
   const navigation = useNavigation();
   const { setUser } = useAuth();
   const auth = getAuth();
+  const { t } = useTranslation();
 
   const handleLogout = () => {
     signOut(auth)
@@ -25,14 +27,14 @@ export const SettingsList = (props) => {
   const items = [
     {
       _id: "1",
-      title: "Panoul de bord",
+      title: t("myBusiness"),
       iconName: "airplay",
       iconType: "feather",
       navigation: "MyBusiness",
     },
     {
       _id: "2",
-      title: "Setari",
+      title: t("settings"),
       iconName: "setting",
       iconType: "antdesign",
       navigation: "Settings",
@@ -66,7 +68,7 @@ export const SettingsList = (props) => {
     },
     {
       _id: "7",
-      title: "Logout",
+      title: t("logout"),
       iconName: "logout",
       iconType: "antdesign",
       action: handleLogout,
