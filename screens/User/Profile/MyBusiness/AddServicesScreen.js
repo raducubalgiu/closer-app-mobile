@@ -6,6 +6,7 @@ import {
   Header,
   Feedback,
   Button,
+  IconButtonDelete,
 } from "../../../../components/core";
 import { Icon } from "@rneui/themed";
 import TooltipTitle from "../../../../components/customized/ListItems/TooltipItem";
@@ -133,14 +134,9 @@ const AddServicesScreen = () => {
         {selectedServices.map((service, i) => (
           <Stack direction="row" sx={styles.service} key={i}>
             <Text style={styles.name}>{service?.name}</Text>
-            <Button onPress={() => removeServiceHandler(service?._id)}>
-              <Icon
-                name="minuscircleo"
-                type="antdesign"
-                size={22.5}
-                color={theme.lightColors.black}
-              />
-            </Button>
+            <IconButtonDelete
+              onPress={() => removeServiceHandler(service?._id)}
+            />
           </Stack>
         ))}
       </ScrollView>

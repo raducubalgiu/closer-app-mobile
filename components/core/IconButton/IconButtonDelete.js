@@ -25,7 +25,11 @@ export const IconButtonDelete = ({ onPress, sx }) => {
   return (
     <Pressable onPress={handlePress} style={sx}>
       <Animated.View style={[{ transform: [{ scale: animatedScale }] }]}>
-        <Icon name="delete" type="antdesign" color={theme.lightColors.black} />
+        <Icon
+          name="minuscircleo"
+          type="antdesign"
+          color={theme.lightColors.black}
+        />
       </Animated.View>
     </Pressable>
   );

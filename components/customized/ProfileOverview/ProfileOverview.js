@@ -12,11 +12,19 @@ import {
 } from "../../core";
 import { MAIN_ROLE, SECOND_ROLE, THIRD_ROLE } from "@env";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "../../../hooks";
 
 export const ProfileOverview = (props) => {
+  const { user: userContext } = useAuth();
   const { user, withBadge } = props;
   const navigation = useNavigation();
   const { t } = useTranslation();
+
+  const handleGoToProducts = (serviceId) => {
+    if (user?._id === userContext?._id) {
+      navigation.navigate("MyProducts", { serviceId });
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -52,9 +60,9 @@ export const ProfileOverview = (props) => {
           showsHorizontalScrollIndicator={false}
         >
           {user?.services?.map((service, i) => (
-            <Text key={i} style={styles.service}>
-              {service?.name}
-            </Text>
+            <Button key={i} onPress={() => handleGoToProducts(service?._id)}>
+              <Text style={styles.service}>{service?.name}</Text>
+            </Button>
           ))}
         </ScrollView>
       </Stack>

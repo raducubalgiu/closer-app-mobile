@@ -1,4 +1,4 @@
-import { FlatList, SafeAreaView, Text, StyleSheet } from "react-native";
+import { FlatList, SafeAreaView, Text, StyleSheet, View } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
@@ -11,16 +11,22 @@ import {
   Spinner,
   Stack,
 } from "../../../../components/core";
-import { CardProduct } from "../../../../components/customized";
+import {
+  CardProduct,
+  NoFoundProducts,
+} from "../../../../components/customized";
 import theme from "../../../../assets/styles/theme";
 import { useAuth } from "../../../../hooks/auth";
 
 const MyProductsScreen = ({ route }) => {
   const { user } = useAuth();
   const [products, setProducts] = useState([]);
-  const product = route.params?.product;
+  const { product, serviceId } = route.params || {};
+  const initServ = user?.services[0]?._id;
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
-  const [activeService, setActiveService] = useState(user?.services[0]?._id);
+  const [activeService, setActiveService] = useState(
+    serviceId ? serviceId : initServ
+  );
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
   const { t } = useTranslation();
@@ -152,6 +158,13 @@ const MyProductsScreen = ({ route }) => {
         keyExtractor={(item) => item?._id}
         contentContainerStyle={{ marginTop: 10 }}
         renderItem={renderProducts}
+        ListFooterComponent={
+          products.length === 0 && (
+            <Stack sx={{ marginTop: 75 }}>
+              <NoFoundProducts />
+            </Stack>
+          )
+        }
       />
     </SafeAreaView>
   );
@@ -165,7 +178,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   divider: { marginTop: 10, marginBottom: 20 },
-  headerContainer: { marginTop: 10 },
+  headerContainer: { marginTop: 10, paddingRight: 15 },
   button: {
     paddingVertical: 10,
     paddingHorizontal: 20,

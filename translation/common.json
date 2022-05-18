@@ -101,5 +101,6 @@
   "selectService": "Selectează un serviciu",
   "alreadyServiceAdded": "Ai adăugat deja acest serviciu",
   "myBusiness": "Afacerea mea",
-  "myProducts": "Produsele mele"
+  "myProducts": "Produsele mele",
+  "notProductsAddedForService": "Încă nu ai adăugat produse pentru acest serviciu"
 }

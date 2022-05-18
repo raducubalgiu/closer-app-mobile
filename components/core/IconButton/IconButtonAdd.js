@@ -26,9 +26,10 @@ export const IconButtonAdd = ({ onPress, sx, disabled }) => {
     <Pressable onPress={handlePress} style={sx} disabled={disabled}>
       <Animated.View style={[{ transform: [{ scale: animatedScale }] }]}>
         <Icon
-          name="plussquare"
+          name="pluscircle"
           type="antdesign"
           color={!disabled && theme.lightColors.primary}
+          size={30}
         />
       </Animated.View>
     </Pressable>
