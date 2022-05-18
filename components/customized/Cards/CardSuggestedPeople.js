@@ -1,34 +1,44 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import React from "react";
-import { ContainedButton, CustomAvatar } from "../../core";
+import { Button, CustomAvatar, FollowButton, Stack, IconStar } from "../../core";
 import theme from "../../../assets/styles/theme";
+import { useTranslation } from "react-i18next";
 
-const CardSuggestedPeople = (props) => {
+export const CardSuggestedPeople = ({
+  avatar,
+  username,
+  business,
+  noFollowers,
+  onPress,
+  followeeId,
+  ratingsAverage,
+}) => {
+  const { t } = useTranslation();
+
   return (
-    <TouchableOpacity style={styles.container}>
-      <View>
-        <CustomAvatar
-          avatar={props?.avatar}
-          size={85}
-          withBadge={false}
-          withBadgeTop={true}
-          iconSize={35}
-        />
-      </View>
-      <Text style={styles.username}>@{props.username}</Text>
-      <Text style={styles.job}>{props.business}</Text>
-      <Text style={styles.followers}>{props.noFollowers} urmaritori</Text>
-      <ContainedButton
-        title="Urmareste"
-        onPress={props.onPress}
-        sx={{ paddingVertical: 4, paddingHorizontal: 35, marginTop: 15 }}
-        sxText={{ fontSize: 12.5 }}
+    <Button sx={styles.container} onPress={onPress}>
+      <Stack>
+        <CustomAvatar avatar={avatar} size={75} iconSize={35} />
+      </Stack>
+      <Text style={styles.username}>@{username}</Text>
+      <Stack direction="row">
+        <Text style={styles.business}>{business}</Text>
+        <Stack direction="row" sx={{ marginLeft: 2.5 }}>
+          <IconStar />
+          <Text style={styles.ratingsAverage}>{ratingsAverage}</Text>
+        </Stack>
+      </Stack>
+      <Text style={styles.followers}>
+        {noFollowers} {t("followers")}
+      </Text>
+      <FollowButton
+        sxBtn={styles.followBtn}
+        sxBtnText={styles.followBtnText}
+        followeeId={followeeId}
       />
-    </TouchableOpacity>
+    </Button>
   );
 };
-
-export default CardSuggestedPeople;
 
 const styles = StyleSheet.create({
   container: {
@@ -38,14 +48,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#eee",
     marginRight: 15,
-    borderRadius: 10,
+    borderRadius: 5,
+    minWidth: 200,
   },
   name: {
     fontFamily: "Exo-Medium",
     color: theme.lightColors.black,
   },
   username: {
-    fontFamily: "Exo-Bold",
+    fontFamily: "Exo-SemiBold",
     color: theme.lightColors.black,
     marginTop: 5,
     marginBottom: 1,
@@ -56,9 +67,12 @@ const styles = StyleSheet.create({
     fontSize: 13,
     marginTop: 10,
   },
-  job: {
+  business: {
     fontFamily: "Exo-SemiBold",
     color: theme.lightColors.primary,
     textTransform: "capitalize",
   },
+  followBtn: { width: "100%", marginTop: 10 },
+  followBtnText: { textAlign: "center" },
+  ratingsAverage: { fontFamily: "Exo-SemiBold", marginLeft: 2.5 },
 });

@@ -25,9 +25,9 @@ import {
   ProductsProfileTab,
   AboutProfileTab,
   JobsProfileTab,
+  CardSuggestedPeople,
 } from "../../../components/customized";
 import { useAuth } from "../../../hooks/auth";
-import CardSuggestedPeople from "../../../components/customized/Cards/CardSuggestedPeople";
 import theme from "../../../assets/styles/theme";
 
 const ProfileGeneralScreen = (props) => {
@@ -75,8 +75,7 @@ const ProfileGeneralScreen = (props) => {
         setSuggestedPeople(res.data.suggestedPeople);
         setLoading(false);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         setLoading(false);
       });
   };
@@ -132,14 +131,21 @@ const ProfileGeneralScreen = (props) => {
     />
   );
 
-  const renderSuggested = ({ item }) => (
-    <CardSuggestedPeople
-      title={item?.name}
-      business={item?.business?.name}
-      noFollowers={item?.followersCount}
-      username={item?.username}
-    />
-  );
+  const renderSuggested = ({ item }) => {
+    const { avatar, name, business, counter, username, _id } = item;
+
+    return (
+      <CardSuggestedPeople
+        avatar={avatar}
+        title={name}
+        business={business?.name}
+        noFollowers={counter?.followersCount}
+        ratingsAverage={counter?.ratingsAverage.toFixed(1)}
+        username={username}
+        followeeId={_id}
+      />
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -217,9 +223,10 @@ const styles = StyleSheet.create({
     borderRadius: 2.5,
   },
   suggestedTitle: {
-    fontFamily: "Exo-Medium",
+    fontFamily: "Exo-SemiBold",
     color: theme.lightColors.black,
-    marginBottom: 5,
+    marginBottom: 10,
+    fontSize: 15
   },
   suggestedPeople: {
     margin: 15,
