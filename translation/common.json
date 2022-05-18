@@ -102,5 +102,7 @@
   "alreadyServiceAdded": "Ai adăugat deja acest serviciu",
   "myBusiness": "Afacerea mea",
   "myProducts": "Produsele mele",
-  "notProductsAddedForService": "Încă nu ai adăugat produse pentru acest serviciu"
+  "myJobs": "Joburile mele",
+  "notProductsAddedForService": "Încă nu ai adăugat produse pentru acest serviciu",
+  "noJobsAdded": "Încă nu ai adăugat joburi"
 }

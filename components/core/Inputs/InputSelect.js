@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import React from "react";
 import RNPickerSelect from "react-native-picker-select";
 
-const InputSelect = (props) => {
+const InputSelect = ({ value, onValueChange, items, ...props }) => {
   const placeholder = {
     label: props.placeholder,
     value: null,
@@ -13,11 +13,11 @@ const InputSelect = (props) => {
     <RNPickerSelect
       placeholder={placeholder}
       useNativeAndroidPickerStyle={false}
-      onValueChange={(text) => props.onValueChange(text)}
+      onValueChange={(text) => onValueChange(text)}
       style={{ ...styles }}
       doneText="Gata"
-      value={props.value}
-      items={props?.items?.map((item) => {
+      value={value}
+      items={items?.map((item) => {
         return {
           label: item?.name,
           value: item?._id,

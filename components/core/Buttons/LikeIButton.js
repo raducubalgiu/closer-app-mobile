@@ -4,7 +4,7 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../../hooks/auth";
 
-const LikeIButton = (props) => {
+const LikeIButton = ({ postId, onAddLike, onRemoveLike, ...props }) => {
   const [liked, setLiked] = useState(false);
   const { user } = useAuth();
   const animatedScale = useRef(new Animated.Value(0)).current;
@@ -12,15 +12,14 @@ const LikeIButton = (props) => {
   useEffect(() => {
     axios
       .get(
-        `${process.env.BASE_ENDPOINT}/users/${user?._id}/posts/${props.postId}/likes`,
+        `${process.env.BASE_ENDPOINT}/users/${user?._id}/posts/${postId}/likes`,
         { headers: { Authorization: `Bearer ${user?.token}` } }
       )
       .then((res) => {
-        console.log(res.data.status);
         setLiked(res.data.status);
       })
       .catch((err) => console.log(err));
-  }, [props.postId]);
+  }, [postId]);
 
   const likeHandler = () => {
     animatedScale.setValue(0.8);
@@ -32,30 +31,30 @@ const LikeIButton = (props) => {
     }).start();
 
     if (!liked) {
+      setLiked(true);
       axios
         .post(
-          `${process.env.BASE_ENDPOINT}/users/${user?._id}/posts/${props.postId}/likes`,
+          `${process.env.BASE_ENDPOINT}/users/${user?._id}/posts/${postId}/likes`,
           {
-            postId: props.postId,
+            postId: postId,
           },
           { headers: { Authorization: `Bearer ${user?.token}` } }
         )
-        .then((res) => {
-          setLiked(res.data.status);
-          props.onAddLike();
+        .then(() => {
+          onAddLike();
         })
-        .catch((err) => console.log(err));
+        .catch(() => setLiked(false));
     } else {
       axios
         .delete(
-          `${process.env.BASE_ENDPOINT}/users/${user?._id}/posts/${props.postId}/likes`,
+          `${process.env.BASE_ENDPOINT}/users/${user?._id}/posts/${postId}/likes`,
           { headers: { Authorization: `Bearer ${user?.token}` } }
         )
-        .then((res) => {
-          setLiked(res.data.status);
-          props.onRemoveLike();
+        .then(() => {
+          setLiked(false);
+          onRemoveLike();
         })
-        .catch((err) => console.log(err));
+        .catch(() => setLiked(true));
     }
   };
 

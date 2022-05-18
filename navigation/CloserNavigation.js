@@ -57,6 +57,8 @@ import ProfileStatsScreen from "../screens/User/Profile/ProfileStatsScreen";
 import NotificationsScreen from "../screens/NotificationsScreen";
 import EditProductScreen from "../screens/User/Profile/MyBusiness/EditProductScreen";
 import EditUsernameScreen from "../screens/User/Profile/EditProfile/EditUsernameScreen";
+import MyJobsScreen from "../screens/User/Profile/MyBusiness/MyJobsScreen";
+import AddJobsScreen from "../screens/User/Profile/MyBusiness/AddJobsScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -246,6 +248,7 @@ const CloserNavigation = () => {
           <RootStack.Screen name="AddLocation" component={AddLocationScreen} />
           <RootStack.Screen name="AddServices" component={AddServicesScreen} />
           <RootStack.Screen name="AddProducts" component={AddProductsScreen} />
+          <RootStack.Screen name="AddJobs" component={AddJobsScreen} />
           <RootStack.Screen name="EditProduct" component={EditProductScreen} />
           <RootStack.Screen
             name="AddBusinessType"
@@ -265,6 +268,7 @@ const CloserNavigation = () => {
           <Stack.Screen name="MyCalendar" component={MyCalendarScreen} />
           <Stack.Screen name="MyLocation" component={MyLocationScreen} />
           <Stack.Screen name="MyProducts" component={MyProductsScreen} />
+          <Stack.Screen name="MyJobs" component={MyJobsScreen} />
           <Stack.Screen name="Comments" component={CommentsScreen} />
           <Stack.Screen name="MessageItem" component={MessageItemScreen} />
           <Stack.Screen name="SearchAll" component={SearchAllScreen} />

@@ -4,10 +4,12 @@ import axios from "axios";
 import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../hooks/auth";
 
-const FollowButton = (props) => {
+const FollowButton = ({ followeeId, fetchUser, fetchSuggested, ...props }) => {
   const [follow, setFollow] = useState(true);
   const { user, setUser } = useAuth();
-  const FOLLOW_ENDPOINT = `${process.env.BASE_ENDPOINT}/users/${user?._id}/follower/${props.followeeId}/followee/follows`;
+  const { followersCount, ratingsAverage, ratingsQuantity, followingCount } =
+    user.counter || {};
+  const FOLLOW_ENDPOINT = `${process.env.BASE_ENDPOINT}/users/${user?._id}/follower/${followeeId}/followee/follows`;
 
   useEffect(() => {
     axios
@@ -17,56 +19,56 @@ const FollowButton = (props) => {
       .then((res) => {
         setFollow(res.data.status);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
         setFollow(false);
       });
-  }, [user, props.followeeId]);
+  }, [user, followeeId]);
 
   const followHandler = () => {
+    setFollow(true);
+    setUser({
+      ...user,
+      counter: {
+        followersCount,
+        ratingsAverage,
+        ratingsQuantity,
+        followingCount: followingCount + 1,
+      },
+    });
+
     if (!follow) {
       axios
         .post(FOLLOW_ENDPOINT, {
           headers: { Authorization: `Bearer ${user?.token}` },
         })
         .then(() => {
-          setFollow(true);
-          props.fetchUser ? props.fetchUser() : null;
-          props.fetchSuggested ? props.fetchSuggested() : null;
-          setUser({
-            ...user,
-            counter: {
-              followersCount: user.counter.followersCount,
-              ratingsAverage: user.counter.ratingsAverage,
-              ratingsQuantity: user.counter.ratingsQuantity,
-              followingCount: user.counter.followingCount + 1,
-            },
-          });
+          fetchUser ? fetchUser() : null;
+          fetchSuggested ? fetchSuggested() : null;
         })
-        .catch((error) => {
-          console.log(error);
+        .catch(() => {
           setFollow(false);
         });
     }
     if (follow) {
+      setFollow(false);
+      setUser({
+        ...user,
+        counter: {
+          followersCount,
+          ratingsAverage,
+          ratingsQuantity,
+          followingCount: followingCount - 1,
+        },
+      });
+
       axios
         .delete(FOLLOW_ENDPOINT, {
           headers: { Authorization: `Bearer ${user?.token}` },
         })
         .then(() => {
-          setFollow(false);
-          props.fetchUser ? props.fetchUser() : null;
-          setUser({
-            ...user,
-            counter: {
-              followersCount: user.counter.followersCount,
-              ratingsAverage: user.counter.ratingsAverage,
-              ratingsQuantity: user.counter.ratingsQuantity,
-              followingCount: user.counter.followingCount - 1,
-            },
-          });
+          fetchUser ? fetchUser() : null;
         })
-        .catch((error) => console.log(error));
+        .catch(() => setFollow(false));
     }
   };
 
@@ -88,6 +90,7 @@ const FollowButton = (props) => {
 
   return (
     <TouchableOpacity
+      activeOpacity={1}
       style={{ ...styles.btn, ...props.sxBtn }}
       onPress={followHandler}
     >

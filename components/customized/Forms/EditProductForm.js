@@ -11,7 +11,7 @@ import RNPickerSelect from "react-native-picker-select";
 import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../../../hooks/auth";
 import theme from "../../../assets/styles/theme";
-import { MainButton } from "../../core";
+import { InputSelect, MainButton } from "../../core";
 
 const defaultValues = {
   name: "",
@@ -22,8 +22,9 @@ const defaultValues = {
 
 const EditProductForm = ({ product }) => {
   const { user } = useAuth();
-  const [filters, setFilters] = useState([]);
+  const [options, setOptions] = useState([product?.option]);
   const [selectedService, setSelectedService] = useState(product.service._id);
+  const [selectedOption, setSelectedOption] = useState(product.option._id);
   const [loading, setLoading] = useState(false);
   const {
     control,
@@ -34,62 +35,37 @@ const EditProductForm = ({ product }) => {
   const fetchFilters = useCallback(() => {
     axios
       .get(`${process.env.BASE_ENDPOINT}/services/${selectedService}/filters`)
-      .then((res) => setFilters(res.data.filters[0].options))
+      .then((res) => setOptions(res.data.filters[0].options))
       .catch((err) => console.log(err));
   }, [selectedService]);
-
-  useEffect(() => {
-    fetchFilters();
-  }, [fetchFilters]);
-
-  const placeholder = {
-    label: "Selecteaza serviciul aferent produsului*",
-    value: null,
-    color: "#9EA0A4",
-  };
-  const placeholderOption = {
-    label: "Selecteaza categoria produsului*",
-    value: null,
-    color: "#9EA0A4",
-  };
 
   const onSubmit = (data) => {
     setLoading(true);
     const { description, price, discount, name } = data;
   };
 
+  console.log(options);
+
   return (
     <>
       <View style={styles.row}>
-        <RNPickerSelect
-          placeholder={placeholder}
-          useNativeAndroidPickerStyle={false}
+        <InputSelect
+          placeholder="Selecteaza serviciul aferent produsului*"
+          value={product?.service}
           onValueChange={(text) => {
             setSelectedService(text);
             fetchFilters();
           }}
-          value={product?.service}
-          style={pickerSelectStyles}
-          items={user?.services.map((service) => {
-            return {
-              label: service?.name,
-              value: service?._id,
-            };
-          })}
+          items={user?.services}
         />
       </View>
       <View style={styles.row}>
-        <RNPickerSelect
-          placeholder={placeholderOption}
-          useNativeAndroidPickerStyle={false}
-          onValueChange={(value) => {}}
-          style={pickerSelectStyles}
-          items={filters.map((filter) => {
-            return {
-              label: filter?.name,
-              value: filter?._id,
-            };
-          })}
+        <InputSelect
+          placeholder="Selecteaza categoria produsului*"
+          onValueChange={(text) => {
+            setSelectedOption(text);
+          }}
+          items={options}
         />
       </View>
       <View style={styles.row}>

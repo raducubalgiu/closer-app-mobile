@@ -11,10 +11,7 @@ import {
   Spinner,
   Stack,
 } from "../../../../components/core";
-import {
-  CardProduct,
-  NoFoundProducts,
-} from "../../../../components/customized";
+import { CardProduct, NoFoundMessage } from "../../../../components/customized";
 import theme from "../../../../assets/styles/theme";
 import { useAuth } from "../../../../hooks/auth";
 
@@ -161,7 +158,10 @@ const MyProductsScreen = ({ route }) => {
         ListFooterComponent={
           products.length === 0 && (
             <Stack sx={{ marginTop: 75 }}>
-              <NoFoundProducts />
+              <NoFoundMessage
+                title={t("myProducts")}
+                description={t("notProductsAddedForService")}
+              />
             </Stack>
           )
         }

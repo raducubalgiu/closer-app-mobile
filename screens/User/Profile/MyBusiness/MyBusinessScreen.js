@@ -56,7 +56,7 @@ const MyBusinessScreen = () => {
       iconName: "briefcase",
       iconType: "feather",
       description: "Poti adauga joburi pentru business-ul tau",
-      navigation: "MyProducts",
+      navigation: "MyJobs",
     },
   ];
 

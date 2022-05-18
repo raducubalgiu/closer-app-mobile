@@ -3,21 +3,19 @@ import React from "react";
 import { Stack } from "../../core";
 import { Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
-import { useTranslation } from "react-i18next";
 
-export const NoFoundProducts = () => {
-  const { t } = useTranslation();
-
+export const NoFoundMessage = ({ title, description }) => {
   return (
-    <Stack sx={{ marginHorizontal: 40 }}>
+    <Stack align="center" justify="center" sx={styles.container}>
       <Icon name="info" type="simple-line-icon" size={50} color="#ddd" />
-      <Text style={styles.title}>{t("myProducts")}</Text>
-      <Text style={styles.description}>{t("notProductsAddedForService")}</Text>
+      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.description}>{description}</Text>
     </Stack>
   );
 };
 
 const styles = StyleSheet.create({
+  container: { marginHorizontal: 40, flex: 1 },
   title: {
     fontFamily: "Exo-Medium",
     fontSize: 19.5,

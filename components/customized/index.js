@@ -42,4 +42,4 @@ export { SettingsList } from "./Lists/SettingsList";
 
 export { VideoItem } from "./VideoItem/VideoItem";
 
-export { NoFoundProducts } from "./NotFoundContent/NoFoundProducts";
+export { NoFoundMessage } from "./NotFoundContent/NoFoundMessage";
