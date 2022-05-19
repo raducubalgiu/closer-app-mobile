@@ -56,6 +56,7 @@ export const RatingsTab = ({ userId }) => {
           data={reviews}
           keyExtractor={(item) => item?._id}
           renderItem={renderRatings}
+          showsVerticalScrollIndicator={false}
         />
       )}
       {loading && <Spinner />}

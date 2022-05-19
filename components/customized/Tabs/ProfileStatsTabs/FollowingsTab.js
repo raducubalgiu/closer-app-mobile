@@ -83,6 +83,7 @@ export const FollowingsTab = (props) => {
           data={followings}
           keyExtractor={(item) => item?._id}
           renderItem={renderPerson}
+          showsVerticalScrollIndicator={false}
         />
       )}
     </View>

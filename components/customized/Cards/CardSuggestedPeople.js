@@ -1,6 +1,12 @@
 import { StyleSheet, Text } from "react-native";
 import React from "react";
-import { Button, CustomAvatar, FollowButton, Stack, IconStar } from "../../core";
+import {
+  Button,
+  CustomAvatar,
+  FollowButton,
+  Stack,
+  IconStar,
+} from "../../core";
 import theme from "../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 
@@ -65,7 +71,7 @@ const styles = StyleSheet.create({
     fontFamily: "Exo-Medium",
     color: theme.lightColors.grey0,
     fontSize: 13,
-    marginTop: 10,
+    marginTop: 20,
   },
   business: {
     fontFamily: "Exo-SemiBold",

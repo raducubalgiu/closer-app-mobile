@@ -66,6 +66,7 @@ export const FollowersTab = (props) => {
           data={followers}
           keyExtractor={(item) => item?._id}
           renderItem={renderPerson}
+          showsVerticalScrollIndicator={false}
         />
       )}
     </View>

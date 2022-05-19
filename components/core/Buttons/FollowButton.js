@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../hooks/auth";
+import { useTranslation } from "react-i18next";
 
 const FollowButton = ({ followeeId, fetchUser, fetchSuggested, ...props }) => {
   const [follow, setFollow] = useState(true);
@@ -10,6 +11,7 @@ const FollowButton = ({ followeeId, fetchUser, fetchSuggested, ...props }) => {
   const { followersCount, ratingsAverage, ratingsQuantity, followingCount } =
     user.counter || {};
   const FOLLOW_ENDPOINT = `${process.env.BASE_ENDPOINT}/users/${user?._id}/follower/${followeeId}/followee/follows`;
+  const { t } = useTranslation();
 
   useEffect(() => {
     axios
@@ -95,7 +97,7 @@ const FollowButton = ({ followeeId, fetchUser, fetchSuggested, ...props }) => {
       onPress={followHandler}
     >
       <Text style={{ ...styles.btnText, ...props.sxBtnText }}>
-        {follow ? "Urmaresti" : "Urmareste"}
+        {follow ? t("following") : t("follow")}
       </Text>
     </TouchableOpacity>
   );
