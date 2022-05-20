@@ -11,11 +11,10 @@ import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { Divider } from "@rneui/themed";
 import FakeSearchBar from "../components/customized/FakeSearchBar/FakeSearchBar";
-import CardRecommended from "../components/customized/Cards/CardRecommended";
 import theme from "../assets/styles/theme";
 import { useAuth } from "../hooks/auth";
 import { useScrollToTop } from "@react-navigation/native";
-import { ServicesList } from "../components/customized";
+import { ServicesList, CardRecommended } from "../components/customized";
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -54,24 +53,7 @@ const HomeScreen = () => {
     });
   }, []);
 
-  const renderRecommended = ({ item }) => {
-    const { images, counter } = item;
-
-    return (
-      <CardRecommended
-        userId={item?._id}
-        name={item?.name}
-        image={images[0]?.url}
-        title={item?.title}
-        address={item?.location}
-        distance={item?.distance}
-        ratingsAverage={counter[0]?.ratingsAverage}
-        ratingsQuantity={counter[0]?.ratingsQuantity}
-        availableSeats={item?.availableSeats}
-        service={item?.services[0]?.name}
-      />
-    );
-  };
+  const renderRecommended = ({ item }) => <CardRecommended location={item} />;
 
   return (
     <SafeAreaView style={styles.screen}>

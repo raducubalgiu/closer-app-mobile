@@ -33,6 +33,7 @@ export { CardRatings } from "./Cards/CardRatings";
 export { CardProduct } from "./Cards/CardProduct";
 export { CardSuggestedPeople } from "./Cards/CardSuggestedPeople";
 export { CardLocation } from "./Cards/CardLocation";
+export { CardRecommended } from "./Cards/CardRecommended";
 
 export { HeaderServices } from "../customized/Layout/Headers/HeaderServices";
 export { HeaderEdit } from "../customized/Layout/Headers/HeaderEdit";
@@ -45,3 +46,7 @@ export { SettingsList } from "./Lists/SettingsList";
 export { VideoItem } from "./VideoItem/VideoItem";
 
 export { NoFoundMessage } from "./NotFoundContent/NoFoundMessage";
+
+export { Map } from "../customized/Map/Map";
+
+export { SheetService } from "../customized/BottomSheets/SheetService";

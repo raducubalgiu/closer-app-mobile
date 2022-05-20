@@ -1,20 +1,21 @@
 import { FlatList } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useState } from "react";
-import { CardRatings } from "../../../customized";
+import { CardRatings } from "../../Cards/CardRatings";
 import axios from "axios";
 import moment from "moment";
 import { useAuth } from "../../../../hooks";
 import { Spinner } from "../../../core";
+import { useTranslation } from "react-i18next";
 
 export const RatingsTab = ({ userId }) => {
   const { user } = useAuth();
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation();
 
   useFocusEffect(
     React.useCallback(() => {
-      if (loading) return;
       setLoading(true);
       axios
         .get(`${process.env.BASE_ENDPOINT}/users/${userId}/reviews`, {
@@ -24,11 +25,7 @@ export const RatingsTab = ({ userId }) => {
           setReviews(res.data.reviews);
           setLoading(false);
         })
-        .catch((err) => {
-          console.log(err);
-          setLoading(false);
-        })
-        .finally(() => {
+        .catch(() => {
           setLoading(false);
         });
     }, [userId, user?.token])

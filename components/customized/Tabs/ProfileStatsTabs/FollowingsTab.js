@@ -1,6 +1,6 @@
 import { StyleSheet, View, FlatList, RefreshControl } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
-import { CardFollowers } from "../../../customized";
+import { CardFollowers } from "../../Cards/CardFollowers";
 import axios from "axios";
 import { useAuth } from "../../../../hooks/auth";
 import { Spinner, SearchBarInput } from "../../../core";

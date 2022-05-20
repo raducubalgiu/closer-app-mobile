@@ -105,5 +105,6 @@
   "myProducts": "Produsele mele",
   "myJobs": "Joburile mele",
   "notProductsAddedForService": "Încă nu ai adăugat produse pentru acest serviciu",
-  "noJobsAdded": "Încă nu ai adăugat joburi"
+  "noJobsAdded": "Încă nu ai adăugat joburi",
+  "kmFromYou": "km de tine"
 }

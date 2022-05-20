@@ -1,5 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import { Stack } from "../index";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useCallback, useState } from "react";
 import theme from "../../../assets/styles/theme";
 
@@ -11,6 +10,8 @@ const ButtonGroup = (props) => {
       backgroundColor: "#f1f1f1",
       padding: 5,
       borderRadius: 20,
+      flexDirection: "row",
+      alignItems: "center",
     },
     button: {
       paddingVertical: props.size === "small" ? 5 : 7.5,
@@ -27,8 +28,8 @@ const ButtonGroup = (props) => {
   });
 
   return (
-    <Stack sx={props.sx}>
-      <Stack direction="row" align="center" sx={styles.buttonsContainer}>
+    <View style={styles.sx}>
+      <View style={styles.buttonsContainer}>
         {props.buttons.map((button, index) => (
           <TouchableOpacity
             key={index}
@@ -54,8 +55,8 @@ const ButtonGroup = (props) => {
             </Text>
           </TouchableOpacity>
         ))}
-      </Stack>
-    </Stack>
+      </View>
+    </View>
   );
 };
 

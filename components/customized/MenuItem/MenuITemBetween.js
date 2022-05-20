@@ -8,7 +8,11 @@ const MenuITemBetween = (props) => {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{props.label}</Text>
-      <TouchableOpacity style={styles.button} onPress={props.onPress}>
+      <TouchableOpacity
+        activeOpacity={1}
+        style={styles.button}
+        onPress={props.onPress}
+      >
         <Text style={styles.buttonText}>
           {trimFunc(props.resultText, props.resultTextLength)}
         </Text>

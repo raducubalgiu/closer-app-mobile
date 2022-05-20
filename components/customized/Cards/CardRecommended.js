@@ -1,75 +1,57 @@
-import { StyleSheet, Text, View, Image, Dimensions } from "react-native";
-import { Icon, Divider } from "@rneui/themed";
-import { Button, Stack } from "../../core";
+import { StyleSheet, Text, Image, Dimensions } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
+import { Button, IconLocation, IconStar, IconVideo, Stack } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { AddressFormat, trimFunc } from "../../../utils";
 
-const width = Dimensions.get("window").width;
+const { width } = Dimensions.get("window");
 
-const CardRecommended = (props) => {
+export const CardRecommended = ({ location }) => {
+  const { _id, images, name, distance, services, counter } = location;
   const navigation = useNavigation();
   const { t } = useTranslation();
 
-  const goToUser = () =>
-    navigation.push("LocationItem", { locationId: props.userId });
+  const goToUser = () => navigation.push("LocationItem", { locationId: _id });
 
   return (
     <Button sx={styles.button} onPress={goToUser}>
       <Stack direction="row" sx={styles.item}>
         <Stack>
           <Image
-            style={styles.cardImage}
+            style={styles.image}
             source={{
-              uri: `${props.image}`,
+              uri: `${images[0]?.url}`,
             }}
           />
-          <Icon
-            name="video"
-            type="feather"
-            containerStyle={styles.iconVideo}
-            color="white"
-            size={18}
-          />
+          <IconVideo sx={styles.iconVideo} />
         </Stack>
         <Stack align="start" sx={styles.info}>
           <Stack direction="row">
-            <Text style={styles.name}>{props.name}</Text>
+            <Text style={styles.name}>{name}</Text>
             <Stack direction="row">
-              <Icon
-                style={{ marginRight: 5 }}
-                size={20}
-                color={theme.lightColors.grey0}
-                type="feather"
-                name="map-pin"
-              />
+              <IconLocation sx={{ marginRight: 5 }} />
               <Text style={styles.distance}>
-                {props.distance < 1000
-                  ? `la ${Math.round(props.distance)} m`
-                  : `la ${Math.round(props.distance * 0.001)} km`}
+                {distance < 1000
+                  ? `${t("at")} ${Math.round(distance)} m`
+                  : `${t("at")} ${Math.round(distance * 0.001)} km`}
               </Text>
             </Stack>
           </Stack>
           <Text style={styles.address}>
-            {trimFunc(AddressFormat(props.address), 30)}
+            {trimFunc(AddressFormat(location?.location), 30)}
           </Text>
           <Stack direction="row">
-            <Text style={styles.service}>{props.service}</Text>
+            <Text style={styles.service}>{services[0]?.name}</Text>
           </Stack>
           <Stack direction="row">
-            <Icon
-              name="star"
-              type="antdesign"
-              size={16}
-              color={theme.lightColors.primary}
-            />
+            <IconStar />
             <Text style={styles.ratingsAvg}>
-              {props.ratingsAverage.toFixed(1)}
+              {counter[0]?.ratingsAverage.toFixed(1)}
             </Text>
             <Text style={styles.ratingsQuant}>
-              {props.ratingsQuantity} {t("reviews")}
+              {counter[0]?.ratingsQuantity} {t("reviews")}
             </Text>
           </Stack>
         </Stack>
@@ -78,8 +60,6 @@ const CardRecommended = (props) => {
   );
 };
 
-export default CardRecommended;
-
 const styles = StyleSheet.create({
   button: {
     paddingVertical: 15,
@@ -87,10 +67,11 @@ const styles = StyleSheet.create({
   item: {
     borderRadius: 5,
   },
-  cardImage: {
+  image: {
     flex: 1,
-    width: width / 3,
     borderRadius: 5,
+    resizeMode: "cover",
+    width: width / 3,
   },
   info: {
     flex: 1,
@@ -141,7 +122,7 @@ const styles = StyleSheet.create({
   },
   iconVideo: {
     position: "absolute",
-    bottom: 10,
+    bottom: 5,
     left: 10,
     zIndex: 1000,
   },

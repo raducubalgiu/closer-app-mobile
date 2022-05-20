@@ -1,115 +1,88 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Image, Dimensions } from "react-native";
 import React from "react";
-import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";
 import { trimFunc, AddressFormat } from "../../../utils";
+import { Button, IconLocation, IconStar, IconVideo, Stack } from "../../core";
+
+const { width, height } = Dimensions.get("window");
 
 export const CardLocation = ({ location }) => {
-  const {
-    _id,
-    images,
-    name,
-    counter,
-    minPrice,
-    distance,
-    location: address,
-  } = location;
+  const { _id, images, name, counter, minPrice, distance } = location;
   const navigation = useNavigation();
   const { t } = useTranslation();
 
   const goToUser = () => navigation.push("LocationItem", { locationId: _id });
 
   return (
-    <TouchableOpacity
-      activeOpacity={1}
-      style={styles.container}
-      onPress={goToUser}
-    >
-      <View style={styles.cardHeader}>
-        <Image
-          style={styles.cardImage}
-          source={{
-            uri: images[0]?.url,
-          }}
-        />
-        <Icon
-          name="video"
-          type="feather"
-          containerStyle={styles.iconVideo}
-          color="white"
-          size={18}
-        />
-      </View>
-      <View style={styles.cardContent}>
-        <View style={styles.cardContentFlex}>
-          <Text style={styles.business}>{name}</Text>
-          <Text style={styles.address}>
-            {trimFunc(AddressFormat(address), 60)}{" "}
-          </Text>
-          <View style={styles.ratingsContainer}>
-            <Icon
-              name="star"
-              type="antdesign"
-              size={17}
-              color={theme.lightColors.primary}
-            />
-            <Text style={styles.ratingsAverage}>
-              {counter[0]?.ratingsAverage?.toFixed(1)}
-            </Text>
-            <Text style={styles.ratingsQuantity}>
-              {counter[0]?.ratingsQuantity} {t("reviews")}
-            </Text>
-          </View>
-          <View style={styles.priceContainer}>
-            <Text style={styles.priceLabel}>de la</Text>
-            <Text style={styles.price}>{minPrice} Lei</Text>
-          </View>
-        </View>
-        <View style={styles.distanceContainer}>
-          <Icon
-            name="map-pin"
-            type="feather"
-            size={20}
-            color={theme.lightColors.black}
+    <Button onPress={goToUser}>
+      <Stack direction="row" sx={styles.container}>
+        <Stack sx={styles.imageC}>
+          <Image
+            style={styles.image}
+            source={{
+              uri: images[0]?.url,
+            }}
           />
-          <Text style={styles.distance}>
-            {distance < 1
-              ? `la mai putin de 1 km`
-              : `la ${Math.round(distance)} km de tine`}
-          </Text>
+          <IconVideo sx={styles.iconVideo} />
+        </Stack>
+        <View style={styles.content}>
+          <Stack align="start">
+            <Text style={styles.business}>{name}</Text>
+            <Text style={styles.address}>
+              {trimFunc(AddressFormat(location?.location), 60)}{" "}
+            </Text>
+            <Stack direction="row" sx={styles.ratings}>
+              <IconStar />
+              <Text style={styles.ratingsAverage}>
+                {counter[0]?.ratingsAverage?.toFixed(1)}
+              </Text>
+              <Text style={styles.ratingsQuantity}>
+                {counter[0]?.ratingsQuantity} {t("reviews")}
+              </Text>
+            </Stack>
+          </Stack>
+          <Stack align="end">
+            <Stack direction="row" align="end">
+              <Text style={styles.from}>de la</Text>
+              <Text style={styles.price}>{minPrice} Lei</Text>
+            </Stack>
+            <Stack direction="row" sx={styles.distanceC}>
+              <IconLocation />
+              <Text style={styles.distance}>
+                {distance < 1
+                  ? `la mai putin de 1 km`
+                  : `la ${Math.round(distance)} km de tine`}
+              </Text>
+            </Stack>
+          </Stack>
         </View>
-      </View>
-    </TouchableOpacity>
+      </Stack>
+    </Button>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "row",
     marginHorizontal: 15,
-    backgroundColor: "white",
-    borderRadius: 5,
-    marginBottom: 15,
-    marginTop: 15,
+    marginVertical: 15,
   },
-  cardHeader: {},
-  cardImage: {
+  imageC: {
+    width: width / 3,
+  },
+  image: {
     flex: 1,
-    width: 110,
-    minHeight: 150,
-    borderTopLeftRadius: 5,
-    borderBottomLeftRadius: 5,
+    width: "100%",
+    resizeMode: "cover",
+    borderRadius: 5,
   },
-  cardContent: {
+  content: {
     flex: 1,
     paddingVertical: 5,
     paddingHorizontal: 10,
-    justifyContent: "space-between",
   },
-  cardContentFlex: {},
   business: {
     fontSize: 16,
     fontFamily: "Exo-SemiBold",
@@ -121,10 +94,8 @@ const styles = StyleSheet.create({
     marginTop: 1,
     fontSize: 13,
   },
-  ratingsContainer: {
-    flexDirection: "row",
+  ratings: {
     marginVertical: 5,
-    alignItems: "center",
   },
   ratingsAverage: {
     fontFamily: "Exo-SemiBold",
@@ -147,16 +118,12 @@ const styles = StyleSheet.create({
     padding: 5,
     fontSize: 12,
   },
-  priceContainer: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-  },
   price: {
     fontFamily: "Exo-Bold",
     fontSize: 15,
     marginLeft: 5,
   },
-  priceLabel: {
+  from: {
     fontFamily: "Exo-Regular",
     fontSize: 12,
   },
@@ -165,10 +132,7 @@ const styles = StyleSheet.create({
     fontFamily: "Exo-Regular",
     fontSize: 13,
   },
-  distanceContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-end",
+  distanceC: {
     marginTop: 15,
   },
   distance: {

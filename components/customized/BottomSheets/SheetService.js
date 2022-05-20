@@ -1,19 +1,11 @@
 import { useRef, useMemo, useCallback } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Divider } from "@rneui/themed";
-import BottomSheet, {
-  BottomSheetFlatList,
-  BottomSheetBackdrop,
-} from "@gorhom/bottom-sheet";
-import { useTranslation } from "react-i18next";
+import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 import theme from "../../../assets/styles/theme";
-import { CardLocation } from "../../customized";
-import { AddressFormat } from "../../../utils/addressFormat";
 
-const BottomSheetService = (props) => {
-  const { t } = useTranslation();
+export const SheetService = (props) => {
   const sheetRef = useRef(null);
-
   const snapPoints = useMemo(() => ["25%", "90%"], []);
 
   const renderBackdrop = useCallback(
@@ -27,21 +19,10 @@ const BottomSheetService = (props) => {
     []
   );
 
-  const renderItem = useCallback(
-    ({ item }) => (
-      <>
-        <CardLocation location={item} service={props?.serviceName} />
-        <Divider />
-      </>
-    ),
-    []
-  );
-
   return (
     <BottomSheet
       ref={sheetRef}
       snapPoints={snapPoints}
-      onChange={props.onHandleSheetChange}
       handleIndicatorStyle={styles.indicatorStyle}
       enableOverDrag={true}
       backdropComponent={renderBackdrop}
@@ -51,18 +32,11 @@ const BottomSheetService = (props) => {
           {props.results} {props.results > 19 ? "de rezultate" : "rezultate"}
         </Text>
         <Divider width={2} color="#f1f1f1" style={styles.divider} />
-        <BottomSheetFlatList
-          showsVerticalScrollIndicator={false}
-          data={props.data}
-          keyExtractor={(item) => item._id}
-          renderItem={renderItem}
-        />
+        {props.list}
       </View>
     </BottomSheet>
   );
 };
-
-export default BottomSheetService;
 
 const styles = StyleSheet.create({
   sheetHeading: {

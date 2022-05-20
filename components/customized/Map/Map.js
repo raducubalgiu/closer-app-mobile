@@ -1,12 +1,14 @@
 import { StyleSheet, Text, View } from "react-native";
 import MapView, { Marker, Callout, PROVIDER_GOOGLE } from "react-native-maps";
-import { Icon } from "@rneui/themed";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";
+import { IconLocation, IconStar, Stack } from "../../core";
+import { useNavigation } from "@react-navigation/native";
 
-const Map = (props) => {
+export const Map = ({ locations, serviceName }) => {
   const { t } = useTranslation();
+  const navigation = useNavigation();
 
   const mapStyle = [
     {
@@ -171,11 +173,7 @@ const Map = (props) => {
 
   return (
     <MapView
-      style={
-        parseFloat(props.sheetStep) === 0
-          ? { height: "80%" }
-          : { height: "100%" }
-      }
+      style={{ height: "100%" }}
       initialRegion={{
         latitude: 44.425625,
         longitude: 26.102312,
@@ -185,49 +183,41 @@ const Map = (props) => {
       customMapStyle={mapStyle}
       provider={PROVIDER_GOOGLE}
     >
-      {props.locations.map((marker, index) => (
+      {locations.map((loc, i) => (
         <Marker
-          key={index}
+          key={i}
           coordinate={{
-            latitude: marker.location.coordinates[0],
-            longitude: marker.location.coordinates[1],
+            latitude: loc.location.coordinates[0],
+            longitude: loc.location.coordinates[1],
           }}
           image={require("../../../assets/images/map_marker_yellow.png")}
         >
-          <Callout onPress={() => console.log("Pressed!")}>
-            <View style={styles.callOutContainer}>
-              <Text style={styles.markerName}>{marker.name}</Text>
-              <View style={styles.priceContainer}>
-                <Text style={styles.serviceName}>{props.serviceName}</Text>
+          <Callout
+            onPress={() =>
+              navigation.push("LocationItem", { locationId: loc?._id })
+            }
+          >
+            <Stack align="start" sx={styles.callOut}>
+              <Text style={styles.name}>{loc.name}</Text>
+              <Stack direction="row">
+                <Text>{serviceName}</Text>
                 <Text style={styles.from}>{t("from")}</Text>
-                <Text style={styles.priceText}>50 Lei</Text>
-              </View>
-              <View style={styles.ratingsContainer}>
-                <Icon
-                  name="star"
-                  type="antdesign"
-                  color={theme.lightColors.primary}
-                  size={17}
-                />
-                <Text style={styles.markerRatingsAverage}>
-                  {marker.ratingsAverage}
+                <Text style={styles.price}>{loc.minPrice}</Text>
+              </Stack>
+              <Stack direction="row" sx={styles.ratingsC}>
+                <IconStar />
+                <Text style={styles.ratingsAvg}>{loc.ratingsAverage}</Text>
+                <Text style={styles.ratingsQuant}>
+                  {loc.ratingsQuantity} {t("reviews")}
                 </Text>
-                <Text style={styles.markerRatingsQuantity}>
-                  {marker.ratingsQuantity} {t("reviews")}
-                </Text>
-              </View>
-              <View style={styles.markerDistanceContainer}>
-                <Icon
-                  name="location"
-                  type="entypo"
-                  color={theme.lightColors.grey0}
-                  size={17}
-                />
-                <Text style={styles.markerDistance}>
-                  la {Math.round(marker.distance)} km de tine
+              </Stack>
+              <View style={styles.distanceC}>
+                <IconLocation />
+                <Text style={styles.distance}>
+                  {t("at")} {Math.round(loc.distance)} {t("kmFromYou")}
                 </Text>
               </View>
-            </View>
+            </Stack>
           </Callout>
         </Marker>
       ))}
@@ -235,29 +225,25 @@ const Map = (props) => {
   );
 };
 
-export default Map;
-
 const styles = StyleSheet.create({
-  callOutContainer: {
+  callOut: {
     padding: 5,
   },
-  markerName: {
+  name: {
     fontFamily: "Exo-Bold",
   },
   priceName: {
     fontFamily: "Exo-SemiBold",
     color: theme.lightColors.grey0,
   },
-  ratingsContainer: {
-    flexDirection: "row",
-    alignItems: "center",
+  ratingsC: {
     marginVertical: 5,
   },
-  markerRatingsAverage: {
+  ratingsAvg: {
     fontFamily: "Exo-SemiBold",
     marginLeft: 2.5,
   },
-  markerRatingsQuantity: {
+  ratingsQuant: {
     marginLeft: 5,
     fontFamily: "Exo-Medium",
     color: theme.lightColors.grey0,
@@ -267,26 +253,25 @@ const styles = StyleSheet.create({
     marginTop: 10,
     textAlign: "right",
   },
-  markerDistanceContainer: {
+  distanceC: {
     flexDirection: "row",
     alignItems: "center",
   },
-  markerDistance: {
+  distance: {
     fontFamily: "Exo-Medium",
     fontSize: 13,
     marginLeft: 5,
     color: theme.lightColors.grey0,
-  },
-  priceContainer: { flexDirection: "row", alignItems: "center" },
-  priceText: {
-    fontFamily: "Exo-SemiBold",
-    marginLeft: 2.5,
-    fontSize: 13.5,
   },
   from: {
     fontFamily: "Exo-Regular",
     color: theme.lightColors.grey0,
     marginLeft: 10,
     fontSize: 10,
+  },
+  price: {
+    fontFamily: "Exo-SemiBold",
+    marginLeft: 2.5,
+    fontSize: 13.5,
   },
 });
