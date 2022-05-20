@@ -14,7 +14,7 @@ const CardRecommended = (props) => {
   const { t } = useTranslation();
 
   const goToUser = () =>
-    navigation.navigate("ServiceItem", { serviceIde: props.id });
+    navigation.push("ServiceItem", { userId: props.userId });
 
   return (
     <Button sx={styles.button} onPress={goToUser}>

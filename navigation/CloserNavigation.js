@@ -63,33 +63,6 @@ import AddJobsScreen from "../screens/User/Profile/MyBusiness/AddJobsScreen";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const HomeStackNavigator = () => {
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-      initialRouteName="Home"
-    >
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="ServiceItem" component={ServiceItemScreen} />
-    </Stack.Navigator>
-  );
-};
-
-const ExploreStackNavigator = () => {
-  return (
-    <Stack.Navigator
-      initialRouteName="Explore"
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <Stack.Screen name="Explore" component={ExploreScreen} />
-    </Stack.Navigator>
-  );
-};
-
 const FeedStackNavigator = () => {
   return (
     <Stack.Navigator
@@ -105,19 +78,6 @@ const FeedStackNavigator = () => {
         name="ProfileGeneralStack"
         component={ProfileStackNavigator}
       />
-    </Stack.Navigator>
-  );
-};
-
-const MessagesStackNavigator = () => {
-  return (
-    <Stack.Navigator
-      initialRouteName="Messages"
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <Stack.Screen name="Messages" component={MessagesScreen} />
     </Stack.Navigator>
   );
 };
@@ -190,16 +150,16 @@ const TabsScreen = () => {
         tabBarIcon: ({ focused, color }) => {
           let iconName;
           let iconType;
-          if (route.name === "FeedStack") {
-            iconType = "feather";
-            iconName = focused ? "compass" : "compass";
-          } else if (route.name === "ExploreStack") {
-            iconType = "feather";
-            iconName = focused ? "video" : "video";
-          } else if (route.name === "HomeStack") {
+          if (route.name === "Home") {
             iconType = "feather";
             iconName = focused ? "search" : "search";
-          } else if (route.name === "MessagesStack") {
+          } else if (route.name === "Explore") {
+            iconType = "feather";
+            iconName = focused ? "video" : "video";
+          } else if (route.name === "FeedStack") {
+            iconType = "feather";
+            iconName = focused ? "compass" : "compass";
+          } else if (route.name === "Messages") {
             iconType = "feather";
             iconName = focused ? "message-circle" : "message-circle";
           } else if (route.name === "UserStack") {
@@ -217,10 +177,10 @@ const TabsScreen = () => {
       })}
       sceneContainerStyle={{ backgroundColor: "white" }}
     >
-      <Tab.Screen name="HomeStack" component={HomeStackNavigator} />
-      <Tab.Screen name="ExploreStack" component={ExploreStackNavigator} />
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Explore" component={ExploreScreen} />
       <Tab.Screen name="FeedStack" component={FeedStackNavigator} />
-      <Tab.Screen name="MessagesStack" component={MessagesStackNavigator} />
+      <Tab.Screen name="Messages" component={MessagesScreen} />
       <Tab.Screen name="UserStack" component={UserStackNavigator} />
     </Tab.Navigator>
   );
@@ -274,6 +234,7 @@ const CloserNavigation = () => {
           <Stack.Screen name="SearchAll" component={SearchAllScreen} />
           <Stack.Screen name="Notifications" component={NotificationsScreen} />
           <Stack.Screen name="Post" component={PostScreen} />
+          <Stack.Screen name="ServiceItem" component={ServiceItemScreen} />
         </RootStack.Navigator>
       )}
       {!user && (

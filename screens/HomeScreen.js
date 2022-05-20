@@ -59,7 +59,7 @@ const HomeScreen = () => {
 
     return (
       <CardRecommended
-        id={item?._id}
+        userId={item?._id}
         name={item?.name}
         image={images[0]?.url}
         title={item?.title}
