@@ -3,13 +3,11 @@ import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { Divider } from "@rneui/themed";
 import BottomSheetService from "../components/customized/BottomSheets/BottomSheetService";
-import CardService from "../components/customized/Cards/CardService";
 import Map from "../components/customized/Map/Map";
 import { useAuth } from "../hooks/auth";
-import { AddressFormat } from "../utils/addressFormat";
-import { HeaderServices } from "../components/customized";
+import { HeaderServices, CardLocation } from "../components/customized";
 
-const ServicesScreen = (props) => {
+const LocationsScreen = (props) => {
   const { serviceId, serviceName, optionId, period } = props.route.params;
   const { user } = useAuth();
   const [results, setResults] = useState(null);
@@ -54,17 +52,7 @@ const ServicesScreen = (props) => {
 
   const renderLocation = ({ item }) => (
     <>
-      <CardService
-        id={item?._id}
-        distance={item?.distance}
-        image={item?.images[0]?.url}
-        business={item?.name}
-        address={AddressFormat(item?.location)}
-        minPrice={item?.minPrice}
-        ratingsAverage={item?.counter[0]?.ratingsAverage}
-        ratingsQuantity={item?.counter[0]?.ratingsQuantity}
-        service={serviceName}
-      />
+      <CardLocation location={item} service={serviceName} />
       <Divider />
     </>
   );
@@ -105,7 +93,7 @@ const ServicesScreen = (props) => {
   );
 };
 
-export default ServicesScreen;
+export default LocationsScreen;
 
 const styles = StyleSheet.create({
   screen: {

@@ -3,16 +3,20 @@ import React, { useEffect, useState } from "react";
 import { ImageSlider } from "../components/core";
 import { BASE_ENDPOINT } from "@env";
 import axios from "axios";
+import { useAuth } from "../hooks";
 
 const { width, height } = Dimensions.get("window");
 
-const ServiceItemScreen = ({ route }) => {
+const LocationItemScreen = ({ route }) => {
+  const { user } = useAuth();
   const [location, setLocation] = useState(null);
-  const { userId } = route.params;
+  const { locationId } = route.params;
 
   useEffect(() => {
     axios
-      .get(`${BASE_ENDPOINT}/users/${userId}`)
+      .get(`${BASE_ENDPOINT}/users/${locationId}`, {
+        headers: { Authorization: `Bearer ${user?.token}` },
+      })
       .then((res) => setLocation(res.data.user))
       .catch((err) => console.log(err));
   }, []);
@@ -31,7 +35,7 @@ const ServiceItemScreen = ({ route }) => {
   );
 };
 
-export default ServiceItemScreen;
+export default LocationItemScreen;
 
 const styles = StyleSheet.create({
   screen: {

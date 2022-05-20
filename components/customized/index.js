@@ -32,6 +32,7 @@ export { CardFollowers } from "./Cards/CardFollowers";
 export { CardRatings } from "./Cards/CardRatings";
 export { CardProduct } from "./Cards/CardProduct";
 export { CardSuggestedPeople } from "./Cards/CardSuggestedPeople";
+export { CardLocation } from "./Cards/CardLocation";
 
 export { HeaderServices } from "../customized/Layout/Headers/HeaderServices";
 export { HeaderEdit } from "../customized/Layout/Headers/HeaderEdit";

@@ -49,7 +49,7 @@ const FiltersServiceScreen = ({ route }) => {
           <Button
             disabled={disabled}
             onPress={() =>
-              navigation.navigate("Services", {
+              navigation.navigate("Locations", {
                 serviceId,
                 serviceName,
                 optionId: option?._id,

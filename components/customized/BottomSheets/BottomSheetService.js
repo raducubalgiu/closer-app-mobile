@@ -7,7 +7,7 @@ import BottomSheet, {
 } from "@gorhom/bottom-sheet";
 import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";
-import CardService from "../Cards/CardService";
+import { CardLocation } from "../../customized";
 import { AddressFormat } from "../../../utils/addressFormat";
 
 const BottomSheetService = (props) => {
@@ -30,17 +30,7 @@ const BottomSheetService = (props) => {
   const renderItem = useCallback(
     ({ item }) => (
       <>
-        <CardService
-          id={item?._id}
-          image={item?.images[0]?.url}
-          business={item?.name}
-          distance={item?.distance}
-          address={AddressFormat(item?.location)}
-          ratingsAverage={item?.counter[0]?.ratingsAverage}
-          ratingsQuantity={item?.counter[0]?.ratingsQuantity}
-          minPrice={item?.minPrice}
-          service={props?.serviceName}
-        />
+        <CardLocation location={item} service={props?.serviceName} />
         <Divider />
       </>
     ),

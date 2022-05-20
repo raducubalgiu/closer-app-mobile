@@ -4,25 +4,34 @@ import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";
-import { trimFunc } from "../../../utils/trimFunc";
+import { trimFunc, AddressFormat } from "../../../utils";
 
-const CardService = (props) => {
+export const CardLocation = ({ location }) => {
+  const {
+    _id,
+    images,
+    name,
+    counter,
+    minPrice,
+    distance,
+    location: address,
+  } = location;
   const navigation = useNavigation();
   const { t } = useTranslation();
+
+  const goToUser = () => navigation.push("LocationItem", { locationId: _id });
 
   return (
     <TouchableOpacity
       activeOpacity={1}
       style={styles.container}
-      onPress={() =>
-        navigation.navigate("ServiceItem", { serviceId: props.id })
-      }
+      onPress={goToUser}
     >
       <View style={styles.cardHeader}>
         <Image
           style={styles.cardImage}
           source={{
-            uri: props.image,
+            uri: images[0]?.url,
           }}
         />
         <Icon
@@ -35,8 +44,10 @@ const CardService = (props) => {
       </View>
       <View style={styles.cardContent}>
         <View style={styles.cardContentFlex}>
-          <Text style={styles.business}>{props.business}</Text>
-          <Text style={styles.address}>{trimFunc(props.address, 60)} </Text>
+          <Text style={styles.business}>{name}</Text>
+          <Text style={styles.address}>
+            {trimFunc(AddressFormat(address), 60)}{" "}
+          </Text>
           <View style={styles.ratingsContainer}>
             <Icon
               name="star"
@@ -45,15 +56,15 @@ const CardService = (props) => {
               color={theme.lightColors.primary}
             />
             <Text style={styles.ratingsAverage}>
-              {props.ratingsAverage.toFixed(1)}
+              {counter[0]?.ratingsAverage?.toFixed(1)}
             </Text>
             <Text style={styles.ratingsQuantity}>
-              {props.ratingsQuantity} {t("reviews")}
+              {counter[0]?.ratingsQuantity} {t("reviews")}
             </Text>
           </View>
           <View style={styles.priceContainer}>
             <Text style={styles.priceLabel}>de la</Text>
-            <Text style={styles.price}>{props.minPrice} Lei</Text>
+            <Text style={styles.price}>{minPrice} Lei</Text>
           </View>
         </View>
         <View style={styles.distanceContainer}>
@@ -64,17 +75,15 @@ const CardService = (props) => {
             color={theme.lightColors.black}
           />
           <Text style={styles.distance}>
-            {props.distance < 1
+            {distance < 1
               ? `la mai putin de 1 km`
-              : `la ${Math.round(props.distance)} km de tine`}
+              : `la ${Math.round(distance)} km de tine`}
           </Text>
         </View>
       </View>
     </TouchableOpacity>
   );
 };
-
-export default CardService;
 
 const styles = StyleSheet.create({
   container: {

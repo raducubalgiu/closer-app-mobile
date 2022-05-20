@@ -25,11 +25,9 @@ import SearchPostsScreen from "../screens/SearchPostsScreen";
 import SearchAllScreen from "../screens/SearchAllScreen";
 import FiltersDateScreen from "../screens/FilterDateScreen";
 import FiltersServiceScreen from "../screens/FiltersServiceScreen";
-import ServicesScreen from "../screens/ServicesScreen";
 import ExploreScreen from "../screens/ExploreScreen";
 import MessagesScreen from "../screens/MessagesScreen";
 import MessageItemScreen from "../screens/MessageItemScreen";
-import ServiceItemScreen from "../screens/ServiceItemScreen";
 import FeedScreen from "../screens/FeedScreen";
 import PostScreen from "../screens/PostScreen";
 
@@ -59,6 +57,8 @@ import EditProductScreen from "../screens/User/Profile/MyBusiness/EditProductScr
 import EditUsernameScreen from "../screens/User/Profile/EditProfile/EditUsernameScreen";
 import MyJobsScreen from "../screens/User/Profile/MyBusiness/MyJobsScreen";
 import AddJobsScreen from "../screens/User/Profile/MyBusiness/AddJobsScreen";
+import LocationsScreen from "../screens/LocationsScreen";
+import LocationItemScreen from "../screens/LocationItemScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -204,7 +204,7 @@ const CloserNavigation = () => {
             component={FiltersServiceScreen}
           />
           <Stack.Screen name="AllServices" component={AllServicesScreen} />
-          <Stack.Screen name="Services" component={ServicesScreen} />
+          <Stack.Screen name="Locations" component={LocationsScreen} />
           <RootStack.Screen name="AddLocation" component={AddLocationScreen} />
           <RootStack.Screen name="AddServices" component={AddServicesScreen} />
           <RootStack.Screen name="AddProducts" component={AddProductsScreen} />
@@ -234,7 +234,7 @@ const CloserNavigation = () => {
           <Stack.Screen name="SearchAll" component={SearchAllScreen} />
           <Stack.Screen name="Notifications" component={NotificationsScreen} />
           <Stack.Screen name="Post" component={PostScreen} />
-          <Stack.Screen name="ServiceItem" component={ServiceItemScreen} />
+          <Stack.Screen name="LocationItem" component={LocationItemScreen} />
         </RootStack.Navigator>
       )}
       {!user && (
