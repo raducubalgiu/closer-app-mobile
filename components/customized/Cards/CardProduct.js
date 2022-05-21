@@ -25,11 +25,13 @@ export const CardProduct = ({
       <Stack direction="row" align="start" sx={styles.container}>
         <Stack align="start" sx={styles.descriptionCont}>
           <Text style={styles.name}>{name}</Text>
-          {option && <Text style={styles.option}>{option}</Text>}
-          <Text style={styles.description}>
-            {t("duration")}: {currDuration}
-          </Text>
-          <Text style={styles.description}>{trimFunc(description, 100)}</Text>
+          {option && (
+            <Stack direction="row">
+              <Text style={styles.option}>{option}</Text>
+              <Text style={styles.duration}>{currDuration}</Text>
+            </Stack>
+          )}
+          <Text style={styles.description}>{trimFunc(description, 50)}</Text>
           <Text style={styles.price}>
             {price} {t("ron")}
           </Text>
@@ -68,6 +70,11 @@ const styles = StyleSheet.create({
     fontFamily: "Exo-SemiBold",
     color: theme.lightColors.primary,
     fontSize: 15,
+  },
+  duration: {
+    fontFamily: "Exo-Regular",
+    color: theme.lightColors.grey0,
+    marginLeft: 10,
   },
   descriptionCont: { flex: 1, marginRight: 5 },
   description: {

@@ -23,6 +23,8 @@ export const ProfileOverview = (props) => {
   const handleGoToProducts = (serviceId) => {
     if (user?._id === userContext?._id) {
       navigation.navigate("MyProducts", { serviceId });
+    } else {
+      navigation.navigate("Products", { serviceId });
     }
   };
 

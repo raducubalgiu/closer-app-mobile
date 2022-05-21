@@ -119,16 +119,21 @@ const ProfileGeneralScreen = (props) => {
     [userId]
   );
   const ProductsProfile = useCallback(
-    () => <ProductsProfileTab userId={userId} />,
-    [userId]
+    () => (
+      <ProductsProfileTab userId={userId} services={userDetails?.services} />
+    ),
+    [userId, userDetails]
   );
-  const AboutProfile = () => (
-    <AboutProfileTab
-      biography={userDetails?.description}
-      website={userDetails?.website}
-      location={userDetails?.location}
-      role={userDetails?.role}
-    />
+  const AboutProfile = useCallback(
+    () => (
+      <AboutProfileTab
+        biography={userDetails?.description}
+        website={userDetails?.website}
+        location={userDetails?.location}
+        role={userDetails?.role}
+      />
+    ),
+    [userDetails]
   );
 
   const renderSuggested = ({ item }) => {
@@ -226,7 +231,7 @@ const styles = StyleSheet.create({
     fontFamily: "Exo-SemiBold",
     color: theme.lightColors.black,
     marginBottom: 10,
-    fontSize: 15
+    fontSize: 15,
   },
   suggestedPeople: {
     margin: 15,

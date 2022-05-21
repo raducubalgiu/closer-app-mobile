@@ -1,12 +1,5 @@
-import {
-  StyleSheet,
-  Dimensions,
-  StatusBar,
-  ScrollView,
-  Text,
-  View,
-} from "react-native";
-import React, { useEffect, useState } from "react";
+import { StyleSheet, Dimensions, StatusBar, Text, View } from "react-native";
+import React from "react";
 import {
   Button,
   CustomAvatar,
@@ -19,32 +12,18 @@ import {
   StatsButton,
 } from "../components/core";
 import { Divider } from "@rneui/themed";
-import { BASE_ENDPOINT } from "@env";
-import axios from "axios";
-import { useAuth } from "../hooks";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../assets/styles/theme";
-import { AddressFormat, trimFunc } from "../utils";
+import { AddressFormat } from "../utils";
 import { useTranslation } from "react-i18next";
 import { ShowProducts } from "../components/customized";
 
 const { width, height } = Dimensions.get("window");
 
 const LocationItemScreen = ({ route }) => {
-  const { user } = useAuth();
-  const [location, setLocation] = useState(null);
-  const { locationId, distance } = route.params;
+  const { location, distance } = route.params || {};
   const navigation = useNavigation();
   const { t } = useTranslation();
-
-  useEffect(() => {
-    axios
-      .get(`${BASE_ENDPOINT}/users/${locationId}`, {
-        headers: { Authorization: `Bearer ${user?.token}` },
-      })
-      .then((res) => setLocation(res.data.user))
-      .catch((err) => console.log(err));
-  }, []);
 
   const goToUser = () =>
     navigation.push("ProfileGeneral", {
@@ -106,7 +85,7 @@ const LocationItemScreen = ({ route }) => {
               <Stack direction="row">
                 <IconStar size={19} />
                 <Text style={styles.rating}>
-                  {location?.counter?.ratingsAverage.toFixed(1)}
+                  {location?.counter[0]?.ratingsAverage?.toFixed(1)}
                 </Text>
               </Stack>
               <Stack
@@ -115,20 +94,20 @@ const LocationItemScreen = ({ route }) => {
                 sx={{ flex: 1, marginLeft: 20 }}
               >
                 <StatsButton
-                  onPress={() => goToStats(initialRoute)}
-                  statsNo={location?.counter?.ratingsQuantity}
+                  onPress={() => goToStats("Ratings")}
+                  statsNo={location?.counter[0]?.ratingsQuantity}
                   labelStats={t("reviews")}
                   labelStyle={styles.label}
                 />
                 <StatsButton
-                  onPress={() => goToStats(initialRoute)}
-                  statsNo={location?.counter?.followersCount}
+                  onPress={() => goToStats("Followers")}
+                  statsNo={location?.counter[0]?.followersCount}
                   labelStats={t("followers")}
                   labelStyle={styles.label}
                 />
                 <StatsButton
-                  onPress={() => goToStats(initialRoute)}
-                  statsNo={location?.counter?.followingCount}
+                  onPress={() => goToStats("Following")}
+                  statsNo={location?.counter[0]?.followingCount}
                   labelStats={t("following")}
                   labelStyle={styles.label}
                 />
@@ -137,11 +116,9 @@ const LocationItemScreen = ({ route }) => {
             <Divider color="#ddd" style={{ marginHorizontal: 15 }} />
           </>
         }
-        userId={locationId}
+        userId={location?._id}
         services={location?.services}
         initServ={location?.services[0]?._id}
-        serviceId={undefined}
-        product={undefined}
       />
     </View>
   );

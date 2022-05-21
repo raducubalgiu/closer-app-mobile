@@ -73,7 +73,7 @@ export const ShowProducts = ({
         </Text>
       </Button>
     ),
-    []
+    [activeService]
   );
 
   const renderProducts = useCallback(
@@ -100,6 +100,7 @@ export const ShowProducts = ({
         data={services}
         keyExtractor={(item) => item?._id}
         showsHorizontalScrollIndicator={false}
+        bounces={false}
         contentContainerStyle={styles.headerContainer}
         renderItem={renderService}
       />

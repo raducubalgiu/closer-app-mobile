@@ -1,95 +1,16 @@
-import { FlatList } from "react-native";
-import axios from "axios";
-import CardProduct from "../../Cards/CardProduct";
-import React, { useState } from "react";
-import NotFoundContent from "../../NotFoundContent/NotFoundContent";
-import { useFocusEffect } from "@react-navigation/native";
-import { useAuth } from "../../../../hooks/auth";
-import { Spinner } from "../../../core";
+import React from "react";
+import { ShowProducts } from "../../ShowProducts/ShowProducts";
 
-export const ProductsProfileTab = (props) => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState([]);
-  const { user } = useAuth();
-  const { userId } = props;
-
-  useFocusEffect(
-    React.useCallback(() => {
-      setLoading(true);
-      axios
-        .get(`${process.env.BASE_ENDPOINT}/users/${userId}/products`, {
-          headers: { Authorization: `Bearer ${user?.token}` },
-        })
-        .then((res) => {
-          console.log("FETCH PRODUCTS");
-          setProducts(res.data.products);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-          setLoading(false);
-        });
-    }, [userId, user?.token])
-  );
-
-  let noFoundContent;
-  if (products?.length === 0 && user?._id === userId) {
-    noFoundContent = (
-      <NotFoundContent
-        iconName="shoppingcart"
-        iconType="antdesign"
-        title="Listeaza-ti Produsele"
-        description="Aici vei adauga produsele (serviciile) pe care le detii la locatie pentru ca acestea sa poata fi rezervate de catre clienti"
-      />
-    );
-  }
-
-  const deleteProductHandler = (productId) => {
-    axios
-      .delete(
-        `${process.env.BASE_ENDPOINT}/users/${user?._id}/products/${productId}`,
-        {
-          headers: { Authorization: `Bearer ${user?.token}` },
-        }
-      )
-      .then(() =>
-        setProducts((products) =>
-          products.filter((product) => product._id !== productId)
-        )
-      )
-      .catch((err) => console.log(err));
-  };
-
-  const renderProducts = ({ item }) => (
-    <CardProduct
-      name={item.name}
-      description={item.description}
-      price={item.price}
-      option={item.option[0].name}
-      canBook={item?.user !== user?._id}
-      duration={item?.duration}
-      onEditProduct={() =>
-        navigation.navigate("EditProduct", {
-          product: item,
-        })
-      }
-      onDeleteProduct={() => deleteProductHandler(item?._id)}
-    />
-  );
+export const ProductsProfileTab = ({ userId, route, services }) => {
+  const { serviceId, product } = route?.params || {};
 
   return (
-    <>
-      {!loading && (
-        <FlatList
-          data={products}
-          bounces={false}
-          keyExtractor={(item) => item._id}
-          showsVerticalScrollIndicator={false}
-          renderItem={renderProducts}
-          ListHeaderComponent={noFoundContent}
-        />
-      )}
-      {loading && <Spinner />}
-    </>
+    <ShowProducts
+      userId={userId}
+      services={services}
+      initServices={services && services[0]?._id}
+      serviceId={serviceId}
+      product={product}
+    />
   );
 };

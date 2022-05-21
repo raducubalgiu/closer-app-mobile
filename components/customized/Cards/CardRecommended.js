@@ -9,12 +9,12 @@ import { AddressFormat, trimFunc } from "../../../utils";
 const { width } = Dimensions.get("window");
 
 export const CardRecommended = ({ location }) => {
-  const { _id, images, name, distance, services, counter } = location;
+  const { images, name, distance, services, counter } = location;
   const navigation = useNavigation();
   const { t } = useTranslation();
 
   const goToUser = () =>
-    navigation.push("LocationItem", { locationId: _id, distance });
+    navigation.push("LocationItem", { location, distance });
 
   return (
     <Button sx={styles.button} onPress={goToUser}>
