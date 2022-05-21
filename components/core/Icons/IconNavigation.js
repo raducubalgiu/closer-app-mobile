@@ -2,14 +2,13 @@ import React from "react";
 import { Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 
-export const IconLocation = ({ size, sx, color }) => {
+export const IconNavigation = ({ size }) => {
   return (
     <Icon
-      name="map-pin"
+      name="navigation"
       type="feather"
+      color={theme.lightColors.grey0}
       size={size ? size : 20}
-      color={color ? color : theme.lightColors.grey0}
-      containerStyle={sx}
     />
   );
 };

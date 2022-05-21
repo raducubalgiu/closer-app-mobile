@@ -6,11 +6,13 @@ import { useNavigation } from "@react-navigation/native";
 import { ListItem, Icon } from "@rneui/themed";
 import { useAuth } from "../../../hooks/auth";
 import theme from "../../../assets/styles/theme";
+import { MAIN_ROLE, SECOND_ROLE, THIRD_ROLE } from "@env";
+import { Protected } from "../../core";
 import { useTranslation } from "react-i18next";
 
 export const SettingsList = () => {
   const navigation = useNavigation();
-  const { setUser } = useAuth();
+  const { user, setUser } = useAuth();
   const auth = getAuth();
   const { t } = useTranslation();
 
@@ -31,6 +33,7 @@ export const SettingsList = () => {
       iconName: "airplay",
       iconType: "feather",
       navigation: "MyBusiness",
+      roles: [MAIN_ROLE, SECOND_ROLE],
     },
     {
       _id: "2",
@@ -38,6 +41,7 @@ export const SettingsList = () => {
       iconName: "setting",
       iconType: "antdesign",
       navigation: "Settings",
+      roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE],
     },
     {
       _id: "3",
@@ -45,6 +49,7 @@ export const SettingsList = () => {
       iconName: "bars",
       iconType: "antdesign",
       navigation: "Schedules",
+      roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE],
     },
     {
       _id: "4",
@@ -52,6 +57,7 @@ export const SettingsList = () => {
       iconName: "gift",
       iconType: "antdesign",
       navigation: "Discounts",
+      roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE],
     },
     {
       _id: "5",
@@ -59,12 +65,14 @@ export const SettingsList = () => {
       iconName: "exclamationcircleo",
       iconType: "antdesign",
       navigation: "Discounts",
+      roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE],
     },
     {
       _id: "6",
       title: "Distribuie profile",
       iconName: "sharealt",
       iconType: "antdesign",
+      roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE],
     },
     {
       _id: "7",
@@ -72,31 +80,34 @@ export const SettingsList = () => {
       iconName: "logout",
       iconType: "antdesign",
       action: handleLogout,
+      roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE],
     },
   ];
 
   const renderItem = ({ item }) => (
-    <ListItem
-      bottomDivider
-      onPress={
-        item?.navigation
-          ? () => navigation.navigate(item?.navigation)
-          : item?.action
-      }
-      containerStyle={{
-        paddingLeft: 0,
-        backgroundColor: theme.lightColors.white,
-      }}
-    >
-      <Icon
-        name={item?.iconName}
-        type={item?.iconType}
-        color={theme.lightColors.black}
-      />
-      <ListItem.Content>
-        <ListItem.Title style={styles.text}>{item?.title}</ListItem.Title>
-      </ListItem.Content>
-    </ListItem>
+    <Protected userRole={user?.role} roles={item?.roles}>
+      <ListItem
+        bottomDivider
+        onPress={
+          item?.navigation
+            ? () => navigation.navigate(item?.navigation)
+            : item?.action
+        }
+        containerStyle={{
+          paddingLeft: 0,
+          backgroundColor: theme.lightColors.white,
+        }}
+      >
+        <Icon
+          name={item?.iconName}
+          type={item?.iconType}
+          color={theme.lightColors.black}
+        />
+        <ListItem.Content>
+          <ListItem.Title style={styles.text}>{item?.title}</ListItem.Title>
+        </ListItem.Content>
+      </ListItem>
+    </Protected>
   );
 
   return (

@@ -50,3 +50,5 @@ export { NoFoundMessage } from "./NotFoundContent/NoFoundMessage";
 export { Map } from "../customized/Map/Map";
 
 export { SheetService } from "../customized/BottomSheets/SheetService";
+
+export { ShowProducts } from "../customized/ShowProducts/ShowProducts";

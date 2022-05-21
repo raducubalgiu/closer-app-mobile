@@ -70,13 +70,9 @@ export const ProfileOverview = (props) => {
         <Protected userRole={user?.role} roles={[MAIN_ROLE, SECOND_ROLE]}>
           <StatsButton
             onPress={() =>
-              navigation.navigate("ProfileGeneralStack", {
-                screen: "ProfileStats",
-                params: {
-                  userId: user?._id,
-                  username: user?.username,
-                  initialRoute: "Ratings",
-                },
+              navigation.navigate("ProfileStats", {
+                userId: user?._id,
+                username: user?.username,
               })
             }
             labelStats={t("reviews")}
@@ -91,13 +87,11 @@ export const ProfileOverview = (props) => {
         </Protected>
         <StatsButton
           onPress={() =>
-            navigation.navigate("ProfileGeneralStack", {
+            navigation.navigate("ProfileStats", {
               screen: "ProfileStats",
-              params: {
-                userId: user?._id,
-                username: user?.username,
-                initialRoute: "Followers",
-              },
+              userId: user?._id,
+              username: user?.username,
+              initialRoute: "Followers",
             })
           }
           labelStats={t("followers")}
@@ -105,13 +99,11 @@ export const ProfileOverview = (props) => {
         />
         <StatsButton
           onPress={() =>
-            navigation.navigate("ProfileGeneralStack", {
+            navigation.navigate("ProfileStats", {
               screen: "ProfileStats",
-              params: {
-                userId: user?._id,
-                username: user?.username,
-                initialRoute: "Following",
-              },
+              userId: user?._id,
+              username: user?.username,
+              initialRoute: "Following",
             })
           }
           labelStats={t("following")}

@@ -2,17 +2,17 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 
-export const StatsButton = (props) => {
+export const StatsButton = ({ onPress, statsNo, labelStats, labelStyle }) => {
   return (
     <TouchableOpacity
       activeOpacity={1}
       style={styles.container}
-      onPress={props.onPress}
+      onPress={onPress}
     >
-      <Text style={styles.statsNumber}>
-        {props?.statsNo ? props?.statsNo : 0}
+      <Text style={styles.statsNumber}>{statsNo ? statsNo : 0}</Text>
+      <Text style={labelStyle ? labelStyle : styles.statsText}>
+        {labelStats}
       </Text>
-      <Text style={styles.statsText}>{props.labelStats}</Text>
     </TouchableOpacity>
   );
 };

@@ -16,8 +16,8 @@ import EditWebsiteScreen from "../screens/User/Profile/EditProfile/EditWebsiteSc
 import EditBioScreen from "../screens/User/Profile/EditProfile/EditBioScreen";
 import EditPhotoLibraryScreen from "../screens/User/Profile/EditProfile/EditPhotoLibraryScreen";
 import SettingsScreen from "../screens/User/Profile/Settings/SettingsProfileScreen";
-import SchedulesScreen from "../screens/User/Profile/Settings/SchedulesProfileScreen";
-import DiscountsScreen from "../screens/User/Profile/Settings/DiscountsProfileScreen";
+import SchedulesScreen from "../screens/User/Profile/Settings/SchedulesScreen";
+import DiscountsScreen from "../screens/User/Profile/Settings/DiscountScreen";
 import FindFriendsScreen from "../screens/User/Profile/FindFriendsScreen";
 
 import SearchServicesScreen from "../screens/SearchServicesScreen";
@@ -74,10 +74,6 @@ const FeedStackNavigator = () => {
       <Stack.Screen name="Feed" component={FeedScreen} />
       <Stack.Screen name="Likes" component={LikesScreen} />
       <Stack.Screen name="SearchPosts" component={SearchPostsScreen} />
-      <Stack.Screen
-        name="ProfileGeneralStack"
-        component={ProfileStackNavigator}
-      />
     </Stack.Navigator>
   );
 };
@@ -119,24 +115,6 @@ const UserStackNavigator = () => {
       <Stack.Screen name="Discounts" component={DiscountsScreen} />
       <Stack.Screen name="FindFriends" component={FindFriendsScreen} />
       <Stack.Screen name="Bookmarks" component={BookmarksScreen} />
-      <Stack.Screen
-        name="ProfileGeneralStack"
-        component={ProfileStackNavigator}
-      />
-    </Stack.Navigator>
-  );
-};
-
-const ProfileStackNavigator = () => {
-  return (
-    <Stack.Navigator
-      initialRouteName="ProfileGeneral"
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <Stack.Screen name="ProfileGeneral" component={ProfileGeneralScreen} />
-      <Stack.Screen name="ProfileStats" component={ProfileStatsScreen} />
     </Stack.Navigator>
   );
 };
@@ -235,6 +213,11 @@ const CloserNavigation = () => {
           <Stack.Screen name="Notifications" component={NotificationsScreen} />
           <Stack.Screen name="Post" component={PostScreen} />
           <Stack.Screen name="LocationItem" component={LocationItemScreen} />
+          <Stack.Screen
+            name="ProfileGeneral"
+            component={ProfileGeneralScreen}
+          />
+          <Stack.Screen name="ProfileStats" component={ProfileStatsScreen} />
         </RootStack.Navigator>
       )}
       {!user && (

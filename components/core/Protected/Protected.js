@@ -1,9 +1,6 @@
 import React from "react";
 
-const Protected = (props) => {
-  const { roles } = props;
-  const { userRole } = props;
-
+const Protected = ({ roles, userRole, children }) => {
   let visible = false;
 
   if (roles.includes(userRole)) {
@@ -14,7 +11,7 @@ const Protected = (props) => {
     visible = false;
   }
 
-  return <>{visible && props.children}</>;
+  return <>{visible && children}</>;
 };
 
 export default Protected;

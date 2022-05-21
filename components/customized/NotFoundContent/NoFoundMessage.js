@@ -4,10 +4,15 @@ import { Stack } from "../../core";
 import { Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 
-export const NoFoundMessage = ({ title, description }) => {
+export const NoFoundMessage = ({ title, description, iconName, iconType }) => {
   return (
     <Stack align="center" justify="center" sx={styles.container}>
-      <Icon name="info" type="simple-line-icon" size={50} color="#ddd" />
+      <Icon
+        name={iconName ? iconName : "info"}
+        type={iconType ? iconType : "simple-line-icon"}
+        size={50}
+        color="#ddd"
+      />
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.description}>{description}</Text>
     </Stack>

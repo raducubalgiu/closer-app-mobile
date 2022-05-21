@@ -10,10 +10,7 @@ export const CardFollowers = ({ avatar, followeeId, username, name }) => {
   const { user } = useAuth();
 
   const goToUser = (userId) => {
-    navigation.push("ProfileGeneralStack", {
-      screen: "ProfileGeneral",
-      params: { userId },
-    });
+    navigation.push("ProfileGeneral", { userId });
   };
 
   return (

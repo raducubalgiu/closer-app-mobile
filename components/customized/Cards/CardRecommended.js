@@ -13,7 +13,8 @@ export const CardRecommended = ({ location }) => {
   const navigation = useNavigation();
   const { t } = useTranslation();
 
-  const goToUser = () => navigation.push("LocationItem", { locationId: _id });
+  const goToUser = () =>
+    navigation.push("LocationItem", { locationId: _id, distance });
 
   return (
     <Button sx={styles.button} onPress={goToUser}>
@@ -83,6 +84,7 @@ const styles = StyleSheet.create({
     color: theme.lightColors.black,
     fontFamily: "Exo-SemiBold",
     fontSize: 14,
+    textTransform: "capitalize",
   },
   distance: {
     fontSize: 12,

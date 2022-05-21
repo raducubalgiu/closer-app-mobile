@@ -106,5 +106,10 @@
   "myJobs": "Joburile mele",
   "notProductsAddedForService": "Încă nu ai adăugat produse pentru acest serviciu",
   "noJobsAdded": "Încă nu ai adăugat joburi",
-  "kmFromYou": "km de tine"
+  "kmFromYou": "km de tine",
+  "discounts": "Discounturi",
+  "noDiscountsFound": "Încă nu beneficiezi de nici un discount",
+  "schedules": "Programări",
+  "noSchedulesFound": "Încă nu efectuat nici o programare",
+  "myCalendar": "Calendarul meu"
 }

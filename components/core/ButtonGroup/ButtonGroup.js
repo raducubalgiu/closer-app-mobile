@@ -27,6 +27,11 @@ const ButtonGroup = (props) => {
     buttonTextActive: { fontFamily: "Exo-SemiBold", fontSize: 13.5 },
   });
 
+  const handleButton = useCallback(() => {
+    setActiveBtn(index);
+    props.onPress(index);
+  }, []);
+
   return (
     <View style={styles.sx}>
       <View style={styles.buttonsContainer}>
@@ -34,10 +39,7 @@ const ButtonGroup = (props) => {
           <TouchableOpacity
             key={index}
             activeOpacity={1}
-            onPress={useCallback(() => {
-              setActiveBtn(index);
-              props.onPress(index);
-            }, [])}
+            onPress={handleButton}
             style={
               index === activeBtn
                 ? { ...styles.button, ...styles.active }

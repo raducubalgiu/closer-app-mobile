@@ -33,6 +33,7 @@ export { IconStar } from "./Icons/IconStar";
 export { IconBook } from "./Icons/IconBook";
 export { IconVideo } from "./Icons/IconVideo";
 export { IconLocation } from "./Icons/IconLocation";
+export { IconNavigation } from "./Icons/IconNavigation";
 
 export { default as Modal } from "./Modal/Modal";
 

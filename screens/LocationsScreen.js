@@ -48,7 +48,13 @@ const LocationsScreen = (props) => {
   }, [fetchLocations]);
 
   const renderLocation = useCallback(
-    ({ item }) => <CardLocation location={item} service={serviceName} />,
+    ({ item }) => (
+      <CardLocation
+        location={item}
+        service={serviceName}
+        distance={item.distance}
+      />
+    ),
     []
   );
 
