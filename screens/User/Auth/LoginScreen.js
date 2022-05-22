@@ -11,16 +11,23 @@ import { useNavigation } from "@react-navigation/native";
 const LoginScreen = () => {
   const { setUser } = useAuth();
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
+  const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
   const navigation = useNavigation();
 
   const onSubmit = async (data) => {
+    setLoading(true);
     try {
-      const { user, error } = await AuthService.loginWithPassword(
+      const { user, err } = await AuthService.loginWithPassword(
         data.email,
         data.password
       );
-      if (!error) {
+      if (err) {
+        setLoading(false);
+        return;
+      } else {
+        setLoading(false);
+
         const idTokenResult = await user?.getIdTokenResult();
         const userResult = await axios.post(
           `${process.env.BASE_ENDPOINT}/users/create-or-update-user`,
@@ -70,6 +77,7 @@ const LoginScreen = () => {
         });
       }
     } catch (err) {
+      setLoading(false);
       setFeedback({ visible: true, message: t("somethingWentWrong") });
     }
   };
@@ -79,6 +87,7 @@ const LoginScreen = () => {
       <Feedback feedback={feedback} setFeedback={setFeedback} />
       <Header />
       <LoginRegisterForm
+        loading={loading}
         onSubmit={onSubmit}
         heading={t("login")}
         statusText={t("dontHaveAccount")}

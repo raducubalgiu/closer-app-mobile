@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
 import React, { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { Divider } from "@rneui/themed";
@@ -18,6 +18,7 @@ export const LoginRegisterForm = ({
   statusText,
   statusBtn,
   statusAction,
+  loading,
 }) => {
   const [disabled, setDisabled] = useState(true);
   const methods = useForm({ defaultValues });
@@ -54,7 +55,13 @@ export const LoginRegisterForm = ({
           secureTextEntry={true}
         />
         <MainButton
-          title={heading}
+          title={
+            !loading ? (
+              heading
+            ) : (
+              <ActivityIndicator size="small" color="white" />
+            )
+          }
           onPress={handleSubmit(onSubmit)}
           disabled={disabled}
         />

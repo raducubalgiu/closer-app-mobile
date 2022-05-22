@@ -9,9 +9,11 @@ import { useTranslation } from "react-i18next";
 const RegisterScreen = () => {
   const navigation = useNavigation();
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
+  const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
 
   const onSubmit = async (data) => {
+    setLoading(true);
     try {
       const { email, password } = data;
       const { user, err } = await AuthService.registerWithPassword(
@@ -20,11 +22,12 @@ const RegisterScreen = () => {
       );
 
       if (err && err.code === "auth/email-already-in-use") {
-        setFeedback({ visible: "true", message: t("emailAlreadyInUse") });
+        setFeedback({ visible: true, message: t("emailAlreadyInUse") });
+        setLoading(false);
         return;
       }
-
-      if (user && !error) {
+      if (!err) {
+        setLoading(false);
         const idTokenResult = await user.getIdTokenResult();
         navigation.navigate("Username", {
           role: "subscriber",
@@ -33,6 +36,7 @@ const RegisterScreen = () => {
         });
       }
     } catch (err) {
+      setLoading(false);
       setFeedback({ visible: true, message: t("somethingWentWrong") });
     }
   };
@@ -42,6 +46,7 @@ const RegisterScreen = () => {
       <Feedback feedback={feedback} setFeedback={setFeedback} />
       <Header />
       <LoginRegisterForm
+        loading={loading}
         onSubmit={onSubmit}
         heading={t("register")}
         statusText={t("haveAccount")}

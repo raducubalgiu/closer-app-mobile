@@ -38,7 +38,7 @@ const AuthScreen = () => {
           color={theme.lightColors.black}
         />
         <Stack align="start" sx={{ marginLeft: 20, flex: 1 }}>
-          <Text style={styles.businessText}>{t("haveAccount")}</Text>
+          <Text style={styles.businessText}>{t("haveAccountBusiness")}</Text>
           <Button onPress={() => navigation.navigate("RegisterBusiness")}>
             <Text style={styles.registerBtnText}>{t("register")}</Text>
           </Button>

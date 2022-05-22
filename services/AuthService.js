@@ -39,7 +39,7 @@ export const AuthService = {
       };
     } catch (error) {
       return {
-        error: error.message,
+        err: { code: error.code, message: error.message },
       };
     }
   },

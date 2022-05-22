@@ -118,5 +118,7 @@
   "loginWithFacebook": "Continuă cu Facebook",
   "email": "Email",
   "password": "Parolă",
-  "emailAlreadyInUse": "Ai deja cont. Mergi către conectare"
+  "emailAlreadyInUse": "Ai deja cont. Mergi către conectare",
+  "chooseUsername": "Creează un nume de utilizator",
+  "chooseUsernameLong": "Alege un nume de utilizator pentru contul tău. Îl poţi schimba oricand"
 }
