@@ -29,13 +29,13 @@ const RegisterBusinessScreen = () => {
       }
 
       if (user && !error) {
-        setLoading(false);
         const idTokenResult = await user.getIdTokenResult();
         navigation.navigate("Username", {
           role: FIRST_ROLE,
           business: process.env.DEFAULT_BUSINESS,
           idTokenResult,
         });
+        setLoading(false);
       }
     } catch (err) {
       setLoading(false);

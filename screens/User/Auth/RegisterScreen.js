@@ -27,13 +27,13 @@ const RegisterScreen = () => {
         return;
       }
       if (!err) {
-        setLoading(false);
         const idTokenResult = await user.getIdTokenResult();
         navigation.navigate("Username", {
           role: "subscriber",
           business: undefined,
           idTokenResult,
         });
+        setLoading(false);
       }
     } catch (err) {
       setLoading(false);

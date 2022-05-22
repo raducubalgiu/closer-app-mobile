@@ -26,8 +26,6 @@ const LoginScreen = () => {
         setLoading(false);
         return;
       } else {
-        setLoading(false);
-
         const idTokenResult = await user?.getIdTokenResult();
         const userResult = await axios.post(
           `${process.env.BASE_ENDPOINT}/users/create-or-update-user`,
@@ -75,6 +73,7 @@ const LoginScreen = () => {
           token: idTokenResult?.token,
           validated,
         });
+        setLoading(false);
       }
     } catch (err) {
       setLoading(false);
