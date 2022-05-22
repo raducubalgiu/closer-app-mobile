@@ -15,7 +15,6 @@ import CompleteProfile from "../../CompleteProfile/CompleteProfile";
 import NoFoundPosts from "../../NotFoundContent/NoFoundPosts";
 import theme from "../../../../assets/styles/theme";
 import { useAuth } from "../../../../hooks/auth";
-import { Video, AVPlaybackStatus } from "expo-av";
 
 const { width } = Dimensions.get("window");
 
@@ -24,8 +23,6 @@ export const PostsProfileTab = (props) => {
   const { user } = useAuth();
   const { userId } = props;
   const navigation = useNavigation();
-  const videoRef = React.useRef(null);
-  const [status, setStatus] = React.useState({});
 
   useFocusEffect(
     React.useCallback(() => {
@@ -71,19 +68,11 @@ export const PostsProfileTab = (props) => {
           }
         >
           <View style={{ position: "relative" }}>
-            <Video
-              ref={videoRef}
-              style={styles.image}
+            <Image
               source={{
                 uri: `${item?.images[0]?.url}`,
               }}
-              useNativeControls={false}
-              resizeMode="cover"
-              isLooping
-              onPlaybackStatusUpdate={(status) => setStatus(() => status)}
-              shouldPlay={false}
-              onTouchStart={() => console.log("Start")}
-              isMuted={false}
+              style={styles.image}
             />
             {item?.bookable && (
               <View style={styles.bookable}>

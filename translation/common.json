@@ -120,5 +120,8 @@
   "password": "Parolă",
   "emailAlreadyInUse": "Ai deja cont. Mergi către conectare",
   "chooseUsername": "Creează un nume de utilizator",
-  "chooseUsernameLong": "Alege un nume de utilizator pentru contul tău. Îl poţi schimba oricand"
+  "chooseUsernameLong": "Alege un nume de utilizator pentru contul tău. Îl poţi schimba oricand",
+  "addBusinessType": "Adaugă tipul afacerii",
+  "selectBusinessType": "Selectează tipul afacerii tale",
+  "selectCategory": "Selectează categoria"
 }
