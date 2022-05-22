@@ -1,44 +1,27 @@
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  TextInput,
-} from "react-native";
-import React from "react";
+import { SafeAreaView, StyleSheet } from "react-native";
+import React, { useState } from "react";
 import axios from "axios";
-import { useForm, Controller } from "react-hook-form";
-import { Divider } from "@rneui/themed";
-import { useNavigation } from "@react-navigation/native";
-import theme from "../../../assets/styles/theme";
 import { AuthService } from "../../../services/AuthService";
-import { Header, MainButton, ButtonProvider } from "../../../components/core";
+import { Header, Feedback } from "../../../components/core";
 import { useAuth } from "../../../hooks/auth";
+import { LoginRegisterForm } from "../../../components/customized";
+import { useTranslation } from "react-i18next";
+import { useNavigation } from "@react-navigation/native";
 
 const LoginScreen = () => {
   const { setUser } = useAuth();
+  const [feedback, setFeedback] = useState({ visible: false, message: "" });
+  const { t } = useTranslation();
   const navigation = useNavigation();
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
+
   const onSubmit = async (data) => {
     try {
       const { user, error } = await AuthService.loginWithPassword(
         data.email,
         data.password
       );
-
       if (!error) {
         const idTokenResult = await user?.getIdTokenResult();
-
         const userResult = await axios.post(
           `${process.env.BASE_ENDPOINT}/users/create-or-update-user`,
           {},
@@ -48,7 +31,6 @@ const LoginScreen = () => {
             },
           }
         );
-
         const {
           _id,
           name,
@@ -67,7 +49,6 @@ const LoginScreen = () => {
           counter,
           validated,
         } = userResult.data.user;
-
         setUser({
           _id,
           name,
@@ -89,103 +70,21 @@ const LoginScreen = () => {
         });
       }
     } catch (err) {
-      console.log(err);
+      setFeedback({ visible: true, message: t("somethingWentWrong") });
     }
   };
 
   return (
     <SafeAreaView style={styles.screen}>
+      <Feedback feedback={feedback} setFeedback={setFeedback} />
       <Header />
-      <View style={styles.loginContainer}>
-        <Text style={styles.mainHeading}>Autentificare</Text>
-        <Controller
-          control={control}
-          rules={{
-            required: true,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              style={{
-                borderTopLeftRadius: 10,
-                borderTopRightRadius: 10,
-                ...styles.input,
-              }}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              placeholder="Email"
-              placeholderTextColor={theme.lightColors.grey0}
-            />
-          )}
-          name="email"
-        />
-        {errors.email && <Text>This is required.</Text>}
-
-        <Controller
-          control={control}
-          rules={{
-            required: true,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              style={{
-                borderBottomLeftRadius: 10,
-                borderBottomRightRadius: 10,
-                ...styles.input,
-              }}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              placeholder="Parola"
-              secureTextEntry={true}
-              placeholderTextColor={theme.lightColors.grey0}
-            />
-          )}
-          name="password"
-        />
-        {errors.password && <Text>This is required.</Text>}
-
-        <View style={{ marginTop: 10 }}>
-          <MainButton title="Conecteaza-te" onPress={handleSubmit(onSubmit)} />
-        </View>
-
-        <View style={styles.actionsContainer}>
-          <View style={styles.actionRegister}>
-            <Text style={{ fontFamily: "Exo-Regular", marginRight: 5 }}>
-              Ai deja cont?
-            </Text>
-            <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-              <Text style={{ fontFamily: "Exo-SemiBold" }}>
-                Inregistreaza-te
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <Divider style={{ marginTop: 20, marginBottom: 35 }} />
-
-        <ButtonProvider
-          onPress={() => {}}
-          iconName="googleplus"
-          iconType="antdesign"
-          color="#DB4437"
-          text="Continua cu Google"
-        />
-        <ButtonProvider
-          onPress={() => {}}
-          iconName="apple1"
-          iconType="antdesign"
-          color={theme.lightColors.black}
-          text="Continua cu Apple"
-        />
-        <ButtonProvider
-          onPress={() => {}}
-          iconName="facebook"
-          iconType="material"
-          color="#4267B2"
-          text="Continua cu Facebook"
-        />
-      </View>
+      <LoginRegisterForm
+        onSubmit={onSubmit}
+        heading={t("login")}
+        statusText={t("dontHaveAccount")}
+        statusBtn={t("register")}
+        statusAction={() => navigation.push("Register")}
+      />
     </SafeAreaView>
   );
 };
@@ -196,31 +95,5 @@ const styles = StyleSheet.create({
   screen: {
     backgroundColor: "white",
     flex: 1,
-  },
-  loginContainer: {
-    paddingHorizontal: 20,
-  },
-  mainHeading: {
-    fontFamily: "Exo-SemiBold",
-    fontSize: 25,
-    color: theme.lightColors.black,
-    marginTop: 30,
-    marginBottom: 25,
-  },
-  input: {
-    padding: 17.5,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    fontFamily: "Exo-Regular",
-  },
-  actionsContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  actionRegister: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginVertical: 5,
   },
 });

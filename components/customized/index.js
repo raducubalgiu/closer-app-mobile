@@ -52,3 +52,6 @@ export { Map } from "../customized/Map/Map";
 export { SheetService } from "../customized/BottomSheets/SheetService";
 
 export { ShowProducts } from "../customized/ShowProducts/ShowProducts";
+
+export { LoginRegisterForm } from "../customized/Forms/LoginRegisterForm";
+export { AuthProviders } from "../customized/Forms/AuthProviders";

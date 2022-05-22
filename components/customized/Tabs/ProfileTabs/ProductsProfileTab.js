@@ -8,7 +8,7 @@ export const ProductsProfileTab = ({ userId, route, services }) => {
     <ShowProducts
       userId={userId}
       services={services}
-      initServices={services && services[0]?._id}
+      initServ={services[0]?._id}
       serviceId={serviceId}
       product={product}
     />

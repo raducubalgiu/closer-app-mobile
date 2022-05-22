@@ -79,10 +79,11 @@
   "chooseFromLibrary": "Alege din librărie",
   "yourProfile": "Profilul tău",
   "dontHaveAccount": "Nu ai cont?",
+  "haveAccount": "Ai cont?",
   "signUp": "Înscrie-te",
   "connect": "Conectează-te",
   "connectIntoAccountTitle": "Conectează-te pentru a începe să rezervi servicii",
-  "haveAccount": "Deţii un business? Începe să primeşti clienţi imediat",
+  "haveAccountBusiness": "Deţii un business? Începe să primeşti clienţi imediat",
   "likes": "aprecieri",
   "addName": "Adaugă numele",
   "addWebsite": "Adaugă website",
@@ -111,5 +112,11 @@
   "noDiscountsFound": "Încă nu beneficiezi de nici un discount",
   "schedules": "Programări",
   "noSchedulesFound": "Încă nu efectuat nici o programare",
-  "myCalendar": "Calendarul meu"
+  "myCalendar": "Calendarul meu",
+  "loginWithGoogle": "Continuă cu Google",
+  "loginWithApple": "Continuă cu Apple",
+  "loginWithFacebook": "Continuă cu Facebook",
+  "email": "Email",
+  "password": "Parolă",
+  "emailAlreadyInUse": "Ai deja cont. Mergi către conectare"
 }

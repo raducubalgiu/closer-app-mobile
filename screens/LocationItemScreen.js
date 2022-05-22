@@ -158,6 +158,7 @@ const styles = StyleSheet.create({
     fontSize: 21,
     flex: 1,
     marginLeft: 10,
+    textTransform: "capitalize",
   },
   rating: {
     fontFamily: "Exo-SemiBold",
