@@ -102,7 +102,7 @@ const ProfileGeneralScreen = (props) => {
           size={20}
           color={theme.lightColors.black}
           iconType="antdesign"
-          iconName="addusergroup"
+          iconName="adduser"
           onPress={handleSuggested}
         />
       )}
@@ -118,12 +118,14 @@ const ProfileGeneralScreen = (props) => {
     () => <PostsProfileTab userId={userId} />,
     [userId]
   );
+
   const ProductsProfile = useCallback(
     () => (
       <ProductsProfileTab userId={userId} services={userDetails?.services} />
     ),
     [userId, userDetails]
   );
+
   const AboutProfile = useCallback(
     () => (
       <AboutProfileTab
@@ -133,6 +135,10 @@ const ProfileGeneralScreen = (props) => {
         role={userDetails?.role}
       />
     ),
+    [userDetails]
+  );
+  const CalendarProfile = useCallback(
+    () => <CalendarProfileTab services={userDetails?.services} />,
     [userDetails]
   );
 
@@ -153,11 +159,13 @@ const ProfileGeneralScreen = (props) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <HeaderProfileGeneral
-        name={userDetails?.name}
-        checkmark={userDetails?.checkmark}
-      />
+    <View style={styles.container}>
+      <SafeAreaView>
+        <HeaderProfileGeneral
+          name={userDetails?.name}
+          checkmark={userDetails?.checkmark}
+        />
+      </SafeAreaView>
       <ProfileOverview
         user={userDetails}
         badgeDetails={props.badgeDetails}
@@ -179,14 +187,12 @@ const ProfileGeneralScreen = (props) => {
         <TopTabContainer initialRouteName="Posts" profileTabs={true}>
           <Tab.Screen name="Posts" component={PostsProfile} />
           {admin && <Tab.Screen name="Products" component={ProductsProfile} />}
-          {admin && (
-            <Tab.Screen name="Calendar" component={CalendarProfileTab} />
-          )}
+          {admin && <Tab.Screen name="Calendar" component={CalendarProfile} />}
           {admin && <Tab.Screen name="Jobs" component={JobsProfileTab} />}
           <Tab.Screen name="About" component={AboutProfile} />
         </TopTabContainer>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

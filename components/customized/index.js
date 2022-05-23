@@ -34,6 +34,8 @@ export { CardProduct } from "./Cards/CardProduct";
 export { CardSuggestedPeople } from "./Cards/CardSuggestedPeople";
 export { CardLocation } from "./Cards/CardLocation";
 export { CardRecommended } from "./Cards/CardRecommended";
+export { CardAvailableHour } from "./Cards/CardAvailableHour";
+export { CardServicesHeader } from "./Cards/CardServicesHeader";
 
 export { HeaderServices } from "../customized/Layout/Headers/HeaderServices";
 export { HeaderEdit } from "../customized/Layout/Headers/HeaderEdit";

@@ -35,6 +35,6 @@ export const HeaderProfileGeneral = (props) => {
 };
 
 const styles = StyleSheet.create({
-  container: { marginVertical: 20, marginHorizontal: 20 },
+  container: { margin: 15 },
   name: { fontFamily: "Exo-Medium", fontSize: 15 },
 });

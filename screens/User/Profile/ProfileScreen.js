@@ -1,9 +1,8 @@
 import { StyleSheet, SafeAreaView, View } from "react-native";
-import React, { useState, useCallback } from "react";
+import React, { useCallback, useRef, useMemo } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { FAB, Icon } from "@rneui/themed";
-import BottomSheetPopup from "../../../components/customized/BottomSheets/BottomSheetPopup";
 import { OutlinedButton, Protected, Button } from "../../../components/core";
 import {
   TopTabContainer,
@@ -16,12 +15,19 @@ import {
 import { useAuth } from "../../../hooks/auth";
 import { MAIN_ROLE, SECOND_ROLE } from "@env";
 import theme from "../../../assets/styles/theme";
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+  BottomSheetBackdrop,
+} from "@gorhom/bottom-sheet";
+import { Portal } from "@gorhom/portal";
 
 const ProfileScreen = (props) => {
   const { user } = useAuth();
   const navigation = useNavigation();
-  const [openSettings, setOpenSettings] = useState(false);
   const Tab = createMaterialTopTabNavigator();
+  const bottomSheetModalRef = useRef(null);
+  const snapPoints = useMemo(() => ["25%", "60%"], []);
 
   const PostsProfile = useCallback(
     () => <PostsProfileTab userId={user?._id} />,
@@ -37,9 +43,16 @@ const ProfileScreen = (props) => {
     />
   );
 
-  const closeSheet = useCallback(() => {
-    setOpenSettings(false);
-  }, []);
+  const renderBackdrop = useCallback(
+    (props) => (
+      <BottomSheetBackdrop
+        {...props}
+        appearsOnIndex={1}
+        disappearsOnIndex={0}
+      />
+    ),
+    []
+  );
 
   const buttons = (
     <>
@@ -78,14 +91,12 @@ const ProfileScreen = (props) => {
     </>
   );
 
-  const sheetSettings = (
-    <BottomSheetPopup
-      open={openSettings}
-      onClose={closeSheet}
-      height={60}
-      sheetBody={openSettings && <SettingsList />}
-    />
-  );
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
+  const handleCloseSheet = useCallback(() => {
+    bottomSheetModalRef.current?.close();
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -93,7 +104,7 @@ const ProfileScreen = (props) => {
         checkmark={user?.checkmark}
         onGoToFindFriends={() => navigation.navigate("FindFriends")}
         name={user?.name}
-        onOpenSettings={() => setOpenSettings(true)}
+        onOpenSettings={handlePresentModalPress}
       />
       <ProfileOverview
         user={user}
@@ -116,7 +127,19 @@ const ProfileScreen = (props) => {
           onPress={() => navigation.navigate("MyCalendar")}
         />
       </Protected>
-      {sheetSettings}
+      <Portal>
+        <BottomSheetModalProvider>
+          <BottomSheetModal
+            ref={bottomSheetModalRef}
+            index={1}
+            snapPoints={snapPoints}
+            backdropComponent={renderBackdrop}
+            handleIndicatorStyle={styles.indicatorStyle}
+          >
+            <SettingsList onCloseModal={handleCloseSheet} />
+          </BottomSheetModal>
+        </BottomSheetModalProvider>
+      </Portal>
     </SafeAreaView>
   );
 };
@@ -147,4 +170,9 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   tabsCont: { flex: 1, height: 700 },
+  indicatorStyle: {
+    backgroundColor: "#ddd",
+    width: 45,
+    height: 5,
+  },
 });

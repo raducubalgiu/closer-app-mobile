@@ -129,5 +129,7 @@
   "selectProductCategory": "Selectează categoria produsului*",
   "add": "Adaugă",
   "addProduct": "Adaugă un produs",
-  "products": "Produse"
+  "products": "Produse",
+  "date": "Data",
+  "hour": "Ora"
 }

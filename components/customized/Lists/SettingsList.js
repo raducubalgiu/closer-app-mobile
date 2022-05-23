@@ -10,7 +10,7 @@ import { MAIN_ROLE, SECOND_ROLE, THIRD_ROLE } from "@env";
 import { Protected } from "../../core";
 import { useTranslation } from "react-i18next";
 
-export const SettingsList = () => {
+export const SettingsList = ({ onCloseModal }) => {
   const navigation = useNavigation();
   const { user, setUser } = useAuth();
   const auth = getAuth();
@@ -79,23 +79,28 @@ export const SettingsList = () => {
       title: t("logout"),
       iconName: "logout",
       iconType: "antdesign",
-      action: handleLogout,
       roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE],
     },
   ];
 
+  const handleNavigate = (item) => {
+    if (item.navigation) {
+      navigation.navigate(item?.navigation);
+      onCloseModal();
+    } else {
+      handleLogout();
+    }
+  };
+
   const renderItem = ({ item }) => (
     <Protected userRole={user?.role} roles={item?.roles}>
       <ListItem
-        bottomDivider
-        onPress={
-          item?.navigation
-            ? () => navigation.navigate(item?.navigation)
-            : item?.action
-        }
+        onPress={() => handleNavigate(item)}
         containerStyle={{
           paddingLeft: 0,
           backgroundColor: theme.lightColors.white,
+          borderBottomWidth: 0.5,
+          borderBottomColor: "#ddd",
         }}
       >
         <Icon
@@ -113,7 +118,7 @@ export const SettingsList = () => {
   return (
     <BottomSheetFlatList
       data={items}
-      contentContainerStyle={{ marginHorizontal: 20 }}
+      contentContainerStyle={{ marginHorizontal: 20, marginTop: 10 }}
       keyExtractor={(item) => item?._id}
       renderItem={renderItem}
       bounces={false}
@@ -126,5 +131,6 @@ const styles = StyleSheet.create({
     fontFamily: "Exo-Medium",
     color: theme.lightColors.black,
     fontSize: 14.5,
+    paddingVertical: 2.5,
   },
 });

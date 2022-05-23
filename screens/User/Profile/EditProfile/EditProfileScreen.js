@@ -1,11 +1,10 @@
 import { StyleSheet, Text, View, ScrollView, SafeAreaView } from "react-native";
-import React, { useState } from "react";
+import React, { useRef, useMemo, useCallback } from "react";
 import { Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../../assets/styles/theme";
 import { useAuth } from "../../../../hooks/auth";
 import MenuITemBetween from "../../../../components/customized/MenuItem/MenuITemBetween";
-import BottomSheetPopup from "../../../../components/customized/BottomSheets/BottomSheetPopup";
 import {
   Stack,
   Header,
@@ -14,14 +13,37 @@ import {
 } from "../../../../components/core";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+  BottomSheetBackdrop,
+} from "@gorhom/bottom-sheet";
+import { Portal } from "@gorhom/portal";
 
 const EditProfileScreen = () => {
-  const [open, setOpen] = useState(false);
   const { user, setUser } = useAuth();
   const navigation = useNavigation();
   const { t } = useTranslation();
+  const bottomSheetModalRef = useRef(null);
+  const snapPoints = useMemo(() => ["25%", "40%"], []);
 
-  const handleClose = () => setOpen(false);
+  const renderBackdrop = useCallback(
+    (props) => (
+      <BottomSheetBackdrop
+        {...props}
+        appearsOnIndex={1}
+        disappearsOnIndex={0}
+      />
+    ),
+    []
+  );
+
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
+  const handleCloseSheet = useCallback(() => {
+    bottomSheetModalRef.current?.close();
+  }, []);
 
   const handleDeletePhoto = () => {
     axios
@@ -44,9 +66,12 @@ const EditProfileScreen = () => {
         <Header title={user?.name} />
         <ScrollView style={{ flex: 1 }}>
           <Stack sx={{ marginVertical: 20 }}>
-            <Button sx={{ alignItems: "center" }} onPress={() => setOpen(true)}>
+            <Button
+              sx={{ alignItems: "center" }}
+              onPress={handlePresentModalPress}
+            >
               <View>
-                <CustomAvatar avatar={user?.avatar} size={95} iconSize={35}  />
+                <CustomAvatar avatar={user?.avatar} size={95} iconSize={35} />
               </View>
               <Text style={styles.text}>{t("changePhoto")}</Text>
             </Button>
@@ -86,30 +111,35 @@ const EditProfileScreen = () => {
           </View>
         </ScrollView>
       </SafeAreaView>
-      <BottomSheetPopup
-        open={open}
-        height={40}
-        onClose={handleClose}
-        sheetBody={
-          <Stack sx={{ padding: 15 }}>
-            <Button sx={styles.sheetTitle} onPress={handleDeletePhoto}>
-              <Text style={styles.sheetText}>{t("erasePhoto")}</Text>
-            </Button>
-            <Button sx={styles.sheetTitle}>
-              <Text style={styles.sheetText}>{t("addPhoto")}</Text>
-            </Button>
-            <Button
-              sx={styles.sheetTitle}
-              onPress={() => navigation.navigate("EditPhotoLibrary")}
-            >
-              <Text style={styles.sheetText}>{t("chooseFromLibrary")}</Text>
-            </Button>
-            <Button sx={styles.cancelBtn}>
-              <Text style={styles.cancelBtnText}>{t("cancel")}</Text>
-            </Button>
-          </Stack>
-        }
-      />
+      <Portal>
+        <BottomSheetModalProvider>
+          <BottomSheetModal
+            ref={bottomSheetModalRef}
+            index={1}
+            snapPoints={snapPoints}
+            backdropComponent={renderBackdrop}
+            handleIndicatorStyle={styles.indicatorStyle}
+          >
+            <Stack sx={{ padding: 15 }}>
+              <Button sx={styles.sheetTitle} onPress={handleDeletePhoto}>
+                <Text style={styles.sheetText}>{t("erasePhoto")}</Text>
+              </Button>
+              <Button sx={styles.sheetTitle}>
+                <Text style={styles.sheetText}>{t("addPhoto")}</Text>
+              </Button>
+              <Button
+                sx={styles.sheetTitle}
+                onPress={() => navigation.navigate("EditPhotoLibrary")}
+              >
+                <Text style={styles.sheetText}>{t("chooseFromLibrary")}</Text>
+              </Button>
+              <Button sx={styles.cancelBtn} onPress={handleCloseSheet}>
+                <Text style={styles.cancelBtnText}>{t("cancel")}</Text>
+              </Button>
+            </Stack>
+          </BottomSheetModal>
+        </BottomSheetModalProvider>
+      </Portal>
     </>
   );
 };
@@ -171,5 +201,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: "Exo-SemiBold",
     color: theme.lightColors.black,
+  },
+  indicatorStyle: {
+    backgroundColor: "#ddd",
+    width: 45,
+    height: 5,
   },
 });

@@ -59,6 +59,7 @@ export const PostsProfileTab = (props) => {
       keyExtractor={(item) => item._id}
       renderItem={({ item }) => (
         <TouchableOpacity
+          activeOpacity={1}
           style={styles.box}
           onPress={() =>
             navigation.navigate("Post", {

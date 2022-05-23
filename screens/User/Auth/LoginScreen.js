@@ -91,7 +91,7 @@ const LoginScreen = () => {
         heading={t("login")}
         statusText={t("dontHaveAccount")}
         statusBtn={t("register")}
-        statusAction={() => navigation.push("Register")}
+        statusAction={() => navigation.replace("Register")}
       />
     </SafeAreaView>
   );

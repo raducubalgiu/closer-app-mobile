@@ -93,9 +93,12 @@ const styles = StyleSheet.create({
   statusText: { fontFamily: "Exo-Regular", marginRight: 5 },
   statusBtn: { fontFamily: "Exo-SemiBold" },
   inputEmail: {
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
+    marginBottom: 0,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+    borderBottomWidth: 0,
+    padding: 17.5,
   },
-  inputPass: { borderBottomLeftRadius: 10, borderBottomRightRadius: 10 },
+  inputPass: { borderTopLeftRadius: 0, borderTopRightRadius: 0, padding: 17.5 },
   divider: { marginTop: 20, marginBottom: 35 },
 });

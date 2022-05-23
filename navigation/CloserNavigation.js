@@ -60,6 +60,8 @@ import AddJobsScreen from "../screens/User/Profile/MyBusiness/AddJobsScreen";
 import LocationsScreen from "../screens/LocationsScreen";
 import LocationItemScreen from "../screens/LocationItemScreen";
 
+import { PortalProvider } from "@gorhom/portal";
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -170,55 +172,75 @@ const CloserNavigation = () => {
   return (
     <NavigationContainer>
       {user && (
-        <RootStack.Navigator screenOptions={{ headerShown: false }}>
-          <RootStack.Screen name="App" component={TabsScreen} />
-          <Stack.Screen
-            name="SearchServices"
-            component={SearchServicesScreen}
-          />
-          <Stack.Screen name="FiltersDate" component={FiltersDateScreen} />
-          <Stack.Screen
-            name="FiltersService"
-            component={FiltersServiceScreen}
-          />
-          <Stack.Screen name="AllServices" component={AllServicesScreen} />
-          <Stack.Screen name="Locations" component={LocationsScreen} />
-          <RootStack.Screen name="AddLocation" component={AddLocationScreen} />
-          <RootStack.Screen name="AddServices" component={AddServicesScreen} />
-          <RootStack.Screen name="AddProducts" component={AddProductsScreen} />
-          <RootStack.Screen name="AddJobs" component={AddJobsScreen} />
-          <RootStack.Screen name="EditProduct" component={EditProductScreen} />
-          <RootStack.Screen
-            name="AddBusinessType"
-            component={AddBusinessTypeScreen}
-          />
-          <RootStack.Screen name="EditProfile" component={EditProfileScreen} />
-          <Stack.Screen name="EditName" component={EditNameScreen} />
-          <Stack.Screen name="EditWebsite" component={EditWebsiteScreen} />
-          <Stack.Screen name="EditBio" component={EditBioScreen} />
-          <Stack.Screen name="EditUsername" component={EditUsernameScreen} />
-          <Stack.Screen
-            name="EditPhotoLibrary"
-            component={EditPhotoLibraryScreen}
-          />
-          <Stack.Screen name="MyBusiness" component={MyBusinessScreen} />
-          <Stack.Screen name="MyDashboard" component={MyDashboardScreen} />
-          <Stack.Screen name="MyCalendar" component={MyCalendarScreen} />
-          <Stack.Screen name="MyLocation" component={MyLocationScreen} />
-          <Stack.Screen name="MyProducts" component={MyProductsScreen} />
-          <Stack.Screen name="MyJobs" component={MyJobsScreen} />
-          <Stack.Screen name="Comments" component={CommentsScreen} />
-          <Stack.Screen name="MessageItem" component={MessageItemScreen} />
-          <Stack.Screen name="SearchAll" component={SearchAllScreen} />
-          <Stack.Screen name="Notifications" component={NotificationsScreen} />
-          <Stack.Screen name="Post" component={PostScreen} />
-          <Stack.Screen name="LocationItem" component={LocationItemScreen} />
-          <Stack.Screen
-            name="ProfileGeneral"
-            component={ProfileGeneralScreen}
-          />
-          <Stack.Screen name="ProfileStats" component={ProfileStatsScreen} />
-        </RootStack.Navigator>
+        <PortalProvider>
+          <RootStack.Navigator screenOptions={{ headerShown: false }}>
+            <RootStack.Screen name="App" component={TabsScreen} />
+            <Stack.Screen
+              name="SearchServices"
+              component={SearchServicesScreen}
+            />
+            <Stack.Screen name="FiltersDate" component={FiltersDateScreen} />
+            <Stack.Screen
+              name="FiltersService"
+              component={FiltersServiceScreen}
+            />
+            <Stack.Screen name="AllServices" component={AllServicesScreen} />
+            <Stack.Screen name="Locations" component={LocationsScreen} />
+            <RootStack.Screen
+              name="AddLocation"
+              component={AddLocationScreen}
+            />
+            <RootStack.Screen
+              name="AddServices"
+              component={AddServicesScreen}
+            />
+            <RootStack.Screen
+              name="AddProducts"
+              component={AddProductsScreen}
+            />
+            <RootStack.Screen name="AddJobs" component={AddJobsScreen} />
+            <RootStack.Screen
+              name="EditProduct"
+              component={EditProductScreen}
+            />
+            <RootStack.Screen
+              name="AddBusinessType"
+              component={AddBusinessTypeScreen}
+            />
+            <RootStack.Screen
+              name="EditProfile"
+              component={EditProfileScreen}
+            />
+            <Stack.Screen name="EditName" component={EditNameScreen} />
+            <Stack.Screen name="EditWebsite" component={EditWebsiteScreen} />
+            <Stack.Screen name="EditBio" component={EditBioScreen} />
+            <Stack.Screen name="EditUsername" component={EditUsernameScreen} />
+            <Stack.Screen
+              name="EditPhotoLibrary"
+              component={EditPhotoLibraryScreen}
+            />
+            <Stack.Screen name="MyBusiness" component={MyBusinessScreen} />
+            <Stack.Screen name="MyDashboard" component={MyDashboardScreen} />
+            <Stack.Screen name="MyCalendar" component={MyCalendarScreen} />
+            <Stack.Screen name="MyLocation" component={MyLocationScreen} />
+            <Stack.Screen name="MyProducts" component={MyProductsScreen} />
+            <Stack.Screen name="MyJobs" component={MyJobsScreen} />
+            <Stack.Screen name="Comments" component={CommentsScreen} />
+            <Stack.Screen name="MessageItem" component={MessageItemScreen} />
+            <Stack.Screen name="SearchAll" component={SearchAllScreen} />
+            <Stack.Screen
+              name="Notifications"
+              component={NotificationsScreen}
+            />
+            <Stack.Screen name="Post" component={PostScreen} />
+            <Stack.Screen name="LocationItem" component={LocationItemScreen} />
+            <Stack.Screen
+              name="ProfileGeneral"
+              component={ProfileGeneralScreen}
+            />
+            <Stack.Screen name="ProfileStats" component={ProfileStatsScreen} />
+          </RootStack.Navigator>
+        </PortalProvider>
       )}
       {!user && (
         <RootStack.Navigator screenOptions={{ headerShown: false }}>

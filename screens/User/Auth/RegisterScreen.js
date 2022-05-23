@@ -51,7 +51,7 @@ const RegisterScreen = () => {
         heading={t("register")}
         statusText={t("haveAccount")}
         statusBtn={t("login")}
-        statusAction={() => navigation.push("Login")}
+        statusAction={() => navigation.replace("Login")}
       />
     </SafeAreaView>
   );
