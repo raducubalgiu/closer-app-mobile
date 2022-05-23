@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   popover: { color: "white", fontFamily: "Exo-Medium" },
   title: {
     fontFamily: "Exo-SemiBold",
-    fontSize: 15,
+    fontSize: 16,
     color: theme.lightColors.black,
     marginRight: 10,
   },

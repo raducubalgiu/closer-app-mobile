@@ -11,12 +11,13 @@ export const FormInput = ({ name, placeholder, rules = {}, sx, ...props }) => {
       rules={{ ...rules }}
       render={({ field: { onChange, onBlur, value } }) => (
         <TextInput
+          {...props}
           placeholder={placeholder}
           style={{ ...styles.input, ...sx }}
           onBlur={onBlur}
           onChangeText={onChange}
           value={value}
-          {...props}
+          placeholderTextColor="#9EA0A4"
         />
       )}
       name={name}
@@ -26,9 +27,12 @@ export const FormInput = ({ name, placeholder, rules = {}, sx, ...props }) => {
 
 const styles = StyleSheet.create({
   input: {
-    padding: 17.5,
+    padding: 12.5,
     borderWidth: 1,
     borderColor: "#ccc",
     fontFamily: "Exo-Regular",
+    width: "100%",
+    marginBottom: 10,
+    borderRadius: 10,
   },
 });

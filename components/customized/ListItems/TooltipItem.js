@@ -4,19 +4,15 @@ import React from "react";
 import theme from "../../../assets/styles/theme";
 import { Stack } from "../../core";
 
-const TooltipTitle = (props) => {
+const TooltipTitle = ({ title, tooltipText, tooltipDimensions, sx }) => {
   return (
-    <Stack direction="row" justify="start" sx={props.sx}>
+    <Stack direction="row" justify="start" sx={sx}>
       <Tooltip
         backgroundColor={theme.lightColors.primary}
-        popover={
-          <>
-            <Text style={styles.tooltipText}>{props.tooltipText}</Text>
-          </>
-        }
+        popover={<Text style={styles.tooltipText}>{tooltipText}</Text>}
         containerStyle={{
           ...styles.tooltipContainer,
-          ...props.tooltipDimensions,
+          ...tooltipDimensions,
         }}
       >
         <Icon
@@ -26,7 +22,7 @@ const TooltipTitle = (props) => {
           size={20}
         />
       </Tooltip>
-      <Text style={styles.step}>{props.title}</Text>
+      <Text style={styles.step}>{title}</Text>
     </Stack>
   );
 };

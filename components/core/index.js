@@ -43,6 +43,7 @@ export { default as InputSelect } from "./Inputs/InputSelect";
 export { default as SearchBarInput } from "./Inputs/SearchBarInput";
 export { InputEdit } from "./Inputs/InputEdit";
 export { FormInput } from "./Inputs/FormInput";
+export { FormInputSelect } from "./Inputs/FormInputSelect";
 
 export { default as Protected } from "./Protected/Protected";
 

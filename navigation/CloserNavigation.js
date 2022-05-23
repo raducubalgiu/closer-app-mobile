@@ -155,9 +155,9 @@ const TabsScreen = () => {
       })}
       sceneContainerStyle={{ backgroundColor: "white" }}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Explore" component={ExploreScreen} />
       <Tab.Screen name="FeedStack" component={FeedStackNavigator} />
+      <Tab.Screen name="Explore" component={ExploreScreen} />
+      <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Messages" component={MessagesScreen} />
       <Tab.Screen name="UserStack" component={UserStackNavigator} />
     </Tab.Navigator>

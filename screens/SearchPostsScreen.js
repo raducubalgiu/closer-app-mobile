@@ -46,10 +46,7 @@ const SearchPostsScreen = () => {
   };
 
   const goToUser = (userId) => {
-    navigation.navigate("ProfileGeneralStack", {
-      screen: "ProfileGeneral",
-      params: { userId },
-    });
+    navigation.navigate("ProfileGeneral", { userId });
   };
 
   const renderRecent = ({ item }) => (

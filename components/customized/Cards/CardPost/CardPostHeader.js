@@ -8,10 +8,7 @@ const CardPostHeader = ({ userId, avatar, username, checkmark }) => {
   const navigation = useNavigation();
 
   const goToUser = (userId) => {
-    navigation.push("ProfileGeneralStack", {
-      screen: "ProfileGeneral",
-      params: { userId },
-    });
+    navigation.push("ProfileGeneral", { userId });
   };
 
   return (

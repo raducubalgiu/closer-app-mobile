@@ -7,6 +7,8 @@ import { Button, Stack } from "../../core";
 import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../hooks";
+import { useNavigation } from "@react-navigation/native";
+import { BASE_ENDPOINT } from "@env";
 
 export const ShowProducts = ({
   userId,
@@ -14,7 +16,6 @@ export const ShowProducts = ({
   serviceId,
   initServ,
   services,
-  onDeleteProduct,
   extraHeader,
 }) => {
   const [products, setProducts] = useState([]);
@@ -23,6 +24,7 @@ export const ShowProducts = ({
   );
   const { user } = useAuth();
   const { t } = useTranslation();
+  const navigation = useNavigation();
 
   useEffect(() => {
     if (product) {
@@ -35,7 +37,7 @@ export const ShowProducts = ({
     if (userId && activeService) {
       axios
         .get(
-          `${process.env.BASE_ENDPOINT}/users/${userId}/services/${activeService}/products`,
+          `${BASE_ENDPOINT}/users/${userId}/services/${activeService}/products`,
           {
             headers: { Authorization: `Bearer ${user?.token}` },
           }
@@ -57,6 +59,20 @@ export const ShowProducts = ({
     (service) => setActiveService(service),
     []
   );
+
+  const deleteProductHandler = useCallback((productId) => {
+    axios
+      .delete(`${BASE_ENDPOINT}/users/${user?._id}/products/${productId}`, {
+        headers: { Authorization: `Bearer ${user?.token}` },
+      })
+      .then(() => {
+        setProducts((products) =>
+          products.filter((product) => product._id !== productId)
+        );
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   const activeStyle = { ...styles.button, ...styles.activeBtn };
   const activeTxtStyle = { ...styles.btnText, ...styles.activeBtnText };
 
@@ -84,8 +100,8 @@ export const ShowProducts = ({
         price={item?.price}
         duration={item?.duration}
         option={item?.option?.name}
-        onEditProduct={() => {}}
-        onDeleteProduct={() => onDeleteProduct(item?._id)}
+        onEditProduct={() => navigation.push("EditProduct", { product: item })}
+        onDeleteProduct={() => deleteProductHandler(item?._id)}
         canBook={user?._id !== item?.user}
       />
     ),
@@ -130,7 +146,6 @@ export const ShowProducts = ({
 };
 
 const styles = StyleSheet.create({
-  divider: { marginTop: 10, marginBottom: 20 },
   headerContainer: { marginTop: 15, paddingRight: 15 },
   button: {
     paddingVertical: 7.5,

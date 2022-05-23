@@ -108,6 +108,7 @@
   "notProductsAddedForService": "Încă nu ai adăugat produse pentru acest serviciu",
   "noJobsAdded": "Încă nu ai adăugat joburi",
   "kmFromYou": "km de tine",
+  "discount": "Discount",
   "discounts": "Discounturi",
   "noDiscountsFound": "Încă nu beneficiezi de nici un discount",
   "schedules": "Programări",
@@ -123,5 +124,10 @@
   "chooseUsernameLong": "Alege un nume de utilizator pentru contul tău. Îl poţi schimba oricand",
   "addBusinessType": "Adaugă tipul afacerii",
   "selectBusinessType": "Selectează tipul afacerii tale",
-  "selectCategory": "Selectează categoria"
+  "selectCategory": "Selectează categoria",
+  "selectProductService": "Selectează serviciul aferent produsului*",
+  "selectProductCategory": "Selectează categoria produsului*",
+  "add": "Adaugă",
+  "addProduct": "Adaugă un produs",
+  "products": "Produse"
 }
