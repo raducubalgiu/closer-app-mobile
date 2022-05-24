@@ -5,7 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../../hooks/auth";
 import * as Haptics from "expo-haptics";
 
-const LikeIButton = ({ postId, onAddLike, onRemoveLike, ...props }) => {
+export const LikeIButton = ({ postId, onAddLike, onRemoveLike, ...props }) => {
   const [liked, setLiked] = useState(false);
   const { user } = useAuth();
   const animatedScale = useRef(new Animated.Value(0)).current;
@@ -82,8 +82,6 @@ const LikeIButton = ({ postId, onAddLike, onRemoveLike, ...props }) => {
     </Pressable>
   );
 };
-
-export default LikeIButton;
 
 const styles = StyleSheet.create({
   default: {

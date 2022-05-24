@@ -6,10 +6,10 @@ export { MainButton } from "./Buttons/MainButton";
 export { ButtonProvider } from "./Buttons/ButtonProvider";
 export { CardButton } from "./Buttons/CardButton";
 export { FollowButton } from "./Buttons/FollowButton";
-export { default as LikeIButton } from "./Buttons/LikeIButton";
-export { default as CommentsIButton } from "./Buttons/CommentsIButton";
-export { default as ShareIButton } from "./Buttons/ShareIButton";
-export { default as BookmarkIButton } from "./Buttons/BookmarkIButton";
+export { LikeIButton } from "./Buttons/LikeIButton";
+export { CommentsIButton } from "./Buttons/CommentsIButton";
+export { ShareIButton } from "./Buttons/ShareIButton";
+export { BookmarkIButton } from "./Buttons/BookmarkIButton";
 export { StatsButton } from "./Buttons/StatsButton";
 export { FeedLabelButton } from "./Buttons/FeedLabelButton";
 

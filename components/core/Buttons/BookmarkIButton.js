@@ -6,11 +6,11 @@ import { useAuth } from "../../../hooks/auth";
 import theme from "../../../assets/styles/theme";
 import * as Haptics from "expo-haptics";
 
-const BookmarkIButton = (props) => {
+export const BookmarkIButton = ({ postId, sx, size }) => {
   const { user } = useAuth();
   const [bookmarked, setBookmarked] = useState(false);
   const animatedScale = useRef(new Animated.Value(0)).current;
-  const BOOKMARK_ENDPOINT = `${process.env.BASE_ENDPOINT}/users/${user?._id}/posts/${props.postId}/bookmarks`;
+  const BOOKMARK_ENDPOINT = `${process.env.BASE_ENDPOINT}/users/${user?._id}/posts/${postId}/bookmarks`;
 
   useEffect(() => {
     axios
@@ -67,22 +67,20 @@ const BookmarkIButton = (props) => {
     <Pressable onPress={handleBookmark}>
       <Animated.View
         style={[
-          { ...styles.default, ...props.sx },
+          { ...styles.default, ...sx },
           { transform: [{ scale: animatedScale }] },
         ]}
       >
         <Icon
           type="feather"
           name={bookmarked ? "check-square" : "bookmark"}
-          size={props.size ? props.size : 24}
+          size={size ? size : 24}
           color={bookmarked ? "#333333" : theme.lightColors.black}
         />
       </Animated.View>
     </Pressable>
   );
 };
-
-export default BookmarkIButton;
 
 const styles = StyleSheet.create({
   default: {

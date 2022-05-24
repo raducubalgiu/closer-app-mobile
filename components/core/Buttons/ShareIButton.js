@@ -3,21 +3,15 @@ import { Icon } from "@rneui/themed";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 
-const ShareIButton = (props) => {
+export const ShareIButton = ({ onPress, sx, size }) => {
   return (
-    <TouchableOpacity
-      activeOpacity={1}
-      onPress={props.onPress}
-      style={{ ...props.sx }}
-    >
+    <TouchableOpacity activeOpacity={1} onPress={onPress} style={{ ...sx }}>
       <Icon
         type="feather"
         name="send"
-        size={props.size ? props.size : 24}
+        size={size ? size : 24}
         color={theme.lightColors.black}
       />
     </TouchableOpacity>
   );
 };
-
-export default ShareIButton;

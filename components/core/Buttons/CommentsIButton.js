@@ -3,21 +3,15 @@ import { Icon } from "@rneui/themed";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 
-const CommentsIButton = (props) => {
+export const CommentsIButton = ({ onPress, sx, size }) => {
   return (
-    <TouchableOpacity
-      activeOpacity={1}
-      onPress={props.onPress}
-      style={{ ...props.sx }}
-    >
+    <TouchableOpacity activeOpacity={1} onPress={onPress} style={{ ...sx }}>
       <Icon
         type="feather"
         name="message-circle"
-        size={props.size ? props.size : 24}
+        size={size ? size : 24}
         color={theme.lightColors.black}
       />
     </TouchableOpacity>
   );
 };
-
-export default CommentsIButton;
