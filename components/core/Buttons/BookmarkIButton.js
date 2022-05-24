@@ -4,6 +4,7 @@ import axios from "axios";
 import { Icon } from "@rneui/themed";
 import { useAuth } from "../../../hooks/auth";
 import theme from "../../../assets/styles/theme";
+import * as Haptics from "expo-haptics";
 
 const BookmarkIButton = (props) => {
   const { user } = useAuth();
@@ -40,7 +41,10 @@ const BookmarkIButton = (props) => {
             headers: { Authorization: `Bearer ${user?.token}` },
           }
         )
-        .then(() => setBookmarked(true))
+        .then(() => {
+          setBookmarked(true);
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        })
         .catch((err) => {
           console.log(err);
           console.log(err.message);

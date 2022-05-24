@@ -3,6 +3,7 @@ export { AutocompleteGoogle } from "./AutocompleteGoogle/AutocompleteGoogle";
 export { SheetHeader } from "./Layout/Headers/SheetHeader";
 export { HeaderProfile } from "./Layout/Headers/HeaderProfile";
 export { HeaderProfileGeneral } from "./Layout/Headers/HeaderProfileGeneral";
+export { Footer } from "./Layout/Footers/Footer";
 
 export { ProfileOverview } from "./ProfileOverview/ProfileOverview";
 

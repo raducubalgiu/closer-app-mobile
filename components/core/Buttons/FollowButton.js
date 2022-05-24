@@ -4,6 +4,7 @@ import axios from "axios";
 import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../hooks/auth";
 import { useTranslation } from "react-i18next";
+import * as Haptics from "expo-haptics";
 
 const FollowButton = ({ followeeId, fetchUser, fetchSuggested, ...props }) => {
   const [follow, setFollow] = useState(true);
@@ -44,6 +45,7 @@ const FollowButton = ({ followeeId, fetchUser, fetchSuggested, ...props }) => {
           headers: { Authorization: `Bearer ${user?.token}` },
         })
         .then(() => {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
           fetchUser ? fetchUser() : null;
           fetchSuggested ? fetchSuggested() : null;
         })
@@ -68,6 +70,7 @@ const FollowButton = ({ followeeId, fetchUser, fetchSuggested, ...props }) => {
           headers: { Authorization: `Bearer ${user?.token}` },
         })
         .then(() => {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
           fetchUser ? fetchUser() : null;
         })
         .catch(() => setFollow(false));

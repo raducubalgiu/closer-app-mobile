@@ -3,6 +3,7 @@ import { Icon } from "@rneui/themed";
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../../hooks/auth";
+import * as Haptics from "expo-haptics";
 
 const LikeIButton = ({ postId, onAddLike, onRemoveLike, ...props }) => {
   const [liked, setLiked] = useState(false);
@@ -32,6 +33,7 @@ const LikeIButton = ({ postId, onAddLike, onRemoveLike, ...props }) => {
 
     if (!liked) {
       setLiked(true);
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       axios
         .post(
           `${process.env.BASE_ENDPOINT}/users/${user?._id}/posts/${postId}/likes`,
