@@ -2,30 +2,29 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 
-const CardButton = (props) => {
+export const CardButton = ({ completed, onPress, title }) => {
   return (
     <TouchableOpacity
+      onPress={onPress}
+      activeOpacity={1}
       style={
-        !props.completed
+        !completed
           ? { ...styles.btnContainer, ...styles.completedBtn }
           : { ...styles.btnContainer, ...styles.incompletedBtn }
       }
-      onPress={props.onPress}
     >
       <Text
         style={
-          !props.completed
+          !completed
             ? { ...styles.btnText, ...styles.completedText }
             : { ...styles.btnText, ...styles.incompletedText }
         }
       >
-        {props.title}
+        {title}
       </Text>
     </TouchableOpacity>
   );
 };
-
-export default CardButton;
 
 const styles = StyleSheet.create({
   btnContainer: {

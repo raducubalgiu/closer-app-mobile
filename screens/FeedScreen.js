@@ -16,6 +16,7 @@ import { IconButton, Stack, FeedLabelButton } from "../components/core";
 import { CardPost } from "../components/customized";
 import { useTranslation } from "react-i18next";
 import { dateFormat } from "../utils";
+import * as Haptics from "expo-haptics";
 
 const FeedScreen = () => {
   const { postsState, dispatchPosts } = usePosts();
@@ -98,28 +99,6 @@ const FeedScreen = () => {
     });
   }, []);
 
-  // const renderFollowingPosts = ({ item }) => {
-  //   const { post, user } = item;
-
-  //   return (
-  //     <CardPost
-  //       postId={post?._id}
-  //       userId={user?._id}
-  //       avatar={user?.avatar}
-  //       username={user?.username}
-  //       job={user?.business?.name}
-  //       date={dateFormat(post?.createdAt)}
-  //       image={post?.images[0]?.url}
-  //       description={post?.description}
-  //       likesCount={post?.likesCount}
-  //       commentsCount={post?.commentsCount}
-  //       bookable={post?.bookable}
-  //       checkmark={post?.checkmark}
-  //       postType={post?.postType}
-  //     />
-  //   );
-  // };
-
   return (
     <SafeAreaView style={styles.screen}>
       <Stack justify="start">
@@ -149,6 +128,7 @@ const FeedScreen = () => {
               onPress={() => {
                 dispatchPosts({ type: "FETCH_ALL" });
                 fetchAllPosts();
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
               }}
               isActive={postsState.activeAll}
               text={t("explore")}
@@ -157,6 +137,7 @@ const FeedScreen = () => {
               onPress={() => {
                 dispatchPosts({ type: "FETCH_FOLLOWINGS" });
                 fetchFollowings();
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
               }}
               isActive={postsState.activeFollowings}
               text={t("following")}
@@ -164,6 +145,7 @@ const FeedScreen = () => {
             <FeedLabelButton
               onPress={() => {
                 dispatchPosts({ type: "FETCH_LAST_MINUTE" });
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
               }}
               isActive={postsState.activeLastMinute}
               text={t("lastMinute")}
@@ -171,6 +153,7 @@ const FeedScreen = () => {
             <FeedLabelButton
               onPress={() => {
                 dispatchPosts({ type: "FETCH_JOBS" });
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
               }}
               isActive={postsState.activeJobs}
               text={t("jobs")}
@@ -178,6 +161,7 @@ const FeedScreen = () => {
             <FeedLabelButton
               onPress={() => {
                 dispatchPosts({ type: "FETCH_VIDEO" });
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
               }}
               isActive={postsState.activeVideo}
               text={t("videoContent")}

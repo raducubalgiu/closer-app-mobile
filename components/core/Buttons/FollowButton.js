@@ -6,7 +6,12 @@ import { useAuth } from "../../../hooks/auth";
 import { useTranslation } from "react-i18next";
 import * as Haptics from "expo-haptics";
 
-const FollowButton = ({ followeeId, fetchUser, fetchSuggested, ...props }) => {
+export const FollowButton = ({
+  followeeId,
+  fetchUser,
+  fetchSuggested,
+  ...props
+}) => {
   const [follow, setFollow] = useState(true);
   const { user, setUser } = useAuth();
   const { followersCount, ratingsAverage, ratingsQuantity, followingCount } =
@@ -105,5 +110,3 @@ const FollowButton = ({ followeeId, fetchUser, fetchSuggested, ...props }) => {
     </TouchableOpacity>
   );
 };
-
-export default FollowButton;

@@ -6,6 +6,7 @@ export const FeedLabelButton = ({ isActive, text, onPress }) => {
   return (
     <TouchableOpacity
       onPress={onPress}
+      activeOpacity={1}
       style={
         isActive ? { ...styles.btnList, ...styles.activeBtn } : styles.btnList
       }

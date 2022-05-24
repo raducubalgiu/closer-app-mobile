@@ -3,19 +3,27 @@ import { Icon } from "@rneui/themed";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 
-const ButtonProvider = (props) => {
+export const ButtonProvider = ({
+  onPress,
+  iconName,
+  iconType,
+  color,
+  text,
+}) => {
   return (
-    <TouchableOpacity style={styles.providerBtn} onPress={props.onPress}>
+    <TouchableOpacity
+      activeOpacity={1}
+      style={styles.providerBtn}
+      onPress={onPress}
+    >
       <View style={styles.providerContainer}>
-        <Icon name={props.iconName} type={props.iconType} color={props.color} />
-        <Text style={styles.providerBtnText}>{props.text}</Text>
+        <Icon name={iconName} type={iconType} color={color} />
+        <Text style={styles.providerBtnText}>{text}</Text>
         <Icon name="google" type="antdesign" color="white" />
       </View>
     </TouchableOpacity>
   );
 };
-
-export default ButtonProvider;
 
 const styles = StyleSheet.create({
   providerBtn: {
