@@ -2,7 +2,7 @@ export { Accordion } from "./Accordion/Accordion";
 
 export { Button } from "./Buttons/Button";
 export { ButtonFilter } from "./Buttons/ButtonFilter";
-export { default as MainButton } from "./Buttons/MainButton";
+export { MainButton } from "./Buttons/MainButton";
 export { default as ContainedButton } from "./Buttons/ContainedButton";
 export { OutlinedButton } from "./Buttons/OutlinedButton";
 export { default as ButtonProvider } from "./Buttons/ButtonProvider";

@@ -6,6 +6,7 @@ import { trimFunc } from "../../../utils";
 import { useDuration } from "../../../hooks";
 import { useTranslation } from "react-i18next";
 import { IconButtonDelete } from "../../core/IconButton/IconButtonDelete";
+import { useNavigation } from "@react-navigation/native";
 
 export const CardProduct = ({
   name,
@@ -19,6 +20,7 @@ export const CardProduct = ({
 }) => {
   const { t } = useTranslation();
   const currDuration = duration ? useDuration(duration) : "";
+  const navigation = useNavigation();
 
   return (
     <Stack sx={styles.card}>
@@ -36,7 +38,12 @@ export const CardProduct = ({
             {price} {t("ron")}
           </Text>
         </Stack>
-        {canBook && <OutlinedButton title={t("book")} />}
+        {canBook && (
+          <OutlinedButton
+            title={t("book")}
+            onPress={() => navigation.navigate("CalendarBig")}
+          />
+        )}
         {!canBook && (
           <Stack direction="row">
             <IconButtonEdit onPress={onEditProduct} />

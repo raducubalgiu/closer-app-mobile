@@ -11,11 +11,16 @@ import React, { useState } from "react";
 import theme from "../../../../assets/styles/theme";
 import TooltipTitle from "../../../../components/customized/ListItems/TooltipItem";
 import { AutocompleteGoogle } from "../../../../components/customized";
-import { Stack, Header, MainButton } from "../../../../components/core";
+import {
+  Stack,
+  Header,
+  MainButton,
+} from "../../../../components/core";
 import { Icon, Avatar, Badge } from "@rneui/themed";
 import axios from "axios";
 import { useAuth } from "../../../../hooks/auth";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 const defaultValues = {
   street: "",
@@ -33,6 +38,7 @@ const AddLocationScreen = () => {
   const [images, setImages] = useState([]);
   const [blockApartment, setBlockApartment] = useState("");
   const navigation = useNavigation();
+  const { t } = useTranslation();
 
   const handleSetLocation = (location) => setLocation(location);
 
@@ -54,13 +60,7 @@ const AddLocationScreen = () => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Header
-        title="Adauga locatia"
-        withTooltip={true}
-        tooltipText="Adauga mai jos adresa la care iti desfasori activitatea si imagini de la locatie"
-        tooltipContainer={{ width: 220, height: 80 }}
-        divider={true}
-      />
+      <Header title="Adauga locatia" divider />
       <AutocompleteGoogle onSetLocation={handleSetLocation} />
       <ScrollView style={{ padding: 15 }} bounces={false}>
         <TooltipTitle
@@ -176,7 +176,7 @@ const AddLocationScreen = () => {
         />
       </ScrollView>
       <View style={styles.actionButtons}>
-        <MainButton title="Salveaza" onPress={onSubmit} />
+        <MainButton size="lg" fullWidth title={t("save")} onPress={onSubmit} />
       </View>
     </SafeAreaView>
   );

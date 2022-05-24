@@ -76,8 +76,8 @@ const LoginScreen = () => {
         setLoading(false);
       }
     } catch (err) {
-      setLoading(false);
       setFeedback({ visible: true, message: t("somethingWentWrong") });
+      setLoading(false);
     }
   };
 

@@ -59,6 +59,7 @@ import MyJobsScreen from "../screens/User/Profile/MyBusiness/MyJobsScreen";
 import AddJobsScreen from "../screens/User/Profile/MyBusiness/AddJobsScreen";
 import LocationsScreen from "../screens/LocationsScreen";
 import LocationItemScreen from "../screens/LocationItemScreen";
+import CalendarScreen from "../screens/CalendarScreen";
 
 import { PortalProvider } from "@gorhom/portal";
 
@@ -239,6 +240,7 @@ const CloserNavigation = () => {
               component={ProfileGeneralScreen}
             />
             <Stack.Screen name="ProfileStats" component={ProfileStatsScreen} />
+            <Stack.Screen name="CalendarBig" component={CalendarScreen} />
           </RootStack.Navigator>
         </PortalProvider>
       )}

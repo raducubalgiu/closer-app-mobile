@@ -3,11 +3,16 @@ import { SearchBar } from "@rneui/themed";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 
-const SearchBarInput = (props) => {
+const SearchBarInput = ({
+  cancelButtonTitle,
+  height,
+  showCancel,
+  ...props
+}) => {
   const styles = StyleSheet.create({
     containerStyle: {
       borderStyle: "dotted",
-      height: props.height ? props.height : 65,
+      height: height ? height : 65,
       flex: 1,
     },
     inputContainerStyle: {
@@ -34,10 +39,9 @@ const SearchBarInput = (props) => {
 
   return (
     <SearchBar
-      onCancel={props.onPress}
-      cancelButtonTitle={props.cancelButtonTitle}
+      cancelButtonTitle={cancelButtonTitle}
       cancelButtonProps={
-        props.showCancel === false
+        showCancel === false
           ? {
               color: "gray",
               display: "none",
@@ -51,12 +55,8 @@ const SearchBarInput = (props) => {
       inputStyle={styles.inputStyle}
       placeholderTextColor={styles.placeholderColor}
       searchIcon={styles.searchIcon}
-      placeholder={props.placeholder}
-      autoFocus={props.autoFocus}
-      value={props.value}
-      onChangeText={props.updateValue}
-      showLoading={props.showLoading ? true : false}
       clearIcon={{ color: theme.lightColors.divider }}
+      {...props}
     />
   );
 };

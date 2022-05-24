@@ -102,12 +102,7 @@ const AddServicesScreen = () => {
       <Header title={t("myServices")} divider={true} />
       <Feedback feedback={feedback} setFeedback={setFeedback} />
       <Stack align="start" sx={{ margin: 15 }}>
-        <TooltipTitle
-          title={t("services")}
-          sx={{ marginBottom: 25 }}
-          tooltipText="Selecteaza din lista de mai jos serviicile pe care le desfasori la locatie"
-          tooltipDimensions={{ width: 220, height: 80 }}
-        />
+        <TooltipTitle title={t("services")} sx={{ marginBottom: 25 }} />
         <Stack direction="row" sx={{ width: "100%" }}>
           <View style={{ flex: 1 }}>
             <InputSelect

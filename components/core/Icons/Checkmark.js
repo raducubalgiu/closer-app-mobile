@@ -3,14 +3,14 @@ import { Icon } from "@rneui/themed";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 
-const Checkmark = (props) => {
+const Checkmark = ({ size, sx }) => {
   return (
     <Icon
       name="check"
-      type="antdesign"
-      size={props.size ? props.size : 8.5}
+      type="entypo"
+      size={size ? size : 10}
       color="white"
-      style={{ ...styles.checkmark, ...props.sx }}
+      style={{ ...styles.checkmark, ...sx }}
     />
   );
 };
@@ -20,8 +20,9 @@ export default Checkmark;
 const styles = StyleSheet.create({
   checkmark: {
     backgroundColor: theme.lightColors.secondary,
-    marginLeft: 5,
-    padding: 1.5,
+    marginLeft: 7.5,
+    paddingVertical: 1.5,
+    paddingHorizontal: 1.75,
     borderRadius: 50,
   },
 });

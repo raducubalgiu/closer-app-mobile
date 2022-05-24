@@ -55,13 +55,9 @@ export const LoginRegisterForm = ({
           secureTextEntry={true}
         />
         <MainButton
-          title={
-            !loading ? (
-              heading
-            ) : (
-              <ActivityIndicator size="small" color="white" />
-            )
-          }
+          size="lg"
+          title={heading}
+          loading={loading}
           onPress={handleSubmit(onSubmit)}
           disabled={disabled}
         />

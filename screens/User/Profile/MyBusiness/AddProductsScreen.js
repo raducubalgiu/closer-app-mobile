@@ -30,7 +30,7 @@ const AddProductsScreen = () => {
   const { t } = useTranslation();
   const [options, setOptions] = useState([]);
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
-  const [disabled, setDisabled] = useState(false);
+  const [disabled, setDisabled] = useState(true);
   const methods = useForm({ defaultValues });
   const { handleSubmit, watch } = methods;
   const selectedService = watch("service");
@@ -110,6 +110,8 @@ const AddProductsScreen = () => {
               keyboardType="numeric"
             />
             <MainButton
+              size="lg"
+              fullWidth
               title={t("add")}
               onPress={handleSubmit(onSubmit)}
               disabled={disabled}

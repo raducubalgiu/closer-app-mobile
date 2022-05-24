@@ -15,7 +15,6 @@ import axios from "axios";
 import theme from "../assets/styles/theme";
 import { Icon } from "@rneui/themed";
 import { useAuth } from "../hooks";
-import { StackActions } from "@react-navigation/native";
 
 const RECENT_SEARCH = [
   { _id: "1", word: "Patrice Evra" },
@@ -74,7 +73,9 @@ const SearchPostsScreen = () => {
     <Button sx={{ marginTop: 30 }}>
       <Stack direction="row" align="center" justify="center">
         <Icon name="search" type="feather" color={theme.lightColors.primary} />
-        <Text style={styles.searchAll}>Vezi toate rezultatele</Text>
+        <Button onPress={() => navigation.navigate("SearchAll", { search })}>
+          <Text style={styles.searchAll}>{t("seeAllResults")}</Text>
+        </Button>
       </Stack>
     </Button>
   );
@@ -88,9 +89,9 @@ const SearchPostsScreen = () => {
             autoFocus={true}
             placeholder={t("search")}
             value={search}
-            updateValue={updateSearch}
+            onChangeText={updateSearch}
             cancelButtonTitle={t("search")}
-            onPress={() => navigation.navigate("SearchAll", { search })}
+            onCancel={() => navigation.navigate("SearchAll", { search })}
             height={60}
           />
         </Stack>

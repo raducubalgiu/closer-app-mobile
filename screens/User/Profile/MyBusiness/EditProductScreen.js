@@ -104,7 +104,12 @@ const EditProductScreen = ({ route }) => {
             placeholder={t("discount")}
             keyboardType="numeric"
           />
-          <MainButton title={t("save")} onPress={handleSubmit(onSubmit)} />
+          <MainButton
+            size="lg"
+            fullWidth
+            title={t("save")}
+            onPress={handleSubmit(onSubmit)}
+          />
         </FormProvider>
       </Stack>
     </SafeAreaView>

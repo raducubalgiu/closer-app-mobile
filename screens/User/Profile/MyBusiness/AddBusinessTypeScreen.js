@@ -98,7 +98,13 @@ const AddBusinessTypeScreen = () => {
             items={businesses}
           />
         </Stack>
-        <MainButton title={t("save")} onPress={onSubmit} disabled={disabled} />
+        <MainButton
+          size="lg"
+          fullWidth
+          title={t("save")}
+          onPress={onSubmit}
+          disabled={disabled}
+        />
       </Stack>
     </SafeAreaView>
   );

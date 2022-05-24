@@ -18,17 +18,20 @@ const SearchAllScreen = ({ route }) => {
   const { search } = route.params;
   const { t } = useTranslation();
 
+  console.log(search);
+
   const Tab = createMaterialTopTabNavigator();
 
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.container}>
         <Stack direction="row" justify="start">
-          <IconBackButton />
+          <IconBackButton sx={{ marginRight: 10 }} />
           <SearchBarInput
             value={search}
             cancelButtonTitle={t("search")}
-            onPress={() => {}}
+            height={60}
+            showCancel={false}
           />
         </Stack>
         <TopTabContainer initialRouteName="SearchPopular" tabBarScrollEnabled>

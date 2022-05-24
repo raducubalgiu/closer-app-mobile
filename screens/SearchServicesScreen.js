@@ -88,9 +88,9 @@ const SearchServicesScreen = ({ route }) => {
           autoFocus={true}
           placeholder={t("searchService")}
           value={search}
-          updateValue={updateSearch}
+          onChangeText={updateSearch}
           cancelButtonTitle={t("cancel")}
-          onPress={() => navigation.goBack()}
+          onCancel={() => navigation.goBack()}
         />
       </Stack>
       <Stack align="start" sx={styles.container}>
