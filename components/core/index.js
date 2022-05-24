@@ -3,8 +3,6 @@ export { Accordion } from "./Accordion/Accordion";
 export { Button } from "./Buttons/Button";
 export { ButtonFilter } from "./Buttons/ButtonFilter";
 export { MainButton } from "./Buttons/MainButton";
-export { default as ContainedButton } from "./Buttons/ContainedButton";
-export { OutlinedButton } from "./Buttons/OutlinedButton";
 export { default as ButtonProvider } from "./Buttons/ButtonProvider";
 export { default as CardButton } from "./Buttons/CardButton";
 export { default as FollowButton } from "./Buttons/FollowButton";

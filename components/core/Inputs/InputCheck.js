@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import axios from "axios";
 import { useForm, Controller } from "react-hook-form";
-import ContainedButton from "../Buttons/ContainedButton";
+import { MainButton } from "../Buttons/MainButton";
 import React, { useEffect, useState } from "react";
 import theme from "../../../assets/styles/theme";
 import { Icon } from "@rneui/themed";
@@ -95,10 +95,9 @@ const InputCheck = (props) => {
       {errors.username && (
         <Text style={styles.error}>Acest camp este obligatoriu.</Text>
       )}
-      <ContainedButton
+      <MainButton
         onPress={handleSubmit(onSubmit)}
         title="Continuare"
-        sx={{ marginTop: 15, marginHorizontal: 10 }}
         disabled={!input ? true : false}
       />
     </View>

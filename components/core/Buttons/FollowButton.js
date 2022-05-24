@@ -89,7 +89,7 @@ const FollowButton = ({ followeeId, fetchUser, fetchSuggested, ...props }) => {
     btnText: {
       fontFamily: "Exo-SemiBold",
       color: follow ? theme.lightColors.black : "white",
-      fontSize: 14,
+      fontSize: props.size === "md" ? 14 : 13,
     },
   });
 
