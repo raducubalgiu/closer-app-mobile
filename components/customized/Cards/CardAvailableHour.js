@@ -1,6 +1,6 @@
 import { StyleSheet, Text } from "react-native";
 import React from "react";
-import { Stack, OutlinedButton } from "../../core";
+import { Stack, OutlinedButton, MainButton } from "../../core";
 import { useTranslation } from "react-i18next";
 
 export const CardAvailableHour = ({ date, hour }) => {
@@ -18,7 +18,7 @@ export const CardAvailableHour = ({ date, hour }) => {
           <Text style={styles.description}>{hour}</Text>
         </Stack>
       </Stack>
-      <OutlinedButton title={t("book")} />
+      <MainButton variant="outlined" title={t("book")} />
     </Stack>
   );
 };

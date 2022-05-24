@@ -1,6 +1,6 @@
 import { StyleSheet, Text } from "react-native";
 import React from "react";
-import { Stack, IconButtonEdit, OutlinedButton } from "../../core";
+import { Stack, IconButtonEdit, OutlinedButton, MainButton } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { trimFunc } from "../../../utils";
 import { useDuration } from "../../../hooks";
@@ -39,7 +39,9 @@ export const CardProduct = ({
           </Text>
         </Stack>
         {canBook && (
-          <OutlinedButton
+          <MainButton
+            size="md"
+            variant="outlined"
             title={t("book")}
             onPress={() => navigation.navigate("CalendarBig")}
           />

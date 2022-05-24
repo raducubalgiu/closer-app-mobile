@@ -81,15 +81,15 @@ const FollowButton = ({ followeeId, fetchUser, fetchSuggested, ...props }) => {
     btn: {
       borderWidth: 1,
       borderColor: follow ? "#ddd" : theme.lightColors.primary,
-      paddingVertical: props.size === "lg" ? 10 : 4.5,
-      paddingHorizontal: props.size === "lg" ? 20 : 15,
+      paddingVertical: props.size === "md" ? 11 : 4.5,
+      paddingHorizontal: props.size === "md" ? 20 : 15,
       borderRadius: 2.5,
       backgroundColor: follow ? "white" : theme.lightColors.primary,
     },
     btnText: {
       fontFamily: "Exo-SemiBold",
       color: follow ? theme.lightColors.black : "white",
-      fontSize: 13,
+      fontSize: 14,
     },
   });
 

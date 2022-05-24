@@ -15,6 +15,7 @@ import {
   FollowButton,
   OutlinedButton,
   IconButton,
+  MainButton,
 } from "../../../components/core";
 import {
   ProfileOverview,
@@ -86,15 +87,19 @@ const ProfileGeneralScreen = (props) => {
   const buttons = (
     <>
       <FollowButton
-        size="lg"
+        size="md"
         followeeId={userId}
         fetchUser={fetchUser}
         fetchSuggested={handleSuggested}
       />
-      <OutlinedButton
+      <MainButton
+        variant="outlined"
         title="Mesaj"
-        sx={styles.btnMessage}
-        sxText={{ fontFamily: "Exo-SemiBold" }}
+        radius={2.5}
+        sx={{ borderWidth: 1, borderColor: "#ddd", marginLeft: 5 }}
+        onPress={() => {
+          navigation.navigate("EditProfile");
+        }}
       />
       {!loading && (
         <IconButton

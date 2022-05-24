@@ -3,7 +3,12 @@ import React, { useCallback, useRef, useMemo } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { FAB, Icon } from "@rneui/themed";
-import { OutlinedButton, Protected, Button } from "../../../components/core";
+import {
+  OutlinedButton,
+  Protected,
+  Button,
+  MainButton,
+} from "../../../components/core";
 import {
   TopTabContainer,
   ProfileOverview,
@@ -21,6 +26,7 @@ import {
   BottomSheetBackdrop,
 } from "@gorhom/bottom-sheet";
 import { Portal } from "@gorhom/portal";
+import { useTranslation } from "react-i18next";
 
 const ProfileScreen = (props) => {
   const { user } = useAuth();
@@ -28,6 +34,7 @@ const ProfileScreen = (props) => {
   const Tab = createMaterialTopTabNavigator();
   const bottomSheetModalRef = useRef(null);
   const snapPoints = useMemo(() => ["25%", "60%"], []);
+  const { t } = useTranslation();
 
   const PostsProfile = useCallback(
     () => <PostsProfileTab userId={user?._id} />,
@@ -56,12 +63,14 @@ const ProfileScreen = (props) => {
 
   const buttons = (
     <>
-      <OutlinedButton
-        title="Editeaza profilul"
+      <MainButton
+        variant="outlined"
+        title={t("editProfile")}
+        radius={2.5}
+        sx={{ borderWidth: 1, borderColor: "#ddd" }}
         onPress={() => {
           navigation.navigate("EditProfile");
         }}
-        sx={styles.editBtn}
       />
       <Button
         style={styles.savedBtn}

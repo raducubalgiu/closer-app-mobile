@@ -1,12 +1,12 @@
 import { StyleSheet, Text } from "react-native";
 import React from "react";
-import { Stack, ContainedButton } from "../../../core";
+import { Stack, MainButton } from "../../../core";
 
 export const Footer = ({ children, btnTitle, onPress }) => {
   return (
     <Stack direction="row" sx={styles.container}>
       <Text>{children}</Text>
-      <ContainedButton title={btnTitle} onPress={onPress} />
+      <MainButton size="lg" title={btnTitle} onPress={onPress} />
     </Stack>
   );
 };

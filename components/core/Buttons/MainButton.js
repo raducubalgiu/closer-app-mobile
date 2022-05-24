@@ -9,30 +9,38 @@ export const MainButton = ({
   size,
   variant,
   fullWidth,
+  radius,
+  sx,
   ...props
 }) => {
-  let sizeNum;
+  let padding;
   let bgColor;
   let color;
+  let border;
+  let fontSize;
 
   switch (size) {
     case "sm":
-      sizeNum = 7.5;
+      padding = { paddingVertical: 7.5, paddingHorizontal: 10 };
       break;
     case "md":
-      sizeNum = 10;
+      padding = { paddingVertical: 10, paddingHorizontal: 20 };
+      fontSize = 14;
       break;
     case "lg":
-      sizeNum = 15;
+      padding = { paddingVertical: 15, paddingHorizontal: 32.5 };
+      fontSize = 15;
       break;
     default:
-      sizeNum = 10;
+      padding = { paddingVertical: 10, paddingHorizontal: 20 };
+      fontSize = 14;
   }
 
   switch (variant) {
-    case "outline":
+    case "outlined":
       bgColor = "white";
       color = theme.lightColors.black;
+      border = { borderWidth: 2, borderColor: theme.lightColors.primary };
       break;
     case "contain":
       bgColor = theme.lightColors.primary;
@@ -46,16 +54,18 @@ export const MainButton = ({
   const styles = StyleSheet.create({
     buttonStyle: {
       backgroundColor: bgColor,
-      padding: sizeNum,
-      borderRadius: 10,
+      borderRadius: radius ? radius : 5,
+      ...padding,
+      ...border,
+      ...sx,
     },
     containerStyle: {
       width: fullWidth && "100%",
       marginVertical: 10,
     },
     titleStyle: {
-      fontFamily: "Exo-Medium",
-      fontSize: 15,
+      fontFamily: "Exo-SemiBold",
+      fontSize,
       color,
     },
   });
@@ -63,6 +73,7 @@ export const MainButton = ({
   return (
     <Button
       {...props}
+      activeOpacity={1}
       title={loading ? <ActivityIndicator color="white" /> : title}
       buttonStyle={styles.buttonStyle}
       containerStyle={styles.containerStyle}
