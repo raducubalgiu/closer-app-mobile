@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { Divider } from "@rneui/themed";
@@ -56,6 +56,7 @@ export const LoginRegisterForm = ({
         />
         <MainButton
           size="lg"
+          radius={10}
           title={heading}
           loading={loading}
           onPress={handleSubmit(onSubmit)}

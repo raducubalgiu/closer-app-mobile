@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
     color: "black",
     paddingRight: 30,
     fontFamily: "Exo-Medium",
-    marginBottom: 10,
   },
   inputAndroid: {
     fontSize: 15,
@@ -53,6 +52,5 @@ const styles = StyleSheet.create({
     fontFamily: "Exo-Medium",
     paddingRight: 30,
     fontFamily: "Exo-Medium",
-    marginBottom: 10,
   },
 });

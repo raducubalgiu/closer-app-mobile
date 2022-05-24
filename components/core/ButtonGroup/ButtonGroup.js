@@ -2,8 +2,8 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useCallback, useState } from "react";
 import theme from "../../../assets/styles/theme";
 
-const ButtonGroup = (props) => {
-  const [activeBtn, setActiveBtn] = useState(props.activeButton);
+export const ButtonGroup = ({ activeButton, size, onPress, buttons }) => {
+  const [activeBtn, setActiveBtn] = useState(activeButton);
 
   const styles = StyleSheet.create({
     buttonsContainer: {
@@ -14,7 +14,7 @@ const ButtonGroup = (props) => {
       alignItems: "center",
     },
     button: {
-      paddingVertical: props.size === "small" ? 5 : 7.5,
+      paddingVertical: size === "small" ? 5 : 7.5,
       paddingHorizontal: 15,
       borderRadius: 20,
     },
@@ -29,13 +29,13 @@ const ButtonGroup = (props) => {
 
   const handleButton = useCallback(() => {
     setActiveBtn(index);
-    props.onPress(index);
+    onPress(index);
   }, []);
 
   return (
     <View style={styles.sx}>
       <View style={styles.buttonsContainer}>
-        {props.buttons.map((button, index) => (
+        {buttons.map((button, index) => (
           <TouchableOpacity
             key={index}
             activeOpacity={1}
@@ -61,5 +61,3 @@ const ButtonGroup = (props) => {
     </View>
   );
 };
-
-export default ButtonGroup;

@@ -111,6 +111,7 @@ const AddProductsScreen = () => {
             />
             <MainButton
               size="lg"
+              radius={10}
               fullWidth
               title={t("add")}
               onPress={handleSubmit(onSubmit)}

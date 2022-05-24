@@ -50,6 +50,7 @@
   "anyHour": "Orice oră",
   "pickHour": "Alege ora",
   "next": "Înainte",
+  "continue": "Continuă",
   "edit": "Editează",
   "recentSearch": "Căutări recente",
   "jobs": "Job-uri",
@@ -133,5 +134,6 @@
   "date": "Data",
   "hour": "Ora",
   "seeAllResults": "Vezi toate rezultatele",
-  "editProfile": "Editează profilul"
+  "editProfile": "Editează profilul",
+  "scheduleSummary": "Sumarul programării"
 }

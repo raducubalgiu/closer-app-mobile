@@ -19,7 +19,6 @@ import SettingsScreen from "../screens/User/Profile/Settings/SettingsProfileScre
 import SchedulesScreen from "../screens/User/Profile/Settings/SchedulesScreen";
 import DiscountsScreen from "../screens/User/Profile/Settings/DiscountScreen";
 import FindFriendsScreen from "../screens/User/Profile/FindFriendsScreen";
-
 import SearchServicesScreen from "../screens/SearchServicesScreen";
 import SearchPostsScreen from "../screens/SearchPostsScreen";
 import SearchAllScreen from "../screens/SearchAllScreen";
@@ -30,8 +29,6 @@ import MessagesScreen from "../screens/MessagesScreen";
 import MessageItemScreen from "../screens/MessageItemScreen";
 import FeedScreen from "../screens/FeedScreen";
 import PostScreen from "../screens/PostScreen";
-
-// Auth
 import AuthScreen from "../screens/User/Auth/AuthScreen";
 import LoginScreen from "../screens/User/Auth/LoginScreen";
 import RegisterScreen from "../screens/User/Auth/RegisterScreen";
@@ -60,6 +57,7 @@ import AddJobsScreen from "../screens/User/Profile/MyBusiness/AddJobsScreen";
 import LocationsScreen from "../screens/LocationsScreen";
 import LocationItemScreen from "../screens/LocationItemScreen";
 import CalendarScreen from "../screens/CalendarScreen";
+import ScheduleScreen from "../screens/ScheduleScreen";
 
 import { PortalProvider } from "@gorhom/portal";
 
@@ -147,8 +145,6 @@ const TabsScreen = () => {
             iconType = "feather";
             iconName = focused ? "user" : "user";
           }
-
-          // You can return any component that you like here!
           return <Icon name={iconName} type={iconType} color={color} />;
         },
         tabBarActiveTintColor: theme.lightColors.black,
@@ -241,6 +237,7 @@ const CloserNavigation = () => {
             />
             <Stack.Screen name="ProfileStats" component={ProfileStatsScreen} />
             <Stack.Screen name="CalendarBig" component={CalendarScreen} />
+            <Stack.Screen name="Schedule" component={ScheduleScreen} />
           </RootStack.Navigator>
         </PortalProvider>
       )}

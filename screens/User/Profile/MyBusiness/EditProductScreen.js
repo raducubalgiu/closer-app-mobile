@@ -106,6 +106,7 @@ const EditProductScreen = ({ route }) => {
           />
           <MainButton
             size="lg"
+            radius={10}
             fullWidth
             title={t("save")}
             onPress={handleSubmit(onSubmit)}

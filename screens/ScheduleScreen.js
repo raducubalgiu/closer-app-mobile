@@ -1,22 +1,17 @@
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { Header } from "../components/core";
+import { Header, Stack } from "../components/core";
 import { Footer } from "../components/customized";
 import { useTranslation } from "react-i18next";
-import { useNavigation } from "@react-navigation/native";
 
-const CalendarScreen = () => {
+const ScheduleScreen = () => {
   const { t } = useTranslation();
-  const navigation = useNavigation();
 
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.container}>
-        <Header title="Calendar" />
-        <Footer
-          btnTitle={t("continue")}
-          onPress={() => navigation.navigate("Schedule")}
-        >
+        <Header title={t("scheduleSummary")} />
+        <Footer btnTitle={t("book")}>
           <Text>Hello World</Text>
         </Footer>
       </View>
@@ -24,7 +19,7 @@ const CalendarScreen = () => {
   );
 };
 
-export default CalendarScreen;
+export default ScheduleScreen;
 
 const styles = StyleSheet.create({
   screen: {

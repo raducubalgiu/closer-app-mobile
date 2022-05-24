@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import { Text, StyleSheet, SafeAreaView } from "react-native";
+import { Text, StyleSheet, SafeAreaView, View } from "react-native";
 import theme from "../assets/styles/theme";
 import React, {
   useCallback,
@@ -159,12 +159,14 @@ const FiltersDateScreen = ({ route }) => {
       >
         <BottomSheetView>
           <SheetHeader title={serviceName} description={getDescription()} />
-          <ButtonGroup
-            onPress={handleDateBtns}
-            buttons={dateButtons}
-            size="small"
-            activeButton={activeBtn}
-          />
+          <Stack>
+            <ButtonGroup
+              onPress={handleDateBtns}
+              buttons={dateButtons}
+              size="small"
+              activeButton={activeBtn}
+            />
+          </Stack>
           {activeBtn === 0 && calendar}
         </BottomSheetView>
       </BottomSheet>
