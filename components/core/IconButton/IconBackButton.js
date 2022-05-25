@@ -4,7 +4,7 @@ import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";
 
-const IconBackButton = ({ onPress, size, color, sx, withBackground }) => {
+export const IconBackButton = ({ onPress, size, color, sx, withBackground }) => {
   const navigation = useNavigation();
 
   return (
@@ -21,8 +21,6 @@ const IconBackButton = ({ onPress, size, color, sx, withBackground }) => {
     </TouchableOpacity>
   );
 };
-
-export default IconBackButton;
 
 const styles = StyleSheet.create({
   containerStyle: {

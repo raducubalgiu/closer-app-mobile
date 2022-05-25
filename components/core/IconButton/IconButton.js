@@ -3,7 +3,7 @@ import { Icon } from "@rneui/themed";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 
-const IconButton = (props) => {
+export const IconButton = (props) => {
   return (
     <TouchableOpacity
       activeOpacity={1}
@@ -19,5 +19,3 @@ const IconButton = (props) => {
     </TouchableOpacity>
   );
 };
-
-export default IconButton;

@@ -16,8 +16,8 @@ export { FeedLabelButton } from "./Buttons/FeedLabelButton";
 export { ButtonGroup } from "./ButtonGroup/ButtonGroup";
 
 export { Stack } from "./Containers/Stack";
-export { default as IconButton } from "./IconButton/IconButton";
-export { default as IconBackButton } from "./IconButton/IconBackButton";
+export { IconButton } from "./IconButton/IconButton";
+export { IconBackButton } from "./IconButton/IconBackButton";
 export { IconButtonEdit } from "./IconButton/IconButtonEdit";
 export { IconButtonAdd } from "./IconButton/IconButtonAdd";
 export { IconButtonDelete } from "./IconButton/IconButtonDelete";
