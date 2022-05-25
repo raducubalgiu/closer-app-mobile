@@ -3,7 +3,7 @@ import { SearchBar } from "@rneui/themed";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 
-const SearchBarInput = ({
+export const SearchBarInput = ({
   cancelButtonTitle,
   height,
   showCancel,
@@ -60,5 +60,3 @@ const SearchBarInput = ({
     />
   );
 };
-
-export default SearchBarInput;

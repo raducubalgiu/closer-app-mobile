@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import React from "react";
 import RNPickerSelect from "react-native-picker-select";
 
-const InputSelect = ({ value, onValueChange, items, ...props }) => {
+export const InputSelect = ({ value, onValueChange, items, ...props }) => {
   const placeholder = {
     label: props.placeholder,
     value: null,
@@ -26,8 +26,6 @@ const InputSelect = ({ value, onValueChange, items, ...props }) => {
     />
   );
 };
-
-export default InputSelect;
 
 const styles = StyleSheet.create({
   inputIOS: {

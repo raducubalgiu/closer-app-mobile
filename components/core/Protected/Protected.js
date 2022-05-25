@@ -1,6 +1,6 @@
 import React from "react";
 
-const Protected = ({ roles, userRole, children }) => {
+export const Protected = ({ roles, userRole, children }) => {
   let visible = false;
 
   if (roles.includes(userRole)) {
@@ -13,5 +13,3 @@ const Protected = ({ roles, userRole, children }) => {
 
   return <>{visible && children}</>;
 };
-
-export default Protected;

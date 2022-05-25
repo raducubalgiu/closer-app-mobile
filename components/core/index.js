@@ -27,7 +27,7 @@ export { default as Header } from "./Header/Header";
 export { default as CustomAvatar } from "./Avatars/CustomAvatar";
 export { AvatarComplete } from "./Avatars/AvatarComplete";
 
-export { default as Checkmark } from "./Icons/Checkmark";
+export { Checkmark } from "./Icons/Checkmark";
 export { IconStar } from "./Icons/IconStar";
 export { IconBook } from "./Icons/IconBook";
 export { IconVideo } from "./Icons/IconVideo";
@@ -36,15 +36,15 @@ export { IconNavigation } from "./Icons/IconNavigation";
 
 export { default as Modal } from "./Modal/Modal";
 
-export { default as Spinner } from "./Spinner/Spinner";
+export { Spinner } from "./Spinner/Spinner";
 
-export { default as InputSelect } from "./Inputs/InputSelect";
-export { default as SearchBarInput } from "./Inputs/SearchBarInput";
+export { InputSelect } from "./Inputs/InputSelect";
+export { SearchBarInput } from "./Inputs/SearchBarInput";
 export { InputEdit } from "./Inputs/InputEdit";
 export { FormInput } from "./Inputs/FormInput";
 export { FormInputSelect } from "./Inputs/FormInputSelect";
 
-export { default as Protected } from "./Protected/Protected";
+export { Protected } from "./Protected/Protected";
 
 export { SwipableItem } from "./SwipableItem/SwipableItem";
 export { Feedback } from "./Feedback/Feedback";
