@@ -3,7 +3,7 @@ import { Icon } from "@rneui/themed";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 
-const Checkmark = ({ size, sx }) => {
+export const Checkmark = ({ size, sx }) => {
   return (
     <Icon
       name="check"
@@ -14,8 +14,6 @@ const Checkmark = ({ size, sx }) => {
     />
   );
 };
-
-export default Checkmark;
 
 const styles = StyleSheet.create({
   checkmark: {

@@ -1,8 +1,7 @@
 import { StyleSheet, Text } from "react-native";
-import { Stack, AvatarComplete } from "../../core";
+import { Stack, AvatarComplete, CardButton } from "../../core";
 import React from "react";
 import theme from "../../../assets/styles/theme";
-import CardButton from "../../core/Buttons/CardButton";
 
 const CardCompleteProfile = (props) => {
   return (

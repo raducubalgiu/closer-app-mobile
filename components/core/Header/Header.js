@@ -3,8 +3,8 @@ import { Icon, Divider } from "@rneui/themed";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
-import IconBackButton from "../IconButton/IconBackButton";
-import Stack from "../Stack/Stack";
+import { Stack } from "../Stack/Stack";
+import { IconBackButton } from "../IconButton/IconBackButton";
 
 export const Header = ({ hideBtnLeft, title, actionBtn, divider }) => {
   const navigation = useNavigation();

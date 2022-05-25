@@ -1,7 +1,7 @@
 import { StyleSheet, Text } from "react-native";
 import React from "react";
 import { Icon } from "@rneui/themed";
-import { Checkmark, IconButton, Stack } from "../../../core";
+import { Stack, IconButton, Checkmark } from "../../../core";
 import theme from "../../../../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
 
