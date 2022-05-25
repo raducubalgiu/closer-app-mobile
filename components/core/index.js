@@ -22,7 +22,7 @@ export { IconButtonEdit } from "./IconButton/IconButtonEdit";
 export { IconButtonAdd } from "./IconButton/IconButtonAdd";
 export { IconButtonDelete } from "./IconButton/IconButtonDelete";
 
-export { default as Header } from "./Header/Header";
+export { Header } from "./Header/Header";
 
 export { CustomAvatar } from "./Avatars/CustomAvatar";
 export { AvatarComplete } from "./Avatars/AvatarComplete";
