@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import React from "react";
 
-const Stack = (props) => {
+export const Stack = (props) => {
   let justify;
   let align;
   let direction;
@@ -85,5 +85,3 @@ const Stack = (props) => {
     </View>
   );
 };
-
-export default Stack;

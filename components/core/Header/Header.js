@@ -1,10 +1,10 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import { Stack } from "../index";
 import { Icon, Tooltip, Divider } from "@rneui/themed";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
 import IconBackButton from "../IconButton/IconBackButton";
+import Stack from "../Containers/Stack";
 
 const Header = (props) => {
   const navigation = useNavigation();

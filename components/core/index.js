@@ -15,7 +15,7 @@ export { FeedLabelButton } from "./Buttons/FeedLabelButton";
 
 export { ButtonGroup } from "./ButtonGroup/ButtonGroup";
 
-export { default as Stack } from "./Containers/Stack";
+export { Stack } from "./Containers/Stack";
 export { default as IconButton } from "./IconButton/IconButton";
 export { default as IconBackButton } from "./IconButton/IconBackButton";
 export { IconButtonEdit } from "./IconButton/IconButtonEdit";
@@ -24,7 +24,7 @@ export { IconButtonDelete } from "./IconButton/IconButtonDelete";
 
 export { default as Header } from "./Header/Header";
 
-export { default as CustomAvatar } from "./Avatars/CustomAvatar";
+export { CustomAvatar } from "./Avatars/CustomAvatar";
 export { AvatarComplete } from "./Avatars/AvatarComplete";
 
 export { Checkmark } from "./Icons/Checkmark";

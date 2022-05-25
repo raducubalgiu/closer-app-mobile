@@ -12,7 +12,7 @@ import { Divider, Badge } from "@rneui/themed";
 import theme from "../assets/styles/theme";
 import axios from "axios";
 import { usePosts, useAuth } from "../hooks/index";
-import { IconButton, Stack, FeedLabelButton } from "../components/core";
+import { Stack, IconButton, FeedLabelButton } from "../components/core";
 import { CardPost } from "../components/customized";
 import { useTranslation } from "react-i18next";
 import { dateFormat } from "../utils";

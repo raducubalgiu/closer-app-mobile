@@ -1,8 +1,8 @@
 import { StyleSheet, Text } from "react-native";
 import React from "react";
-import { Stack, Checkmark, CustomAvatar, Button } from "../../../core";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../../assets/styles/theme";
+import { CustomAvatar, Stack, Checkmark, Button } from "../../../core";
 
 const CardPostHeader = ({ userId, avatar, username, checkmark }) => {
   const navigation = useNavigation();
