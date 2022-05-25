@@ -4,13 +4,20 @@ import { Stack } from "../../core";
 import { Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 
-export const NoFoundMessage = ({ title, description, iconName, iconType }) => {
+export const NoFoundMessage = ({
+  title,
+  description,
+  iconName,
+  iconType,
+  iconSize,
+  sx,
+}) => {
   return (
-    <Stack align="center" justify="center" sx={styles.container}>
+    <Stack align="center" justify="center" sx={{ ...styles.container, ...sx }}>
       <Icon
-        name={iconName ? iconName : "info"}
-        type={iconType ? iconType : "simple-line-icon"}
-        size={50}
+        name={iconName ? iconName : "alert-circle"}
+        type={iconType ? iconType : "feather"}
+        size={iconSize ? iconSize : 45}
         color="#ddd"
       />
       <Text style={styles.title}>{title}</Text>
@@ -20,18 +27,17 @@ export const NoFoundMessage = ({ title, description, iconName, iconType }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { marginHorizontal: 40, flex: 1 },
+  container: { marginTop: 100, paddingHorizontal: 50 },
   title: {
-    fontFamily: "Exo-Medium",
+    fontFamily: "Exo-SemiBold",
     fontSize: 19.5,
     marginTop: 15,
     marginBottom: 5,
     color: theme.lightColors.black,
   },
   description: {
-    fontFamily: "Exo-Regular",
     color: theme.lightColors.grey0,
     textAlign: "center",
-    fontSize: 14.5,
+    fontSize: 15.5,
   },
 });

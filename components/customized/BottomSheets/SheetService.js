@@ -4,7 +4,7 @@ import { Divider } from "@rneui/themed";
 import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 import theme from "../../../assets/styles/theme";
 
-export const SheetService = (props) => {
+export const SheetService = ({ results, list, ...props }) => {
   const sheetRef = useRef(null);
   const snapPoints = useMemo(() => ["25%", "90%"], []);
 
@@ -29,10 +29,10 @@ export const SheetService = (props) => {
     >
       <View style={{ flex: 1 }}>
         <Text style={styles.sheetHeading}>
-          {props.results} {props.results > 19 ? "de rezultate" : "rezultate"}
+          {results} {results > 19 ? "de rezultate" : "rezultate"}
         </Text>
         <Divider width={2} color="#f1f1f1" style={styles.divider} />
-        {props.list}
+        {list}
       </View>
     </BottomSheet>
   );

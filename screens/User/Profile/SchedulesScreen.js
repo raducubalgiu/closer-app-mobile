@@ -1,8 +1,8 @@
 import { StyleSheet, View, SafeAreaView } from "react-native";
 import React from "react";
-import { Header } from "../../../../components/core";
+import { Header } from "../../../components/core";
 import { useTranslation } from "react-i18next";
-import { NoFoundMessage } from "../../../../components/customized";
+import { NoFoundMessage } from "../../../components/customized";
 
 const SchedulesScreen = () => {
   const { t } = useTranslation();

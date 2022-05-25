@@ -29,8 +29,6 @@ export const CardPost = ({
     />
   );
 
-  const renderVideo = <VideoItem videoUrl={`${image}`} sx={{ height: 500 }} />;
-
   return (
     <View style={styles.container}>
       <CardPostHeader
@@ -39,7 +37,7 @@ export const CardPost = ({
         username={username}
         checkmark={checkmark}
       />
-      <View>{postType === "video" ? renderVideo : renderImage}</View>
+      <View>{renderImage}</View>
       <CardPostButtons
         bookable={bookable}
         postId={postId}

@@ -95,11 +95,7 @@ export const ShowProducts = ({
   const renderProducts = useCallback(
     ({ item }) => (
       <CardProduct
-        name={item?.name}
-        description={item?.description}
-        price={item?.price}
-        duration={item?.duration}
-        option={item?.option?.name}
+        product={item}
         onEditProduct={() => navigation.push("EditProduct", { product: item })}
         onDeleteProduct={() => deleteProductHandler(item?._id)}
         canBook={user?._id !== item?.user}
@@ -133,12 +129,11 @@ export const ShowProducts = ({
       bounces={false}
       ListFooterComponent={
         products.length === 0 && (
-          <Stack sx={{ marginTop: 75 }}>
-            <NoFoundMessage
-              title={t("myProducts")}
-              description={t("notProductsAddedForService")}
-            />
-          </Stack>
+          <NoFoundMessage
+            sx={{ marginTop: 20 }}
+            title={t("myProducts")}
+            description={t("notProductsAddedForService")}
+          />
         )
       }
     />

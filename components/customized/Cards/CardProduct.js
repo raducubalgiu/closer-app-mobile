@@ -1,6 +1,6 @@
 import { StyleSheet, Text } from "react-native";
 import React from "react";
-import { Stack, IconButtonEdit, OutlinedButton, MainButton } from "../../core";
+import { Stack, IconButtonEdit, MainButton } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { trimFunc } from "../../../utils";
 import { useDuration } from "../../../hooks";
@@ -9,16 +9,13 @@ import { IconButtonDelete } from "../../core/IconButton/IconButtonDelete";
 import { useNavigation } from "@react-navigation/native";
 
 export const CardProduct = ({
-  name,
-  duration,
-  description,
-  price,
-  canBook,
-  option,
-  onEditProduct,
+  product,
   onDeleteProduct,
+  onEditProduct,
+  canBook,
 }) => {
   const { t } = useTranslation();
+  const { name, duration, description, price, option } = product;
   const currDuration = duration ? useDuration(duration) : "";
   const navigation = useNavigation();
 
@@ -29,11 +26,13 @@ export const CardProduct = ({
           <Text style={styles.name}>{name}</Text>
           {option && (
             <Stack direction="row">
-              <Text style={styles.option}>{option}</Text>
+              <Text style={styles.option}>{option?.name}</Text>
               <Text style={styles.duration}>{currDuration}</Text>
             </Stack>
           )}
-          <Text style={styles.description}>{trimFunc(description, 50)}</Text>
+          {description && (
+            <Text style={styles.description}>{trimFunc(description, 50)}</Text>
+          )}
           <Text style={styles.price}>
             {price} {t("ron")}
           </Text>
@@ -43,7 +42,7 @@ export const CardProduct = ({
             size="md"
             variant="outlined"
             title={t("book")}
-            onPress={() => navigation.navigate("CalendarBig")}
+            onPress={() => navigation.navigate("CalendarBig", { product })}
           />
         )}
         {!canBook && (

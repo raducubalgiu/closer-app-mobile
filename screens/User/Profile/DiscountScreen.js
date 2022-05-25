@@ -1,7 +1,7 @@
 import { StyleSheet, View, SafeAreaView } from "react-native";
 import React from "react";
-import { Header } from "../../../../components/core";
-import { NoFoundMessage } from "../../../../components/customized";
+import { Header } from "../../../components/core";
+import { NoFoundMessage } from "../../../components/customized";
 import { useTranslation } from "react-i18next";
 
 const DiscountsScreen = () => {

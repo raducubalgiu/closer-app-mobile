@@ -6,14 +6,14 @@ import theme from "../../../assets/styles/theme";
 import { trimFunc, AddressFormat } from "../../../utils";
 import { Button, IconLocation, IconStar, IconVideo, Stack } from "../../core";
 
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 
 export const CardLocation = ({ location }) => {
-  const { _id, images, name, counter, minPrice, distance } = location;
+  const { images, name, counter, minPrice, distance } = location;
   const navigation = useNavigation();
   const { t } = useTranslation();
 
-  const goToUser = () => navigation.push("LocationItem", { locationId: _id });
+  const goToUser = () => navigation.push("LocationItem", { location });
 
   return (
     <Button onPress={goToUser}>

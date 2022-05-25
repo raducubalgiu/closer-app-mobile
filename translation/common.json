@@ -53,7 +53,7 @@
   "continue": "Continuă",
   "edit": "Editează",
   "recentSearch": "Căutări recente",
-  "jobs": "Job-uri",
+  "jobs": "Joburi",
   "videoContent": "Conţinut video",
   "anytime": "Oricând",
   "myMessages": "Mesajele mele",
@@ -135,5 +135,10 @@
   "hour": "Ora",
   "seeAllResults": "Vezi toate rezultatele",
   "editProfile": "Editează profilul",
-  "scheduleSummary": "Sumarul programării"
+  "scheduleSummary": "Sumarul programării",
+  "selectDateAndHour": "Selectează data şi ora",
+  "postsCreatedBy": "Postările create de",
+  "willApearHere": "vor apărea aici",
+  "jobsPostedBy": "Joburile postate de către",
+  "jobsPostedByYouMessage": "Joburile postate de tine vor apărea aici"
 }

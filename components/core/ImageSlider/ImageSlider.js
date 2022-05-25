@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import React, { useRef, useState } from "react";
 import { Image } from "@rneui/themed";
-import IconBackButton from "../IconButton/IconBackButton";
+import { IconBackButton } from "../IconButton/IconBackButton";
 
 const viewConfigRef = { viewAreaCoveragePercentThreshold: 95 };
 

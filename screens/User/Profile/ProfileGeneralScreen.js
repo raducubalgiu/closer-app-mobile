@@ -13,7 +13,6 @@ import { useFocusEffect } from "@react-navigation/native";
 import {
   Stack,
   FollowButton,
-  OutlinedButton,
   IconButton,
   MainButton,
 } from "../../../components/core";
@@ -31,9 +30,9 @@ import {
 import { useAuth } from "../../../hooks/auth";
 import theme from "../../../assets/styles/theme";
 
-const ProfileGeneralScreen = (props) => {
+const ProfileGeneralScreen = ({ badgeDetails, route }) => {
   const { user } = useAuth();
-  const { userId } = props.route.params;
+  const { userId } = route.params;
   const [userDetails, setUserDetails] = useState(null);
   const [loading, setLoading] = useState(false);
   const [suggestedPeople, setSuggestedPeople] = useState([]);
@@ -120,8 +119,8 @@ const ProfileGeneralScreen = (props) => {
   );
 
   const PostsProfile = useCallback(
-    () => <PostsProfileTab userId={userId} />,
-    [userId]
+    () => <PostsProfileTab userId={userId} username={userDetails?.username} />,
+    [userId, userDetails]
   );
 
   const ProductsProfile = useCallback(
@@ -145,6 +144,15 @@ const ProfileGeneralScreen = (props) => {
   const CalendarProfile = useCallback(
     () => <CalendarProfileTab services={userDetails?.services} />,
     [userDetails]
+  );
+  const JobsProfile = useCallback(
+    () => (
+      <JobsProfileTab
+        userId={userDetails?._id}
+        username={userDetails?.username}
+      />
+    ),
+    [userId, userDetails]
   );
 
   const renderSuggested = ({ item }) => {
@@ -173,7 +181,7 @@ const ProfileGeneralScreen = (props) => {
       </SafeAreaView>
       <ProfileOverview
         user={userDetails}
-        badgeDetails={props.badgeDetails}
+        badgeDetails={badgeDetails}
         actionButtons={buttons}
       />
       {suggestedPeople.length !== 0 && (
@@ -193,7 +201,7 @@ const ProfileGeneralScreen = (props) => {
           <Tab.Screen name="Posts" component={PostsProfile} />
           {admin && <Tab.Screen name="Products" component={ProductsProfile} />}
           {admin && <Tab.Screen name="Calendar" component={CalendarProfile} />}
-          {admin && <Tab.Screen name="Jobs" component={JobsProfileTab} />}
+          {admin && <Tab.Screen name="Jobs" component={JobsProfile} />}
           <Tab.Screen name="About" component={AboutProfile} />
         </TopTabContainer>
       </View>

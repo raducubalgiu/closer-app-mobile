@@ -15,14 +15,16 @@ import CompleteProfile from "../../CompleteProfile/CompleteProfile";
 import NoFoundPosts from "../../NotFoundContent/NoFoundPosts";
 import theme from "../../../../assets/styles/theme";
 import { useAuth } from "../../../../hooks/auth";
+import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
+import { useTranslation } from "react-i18next";
 
 const { width } = Dimensions.get("window");
 
-export const PostsProfileTab = (props) => {
+export const PostsProfileTab = ({ userId, username }) => {
   const [posts, setPosts] = useState([]);
   const { user } = useAuth();
-  const { userId } = props;
   const navigation = useNavigation();
+  const { t } = useTranslation();
 
   useFocusEffect(
     React.useCallback(() => {
@@ -31,7 +33,6 @@ export const PostsProfileTab = (props) => {
           headers: { Authorization: `Bearer ${user?.token}` },
         })
         .then((res) => {
-          console.log("FETCH POSTS");
           setPosts(res.data.posts);
         })
         .catch((err) => console.log(err));
@@ -41,8 +42,15 @@ export const PostsProfileTab = (props) => {
   let noFoundPosts;
   if (posts.length === 0 && user?._id === userId) {
     noFoundPosts = <NoFoundPosts />;
+  } else if (posts.length === 0 && user?._id !== userId) {
+    noFoundPosts = (
+      <NoFoundMessage
+        sx={{ marginTop: 50 }}
+        title={t("posts")}
+        description={`${t("postsCreatedBy")} ${username} ${t("willApearHere")}`}
+      />
+    );
   }
-
   let completeProfile;
   if (user?._id === userId) {
     completeProfile = <CompleteProfile />;

@@ -3,12 +3,7 @@ import React, { useCallback, useRef, useMemo } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { FAB, Icon } from "@rneui/themed";
-import {
-  OutlinedButton,
-  Protected,
-  Button,
-  MainButton,
-} from "../../../components/core";
+import { Protected, Button, MainButton } from "../../../components/core";
 import {
   TopTabContainer,
   ProfileOverview,
@@ -37,7 +32,7 @@ const ProfileScreen = (props) => {
   const { t } = useTranslation();
 
   const PostsProfile = useCallback(
-    () => <PostsProfileTab userId={user?._id} />,
+    () => <PostsProfileTab userId={user?._id} username={user?.username} />,
     [user?._id]
   );
 
