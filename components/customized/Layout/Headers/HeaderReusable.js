@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import React from "react";
 import { Icon } from "@rneui/themed";
-import Stack from "../../../core/Containers/Stack";
+import Stack from "../../../core/Stack/Stack";
 
 const HeaderReusable = (props) => {
   return (
