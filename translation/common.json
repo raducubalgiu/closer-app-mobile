@@ -140,5 +140,8 @@
   "postsCreatedBy": "Postările create de",
   "willApearHere": "vor apărea aici",
   "jobsPostedBy": "Joburile postate de către",
-  "jobsPostedByYouMessage": "Joburile postate de tine vor apărea aici"
+  "jobsPostedByYouMessage": "Joburile postate de tine vor apărea aici",
+  "isClosingAt": "Închide la",
+  "closed": "Închis",
+  "message": "Mesaj"
 }

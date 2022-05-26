@@ -9,14 +9,23 @@ import {
   StatsButton,
   IconStar,
   Button,
+  IconLocation,
 } from "../../core";
 import { MAIN_ROLE, SECOND_ROLE, THIRD_ROLE } from "@env";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../hooks";
+import { Icon } from "@rneui/themed";
 
-export const ProfileOverview = (props) => {
+export const ProfileOverview = ({
+  user,
+  username,
+  avatar,
+  withBadge,
+  actionButtons,
+  withAvailable,
+  available,
+}) => {
   const { user: userContext } = useAuth();
-  const { user, withBadge } = props;
   const navigation = useNavigation();
   const { t } = useTranslation();
 
@@ -35,14 +44,16 @@ export const ProfileOverview = (props) => {
           <CustomAvatar
             iconSize={37}
             size={95}
-            avatar={user?.avatar}
+            avatar={avatar}
             withBadge={withBadge}
             badgeDetails={{ name: "plus", type: "entypo" }}
+            withAvailable={withAvailable}
+            available={available}
           />
         </Button>
-        <Text style={styles.name}>@{user?.username}</Text>
-        <Stack direction="row" justify="start">
-          <Protected userRole={user?.role} roles={[MAIN_ROLE, SECOND_ROLE]}>
+        <Text style={styles.name}>@{username}</Text>
+        <Protected userRole={user?.role} roles={[MAIN_ROLE, SECOND_ROLE]}>
+          <Stack direction="row" justify="start">
             {user?.business && (
               <>
                 <Text style={styles.business}>{user?.business?.name}</Text>
@@ -52,8 +63,25 @@ export const ProfileOverview = (props) => {
             <Text style={styles.ratingsAverage}>
               {user?.counter?.ratingsAverage?.toFixed(1)}
             </Text>
-          </Protected>
-        </Stack>
+          </Stack>
+          <Stack direction="row" sx={{ marginTop: 10 }}>
+            <Stack direction="row">
+              <Icon
+                name="clock"
+                type="feather"
+                color={theme.lightColors.grey0}
+                size={17.5}
+              />
+              <Text style={styles.text}>
+                {available ? `${t("isClosingAt")} 17` : t("closed")}
+              </Text>
+            </Stack>
+            <Stack direction="row" sx={{ marginLeft: 10 }}>
+              <IconLocation color={theme.lightColors.grey0} size={17.5} />
+              <Text style={styles.text}>{t("at")} 5 km</Text>
+            </Stack>
+          </Stack>
+        </Protected>
       </Stack>
       <Stack justify="center" align="center" sx={styles.servicesContainer}>
         <ScrollView
@@ -74,7 +102,7 @@ export const ProfileOverview = (props) => {
             onPress={() =>
               navigation.navigate("ProfileStats", {
                 userId: user?._id,
-                username: user?.username,
+                username: username,
               })
             }
             labelStats={t("reviews")}
@@ -92,7 +120,7 @@ export const ProfileOverview = (props) => {
             navigation.navigate("ProfileStats", {
               screen: "ProfileStats",
               userId: user?._id,
-              username: user?.username,
+              username: username,
               initialRoute: "Followers",
             })
           }
@@ -104,7 +132,7 @@ export const ProfileOverview = (props) => {
             navigation.navigate("ProfileStats", {
               screen: "ProfileStats",
               userId: user?._id,
-              username: user?.username,
+              username: username,
               initialRoute: "Following",
             })
           }
@@ -113,7 +141,7 @@ export const ProfileOverview = (props) => {
         />
       </Stack>
       <Stack direction="row" justify="center" sx={styles.buttonsContainer}>
-        {props?.actionButtons}
+        {actionButtons}
       </Stack>
     </View>
   );
@@ -157,10 +185,16 @@ const styles = StyleSheet.create({
   statsContainer: {
     width: "100%",
     paddingHorizontal: 60,
-    marginBottom: 10,
+    marginBottom: 2.5,
   },
   buttonsContainer: {
     marginVertical: 10,
   },
   star: { marginLeft: 7.5 },
+  text: {
+    fontFamily: "Exo-SemiBold",
+    fontSize: 13.5,
+    marginLeft: 5,
+    color: theme.lightColors.black,
+  },
 });

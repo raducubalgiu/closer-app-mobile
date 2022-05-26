@@ -5,12 +5,24 @@ import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../hooks/auth";
 import { useNavigation } from "@react-navigation/native";
 
-export const CardFollowers = ({ avatar, followeeId, username, name }) => {
+export const CardFollowers = ({
+  avatar,
+  followeeId,
+  username,
+  name,
+  counter,
+}) => {
   const navigation = useNavigation();
   const { user } = useAuth();
 
   const goToUser = (userId) => {
-    navigation.push("ProfileGeneral", { userId });
+    navigation.push("ProfileGeneral", {
+      userId,
+      username,
+      avatar,
+      name,
+      counter,
+    });
   };
 
   return (

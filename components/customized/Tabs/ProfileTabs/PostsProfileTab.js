@@ -32,17 +32,13 @@ export const PostsProfileTab = ({ userId, username }) => {
         .get(`${process.env.BASE_ENDPOINT}/users/${userId}/get-posts`, {
           headers: { Authorization: `Bearer ${user?.token}` },
         })
-        .then((res) => {
-          setPosts(res.data.posts);
-        })
+        .then((res) => setPosts(res.data.posts))
         .catch((err) => console.log(err));
     }, [userId, user])
   );
 
   let noFoundPosts;
-  if (posts.length === 0 && user?._id === userId) {
-    noFoundPosts = <NoFoundPosts />;
-  } else if (posts.length === 0 && user?._id !== userId) {
+  if (posts.length === 0 && user?._id !== userId) {
     noFoundPosts = (
       <NoFoundMessage
         sx={{ marginTop: 50 }}
@@ -50,6 +46,8 @@ export const PostsProfileTab = ({ userId, username }) => {
         description={`${t("postsCreatedBy")} ${username} ${t("willApearHere")}`}
       />
     );
+  } else if (posts.length === 0 && user?._id === userId) {
+    noFoundPosts = <NoFoundPosts />;
   }
   let completeProfile;
   if (user?._id === userId) {

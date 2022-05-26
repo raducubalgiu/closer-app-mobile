@@ -4,11 +4,23 @@ import { useNavigation } from "@react-navigation/native";
 import theme from "../../../../assets/styles/theme";
 import { CustomAvatar, Stack, Checkmark, Button } from "../../../core";
 
-const CardPostHeader = ({ userId, avatar, username, checkmark }) => {
+const CardPostHeader = ({
+  userId,
+  avatar,
+  username,
+  checkmark,
+  name,
+  counter,
+}) => {
   const navigation = useNavigation();
 
   const goToUser = (userId) => {
-    navigation.push("ProfileGeneral", { userId });
+    navigation.push("ProfileGeneral", {
+      userId,
+      avatar,
+      username,
+      name,
+    });
   };
 
   return (

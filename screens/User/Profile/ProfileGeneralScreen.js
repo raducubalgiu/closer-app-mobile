@@ -6,22 +6,21 @@ import {
   ActivityIndicator,
   View,
 } from "react-native";
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import axios from "axios";
-import { useFocusEffect } from "@react-navigation/native";
 import {
   Stack,
   FollowButton,
   IconButton,
   MainButton,
+  Feedback,
 } from "../../../components/core";
 import {
   ProfileOverview,
   HeaderProfileGeneral,
   TopTabContainer,
   PostsProfileTab,
-  CalendarProfileTab,
   ProductsProfileTab,
   AboutProfileTab,
   JobsProfileTab,
@@ -29,29 +28,19 @@ import {
 } from "../../../components/customized";
 import { useAuth } from "../../../hooks/auth";
 import theme from "../../../assets/styles/theme";
+import { useTranslation } from "react-i18next";
 
 const ProfileGeneralScreen = ({ badgeDetails, route }) => {
   const { user } = useAuth();
-  const { userId } = route.params;
+  const { userId, username, avatar, name } = route.params;
   const [userDetails, setUserDetails] = useState(null);
+  const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const [loading, setLoading] = useState(false);
   const [suggestedPeople, setSuggestedPeople] = useState([]);
   const Tab = createMaterialTopTabNavigator();
+  const { t } = useTranslation();
 
-  useFocusEffect(
-    React.useCallback(() => {
-      axios
-        .get(`${process.env.BASE_ENDPOINT}/users/${userId}`, {
-          headers: { Authorization: `Bearer ${user?.token}` },
-        })
-        .then((res) => {
-          setUserDetails(res.data.user);
-        })
-        .catch((error) => console.log(error));
-    }, [userId])
-  );
-
-  const fetchUser = () => {
+  const fetchUser = useCallback(() => {
     axios
       .get(`${process.env.BASE_ENDPOINT}/users/${userId}`, {
         headers: { Authorization: `Bearer ${user?.token}` },
@@ -59,10 +48,16 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
       .then((res) => {
         setUserDetails(res.data.user);
       })
-      .catch((err) => console.log(err));
-  };
+      .catch(() =>
+        setFeedback({ visible: true, message: t("somethingWentWrong") })
+      );
+  }, [userId]);
 
-  const handleSuggested = () => {
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
+
+  const handleSuggested = useCallback(() => {
     setLoading(true);
     axios
       .get(
@@ -75,10 +70,8 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
         setSuggestedPeople(res.data.suggestedPeople);
         setLoading(false);
       })
-      .catch(() => {
-        setLoading(false);
-      });
-  };
+      .catch(() => setLoading(false));
+  }, [user, userDetails]);
 
   const admin =
     userDetails?.role === "admin" || userDetails?.role === "employee";
@@ -93,9 +86,9 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
       />
       <MainButton
         variant="outlined"
-        title="Mesaj"
+        title={t("message")}
         radius={2.5}
-        sx={{ borderWidth: 1, borderColor: "#ddd", marginLeft: 5 }}
+        sx={styles.messageBtn}
         onPress={() => {
           navigation.navigate("EditProfile");
         }}
@@ -122,14 +115,21 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
     () => <PostsProfileTab userId={userId} username={userDetails?.username} />,
     [userId, userDetails]
   );
-
   const ProductsProfile = useCallback(
     () => (
       <ProductsProfileTab userId={userId} services={userDetails?.services} />
     ),
     [userId, userDetails]
   );
-
+  const JobsProfile = useCallback(
+    () => (
+      <JobsProfileTab
+        userId={userDetails?._id}
+        username={userDetails?.username}
+      />
+    ),
+    [userId, userDetails]
+  );
   const AboutProfile = useCallback(
     () => (
       <AboutProfileTab
@@ -140,19 +140,6 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
       />
     ),
     [userDetails]
-  );
-  const CalendarProfile = useCallback(
-    () => <CalendarProfileTab services={userDetails?.services} />,
-    [userDetails]
-  );
-  const JobsProfile = useCallback(
-    () => (
-      <JobsProfileTab
-        userId={userDetails?._id}
-        username={userDetails?.username}
-      />
-    ),
-    [userId, userDetails]
   );
 
   const renderSuggested = ({ item }) => {
@@ -174,15 +161,17 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
   return (
     <View style={styles.container}>
       <SafeAreaView>
-        <HeaderProfileGeneral
-          name={userDetails?.name}
-          checkmark={userDetails?.checkmark}
-        />
+        <HeaderProfileGeneral name={name} checkmark={userDetails?.checkmark} />
+        <Feedback feedback={feedback} setFeedback={setFeedback} />
       </SafeAreaView>
       <ProfileOverview
         user={userDetails}
+        username={username}
+        avatar={avatar}
         badgeDetails={badgeDetails}
         actionButtons={buttons}
+        withAvailable={true}
+        available={true}
       />
       {suggestedPeople.length !== 0 && (
         <Stack align="start" justify="start" sx={styles.suggestedPeople}>
@@ -200,7 +189,6 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
         <TopTabContainer initialRouteName="Posts" profileTabs={true}>
           <Tab.Screen name="Posts" component={PostsProfile} />
           {admin && <Tab.Screen name="Products" component={ProductsProfile} />}
-          {admin && <Tab.Screen name="Calendar" component={CalendarProfile} />}
           {admin && <Tab.Screen name="Jobs" component={JobsProfile} />}
           <Tab.Screen name="About" component={AboutProfile} />
         </TopTabContainer>
@@ -263,4 +251,5 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   tabsCont: { flex: 1, height: 700 },
+  messageBtn: { borderWidth: 1, borderColor: "#ddd", marginLeft: 5 },
 });

@@ -14,7 +14,6 @@ import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import theme from "../assets/styles/theme";
 import { Icon } from "@rneui/themed";
-import { useAuth } from "../hooks";
 
 const RECENT_SEARCH = [
   { _id: "1", word: "Patrice Evra" },
@@ -23,7 +22,6 @@ const RECENT_SEARCH = [
 ];
 
 const SearchPostsScreen = () => {
-  const { user } = useAuth();
   const [search, setSearch] = useState("");
   const [users, setUsers] = useState([]);
   const navigation = useNavigation();
@@ -44,16 +42,22 @@ const SearchPostsScreen = () => {
     }
   };
 
-  const goToUser = (userId) => {
-    navigation.navigate("ProfileGeneral", { userId });
-  };
-
   const renderRecent = ({ item }) => (
     <CardRecentSearch onPress={() => {}} word={item?.word} />
   );
 
   const renderUsers = ({ item }) => (
-    <Button onPress={() => goToUser(item?._id)}>
+    <Button
+      onPress={() =>
+        navigation.navigate("ProfileGeneral", {
+          userId: item?._id,
+          username: item?.username,
+          avatar: item?.avatar,
+          name: item?.name,
+          checkmark: item?.checkmark,
+        })
+      }
+    >
       <Stack direction="row" justify="start" sx={styles.searchItem}>
         <CustomAvatar avatar={item?.avatar} />
         <Stack align="start" sx={{ marginLeft: 10 }}>

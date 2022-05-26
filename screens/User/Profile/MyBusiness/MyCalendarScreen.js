@@ -1,17 +1,218 @@
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { SafeAreaView, StyleSheet, View, Text } from "react-native";
 import React, { useState } from "react";
-import { Header } from "../../../../components/core";
+import {
+  Header,
+  Button,
+  Stack,
+  CustomAvatar,
+} from "../../../../components/core";
 import { useTranslation } from "react-i18next";
 import theme from "../../../../assets/styles/theme";
 import { FAB, Icon } from "@rneui/themed";
 import { Agenda } from "react-native-calendars";
 import moment from "moment";
+import { NoFoundMessage } from "../../../../components/customized";
+
+const DUMMY_HOURS = [
+  {
+    startHour: "09:00",
+    customer: "Raducu Balgiu",
+    product: "Tuns par lung",
+    price: 50,
+    option: "Barbati",
+    avatar: [
+      {
+        url: "https://res.cloudinary.com/closer-app/image/upload/v1648680388/avatar-raducu_uykjxt.jpg",
+      },
+    ],
+    channel: "closer",
+  },
+  {
+    startHour: "09:30",
+    customer: "Oprea Laurentiu",
+    product: "Tuns mediu",
+    price: 65,
+    option: "Barbati",
+    avatar: [
+      {
+        url: "https://res.cloudinary.com/closer-app/image/upload/v1652450817/laur_zpdjbq.jpg",
+      },
+    ],
+    channel: "newClient",
+  },
+  {
+    startHour: "10:00",
+    customer: "Mihaela Ghizdavescu",
+    product: "Coafat",
+    price: 120,
+    option: "Femei",
+    avatar: [],
+    channel: "admin",
+  },
+  {
+    startHour: "10:30",
+    customer: "Mihaela Ghizdavescu",
+    product: "Coafat",
+    price: 120,
+    option: "Femei",
+    avatar: [],
+    channel: "newClient",
+  },
+  {
+    startHour: "11:00",
+    customer: "Mihaela Ghizdavescu",
+    product: "Coafat",
+    price: 120,
+    option: "Femei",
+    avatar: [],
+    channel: "admin",
+  },
+  {
+    startHour: "11:30",
+    customer: "Cristiano Ronaldo",
+    product: "Coafat",
+    price: 120,
+    option: "Femei",
+    avatar: [
+      {
+        url: "https://res.cloudinary.com/closer-app/image/upload/v1652805717/cristiano_i77wyp.jpg",
+      },
+    ],
+    channel: "closer",
+  },
+  {
+    startHour: "12:00",
+    customer: "Mihaela Ghizdavescu",
+    product: "Coafat",
+    price: 120,
+    option: "Femei",
+    avatar: [],
+    channel: "newClient",
+  },
+  {
+    startHour: "12:30",
+    customer: "Giorgio Chielini",
+    product: "Coafat",
+    price: 120,
+    option: "Femei",
+    avatar: [
+      {
+        url: "https://res.cloudinary.com/closer-app/image/upload/v1653305989/273193524_514446116663305_4320541658131852576_n_veokg0.jpg",
+      },
+    ],
+    channel: "closer",
+  },
+  {
+    startHour: "13:00",
+    customer: "Mihaela Ghizdavescu",
+    product: "Coafat",
+    price: 120,
+    option: "Femei",
+    avatar: [],
+    channel: "closer",
+  },
+  {
+    startHour: "13:30",
+    customer: "Mihaela Ghizdavescu",
+    product: "Coafat",
+    price: 120,
+    option: "Femei",
+    avatar: [],
+    channel: "newClient",
+  },
+  {
+    startHour: "14:00",
+    customer: "Mihai Gindac",
+    product: "Coafat",
+    price: 120,
+    option: "Femei",
+    avatar: [
+      {
+        url: "https://res.cloudinary.com/closer-app/image/upload/v1652450854/mihai_z2gcw5.jpg",
+      },
+    ],
+    channel: "closer",
+  },
+  {
+    startHour: "14:30",
+    customer: "Mihaela Ghizdavescu",
+    product: "Coafat",
+    price: 120,
+    option: "Femei",
+    avatar: [],
+    channel: "admin",
+  },
+  {
+    startHour: "15:00",
+    customer: "Mihaela Ghizdavescu",
+    product: "Coafat",
+    price: 120,
+    option: "Femei",
+    avatar: [],
+    channel: "newClient",
+  },
+  {
+    startHour: "15:30",
+    customer: "Mihaela Ghizdavescu",
+    product: "Coafat",
+    price: 120,
+    option: "Femei",
+    avatar: [],
+    channel: "closer",
+  },
+  {
+    startHour: "16:00",
+    customer: "Mihaela Ghizdavescu",
+    product: "Coafat",
+    price: 120,
+    option: "Femei",
+    avatar: [],
+    channel: "admin",
+  },
+  {
+    startHour: "16:30",
+    customer: "Mihaela Ghizdavescu",
+    product: "Coafat",
+    price: 120,
+    option: "Femei",
+    avatar: [],
+    channel: "newClient",
+  },
+  {
+    startHour: "17:00",
+    customer: "Mihaela Ghizdavescu",
+    product: "Coafat",
+    price: 120,
+    option: "Femei",
+    avatar: [],
+    channel: "admin",
+  },
+  {
+    startHour: "17:30",
+    customer: "Mihaela Ghizdavescu",
+    product: "Coafat",
+    price: 120,
+    option: "Femei",
+    avatar: [],
+    channel: "closer",
+  },
+  {
+    startHour: "18:00",
+    customer: "Mihaela Ghizdavescu",
+    product: "Coafat",
+    price: 120,
+    option: "Femei",
+    avatar: [],
+    channel: "newClient",
+  },
+];
 
 const MyCalendarScreen = () => {
   const { t } = useTranslation();
   const minDate = moment().format("YYYY-MM-DD");
   const maxDate = moment().add(120, "days").format("YYYY-MM-DD");
-  const [selectedDay, setSelectedDay] = useState();
+  const [selectedDay, setSelectedDay] = useState(minDate);
+  const [slots, setSlots] = useState(DUMMY_HOURS);
   const [knob, setKnob] = useState(false);
 
   const showKnob = (
@@ -33,23 +234,136 @@ const MyCalendarScreen = () => {
     </>
   );
 
+  const noFoundData = (
+    <NoFoundMessage
+      title="Nu mai sunt locuri"
+      description="Se pare ca nu mai sunt locuri pentru ziua selectata"
+      iconName="calendar-clock"
+      iconType="material-community"
+      iconSize={60}
+    />
+  );
+
+  const getBgColor = (channel) => {
+    if (channel === "closer") {
+      return "#fff5cc";
+    } else if (channel === "admin") {
+      return "#ccf2ff";
+    } else {
+      return "#c6ecc6";
+    }
+  };
+
+  const renderSlot = (item) => (
+    <Button>
+      <Stack
+        direction="row"
+        align="start"
+        justify="start"
+        sx={{
+          marginHorizontal: 20,
+          paddingTop: 25,
+        }}
+      >
+        <Text
+          style={{
+            fontFamily: "Exo-Medium",
+            color: theme.lightColors.black,
+            fontSize: 14,
+          }}
+        >
+          {item?.startHour}
+        </Text>
+        <Stack
+          align="start"
+          sx={{
+            marginLeft: 15,
+            flex: 1,
+            padding: 10,
+            borderRadius: 25,
+            backgroundColor: getBgColor(item?.channel),
+          }}
+        >
+          <Stack align="start" direction="row">
+            <CustomAvatar avatar={item?.avatar} size={22.5} iconSize={12.5} />
+            <Stack align="start" sx={{ marginLeft: 10 }}>
+              <Text
+                style={{
+                  fontFamily: "Exo-SemiBold",
+                  color: theme.lightColors.black,
+                  fontSize: 16.5,
+                  marginBottom: 2.5,
+                }}
+              >
+                {item?.customer}
+              </Text>
+              <Stack direction="row">
+                <Text
+                  style={{
+                    //fontFamily: "Exo-Medium",
+                    color: theme.lightColors.black,
+                    fontSize: 15,
+                  }}
+                >
+                  {item?.product} -
+                </Text>
+                <Text
+                  style={{
+                    //fontFamily: "Exo-SemiBold",
+                    color: theme.lightColors.black,
+                    marginLeft: 5,
+                    fontSize: 15,
+                  }}
+                >
+                  {item?.option}
+                </Text>
+              </Stack>
+              <Stack direction="row" sx={{ marginTop: 15 }}>
+                <Text
+                  style={{
+                    //fontFamily: "Exo-Medium",
+                    color: theme.lightColors.black,
+                    fontSize: 15,
+                  }}
+                >
+                  Pret -
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: "Exo-SemiBold",
+                    color: theme.lightColors.black,
+                    fontSize: 14.5,
+                    marginLeft: 5,
+                  }}
+                >
+                  {item?.price} RON
+                </Text>
+              </Stack>
+            </Stack>
+          </Stack>
+        </Stack>
+      </Stack>
+    </Button>
+  );
+
   return (
     <SafeAreaView style={styles.screen}>
-      <Header title={t("myCalendar")} />
+      <Header
+        title={t("myCalendar")}
+        actionBtn={
+          <Button>
+            <Icon name="info" type="feather" color={theme.lightColors.black} />
+          </Button>
+        }
+      />
       <Agenda
         items={{
-          "2012-05-22": [{ name: "item 1 - any js object" }],
-          "2012-05-23": [{ name: "item 2 - any js object", height: 80 }],
-          "2012-05-24": [],
-          "2012-05-25": [
-            { name: "item 3 - any js object" },
-            { name: "any js object" },
-          ],
+          [selectedDay]: slots,
         }}
-        renderItem={(item, firstItemInDay) => {
-          return <View />;
+        renderItem={renderSlot}
+        onDayPress={(day) => {
+          console.log("day pressed");
         }}
-        onDayPress={(day) => {}}
         onDayChange={(day) => setSelectedDay(day)}
         renderDay={() => <View />}
         firstDay={1}
@@ -60,6 +374,7 @@ const MyCalendarScreen = () => {
         pastScrollRange={1}
         futureScrollRange={5}
         renderEmptyDate={() => <View />}
+        renderEmptyData={() => noFoundData}
         renderKnob={() => showKnob}
         rowHasChanged={(r1, r2) => r1.text !== r2.text}
         showClosingKnob={true}
@@ -81,10 +396,11 @@ const MyCalendarScreen = () => {
         style={{}}
       />
       <FAB
-        icon={{ name: "calendar", type: "feather", color: "white" }}
+        icon={{ name: "post-add", type: "material", color: "white" }}
         color={theme.lightColors.primary}
         placement="right"
         onPress={() => {}}
+        style={{ bottom: 50, right: 10 }}
       />
     </SafeAreaView>
   );
@@ -96,5 +412,17 @@ const styles = StyleSheet.create({
   screen: {
     backgroundColor: "white",
     flex: 1,
+  },
+  slot: {
+    marginHorizontal: 15,
+    marginTop: 15,
+    backgroundColor: "#f1f1f1",
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+  },
+  slotText: {
+    fontFamily: "Exo-SemiBold",
+    fontSize: 13,
   },
 });

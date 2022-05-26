@@ -8,7 +8,7 @@ const theme = createTheme({
     grey0: "#818391",
     error: "#dc3545",
     white: "white",
-    success: "#00F07F",
+    success: "#00cc6d",
   },
   darkColors: {
     primary: "#121212",

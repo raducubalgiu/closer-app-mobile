@@ -65,24 +65,7 @@ const FeedScreen = () => {
   }, [postsState.activeFollowings]);
 
   const renderAllPosts = useCallback(({ item }) => {
-    const { user } = item;
-    return (
-      <CardPost
-        postId={item?._id}
-        userId={user?._id}
-        avatar={user?.avatar}
-        username={user?.username}
-        job={user?.business?.name}
-        date={dateFormat(item?.createdAt)}
-        image={item?.images[0]?.url}
-        description={item?.description}
-        likesCount={item?.likesCount}
-        commentsCount={item?.commentsCount}
-        bookable={item?.bookable}
-        checkmark={item?.checkmark}
-        postType={item?.postType}
-      />
-    );
+    return <CardPost post={item} />;
   }, []);
 
   const keyExtractor = useCallback((item) => item?._id, []);

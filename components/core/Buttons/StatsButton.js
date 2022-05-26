@@ -10,9 +10,7 @@ export const StatsButton = ({ onPress, statsNo, labelStats, labelStyle }) => {
       onPress={onPress}
     >
       <Text style={styles.statsNumber}>{statsNo ? statsNo : 0}</Text>
-      <Text style={labelStyle ? labelStyle : styles.statsText}>
-        {labelStats}
-      </Text>
+      <Text style={styles.statsText}>{labelStats}</Text>
     </TouchableOpacity>
   );
 };
@@ -21,9 +19,9 @@ const styles = StyleSheet.create({
   container: { alignItems: "center" },
   statsText: {
     fontFamily: "Exo-Medium",
-    color: theme.lightColors.black,
+    color: theme.lightColors.grey0,
     fontSize: 13,
     marginTop: 5,
   },
-  statsNumber: { fontFamily: "Exo-Bold", fontSize: 14 },
+  statsNumber: { fontFamily: "Exo-Bold", fontSize: 15 },
 });

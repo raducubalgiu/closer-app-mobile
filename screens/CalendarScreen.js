@@ -82,7 +82,11 @@ const CalendarScreen = ({ route }) => {
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.container}>
-        <Header title={name} description={t("selectDateAndHour")} divider />
+        <Header
+          title={name}
+          description={`${moment(selectedDay).format("ll")} - ${selectedHour}`}
+          divider
+        />
         <Agenda
           items={{
             [selectedDay]: slots,
@@ -125,10 +129,8 @@ const CalendarScreen = ({ route }) => {
           btnTitle={t("book")}
           onPress={() => navigation.navigate("Schedule")}
         >
-          <Stack direction="row">
-            <Text style={styles.product}>{trimFunc(name, 15)}</Text>
-            <Text style={styles.price}>{price} RON</Text>
-          </Stack>
+          <Text style={styles.product}>{trimFunc(name, 20)}</Text>
+          <Text style={styles.price}>{price} RON</Text>
           <Text style={styles.date}>
             {moment(selectedDay).format("ll")} - {selectedHour}
           </Text>
@@ -156,9 +158,8 @@ const styles = StyleSheet.create({
   },
   price: {
     fontFamily: "Exo-SemiBold",
-    fontSize: 17,
+    fontSize: 16.5,
     color: theme.lightColors.primary,
-    marginLeft: 10,
   },
   date: {
     color: theme.lightColors.grey0,

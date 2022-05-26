@@ -1,4 +1,11 @@
-import { SafeAreaView, StyleSheet, Text, FlatList } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  FlatList,
+  ScrollView,
+  Keyboard,
+} from "react-native";
 import React, { useState } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
@@ -93,18 +100,19 @@ const SearchServicesScreen = ({ route }) => {
           onCancel={() => navigation.goBack()}
         />
       </Stack>
-      <Stack align="start" sx={styles.container}>
-        <Stack align="start">
-          {services.length === 0 && (
-            <Text style={styles.heading}>{t("suggested")}</Text>
-          )}
-          <FlatList
-            data={services.length > 0 ? services : SUGGESTED_SERVICES}
-            keyExtractor={(item) => item._id}
-            renderItem={services.length > 0 ? renderServices : renderSuggested}
-          />
-        </Stack>
-      </Stack>
+      <FlatList
+        data={services.length > 0 ? services : SUGGESTED_SERVICES}
+        keyExtractor={(item) => item._id}
+        renderItem={services.length > 0 ? renderServices : renderSuggested}
+        ListFooterComponent={
+          <>
+            {services.length === 0 && (
+              <Text style={styles.heading}>{t("suggested")}</Text>
+            )}
+          </>
+        }
+        contentContainerStyle={{ paddingHorizontal: 15 }}
+      />
     </SafeAreaView>
   );
 };
@@ -115,10 +123,6 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: "white",
-  },
-  container: {
-    flex: 1,
-    paddingHorizontal: 15,
   },
   heading: {
     textTransform: "uppercase",

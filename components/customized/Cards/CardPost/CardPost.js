@@ -4,50 +4,49 @@ import React from "react";
 import CardPostHeader from "./CardPostHeader";
 import CardPostButtons from "./CardPostButtons";
 import CardPostFooter from "./CardPostFooter";
-import VideoItem from "../../VideoItem/VideoItem";
 
-export const CardPost = ({
-  userId,
-  avatar,
-  username,
-  checkmark,
-  bookable,
-  postId,
-  likesCount,
-  description,
-  date,
-  commentsCount,
-  postType,
-  image,
-}) => {
-  const renderImage = (
-    <Image
-      source={{
-        uri: `${image}`,
-      }}
-      style={!bookable ? { ...styles.image, height: 450 } : { ...styles.image }}
-    />
-  );
+export const CardPost = ({ post }) => {
+  const {
+    _id,
+    images,
+    bookable,
+    likesCount,
+    commentsCount,
+    description,
+    createdAt,
+    user,
+  } = post;
+  const { name, username, avatar, checkmark } = user;
 
   return (
     <View style={styles.container}>
       <CardPostHeader
-        userId={userId}
+        userId={user?._id}
         avatar={avatar}
         username={username}
+        name={name}
         checkmark={checkmark}
       />
-      <View>{renderImage}</View>
+      <View>
+        <Image
+          source={{
+            uri: `${images[0].url}`,
+          }}
+          style={
+            !bookable ? { ...styles.image, height: 450 } : { ...styles.image }
+          }
+        />
+      </View>
       <CardPostButtons
         bookable={bookable}
-        postId={postId}
+        postId={_id}
         likesCount={likesCount}
       />
       <CardPostFooter
-        postId={postId}
+        postId={_id}
         description={description}
         username={username}
-        date={date}
+        date={createdAt}
         avatar={avatar}
         bookable={bookable}
         commentsCount={commentsCount}
