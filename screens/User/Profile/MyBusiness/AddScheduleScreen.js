@@ -11,7 +11,18 @@ import { useForm, FormProvider } from "react-hook-form";
 import { seconds } from "../../../../utils";
 import theme from "../../../../assets/styles/theme";
 
-const defaultValues = { startMonday: 32400, endMonday: 64800 };
+const defaultValues = {
+  startMonday: 32400,
+  endMonday: 64800,
+  startTuesday: 118800,
+  endTuesday: 151200,
+  startWednesday: 205200,
+  endWednesday: 237600,
+  startThursday: 291600,
+  endThursday: 324000,
+  startFriday: 378000,
+  endFriday: 410400,
+};
 const { grey0 } = theme.lightColors;
 
 const AddScheduleScreen = () => {
@@ -19,7 +30,7 @@ const AddScheduleScreen = () => {
   const methods = useForm({ defaultValues });
   const [disabled, setDisabled] = useState(true);
   const { handleSubmit } = methods;
-  const { mon } = seconds;
+  const { mon, tue, wed, thu, fri } = seconds;
 
   const onSubmit = (data) => {
     console.log(data);
@@ -54,14 +65,14 @@ const AddScheduleScreen = () => {
                 <Stack sx={styles.startDay}>
                   <FormInputSelect
                     name="startTuesday"
-                    items={mon}
+                    items={tue}
                     placeholder={t("start")}
                   />
                 </Stack>
                 <Stack sx={styles.endDay}>
                   <FormInputSelect
                     name="endTuesday"
-                    items={mon}
+                    items={tue}
                     placeholder={t("end")}
                   />
                 </Stack>
@@ -71,14 +82,14 @@ const AddScheduleScreen = () => {
                 <Stack sx={styles.startDay}>
                   <FormInputSelect
                     name="startWednesday"
-                    items={mon}
+                    items={wed}
                     placeholder={t("start")}
                   />
                 </Stack>
                 <Stack sx={styles.endDay}>
                   <FormInputSelect
                     name="endWednesday"
-                    items={mon}
+                    items={wed}
                     placeholder={t("end")}
                   />
                 </Stack>
@@ -88,14 +99,14 @@ const AddScheduleScreen = () => {
                 <Stack sx={styles.startDay}>
                   <FormInputSelect
                     name="startThursday"
-                    items={mon}
+                    items={thu}
                     placeholder={t("start")}
                   />
                 </Stack>
                 <Stack sx={styles.endDay}>
                   <FormInputSelect
                     name="endThursday"
-                    items={mon}
+                    items={thu}
                     placeholder={t("end")}
                   />
                 </Stack>
@@ -105,14 +116,14 @@ const AddScheduleScreen = () => {
                 <Stack sx={styles.startDay}>
                   <FormInputSelect
                     name="startFriday"
-                    items={mon}
+                    items={fri}
                     placeholder={t("start")}
                   />
                 </Stack>
                 <Stack sx={styles.endDay}>
                   <FormInputSelect
                     name="endFriday"
-                    items={mon}
+                    items={fri}
                     placeholder={t("end")}
                   />
                 </Stack>

@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   inputIOS: {
-    fontSize: 15,
+    fontSize: 14,
     paddingVertical: 12.5,
     paddingHorizontal: 10,
     borderWidth: 1,
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   inputAndroid: {
-    fontSize: 15,
+    fontSize: 14,
     paddingHorizontal: 10,
     paddingVertical: 8,
     borderWidth: 0.5,
