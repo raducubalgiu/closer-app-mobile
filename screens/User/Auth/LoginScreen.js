@@ -36,6 +36,7 @@ const LoginScreen = () => {
             },
           }
         );
+        setLoading(false);
         const {
           _id,
           name,
@@ -73,11 +74,10 @@ const LoginScreen = () => {
           token: idTokenResult?.token,
           validated,
         });
-        setLoading(false);
       }
     } catch (err) {
-      setFeedback({ visible: true, message: t("somethingWentWrong") });
       setLoading(false);
+      setFeedback({ visible: true, message: t("somethingWentWrong") });
     }
   };
 

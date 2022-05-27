@@ -10,6 +10,10 @@ import { useTranslation } from "react-i18next";
 import { useForm, FormProvider } from "react-hook-form";
 import { seconds } from "../../../../utils";
 import theme from "../../../../assets/styles/theme";
+import { useAuth } from "../../../../hooks";
+import axios from "axios";
+import { BASE_ENDPOINT } from "@env";
+import { useNavigation } from "@react-navigation/native";
 
 const defaultValues = {
   startMonday: 32400,
@@ -22,18 +26,78 @@ const defaultValues = {
   endThursday: 324000,
   startFriday: 378000,
   endFriday: 410400,
+  startSaturday: 464400,
+  endSaturday: 496800,
+  startSunday: 550800,
+  endSunday: 583200,
 };
 const { grey0 } = theme.lightColors;
 
 const AddScheduleScreen = () => {
+  const { user } = useAuth();
   const { t } = useTranslation();
   const methods = useForm({ defaultValues });
-  const [disabled, setDisabled] = useState(true);
+  const [disabled, setDisabled] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { handleSubmit } = methods;
-  const { mon, tue, wed, thu, fri } = seconds;
+  const { mon, tue, wed, thu, fri, sat, sun } = seconds;
+  const navigation = useNavigation();
 
   const onSubmit = (data) => {
-    console.log(data);
+    setDisabled(true);
+    setLoading(true);
+    axios
+      .patch(
+        `${BASE_ENDPOINT}/users/${user?._id}/update`,
+        {
+          opening_hours: {
+            normal_days: {
+              mon: {
+                startTime: data.startMonday,
+                endTime: data.endMonday,
+              },
+              tue: {
+                startTime: data.startTuesday,
+                endTime: data.endTuesday,
+              },
+              wed: {
+                startTime: data.startWednesday,
+                endTime: data.endWednesday,
+              },
+              thu: {
+                startTime: data.startThursday,
+                endTime: data.endThursday,
+              },
+              fri: {
+                startTime: data.startFriday,
+                endTime: data.endFriday,
+              },
+              sat: {
+                startTime: data.startSaturday,
+                endTime: data.endSaturday,
+              },
+              sun: {
+                startTime: data.startSunday,
+                endTime: data.endSunday,
+              },
+            },
+          },
+        },
+        {
+          headers: { Authorization: `Bearer ${user?.token}` },
+        }
+      )
+      .then((res) => {
+        console.log(res.data.user);
+        setDisabled(false);
+        setLoading(false);
+        navigation.goBack();
+      })
+      .catch((err) => {
+        console.log(err);
+        setDisabled(false);
+        setLoading(false);
+      });
   };
 
   return (
@@ -133,14 +197,14 @@ const AddScheduleScreen = () => {
                 <Stack sx={styles.startDay}>
                   <FormInputSelect
                     name="startSaturday"
-                    items={mon}
+                    items={sat}
                     placeholder={t("start")}
                   />
                 </Stack>
                 <Stack sx={styles.endDay}>
                   <FormInputSelect
                     name="endSaturday"
-                    items={mon}
+                    items={sat}
                     placeholder={t("end")}
                   />
                 </Stack>
@@ -150,14 +214,14 @@ const AddScheduleScreen = () => {
                 <Stack sx={styles.startDay}>
                   <FormInputSelect
                     name="startSunday"
-                    items={mon}
+                    items={sun}
                     placeholder={t("start")}
                   />
                 </Stack>
                 <Stack sx={styles.endDay}>
                   <FormInputSelect
                     name="endSunday"
-                    items={mon}
+                    items={sun}
                     placeholder={t("end")}
                   />
                 </Stack>
@@ -168,6 +232,7 @@ const AddScheduleScreen = () => {
               radius={10}
               fullWidth
               title={t("add")}
+              loading={loading}
               onPress={handleSubmit(onSubmit)}
               disabled={disabled}
             />
