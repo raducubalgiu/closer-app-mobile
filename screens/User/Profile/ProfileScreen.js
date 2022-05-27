@@ -115,6 +115,10 @@ const ProfileScreen = (props) => {
         withBadge
         badgeDetails={props.badgeDetails}
         actionButtons={buttons}
+        username={user?.username}
+        avatar={user?.avatar}
+        withAvailable={true}
+        available={true}
       />
       <View style={styles.tabsCont}>
         <TopTabContainer initialRouteName="Posts" profileTabs={true}>

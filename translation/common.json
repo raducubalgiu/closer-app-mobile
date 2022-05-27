@@ -96,6 +96,7 @@
   "services": "Servicii",
   "addServices": "Adaugă servicii",
   "myServices": "Serviciile mele",
+  "somethingWentWrong": "Ceva nu a mers cum trebuie",
   "somethingWentWrongLater": "Ceva nu a mers cum trebuie. Revin-o mai târziu",
   "serviceAddedMessage": "Ai adăugat cu success serviciul selectat",
   "serviceRemovedMessage": "Ai eliminat cu success serviciul selectat",

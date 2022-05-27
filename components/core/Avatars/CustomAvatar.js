@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   },
   availableCont: {
     position: "absolute",
-    top: 10,
+    bottom: 10,
     right: 0,
   },
   availableBadge: {

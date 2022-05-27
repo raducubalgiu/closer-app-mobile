@@ -9,7 +9,7 @@ import {
 import axios from "axios";
 import { useFocusEffect } from "@react-navigation/native";
 import { Image, Icon } from "@rneui/themed";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import CompleteProfile from "../../CompleteProfile/CompleteProfile";
 import NoFoundPosts from "../../NotFoundContent/NoFoundPosts";

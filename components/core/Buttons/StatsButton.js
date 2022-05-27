@@ -2,7 +2,7 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 
-export const StatsButton = ({ onPress, statsNo, labelStats, labelStyle }) => {
+export const StatsButton = ({ onPress, statsNo, labelStats }) => {
   return (
     <TouchableOpacity
       activeOpacity={1}

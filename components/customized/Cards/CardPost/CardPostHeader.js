@@ -4,14 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import theme from "../../../../assets/styles/theme";
 import { CustomAvatar, Stack, Checkmark, Button } from "../../../core";
 
-const CardPostHeader = ({
-  userId,
-  avatar,
-  username,
-  checkmark,
-  name,
-  counter,
-}) => {
+const CardPostHeader = ({ userId, avatar, username, checkmark, name }) => {
   const navigation = useNavigation();
 
   const goToUser = (userId) => {

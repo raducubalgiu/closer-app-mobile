@@ -11,7 +11,10 @@ import theme from "../../../../assets/styles/theme";
 import { FAB, Icon } from "@rneui/themed";
 import { Agenda } from "react-native-calendars";
 import moment from "moment";
-import { NoFoundMessage } from "../../../../components/customized";
+import {
+  NoFoundMessage,
+  CardSlotDetails,
+} from "../../../../components/customized";
 
 const DUMMY_HOURS = [
   {
@@ -244,106 +247,16 @@ const MyCalendarScreen = () => {
     />
   );
 
-  const getBgColor = (channel) => {
-    if (channel === "closer") {
-      return "#fff5cc";
-    } else if (channel === "admin") {
-      return "#ccf2ff";
-    } else {
-      return "#c6ecc6";
-    }
-  };
-
   const renderSlot = (item) => (
-    <Button>
-      <Stack
-        direction="row"
-        align="start"
-        justify="start"
-        sx={{
-          marginHorizontal: 20,
-          paddingTop: 25,
-        }}
-      >
-        <Text
-          style={{
-            fontFamily: "Exo-Medium",
-            color: theme.lightColors.black,
-            fontSize: 14,
-          }}
-        >
-          {item?.startHour}
-        </Text>
-        <Stack
-          align="start"
-          sx={{
-            marginLeft: 15,
-            flex: 1,
-            padding: 10,
-            borderRadius: 25,
-            backgroundColor: getBgColor(item?.channel),
-          }}
-        >
-          <Stack align="start" direction="row">
-            <CustomAvatar avatar={item?.avatar} size={22.5} iconSize={12.5} />
-            <Stack align="start" sx={{ marginLeft: 10 }}>
-              <Text
-                style={{
-                  fontFamily: "Exo-SemiBold",
-                  color: theme.lightColors.black,
-                  fontSize: 16.5,
-                  marginBottom: 2.5,
-                }}
-              >
-                {item?.customer}
-              </Text>
-              <Stack direction="row">
-                <Text
-                  style={{
-                    //fontFamily: "Exo-Medium",
-                    color: theme.lightColors.black,
-                    fontSize: 15,
-                  }}
-                >
-                  {item?.product} -
-                </Text>
-                <Text
-                  style={{
-                    //fontFamily: "Exo-SemiBold",
-                    color: theme.lightColors.black,
-                    marginLeft: 5,
-                    fontSize: 15,
-                  }}
-                >
-                  {item?.option}
-                </Text>
-              </Stack>
-              <Stack direction="row" sx={{ marginTop: 15 }}>
-                <Text
-                  style={{
-                    //fontFamily: "Exo-Medium",
-                    color: theme.lightColors.black,
-                    fontSize: 15,
-                  }}
-                >
-                  Pret -
-                </Text>
-                <Text
-                  style={{
-                    fontFamily: "Exo-SemiBold",
-                    color: theme.lightColors.black,
-                    fontSize: 14.5,
-                    marginLeft: 5,
-                  }}
-                >
-                  {item?.price} RON
-                </Text>
-              </Stack>
-            </Stack>
-          </Stack>
-        </Stack>
-      </Stack>
-    </Button>
+    <CardSlotDetails
+      startHour={item?.startHour}
+      channel={item?.channel}
+      avatar={item?.avatar}
+      customer={item?.customer}
+      product={item?.product}
+      option={item?.option}
+      price={item?.price}
+    />
   );
 
   return (
