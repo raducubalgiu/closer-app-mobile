@@ -128,6 +128,7 @@ const ProfileScreen = (props) => {
       </View>
       <Protected roles={[MAIN_ROLE, SECOND_ROLE]} userRole={user?.role}>
         <FAB
+          activeOpacity={1}
           visible={true}
           icon={{ name: "calendar", type: "feather", color: "white" }}
           color={theme.lightColors.primary}

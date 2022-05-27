@@ -28,6 +28,14 @@ const CompleteProfile = () => {
       navigation: "AddLocation",
     },
     {
+      title: "Adauga programul",
+      description: "Introdu programul locatiei",
+      iconName: "navigation",
+      iconType: "feather",
+      completed: false,
+      navigation: "AddSchedule",
+    },
+    {
       title: "Adauga serviciile",
       description: "Ce servicii oferi clientilor?",
       iconName: "bulb1",

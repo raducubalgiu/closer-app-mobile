@@ -90,6 +90,7 @@
   "addWebsite": "Adaugă website",
   "addBiography": "Adaugă biografia",
   "addUsername": "Adaugă nume utilizator",
+  "addLocationSchedule": "Adaugă programul locaţiei",
   "notAdded": "Incă nu a fost adaugat",
   "contact": "Contact",
   "location": "Locaţia",
@@ -144,5 +145,14 @@
   "jobsPostedByYouMessage": "Joburile postate de tine vor apărea aici",
   "isClosingAt": "Închide la",
   "closed": "Închis",
-  "message": "Mesaj"
+  "message": "Mesaj",
+  "monday": "Luni",
+  "tuesday": "Marţi",
+  "wednesday": "Miercuri",
+  "thursday": "Joi",
+  "friday": "Vineri",
+  "saturday": "Sâmbătă",
+  "sunday": "Duminică",
+  "start": "Începere",
+  "end": "Sfârşit"
 }

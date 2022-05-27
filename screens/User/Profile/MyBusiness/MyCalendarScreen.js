@@ -1,11 +1,6 @@
-import { SafeAreaView, StyleSheet, View, Text } from "react-native";
-import React, { useState } from "react";
-import {
-  Header,
-  Button,
-  Stack,
-  CustomAvatar,
-} from "../../../../components/core";
+import { SafeAreaView, StyleSheet, View } from "react-native";
+import React, { useState, useRef, useCallback, useMemo } from "react";
+import { Header, Button } from "../../../../components/core";
 import { useTranslation } from "react-i18next";
 import theme from "../../../../assets/styles/theme";
 import { FAB, Icon } from "@rneui/themed";
@@ -15,6 +10,12 @@ import {
   NoFoundMessage,
   CardSlotDetails,
 } from "../../../../components/customized";
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+  BottomSheetBackdrop,
+} from "@gorhom/bottom-sheet";
+import { Portal } from "@gorhom/portal";
 
 const DUMMY_HOURS = [
   {
@@ -212,28 +213,37 @@ const DUMMY_HOURS = [
 
 const MyCalendarScreen = () => {
   const { t } = useTranslation();
+  const { black, grey0, primary } = theme.lightColors;
   const minDate = moment().format("YYYY-MM-DD");
   const maxDate = moment().add(120, "days").format("YYYY-MM-DD");
   const [selectedDay, setSelectedDay] = useState(minDate);
   const [slots, setSlots] = useState(DUMMY_HOURS);
   const [knob, setKnob] = useState(false);
+  const bottomSheetModalRef = useRef(null);
+  const snapPoints = useMemo(() => ["25%", "60%"], []);
+
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
+  const handleCloseSheet = useCallback(() => {
+    bottomSheetModalRef.current?.close();
+  }, []);
+
+  const renderBackdrop = useCallback(
+    (props) => (
+      <BottomSheetBackdrop
+        {...props}
+        appearsOnIndex={1}
+        disappearsOnIndex={0}
+      />
+    ),
+    []
+  );
 
   const showKnob = (
     <>
-      {knob && (
-        <Icon
-          name="keyboard-arrow-up"
-          color={theme.lightColors.grey0}
-          size={30}
-        />
-      )}
-      {!knob && (
-        <Icon
-          name="keyboard-arrow-down"
-          color={theme.lightColors.grey0}
-          size={30}
-        />
-      )}
+      {knob && <Icon name="keyboard-arrow-up" color={grey0} size={30} />}
+      {!knob && <Icon name="keyboard-arrow-down" color={grey0} size={30} />}
     </>
   );
 
@@ -264,8 +274,8 @@ const MyCalendarScreen = () => {
       <Header
         title={t("myCalendar")}
         actionBtn={
-          <Button>
-            <Icon name="info" type="feather" color={theme.lightColors.black} />
+          <Button onPress={handlePresentModalPress}>
+            <Icon name="info" type="feather" color={black} size={27.5} />
           </Button>
         }
       />
@@ -297,24 +307,35 @@ const MyCalendarScreen = () => {
           agendaDayNumColor: "green",
           agendaTodayColor: "red",
           agendaKnobColor: "blue",
-          selectedDayBackgroundColor: theme.lightColors.primary,
+          selectedDayBackgroundColor: primary,
           textDayFontFamily: "Exo-SemiBold",
           textDayFontSize: 13,
           agendaKnobColor: "red",
           agendaTodayColor: "red",
           backgroundColor: "white",
           nowIndicatorKnob: "red",
-          todayTextColor: theme.lightColors.primary,
+          todayTextColor: primary,
         }}
         style={{}}
       />
       <FAB
         icon={{ name: "post-add", type: "material", color: "white" }}
-        color={theme.lightColors.primary}
+        color={primary}
         placement="right"
         onPress={() => {}}
-        style={{ bottom: 50, right: 10 }}
+        style={styles.fab}
       />
+      <Portal>
+        <BottomSheetModalProvider>
+          <BottomSheetModal
+            ref={bottomSheetModalRef}
+            index={1}
+            snapPoints={snapPoints}
+            backdropComponent={renderBackdrop}
+            handleIndicatorStyle={styles.indicatorStyle}
+          ></BottomSheetModal>
+        </BottomSheetModalProvider>
+      </Portal>
     </SafeAreaView>
   );
 };
@@ -337,5 +358,11 @@ const styles = StyleSheet.create({
   slotText: {
     fontFamily: "Exo-SemiBold",
     fontSize: 13,
+  },
+  fab: { bottom: 50 },
+  indicatorStyle: {
+    backgroundColor: "#ddd",
+    width: 45,
+    height: 5,
   },
 });

@@ -29,6 +29,7 @@ import {
 import { useAuth } from "../../../hooks/auth";
 import theme from "../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
+import moment from "moment";
 
 const ProfileGeneralScreen = ({ badgeDetails, route }) => {
   const { user } = useAuth();
