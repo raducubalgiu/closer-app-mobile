@@ -1,8 +1,12 @@
-import { StyleSheet } from "react-native";
-import React from "react";
+import { Dimensions, StyleSheet } from "react-native";
+import React, { lazy } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { Icon } from "@rneui/themed";
 import theme from "../../../../assets/styles/theme";
+import { TabBar } from "react-native-tab-view";
+import { StatusBar } from "react-native";
+
+const { width, height } = Dimensions.get("window");
 
 export const TopTabContainer = ({
   children,
@@ -47,6 +51,7 @@ export const TopTabContainer = ({
       tabBarIndicatorStyle: {
         backgroundColor: theme.lightColors.black,
       },
+      lazy: true,
     });
   } else {
     screenOptions = {
@@ -63,6 +68,7 @@ export const TopTabContainer = ({
       initialRouteName={initialRouteName}
       screenOptions={screenOptions}
       sceneContainerStyle={{ backgroundColor: "white" }}
+      initialLayout={{ width, height: 0 }}
     >
       {children}
     </Tab.Navigator>

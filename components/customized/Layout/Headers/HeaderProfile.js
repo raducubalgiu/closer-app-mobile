@@ -5,14 +5,21 @@ import { Stack, IconButton, Checkmark } from "../../../core";
 import theme from "../../../../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
 
-export const HeaderProfile = (props) => {
+const { black } = theme.lightColors;
+
+export const HeaderProfile = ({
+  username,
+  checkmark,
+  onGoToFindFriends,
+  onOpenSettings,
+}) => {
   const navigation = useNavigation();
 
   return (
-    <Stack direction="row" sx={{ paddingVertical: 10, paddingHorizontal: 15 }}>
+    <Stack direction="row" sx={styles.container}>
       <Stack direction="row">
         <IconButton
-          onPress={props.onGoToFindFriends}
+          onPress={onGoToFindFriends}
           iconName="adduser"
           iconType="antdesign"
           size={27}
@@ -26,8 +33,8 @@ export const HeaderProfile = (props) => {
         />
       </Stack>
       <Stack direction="row">
-        <Text style={styles.name}>{props?.name}</Text>
-        {props.checkmark && <Checkmark />}
+        <Text style={styles.name}>@{username}</Text>
+        {checkmark && <Checkmark />}
       </Stack>
       <Stack direction="row">
         <IconButton
@@ -35,14 +42,14 @@ export const HeaderProfile = (props) => {
           size={30}
           iconName="add-circle-outline"
           iconType="ionicon"
-          color={theme.lightColors.black}
+          color={black}
         />
         <IconButton
-          onPress={props.onOpenSettings}
+          onPress={onOpenSettings}
           size={30}
           iconName="menu-outline"
           iconType="ionicon"
-          color={theme.lightColors.black}
+          color={black}
           sx={{ marginLeft: 15 }}
         />
       </Stack>
@@ -51,5 +58,6 @@ export const HeaderProfile = (props) => {
 };
 
 const styles = StyleSheet.create({
-  name: { fontFamily: "Exo-Medium", fontSize: 15 },
+  container: { marginHorizontal: 15, marginVertical: 10 },
+  name: { fontFamily: "Exo-SemiBold", fontSize: 15, color: black },
 });

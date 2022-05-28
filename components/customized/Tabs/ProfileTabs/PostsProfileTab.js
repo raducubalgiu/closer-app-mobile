@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   View,
   Text,
+  ScrollView,
 } from "react-native";
 import axios from "axios";
 import { useFocusEffect } from "@react-navigation/native";
@@ -18,7 +19,7 @@ import { useAuth } from "../../../../hooks/auth";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { useTranslation } from "react-i18next";
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 export const PostsProfileTab = ({ userId, username }) => {
   const [posts, setPosts] = useState([]);
@@ -55,64 +56,86 @@ export const PostsProfileTab = ({ userId, username }) => {
   }
 
   return (
-    <FlatList
-      ListHeaderComponent={noFoundPosts}
-      style={{ backgroundColor: "white" }}
-      bounces={false}
-      showsVerticalScrollIndicator={false}
-      data={posts}
-      numColumns={3}
-      keyExtractor={(item) => item._id}
-      renderItem={({ item }) => (
-        <TouchableOpacity
-          activeOpacity={1}
-          style={styles.box}
-          onPress={() =>
-            navigation.navigate("Post", {
-              postId: item._id,
-              userId: item.user._id,
-            })
-          }
-        >
-          <View style={{ position: "relative" }}>
-            <Image
-              source={{
-                uri: `${item?.images[0]?.url}`,
-              }}
-              style={styles.image}
-            />
-            {item?.bookable && (
-              <View style={styles.bookable}>
-                <Icon
-                  name="shopping"
-                  type="material-community"
-                  color="white"
-                  size={20}
-                  style={{ marginLeft: 5 }}
-                />
-              </View>
-            )}
-            {item?.fixed && (
-              <View style={styles.fixed}>
-                <Text style={styles.fixedText}>Fixat</Text>
-              </View>
-            )}
-            {!item?.fixed && item?.postType === "video" && (
-              <View style={styles.type}>
-                <Icon
-                  name="video"
-                  type="feather"
-                  color="white"
-                  size={20}
-                  style={{ marginLeft: 5 }}
-                />
-              </View>
-            )}
-          </View>
-        </TouchableOpacity>
-      )}
-      ListFooterComponent={completeProfile}
-    />
+    // <View>
+    //   <ScrollView nestedScrollEnabled={true}>
+    //     <FlatList
+    //       ListHeaderComponent={noFoundPosts}
+    //       style={{ backgroundColor: "white" }}
+    //       showsVerticalScrollIndicator={false}
+    //       data={posts}
+    //       numColumns={3}
+    //       keyExtractor={(item) => item._id}
+    //       listKey={(item) => item._id}
+    //       scrollEnabled={false}
+    //       renderItem={({ item }) => (
+    //         <TouchableOpacity
+    //           activeOpacity={1}
+    //           style={styles.box}
+    //           onPress={() =>
+    //             navigation.navigate("Post", {
+    //               postId: item._id,
+    //               userId: item.user._id,
+    //             })
+    //           }
+    //         >
+    //           <View style={{ position: "relative" }}>
+    //             <Image
+    //               source={{
+    //                 uri: `${item?.images[0]?.url}`,
+    //               }}
+    //               style={styles.image}
+    //             />
+    //             {item?.bookable && (
+    //               <View style={styles.bookable}>
+    //                 <Icon
+    //                   name="shopping"
+    //                   type="material-community"
+    //                   color="white"
+    //                   size={20}
+    //                   style={{ marginLeft: 5 }}
+    //                 />
+    //               </View>
+    //             )}
+    //             {item?.fixed && (
+    //               <View style={styles.fixed}>
+    //                 <Text style={styles.fixedText}>Fixat</Text>
+    //               </View>
+    //             )}
+    //             {!item?.fixed && item?.postType === "video" && (
+    //               <View style={styles.type}>
+    //                 <Icon
+    //                   name="video"
+    //                   type="feather"
+    //                   color="white"
+    //                   size={20}
+    //                   style={{ marginLeft: 5 }}
+    //                 />
+    //               </View>
+    //             )}
+    //           </View>
+    //         </TouchableOpacity>
+    //       )}
+    //       ListFooterComponent={completeProfile}
+    //     />
+    //   </ScrollView>
+    // </View>
+    <View
+      style={{
+        flexDirection: "row",
+        flexWrap: "wrap",
+      }}
+    >
+      {posts.map((item, i) => (
+        <Image
+          key={i}
+          source={{
+            uri: `${item?.images[0]?.url}`,
+          }}
+          //style={styles.image}
+          containerStyle={styles.image}
+        />
+      ))}
+    </View>
   );
 };
 
@@ -123,9 +146,13 @@ const styles = StyleSheet.create({
     borderColor: "white",
   },
   image: {
-    flex: 1,
+    // flex: 1,
+    // aspectRatio: 1,
+    width: width / 3,
+    height: height / 3,
     aspectRatio: 1,
-    width: "100%",
+    borderWidth: 1,
+    borderColor: "white",
   },
   bookable: {
     position: "absolute",

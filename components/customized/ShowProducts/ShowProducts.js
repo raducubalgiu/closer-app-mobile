@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { CardProduct } from "../Cards/CardProduct";
 import { NoFoundMessage } from "../NotFoundContent/NoFoundMessage";
-import { Button, Stack } from "../../core";
+import { Button } from "../../core";
 import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../hooks";
@@ -16,7 +16,6 @@ export const ShowProducts = ({
   serviceId,
   initServ,
   services,
-  extraHeader,
 }) => {
   const [products, setProducts] = useState([]);
   const [activeService, setActiveService] = useState(
@@ -105,18 +104,16 @@ export const ShowProducts = ({
   );
 
   const renderHeader = (
-    <>
-      {extraHeader}
-      <FlatList
-        horizontal
-        data={services}
-        keyExtractor={(item) => item?._id}
-        showsHorizontalScrollIndicator={false}
-        bounces={false}
-        contentContainerStyle={styles.headerContainer}
-        renderItem={renderService}
-      />
-    </>
+    <FlatList
+      nestedScrollEnabled={true}
+      horizontal
+      data={services}
+      keyExtractor={(item) => item?._id}
+      showsHorizontalScrollIndicator={false}
+      bounces={false}
+      contentContainerStyle={styles.headerContainer}
+      renderItem={renderService}
+    />
   );
 
   return (

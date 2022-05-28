@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, Text } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import {
   Header,
@@ -88,7 +88,6 @@ const AddScheduleScreen = () => {
         }
       )
       .then((res) => {
-        console.log(res.data.user);
         setDisabled(false);
         setLoading(false);
         navigation.goBack();
@@ -105,9 +104,9 @@ const AddScheduleScreen = () => {
       <Header title={t("addLocationSchedule")} />
       <Stack sx={styles.container}>
         <FormProvider {...methods}>
-          <Stack sx={styles.formCont}>
-            <Stack>
-              <Stack direction="row">
+          <View style={styles.formCont}>
+            <ScrollView contentContainerStyle={{ paddingTop: 20 }}>
+              <Stack direction="row" sx={styles.dayCont}>
                 <Text style={styles.day}>{t("monday")}</Text>
                 <Stack sx={styles.startDay}>
                   <FormInputSelect
@@ -124,7 +123,7 @@ const AddScheduleScreen = () => {
                   />
                 </Stack>
               </Stack>
-              <Stack direction="row">
+              <Stack direction="row" sx={styles.dayCont}>
                 <Text style={styles.day}>{t("tuesday")}</Text>
                 <Stack sx={styles.startDay}>
                   <FormInputSelect
@@ -141,7 +140,7 @@ const AddScheduleScreen = () => {
                   />
                 </Stack>
               </Stack>
-              <Stack direction="row">
+              <Stack direction="row" sx={styles.dayCont}>
                 <Text style={styles.day}>{t("wednesday")}</Text>
                 <Stack sx={styles.startDay}>
                   <FormInputSelect
@@ -158,7 +157,7 @@ const AddScheduleScreen = () => {
                   />
                 </Stack>
               </Stack>
-              <Stack direction="row">
+              <Stack direction="row" sx={styles.dayCont}>
                 <Text style={styles.day}>{t("thursday")}</Text>
                 <Stack sx={styles.startDay}>
                   <FormInputSelect
@@ -175,7 +174,7 @@ const AddScheduleScreen = () => {
                   />
                 </Stack>
               </Stack>
-              <Stack direction="row">
+              <Stack direction="row" sx={styles.dayCont}>
                 <Text style={styles.day}>{t("friday")}</Text>
                 <Stack sx={styles.startDay}>
                   <FormInputSelect
@@ -192,7 +191,7 @@ const AddScheduleScreen = () => {
                   />
                 </Stack>
               </Stack>
-              <Stack direction="row">
+              <Stack direction="row" sx={styles.dayCont}>
                 <Text style={styles.day}>{t("saturday")}</Text>
                 <Stack sx={styles.startDay}>
                   <FormInputSelect
@@ -209,7 +208,7 @@ const AddScheduleScreen = () => {
                   />
                 </Stack>
               </Stack>
-              <Stack direction="row">
+              <Stack direction="row" sx={styles.dayCont}>
                 <Text style={styles.day}>{t("sunday")}</Text>
                 <Stack sx={styles.startDay}>
                   <FormInputSelect
@@ -226,17 +225,17 @@ const AddScheduleScreen = () => {
                   />
                 </Stack>
               </Stack>
-            </Stack>
+            </ScrollView>
             <MainButton
               size="lg"
               radius={10}
               fullWidth
-              title={t("add")}
+              title={t("save")}
               loading={loading}
               onPress={handleSubmit(onSubmit)}
               disabled={disabled}
             />
-          </Stack>
+          </View>
         </FormProvider>
       </Stack>
     </SafeAreaView>
@@ -251,13 +250,13 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   container: {
-    marginTop: 30,
     marginHorizontal: 20,
     flex: 1,
   },
   formCont: { flex: 1, width: "100%" },
   startDay: { flex: 1, marginRight: 10 },
   endDay: { flex: 1 },
+  dayCont: { marginBottom: 15 },
   day: {
     fontFamily: "Exo-SemiBold",
     fontSize: 15,

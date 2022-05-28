@@ -54,6 +54,7 @@ const LoginScreen = () => {
           services,
           counter,
           validated,
+          opening_hours,
         } = userResult.data.user;
         setUser({
           _id,
@@ -73,6 +74,7 @@ const LoginScreen = () => {
           counter,
           token: idTokenResult?.token,
           validated,
+          opening_hours,
         });
       }
     } catch (err) {

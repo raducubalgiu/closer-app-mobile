@@ -5,6 +5,7 @@ import {
   Text,
   ActivityIndicator,
   View,
+  ScrollView,
 } from "react-native";
 import React, { useState, useCallback, useEffect } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
@@ -138,6 +139,7 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
         website={userDetails?.website}
         location={userDetails?.location}
         role={userDetails?.role}
+        openingHours={userDetails?.opening_hours}
       />
     ),
     [userDetails]
@@ -162,38 +164,45 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
   return (
     <View style={styles.container}>
       <SafeAreaView>
-        <HeaderProfileGeneral name={name} checkmark={userDetails?.checkmark} />
+        <HeaderProfileGeneral
+          username={username}
+          checkmark={userDetails?.checkmark}
+        />
         <Feedback feedback={feedback} setFeedback={setFeedback} />
       </SafeAreaView>
-      <ProfileOverview
-        user={userDetails}
-        username={username}
-        avatar={avatar}
-        badgeDetails={badgeDetails}
-        actionButtons={buttons}
-        withAvailable={true}
-        available={true}
-      />
-      {suggestedPeople.length !== 0 && (
-        <Stack align="start" justify="start" sx={styles.suggestedPeople}>
-          <Text style={styles.suggestedTitle}>Sugestii pentru tine</Text>
-          <FlatList
-            showsHorizontalScrollIndicator={false}
-            horizontal
-            data={suggestedPeople}
-            keyExtractor={(item) => item?._id}
-            renderItem={renderSuggested}
-          />
-        </Stack>
-      )}
-      <View style={styles.tabsCont}>
-        <TopTabContainer initialRouteName="Posts" profileTabs={true}>
-          <Tab.Screen name="Posts" component={PostsProfile} />
-          {admin && <Tab.Screen name="Products" component={ProductsProfile} />}
-          {admin && <Tab.Screen name="Jobs" component={JobsProfile} />}
-          <Tab.Screen name="About" component={AboutProfile} />
-        </TopTabContainer>
-      </View>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <ProfileOverview
+          user={userDetails}
+          name={name}
+          avatar={avatar}
+          badgeDetails={badgeDetails}
+          actionButtons={buttons}
+          withAvailable={true}
+          available={true}
+        />
+        {suggestedPeople.length !== 0 && (
+          <Stack align="start" justify="start" sx={styles.suggestedPeople}>
+            <Text style={styles.suggestedTitle}>Sugestii pentru tine</Text>
+            <FlatList
+              showsHorizontalScrollIndicator={false}
+              horizontal
+              data={suggestedPeople}
+              keyExtractor={(item) => item?._id}
+              renderItem={renderSuggested}
+            />
+          </Stack>
+        )}
+        <View style={styles.tabsCont}>
+          <TopTabContainer initialRouteName="Posts" profileTabs={true}>
+            <Tab.Screen name="Posts" component={PostsProfile} />
+            {admin && (
+              <Tab.Screen name="Products" component={ProductsProfile} />
+            )}
+            {admin && <Tab.Screen name="Jobs" component={JobsProfile} />}
+            <Tab.Screen name="About" component={AboutProfile} />
+          </TopTabContainer>
+        </View>
+      </ScrollView>
     </View>
   );
 };

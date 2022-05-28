@@ -1,4 +1,10 @@
-import { StyleSheet, SafeAreaView, View } from "react-native";
+import {
+  StyleSheet,
+  SafeAreaView,
+  View,
+  ScrollView,
+  Dimensions,
+} from "react-native";
 import React, { useCallback, useRef, useMemo } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
@@ -23,6 +29,8 @@ import {
 import { Portal } from "@gorhom/portal";
 import { useTranslation } from "react-i18next";
 
+const { width, height } = Dimensions.get("window");
+
 const ProfileScreen = (props) => {
   const { user } = useAuth();
   const navigation = useNavigation();
@@ -42,6 +50,7 @@ const ProfileScreen = (props) => {
       website={user?.website}
       location={user?.location}
       role={user?.role}
+      openingHours={user?.opening_hours}
     />
   );
 
@@ -107,25 +116,27 @@ const ProfileScreen = (props) => {
       <HeaderProfile
         checkmark={user?.checkmark}
         onGoToFindFriends={() => navigation.navigate("FindFriends")}
-        name={user?.name}
+        username={user?.username}
         onOpenSettings={handlePresentModalPress}
       />
-      <ProfileOverview
-        user={user}
-        withBadge
-        badgeDetails={props.badgeDetails}
-        actionButtons={buttons}
-        username={user?.username}
-        avatar={user?.avatar}
-        withAvailable={true}
-        available={true}
-      />
-      <View style={styles.tabsCont}>
-        <TopTabContainer initialRouteName="Posts" profileTabs={true}>
-          <Tab.Screen name="Posts" component={PostsProfile} />
-          <Tab.Screen name="About" component={AboutProfile} />
-        </TopTabContainer>
-      </View>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <ProfileOverview
+          user={user}
+          withBadge
+          badgeDetails={props.badgeDetails}
+          actionButtons={buttons}
+          name={user?.name}
+          avatar={user?.avatar}
+          withAvailable={false}
+          available={false}
+        />
+        <View style={{ height }}>
+          <TopTabContainer initialRouteName="Posts" profileTabs={true}>
+            <Tab.Screen name="Posts" component={PostsProfile} />
+            <Tab.Screen name="About" component={AboutProfile} />
+          </TopTabContainer>
+        </View>
+      </ScrollView>
       <Protected roles={[MAIN_ROLE, SECOND_ROLE]} userRole={user?.role}>
         <FAB
           activeOpacity={1}
@@ -178,7 +189,7 @@ const styles = StyleSheet.create({
     borderColor: "#ddd",
     marginLeft: 5,
   },
-  tabsCont: { flex: 1, height: 700 },
+  tabsCont: {},
   indicatorStyle: {
     backgroundColor: "#ddd",
     width: 45,

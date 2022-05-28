@@ -22,10 +22,7 @@ const CardPostHeader = ({ userId, avatar, username, checkmark, name }) => {
         <Stack direction="row" sx={styles.avatarContainer}>
           <CustomAvatar avatar={avatar} size={35} iconSize={15} />
           <Stack align="start">
-            <Stack direction="row">
-              <Text style={styles.name}>{username}</Text>
-              {checkmark && <Checkmark />}
-            </Stack>
+            <Text style={styles.name}>{username}</Text>
             <Text style={styles.job}>Service Auto</Text>
           </Stack>
         </Stack>

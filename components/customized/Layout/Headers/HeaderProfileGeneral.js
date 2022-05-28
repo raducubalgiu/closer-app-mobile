@@ -1,29 +1,38 @@
 import { StyleSheet, Text } from "react-native";
 import React from "react";
 import { Icon } from "@rneui/themed";
-import { IconBackButton, IconButton, Stack } from "../../../core";
+import { IconBackButton, IconButton, Stack, Checkmark } from "../../../core";
 import theme from "../../../../assets/styles/theme";
 
-export const HeaderProfileGeneral = ({ name, onOpenSettings }) => {
+const { black } = theme.lightColors;
+
+export const HeaderProfileGeneral = ({
+  username,
+  onOpenSettings,
+  checkmark,
+}) => {
   return (
     <Stack direction="row" sx={styles.container}>
       <Stack direction="row">
-        <IconBackButton />
+        <IconBackButton sx={{ marginRight: 15 }} />
         <Icon name="bells" type="antdesign" color="white" />
       </Stack>
-      <Text style={styles.name}>{name}</Text>
+      <Stack direction="row">
+        <Text style={styles.name}>@{username}</Text>
+        {checkmark && <Checkmark />}
+      </Stack>
       <Stack direction="row">
         <IconButton
           onPress={onOpenSettings}
           iconName="bell"
           iconType="feather"
-          color={theme.lightColors.black}
+          color={black}
         />
         <IconButton
           onPress={onOpenSettings}
           iconName="more-horizontal"
           iconType="feather"
-          color={theme.lightColors.black}
+          color={black}
           sx={{ marginLeft: 15 }}
         />
       </Stack>
@@ -32,6 +41,6 @@ export const HeaderProfileGeneral = ({ name, onOpenSettings }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { margin: 15 },
-  name: { fontFamily: "Exo-Medium", fontSize: 15 },
+  container: { marginHorizontal: 15, marginVertical: 10 },
+  name: { fontFamily: "Exo-SemiBold", fontSize: 15, color: black },
 });

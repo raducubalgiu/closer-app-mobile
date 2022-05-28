@@ -18,7 +18,7 @@ import { Icon } from "@rneui/themed";
 
 export const ProfileOverview = ({
   user,
-  username,
+  name,
   avatar,
   withBadge,
   actionButtons,
@@ -51,7 +51,7 @@ export const ProfileOverview = ({
             available={available}
           />
         </Button>
-        <Text style={styles.name}>@{username}</Text>
+        <Text style={styles.name}>{name}</Text>
         <Protected userRole={user?.role} roles={[MAIN_ROLE, SECOND_ROLE]}>
           <Stack direction="row" justify="start">
             {user?.business && (
@@ -159,10 +159,10 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   business: {
-    fontFamily: "Exo-SemiBold",
+    fontFamily: "Exo-Bold",
     color: theme.lightColors.primary,
     marginLeft: 5,
-    fontSize: 14,
+    fontSize: 14.5,
     textTransform: "capitalize",
   },
   ratingsAverage: { fontFamily: "Exo-SemiBold", marginLeft: 2.5 },

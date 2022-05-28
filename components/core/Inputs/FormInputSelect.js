@@ -43,7 +43,6 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     fontFamily: "Exo-Regular",
     width: "100%",
-    marginBottom: 10,
     borderRadius: 10,
   },
   inputIOS: {
@@ -56,7 +55,6 @@ const styles = StyleSheet.create({
     color: "black",
     paddingRight: 30,
     fontFamily: "Exo-Medium",
-    marginBottom: 10,
   },
   inputAndroid: {
     fontSize: 14,
@@ -69,6 +67,5 @@ const styles = StyleSheet.create({
     fontFamily: "Exo-Medium",
     paddingRight: 30,
     fontFamily: "Exo-Medium",
-    marginBottom: 10,
   },
 });

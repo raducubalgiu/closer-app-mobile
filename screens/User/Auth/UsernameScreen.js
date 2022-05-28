@@ -44,6 +44,7 @@ const UsernameScreen = (props) => {
         employees,
         services,
         validated,
+        opening_hours,
       } = userResult.data;
 
       setUser({
@@ -69,6 +70,7 @@ const UsernameScreen = (props) => {
         },
         token: idTokenResult?.token,
         validated,
+        opening_hours,
       });
     } catch (err) {
       console.log(err);

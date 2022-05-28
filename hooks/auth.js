@@ -31,6 +31,7 @@ export const AuthProvider = (props) => {
               counter,
               validated,
               checkmark,
+              opening_hours,
             } = res.data.user;
             if (username) {
               setUser({
@@ -52,6 +53,7 @@ export const AuthProvider = (props) => {
                 token: idTokenResult?.token,
                 validated,
                 checkmark,
+                opening_hours,
               });
             }
           })
