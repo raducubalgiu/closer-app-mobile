@@ -1,5 +1,5 @@
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Header, Stack } from "../components/core";
 import { Footer, NoFoundMessage } from "../components/customized";
 import { useTranslation } from "react-i18next";
@@ -21,18 +21,34 @@ const DUMMY_HOURS = [
   },
 ];
 
+const secondSlots = [
+  {
+    startHour: "14:30",
+    endHour: "15:00",
+  },
+  {
+    startHour: "15:30",
+    endHour: "16:00",
+  },
+];
+
 const CalendarScreen = ({ route }) => {
   const { name, price } = route.params.product;
-  const [disabled, setDisabled] = useState(true);
+  const [disabled, setDisabled] = useState(false);
   const minDate = moment().format("YYYY-MM-DD");
   const maxDate = moment().add(120, "days").format("YYYY-MM-DD");
   const [slots, setSlots] = useState(DUMMY_HOURS);
   const [loading, setLoading] = useState(true);
   const [selectedDay, setSelectedDay] = useState(minDate);
   const [selectedHour, setSelectedHour] = useState("");
+  const [activeSlot, setActiveSlot] = useState(null);
   const [knob, setKnob] = useState(false);
   const { t } = useTranslation();
   const navigation = useNavigation();
+
+  const handleBook = () => {
+    navigation.navigate("ScheduleOverview");
+  };
 
   const showKnob = (
     <>
@@ -54,15 +70,24 @@ const CalendarScreen = ({ route }) => {
   );
 
   const handleDayPress = (day) => {
-    setSelectedDay(day);
+    setSelectedDay(day.dateString);
+    setSlots(secondSlots);
+  };
+  const handlePressSlot = (startHour, endHour) => {
+    setSelectedHour(startHour);
   };
 
-  const handlePressSlot = (startHour) => setSelectedHour(startHour);
+  const activeSlotBg = { ...styles.slot, ...styles.active };
+  const activeSlotTxt = { ...styles.slotText, ...styles.activeText };
 
   const renderSlot = ({ startHour, endHour }) => (
-    <Button onPress={() => handlePressSlot(startHour)}>
-      <Stack direction="row" justify="start" sx={styles.slot}>
-        <Text style={styles.slotText}>
+    <Button onPress={() => handlePressSlot(startHour, endHour)}>
+      <Stack
+        direction="row"
+        justify="start"
+        sx={activeSlot ? activeSlotBg : styles.slot}
+      >
+        <Text style={activeSlot ? activeSlotTxt : styles.slotText}>
           {startHour} - {endHour}
         </Text>
       </Stack>
@@ -78,6 +103,9 @@ const CalendarScreen = ({ route }) => {
       iconSize={60}
     />
   );
+
+  console.log("SELECTED DAY", selectedDay);
+  console.log("ITEMSSS", slots);
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -124,16 +152,9 @@ const CalendarScreen = ({ route }) => {
           }}
           style={{}}
         />
-        <Footer
-          disabled={disabled}
-          btnTitle={t("book")}
-          onPress={() => navigation.navigate("Schedule")}
-        >
+        <Footer disabled={disabled} btnTitle={t("book")} onPress={handleBook}>
           <Text style={styles.product}>{trimFunc(name, 20)}</Text>
           <Text style={styles.price}>{price} RON</Text>
-          <Text style={styles.date}>
-            {moment(selectedDay).format("ll")} - {selectedHour}
-          </Text>
         </Footer>
       </View>
     </SafeAreaView>
@@ -170,14 +191,17 @@ const styles = StyleSheet.create({
     marginTop: 15,
     backgroundColor: "#f1f1f1",
     paddingVertical: 15,
-    paddingHorizontal: 20,
+    paddingHorizontal: 15,
     borderRadius: 10,
   },
   slotText: {
     fontFamily: "Exo-SemiBold",
     fontSize: 13,
   },
-  activeSlot: {
+  active: {
     backgroundColor: theme.lightColors.primary,
+  },
+  activeText: {
+    color: "white",
   },
 });

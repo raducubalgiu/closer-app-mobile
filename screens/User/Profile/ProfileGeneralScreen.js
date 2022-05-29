@@ -145,6 +145,12 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
     [userDetails]
   );
 
+  const removeCard = (userId) => {
+    setSuggestedPeople(
+      suggestedPeople.filter((suggested) => suggested?._id !== userId)
+    );
+  };
+
   const renderSuggested = ({ item }) => {
     const { avatar, name, business, counter, username, _id } = item;
 
@@ -157,6 +163,7 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
         ratingsAverage={counter?.ratingsAverage.toFixed(1)}
         username={username}
         followeeId={_id}
+        onRemoveCard={() => removeCard(item?._id)}
       />
     );
   };

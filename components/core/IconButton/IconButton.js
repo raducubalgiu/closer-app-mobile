@@ -3,18 +3,23 @@ import { Icon } from "@rneui/themed";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 
-export const IconButton = (props) => {
+const { black } = theme.lightColors;
+
+export const IconButton = ({
+  iconName,
+  iconType,
+  size,
+  color,
+  sx,
+  ...props
+}) => {
   return (
-    <TouchableOpacity
-      activeOpacity={1}
-      onPress={props.onPress}
-      style={{ ...props.sx }}
-    >
+    <TouchableOpacity {...props} activeOpacity={1} style={{ ...sx }}>
       <Icon
-        type={props.iconType}
-        name={props.iconName}
-        size={props.size ? props.size : 24}
-        color={props.color ? props.color : theme.lightColors.black}
+        type={iconType}
+        name={iconName}
+        size={size ? size : 24}
+        color={color ? color : black}
       />
     </TouchableOpacity>
   );

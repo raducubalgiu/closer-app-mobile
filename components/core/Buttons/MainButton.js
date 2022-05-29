@@ -16,7 +16,6 @@ export const MainButton = ({
   let padding;
   let bgColor;
   let color;
-  let border;
   let fontSize;
 
   switch (size) {
@@ -40,7 +39,6 @@ export const MainButton = ({
     case "outlined":
       bgColor = "white";
       color = theme.lightColors.black;
-      border = { borderWidth: 2, borderColor: theme.lightColors.primary };
       break;
     case "contain":
       bgColor = theme.lightColors.primary;
@@ -56,7 +54,8 @@ export const MainButton = ({
       backgroundColor: bgColor,
       borderRadius: radius ? radius : 5,
       ...padding,
-      ...border,
+      borderWidth: 2,
+      borderColor: theme.lightColors.primary,
       ...sx,
     },
     containerStyle: {

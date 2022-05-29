@@ -6,9 +6,12 @@ import {
   FollowButton,
   Stack,
   IconStar,
+  IconButton,
 } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
+
+const { grey0 } = theme.lightColors;
 
 export const CardSuggestedPeople = ({
   avatar,
@@ -18,44 +21,59 @@ export const CardSuggestedPeople = ({
   onPress,
   followeeId,
   ratingsAverage,
+  onRemoveCard,
 }) => {
   const { t } = useTranslation();
 
   return (
     <Button sx={styles.container} onPress={onPress}>
-      <Stack>
-        <CustomAvatar avatar={avatar} size={75} iconSize={35} />
+      <Stack justify="end" align="end" sx={{ width: "100%" }}>
+        <IconButton
+          onPress={onRemoveCard}
+          iconName="close"
+          iconType="antdesign"
+          size={15}
+          color={grey0}
+          sx={{ marginRight: 10 }}
+        />
       </Stack>
-      <Text style={styles.username}>@{username}</Text>
-      <Stack direction="row">
-        <Text style={styles.business}>{business}</Text>
-        <Stack direction="row" sx={{ marginLeft: 2.5 }}>
-          <IconStar />
-          <Text style={styles.ratingsAverage}>{ratingsAverage}</Text>
+      <Stack sx={styles.content}>
+        <Stack>
+          <CustomAvatar avatar={avatar} size={75} iconSize={35} />
         </Stack>
+        <Text style={styles.username}>@{username}</Text>
+        <Stack direction="row">
+          <Text style={styles.business}>{business}</Text>
+          <Stack direction="row" sx={{ marginLeft: 2.5 }}>
+            <IconStar />
+            <Text style={styles.ratingsAverage}>{ratingsAverage}</Text>
+          </Stack>
+        </Stack>
+        <Text style={styles.followers}>
+          {noFollowers} {t("followers")}
+        </Text>
+        <FollowButton
+          sxBtn={styles.followBtn}
+          sxBtnText={styles.followBtnText}
+          followeeId={followeeId}
+        />
       </Stack>
-      <Text style={styles.followers}>
-        {noFollowers} {t("followers")}
-      </Text>
-      <FollowButton
-        sxBtn={styles.followBtn}
-        sxBtnText={styles.followBtnText}
-        followeeId={followeeId}
-      />
     </Button>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 10,
-    paddingHorizontal: 25,
     alignItems: "center",
     borderWidth: 1,
     borderColor: "#eee",
     marginRight: 15,
     borderRadius: 5,
     minWidth: 200,
+    paddingVertical: 10,
+  },
+  content: {
+    paddingHorizontal: 25,
   },
   name: {
     fontFamily: "Exo-Medium",

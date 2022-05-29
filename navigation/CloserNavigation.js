@@ -61,6 +61,7 @@ import ScheduleScreen from "../screens/ScheduleScreen";
 
 import { PortalProvider } from "@gorhom/portal";
 import AddScheduleScreen from "../screens/User/Profile/MyBusiness/AddScheduleScreen";
+import ScheduleOverviewScreen from "../screens/ScheduleOverviewScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -238,6 +239,10 @@ const CloserNavigation = () => {
             />
             <Stack.Screen name="ProfileStats" component={ProfileStatsScreen} />
             <Stack.Screen name="CalendarBig" component={CalendarScreen} />
+            <Stack.Screen
+              name="ScheduleOverview"
+              component={ScheduleOverviewScreen}
+            />
             <Stack.Screen name="Schedule" component={ScheduleScreen} />
             <Stack.Screen name="AddSchedule" component={AddScheduleScreen} />
           </RootStack.Navigator>
