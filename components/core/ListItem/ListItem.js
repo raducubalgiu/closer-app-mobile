@@ -1,7 +1,8 @@
 import React from "react";
+import { Button } from "../Buttons/Button";
 import { Stack } from "../Stack/Stack";
 
-export const ListItem = ({ between, around, mt, sx, children }) => {
+export const ListItem = ({ between, around, mt, sx, onPress, children }) => {
   let justify;
 
   if (between) {
@@ -13,12 +14,14 @@ export const ListItem = ({ between, around, mt, sx, children }) => {
   }
 
   return (
-    <Stack
-      sx={{ marginTop: mt ? mt : 10, width: "100%", ...sx }}
-      direction="row"
-      justify={justify}
-    >
-      {children}
-    </Stack>
+    <Button onPress={onPress}>
+      <Stack
+        sx={{ marginTop: mt ? mt : 10, width: "100%", ...sx }}
+        direction="row"
+        justify={justify}
+      >
+        {children}
+      </Stack>
+    </Button>
   );
 };

@@ -1,16 +1,16 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { getAuth, signOut } from "firebase/auth";
 import { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { ListItem, Icon } from "@rneui/themed";
+import { Icon } from "@rneui/themed";
 import { useAuth } from "../../../hooks/auth";
 import theme from "../../../assets/styles/theme";
 import { MAIN_ROLE, SECOND_ROLE, THIRD_ROLE } from "@env";
-import { Protected } from "../../core";
+import { Protected, ListItem } from "../../core";
 import { useTranslation } from "react-i18next";
 
-export const SettingsList = ({ onCloseModal }) => {
+export const ProfileMenuList = ({ onCloseSheet }) => {
   const navigation = useNavigation();
   const { user, setUser } = useAuth();
   const auth = getAuth();
@@ -45,7 +45,7 @@ export const SettingsList = ({ onCloseModal }) => {
     },
     {
       _id: "3",
-      title: "Programarile tale",
+      title: t("mySchedules"),
       iconName: "bars",
       iconType: "antdesign",
       navigation: "Schedules",
@@ -53,7 +53,7 @@ export const SettingsList = ({ onCloseModal }) => {
     },
     {
       _id: "4",
-      title: "Discounturi",
+      title: t("discounts"),
       iconName: "gift",
       iconType: "antdesign",
       navigation: "Discounts",
@@ -61,7 +61,7 @@ export const SettingsList = ({ onCloseModal }) => {
     },
     {
       _id: "5",
-      title: "Raporteaza o problema",
+      title: t("reportAProblem"),
       iconName: "exclamationcircleo",
       iconType: "antdesign",
       navigation: "Discounts",
@@ -69,7 +69,7 @@ export const SettingsList = ({ onCloseModal }) => {
     },
     {
       _id: "6",
-      title: "Distribuie profile",
+      title: t("shareProfile"),
       iconName: "sharealt",
       iconType: "antdesign",
       roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE],
@@ -86,7 +86,7 @@ export const SettingsList = ({ onCloseModal }) => {
   const handleNavigate = (item) => {
     if (item.navigation) {
       navigation.navigate(item?.navigation);
-      onCloseModal();
+      onCloseSheet();
     } else {
       handleLogout();
     }
@@ -94,23 +94,13 @@ export const SettingsList = ({ onCloseModal }) => {
 
   const renderItem = ({ item }) => (
     <Protected userRole={user?.role} roles={item?.roles}>
-      <ListItem
-        onPress={() => handleNavigate(item)}
-        containerStyle={{
-          paddingLeft: 0,
-          backgroundColor: theme.lightColors.white,
-          borderBottomWidth: 0.5,
-          borderBottomColor: "#ddd",
-        }}
-      >
+      <ListItem onPress={() => handleNavigate(item)} sx={styles.listItem}>
         <Icon
           name={item?.iconName}
           type={item?.iconType}
           color={theme.lightColors.black}
         />
-        <ListItem.Content>
-          <ListItem.Title style={styles.text}>{item?.title}</ListItem.Title>
-        </ListItem.Content>
+        <Text style={styles.text}>{item?.title}</Text>
       </ListItem>
     </Protected>
   );
@@ -127,10 +117,19 @@ export const SettingsList = ({ onCloseModal }) => {
 };
 
 const styles = StyleSheet.create({
+  listItem: {
+    paddingLeft: 0,
+    backgroundColor: theme.lightColors.white,
+    borderBottomWidth: 0.5,
+    borderBottomColor: "#ddd",
+    paddingTop: 5,
+    paddingBottom: 12.5,
+  },
   text: {
     fontFamily: "Exo-Medium",
     color: theme.lightColors.black,
     fontSize: 14.5,
     paddingVertical: 2.5,
+    marginLeft: 10,
   },
 });

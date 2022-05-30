@@ -45,7 +45,7 @@ export { HeaderEdit } from "../customized/Layout/Headers/HeaderEdit";
 export { MessageItem } from "../customized/ListItems/MessageItem";
 
 export { ServicesList } from "./Lists/ServicesList";
-export { SettingsList } from "./Lists/SettingsList";
+export { ProfileMenuList } from "./Lists/ProfileMenuList";
 
 export { VideoItem } from "./VideoItem/VideoItem";
 

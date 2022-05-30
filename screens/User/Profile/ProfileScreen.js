@@ -13,7 +13,7 @@ import { Protected, Button, MainButton } from "../../../components/core";
 import {
   TopTabContainer,
   ProfileOverview,
-  SettingsList,
+  ProfileMenuList,
   PostsProfileTab,
   AboutProfileTab,
   HeaderProfile,
@@ -29,10 +29,25 @@ import {
 import { Portal } from "@gorhom/portal";
 import { useTranslation } from "react-i18next";
 
+const { black, primary } = theme.lightColors;
 const { width, height } = Dimensions.get("window");
 
 const ProfileScreen = (props) => {
   const { user } = useAuth();
+  const {
+    _id,
+    name,
+    username,
+    avatar,
+    checkmark,
+    description,
+    website,
+    location,
+    business,
+    counter,
+    role,
+    opening_hours,
+  } = user || {};
   const navigation = useNavigation();
   const Tab = createMaterialTopTabNavigator();
   const bottomSheetModalRef = useRef(null);
@@ -40,18 +55,21 @@ const ProfileScreen = (props) => {
   const { t } = useTranslation();
 
   const PostsProfile = useCallback(
-    () => <PostsProfileTab userId={user?._id} username={user?.username} />,
-    [user?._id]
+    () => <PostsProfileTab userId={_id} username={username} />,
+    [_id]
   );
 
-  const AboutProfile = () => (
-    <AboutProfileTab
-      biography={user?.description}
-      website={user?.website}
-      location={user?.location}
-      role={user?.role}
-      openingHours={user?.opening_hours}
-    />
+  const AboutProfile = useCallback(
+    () => (
+      <AboutProfileTab
+        biography={description}
+        website={website}
+        location={location}
+        role={role}
+        openingHours={opening_hours}
+      />
+    ),
+    [description, website, location, role, opening_hours]
   );
 
   const renderBackdrop = useCallback(
@@ -64,7 +82,6 @@ const ProfileScreen = (props) => {
     ),
     []
   );
-
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
@@ -75,19 +92,19 @@ const ProfileScreen = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <HeaderProfile
-        checkmark={user?.checkmark}
+        checkmark={checkmark}
         onGoToFindFriends={() => navigation.navigate("FindFriends")}
-        username={user?.username}
+        username={username}
         onOpenSettings={handlePresentModalPress}
       />
       <ScrollView showsVerticalScrollIndicator={false}>
         <ProfileOverview
           _id={user?._id}
-          name={user?.name}
-          avatar={user?.avatar}
-          role={user?.role}
-          business={user?.business}
-          counter={user?.counter}
+          name={name}
+          avatar={avatar}
+          role={role}
+          business={business}
+          counter={counter}
           withBadge
           badgeDetails={props.badgeDetails}
           withAvailable={false}
@@ -106,26 +123,21 @@ const ProfileScreen = (props) => {
             style={styles.savedBtn}
             onPress={() => navigation.navigate("Bookmarks")}
           >
-            <Icon
-              name="bookmark"
-              type="feather"
-              size={20}
-              color={theme.lightColors.black}
-            />
+            <Icon name="bookmark" type="feather" size={20} color={black} />
           </Button>
           <Icon
             name="instagram"
             type="feather"
             size={20}
             style={styles.socialBtn}
-            color={theme.lightColors.black}
+            color={black}
           />
           <Icon
             name="youtube"
             type="feather"
             size={20}
             style={styles.socialBtn}
-            color={theme.lightColors.black}
+            color={black}
           />
         </ProfileOverview>
         <View style={{ height }}>
@@ -140,7 +152,7 @@ const ProfileScreen = (props) => {
           activeOpacity={1}
           visible={true}
           icon={{ name: "calendar", type: "feather", color: "white" }}
-          color={theme.lightColors.primary}
+          color={primary}
           placement="right"
           onPress={() => navigation.navigate("MyCalendar")}
         />
@@ -154,7 +166,7 @@ const ProfileScreen = (props) => {
             backdropComponent={renderBackdrop}
             handleIndicatorStyle={styles.indicatorStyle}
           >
-            <SettingsList onCloseModal={handleCloseSheet} />
+            <ProfileMenuList onCloseSheet={handleCloseSheet} />
           </BottomSheetModal>
         </BottomSheetModalProvider>
       </Portal>

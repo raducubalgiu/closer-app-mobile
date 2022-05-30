@@ -1,6 +1,10 @@
 export const seconds = {
   mon: [
     {
+      _id: -1,
+      name: "Inchis",
+    },
+    {
       _id: 0,
       name: "00: 00",
     },
@@ -194,6 +198,10 @@ export const seconds = {
     },
   ],
   tue: [
+    {
+      _id: -1,
+      name: "Inchis",
+    },
     {
       _id: 86400,
       name: "00: 00",
@@ -389,6 +397,10 @@ export const seconds = {
   ],
   wed: [
     {
+      _id: -1,
+      name: "Inchis",
+    },
+    {
       _id: 172800,
       name: "00: 00",
     },
@@ -582,6 +594,10 @@ export const seconds = {
     },
   ],
   thu: [
+    {
+      _id: -1,
+      name: "Inchis",
+    },
     {
       _id: 259200,
       name: "00: 00",
@@ -777,6 +793,10 @@ export const seconds = {
   ],
   fri: [
     {
+      _id: -1,
+      name: "Inchis",
+    },
+    {
       _id: 345600,
       name: "00: 00",
     },
@@ -971,6 +991,10 @@ export const seconds = {
   ],
   sat: [
     {
+      _id: -1,
+      name: "Inchis",
+    },
+    {
       _id: 432000,
       name: "00:00",
     },
@@ -1164,6 +1188,10 @@ export const seconds = {
     },
   ],
   sun: [
+    {
+      _id: -1,
+      name: "Inchis",
+    },
     {
       _id: 518400,
       name: "00:00",
