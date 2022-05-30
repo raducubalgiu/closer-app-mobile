@@ -1,46 +1,48 @@
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   Header,
   Stack,
   MainButton,
   FormInputSelect,
+  CSwitch,
 } from "../../../../components/core";
 import { useTranslation } from "react-i18next";
 import { useForm, FormProvider } from "react-hook-form";
-import { seconds } from "../../../../utils";
 import theme from "../../../../assets/styles/theme";
-import { useAuth } from "../../../../hooks";
+import { useAuth, useSeconds } from "../../../../hooks";
 import axios from "axios";
 import { BASE_ENDPOINT } from "@env";
 import { useNavigation } from "@react-navigation/native";
-
-const defaultValues = {
-  startMonday: 32400,
-  endMonday: 64800,
-  startTuesday: 118800,
-  endTuesday: 151200,
-  startWednesday: 205200,
-  endWednesday: 237600,
-  startThursday: 291600,
-  endThursday: 324000,
-  startFriday: 378000,
-  endFriday: 410400,
-  startSaturday: 464400,
-  endSaturday: 496800,
-  startSunday: 550800,
-  endSunday: 583200,
-};
-const { grey0 } = theme.lightColors;
+const { grey0, primary } = theme.lightColors;
 
 const AddScheduleScreen = () => {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
+  const { mon, tue, wed, thu, fri, sat, sun } =
+    user?.opening_hours?.normal_days || {};
   const { t } = useTranslation();
-  const methods = useForm({ defaultValues });
+  const methods = useForm({
+    defaultValues: {
+      startmon: mon?.startTime ? mon?.startTime : 32400,
+      endmon: mon?.endTime ? mon?.endTime : 64800,
+      starttue: tue?.startTime ? tue?.startTime : 118800,
+      endtue: tue?.endTime ? tue?.endTime : 151200,
+      startwed: wed?.startTime ? wed?.startTime : 205200,
+      endwed: wed?.endTime ? wed?.endTime : 237600,
+      startthu: thu?.startTime ? thu?.startTime : 291600,
+      endthu: thu?.endTime ? thu?.endTime : 324000,
+      startfri: fri?.startTime ? fri?.startTime : 378000,
+      endfri: fri?.endTime ? fri?.endTime : 410400,
+      startsat: sat?.startTime ? sat?.startTime : -1,
+      endsat: sat?.endTime ? sat?.endTime : -1,
+      startsun: sun?.startTime ? sun?.startTime : -1,
+      endsun: sun?.endTime ? sun?.endTime : -1,
+    },
+  });
   const [disabled, setDisabled] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { handleSubmit } = methods;
-  const { mon, tue, wed, thu, fri, sat, sun } = seconds;
+  const { handleSubmit, getValues, setValue, watch } = methods;
+  const { seconds } = useSeconds();
   const navigation = useNavigation();
 
   const onSubmit = (data) => {
@@ -53,32 +55,32 @@ const AddScheduleScreen = () => {
           opening_hours: {
             normal_days: {
               mon: {
-                startTime: data.startMonday,
-                endTime: data.endMonday,
+                startTime: data.startmon,
+                endTime: data.endmon,
               },
               tue: {
-                startTime: data.startTuesday,
-                endTime: data.endTuesday,
+                startTime: data.starttue,
+                endTime: data.endtue,
               },
               wed: {
-                startTime: data.startWednesday,
-                endTime: data.endWednesday,
+                startTime: data.startwed,
+                endTime: data.endwed,
               },
               thu: {
-                startTime: data.startThursday,
-                endTime: data.endThursday,
+                startTime: data.startthu,
+                endTime: data.endthu,
               },
               fri: {
-                startTime: data.startFriday,
-                endTime: data.endFriday,
+                startTime: data.startfri,
+                endTime: data.endfri,
               },
               sat: {
-                startTime: data.startSaturday,
-                endTime: data.endSaturday,
+                startTime: data.startsat,
+                endTime: data.endsat,
               },
               sun: {
-                startTime: data.startSunday,
-                endTime: data.endSunday,
+                startTime: data.startsun,
+                endTime: data.endsun,
               },
             },
           },
@@ -88,143 +90,66 @@ const AddScheduleScreen = () => {
         }
       )
       .then((res) => {
+        setUser({ ...user, opening_hours: res.data.user.opening_hours });
         setDisabled(false);
         setLoading(false);
         navigation.goBack();
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         setDisabled(false);
         setLoading(false);
       });
   };
 
+  const handleChangeSwitch = (checked, startName, endName) => {
+    if (checked) {
+      setValue(`${startName}`, -1, { shouldValidate: true });
+      setValue(`${endName}`, -1, { shouldValidate: true });
+    } else {
+      setValue(`${startName}`, 1);
+      setValue(`${endName}`, 1);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.screen}>
-      <Header title={t("addLocationSchedule")} />
+      <Header title={t("locationSchedule")} />
       <Stack sx={styles.container}>
         <FormProvider {...methods}>
           <View style={styles.formCont}>
             <ScrollView contentContainerStyle={{ paddingTop: 20 }}>
-              <Stack direction="row" sx={styles.dayCont}>
-                <Text style={styles.day}>{t("monday")}</Text>
-                <Stack sx={styles.startDay}>
-                  <FormInputSelect
-                    name="startMonday"
-                    items={mon}
-                    placeholder={t("start")}
+              {seconds.map((second, i) => (
+                <Stack key={i} direction="row" sx={styles.dayCont}>
+                  <Text style={styles.day}>{t(`${second.day}`)}</Text>
+                  <CSwitch
+                    onChange={(checked) => {
+                      handleChangeSwitch(
+                        checked,
+                        `start${second?.day}`,
+                        `end${second?.day}`
+                      );
+                    }}
+                    defaultValue={getValues(`start${second?.day}`) !== -1}
+                    color={primary}
                   />
+                  <Stack sx={styles.startDay}>
+                    <FormInputSelect
+                      name={`start${second?.day}`}
+                      items={second?.items}
+                      placeholder={t("start")}
+                      disabled={watch(`start${second?.day}`) === -1}
+                    />
+                  </Stack>
+                  <Stack sx={styles.endDay}>
+                    <FormInputSelect
+                      name={`end${second?.day}`}
+                      items={second?.items}
+                      placeholder={t("end")}
+                      disabled={watch(`start${second?.day}`) === -1}
+                    />
+                  </Stack>
                 </Stack>
-                <Stack sx={styles.endDay}>
-                  <FormInputSelect
-                    name="endMonday"
-                    items={mon}
-                    placeholder={t("end")}
-                  />
-                </Stack>
-              </Stack>
-              <Stack direction="row" sx={styles.dayCont}>
-                <Text style={styles.day}>{t("tuesday")}</Text>
-                <Stack sx={styles.startDay}>
-                  <FormInputSelect
-                    name="startTuesday"
-                    items={tue}
-                    placeholder={t("start")}
-                  />
-                </Stack>
-                <Stack sx={styles.endDay}>
-                  <FormInputSelect
-                    name="endTuesday"
-                    items={tue}
-                    placeholder={t("end")}
-                  />
-                </Stack>
-              </Stack>
-              <Stack direction="row" sx={styles.dayCont}>
-                <Text style={styles.day}>{t("wednesday")}</Text>
-                <Stack sx={styles.startDay}>
-                  <FormInputSelect
-                    name="startWednesday"
-                    items={wed}
-                    placeholder={t("start")}
-                  />
-                </Stack>
-                <Stack sx={styles.endDay}>
-                  <FormInputSelect
-                    name="endWednesday"
-                    items={wed}
-                    placeholder={t("end")}
-                  />
-                </Stack>
-              </Stack>
-              <Stack direction="row" sx={styles.dayCont}>
-                <Text style={styles.day}>{t("thursday")}</Text>
-                <Stack sx={styles.startDay}>
-                  <FormInputSelect
-                    name="startThursday"
-                    items={thu}
-                    placeholder={t("start")}
-                  />
-                </Stack>
-                <Stack sx={styles.endDay}>
-                  <FormInputSelect
-                    name="endThursday"
-                    items={thu}
-                    placeholder={t("end")}
-                  />
-                </Stack>
-              </Stack>
-              <Stack direction="row" sx={styles.dayCont}>
-                <Text style={styles.day}>{t("friday")}</Text>
-                <Stack sx={styles.startDay}>
-                  <FormInputSelect
-                    name="startFriday"
-                    items={fri}
-                    placeholder={t("start")}
-                  />
-                </Stack>
-                <Stack sx={styles.endDay}>
-                  <FormInputSelect
-                    name="endFriday"
-                    items={fri}
-                    placeholder={t("end")}
-                  />
-                </Stack>
-              </Stack>
-              <Stack direction="row" sx={styles.dayCont}>
-                <Text style={styles.day}>{t("saturday")}</Text>
-                <Stack sx={styles.startDay}>
-                  <FormInputSelect
-                    name="startSaturday"
-                    items={sat}
-                    placeholder={t("start")}
-                  />
-                </Stack>
-                <Stack sx={styles.endDay}>
-                  <FormInputSelect
-                    name="endSaturday"
-                    items={sat}
-                    placeholder={t("end")}
-                  />
-                </Stack>
-              </Stack>
-              <Stack direction="row" sx={styles.dayCont}>
-                <Text style={styles.day}>{t("sunday")}</Text>
-                <Stack sx={styles.startDay}>
-                  <FormInputSelect
-                    name="startSunday"
-                    items={sun}
-                    placeholder={t("start")}
-                  />
-                </Stack>
-                <Stack sx={styles.endDay}>
-                  <FormInputSelect
-                    name="endSunday"
-                    items={sun}
-                    placeholder={t("end")}
-                  />
-                </Stack>
-              </Stack>
+              ))}
             </ScrollView>
             <MainButton
               size="lg"
@@ -254,7 +179,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   formCont: { flex: 1, width: "100%" },
-  startDay: { flex: 1, marginRight: 10 },
+  startDay: { flex: 1, marginRight: 10, marginLeft: 20 },
   endDay: { flex: 1 },
   dayCont: { marginBottom: 15 },
   day: {

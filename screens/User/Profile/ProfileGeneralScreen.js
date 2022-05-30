@@ -15,7 +15,6 @@ import {
   FollowButton,
   IconButton,
   MainButton,
-  Feedback,
 } from "../../../components/core";
 import {
   ProfileOverview,
@@ -30,13 +29,26 @@ import {
 import { useAuth } from "../../../hooks/auth";
 import theme from "../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
-import moment from "moment";
 
 const ProfileGeneralScreen = ({ badgeDetails, route }) => {
   const { user } = useAuth();
   const { userId, username, avatar, name } = route.params;
-  const [userDetails, setUserDetails] = useState(null);
-  const [feedback, setFeedback] = useState({ visible: false, message: "" });
+  const [userDetails, setUserDetails] = useState([]);
+  const {
+    _id,
+    role,
+    description,
+    website,
+    location,
+    checkmark,
+    distance,
+    status,
+    endTime,
+    services,
+    business,
+    counter,
+    opening_hours,
+  } = userDetails || {};
   const [loading, setLoading] = useState(false);
   const [suggestedPeople, setSuggestedPeople] = useState([]);
   const Tab = createMaterialTopTabNavigator();
@@ -44,15 +56,16 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
 
   const fetchUser = useCallback(() => {
     axios
-      .get(`${process.env.BASE_ENDPOINT}/users/${userId}`, {
-        headers: { Authorization: `Bearer ${user?.token}` },
-      })
+      .get(
+        `${process.env.BASE_ENDPOINT}/users/${userId}?latlng=26.100195,44.428286`,
+        {
+          headers: { Authorization: `Bearer ${user?.token}` },
+        }
+      )
       .then((res) => {
         setUserDetails(res.data.user);
       })
-      .catch(() =>
-        setFeedback({ visible: true, message: t("somethingWentWrong") })
-      );
+      .catch(() => console.log(err));
   }, [userId]);
 
   useEffect(() => {
@@ -63,7 +76,7 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
     setLoading(true);
     axios
       .get(
-        `${process.env.BASE_ENDPOINT}/users/${user?._id}/businesses/${userDetails?.business?._id}/get-suggested`,
+        `${process.env.BASE_ENDPOINT}/users/${user?._id}/businesses/${business?._id}/get-suggested`,
         {
           headers: { Authorization: `Bearer ${user?.token}` },
         }
@@ -75,81 +88,39 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
       .catch(() => setLoading(false));
   }, [user, userDetails]);
 
-  const admin =
-    userDetails?.role === "admin" || userDetails?.role === "employee";
-
-  const buttons = (
-    <>
-      <FollowButton
-        size="md"
-        followeeId={userId}
-        fetchUser={fetchUser}
-        fetchSuggested={handleSuggested}
-      />
-      <MainButton
-        variant="outlined"
-        title={t("message")}
-        radius={2.5}
-        sx={styles.messageBtn}
-        onPress={() => {
-          navigation.navigate("EditProfile");
-        }}
-      />
-      {!loading && (
-        <IconButton
-          sx={styles.iconBtn}
-          size={20}
-          color={theme.lightColors.black}
-          iconType="antdesign"
-          iconName="adduser"
-          onPress={handleSuggested}
-        />
-      )}
-      {loading && (
-        <View style={styles.activityIndicator}>
-          <ActivityIndicator />
-        </View>
-      )}
-    </>
-  );
-
   const PostsProfile = useCallback(
-    () => <PostsProfileTab userId={userId} username={userDetails?.username} />,
-    [userId, userDetails]
+    () => <PostsProfileTab userId={userId} username={username} />,
+    [userId, username]
   );
   const ProductsProfile = useCallback(
-    () => (
-      <ProductsProfileTab userId={userId} services={userDetails?.services} />
-    ),
-    [userId, userDetails]
+    () => <ProductsProfileTab userId={userId} services={services} />,
+    [userId, services]
   );
   const JobsProfile = useCallback(
-    () => (
-      <JobsProfileTab
-        userId={userDetails?._id}
-        username={userDetails?.username}
-      />
-    ),
-    [userId, userDetails]
+    () => <JobsProfileTab userId={userId} username={username} />,
+    [userId, username]
   );
   const AboutProfile = useCallback(
     () => (
       <AboutProfileTab
-        biography={userDetails?.description}
-        website={userDetails?.website}
-        location={userDetails?.location}
-        role={userDetails?.role}
-        openingHours={userDetails?.opening_hours}
+        biography={description}
+        website={website}
+        location={location}
+        role={role}
+        openingHours={opening_hours}
       />
     ),
-    [userDetails]
+    [description, website, location, role, opening_hours]
   );
 
-  const removeCard = (userId) => {
-    setSuggestedPeople(
-      suggestedPeople.filter((suggested) => suggested?._id !== userId)
-    );
-  };
+  const removeCard = useCallback(
+    (userId) => {
+      setSuggestedPeople(
+        suggestedPeople.filter((suggested) => suggested?._id !== userId)
+      );
+    },
+    [userId]
+  );
 
   const renderSuggested = ({ item }) => {
     const { avatar, name, business, counter, username, _id } = item;
@@ -171,22 +142,52 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
   return (
     <View style={styles.container}>
       <SafeAreaView>
-        <HeaderProfileGeneral
-          username={username}
-          checkmark={userDetails?.checkmark}
-        />
-        <Feedback feedback={feedback} setFeedback={setFeedback} />
+        <HeaderProfileGeneral username={username} checkmark={checkmark} />
       </SafeAreaView>
       <ScrollView showsVerticalScrollIndicator={false}>
         <ProfileOverview
-          user={userDetails}
+          _id={_id}
           name={name}
           avatar={avatar}
+          role={role}
+          distance={distance}
+          services={services}
+          counter={counter}
+          business={business}
           badgeDetails={badgeDetails}
-          actionButtons={buttons}
           withAvailable={true}
-          available={true}
-        />
+          available={status}
+          endTime={endTime}
+        >
+          <FollowButton
+            size="md"
+            followeeId={userId}
+            fetchUser={fetchUser}
+            fetchSuggested={handleSuggested}
+          />
+          <MainButton
+            variant="outlined"
+            title={t("message")}
+            radius={2.5}
+            sx={styles.messageBtn}
+            onPress={() => {}}
+          />
+          {!loading && (
+            <IconButton
+              sx={styles.iconBtn}
+              size={20}
+              color={theme.lightColors.black}
+              iconType="antdesign"
+              iconName="adduser"
+              onPress={handleSuggested}
+            />
+          )}
+          {loading && (
+            <View style={styles.activityIndicator}>
+              <ActivityIndicator />
+            </View>
+          )}
+        </ProfileOverview>
         {suggestedPeople.length !== 0 && (
           <Stack align="start" justify="start" sx={styles.suggestedPeople}>
             <Text style={styles.suggestedTitle}>Sugestii pentru tine</Text>
@@ -202,10 +203,12 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
         <View style={styles.tabsCont}>
           <TopTabContainer initialRouteName="Posts" profileTabs={true}>
             <Tab.Screen name="Posts" component={PostsProfile} />
-            {admin && (
+            {role !== "subscriber" && (
               <Tab.Screen name="Products" component={ProductsProfile} />
             )}
-            {admin && <Tab.Screen name="Jobs" component={JobsProfile} />}
+            {role !== "subscriber" && (
+              <Tab.Screen name="Jobs" component={JobsProfile} />
+            )}
             <Tab.Screen name="About" component={AboutProfile} />
           </TopTabContainer>
         </View>

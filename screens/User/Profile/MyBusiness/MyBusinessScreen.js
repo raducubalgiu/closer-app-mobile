@@ -15,7 +15,7 @@ const MyBusinessScreen = () => {
       title: "Dashboard",
       iconName: "airplay",
       iconType: "feather",
-      description: "Statistici privind programarile",
+      description: t("scheduleStatistics"),
       navigation: "MyDashboard",
     },
     {
@@ -23,39 +23,47 @@ const MyBusinessScreen = () => {
       title: "Calendar",
       iconName: "calendar",
       iconType: "feather",
-      description: "Gestioneaza-ti programarile",
+      description: t("manageYourSchedules"),
       navigation: "MyCalendar",
     },
     {
       _id: "3",
-      title: "Locatie",
+      title: t("location"),
       iconName: "navigation",
       iconType: "feather",
-      description: "Informatii despre locatia adaugata",
+      description: t("informationLocation"),
       navigation: "MyLocation",
     },
     {
       _id: "4",
-      title: "Servicii",
-      iconName: "trending-up",
+      title: t("locationSchedule"),
+      iconName: "clock",
       iconType: "feather",
-      description: "Poti edita oricand serviciile tale",
-      navigation: "AddServices",
+      description: t("informationLocationSchedule"),
+      navigation: "AddSchedule",
     },
     {
       _id: "5",
-      title: "Produse",
-      iconName: "shopping-bag",
+      title: t("services"),
+      iconName: "trending-up",
       iconType: "feather",
-      description: "Poti edita oricand produsele tale",
-      navigation: "MyProducts",
+      description: t("youCanEditServices"),
+      navigation: "AddServices",
     },
     {
       _id: "6",
-      title: "Joburi",
+      title: t("products"),
+      iconName: "shopping-bag",
+      iconType: "feather",
+      description: t("youCanEditProducts"),
+      navigation: "MyProducts",
+    },
+    {
+      _id: "7",
+      title: t("jobs"),
       iconName: "briefcase",
       iconType: "feather",
-      description: "Poti adauga joburi pentru business-ul tau",
+      description: t("youCanAddJobs"),
       navigation: "MyJobs",
     },
   ];
@@ -77,7 +85,6 @@ const MyBusinessScreen = () => {
         data={SCREENS}
         keyExtractor={(item) => item?._id}
         contentContainerStyle={{ margin: 10 }}
-        bounces={false}
         numColumns={2}
         renderItem={renderCard}
       />

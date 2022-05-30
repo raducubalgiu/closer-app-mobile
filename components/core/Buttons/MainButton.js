@@ -27,7 +27,7 @@ export const MainButton = ({
       fontSize = 14;
       break;
     case "lg":
-      padding = { paddingVertical: 15, paddingHorizontal: 32.5 };
+      padding = { paddingVertical: 13, paddingHorizontal: 32.5 };
       fontSize = 15;
       break;
     default:

@@ -65,45 +65,6 @@ const ProfileScreen = (props) => {
     []
   );
 
-  const buttons = (
-    <>
-      <MainButton
-        variant="outlined"
-        title={t("editProfile")}
-        radius={2.5}
-        sx={{ borderWidth: 1, borderColor: "#ddd" }}
-        onPress={() => {
-          navigation.navigate("EditProfile");
-        }}
-      />
-      <Button
-        style={styles.savedBtn}
-        onPress={() => navigation.navigate("Bookmarks")}
-      >
-        <Icon
-          name="bookmark"
-          type="feather"
-          size={20}
-          color={theme.lightColors.black}
-        />
-      </Button>
-      <Icon
-        name="instagram"
-        type="feather"
-        size={20}
-        style={styles.socialBtn}
-        color={theme.lightColors.black}
-      />
-      <Icon
-        name="youtube"
-        type="feather"
-        size={20}
-        style={styles.socialBtn}
-        color={theme.lightColors.black}
-      />
-    </>
-  );
-
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
@@ -121,15 +82,52 @@ const ProfileScreen = (props) => {
       />
       <ScrollView showsVerticalScrollIndicator={false}>
         <ProfileOverview
-          user={user}
-          withBadge
-          badgeDetails={props.badgeDetails}
-          actionButtons={buttons}
+          _id={user?._id}
           name={user?.name}
           avatar={user?.avatar}
+          role={user?.role}
+          business={user?.business}
+          counter={user?.counter}
+          withBadge
+          badgeDetails={props.badgeDetails}
           withAvailable={false}
           available={false}
-        />
+        >
+          <MainButton
+            variant="outlined"
+            title={t("editProfile")}
+            radius={2.5}
+            sx={{ borderWidth: 1, borderColor: "#ddd" }}
+            onPress={() => {
+              navigation.navigate("EditProfile");
+            }}
+          />
+          <Button
+            style={styles.savedBtn}
+            onPress={() => navigation.navigate("Bookmarks")}
+          >
+            <Icon
+              name="bookmark"
+              type="feather"
+              size={20}
+              color={theme.lightColors.black}
+            />
+          </Button>
+          <Icon
+            name="instagram"
+            type="feather"
+            size={20}
+            style={styles.socialBtn}
+            color={theme.lightColors.black}
+          />
+          <Icon
+            name="youtube"
+            type="feather"
+            size={20}
+            style={styles.socialBtn}
+            color={theme.lightColors.black}
+          />
+        </ProfileOverview>
         <View style={{ height }}>
           <TopTabContainer initialRouteName="Posts" profileTabs={true}>
             <Tab.Screen name="Posts" component={PostsProfile} />

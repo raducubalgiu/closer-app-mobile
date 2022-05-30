@@ -52,3 +52,5 @@ export { SwipableItem } from "./SwipableItem/SwipableItem";
 export { Feedback } from "./Feedback/Feedback";
 
 export { ImageSlider } from "./ImageSlider/ImageSlider";
+
+export { CSwitch } from "./CSwitch/CSwitch";

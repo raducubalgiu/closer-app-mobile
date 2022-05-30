@@ -15,22 +15,32 @@ import { MAIN_ROLE, SECOND_ROLE, THIRD_ROLE } from "@env";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../hooks";
 import { Icon } from "@rneui/themed";
+import { formatSeconds } from "../../../utils";
+import moment from "moment";
+
+const { black, grey0, primary } = theme.lightColors;
 
 export const ProfileOverview = ({
-  user,
+  _id,
   name,
   avatar,
+  counter,
+  distance,
+  role,
+  services,
+  business,
   withBadge,
-  actionButtons,
   withAvailable,
   available,
+  children,
+  endTime,
 }) => {
   const { user: userContext } = useAuth();
   const navigation = useNavigation();
   const { t } = useTranslation();
 
   const handleGoToProducts = (serviceId) => {
-    if (user?._id === userContext?._id) {
+    if (_id === userContext?._id) {
       navigation.navigate("MyProducts", { serviceId });
     } else {
       navigation.navigate("Products", { serviceId });
@@ -52,33 +62,37 @@ export const ProfileOverview = ({
           />
         </Button>
         <Text style={styles.name}>{name}</Text>
-        <Protected userRole={user?.role} roles={[MAIN_ROLE, SECOND_ROLE]}>
+        <Protected userRole={role} roles={[MAIN_ROLE, SECOND_ROLE]}>
           <Stack direction="row" justify="start">
-            {user?.business && (
+            {business && (
               <>
-                <Text style={styles.business}>{user?.business?.name}</Text>
+                <Text style={styles.business}>{business?.name}</Text>
                 <IconStar sx={styles.star} />
               </>
             )}
             <Text style={styles.ratingsAverage}>
-              {user?.counter?.ratingsAverage?.toFixed(1)}
+              {counter?.ratingsAverage?.toFixed(1)}
             </Text>
           </Stack>
           <Stack direction="row" sx={{ marginTop: 10 }}>
             <Stack direction="row">
-              <Icon
-                name="clock"
-                type="feather"
-                color={theme.lightColors.grey0}
-                size={17.5}
-              />
+              <Icon name="keyboard-arrow-down" size={15} color="white" />
+              <Icon name="clock" type="feather" color={grey0} size={17.5} />
               <Text style={styles.text}>
-                {available ? `${t("isClosingAt")} 17` : t("closed")}
+                {available
+                  ? `${t("isClosingAt")} ${moment()
+                      .startOf("day")
+                      .seconds(endTime)
+                      .format("HH")}`
+                  : t("closed")}
               </Text>
             </Stack>
             <Stack direction="row" sx={{ marginLeft: 10 }}>
-              <IconLocation color={theme.lightColors.grey0} size={17.5} />
-              <Text style={styles.text}>{t("at")} 5 km</Text>
+              <IconLocation color={grey0} size={17.5} />
+              <Text style={styles.text}>
+                {t("at")} {distance?.toFixed(0)} km
+              </Text>
+              <Icon name="keyboard-arrow-down" size={15} color={black} />
             </Stack>
           </Stack>
         </Protected>
@@ -89,7 +103,7 @@ export const ProfileOverview = ({
           horizontal
           showsHorizontalScrollIndicator={false}
         >
-          {user?.services?.map((service, i) => (
+          {services?.map((service, i) => (
             <Button key={i} onPress={() => handleGoToProducts(service?._id)}>
               <Text style={styles.service}>{service?.name}</Text>
             </Button>
@@ -97,51 +111,51 @@ export const ProfileOverview = ({
         </ScrollView>
       </Stack>
       <Stack direction="row" justify="between" sx={styles.statsContainer}>
-        <Protected userRole={user?.role} roles={[MAIN_ROLE, SECOND_ROLE]}>
+        <Protected userRole={role} roles={[MAIN_ROLE, SECOND_ROLE]}>
           <StatsButton
             onPress={() =>
               navigation.navigate("ProfileStats", {
-                userId: user?._id,
+                userId: _id,
                 username: username,
               })
             }
             labelStats={t("reviews")}
-            statsNo={user?.counter?.ratingsQuantity}
+            statsNo={counter?.ratingsQuantity}
           />
         </Protected>
-        <Protected userRole={user?.role} roles={[THIRD_ROLE]}>
+        <Protected userRole={role} roles={[THIRD_ROLE]}>
           <StatsButton
             labelStats={t("posts")}
-            statsNo={user?.counter?.ratingsQuantity}
+            statsNo={counter?.ratingsQuantity}
           />
         </Protected>
         <StatsButton
           onPress={() =>
             navigation.navigate("ProfileStats", {
               screen: "ProfileStats",
-              userId: user?._id,
+              userId: _id,
               username: username,
               initialRoute: "Followers",
             })
           }
           labelStats={t("followers")}
-          statsNo={user?.counter?.followersCount}
+          statsNo={counter?.followersCount}
         />
         <StatsButton
           onPress={() =>
             navigation.navigate("ProfileStats", {
               screen: "ProfileStats",
-              userId: user?._id,
+              userId: _id,
               username: username,
               initialRoute: "Following",
             })
           }
           labelStats={t("following")}
-          statsNo={user?.counter?.followingCount}
+          statsNo={counter?.followingCount}
         />
       </Stack>
       <Stack direction="row" justify="center" sx={styles.buttonsContainer}>
-        {actionButtons}
+        {children}
       </Stack>
     </View>
   );
@@ -153,14 +167,14 @@ const styles = StyleSheet.create({
   },
   name: {
     fontFamily: "Exo-SemiBold",
-    color: theme.lightColors.black,
+    color: black,
     fontSize: 16,
     marginTop: 5,
     marginBottom: 5,
   },
   business: {
     fontFamily: "Exo-Bold",
-    color: theme.lightColors.primary,
+    color: primary,
     marginLeft: 5,
     fontSize: 14.5,
     textTransform: "capitalize",
@@ -180,7 +194,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
     borderRadius: 10,
     fontSize: 12,
-    color: theme.lightColors.black,
+    color: black,
   },
   statsContainer: {
     width: "100%",
@@ -195,6 +209,6 @@ const styles = StyleSheet.create({
     fontFamily: "Exo-SemiBold",
     fontSize: 13.5,
     marginLeft: 5,
-    color: theme.lightColors.black,
+    color: black,
   },
 });

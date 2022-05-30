@@ -2,14 +2,58 @@ import { StyleSheet } from "react-native";
 import React from "react";
 import { useFormContext, Controller } from "react-hook-form";
 import RNPickerSelect from "react-native-picker-select";
+import theme from "../../../assets/styles/theme";
 
-export const FormInputSelect = ({ name, placeholder, rules = {}, items }) => {
+const { black, grey0 } = theme.lightColors;
+
+export const FormInputSelect = ({
+  name,
+  placeholder,
+  rules = {},
+  items,
+  disabled,
+}) => {
   const { errors, control } = useFormContext();
+
   const inputPlaceholder = {
     label: placeholder,
     value: null,
     color: "#9EA0A4",
   };
+
+  const styles = StyleSheet.create({
+    input: {
+      padding: 12.5,
+      borderWidth: 1,
+      borderColor: "#ccc",
+      fontFamily: "Exo-Regular",
+      width: "100%",
+      borderRadius: 10,
+    },
+    inputIOS: {
+      fontSize: 14,
+      paddingVertical: 12.5,
+      paddingHorizontal: 10,
+      borderWidth: 1,
+      borderColor: "#ddd",
+      borderRadius: 10,
+      color: disabled ? "#9EA0A4" : black,
+      paddingRight: 30,
+      fontFamily: "Exo-Medium",
+    },
+    inputAndroid: {
+      fontSize: 14,
+      paddingHorizontal: 10,
+      paddingVertical: 8,
+      borderWidth: 0.5,
+      borderColor: "purple",
+      borderRadius: 10,
+      color: disabled ? "#9EA0A4" : black,
+      fontFamily: "Exo-Medium",
+      paddingRight: 30,
+      fontFamily: "Exo-Medium",
+    },
+  });
 
   return (
     <Controller
@@ -17,6 +61,7 @@ export const FormInputSelect = ({ name, placeholder, rules = {}, items }) => {
       rules={{ ...rules }}
       render={({ field: { onChange, onBlur, value } }) => (
         <RNPickerSelect
+          disabled={disabled}
           placeholder={inputPlaceholder}
           useNativeAndroidPickerStyle={false}
           onValueChange={onChange}
@@ -35,37 +80,3 @@ export const FormInputSelect = ({ name, placeholder, rules = {}, items }) => {
     />
   );
 };
-
-const styles = StyleSheet.create({
-  input: {
-    padding: 12.5,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    fontFamily: "Exo-Regular",
-    width: "100%",
-    borderRadius: 10,
-  },
-  inputIOS: {
-    fontSize: 14,
-    paddingVertical: 12.5,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 10,
-    color: "black",
-    paddingRight: 30,
-    fontFamily: "Exo-Medium",
-  },
-  inputAndroid: {
-    fontSize: 14,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    borderWidth: 0.5,
-    borderColor: "purple",
-    borderRadius: 10,
-    color: "black",
-    fontFamily: "Exo-Medium",
-    paddingRight: 30,
-    fontFamily: "Exo-Medium",
-  },
-});

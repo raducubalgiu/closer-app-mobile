@@ -1,39 +1,39 @@
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  Dimensions,
-  View,
-} from "react-native";
+import { StyleSheet, Text, Dimensions } from "react-native";
 import React from "react";
 import { Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
+import { Button, Stack } from "../../core";
 
 const width = Dimensions.get("window").width;
+const { black } = theme.lightColors;
 
-const MyBusinessCard = (props) => {
+const MyBusinessCard = ({
+  sx,
+  onPress,
+  iconName,
+  iconType,
+  size,
+  title,
+  description,
+}) => {
   return (
-    <TouchableOpacity
-      style={{ ...styles.container, ...props.sx }}
-      onPress={props.onPress}
-    >
-      <View
-        style={{
+    <Button sx={{ ...styles.container, ...sx }} onPress={onPress}>
+      <Stack
+        sx={{
           width: "100%",
           maxWidth: width / 2,
-          alignItems: "center",
         }}
       >
         <Icon
-          name={props.iconName}
-          type={props.iconType}
-          size={props.size ? props.size : 30}
-          color={theme.lightColors.black}
+          name={iconName}
+          type={iconType}
+          size={size ? size : 30}
+          color={black}
         />
-        <Text style={styles.title}>{props.title}</Text>
-        <Text style={styles.description}>{props.description}</Text>
-      </View>
-    </TouchableOpacity>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.description}>{description}</Text>
+      </Stack>
+    </Button>
   );
 };
 
@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     fontSize: 15,
     color: theme.lightColors.black,
+    textAlign: "center",
   },
   description: {
     textAlign: "center",
