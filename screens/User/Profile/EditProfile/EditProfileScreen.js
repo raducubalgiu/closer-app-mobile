@@ -4,12 +4,13 @@ import { Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../../assets/styles/theme";
 import { useAuth } from "../../../../hooks/auth";
-import MenuITemBetween from "../../../../components/customized/MenuItem/MenuITemBetween";
+import { Icon } from "@rneui/themed";
 import {
   Stack,
   Header,
   CustomAvatar,
   Button,
+  ListItem,
 } from "../../../../components/core";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
@@ -19,6 +20,9 @@ import {
   BottomSheetBackdrop,
 } from "@gorhom/bottom-sheet";
 import { Portal } from "@gorhom/portal";
+import { trimFunc } from "../../../../utils";
+
+const { grey0, black } = theme.lightColors;
 
 const EditProfileScreen = () => {
   const { user, setUser } = useAuth();
@@ -60,54 +64,63 @@ const EditProfileScreen = () => {
       .catch((err) => console.log(err));
   };
 
+  const list = [
+    { label: "name", val: user?.name, nav: "EditName" },
+    { label: "username", val: user?.username, nav: "EditUsername" },
+    { label: "website", val: user?.website, nav: "EditWebsite" },
+    { label: "description", val: user?.description, nav: "EditBio" },
+  ];
+
   return (
     <>
       <SafeAreaView style={styles.screen}>
         <Header title={user?.name} />
-        <ScrollView style={{ flex: 1 }}>
+        <ScrollView>
           <Stack sx={{ marginVertical: 20 }}>
             <Button
               sx={{ alignItems: "center" }}
               onPress={handlePresentModalPress}
             >
-              <View>
-                <CustomAvatar avatar={user?.avatar} size={95} iconSize={35} />
-              </View>
+              <CustomAvatar avatar={user?.avatar} size={95} iconSize={35} />
               <Text style={styles.text}>{t("changePhoto")}</Text>
             </Button>
           </Stack>
           <View style={styles.sectionContainer}>
             <Text style={styles.sectionHeading}>{t("aboutYou")}</Text>
-            <MenuITemBetween
-              label={t("name")}
-              resultText={user?.name}
-              onPress={() => navigation.navigate("EditName")}
-            />
-            <MenuITemBetween
-              label={t("username")}
-              resultText={user?.username}
-              onPress={() => navigation.navigate("EditUsername")}
-            />
-            <MenuITemBetween
-              label={t("website")}
-              resultText={user?.website}
-              onPress={() => navigation.navigate("EditWebsite")}
-            />
-            <MenuITemBetween
-              label={t("description")}
-              resultText={user?.description}
-              resultTextLength={25}
-              onPress={() => navigation.navigate("EditBio")}
-            />
+            {list.map((item, i) => (
+              <ListItem
+                key={i}
+                between
+                sx={styles.listItem}
+                onPress={() => navigation.navigate(item.nav)}
+              >
+                <Text style={styles.label}>{t(item.label)}</Text>
+                <Stack direction="row">
+                  <Text style={styles.buttonText}>
+                    {trimFunc(item?.val, 30)}
+                  </Text>
+                  <Icon name="keyboard-arrow-right" size={17} color={grey0} />
+                </Stack>
+              </ListItem>
+            ))}
           </View>
           <Divider color="#ddd" />
           <View style={styles.sectionContainer}>
             <Text style={styles.sectionHeading}>Social</Text>
-            <MenuITemBetween label="Instagram" resultText="raducu__balgiu" />
-            <MenuITemBetween
-              label="Youtube"
-              resultText={t("addYoutubeAccount")}
-            />
+            <ListItem between sx={styles.listItem}>
+              <Text style={styles.label}>Instagram</Text>
+              <Stack direction="row">
+                <Text style={styles.buttonText}>raducu__balgiu</Text>
+                <Icon name="keyboard-arrow-right" size={17} color={grey0} />
+              </Stack>
+            </ListItem>
+            <ListItem between sx={styles.listItem}>
+              <Text style={styles.label}>Youtube</Text>
+              <Stack direction="row">
+                <Text style={styles.buttonText}>{t("addYoutubeAccount")}</Text>
+                <Icon name="keyboard-arrow-right" size={17} color={grey0} />
+              </Stack>
+            </ListItem>
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -161,7 +174,7 @@ const styles = StyleSheet.create({
   name: {
     fontFamily: "Exo-Bold",
     fontSize: 16,
-    color: theme.lightColors.black,
+    color: black,
   },
   sectionContainer: {
     paddingTop: 10,
@@ -171,14 +184,14 @@ const styles = StyleSheet.create({
   sectionHeading: {
     marginBottom: 10,
     fontFamily: "Exo-SemiBold",
-    color: theme.lightColors.grey0,
+    color: grey0,
     fontSize: 13,
     marginTop: 5,
   },
   text: {
     marginTop: 15,
     fontFamily: "Exo-Bold",
-    color: theme.lightColors.black,
+    color: black,
     fontSize: 15,
   },
   sheetTitle: {
@@ -188,7 +201,7 @@ const styles = StyleSheet.create({
   },
   sheetText: {
     fontFamily: "Exo-Medium",
-    color: theme.lightColors.black,
+    color: black,
   },
   cancelBtn: {
     width: "100%",
@@ -200,11 +213,25 @@ const styles = StyleSheet.create({
   cancelBtnText: {
     textAlign: "center",
     fontFamily: "Exo-SemiBold",
-    color: theme.lightColors.black,
+    color: black,
   },
   indicatorStyle: {
     backgroundColor: "#ddd",
     width: 45,
     height: 5,
+  },
+  label: {
+    fontFamily: "Exo-Medium",
+    color: black,
+    fontSize: 15,
+  },
+  buttonText: {
+    fontFamily: "Exo-Medium",
+    marginRight: 10,
+    fontSize: 14,
+    color: grey0,
+  },
+  listItem: {
+    marginBottom: 20,
   },
 });
