@@ -25,7 +25,24 @@ export const AboutProfileTab = ({
   openingHours,
 }) => {
   const { mon, tue, wed, thu, fri, sat, sun } = openingHours?.normal_days || {};
+  const schedules = [
+    { day: "mon", ...mon },
+    { day: "tue", ...tue },
+    { day: "wed", ...wed },
+    { day: "thu", ...thu },
+    { day: "fri", ...fri },
+    { day: "sat", ...sat },
+    { day: "sun", ...sun },
+  ];
   const { t } = useTranslation();
+
+  const handleClosed = (startTime, endTime) => {
+    if (startTime === -1) {
+      return t("closed");
+    } else {
+      return `${formatSeconds(startTime)} - ${formatSeconds(endTime)}`;
+    }
+  };
 
   return (
     <View style={styles.screen}>
@@ -69,50 +86,16 @@ export const AboutProfileTab = ({
           <Stack align="start" sx={styles.section}>
             <Stack direction="row">
               <Icon name="calendar" type="feather" color={primary} />
-              <Text style={{ ...styles.heading, marginLeft: 10 }}>Program</Text>
+              <Text style={{ ...styles.heading, marginLeft: 10 }}>
+                {t("schedule")}
+              </Text>
             </Stack>
-            <ListItem between mt={20}>
-              <Text style={styles.day}>{t("monday")}</Text>
-              <Text>
-                {formatSeconds(mon?.startTime)} - {formatSeconds(mon?.endTime)}
-              </Text>
-            </ListItem>
-            <ListItem between mt={20}>
-              <Text style={styles.day}>{t("tuesday")}</Text>
-              <Text>
-                {formatSeconds(tue?.startTime)} - {formatSeconds(tue?.endTime)}
-              </Text>
-            </ListItem>
-            <ListItem between mt={20}>
-              <Text style={styles.day}>{t("wednesday")}</Text>
-              <Text>
-                {formatSeconds(wed?.startTime)} - {formatSeconds(wed?.endTime)}
-              </Text>
-            </ListItem>
-            <ListItem between mt={20}>
-              <Text style={styles.day}>{t("thursday")}</Text>
-              <Text>
-                {formatSeconds(thu?.startTime)} - {formatSeconds(thu?.endTime)}
-              </Text>
-            </ListItem>
-            <ListItem between mt={20}>
-              <Text style={styles.day}>{t("friday")}</Text>
-              <Text>
-                {formatSeconds(fri?.startTime)} - {formatSeconds(fri?.endTime)}
-              </Text>
-            </ListItem>
-            <ListItem between mt={20}>
-              <Text style={styles.day}>{t("saturday")}</Text>
-              <Text>
-                {formatSeconds(sat?.startTime)} - {formatSeconds(sat?.endTime)}
-              </Text>
-            </ListItem>
-            <ListItem between mt={20}>
-              <Text style={styles.day}>{t("sunday")}</Text>
-              <Text>
-                {formatSeconds(sun?.startTime)} - {formatSeconds(sun?.endTime)}
-              </Text>
-            </ListItem>
+            {schedules.map((day, i) => (
+              <ListItem key={i} between mt={20}>
+                <Text style={styles.day}>{t(day?.day)}</Text>
+                <Text>{handleClosed(day.startTime, day.endTime)}</Text>
+              </ListItem>
+            ))}
           </Stack>
         )}
       </Protected>
