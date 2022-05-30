@@ -2,10 +2,11 @@ import React from "react";
 import { StyleSheet, View, Text, SafeAreaView } from "react-native";
 import theme from "../../../assets/styles/theme";
 import { Divider, Icon } from "@rneui/themed";
-import MenuItemBigger from "../../../components/customized/MenuItem/MenuItemBigger";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { Stack, Button } from "../../../components/core";
+import { Stack, Button, ListItem } from "../../../components/core";
+
+const { black, primary, grey0 } = theme.lightColors;
 
 const AuthScreen = () => {
   const navigation = useNavigation();
@@ -31,12 +32,7 @@ const AuthScreen = () => {
       </Stack>
       <Divider />
       <Stack direction="row" sx={styles.businessContainer}>
-        <Icon
-          name="wallet"
-          type="antdesign"
-          size={35}
-          color={theme.lightColors.black}
-        />
+        <Icon name="wallet" type="antdesign" size={35} color={black} />
         <Stack align="start" sx={{ marginLeft: 20, flex: 1 }}>
           <Text style={styles.businessText}>{t("haveAccountBusiness")}</Text>
           <Button onPress={() => navigation.navigate("RegisterBusiness")}>
@@ -46,24 +42,33 @@ const AuthScreen = () => {
       </Stack>
       <Divider />
       <View style={{ marginTop: 20, marginHorizontal: 20 }}>
-        <MenuItemBigger
-          onPress={() => {}}
-          iconName="settings-outline"
-          iconType="ionicon"
-          text="Setări"
-        />
-        <MenuItemBigger
-          onPress={() => {}}
-          iconName="exclamationcircleo"
-          iconType="antdesign"
-          text="Raportează o problemă"
-        />
-        <MenuItemBigger
-          onPress={() => {}}
-          iconName="questioncircleo"
-          iconType="antdesign"
-          text="Termeni şi condiţii"
-        />
+        <ListItem sx={styles.listItem}>
+          <Icon
+            name="settings-outline"
+            type="ionicon"
+            size={26}
+            color={black}
+          />
+          <Text style={styles.text}>{t("settings")}</Text>
+        </ListItem>
+        <ListItem sx={styles.listItem}>
+          <Icon
+            name="exclamationcircleo"
+            type="antdesign"
+            size={26}
+            color={black}
+          />
+          <Text style={styles.text}>{t("reportAProblem")}</Text>
+        </ListItem>
+        <ListItem sx={styles.listItem}>
+          <Icon
+            name="questioncircleo"
+            type="antdesign"
+            size={26}
+            color={black}
+          />
+          <Text style={styles.text}>{t("termsAndConditions")}</Text>
+        </ListItem>
       </View>
     </SafeAreaView>
   );
@@ -84,7 +89,7 @@ const styles = StyleSheet.create({
   mainHeading: {
     fontFamily: "Exo-SemiBold",
     fontSize: 27,
-    color: theme.lightColors.black,
+    color: black,
   },
   mainBtnText: {
     textAlign: "center",
@@ -94,12 +99,12 @@ const styles = StyleSheet.create({
   },
   secondHeading: {
     fontFamily: "Exo-Medium",
-    color: theme.lightColors.grey0,
+    color: grey0,
     fontSize: 16,
     marginTop: 2.5,
   },
   mainBtn: {
-    backgroundColor: theme.lightColors.primary,
+    backgroundColor: primary,
     marginTop: 30,
     padding: 12.5,
     borderRadius: 5,
@@ -111,13 +116,13 @@ const styles = StyleSheet.create({
   textAction: {
     fontFamily: "Exo-Regular",
     fontSize: 14,
-    color: theme.lightColors.black,
+    color: black,
     marginLeft: 20,
   },
   btnAction: {
     fontFamily: "Exo-SemiBold",
     fontSize: 15,
-    color: theme.lightColors.black,
+    color: black,
   },
   businessContainer: {
     marginVertical: 10,
@@ -132,5 +137,12 @@ const styles = StyleSheet.create({
     marginTop: 5,
     fontFamily: "Exo-SemiBold",
     fontSize: 15,
+  },
+  listItem: { marginBottom: 10 },
+  text: {
+    fontFamily: "Exo-Regular",
+    fontSize: 17,
+    color: theme.lightColors.black,
+    marginLeft: 10,
   },
 });
