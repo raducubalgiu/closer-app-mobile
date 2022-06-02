@@ -15,7 +15,16 @@ export const CardProduct = ({
   canBook,
 }) => {
   const { t } = useTranslation();
-  const { name, duration, description, price, option } = product;
+  const {
+    name,
+    duration,
+    description,
+    price,
+    option,
+    service,
+    user,
+    employee,
+  } = product;
   const currDuration = duration ? useDuration(duration) : "";
   const navigation = useNavigation();
 
@@ -42,7 +51,15 @@ export const CardProduct = ({
             size="md"
             variant="outlined"
             title={t("book")}
-            onPress={() => navigation.navigate("CalendarBig", { product })}
+            onPress={() =>
+              navigation.navigate("CalendarBig", {
+                product,
+                service,
+                ownerId: user?._id,
+                opening_hours: user?.opening_hours,
+                employee,
+              })
+            }
           />
         )}
         {!canBook && (

@@ -9,6 +9,7 @@ const { black } = theme.lightColors;
 export const HeaderProfileGeneral = ({
   username,
   onOpenSettings,
+  onOpenNotifications,
   checkmark,
 }) => {
   return (
@@ -23,7 +24,7 @@ export const HeaderProfileGeneral = ({
       </Stack>
       <Stack direction="row">
         <IconButton
-          onPress={onOpenSettings}
+          onPress={onOpenNotifications}
           iconName="bell"
           iconType="feather"
           color={black}

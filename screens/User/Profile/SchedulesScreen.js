@@ -1,22 +1,54 @@
-import { StyleSheet, View, SafeAreaView } from "react-native";
-import React from "react";
+import { StyleSheet, SafeAreaView, FlatList, Text } from "react-native";
+import React, { useState } from "react";
+import axios from "axios";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Header } from "../../../components/core";
 import { useTranslation } from "react-i18next";
-import { NoFoundMessage } from "../../../components/customized";
+import { useAuth } from "../../../hooks";
+import { CardScheduleOverview } from "../../../components/customized";
 
 const SchedulesScreen = () => {
+  const { user } = useAuth();
+  const [schedules, setSchedules] = useState([]);
+  const navigation = useNavigation();
   const { t } = useTranslation();
+
+  useFocusEffect(
+    React.useCallback(() => {
+      axios
+        .get(`${process.env.BASE_ENDPOINT}/users/${user?._id}/schedules`, {
+          headers: { Authorization: `Bearer ${user?.token}` },
+        })
+        .then((res) => setSchedules(res.data.schedules))
+        .catch((err) => console.log(err));
+    }, [])
+  );
+
+  const renderSchedules = ({ item }) => {
+    const { owner, service, product, status, scheduleStart } = item;
+
+    return (
+      <CardScheduleOverview
+        avatar={owner?.avatar}
+        owner={owner?.name}
+        service={service?.name}
+        price={product?.price}
+        status={status}
+        scheduleStart={scheduleStart}
+        onPress={() => navigation.navigate("ScheduleDetails", { item })}
+      />
+    );
+  };
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Header title={t("schedules")} divider={true} />
-      <View style={styles.container}>
-        <NoFoundMessage
-          title={t("schedules")}
-          description={t("noSchedulesFound")}
-          iconName="event"
-        />
-      </View>
+      <Header title={t("mySchedules")} />
+      <FlatList
+        contentContainerStyle={styles.container}
+        data={schedules}
+        keyExtractor={(item) => item?._id}
+        renderItem={renderSchedules}
+      />
     </SafeAreaView>
   );
 };
@@ -29,7 +61,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   container: {
-    padding: 10,
+    padding: 15,
     flex: 1,
   },
 });

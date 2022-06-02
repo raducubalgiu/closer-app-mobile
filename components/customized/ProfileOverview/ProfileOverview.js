@@ -15,7 +15,6 @@ import { MAIN_ROLE, SECOND_ROLE, THIRD_ROLE } from "@env";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../hooks";
 import { Icon } from "@rneui/themed";
-import { formatSeconds } from "../../../utils";
 import moment from "moment";
 
 const { black, grey0, primary } = theme.lightColors;
@@ -46,6 +45,13 @@ export const ProfileOverview = ({
       navigation.navigate("Products", { serviceId });
     }
   };
+
+  let status = available
+    ? `${t("isClosingAt")} ${moment()
+        .startOf("day")
+        .seconds(endTime)
+        .format("HH")}`
+    : t("closed");
 
   return (
     <View style={styles.container}>
@@ -78,14 +84,7 @@ export const ProfileOverview = ({
             <Stack direction="row">
               <Icon name="keyboard-arrow-down" size={15} color="white" />
               <Icon name="clock" type="feather" color={grey0} size={17.5} />
-              <Text style={styles.text}>
-                {available
-                  ? `${t("isClosingAt")} ${moment()
-                      .startOf("day")
-                      .seconds(endTime)
-                      .format("HH")}`
-                  : t("closed")}
-              </Text>
+              <Text style={styles.text}>{status}</Text>
             </Stack>
             <Stack direction="row" sx={{ marginLeft: 10 }}>
               <IconLocation color={grey0} size={17.5} />

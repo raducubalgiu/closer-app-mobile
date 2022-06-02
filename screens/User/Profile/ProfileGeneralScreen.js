@@ -7,7 +7,13 @@ import {
   View,
   ScrollView,
 } from "react-native";
-import React, { useState, useCallback, useEffect } from "react";
+import React, {
+  useState,
+  useCallback,
+  useEffect,
+  useRef,
+  useMemo,
+} from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import axios from "axios";
 import {
@@ -15,6 +21,7 @@ import {
   FollowButton,
   IconButton,
   MainButton,
+  CustomAvatar,
 } from "../../../components/core";
 import {
   ProfileOverview,
@@ -29,6 +36,12 @@ import {
 import { useAuth } from "../../../hooks/auth";
 import theme from "../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+  BottomSheetBackdrop,
+} from "@gorhom/bottom-sheet";
+import { Portal } from "@gorhom/portal";
 
 const ProfileGeneralScreen = ({ badgeDetails, route }) => {
   const { user } = useAuth();
@@ -52,6 +65,8 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
   const [loading, setLoading] = useState(false);
   const [suggestedPeople, setSuggestedPeople] = useState([]);
   const Tab = createMaterialTopTabNavigator();
+  const bottomSheetModalRef = useRef(null);
+  const snapPoints = useMemo(() => ["1%", "45%"], []);
   const { t } = useTranslation();
 
   const fetchUser = useCallback(() => {
@@ -122,6 +137,23 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
     [userId]
   );
 
+  const renderBackdrop = useCallback(
+    (props) => (
+      <BottomSheetBackdrop
+        {...props}
+        appearsOnIndex={1}
+        disappearsOnIndex={0}
+      />
+    ),
+    []
+  );
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
+  const handleCloseSheet = useCallback(() => {
+    bottomSheetModalRef.current?.close();
+  }, []);
+
   const renderSuggested = ({ item }) => {
     const { avatar, name, business, counter, username, _id } = item;
 
@@ -142,7 +174,11 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
   return (
     <View style={styles.container}>
       <SafeAreaView>
-        <HeaderProfileGeneral username={username} checkmark={checkmark} />
+        <HeaderProfileGeneral
+          username={username}
+          checkmark={checkmark}
+          onOpenNotifications={handlePresentModalPress}
+        />
       </SafeAreaView>
       <ScrollView showsVerticalScrollIndicator={false}>
         <ProfileOverview
@@ -213,6 +249,36 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
           </TopTabContainer>
         </View>
       </ScrollView>
+      <Portal>
+        <BottomSheetModalProvider>
+          <BottomSheetModal
+            ref={bottomSheetModalRef}
+            index={1}
+            snapPoints={snapPoints}
+            backdropComponent={renderBackdrop}
+            handleIndicatorStyle={styles.indicatorStyle}
+            enablePanDownToClose={false}
+          >
+            <Stack sx={{ margin: 30 }}>
+              <CustomAvatar avatar={avatar} size={70} />
+              <Text
+                style={{
+                  marginTop: 15,
+                  marginBottom: 30,
+                  textAlign: "center",
+                  fontFamily: "Exo-Medium",
+                  fontSize: 14.5,
+                  color: theme.lightColors.black,
+                }}
+              >
+                Urmareste pe fresh_salon pentru a avea acces la notificari cu
+                privire la postari si promotii
+              </Text>
+              <MainButton title={t("follow")} fullWidth radius={0} />
+            </Stack>
+          </BottomSheetModal>
+        </BottomSheetModalProvider>
+      </Portal>
     </View>
   );
 };
@@ -272,4 +338,9 @@ const styles = StyleSheet.create({
   },
   tabsCont: { flex: 1, height: 700 },
   messageBtn: { borderWidth: 1, borderColor: "#ddd", marginLeft: 5 },
+  indicatorStyle: {
+    backgroundColor: "#ddd",
+    width: 45,
+    height: 5,
+  },
 });

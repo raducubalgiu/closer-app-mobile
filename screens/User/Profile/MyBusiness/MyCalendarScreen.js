@@ -6,6 +6,7 @@ import theme from "../../../../assets/styles/theme";
 import { FAB, Icon } from "@rneui/themed";
 import { Agenda } from "react-native-calendars";
 import moment from "moment";
+import { useFocusEffect } from "@react-navigation/native";
 import {
   NoFoundMessage,
   CardSlotDetails,
@@ -16,208 +17,18 @@ import {
   BottomSheetBackdrop,
 } from "@gorhom/bottom-sheet";
 import { Portal } from "@gorhom/portal";
+import axios from "axios";
+import { useAuth } from "../../../../hooks";
 
-const DUMMY_HOURS = [
-  {
-    startHour: "09:00",
-    customer: "Raducu Balgiu",
-    product: "Tuns par lung",
-    price: 50,
-    option: "Barbati",
-    avatar: [
-      {
-        url: "https://res.cloudinary.com/closer-app/image/upload/v1648680388/avatar-raducu_uykjxt.jpg",
-      },
-    ],
-    channel: "closer",
-  },
-  {
-    startHour: "09:30",
-    customer: "Oprea Laurentiu",
-    product: "Tuns mediu",
-    price: 65,
-    option: "Barbati",
-    avatar: [
-      {
-        url: "https://res.cloudinary.com/closer-app/image/upload/v1652450817/laur_zpdjbq.jpg",
-      },
-    ],
-    channel: "newClient",
-  },
-  {
-    startHour: "10:00",
-    customer: "Mihaela Ghizdavescu",
-    product: "Coafat",
-    price: 120,
-    option: "Femei",
-    avatar: [],
-    channel: "admin",
-  },
-  {
-    startHour: "10:30",
-    customer: "Mihaela Ghizdavescu",
-    product: "Coafat",
-    price: 120,
-    option: "Femei",
-    avatar: [],
-    channel: "newClient",
-  },
-  {
-    startHour: "11:00",
-    customer: "Mihaela Ghizdavescu",
-    product: "Coafat",
-    price: 120,
-    option: "Femei",
-    avatar: [],
-    channel: "admin",
-  },
-  {
-    startHour: "11:30",
-    customer: "Cristiano Ronaldo",
-    product: "Coafat",
-    price: 120,
-    option: "Femei",
-    avatar: [
-      {
-        url: "https://res.cloudinary.com/closer-app/image/upload/v1652805717/cristiano_i77wyp.jpg",
-      },
-    ],
-    channel: "closer",
-  },
-  {
-    startHour: "12:00",
-    customer: "Mihaela Ghizdavescu",
-    product: "Coafat",
-    price: 120,
-    option: "Femei",
-    avatar: [],
-    channel: "newClient",
-  },
-  {
-    startHour: "12:30",
-    customer: "Giorgio Chielini",
-    product: "Coafat",
-    price: 120,
-    option: "Femei",
-    avatar: [
-      {
-        url: "https://res.cloudinary.com/closer-app/image/upload/v1653305989/273193524_514446116663305_4320541658131852576_n_veokg0.jpg",
-      },
-    ],
-    channel: "closer",
-  },
-  {
-    startHour: "13:00",
-    customer: "Mihaela Ghizdavescu",
-    product: "Coafat",
-    price: 120,
-    option: "Femei",
-    avatar: [],
-    channel: "closer",
-  },
-  {
-    startHour: "13:30",
-    customer: "Mihaela Ghizdavescu",
-    product: "Coafat",
-    price: 120,
-    option: "Femei",
-    avatar: [],
-    channel: "newClient",
-  },
-  {
-    startHour: "14:00",
-    customer: "Mihai Gindac",
-    product: "Coafat",
-    price: 120,
-    option: "Femei",
-    avatar: [
-      {
-        url: "https://res.cloudinary.com/closer-app/image/upload/v1652450854/mihai_z2gcw5.jpg",
-      },
-    ],
-    channel: "closer",
-  },
-  {
-    startHour: "14:30",
-    customer: "Mihaela Ghizdavescu",
-    product: "Coafat",
-    price: 120,
-    option: "Femei",
-    avatar: [],
-    channel: "admin",
-  },
-  {
-    startHour: "15:00",
-    customer: "Mihaela Ghizdavescu",
-    product: "Coafat",
-    price: 120,
-    option: "Femei",
-    avatar: [],
-    channel: "newClient",
-  },
-  {
-    startHour: "15:30",
-    customer: "Mihaela Ghizdavescu",
-    product: "Coafat",
-    price: 120,
-    option: "Femei",
-    avatar: [],
-    channel: "closer",
-  },
-  {
-    startHour: "16:00",
-    customer: "Mihaela Ghizdavescu",
-    product: "Coafat",
-    price: 120,
-    option: "Femei",
-    avatar: [],
-    channel: "admin",
-  },
-  {
-    startHour: "16:30",
-    customer: "Mihaela Ghizdavescu",
-    product: "Coafat",
-    price: 120,
-    option: "Femei",
-    avatar: [],
-    channel: "newClient",
-  },
-  {
-    startHour: "17:00",
-    customer: "Mihaela Ghizdavescu",
-    product: "Coafat",
-    price: 120,
-    option: "Femei",
-    avatar: [],
-    channel: "admin",
-  },
-  {
-    startHour: "17:30",
-    customer: "Mihaela Ghizdavescu",
-    product: "Coafat",
-    price: 120,
-    option: "Femei",
-    avatar: [],
-    channel: "closer",
-  },
-  {
-    startHour: "18:00",
-    customer: "Mihaela Ghizdavescu",
-    product: "Coafat",
-    price: 120,
-    option: "Femei",
-    avatar: [],
-    channel: "newClient",
-  },
-];
+const { black, grey0, primary } = theme.lightColors;
 
 const MyCalendarScreen = () => {
+  const { user } = useAuth();
   const { t } = useTranslation();
-  const { black, grey0, primary } = theme.lightColors;
   const minDate = moment().format("YYYY-MM-DD");
   const maxDate = moment().add(120, "days").format("YYYY-MM-DD");
+  const [schedules, setSchedules] = useState([]);
   const [selectedDay, setSelectedDay] = useState(minDate);
-  const [slots, setSlots] = useState(DUMMY_HOURS);
   const [knob, setKnob] = useState(false);
   const bottomSheetModalRef = useRef(null);
   const snapPoints = useMemo(() => ["25%", "60%"], []);
@@ -240,6 +51,15 @@ const MyCalendarScreen = () => {
     []
   );
 
+  useFocusEffect(
+    React.useCallback(() => {
+      axios
+        .get(`${process.env.BASE_ENDPOINT}/users/${user?._id}/schedules`)
+        .then((res) => setSchedules(res.data.schedules))
+        .catch((err) => console.log(err));
+    }, [user?._id])
+  );
+
   const showKnob = (
     <>
       {knob && <Icon name="keyboard-arrow-up" color={grey0} size={30} />}
@@ -257,17 +77,21 @@ const MyCalendarScreen = () => {
     />
   );
 
-  const renderSlot = (item) => (
-    <CardSlotDetails
-      startHour={item?.startHour}
-      channel={item?.channel}
-      avatar={item?.avatar}
-      customer={item?.customer}
-      product={item?.product}
-      option={item?.option}
-      price={item?.price}
-    />
-  );
+  const renderSlot = (item) => {
+    console.log("START DATE", item.startTime);
+
+    return (
+      <CardSlotDetails
+        startHour={moment(item?.scheduleStart).utc().format("HH:mm")}
+        channel={item?.channel}
+        avatar={item?.customer?.avatar}
+        customer={item?.customer?.name}
+        product={item?.product?.name}
+        price={item?.product?.price}
+        service={item?.service}
+      />
+    );
+  };
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -281,7 +105,7 @@ const MyCalendarScreen = () => {
       />
       <Agenda
         items={{
-          [selectedDay]: slots,
+          [selectedDay]: schedules,
         }}
         renderItem={renderSlot}
         onDayPress={(day) => {
