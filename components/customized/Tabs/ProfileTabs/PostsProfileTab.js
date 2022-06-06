@@ -1,12 +1,4 @@
-import {
-  StyleSheet,
-  FlatList,
-  Dimensions,
-  TouchableOpacity,
-  View,
-  Text,
-  ScrollView,
-} from "react-native";
+import { StyleSheet, Dimensions, View } from "react-native";
 import axios from "axios";
 import { useFocusEffect } from "@react-navigation/native";
 import { Image, Icon } from "@rneui/themed";
@@ -18,6 +10,7 @@ import theme from "../../../../assets/styles/theme";
 import { useAuth } from "../../../../hooks/auth";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { useTranslation } from "react-i18next";
+import { CardPostImage } from "../../Cards/CardPostImage";
 
 const { width, height } = Dimensions.get("window");
 
@@ -56,83 +49,21 @@ export const PostsProfileTab = ({ userId, username }) => {
   }
 
   return (
-    // <View>
-    //   <ScrollView nestedScrollEnabled={true}>
-    //     <FlatList
-    //       ListHeaderComponent={noFoundPosts}
-    //       style={{ backgroundColor: "white" }}
-    //       showsVerticalScrollIndicator={false}
-    //       data={posts}
-    //       numColumns={3}
-    //       keyExtractor={(item) => item._id}
-    //       listKey={(item) => item._id}
-    //       scrollEnabled={false}
-    //       renderItem={({ item }) => (
-    //         <TouchableOpacity
-    //           activeOpacity={1}
-    //           style={styles.box}
-    //           onPress={() =>
-    //             navigation.navigate("Post", {
-    //               postId: item._id,
-    //               userId: item.user._id,
-    //             })
-    //           }
-    //         >
-    //           <View style={{ position: "relative" }}>
-    //             <Image
-    //               source={{
-    //                 uri: `${item?.images[0]?.url}`,
-    //               }}
-    //               style={styles.image}
-    //             />
-    //             {item?.bookable && (
-    //               <View style={styles.bookable}>
-    //                 <Icon
-    //                   name="shopping"
-    //                   type="material-community"
-    //                   color="white"
-    //                   size={20}
-    //                   style={{ marginLeft: 5 }}
-    //                 />
-    //               </View>
-    //             )}
-    //             {item?.fixed && (
-    //               <View style={styles.fixed}>
-    //                 <Text style={styles.fixedText}>Fixat</Text>
-    //               </View>
-    //             )}
-    //             {!item?.fixed && item?.postType === "video" && (
-    //               <View style={styles.type}>
-    //                 <Icon
-    //                   name="video"
-    //                   type="feather"
-    //                   color="white"
-    //                   size={20}
-    //                   style={{ marginLeft: 5 }}
-    //                 />
-    //               </View>
-    //             )}
-    //           </View>
-    //         </TouchableOpacity>
-    //       )}
-    //       ListFooterComponent={completeProfile}
-    //     />
-    //   </ScrollView>
-    // </View>
-    <View
-      style={{
-        flexDirection: "row",
-        flexWrap: "wrap",
-      }}
-    >
+    <View style={styles.container}>
       {posts.map((item, i) => (
-        <Image
+        <CardPostImage
+          onPress={() =>
+            navigation.navigate("Post", {
+              postId: item._id,
+              userId: item.user._id,
+            })
+          }
           key={i}
-          source={{
-            uri: `${item?.images[0]?.url}`,
-          }}
-          //style={styles.image}
-          containerStyle={styles.image}
+          index={i}
+          image={item?.images[0]?.url}
+          bookable={item?.bookable}
+          fixed={item?.fixed}
+          postType={item?.postType}
         />
       ))}
     </View>
@@ -140,45 +71,8 @@ export const PostsProfileTab = ({ userId, username }) => {
 };
 
 const styles = StyleSheet.create({
-  box: {
-    width: width / 3,
-    borderWidth: 1,
-    borderColor: "white",
-  },
-  image: {
-    // flex: 1,
-    // aspectRatio: 1,
-    width: width / 3,
-    height: height / 3,
-    aspectRatio: 1,
-    borderWidth: 1,
-    borderColor: "white",
-  },
-  bookable: {
-    position: "absolute",
-    zIndex: 10000,
-    top: 5,
-    right: 5,
-  },
-  fixed: {
-    position: "absolute",
-    zIndex: 10000,
-    bottom: 5,
-    left: 5,
-    backgroundColor: "white",
-    opacity: 0.8,
-    paddingHorizontal: 10,
-  },
-  fixedText: {
-    fontFamily: "Exo-SemiBold",
-    fontSize: 12,
-    //textTransform: "uppercase",
-    color: theme.lightColors.black,
-  },
-  type: {
-    position: "absolute",
-    zIndex: 10000,
-    bottom: 5,
-    left: 5,
+  container: {
+    flexDirection: "row",
+    flexWrap: "wrap",
   },
 });

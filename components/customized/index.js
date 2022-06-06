@@ -39,6 +39,7 @@ export { CardAvailableHour } from "./Cards/CardAvailableHour";
 export { CardServicesHeader } from "./Cards/CardServicesHeader";
 export { CardSlotDetails } from "./Cards/CardSlotDetails";
 export { CardScheduleOverview } from "./Cards/CardScheduleOverview";
+export { CardPostImage } from "./Cards/CardPostImage";
 
 export { HeaderServices } from "../customized/Layout/Headers/HeaderServices";
 export { HeaderEdit } from "../customized/Layout/Headers/HeaderEdit";

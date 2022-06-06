@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import React, { useState } from "react";
 import { Icon } from "@rneui/themed";
 import { Button, Stack, CustomAvatar } from "../../../core";

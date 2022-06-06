@@ -4,6 +4,7 @@ import React from "react";
 import CardPostHeader from "./CardPostHeader";
 import CardPostButtons from "./CardPostButtons";
 import CardPostFooter from "./CardPostFooter";
+import { dateFormat } from "../../../../utils";
 
 export const CardPost = ({ post }) => {
   const {
@@ -46,7 +47,7 @@ export const CardPost = ({ post }) => {
         postId={_id}
         description={description}
         username={username}
-        date={createdAt}
+        date={dateFormat(createdAt)}
         avatar={avatar}
         bookable={bookable}
         commentsCount={commentsCount}

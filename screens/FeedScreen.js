@@ -15,7 +15,6 @@ import { usePosts, useAuth } from "../hooks/index";
 import { IconButton, Stack, FeedLabelButton } from "../components/core";
 import { CardPost } from "../components/customized";
 import { useTranslation } from "react-i18next";
-import { dateFormat } from "../utils";
 import * as Haptics from "expo-haptics";
 
 const FeedScreen = () => {
