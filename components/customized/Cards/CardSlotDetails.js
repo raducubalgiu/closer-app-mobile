@@ -14,6 +14,7 @@ export const CardSlotDetails = ({
   product,
   price,
   service,
+  day,
 }) => {
   const { t } = useTranslation();
   const getBgColor = (channel) => {
@@ -55,6 +56,9 @@ export const CardSlotDetails = ({
                   {price} {t("ron")}
                 </Text>
               </Stack>
+              <Text style={{ marginTop: 10, fontFamily: "Exo-Bold" }}>
+                {day}
+              </Text>
             </Stack>
           </Stack>
         </Stack>

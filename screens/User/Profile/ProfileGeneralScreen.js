@@ -194,6 +194,8 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
           withAvailable={true}
           available={status}
           endTime={endTime}
+          location={location}
+          showDetails
         >
           <FollowButton
             size="md"

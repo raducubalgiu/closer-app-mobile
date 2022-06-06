@@ -1,26 +1,35 @@
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { MainButton, Stack } from "../components/core";
 import { Icon } from "@rneui/themed";
 import theme from "../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
+import moment from "moment";
 
 const { black, primary, grey0 } = theme.lightColors;
 
-const ScheduleOverviewScreen = () => {
+const ScheduleOverviewScreen = ({ route }) => {
+  const { schedule } = route.params;
+  const { service, scheduleStart } = schedule;
   const navigation = useNavigation();
 
   return (
-    <SafeAreaView style={styles.screen}>
+    <View style={styles.screen}>
       <Stack justify="center" sx={styles.container}>
         <Icon name="check-circle" type="feather" size={70} color={primary} />
         <Text style={styles.title}>Super</Text>
         <Text style={styles.message}>
-          Ai rezervat serviciul de Tuns pentru data de:
+          Ai rezervat serviciul de {service.name} pentru data de:
         </Text>
-        <Text style={styles.date}>23-05-2022, ora 16:30</Text>
+        <Text style={styles.date}>
+          {moment(scheduleStart).utc().format("LLL")}
+        </Text>
         <Stack direction="row" sx={{ marginTop: 10 }}>
-          <MainButton title="Vezi sumarul" sx={{ marginRight: 10 }} />
+          <MainButton
+            title="Vezi sumarul"
+            sx={{ marginRight: 10 }}
+            onPress={() => navigation.navigate("Schedules")}
+          />
           <MainButton
             title="Catre profil"
             variant="outlined"
@@ -28,7 +37,7 @@ const ScheduleOverviewScreen = () => {
           />
         </Stack>
       </Stack>
-    </SafeAreaView>
+    </View>
   );
 };
 

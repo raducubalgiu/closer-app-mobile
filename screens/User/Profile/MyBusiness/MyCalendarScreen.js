@@ -1,5 +1,17 @@
-import { SafeAreaView, StyleSheet, View } from "react-native";
-import React, { useState, useRef, useCallback, useMemo } from "react";
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  RefreshControl,
+  Text,
+} from "react-native";
+import React, {
+  useState,
+  useRef,
+  useCallback,
+  useMemo,
+  useEffect,
+} from "react";
 import { Header, Button } from "../../../../components/core";
 import { useTranslation } from "react-i18next";
 import theme from "../../../../assets/styles/theme";
@@ -21,17 +33,21 @@ import axios from "axios";
 import { useAuth } from "../../../../hooks";
 
 const { black, grey0, primary } = theme.lightColors;
+const wait = (timeout) => {
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
 
 const MyCalendarScreen = () => {
   const { user } = useAuth();
   const { t } = useTranslation();
   const minDate = moment().format("YYYY-MM-DD");
   const maxDate = moment().add(120, "days").format("YYYY-MM-DD");
-  const [schedules, setSchedules] = useState([]);
+  const [schedules, setSchedules] = useState({});
   const [selectedDay, setSelectedDay] = useState(minDate);
   const [knob, setKnob] = useState(false);
   const bottomSheetModalRef = useRef(null);
   const snapPoints = useMemo(() => ["25%", "60%"], []);
+  const [refreshing, setRefreshing] = useState(false);
 
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
@@ -51,13 +67,36 @@ const MyCalendarScreen = () => {
     []
   );
 
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
+  console.log("SCHEDULES!!!!!!", schedules);
+
   useFocusEffect(
     React.useCallback(() => {
       axios
-        .get(`${process.env.BASE_ENDPOINT}/users/${user?._id}/schedules`)
-        .then((res) => setSchedules(res.data.schedules))
+        .get(`${process.env.BASE_ENDPOINT}/users/${user?._id}/schedules`, {
+          headers: { Authorization: `Bearer ${user?.token}` },
+        })
+        .then((res) => {
+          let schedulesObj = {};
+
+          res.data.schedules.forEach((schedule) => {
+            const { _id, schedules } = schedule;
+            const dayFormat = moment(_id).format("YYYY-MM-DD");
+
+            schedulesObj = {
+              ...schedulesObj,
+              [dayFormat]: schedules,
+            };
+          });
+
+          setSchedules(schedulesObj);
+        })
         .catch((err) => console.log(err));
-    }, [user?._id])
+    }, [])
   );
 
   const showKnob = (
@@ -78,8 +117,6 @@ const MyCalendarScreen = () => {
   );
 
   const renderSlot = (item) => {
-    console.log("START DATE", item.startTime);
-
     return (
       <CardSlotDetails
         startHour={moment(item?.scheduleStart).utc().format("HH:mm")}
@@ -88,7 +125,8 @@ const MyCalendarScreen = () => {
         customer={item?.customer?.name}
         product={item?.product?.name}
         price={item?.product?.price}
-        service={item?.service}
+        service={item?.service?.name}
+        day={moment(item?.scheduleStart).utc().day()}
       />
     );
   };
@@ -104,21 +142,17 @@ const MyCalendarScreen = () => {
         }
       />
       <Agenda
-        items={{
-          [selectedDay]: schedules,
-        }}
+        items={schedules}
         renderItem={renderSlot}
-        onDayPress={(day) => {
-          console.log("day pressed");
-        }}
+        onDayPress={(day) => console.log("day pressed")}
         onDayChange={(day) => setSelectedDay(day)}
-        renderDay={() => <View />}
+        renderDay={() => {}}
         firstDay={1}
         onCalendarToggled={(calendarOpened) => setKnob(calendarOpened)}
         selected={minDate}
         minDate={minDate}
         maxDate={maxDate}
-        pastScrollRange={1}
+        pastScrollRange={5}
         futureScrollRange={5}
         renderEmptyDate={() => <View />}
         renderEmptyData={() => noFoundData}
@@ -126,6 +160,10 @@ const MyCalendarScreen = () => {
         rowHasChanged={(r1, r2) => r1.text !== r2.text}
         showClosingKnob={true}
         disabledByDefault={false}
+        refreshing={true}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
         theme={{
           agendaDayTextColor: "yellow",
           agendaDayNumColor: "green",
@@ -140,6 +178,11 @@ const MyCalendarScreen = () => {
           nowIndicatorKnob: "red",
           todayTextColor: primary,
         }}
+        // markedDates={{
+        //   "2022-06-16": { selected: true, marked: true },
+        //   "2022-06-17": { marked: true },
+        //   "2022-06-18": { marked: true },
+        // }}
         style={{}}
       />
       <FAB

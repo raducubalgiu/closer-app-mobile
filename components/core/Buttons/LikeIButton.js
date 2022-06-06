@@ -4,6 +4,9 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../../hooks/auth";
 import * as Haptics from "expo-haptics";
+import theme from "../../../assets/styles/theme";
+
+const { error } = theme.lightColors;
 
 export const LikeIButton = ({ postId, onAddLike, onRemoveLike, ...props }) => {
   const [liked, setLiked] = useState(false);
@@ -76,7 +79,7 @@ export const LikeIButton = ({ postId, onAddLike, onRemoveLike, ...props }) => {
           type={liked ? "antdesign" : "feather"}
           name="heart"
           size={props.size ? props.size : 25}
-          color={liked ? "#F72A50" : "black"}
+          color={liked ? error : "black"}
         />
       </Animated.View>
     </Pressable>

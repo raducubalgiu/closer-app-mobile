@@ -28,17 +28,15 @@ export const JobsProfileTab = ({ userId, username }) => {
   }
 
   return (
-    <FlatList
-      data={jobs}
-      keyExtractor={(item) => item?._id}
-      renderItem={({ item }) => (
+    <>
+      {jobs.map((job, i) => (
         <CardJob
-          name={item?.name}
-          description={item?.description}
-          priority={item?.priority}
+          key={i}
+          name={job?.name}
+          description={job?.description}
+          priority={job?.priority}
         />
-      )}
-      ListFooterComponent={noFoundJobs}
-    />
+      ))}
+    </>
   );
 };

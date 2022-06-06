@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Icon } from "@rneui/themed";
+import theme from "../assets/styles/theme";
 import { useAuth } from "../hooks";
 import "../i18next";
 
@@ -46,7 +47,6 @@ import MyCalendarScreen from "../screens/User/Profile/MyBusiness/MyCalendarScree
 import MyLocationScreen from "../screens/User/Profile/MyBusiness/MyLocationScreen";
 import MyProductsScreen from "../screens/User/Profile/MyBusiness/MyProductsScreen";
 import AddBusinessTypeScreen from "../screens/User/Profile/MyBusiness/AddBusinessTypeScreen";
-import theme from "../assets/styles/theme";
 import AllServicesScreen from "../screens/AllServicesScreen";
 import ProfileStatsScreen from "../screens/User/Profile/ProfileStatsScreen";
 import NotificationsScreen from "../screens/NotificationsScreen";
@@ -62,6 +62,8 @@ import ScheduleScreen from "../screens/ScheduleScreen";
 import { PortalProvider } from "@gorhom/portal";
 import AddScheduleScreen from "../screens/User/Profile/MyBusiness/AddScheduleScreen";
 import ScheduleOverviewScreen from "../screens/ScheduleOverviewScreen";
+import ScheduleDetailsScreen from "../screens/User/Profile/ScheduleDetailsScreen";
+import MapScreen from "../screens/MapScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -101,27 +103,6 @@ const AuthStackNavigator = () => {
   );
 };
 
-const UserStackNavigator = () => {
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <Stack.Screen
-        name="Profile"
-        component={ProfileScreen}
-        initialRouteName="Profile"
-      />
-      <Stack.Screen name="Settings" component={SettingsScreen} />
-      <Stack.Screen name="Schedules" component={SchedulesScreen} />
-      <Stack.Screen name="Discounts" component={DiscountsScreen} />
-      <Stack.Screen name="FindFriends" component={FindFriendsScreen} />
-      <Stack.Screen name="Bookmarks" component={BookmarksScreen} />
-    </Stack.Navigator>
-  );
-};
-
 const RootStack = createNativeStackNavigator();
 
 const TabsScreen = () => {
@@ -143,7 +124,7 @@ const TabsScreen = () => {
           } else if (route.name === "Messages") {
             iconType = "feather";
             iconName = focused ? "message-circle" : "message-circle";
-          } else if (route.name === "UserStack") {
+          } else if (route.name === "Profile") {
             iconType = "feather";
             iconName = focused ? "user" : "user";
           }
@@ -160,7 +141,7 @@ const TabsScreen = () => {
       <Tab.Screen name="Explore" component={ExploreScreen} />
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Messages" component={MessagesScreen} />
-      <Tab.Screen name="UserStack" component={UserStackNavigator} />
+      <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
 };
@@ -218,6 +199,15 @@ const CloserNavigation = () => {
               name="EditPhotoLibrary"
               component={EditPhotoLibraryScreen}
             />
+            <Stack.Screen name="Settings" component={SettingsScreen} />
+            <Stack.Screen name="Schedules" component={SchedulesScreen} />
+            <Stack.Screen
+              name="ScheduleDetails"
+              component={ScheduleDetailsScreen}
+            />
+            <Stack.Screen name="Discounts" component={DiscountsScreen} />
+            <Stack.Screen name="FindFriends" component={FindFriendsScreen} />
+            <Stack.Screen name="Bookmarks" component={BookmarksScreen} />
             <Stack.Screen name="MyBusiness" component={MyBusinessScreen} />
             <Stack.Screen name="MyDashboard" component={MyDashboardScreen} />
             <Stack.Screen name="MyCalendar" component={MyCalendarScreen} />
@@ -237,6 +227,7 @@ const CloserNavigation = () => {
               name="ProfileGeneral"
               component={ProfileGeneralScreen}
             />
+            <Stack.Screen name="Map" component={MapScreen} />
             <Stack.Screen name="ProfileStats" component={ProfileStatsScreen} />
             <Stack.Screen name="CalendarBig" component={CalendarScreen} />
             <Stack.Screen

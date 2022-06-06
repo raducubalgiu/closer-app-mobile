@@ -15,6 +15,27 @@ import { BASE_ENDPOINT } from "@env";
 
 const DUMMY_HOURS = [
   {
+    startHour: "10:30",
+    endHour: "11:00",
+  },
+  {
+    startHour: "11:00",
+    endHour: "11:30",
+  },
+  {
+    startHour: "11:30",
+    endHour: "12:00",
+  },
+  {
+    startHour: "12:30",
+    endHour: "13:00",
+  },
+  {
+    startHour: "13:00",
+    endHour: "13:30",
+  },
+
+  {
     startHour: "13:30",
     endHour: "14:00",
   },
@@ -22,22 +43,144 @@ const DUMMY_HOURS = [
     startHour: "14:00",
     endHour: "14:30",
   },
-];
-
-const secondSlots = [
   {
     startHour: "14:30",
     endHour: "15:00",
   },
   {
+    startHour: "15:00",
+    endHour: "15:30",
+  },
+  {
     startHour: "15:30",
     endHour: "16:00",
+  },
+  {
+    startHour: "16:00",
+    endHour: "16:30",
+  },
+  {
+    startHour: "16:30",
+    endHour: "17:00",
+  },
+  {
+    startHour: "17:00",
+    endHour: "17:30",
+  },
+  {
+    startHour: "17:30",
+    endHour: "18:00",
+  },
+  {
+    startHour: "18:00",
+    endHour: "18:30",
+  },
+  {
+    startHour: "18:30",
+    endHour: "19:00",
+  },
+  {
+    startHour: "19:00",
+    endHour: "19:30",
+  },
+  {
+    startHour: "19:30",
+    endHour: "20:00",
+  },
+  {
+    startHour: "20:00",
+    endHour: "20:30",
+  },
+  {
+    startHour: "20:30",
+    endHour: "21:00",
+  },
+  {
+    startHour: "21:00",
+    endHour: "21:30",
+  },
+  {
+    startHour: "21:30",
+    endHour: "22:00",
+  },
+  {
+    startHour: "22:00",
+    endHour: "22:30",
+  },
+  {
+    startHour: "22:30",
+    endHour: "23:00",
+  },
+  {
+    startHour: "23:30",
+    endHour: "00:00",
+  },
+];
+
+const secondSlots = [
+  {
+    startHour: "10:30",
+    endHour: "11:00",
+  },
+  {
+    startHour: "11:00",
+    endHour: "11:30",
+  },
+  {
+    startHour: "11:30",
+    endHour: "12:00",
+  },
+  {
+    startHour: "12:30",
+    endHour: "13:00",
+  },
+  {
+    startHour: "13:00",
+    endHour: "13:30",
+  },
+
+  {
+    startHour: "13:30",
+    endHour: "14:00",
+  },
+  {
+    startHour: "14:00",
+    endHour: "14:30",
+  },
+  {
+    startHour: "14:30",
+    endHour: "15:00",
+  },
+  {
+    startHour: "15:00",
+    endHour: "15:30",
+  },
+  {
+    startHour: "15:30",
+    endHour: "16:00",
+  },
+  {
+    startHour: "16:00",
+    endHour: "16:30",
+  },
+  {
+    startHour: "16:30",
+    endHour: "17:00",
+  },
+  {
+    startHour: "17:00",
+    endHour: "17:30",
+  },
+  {
+    startHour: "17:30",
+    endHour: "18:00",
   },
 ];
 
 const { primary, black, grey0 } = theme.lightColors;
 
 const CalendarScreen = ({ route }) => {
+  const slot = 29;
   const { user } = useAuth();
   const { product, service, ownerId, employee, opening_hours } = route.params;
   const { name, price, option, duration } = product;
@@ -66,48 +209,45 @@ const CalendarScreen = ({ route }) => {
     }
   }, [selectedHour]);
 
-  console.log("SELECTED DAY", selectedDay);
-  console.log("SELECTED HOUR", selectedHour);
-  //console.log("START", start);
-
-  const start = moment(selectedDay).add(selectedHour, "hours").format();
-
-  console.log("START", moment(start));
+  const start = moment.utc(selectedDay).add(selectedHour, "hours").format();
 
   const handleBook = () => {
-    // setLoading(true);
-    // axios
-    //   .post(
-    //     `${BASE_ENDPOINT}/schedules?slot=29&locationStart=${locationStart}&locationEnd=${locationEnd}`,
-    //     {
-    //       start,
-    //       owner: ownerId,
-    //       employee,
-    //       customer: {
-    //         _id: user?._id,
-    //         name: user?.name,
-    //         avatar: user?.avatar,
-    //       },
-    //       service: {
-    //         _id: service?._id,
-    //         name: service?.name,
-    //       },
-    //       product: {
-    //         name,
-    //         price,
-    //         option: option?.name,
-    //         duration,
-    //       },
-    //       channel: "closer",
-    //     }
-    //   )
-    //   .then((res) => {
-    //     setLoading(false);
-    //   })
-    //   .catch(() => {
-    //     setLoading(false);
-    //     setFeedback({ visible: true, message: t("somethingWentWrong") });
-    //   });
+    setLoading(true);
+    axios
+      .post(
+        `${BASE_ENDPOINT}/schedules?slot=${slot}&locationStart=${locationStart}&locationEnd=${locationEnd}`,
+        {
+          start,
+          owner: ownerId,
+          employee,
+          customer: {
+            _id: user?._id,
+            name: user?.name,
+            avatar: user?.avatar,
+          },
+          service: {
+            _id: service?._id,
+            name: service?.name,
+          },
+          product: {
+            name,
+            price,
+            option: option?.name,
+            duration,
+          },
+          channel: "closer",
+        }
+      )
+      .then((res) => {
+        setLoading(false);
+        navigation.navigate("ScheduleOverview", {
+          schedule: res.data.schedule,
+        });
+      })
+      .catch(() => {
+        setLoading(false);
+        setFeedback({ visible: true, message: t("somethingWentWrong") });
+      });
   };
 
   const showKnob = (

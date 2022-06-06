@@ -167,5 +167,11 @@
   "mySchedules": "Programările mele",
   "schedule": "Program",
   "termsAndConditions": "Termeni şi condiţii",
-  "scheduleDetails": "Detalii programare"
+  "scheduleDetails": "Detalii programare",
+  "accepted": "Acceptat",
+  "bookAgain": "Programează din nou",
+  "cancelAppoinment": "Anulează programarea",
+  "navigate": "Navighează",
+  "canceled": "Anulat",
+  "confirmed": "Confirmat"
 }

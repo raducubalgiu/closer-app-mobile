@@ -46,6 +46,7 @@ const ProfileScreen = (props) => {
     business,
     counter,
     role,
+    services,
     opening_hours,
   } = user || {};
   const navigation = useNavigation();
@@ -103,12 +104,14 @@ const ProfileScreen = (props) => {
           name={name}
           avatar={avatar}
           role={role}
+          services={services}
           business={business}
           counter={counter}
           withBadge
           badgeDetails={props.badgeDetails}
           withAvailable={false}
           available={false}
+          showDetails={false}
         >
           <MainButton
             variant="outlined"

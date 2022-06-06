@@ -1,8 +1,8 @@
-import { StyleSheet, SafeAreaView, FlatList, Text } from "react-native";
+import { StyleSheet, SafeAreaView, FlatList, View, Text } from "react-native";
 import React, { useState } from "react";
 import axios from "axios";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { Header } from "../../../components/core";
+import { Header, Button, IconButton } from "../../../components/core";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../hooks";
 import { CardScheduleOverview } from "../../../components/customized";
@@ -35,20 +35,28 @@ const SchedulesScreen = () => {
         price={product?.price}
         status={status}
         scheduleStart={scheduleStart}
-        onPress={() => navigation.navigate("ScheduleDetails", { item })}
+        onPress={() =>
+          navigation.navigate("ScheduleDetails", { schedule: item })
+        }
       />
     );
   };
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Header title={t("mySchedules")} />
-      <FlatList
-        contentContainerStyle={styles.container}
-        data={schedules}
-        keyExtractor={(item) => item?._id}
-        renderItem={renderSchedules}
+      <Header
+        title={t("mySchedules")}
+        divider
+        actionBtn={<IconButton iconName="filter" iconType="feather" />}
       />
+      <View style={styles.container}>
+        <FlatList
+          contentContainerStyle={styles.contentContainer}
+          data={schedules}
+          keyExtractor={(item) => item?._id}
+          renderItem={renderSchedules}
+        />
+      </View>
     </SafeAreaView>
   );
 };
@@ -61,7 +69,9 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   container: {
-    padding: 15,
     flex: 1,
+  },
+  contentContainer: {
+    paddingHorizontal: 15,
   },
 });

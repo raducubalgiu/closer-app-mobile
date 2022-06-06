@@ -3,6 +3,8 @@ import { Button } from "@rneui/themed";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 
+const { black, primary } = theme.lightColors;
+
 export const MainButton = ({
   title,
   loading,
@@ -11,11 +13,16 @@ export const MainButton = ({
   fullWidth,
   radius,
   sx,
+  btnText,
+  bgColor,
+  txtColor,
   ...props
 }) => {
   let padding;
-  let bgColor;
+  let backgroundColor;
   let color;
+  let borderWidth;
+  let borderColor;
   let fontSize;
 
   switch (size) {
@@ -27,7 +34,7 @@ export const MainButton = ({
       fontSize = 14;
       break;
     case "lg":
-      padding = { paddingVertical: 13, paddingHorizontal: 32.5 };
+      padding = { paddingVertical: 15, paddingHorizontal: 32.5 };
       fontSize = 15;
       break;
     default:
@@ -37,25 +44,29 @@ export const MainButton = ({
 
   switch (variant) {
     case "outlined":
-      bgColor = "white";
-      color = theme.lightColors.black;
+      backgroundColor = bgColor ? bgColor : "white";
+      color = txtColor ? txtColor : black;
+      borderWidth = 2;
+      borderColor = bgColor ? bgColor : primary;
       break;
     case "contain":
-      bgColor = theme.lightColors.primary;
-      color = "white";
+      backgroundColor = bgColor ? bgColor : primary;
+      color = txtColor ? txtColor : "white";
+      borderColor = bgColor ? bgColor : "white";
       break;
     default:
-      bgColor = theme.lightColors.primary;
-      color = "white";
+      borderColor = bgColor ? bgColor : primary;
+      backgroundColor = bgColor ? bgColor : primary;
+      color = txtColor ? txtColor : "white";
   }
 
   const styles = StyleSheet.create({
     buttonStyle: {
-      backgroundColor: bgColor,
+      backgroundColor,
       borderRadius: radius ? radius : 5,
+      borderWidth,
+      borderColor,
       ...padding,
-      borderWidth: 2,
-      borderColor: theme.lightColors.primary,
       ...sx,
     },
     containerStyle: {
@@ -66,6 +77,7 @@ export const MainButton = ({
       fontFamily: "Exo-SemiBold",
       fontSize,
       color,
+      ...btnText,
     },
   });
 
