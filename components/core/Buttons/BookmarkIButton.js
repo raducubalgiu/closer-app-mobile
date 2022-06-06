@@ -5,6 +5,7 @@ import { Icon } from "@rneui/themed";
 import { useAuth } from "../../../hooks/auth";
 import theme from "../../../assets/styles/theme";
 import * as Haptics from "expo-haptics";
+import { useFocusEffect } from "@react-navigation/native";
 
 export const BookmarkIButton = ({ postId, sx, size }) => {
   const { user } = useAuth();
@@ -12,16 +13,21 @@ export const BookmarkIButton = ({ postId, sx, size }) => {
   const animatedScale = useRef(new Animated.Value(0)).current;
   const BOOKMARK_ENDPOINT = `${process.env.BASE_ENDPOINT}/users/${user?._id}/posts/${postId}/bookmarks`;
 
-  useEffect(() => {
-    axios
-      .get(BOOKMARK_ENDPOINT, {
-        headers: { Authorization: `Bearer ${user?.token}` },
-      })
-      .then((res) => {
-        setBookmarked(res.data.status);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      axios
+        .get(
+          `${process.env.BASE_ENDPOINT}/users/${user?._id}/posts/${postId}/bookmarks`,
+          {
+            headers: { Authorization: `Bearer ${user?.token}` },
+          }
+        )
+        .then((res) => {
+          setBookmarked(res.data.status);
+        })
+        .catch(() => {});
+    }, [postId])
+  );
 
   const handleBookmark = () => {
     animatedScale.setValue(0.8);

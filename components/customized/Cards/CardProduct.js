@@ -29,8 +29,8 @@ export const CardProduct = ({
   const navigation = useNavigation();
 
   return (
-    <Stack sx={styles.card}>
-      <Stack direction="row" align="start" sx={styles.container}>
+    <Stack align="start" sx={styles.card}>
+      <Stack direction="row" sx={{ width: "100%" }} align="start">
         <Stack align="start" sx={styles.descriptionCont}>
           <Text style={styles.name}>{name}</Text>
           {option && (
@@ -85,7 +85,6 @@ const styles = StyleSheet.create({
     borderBottomColor: "#eee",
     marginHorizontal: 10,
   },
-  container: { flex: 1 },
   name: {
     fontFamily: "Exo-SemiBold",
     fontSize: 15,
@@ -101,7 +100,7 @@ const styles = StyleSheet.create({
     color: theme.lightColors.grey0,
     marginLeft: 10,
   },
-  descriptionCont: { flex: 1, marginRight: 5 },
+  descriptionCont: { marginRight: 5, flex: 1 },
   description: {
     fontFamily: "Exo-Regular",
     color: theme.lightColors.grey0,

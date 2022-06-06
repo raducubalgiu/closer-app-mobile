@@ -1,9 +1,9 @@
-import { StyleSheet, FlatList, Text } from "react-native";
+import { StyleSheet, FlatList, Text, View } from "react-native";
 import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { CardProduct } from "../Cards/CardProduct";
 import { NoFoundMessage } from "../NotFoundContent/NoFoundMessage";
-import { Button } from "../../core";
+import { Button, Stack } from "../../core";
 import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../hooks";
@@ -24,6 +24,8 @@ export const ShowProducts = ({
   const { user } = useAuth();
   const { t } = useTranslation();
   const navigation = useNavigation();
+
+  console.log("PRODUCTS", products);
 
   useEffect(() => {
     if (product) {
@@ -91,18 +93,6 @@ export const ShowProducts = ({
     [activeService]
   );
 
-  const renderProducts = useCallback(
-    ({ item }) => (
-      <CardProduct
-        product={item}
-        onEditProduct={() => navigation.push("EditProduct", { product: item })}
-        onDeleteProduct={() => deleteProductHandler(item?._id)}
-        canBook={user?._id !== item?.user}
-      />
-    ),
-    []
-  );
-
   const renderHeader = (
     <FlatList
       nestedScrollEnabled={true}
@@ -116,24 +106,24 @@ export const ShowProducts = ({
     />
   );
 
+  const renderProducts = useCallback(
+    (product, i) => (
+      <CardProduct
+        key={i}
+        product={product}
+        onEditProduct={() => navigation.push("EditProduct", { product })}
+        onDeleteProduct={() => deleteProductHandler(product?._id)}
+        canBook={user?._id !== product?.user?._id}
+      />
+    ),
+    [product]
+  );
+
   return (
-    <FlatList
-      ListHeaderComponent={renderHeader}
-      data={products}
-      keyExtractor={(item) => item?._id}
-      renderItem={renderProducts}
-      showsVerticalScrollIndicator={false}
-      bounces={false}
-      ListFooterComponent={
-        products.length === 0 && (
-          <NoFoundMessage
-            sx={{ marginTop: 20 }}
-            title={t("myProducts")}
-            description={t("notProductsAddedForService")}
-          />
-        )
-      }
-    />
+    <>
+      <View>{renderHeader}</View>
+      {products.map((product, i) => renderProducts(product, i))}
+    </>
   );
 };
 

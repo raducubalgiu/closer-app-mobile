@@ -1,10 +1,43 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { StyleSheet, Text, View, Animated } from "react-native";
+import React, { useState } from "react";
+import axios from "axios";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import MapView, { Marker, Callout, PROVIDER_GOOGLE } from "react-native-maps";
-import { IconBackButton } from "../components/core";
+import { IconBackButton, Stack } from "../components/core";
+import { useAuth } from "../hooks";
 
 const MapScreen = ({ route }) => {
-  const { location } = route.params;
+  const { user } = useAuth();
+  const navigation = useNavigation();
+  const { location, business } = route.params;
+  const [locations, setLocations] = useState([]);
+  const maxDistance = 50;
+
+  useFocusEffect(
+    React.useCallback(() => {
+      axios
+        .get(
+          `${process.env.BASE_ENDPOINT}/users/get-locations-map?latlng=26.100195,44.428286&business=${business?._id}&maxDistance=${maxDistance}`,
+          {
+            headers: { Authorization: `Bearer ${user?.token}` },
+          }
+        )
+        .then((res) => {
+          setLocations(res.data.locations);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }, [business])
+  );
+
+  const goToLocation = () =>
+    navigation.push("ProfileGeneral", {
+      userId: loc?._id,
+      username: loc?.username,
+      name: loc?.name,
+      avatar: loc?.avatar,
+    });
 
   return (
     <View>
@@ -12,20 +45,30 @@ const MapScreen = ({ route }) => {
       <MapView
         style={{ height: "100%" }}
         initialRegion={{
-          latitude: 44.425625,
-          longitude: 26.102312,
+          latitude: 44.428286,
+          longitude: 26.100195,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
         provider={PROVIDER_GOOGLE}
       >
-        <Marker
-          coordinate={{
-            latitude: location.coordinates[0],
-            longitude: location.coordinates[1],
-          }}
-          image={require("../assets/images/map_marker_yellow.png")}
-        ></Marker>
+        {locations.map((loc, i) => (
+          <Marker
+            key={i}
+            coordinate={{
+              latitude: loc.location.coordinates[0],
+              longitude: loc.location.coordinates[1],
+            }}
+            image={require("../assets/images/map_marker.png")}
+          >
+            <Callout tooltip onPress={goToLocation}>
+              <Stack align="start">
+                <Text>Something</Text>
+                <Text>Really Cool!!!</Text>
+              </Stack>
+            </Callout>
+          </Marker>
+        ))}
       </MapView>
     </View>
   );

@@ -49,7 +49,7 @@ export const ProfileMenuList = ({ onCloseSheet }) => {
       iconName: "bars",
       iconType: "antdesign",
       navigation: "Schedules",
-      roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE],
+      roles: [THIRD_ROLE],
     },
     {
       _id: "4",

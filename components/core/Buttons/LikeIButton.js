@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../../hooks/auth";
 import * as Haptics from "expo-haptics";
 import theme from "../../../assets/styles/theme";
+import { useFocusEffect } from "@react-navigation/native";
 
 const { error } = theme.lightColors;
 
@@ -13,17 +14,21 @@ export const LikeIButton = ({ postId, onAddLike, onRemoveLike, ...props }) => {
   const { user } = useAuth();
   const animatedScale = useRef(new Animated.Value(0)).current;
 
-  useEffect(() => {
-    axios
-      .get(
-        `${process.env.BASE_ENDPOINT}/users/${user?._id}/posts/${postId}/likes`,
-        { headers: { Authorization: `Bearer ${user?.token}` } }
-      )
-      .then((res) => {
-        setLiked(res.data.status);
-      })
-      .catch((err) => console.log(err));
-  }, [postId]);
+  useFocusEffect(
+    React.useCallback(() => {
+      axios
+        .get(
+          `${process.env.BASE_ENDPOINT}/users/${user?._id}/posts/${postId}/likes`,
+          {
+            headers: { Authorization: `Bearer ${user?.token}` },
+          }
+        )
+        .then((res) => {
+          setLiked(res.data.status);
+        })
+        .catch(() => {});
+    }, [postId])
+  );
 
   const likeHandler = () => {
     animatedScale.setValue(0.8);

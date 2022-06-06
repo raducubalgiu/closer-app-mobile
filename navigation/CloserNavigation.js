@@ -55,7 +55,6 @@ import EditUsernameScreen from "../screens/User/Profile/EditProfile/EditUsername
 import MyJobsScreen from "../screens/User/Profile/MyBusiness/MyJobsScreen";
 import AddJobsScreen from "../screens/User/Profile/MyBusiness/AddJobsScreen";
 import LocationsScreen from "../screens/LocationsScreen";
-import LocationItemScreen from "../screens/LocationItemScreen";
 import CalendarScreen from "../screens/CalendarScreen";
 import ScheduleScreen from "../screens/ScheduleScreen";
 
@@ -222,7 +221,6 @@ const CloserNavigation = () => {
               component={NotificationsScreen}
             />
             <Stack.Screen name="Post" component={PostScreen} />
-            <Stack.Screen name="LocationItem" component={LocationItemScreen} />
             <Stack.Screen
               name="ProfileGeneral"
               component={ProfileGeneralScreen}

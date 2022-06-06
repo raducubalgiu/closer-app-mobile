@@ -84,14 +84,14 @@ export const ProfileOverview = ({
           </Stack>
           {showDetails && (
             <Stack direction="row" sx={{ marginTop: 10 }}>
-              <Button>
+              <Button onPress={() => navigation.navigate("About")}>
                 <Stack direction="row">
                   <Icon name="keyboard-arrow-down" size={15} color="white" />
                   <Icon name="clock" type="feather" color={grey0} size={17.5} />
                   <Text style={styles.text}>{status}</Text>
                 </Stack>
               </Button>
-              <Button onPress={() => navigation.navigate("Map", { location })}>
+              <Button onPress={() => navigation.navigate("Map", { location, business })}>
                 <Stack direction="row" sx={{ marginLeft: 10 }}>
                   <IconLocation color={grey0} size={17.5} />
                   <Text style={styles.text}>
