@@ -72,8 +72,6 @@ const MyCalendarScreen = () => {
     wait(2000).then(() => setRefreshing(false));
   }, []);
 
-  console.log("SCHEDULES!!!!!!", schedules);
-
   useFocusEffect(
     React.useCallback(() => {
       axios

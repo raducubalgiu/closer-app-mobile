@@ -67,6 +67,7 @@ const EditProfileScreen = () => {
   const list = [
     { label: "name", val: user?.name, nav: "EditName" },
     { label: "username", val: user?.username, nav: "EditUsername" },
+    { label: "profession", val: "Liber Profesionist", nav: "EditProfession" },
     { label: "website", val: user?.website, nav: "EditWebsite" },
     { label: "description", val: user?.description, nav: "EditBio" },
   ];

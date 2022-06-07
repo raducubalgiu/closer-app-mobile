@@ -8,14 +8,19 @@ import { Button, IconLocation, IconStar, IconVideo, Stack } from "../../core";
 
 const { width } = Dimensions.get("window");
 
-export const CardLocation = ({ location }) => {
+export const CardLocation = ({ location, initServ }) => {
   const { images, name, counter, minPrice, distance, _id, username, avatar } =
     location;
   const navigation = useNavigation();
   const { t } = useTranslation();
 
   const goToUser = () =>
-    navigation.push("ProfileGeneral", { userId: _id, username, name, avatar });
+    navigation.push("ProfileGeneral", {
+      userId: _id,
+      username,
+      name,
+      avatar,
+    });
 
   return (
     <Button onPress={goToUser}>

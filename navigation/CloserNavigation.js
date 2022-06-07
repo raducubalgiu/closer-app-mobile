@@ -63,6 +63,7 @@ import AddScheduleScreen from "../screens/User/Profile/MyBusiness/AddScheduleScr
 import ScheduleOverviewScreen from "../screens/ScheduleOverviewScreen";
 import ScheduleDetailsScreen from "../screens/User/Profile/ScheduleDetailsScreen";
 import MapScreen from "../screens/MapScreen";
+import ScheduleConfirmScreen from "../screens/ScheduleConfirmScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -228,6 +229,10 @@ const CloserNavigation = () => {
             <Stack.Screen name="Map" component={MapScreen} />
             <Stack.Screen name="ProfileStats" component={ProfileStatsScreen} />
             <Stack.Screen name="CalendarBig" component={CalendarScreen} />
+            <Stack.Screen
+              name="ScheduleConfirm"
+              component={ScheduleConfirmScreen}
+            />
             <Stack.Screen
               name="ScheduleOverview"
               component={ScheduleOverviewScreen}

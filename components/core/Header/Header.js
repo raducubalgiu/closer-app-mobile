@@ -40,8 +40,8 @@ export const Header = ({
 const styles = StyleSheet.create({
   container: { paddingVertical: 10, paddingHorizontal: 15 },
   title: {
-    fontFamily: "Exo-SemiBold",
-    fontSize: 16,
+    fontFamily: "Exo-Bold",
+    fontSize: 17,
     color: theme.lightColors.black,
     marginRight: 10,
   },

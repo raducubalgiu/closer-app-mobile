@@ -25,8 +25,6 @@ export const ShowProducts = ({
   const { t } = useTranslation();
   const navigation = useNavigation();
 
-  console.log("PRODUCTS", products);
-
   useEffect(() => {
     if (product) {
       setActiveService(product.service);

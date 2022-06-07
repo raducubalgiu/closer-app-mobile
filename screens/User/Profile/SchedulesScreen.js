@@ -1,15 +1,26 @@
-import { StyleSheet, SafeAreaView, FlatList, View, Text } from "react-native";
+import {
+  StyleSheet,
+  SafeAreaView,
+  SectionList,
+  View,
+  Text,
+} from "react-native";
 import React, { useState } from "react";
 import axios from "axios";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { Header, Button, IconButton } from "../../../components/core";
+import { Header } from "../../../components/core";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../hooks";
 import { CardScheduleOverview } from "../../../components/customized";
+import moment from "moment";
+import theme from "../../../assets/styles/theme";
 
-const SchedulesScreen = () => {
+const { black } = theme.lightColors;
+
+const SchedulesScreen = ({ route }) => {
   const { user } = useAuth();
   const [schedules, setSchedules] = useState([]);
+  const newSched = route?.params?.scheduleStart;
   const navigation = useNavigation();
   const { t } = useTranslation();
 
@@ -24,37 +35,36 @@ const SchedulesScreen = () => {
     }, [])
   );
 
-  const renderSchedules = ({ item }) => {
-    const { owner, service, product, status, scheduleStart } = item;
+  const renderHeader = ({ section }) => (
+    <Text style={styles.headerList}>
+      {moment(section._id).utc().format("YYYY MMMM")}
+    </Text>
+  );
 
-    return (
-      <CardScheduleOverview
-        avatar={owner?.avatar}
-        owner={owner?.name}
-        service={service?.name}
-        price={product?.price}
-        status={status}
-        scheduleStart={scheduleStart}
-        onPress={() =>
-          navigation.navigate("ScheduleDetails", { schedule: item })
-        }
-      />
-    );
-  };
+  const renderSchedules = ({ item }) => (
+    <CardScheduleOverview
+      onPress={() => navigation.navigate("ScheduleDetails", { schedule: item })}
+      avatar={item.avatar}
+      owner={item.owner.name}
+      price={item.product.price}
+      service={item.service.name}
+      status={item.status}
+      scheduleStart={item.scheduleStart}
+      newSched={newSched === item.scheduleStart}
+    />
+  );
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Header
-        title={t("mySchedules")}
-        divider
-        actionBtn={<IconButton iconName="filter" iconType="feather" />}
-      />
+      <Header title={t("mySchedules")} divider />
       <View style={styles.container}>
-        <FlatList
-          contentContainerStyle={styles.contentContainer}
-          data={schedules}
-          keyExtractor={(item) => item?._id}
+        <SectionList
+          sections={schedules}
+          keyExtractor={(item, index) => item + index}
+          stickySectionHeadersEnabled={false}
           renderItem={renderSchedules}
+          renderSectionHeader={renderHeader}
+          contentContainerStyle={{ padding: 15 }}
         />
       </View>
     </SafeAreaView>
@@ -73,5 +83,13 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingHorizontal: 15,
+  },
+  headerList: {
+    padding: 10,
+    textTransform: "capitalize",
+    fontFamily: "Exo-Bold",
+    fontSize: 15.5,
+    color: black,
+    marginBottom: 20,
   },
 });

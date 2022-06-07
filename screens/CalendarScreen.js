@@ -1,17 +1,18 @@
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import React, { useEffect, useState } from "react";
-import { Button, Feedback, Header, Stack } from "../components/core";
-import { Footer, NoFoundMessage } from "../components/customized";
-import { useTranslation } from "react-i18next";
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import React, { useCallback, useState } from "react";
+import { Header, Stack } from "../components/core";
+import { NoFoundMessage } from "../components/customized";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../assets/styles/theme";
 import { Agenda } from "react-native-calendars";
 import moment from "moment";
 import { Icon } from "@rneui/themed";
-import { trimFunc } from "../utils";
-import axios from "axios";
-import { useAuth, useLocationStartEnd } from "../hooks";
-import { BASE_ENDPOINT } from "@env";
 
 const DUMMY_HOURS = [
   {
@@ -180,74 +181,29 @@ const secondSlots = [
 const { primary, black, grey0 } = theme.lightColors;
 
 const CalendarScreen = ({ route }) => {
-  const slot = 29;
-  const { user } = useAuth();
   const { product, service, ownerId, employee, opening_hours } = route.params;
-  const { name, price, option, duration } = product;
-  const [disabled, setDisabled] = useState(true);
+  const { name } = product;
   const minDate = moment().format("YYYY-MM-DD");
   const maxDate = moment().add(120, "days").format("YYYY-MM-DD");
-  const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const [slots, setSlots] = useState(DUMMY_HOURS);
-  const [loading, setLoading] = useState(false);
   const [selectedDay, setSelectedDay] = useState(minDate);
-  const [selectedHour, setSelectedHour] = useState("");
-  const [activeSlot, setActiveSlot] = useState(null);
   const [knob, setKnob] = useState(false);
-  const { locationStart, locationEnd } = useLocationStartEnd(
-    opening_hours.normal_days,
-    selectedDay
-  );
-  const { t } = useTranslation();
   const navigation = useNavigation();
 
-  useEffect(() => {
-    if (selectedHour === "") {
-      setDisabled(true);
-    } else {
-      setDisabled(false);
-    }
-  }, [selectedHour]);
+  console.log("SELECTED DAY", selectedDay);
 
-  const start = moment.utc(selectedDay).add(selectedHour, "hours").format();
+  const goToConfirm = (startHour) => {
+    console.log("SELECTED DAY FROM CONFIRM", selectedDay);
 
-  const handleBook = () => {
-    setLoading(true);
-    axios
-      .post(
-        `${BASE_ENDPOINT}/schedules?slot=${slot}&locationStart=${locationStart}&locationEnd=${locationEnd}`,
-        {
-          start,
-          owner: ownerId,
-          employee,
-          customer: {
-            _id: user?._id,
-            name: user?.name,
-            avatar: user?.avatar,
-          },
-          service: {
-            _id: service?._id,
-            name: service?.name,
-          },
-          product: {
-            name,
-            price,
-            option: option?.name,
-            duration,
-          },
-          channel: "closer",
-        }
-      )
-      .then((res) => {
-        setLoading(false);
-        navigation.navigate("ScheduleOverview", {
-          schedule: res.data.schedule,
-        });
-      })
-      .catch(() => {
-        setLoading(false);
-        setFeedback({ visible: true, message: t("somethingWentWrong") });
-      });
+    navigation.navigate("ScheduleConfirm", {
+      selectedDay,
+      selectedHour: startHour,
+      service,
+      product,
+      ownerId,
+      opening_hours,
+      employee,
+    });
   };
 
   const showKnob = (
@@ -257,30 +213,23 @@ const CalendarScreen = ({ route }) => {
     </>
   );
 
-  const handleDayPress = (day) => {
+  const handleDayPress = useCallback((day) => {
     setSelectedDay(day.dateString);
     setSlots(secondSlots);
-  };
-  const handlePressSlot = (startHour, endHour) => {
-    setSelectedHour(startHour);
-  };
+  }, []);
 
-  const activeSlotBg = { ...styles.slot, ...styles.active };
-  const activeSlotTxt = { ...styles.slotText, ...styles.activeText };
-
-  const renderSlot = ({ startHour, endHour }) => (
-    <Button onPress={() => handlePressSlot(startHour, endHour)}>
-      <Stack
-        direction="row"
-        justify="start"
-        sx={activeSlot ? activeSlotBg : styles.slot}
-      >
-        <Text style={activeSlot ? activeSlotTxt : styles.slotText}>
-          {startHour} - {endHour}
-        </Text>
-      </Stack>
-    </Button>
-  );
+  const renderSlot = (item) => {
+    console.log("ITEM", item);
+    return (
+      <TouchableOpacity onPress={() => goToConfirm(item.startHour)}>
+        <Stack direction="row" justify="start" sx={styles.slot}>
+          <Text style={styles.slotText}>
+            {item.startHour} - {item.endHour}
+          </Text>
+        </Stack>
+      </TouchableOpacity>
+    );
+  };
 
   const noFoundData = (
     <NoFoundMessage
@@ -297,10 +246,9 @@ const CalendarScreen = ({ route }) => {
       <View style={styles.container}>
         <Header
           title={name}
-          description={`${moment(selectedDay).format("ll")} - ${selectedHour}`}
+          description={moment(selectedDay).format("ll")}
           divider
         />
-        <Feedback feedback={feedback} setFeedback={setFeedback} />
         <Agenda
           items={{
             [selectedDay]: slots,
@@ -338,15 +286,6 @@ const CalendarScreen = ({ route }) => {
           }}
           style={{}}
         />
-        <Footer
-          disabled={disabled}
-          btnTitle={t("book")}
-          onPress={handleBook}
-          loading={loading}
-        >
-          <Text style={styles.product}>{trimFunc(name, 20)}</Text>
-          <Text style={styles.price}>{price} RON</Text>
-        </Footer>
       </View>
     </SafeAreaView>
   );

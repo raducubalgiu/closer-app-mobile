@@ -17,18 +17,18 @@ export const CardPostImage = ({
   let borderBox;
 
   if (index % 3 !== 0) {
-    borderBox = { marginBottom: 1.5 };
+    borderBox = { paddingLeft: 2 };
   } else {
-    borderBox = { marginLeft: 0, marginBottom: 1.5 };
+    borderBox = { paddingLeft: 0 };
   }
 
   return (
-    <Button sx={styles.box} onPress={onPress}>
+    <Button sx={{ ...styles.box, ...borderBox }} onPress={onPress}>
       <Image
         source={{
           uri: `${image}`,
         }}
-        containerStyle={{ ...styles.image, ...borderBox }}
+        containerStyle={styles.image}
       />
       {bookable && (
         <View style={styles.bookable}>
@@ -65,9 +65,9 @@ const styles = StyleSheet.create({
   box: {
     width: width / 3,
     height: width / 3,
+    marginBottom: 2,
   },
   image: {
-    aspectRatio: 1,
     flex: 1,
   },
   bookable: {
