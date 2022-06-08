@@ -55,7 +55,7 @@ export const CardProduct = ({
               navigation.navigate("CalendarBig", {
                 product,
                 service,
-                ownerId: user?._id,
+                owner: user,
                 opening_hours: user?.opening_hours,
                 employee,
               })

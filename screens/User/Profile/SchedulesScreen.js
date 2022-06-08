@@ -8,12 +8,13 @@ import {
 import React, { useState } from "react";
 import axios from "axios";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { Header } from "../../../components/core";
+import { IconButton, Stack } from "../../../components/core";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../hooks";
 import { CardScheduleOverview } from "../../../components/customized";
 import moment from "moment";
 import theme from "../../../assets/styles/theme";
+import { Icon } from "@rneui/themed";
 
 const { black } = theme.lightColors;
 
@@ -56,7 +57,15 @@ const SchedulesScreen = ({ route }) => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Header title={t("mySchedules")} divider />
+      <Stack direction="row" sx={styles.header}>
+        <IconButton
+          iconName="arrow-back-ios"
+          size={21}
+          onPress={() => navigation.navigate("Profile")}
+        />
+        <Text style={styles.title}>{t("mySchedules")}</Text>
+        <Icon name="arrow-back-ios" size={21} color="white" />
+      </Stack>
       <View style={styles.container}>
         <SectionList
           sections={schedules}
@@ -77,6 +86,13 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: "white",
+  },
+  header: { paddingHorizontal: 15, paddingVertical: 10 },
+  title: {
+    fontFamily: "Exo-Bold",
+    fontSize: 17,
+    color: theme.lightColors.black,
+    marginRight: 10,
   },
   container: {
     flex: 1,

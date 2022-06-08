@@ -174,5 +174,7 @@
   "navigate": "Navighează",
   "canceled": "Anulat",
   "confirmed": "Confirmat",
-  "profession": "Profesie"
+  "profession": "Profesie",
+  "confirmBooking": "Confirmă rezervarea",
+  "paymentDetails": "Plăteşti direct la locaţie în numerar sau prin alte metode de plată acceptate"
 }

@@ -181,8 +181,7 @@ const secondSlots = [
 const { primary, black, grey0 } = theme.lightColors;
 
 const CalendarScreen = ({ route }) => {
-  const { product, service, ownerId, employee, opening_hours } = route.params;
-  const { name } = product;
+  const { product, service, owner, employee, opening_hours } = route.params;
   const minDate = moment().format("YYYY-MM-DD");
   const maxDate = moment().add(120, "days").format("YYYY-MM-DD");
   const [slots, setSlots] = useState(DUMMY_HOURS);
@@ -190,17 +189,13 @@ const CalendarScreen = ({ route }) => {
   const [knob, setKnob] = useState(false);
   const navigation = useNavigation();
 
-  console.log("SELECTED DAY", selectedDay);
-
   const goToConfirm = (startHour) => {
-    console.log("SELECTED DAY FROM CONFIRM", selectedDay);
-
     navigation.navigate("ScheduleConfirm", {
       selectedDay,
       selectedHour: startHour,
       service,
       product,
-      ownerId,
+      owner,
       opening_hours,
       employee,
     });
@@ -219,7 +214,6 @@ const CalendarScreen = ({ route }) => {
   }, []);
 
   const renderSlot = (item) => {
-    console.log("ITEM", item);
     return (
       <TouchableOpacity onPress={() => goToConfirm(item.startHour)}>
         <Stack direction="row" justify="start" sx={styles.slot}>
@@ -245,7 +239,7 @@ const CalendarScreen = ({ route }) => {
     <SafeAreaView style={styles.screen}>
       <View style={styles.container}>
         <Header
-          title={name}
+          title={product?.name}
           description={moment(selectedDay).format("ll")}
           divider
         />

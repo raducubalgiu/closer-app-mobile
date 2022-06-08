@@ -64,6 +64,7 @@ import ScheduleOverviewScreen from "../screens/ScheduleOverviewScreen";
 import ScheduleDetailsScreen from "../screens/User/Profile/ScheduleDetailsScreen";
 import MapScreen from "../screens/MapScreen";
 import ScheduleConfirmScreen from "../screens/ScheduleConfirmScreen";
+import ScheduleCancelScreen from "../screens/User/Profile/ScheduleCancelScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -204,6 +205,10 @@ const CloserNavigation = () => {
             <Stack.Screen
               name="ScheduleDetails"
               component={ScheduleDetailsScreen}
+            />
+            <Stack.Screen
+              name="ScheduleCancel"
+              component={ScheduleCancelScreen}
             />
             <Stack.Screen name="Discounts" component={DiscountsScreen} />
             <Stack.Screen name="FindFriends" component={FindFriendsScreen} />

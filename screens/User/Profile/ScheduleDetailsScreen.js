@@ -16,50 +16,19 @@ import moment from "moment";
 import { Divider } from "@rneui/themed";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { AddressFormat } from "../../../utils";
-import axios from "axios";
-import { useAuth } from "../../../hooks";
 import { useNavigation } from "@react-navigation/native";
 
 const { black, grey0, success, error } = theme.lightColors;
 
 const ScheduleDetailsScreen = ({ route }) => {
-  const { user } = useAuth();
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
-  const [schedule, setSchedule] = useState(route.params.schedule);
-  const { owner, product, scheduleStart, service, status, _id } = schedule;
+  const { schedule } = route.params;
+  const { owner, product, scheduleStart, service, status, _id, employee } =
+    schedule;
   const { coordinates } = owner.location;
   const formatScheduleStart = moment(scheduleStart).utc().format("lll");
   const { t } = useTranslation();
   const navigation = useNavigation();
-
-  const cancelAppoinment = () => {
-    if (moment(scheduleStart).isAfter(moment())) {
-      axios
-        .patch(
-          `${process.env.BASE_ENDPOINT}/users/${user?._id}/schedules/${_id}`,
-          { status: "canceled" },
-          {
-            headers: { Authorization: `Bearer ${user?.token}` },
-          }
-        )
-        .then((res) => {
-          const { status } = res.data.schedule;
-          setSchedule({ ...schedule, status });
-          setFeedback({
-            visible: true,
-            message: "Ai anulat rezervarea cu success!",
-          });
-        })
-        .catch(() =>
-          setFeedback({ visible: true, message: t("somethingWentWrong") })
-        );
-    } else {
-      setFeedback({
-        visible: true,
-        message: "You cannot cancel the appoinment anymore",
-      });
-    }
-  };
 
   const goToOwner = () =>
     navigation.push("ProfileGeneral", {
@@ -67,13 +36,26 @@ const ScheduleDetailsScreen = ({ route }) => {
       username: owner?.username,
       name: owner?.name,
     });
+  const goToCancel = () =>
+    navigation.navigate("ScheduleCancel", {
+      scheduleStart,
+      scheduleId: _id,
+    });
+  const goToBookAgain = () =>
+    navigation.navigate("CalendarBig", {
+      product,
+      service,
+      owner,
+      employee,
+      opening_hours: owner.opening_hours,
+    });
 
   let actionButton;
 
   if (moment(scheduleStart).isAfter(moment().utc()) && status === "accepted") {
     actionButton = (
       <MainButton
-        onPress={cancelAppoinment}
+        onPress={goToCancel}
         title={t("cancelAppoinment")}
         fullwidth
         size="lg"
@@ -85,7 +67,7 @@ const ScheduleDetailsScreen = ({ route }) => {
   } else {
     actionButton = (
       <MainButton
-        onPress={() => {}}
+        onPress={goToBookAgain}
         title={t("bookAgain")}
         fullwidth
         size="lg"
@@ -166,21 +148,7 @@ const ScheduleDetailsScreen = ({ route }) => {
           </Stack>
           <Stack align="start" sx={{ marginLeft: 15 }}>
             <MainButton
-              title={
-                <Stack direction="row">
-                  <Icon name="navigation" type="feather" size={20} />
-                  <Text
-                    style={{
-                      marginLeft: 10,
-                      fontFamily: "Exo-SemiBold",
-                      color: black,
-                      fontSize: 15,
-                    }}
-                  >
-                    {t("navigate")}
-                  </Text>
-                </Stack>
-              }
+              title={<Text style={styles.navigate}>{t("navigate")}</Text>}
               bgColor="#f5f5f5"
               radius={25}
               sx={{ marginTop: 10 }}
@@ -255,4 +223,10 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   map: { height: 200, width: "100%", marginVertical: 20 },
+  navigate: {
+    marginLeft: 10,
+    fontFamily: "Exo-SemiBold",
+    color: black,
+    fontSize: 15,
+  },
 });
