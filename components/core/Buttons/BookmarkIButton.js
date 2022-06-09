@@ -1,5 +1,5 @@
 import { StyleSheet, Animated, Pressable } from "react-native";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import axios from "axios";
 import { Icon } from "@rneui/themed";
 import { useAuth } from "../../../hooks/auth";
@@ -16,20 +16,17 @@ export const BookmarkIButton = ({ postId, sx, size }) => {
   useFocusEffect(
     React.useCallback(() => {
       axios
-        .get(
-          `${process.env.BASE_ENDPOINT}/users/${user?._id}/posts/${postId}/bookmarks`,
-          {
-            headers: { Authorization: `Bearer ${user?.token}` },
-          }
-        )
+        .get(BOOKMARK_ENDPOINT, {
+          headers: { Authorization: `Bearer ${user?.token}` },
+        })
         .then((res) => {
           setBookmarked(res.data.status);
         })
         .catch(() => {});
-    }, [postId])
+    }, [BOOKMARK_ENDPOINT])
   );
 
-  const handleBookmark = () => {
+  const handleBookmark = useCallback(() => {
     animatedScale.setValue(0.8);
     Animated.spring(animatedScale, {
       toValue: 1,
@@ -63,7 +60,7 @@ export const BookmarkIButton = ({ postId, sx, size }) => {
         .then((res) => setBookmarked(res.data.status))
         .catch((err) => console.log(err));
     }
-  };
+  }, [BOOKMARK_ENDPOINT, bookmarked]);
 
   useEffect(() => {
     animatedScale.setValue(1);

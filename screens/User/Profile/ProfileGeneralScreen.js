@@ -184,6 +184,7 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
         <ProfileOverview
           _id={_id}
           name={name}
+          username={username}
           avatar={avatar}
           role={role}
           distance={distance}

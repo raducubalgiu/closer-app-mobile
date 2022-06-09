@@ -176,5 +176,12 @@
   "confirmed": "Confirmat",
   "profession": "Profesie",
   "confirmBooking": "Confirmă rezervarea",
-  "paymentDetails": "Plăteşti direct la locaţie în numerar sau prin alte metode de plată acceptate"
+  "paymentDetails": "Plăteşti direct la locaţie în numerar sau prin alte metode de plată acceptate",
+  "areYouSure": "Eşti sigur?",
+  "cannotArrive": "A apărut o problemă şi nu mai pot ajunge",
+  "foundBetterOffer": "Am găsit o ofertă mai bună",
+  "others": "Altele",
+  "helpUsProvingCancelMotivation": "Ajută-ne să îmbunătăţim procesul de rezervare indicându-ne motivul anulării",
+  "bookings": "Rezervări",
+  "dontHaveBookings": "Încă nu ai rezervat nici un serviciu"
 }

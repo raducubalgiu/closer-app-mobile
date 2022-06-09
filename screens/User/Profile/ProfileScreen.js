@@ -102,6 +102,7 @@ const ProfileScreen = (props) => {
         <ProfileOverview
           _id={user?._id}
           name={name}
+          username={username}
           avatar={avatar}
           role={role}
           services={services}

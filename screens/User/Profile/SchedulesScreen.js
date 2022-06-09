@@ -11,7 +11,10 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { IconButton, Stack } from "../../../components/core";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../hooks";
-import { CardScheduleOverview } from "../../../components/customized";
+import {
+  CardScheduleOverview,
+  NoFoundMessage,
+} from "../../../components/customized";
 import moment from "moment";
 import theme from "../../../assets/styles/theme";
 import { Icon } from "@rneui/themed";
@@ -67,14 +70,25 @@ const SchedulesScreen = ({ route }) => {
         <Icon name="arrow-back-ios" size={21} color="white" />
       </Stack>
       <View style={styles.container}>
-        <SectionList
-          sections={schedules}
-          keyExtractor={(item, index) => item + index}
-          stickySectionHeadersEnabled={false}
-          renderItem={renderSchedules}
-          renderSectionHeader={renderHeader}
-          contentContainerStyle={{ padding: 15 }}
-        />
+        {schedules.length > 0 && (
+          <SectionList
+            sections={schedules}
+            keyExtractor={(item, index) => item + index}
+            stickySectionHeadersEnabled={false}
+            renderItem={renderSchedules}
+            renderSectionHeader={renderHeader}
+            contentContainerStyle={{ padding: 15 }}
+          />
+        )}
+        {schedules.length === 0 && (
+          <NoFoundMessage
+            title={t("bookings")}
+            description={t("dontHaveBookings")}
+            iconName="calendar-clock"
+            iconType="material-community"
+            iconSize={60}
+          />
+        )}
       </View>
     </SafeAreaView>
   );

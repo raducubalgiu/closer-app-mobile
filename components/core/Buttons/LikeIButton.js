@@ -1,7 +1,7 @@
 import { Animated, StyleSheet, Pressable } from "react-native";
 import { Icon } from "@rneui/themed";
 import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "../../../hooks/auth";
 import * as Haptics from "expo-haptics";
 import theme from "../../../assets/styles/theme";
@@ -30,7 +30,7 @@ export const LikeIButton = ({ postId, onAddLike, onRemoveLike, ...props }) => {
     }, [postId])
   );
 
-  const likeHandler = () => {
+  const likeHandler = useCallback(() => {
     animatedScale.setValue(0.8);
     Animated.spring(animatedScale, {
       toValue: 1,
@@ -66,7 +66,7 @@ export const LikeIButton = ({ postId, onAddLike, onRemoveLike, ...props }) => {
         })
         .catch(() => setLiked(true));
     }
-  };
+  }, [postId, user, liked]);
 
   useEffect(() => {
     animatedScale.setValue(1);

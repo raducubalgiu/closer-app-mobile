@@ -14,7 +14,9 @@ const DiscountsScreen = () => {
         <NoFoundMessage
           title={t("discounts")}
           description={t("noDiscountsFound")}
-          iconName="tag"
+          iconName="gift"
+          iconType="feather"
+          iconSize={55}
         />
       </View>
     </SafeAreaView>

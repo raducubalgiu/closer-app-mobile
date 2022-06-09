@@ -22,6 +22,7 @@ const { black, grey0, primary } = theme.lightColors;
 export const ProfileOverview = ({
   _id,
   name,
+  username,
   avatar,
   counter,
   distance,
@@ -91,7 +92,11 @@ export const ProfileOverview = ({
                   <Text style={styles.text}>{status}</Text>
                 </Stack>
               </Button>
-              <Button onPress={() => navigation.navigate("Map", { location, business })}>
+              <Button
+                onPress={() =>
+                  navigation.navigate("Map", { location, business })
+                }
+              >
                 <Stack direction="row" sx={{ marginLeft: 10 }}>
                   <IconLocation color={grey0} size={17.5} />
                   <Text style={styles.text}>

@@ -45,6 +45,7 @@ export { SearchBarInput } from "./Inputs/SearchBarInput";
 export { InputEdit } from "./Inputs/InputEdit";
 export { FormInput } from "./Inputs/FormInput";
 export { FormInputSelect } from "./Inputs/FormInputSelect";
+export { Textarea } from "./Inputs/Textarea";
 
 export { Protected } from "./Protected/Protected";
 
