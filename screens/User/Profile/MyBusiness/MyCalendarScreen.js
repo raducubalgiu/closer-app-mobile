@@ -1,16 +1,16 @@
-import { SafeAreaView, StyleSheet, View, RefreshControl } from "react-native";
-import React, { useState, useRef, useCallback, useMemo } from "react";
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  RefreshControl,
+  Text,
+} from "react-native";
+import React, { useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { FAB, Icon } from "@rneui/themed";
 import { Agenda } from "react-native-calendars";
 import moment from "moment";
 import { useFocusEffect } from "@react-navigation/native";
-import {
-  BottomSheetModal,
-  BottomSheetModalProvider,
-  BottomSheetBackdrop,
-} from "@gorhom/bottom-sheet";
-import { Portal } from "@gorhom/portal";
 import axios from "axios";
 import theme from "../../../../assets/styles/theme";
 import { Header, Button } from "../../../../components/core";
@@ -19,7 +19,7 @@ import {
   CardSlotDetails,
   BusinessScheduleModal,
 } from "../../../../components/customized";
-import { useAuth, useDates } from "../../../../hooks";
+import { useAuth, useDates, useSheetPopup } from "../../../../hooks";
 
 const { black, grey0, primary } = theme.lightColors;
 
@@ -32,35 +32,18 @@ const MyCalendarScreen = () => {
   const { t } = useTranslation();
   const { _minDate, _maxDate } = useDates();
   const [schedules, setSchedules] = useState({});
-  const [selectedDay, setSelectedDay] = useState(minDate);
+  const [selectedDay, setSelectedDay] = useState(_minDate);
   const [knob, setKnob] = useState(false);
-  const bottomSheetModalRef = useRef(null);
-  const snapPoints = useMemo(() => ["25%", "60%"], []);
   const [refreshing, setRefreshing] = useState(false);
   const [visible, setVisible] = useState(false);
-
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.present();
-  }, []);
-  const handleCloseSheet = useCallback(() => {
-    bottomSheetModalRef.current?.close();
-  }, []);
-
-  const renderBackdrop = useCallback(
-    (props) => (
-      <BottomSheetBackdrop
-        {...props}
-        appearsOnIndex={1}
-        disappearsOnIndex={0}
-      />
-    ),
-    []
-  );
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     wait(2000).then(() => setRefreshing(false));
   }, []);
+
+  const sheetContent = <Text>Hello World</Text>;
+  const { BOTTOM_SHEET, SHOW_BS } = useSheetPopup(sheetContent);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -128,7 +111,7 @@ const MyCalendarScreen = () => {
       <Header
         title={t("myCalendar")}
         actionBtn={
-          <Button onPress={handlePresentModalPress}>
+          <Button onPress={SHOW_BS}>
             <Icon name="info" type="feather" color={black} size={27.5} />
           </Button>
         }
@@ -185,22 +168,12 @@ const MyCalendarScreen = () => {
         onPress={() => setVisible(true)}
         style={styles.fab}
       />
-      <Portal>
-        <BusinessScheduleModal
-          visible={visible}
-          onCloseModal={() => setVisible(false)}
-          onUpdateSchedules={handleUpdateSchedules}
-        />
-        <BottomSheetModalProvider>
-          <BottomSheetModal
-            ref={bottomSheetModalRef}
-            index={1}
-            snapPoints={snapPoints}
-            backdropComponent={renderBackdrop}
-            handleIndicatorStyle={styles.indicatorStyle}
-          ></BottomSheetModal>
-        </BottomSheetModalProvider>
-      </Portal>
+      <BusinessScheduleModal
+        visible={visible}
+        onCloseModal={() => setVisible(false)}
+        onUpdateSchedules={handleUpdateSchedules}
+      />
+      {BOTTOM_SHEET}
     </SafeAreaView>
   );
 };
@@ -225,9 +198,4 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   fab: { bottom: 50 },
-  indicatorStyle: {
-    backgroundColor: "#ddd",
-    width: 45,
-    height: 5,
-  },
 });

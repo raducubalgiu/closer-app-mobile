@@ -28,7 +28,7 @@ export const CardPost = ({ post }) => {
         name={name}
         checkmark={checkmark}
       />
-      <View style={{ marginHorizontal: 10 }}>
+      <View>
         <Image
           source={{
             uri: `${images[0].url}`,
@@ -65,7 +65,6 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     width: "100%",
     flex: 1,
-    borderRadius: 25,
   },
   video: {
     alignSelf: "center",
