@@ -7,7 +7,7 @@ import {
 } from "@gorhom/bottom-sheet";
 import { Portal } from "@gorhom/portal";
 
-export const useSheetPopup = (sheetContent) => {
+export const useSheet = (sheetContent) => {
   const bottomSheetModalRef = useRef(null);
   const snapPoints = useMemo(() => ["25%", "60%"], []);
 

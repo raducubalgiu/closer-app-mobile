@@ -57,3 +57,5 @@ export { ImageSlider } from "./ImageSlider/ImageSlider";
 export { CSwitch } from "./CSwitch/CSwitch";
 
 export { CModal } from "./CModal/CModal";
+
+export { CFAB } from "./CFAB/CFAB";

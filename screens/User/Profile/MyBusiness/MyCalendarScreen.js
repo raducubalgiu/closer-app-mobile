@@ -1,49 +1,26 @@
-import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-  RefreshControl,
-  Text,
-} from "react-native";
-import React, { useState, useCallback } from "react";
+import { SafeAreaView, StyleSheet, Text } from "react-native";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FAB, Icon } from "@rneui/themed";
-import { Agenda } from "react-native-calendars";
+import { Icon } from "@rneui/themed";
 import moment from "moment";
 import { useFocusEffect } from "@react-navigation/native";
 import axios from "axios";
 import theme from "../../../../assets/styles/theme";
-import { Header, Button } from "../../../../components/core";
+import { Header, Button, CFAB } from "../../../../components/core";
 import {
   NoFoundMessage,
   CardSlotDetails,
   BusinessScheduleModal,
 } from "../../../../components/customized";
-import { useAuth, useDates, useSheetPopup } from "../../../../hooks";
+import { useAuth, useAgenda, useSheet } from "../../../../hooks";
 
-const { black, grey0, primary } = theme.lightColors;
-
-const wait = (timeout) => {
-  return new Promise((resolve) => setTimeout(resolve, timeout));
-};
+const { black } = theme.lightColors;
 
 const MyCalendarScreen = () => {
   const { user } = useAuth();
   const { t } = useTranslation();
-  const { _minDate, _maxDate } = useDates();
   const [schedules, setSchedules] = useState({});
-  const [selectedDay, setSelectedDay] = useState(_minDate);
-  const [knob, setKnob] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
   const [visible, setVisible] = useState(false);
-
-  const onRefresh = useCallback(() => {
-    setRefreshing(true);
-    wait(2000).then(() => setRefreshing(false));
-  }, []);
-
-  const sheetContent = <Text>Hello World</Text>;
-  const { BOTTOM_SHEET, SHOW_BS } = useSheetPopup(sheetContent);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -70,12 +47,8 @@ const MyCalendarScreen = () => {
     }, [])
   );
 
-  const showKnob = (
-    <>
-      {knob && <Icon name="keyboard-arrow-up" color={grey0} size={30} />}
-      {!knob && <Icon name="keyboard-arrow-down" color={grey0} size={30} />}
-    </>
-  );
+  const sheetContent = <Text>Hello World</Text>;
+  const { BOTTOM_SHEET, SHOW_BS } = useSheet(sheetContent);
 
   const noFoundData = (
     <NoFoundMessage
@@ -104,6 +77,8 @@ const MyCalendarScreen = () => {
     );
   };
 
+  const { AGENDA } = useAgenda(schedules, renderSlot, noFoundData);
+
   const handleUpdateSchedules = (schedule) => {};
 
   return (
@@ -116,57 +91,10 @@ const MyCalendarScreen = () => {
           </Button>
         }
       />
-      <Agenda
-        items={schedules}
-        renderItem={renderSlot}
-        onDayPress={(day) => console.log("day pressed")}
-        onDayChange={(day) => setSelectedDay(day)}
-        renderDay={() => {}}
-        firstDay={1}
-        onCalendarToggled={(calendarOpened) => setKnob(calendarOpened)}
-        selected={_minDate}
-        minDate={_minDate}
-        maxDate={_maxDate}
-        pastScrollRange={5}
-        futureScrollRange={5}
-        renderEmptyDate={() => <View />}
-        renderEmptyData={() => noFoundData}
-        renderKnob={() => showKnob}
-        rowHasChanged={(r1, r2) => r1.text !== r2.text}
-        showClosingKnob={true}
-        disabledByDefault={false}
-        refreshing={true}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-        theme={{
-          agendaDayTextColor: "yellow",
-          agendaDayNumColor: "green",
-          agendaTodayColor: "red",
-          agendaKnobColor: "blue",
-          selectedDayBackgroundColor: primary,
-          textDayFontFamily: "Exo-SemiBold",
-          textDayFontSize: 13,
-          agendaKnobColor: "red",
-          agendaTodayColor: "red",
-          backgroundColor: "white",
-          nowIndicatorKnob: "red",
-          todayTextColor: primary,
-        }}
-        // markedDates={{
-        //   "2022-06-16": { selected: true, marked: true },
-        //   "2022-06-17": { marked: true },
-        //   "2022-06-18": { marked: true },
-        // }}
-        style={{}}
-      />
-      <FAB
-        activeOpacity={1}
-        icon={{ name: "post-add", type: "material", color: "white" }}
-        color={primary}
-        placement="right"
+      {AGENDA}
+      <CFAB
         onPress={() => setVisible(true)}
-        style={styles.fab}
+        icon={{ name: "post-add", type: "material", color: "white" }}
       />
       <BusinessScheduleModal
         visible={visible}
@@ -197,5 +125,4 @@ const styles = StyleSheet.create({
     fontFamily: "Exo-SemiBold",
     fontSize: 13,
   },
-  fab: { bottom: 50 },
 });
