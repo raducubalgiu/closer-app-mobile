@@ -7,9 +7,9 @@ import {
 } from "@gorhom/bottom-sheet";
 import { Portal } from "@gorhom/portal";
 
-export const useSheet = (sheetContent) => {
+export const useSheet = (intervals, sheetContent, closeSheet = null) => {
   const bottomSheetModalRef = useRef(null);
-  const snapPoints = useMemo(() => ["25%", "60%"], []);
+  const snapPoints = useMemo(() => [...intervals], []);
 
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();

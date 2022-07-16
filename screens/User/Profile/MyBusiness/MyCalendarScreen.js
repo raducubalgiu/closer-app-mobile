@@ -48,7 +48,7 @@ const MyCalendarScreen = () => {
   );
 
   const sheetContent = <Text>Hello World</Text>;
-  const { BOTTOM_SHEET, SHOW_BS } = useSheet(sheetContent);
+  const { BOTTOM_SHEET, SHOW_BS } = useSheet(["25%", "60%"], sheetContent);
 
   const noFoundData = (
     <NoFoundMessage
@@ -95,6 +95,7 @@ const MyCalendarScreen = () => {
       <CFAB
         onPress={() => setVisible(true)}
         icon={{ name: "post-add", type: "material", color: "white" }}
+        bottom={40}
       />
       <BusinessScheduleModal
         visible={visible}

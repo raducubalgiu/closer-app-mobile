@@ -63,3 +63,5 @@ export { LoginRegisterForm } from "../customized/Forms/LoginRegisterForm";
 export { AuthProviders } from "../customized/Forms/AuthProviders";
 
 export { BusinessScheduleModal } from "../customized/Modals/BusinessScheduleModal";
+
+export { EditProfileSheet } from "../customized/Sheets/EditProfileSheet";

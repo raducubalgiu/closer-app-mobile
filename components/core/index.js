@@ -12,6 +12,7 @@ export { ShareIButton } from "./Buttons/ShareIButton";
 export { BookmarkIButton } from "./Buttons/BookmarkIButton";
 export { StatsButton } from "./Buttons/StatsButton";
 export { FeedLabelButton } from "./Buttons/FeedLabelButton";
+export { SocialIconButton } from "./Buttons/SocialIconButton";
 
 export { ButtonGroup } from "./ButtonGroup/ButtonGroup";
 
