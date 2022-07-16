@@ -65,7 +65,6 @@ export const FollowingsTab = (props) => {
 
   return (
     <View style={styles.screen}>
-      {loading && <Spinner />}
       {!loading && (
         <FlatList
           refreshControl={

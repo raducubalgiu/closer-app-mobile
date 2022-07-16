@@ -1,8 +1,9 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import React from "react";
 import { useFormContext, Controller } from "react-hook-form";
 import RNPickerSelect from "react-native-picker-select";
 import theme from "../../../assets/styles/theme";
+import { Icon } from "@rneui/themed";
 
 const { black, grey0 } = theme.lightColors;
 
@@ -12,6 +13,7 @@ export const FormInputSelect = ({
   rules = {},
   items,
   disabled,
+  label,
 }) => {
   const { errors, control } = useFormContext();
 
@@ -28,7 +30,7 @@ export const FormInputSelect = ({
       borderColor: "#ccc",
       fontFamily: "Exo-Regular",
       width: "100%",
-      borderRadius: 10,
+      borderRadius: 5,
     },
     inputIOS: {
       fontSize: 14,
@@ -36,10 +38,11 @@ export const FormInputSelect = ({
       paddingHorizontal: 10,
       borderWidth: 1,
       borderColor: "#ddd",
-      borderRadius: 10,
+      borderRadius: 5,
       color: disabled ? "#9EA0A4" : black,
       paddingRight: 30,
       fontFamily: "Exo-Medium",
+      marginBottom: 10,
     },
     inputAndroid: {
       fontSize: 14,
@@ -47,36 +50,46 @@ export const FormInputSelect = ({
       paddingVertical: 8,
       borderWidth: 0.5,
       borderColor: "purple",
-      borderRadius: 10,
+      borderRadius: 5,
       color: disabled ? "#9EA0A4" : black,
       fontFamily: "Exo-Medium",
       paddingRight: 30,
       fontFamily: "Exo-Medium",
+      marginBottom: 10,
+    },
+    label: {
+      fontFamily: "Exo-SemiBold",
+      textTransform: "uppercase",
+      color: theme.lightColors.grey0,
+      marginBottom: 2.5,
     },
   });
 
   return (
-    <Controller
-      control={control}
-      rules={{ ...rules }}
-      render={({ field: { onChange, onBlur, value } }) => (
-        <RNPickerSelect
-          disabled={disabled}
-          placeholder={inputPlaceholder}
-          useNativeAndroidPickerStyle={false}
-          onValueChange={onChange}
-          style={{ ...styles }}
-          doneText="Gata"
-          value={value}
-          items={items?.map((item) => {
-            return {
-              label: item?.name,
-              value: item?._id,
-            };
-          })}
-        />
-      )}
-      name={name}
-    />
+    <>
+      {label?.length > 0 && <Text style={styles.label}>{label}</Text>}
+      <Controller
+        control={control}
+        rules={{ ...rules }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <RNPickerSelect
+            disabled={disabled}
+            placeholder={inputPlaceholder}
+            useNativeAndroidPickerStyle={false}
+            onValueChange={onChange}
+            style={{ ...styles }}
+            doneText="Gata"
+            value={value}
+            items={items?.map((item) => {
+              return {
+                label: item?.name,
+                value: item?._id,
+              };
+            })}
+          />
+        )}
+        name={name}
+      />
+    </>
   );
 };

@@ -56,7 +56,6 @@ export const RatingsTab = ({ userId }) => {
           showsVerticalScrollIndicator={false}
         />
       )}
-      {loading && <Spinner />}
     </>
   );
 };

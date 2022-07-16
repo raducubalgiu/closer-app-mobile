@@ -13,7 +13,6 @@ const CardPostFooter = ({
   username,
   date,
   avatar,
-  bookable,
   commentsCount,
 }) => {
   const [comments, setComments] = useState(commentsCount);
@@ -61,7 +60,11 @@ const CardPostFooter = ({
         </Button>
       )}
       <Button
-        sx={{ paddingHorizontal: 15, marginTop: 10 }}
+        sx={
+          comments > 0 || description
+            ? { paddingHorizontal: 15, marginTop: 10 }
+            : { paddingHorizontal: 15 }
+        }
         onPress={() => goToComments(true)}
       >
         <Stack direction="row" justify="start">
@@ -71,16 +74,6 @@ const CardPostFooter = ({
       </Button>
       <Stack direction="row" sx={{ marginTop: 7.5, marginHorizontal: 15 }}>
         <Text style={styles.date}>{date}</Text>
-        {bookable && (
-          <Stack direction="row">
-            <Icon
-              name="enviromento"
-              type="antdesign"
-              color={theme.lightColors.grey0}
-            />
-            <Text style={styles.distanceText}>{t("at")} 5 km</Text>
-          </Stack>
-        )}
       </Stack>
     </>
   );

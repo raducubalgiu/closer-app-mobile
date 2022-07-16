@@ -10,13 +10,15 @@ export const Textarea = ({
   placeholder,
   lines,
   maxLength,
+  showLength = true,
   autoFocus,
-  radius,
   sx,
+  label,
 }) => {
   return (
     <View style={{ ...styles.container, ...sx }}>
-      <View style={{ ...styles.textAreaContainer, borderRadius: radius }}>
+      {label?.length > 0 && <Text style={styles.label}>{label}</Text>}
+      <View style={styles.textAreaContainer}>
         <TextInput
           value={value}
           style={styles.textArea}
@@ -30,15 +32,17 @@ export const Textarea = ({
           autoFocus={autoFocus}
         />
       </View>
-      <Text
-        style={
-          value.length < maxLength
-            ? styles.strokeLength
-            : { ...styles.strokeLength, color: "#F72A50" }
-        }
-      >
-        {value.length} / {maxLength}
-      </Text>
+      {showLength && (
+        <Text
+          style={
+            value.length < maxLength
+              ? styles.strokeLength
+              : { ...styles.strokeLength, color: "#F72A50" }
+          }
+        >
+          {value.length} / {maxLength}
+        </Text>
+      )}
     </View>
   );
 };
@@ -51,6 +55,7 @@ const styles = StyleSheet.create({
     borderColor: "#ddd",
     borderWidth: 1,
     padding: 5,
+    borderRadius: 5,
   },
   textArea: {
     height: 100,
@@ -63,5 +68,11 @@ const styles = StyleSheet.create({
     fontFamily: "Exo-Medium",
     color: grey0,
     marginTop: 10,
+  },
+  label: {
+    fontFamily: "Exo-SemiBold",
+    textTransform: "uppercase",
+    color: theme.lightColors.grey0,
+    marginBottom: 2.5,
   },
 });

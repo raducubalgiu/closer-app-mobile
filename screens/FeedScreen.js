@@ -16,6 +16,7 @@ import { IconButton, Stack, FeedLabelButton } from "../components/core";
 import { CardPost } from "../components/customized";
 import { useTranslation } from "react-i18next";
 import * as Haptics from "expo-haptics";
+import moment from "moment";
 
 const FeedScreen = () => {
   const { postsState, dispatchPosts } = usePosts();

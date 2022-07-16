@@ -27,9 +27,9 @@ export const TopTabContainer = ({
         if (route.name === "Posts") {
           iconType = "feather";
           iconName = focused ? "grid" : "grid";
-        } else if (route.name === "Products") {
-          iconType = "feather";
-          iconName = focused ? "shopping-bag" : "shopping-bag";
+          // } else if (route.name === "Products") {
+          //   iconType = "feather";
+          //   iconName = focused ? "shopping-bag" : "shopping-bag";
         } else if (route.name === "Calendar") {
           iconType = "feather";
           iconName = focused ? "clock" : "clock";

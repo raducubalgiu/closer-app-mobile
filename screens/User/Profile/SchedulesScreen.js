@@ -17,7 +17,7 @@ import {
 } from "../../../components/customized";
 import moment from "moment";
 import theme from "../../../assets/styles/theme";
-import { Icon } from "@rneui/themed";
+import { Divider, Icon } from "@rneui/themed";
 
 const { black } = theme.lightColors;
 
@@ -69,6 +69,7 @@ const SchedulesScreen = ({ route }) => {
         <Text style={styles.title}>{t("mySchedules")}</Text>
         <Icon name="arrow-back-ios" size={21} color="white" />
       </Stack>
+      <Divider />
       <View style={styles.container}>
         {schedules.length > 0 && (
           <SectionList

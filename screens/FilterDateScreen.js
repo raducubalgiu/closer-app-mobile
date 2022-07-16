@@ -13,10 +13,11 @@ import BottomSheet, {
   BottomSheetView,
   BottomSheetFooter,
 } from "@gorhom/bottom-sheet";
-import { Stack, ButtonGroup, Button } from "../components/core";
+import { Stack, ButtonGroup, Button, MainButton } from "../components/core";
 import { SheetHeader } from "../components/customized";
 import { useCalendarList } from "../hooks";
 import { useTranslation } from "react-i18next";
+import moment from "moment";
 
 const FiltersDateScreen = ({ route }) => {
   const { serviceId, serviceName, period } = route.params;
@@ -115,13 +116,12 @@ const FiltersDateScreen = ({ route }) => {
               activeButton={activeHours}
             />
           )}
-          <Button
+          <MainButton
+            size="lg"
             disabled={disabled}
             onPress={goNext}
-            style={disabled ? disabledStyle : styles.mainButton}
-          >
-            <Text style={styles.mainButtonText}>{t("next")}</Text>
-          </Button>
+            title={t("next")}
+          />
         </Stack>
       </BottomSheetFooter>
     ),
@@ -189,8 +189,8 @@ const styles = StyleSheet.create({
   },
   footerContainer: {
     backgroundColor: "white",
-    paddingTop: 20,
-    paddingBottom: 40,
+    paddingTop: 10,
+    paddingBottom: 20,
     borderTopWidth: 0.5,
     borderTopColor: "#ddd",
     paddingHorizontal: 15,

@@ -15,9 +15,7 @@ export const Accordion = ({ title, children, initExpand, ...props }) => {
         </ListItem.Content>
       }
       isExpanded={expanded}
-      onPress={() => {
-        setExpanded(!expanded);
-      }}
+      onPress={() => setExpanded(!expanded)}
     >
       {children}
     </ListItem.Accordion>

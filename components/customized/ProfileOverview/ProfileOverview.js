@@ -15,6 +15,7 @@ import { MAIN_ROLE, SECOND_ROLE, THIRD_ROLE } from "@env";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../hooks";
 import { Icon } from "@rneui/themed";
+import { displayDash } from "../../../utils";
 import moment from "moment";
 
 const { black, grey0, primary } = theme.lightColors;
@@ -38,6 +39,13 @@ export const ProfileOverview = ({
   showDetails,
 }) => {
   const { user: userContext } = useAuth();
+  const {
+    ratingsAverage,
+    ratingsQuantity,
+    followersCount,
+    followingCount,
+    postsCount,
+  } = counter || {};
   const navigation = useNavigation();
   const { t } = useTranslation();
 
@@ -75,12 +83,14 @@ export const ProfileOverview = ({
           <Stack direction="row" justify="start">
             {business && (
               <>
-                <Text style={styles.business}>{business?.name}</Text>
+                <Text style={styles.business}>
+                  {displayDash(business?.name)}
+                </Text>
                 <IconStar sx={styles.star} />
               </>
             )}
             <Text style={styles.ratingsAverage}>
-              {counter?.ratingsAverage?.toFixed(1)}
+              {displayDash(ratingsAverage?.toFixed(1))}
             </Text>
           </Stack>
           {showDetails && (
@@ -89,7 +99,7 @@ export const ProfileOverview = ({
                 <Stack direction="row">
                   <Icon name="keyboard-arrow-down" size={15} color="white" />
                   <Icon name="clock" type="feather" color={grey0} size={17.5} />
-                  <Text style={styles.text}>{status}</Text>
+                  <Text style={styles.text}>{displayDash(status)}</Text>
                 </Stack>
               </Button>
               <Button
@@ -100,7 +110,7 @@ export const ProfileOverview = ({
                 <Stack direction="row" sx={{ marginLeft: 10 }}>
                   <IconLocation color={grey0} size={17.5} />
                   <Text style={styles.text}>
-                    {t("at")} {distance?.toFixed(0)} km
+                    {t("at")} {displayDash(distance?.toFixed(0))} km
                   </Text>
                   <Icon name="keyboard-arrow-down" size={15} color={black} />
                 </Stack>
@@ -132,13 +142,13 @@ export const ProfileOverview = ({
               })
             }
             labelStats={t("reviews")}
-            statsNo={counter?.ratingsQuantity}
+            statsNo={displayDash(ratingsQuantity)}
           />
         </Protected>
         <Protected userRole={role} roles={[THIRD_ROLE]}>
           <StatsButton
             labelStats={t("posts")}
-            statsNo={counter?.ratingsQuantity}
+            statsNo={displayDash(postsCount)}
           />
         </Protected>
         <StatsButton
@@ -151,7 +161,7 @@ export const ProfileOverview = ({
             })
           }
           labelStats={t("followers")}
-          statsNo={counter?.followersCount}
+          statsNo={displayDash(followersCount)}
         />
         <StatsButton
           onPress={() =>
@@ -163,7 +173,7 @@ export const ProfileOverview = ({
             })
           }
           labelStats={t("following")}
-          statsNo={counter?.followingCount}
+          statsNo={displayDash(followingCount)}
         />
       </Stack>
       <Stack direction="row" justify="center" sx={styles.buttonsContainer}>

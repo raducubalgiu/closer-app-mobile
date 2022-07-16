@@ -42,6 +42,8 @@ import {
   BottomSheetBackdrop,
 } from "@gorhom/bottom-sheet";
 import { Portal } from "@gorhom/portal";
+import { Icon, Avatar, Badge } from "@rneui/themed";
+import { THIRD_ROLE } from "@env";
 
 const ProfileGeneralScreen = ({ badgeDetails, route }) => {
   const { user } = useAuth();
@@ -78,7 +80,7 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
         }
       )
       .then((res) => {
-        setUserDetails(res.data.user);
+        setUserDetails(res.data);
       })
       .catch(() => console.log(err));
   }, [userId]);
@@ -86,6 +88,8 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
   useEffect(() => {
     fetchUser();
   }, [fetchUser]);
+
+  console.log("USER DETAILS!!", userDetails);
 
   const handleSuggested = useCallback(() => {
     setLoading(true);
@@ -150,9 +154,6 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
-  const handleCloseSheet = useCallback(() => {
-    bottomSheetModalRef.current?.close();
-  }, []);
 
   const renderSuggested = ({ item }) => {
     const { avatar, name, business, counter, username, _id } = item;
@@ -163,7 +164,7 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
         title={name}
         business={business?.name}
         noFollowers={counter?.followersCount}
-        ratingsAverage={counter?.ratingsAverage.toFixed(1)}
+        ratingsAverage={counter?.ratingsAverage?.toFixed(1)}
         username={username}
         followeeId={_id}
         onRemoveCard={() => removeCard(item?._id)}
@@ -192,7 +193,7 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
           counter={counter}
           business={business}
           badgeDetails={badgeDetails}
-          withAvailable={true}
+          withAvailable={role !== THIRD_ROLE}
           available={status}
           endTime={endTime}
           location={location}
@@ -243,7 +244,35 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
           <TopTabContainer initialRouteName="Posts" profileTabs={true}>
             <Tab.Screen name="Posts" component={PostsProfile} />
             {role !== "subscriber" && (
-              <Tab.Screen name="Products" component={ProductsProfile} />
+              <Tab.Screen
+                name="Products"
+                component={ProductsProfile}
+                options={{
+                  tabBarIcon: ({ focused }) => (
+                    <View>
+                      <Icon name="shopping-bag" type="feather" />
+                      <Badge
+                        value={counter?.productsCount}
+                        containerStyle={{
+                          position: "absolute",
+                          top: -10,
+                          left: 15,
+                        }}
+                        badgeStyle={{
+                          backgroundColor: theme.lightColors.primary,
+                          width: 22.5,
+                          height: 21,
+                          borderRadius: 50,
+                        }}
+                        textStyle={{
+                          fontFamily: "Exo-SemiBold",
+                          fontSize: 10.5,
+                        }}
+                      />
+                    </View>
+                  ),
+                }}
+              />
             )}
             {role !== "subscriber" && (
               <Tab.Screen name="Jobs" component={JobsProfile} />

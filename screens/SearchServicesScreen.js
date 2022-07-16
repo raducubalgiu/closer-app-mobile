@@ -11,7 +11,12 @@ import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../assets/styles/theme";
-import { Button, SearchBarInput, Stack } from "../components/core";
+import {
+  Button,
+  IconBackButton,
+  SearchBarInput,
+  Stack,
+} from "../components/core";
 import { useAuth } from "../hooks";
 
 const SUGGESTED_SERVICES = [
@@ -91,13 +96,13 @@ const SearchServicesScreen = ({ route }) => {
   return (
     <SafeAreaView style={styles.screen}>
       <Stack direction="row" justify="start" sx={{ marginHorizontal: 15 }}>
+        <IconBackButton sx={{ marginRight: 10 }} />
         <SearchBarInput
           autoFocus={true}
           placeholder={t("searchService")}
           value={search}
           onChangeText={updateSearch}
-          cancelButtonTitle={t("cancel")}
-          onCancel={() => navigation.goBack()}
+          cancelButtonTitle=""
         />
       </Stack>
       <FlatList

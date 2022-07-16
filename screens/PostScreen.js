@@ -1,112 +1,19 @@
 import {
   StyleSheet,
-  Text,
   SafeAreaView,
   FlatList,
-  View,
   Dimensions,
+  View,
+  Text,
 } from "react-native";
-import { Header } from "../components/core";
-import { Image } from "@rneui/themed";
+import { Header, IconBackButton, Stack } from "../components/core";
 import React, { useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import axios from "axios";
 import { useAuth } from "../hooks";
+import { CardPost } from "../components/customized";
 
-const DUMMY_POSTS = [
-  {
-    _id: "1",
-    bookable: false,
-    commentsCount: 1,
-    description: "Aici gasesti intotdeauna cele mai bune mancaruri",
-    fixed: false,
-    images: [
-      {
-        url: "https://res.cloudinary.com/closer-app/image/upload/v1652480287/raducu_loxt0z.jpg",
-      },
-    ],
-    likesCount: 4,
-    mentions: [],
-    postType: "photo",
-    user: {
-      _id: "626a6910fe152cc1ba477e6f",
-      avatar: [
-        {
-          url: "https://images.unsplash.com/photo-1538377557518-6d3de7a5777e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80",
-        },
-      ],
-      checkmark: false,
-      counter: {
-        followersCount: 1,
-        followingCount: 1,
-        ratingsAverage: 5,
-        ratingsQuantity: 1,
-      },
-    },
-  },
-  {
-    _id: "2",
-    bookable: false,
-    commentsCount: 1,
-    description: "Some description for this #2 post",
-    fixed: false,
-    images: [
-      {
-        url: "https://res.cloudinary.com/closer-app/image/upload/v1652480287/raducu_loxt0z.jpg",
-      },
-    ],
-    likesCount: 4,
-    mentions: [],
-    postType: "photo",
-    user: {
-      _id: "626a6910fe152cc1ba477e6f",
-      avatar: [
-        {
-          url: "https://images.unsplash.com/photo-1538377557518-6d3de7a5777e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80",
-        },
-      ],
-      checkmark: false,
-      counter: {
-        followersCount: 1,
-        followingCount: 1,
-        ratingsAverage: 5,
-        ratingsQuantity: 1,
-      },
-    },
-  },
-  {
-    _id: "3",
-    bookable: false,
-    commentsCount: 1,
-    description: "Some description for this #3 post",
-    fixed: false,
-    images: [
-      {
-        url: "https://res.cloudinary.com/closer-app/image/upload/v1652480297/raducuu_hvxoeo.jpg",
-      },
-    ],
-    likesCount: 4,
-    mentions: [],
-    postType: "photo",
-    user: {
-      _id: "626a6910fe152cc1ba477e6f",
-      avatar: [
-        {
-          url: "https://images.unsplash.com/photo-1538377557518-6d3de7a5777e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80",
-        },
-      ],
-      checkmark: false,
-      counter: {
-        followersCount: 1,
-        followingCount: 1,
-        ratingsAverage: 5,
-        ratingsQuantity: 1,
-      },
-    },
-  },
-];
-
-const width = Dimensions.get("window").width;
+const { width, height } = Dimensions.get("window");
 
 const PostScreen = ({ route }) => {
   const { user } = useAuth();
@@ -126,25 +33,27 @@ const PostScreen = ({ route }) => {
     }, [userId, user])
   );
 
+  const renderUserPosts = ({ item }) => <CardPost post={item} />;
+  const getItemLayout = (data, index) => ({
+    length: width,
+    offset: height * index,
+    index,
+  });
+
   return (
-    <SafeAreaView style={styles.screen}>
-      <Header title="Postari" />
+    <View style={styles.screen}>
+      <SafeAreaView>
+        <Header title="Postări" divider />
+      </SafeAreaView>
       <FlatList
-        showsHorizontalScrollIndicator={false}
-        horizontal
-        data={DUMMY_POSTS}
+        showsVerticalScrollIndicator={false}
+        initialScrollIndex={3}
+        getItemLayout={getItemLayout}
+        data={posts}
         keyExtractor={(item) => item?._id}
-        renderItem={({ item }) => (
-          <View style={{ width, paddingVertical: 15 }}>
-            <Image
-              containerStyle={styles.image}
-              source={{ uri: `${item.images[0].url}` }}
-            />
-            <Text>{item.description}</Text>
-          </View>
-        )}
+        renderItem={renderUserPosts}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 

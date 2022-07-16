@@ -115,7 +115,7 @@ const AddProductsScreen = () => {
               fullWidth
               title={t("add")}
               onPress={handleSubmit(onSubmit)}
-              disabled={disabled}
+              //disabled={disabled}
             />
           </FormProvider>
         </Stack>

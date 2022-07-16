@@ -50,6 +50,7 @@ const CardPostButtons = ({ bookable, postId, likesCount }) => {
   return (
     <>
       {bookable && bookableSection}
+      <Divider color="#ddd" style={{ marginHorizontal: 15 }} />
       <Stack direction="row" sx={styles.buttons}>
         <Button onPress={goToLikes}>
           <Text style={styles.likes}>
@@ -67,7 +68,7 @@ const CardPostButtons = ({ bookable, postId, likesCount }) => {
           <ShareIButton onPress={onShare} sx={styles.button} />
         </Stack>
       </Stack>
-      <Divider color="#ddd" />
+      <Divider color="#ddd" style={{ marginHorizontal: 15 }} />
     </>
   );
 };
@@ -78,7 +79,6 @@ const styles = StyleSheet.create({
   bookable: {
     paddingHorizontal: 15,
     paddingVertical: 7.5,
-    backgroundColor: "#f1f1f1",
   },
   book: {
     color: theme.lightColors.black,

@@ -1,48 +1,40 @@
 import { SafeAreaView, ScrollView, StyleSheet, Text } from "react-native";
 import React, { useState } from "react";
-import { Header, MainButton, Stack } from "../components/core";
 import axios from "axios";
-import { useAuth, useLocationStartEnd } from "../hooks";
-import moment from "moment";
 import { useNavigation } from "@react-navigation/native";
-import { BASE_ENDPOINT } from "@env";
 import { Icon } from "@rneui/themed";
+import { useTranslation } from "react-i18next";
+import { Header, MainButton, Stack } from "../components/core";
+import { useAuth, useLocationStartEnd, useDates } from "../hooks";
 import theme from "../assets/styles/theme";
 import { AddressFormat } from "../utils";
-import { useTranslation } from "react-i18next";
+import { scheduleChannel } from "../constants/constants";
 
 const { black, grey0 } = theme.lightColors;
 
 const ScheduleConfirmScreen = ({ route }) => {
   const { user } = useAuth();
-  const {
-    selectedDay,
-    selectedHour,
-    owner,
-    service,
-    product,
-    opening_hours,
-    employee,
-  } = route.params;
-  const { name, price, option, duration } = product;
   const [loading, setLoading] = useState(false);
+  const { getStartTimeByDateAndHours } = useDates();
+  const navigation = useNavigation();
+  const { t } = useTranslation();
+  const { selectedDay, selectedHour, owner, service } = route.params;
+  const { product, opening_hours, employee } = route.params;
+  const { name, price, option, duration } = product;
   const slot = 29;
+
   const { locationStart, locationEnd } = useLocationStartEnd(
     opening_hours.normal_days,
     selectedDay
   );
-  const navigation = useNavigation();
-  const { t } = useTranslation();
-
-  const start = moment.utc(selectedDay).add(selectedHour, "hours").format();
 
   const handleBook = () => {
     setLoading(true);
     axios
       .post(
-        `${BASE_ENDPOINT}/schedules?slot=${slot}&locationStart=${locationStart}&locationEnd=${locationEnd}`,
+        `${process.env.BASE_ENDPOINT}/schedules?slot=${slot}&locationStart=${locationStart}&locationEnd=${locationEnd}`,
         {
-          start,
+          start: getStartTimeByDateAndHours(selectedDay, selectedHour),
           owner: owner._id,
           customer: {
             _id: user?._id,
@@ -59,8 +51,9 @@ const ScheduleConfirmScreen = ({ route }) => {
             option: option?.name,
             duration,
           },
-          channel: "closer",
-        }
+          channel: scheduleChannel.CLOSER,
+        },
+        { headers: { Authorization: `Bearer ${user?.token}` } }
       )
       .then((res) => {
         setLoading(false);

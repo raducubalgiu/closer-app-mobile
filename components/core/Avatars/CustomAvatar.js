@@ -12,6 +12,7 @@ export const CustomAvatar = ({
   badgeDetails,
   withAvailable,
   available,
+  sx,
 }) => {
   const hasAvatar = (av) => {
     if (av === undefined || av.length === 0) {
@@ -28,6 +29,7 @@ export const CustomAvatar = ({
         size={size ? size : 55}
         rounded
         source={avatar && { uri: `${avatar[0]?.url}` }}
+        containerStyle={{ ...sx }}
       />
     );
   } else {
@@ -40,7 +42,10 @@ export const CustomAvatar = ({
           type: "font-awesome",
           size: iconSize ? iconSize : 30,
         }}
-        containerStyle={{ backgroundColor: "#ccc" }}
+        containerStyle={{
+          backgroundColor: "#ccc",
+          ...sx,
+        }}
       />
     );
   }

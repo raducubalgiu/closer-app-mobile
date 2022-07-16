@@ -1,28 +1,10 @@
-import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-  RefreshControl,
-  Text,
-} from "react-native";
-import React, {
-  useState,
-  useRef,
-  useCallback,
-  useMemo,
-  useEffect,
-} from "react";
-import { Header, Button } from "../../../../components/core";
+import { SafeAreaView, StyleSheet, View, RefreshControl } from "react-native";
+import React, { useState, useRef, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import theme from "../../../../assets/styles/theme";
 import { FAB, Icon } from "@rneui/themed";
 import { Agenda } from "react-native-calendars";
 import moment from "moment";
 import { useFocusEffect } from "@react-navigation/native";
-import {
-  NoFoundMessage,
-  CardSlotDetails,
-} from "../../../../components/customized";
 import {
   BottomSheetModal,
   BottomSheetModalProvider,
@@ -30,9 +12,17 @@ import {
 } from "@gorhom/bottom-sheet";
 import { Portal } from "@gorhom/portal";
 import axios from "axios";
-import { useAuth } from "../../../../hooks";
+import theme from "../../../../assets/styles/theme";
+import { Header, Button } from "../../../../components/core";
+import {
+  NoFoundMessage,
+  CardSlotDetails,
+  BusinessScheduleModal,
+} from "../../../../components/customized";
+import { useAuth, useDates } from "../../../../hooks";
 
 const { black, grey0, primary } = theme.lightColors;
+
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
@@ -40,14 +30,14 @@ const wait = (timeout) => {
 const MyCalendarScreen = () => {
   const { user } = useAuth();
   const { t } = useTranslation();
-  const minDate = moment().format("YYYY-MM-DD");
-  const maxDate = moment().add(120, "days").format("YYYY-MM-DD");
+  const { _minDate, _maxDate } = useDates();
   const [schedules, setSchedules] = useState({});
   const [selectedDay, setSelectedDay] = useState(minDate);
   const [knob, setKnob] = useState(false);
   const bottomSheetModalRef = useRef(null);
   const snapPoints = useMemo(() => ["25%", "60%"], []);
   const [refreshing, setRefreshing] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
@@ -115,19 +105,23 @@ const MyCalendarScreen = () => {
   );
 
   const renderSlot = (item) => {
+    const { scheduleStart, channel, customer, product, service } = item;
+
     return (
       <CardSlotDetails
-        startHour={moment(item?.scheduleStart).utc().format("HH:mm")}
-        channel={item?.channel}
-        avatar={item?.customer?.avatar}
-        customer={item?.customer?.name}
-        product={item?.product?.name}
-        price={item?.product?.price}
-        service={item?.service?.name}
-        day={moment(item?.scheduleStart).utc().day()}
+        startHour={moment(scheduleStart).utc().format("HH:mm")}
+        channel={channel}
+        avatar={customer?.avatar}
+        customer={customer?.name}
+        product={product?.name}
+        price={product?.price}
+        service={service?.name}
+        day={moment(scheduleStart).utc().day()}
       />
     );
   };
+
+  const handleUpdateSchedules = (schedule) => {};
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -147,9 +141,9 @@ const MyCalendarScreen = () => {
         renderDay={() => {}}
         firstDay={1}
         onCalendarToggled={(calendarOpened) => setKnob(calendarOpened)}
-        selected={minDate}
-        minDate={minDate}
-        maxDate={maxDate}
+        selected={_minDate}
+        minDate={_minDate}
+        maxDate={_maxDate}
         pastScrollRange={5}
         futureScrollRange={5}
         renderEmptyDate={() => <View />}
@@ -184,13 +178,19 @@ const MyCalendarScreen = () => {
         style={{}}
       />
       <FAB
+        activeOpacity={1}
         icon={{ name: "post-add", type: "material", color: "white" }}
         color={primary}
         placement="right"
-        onPress={() => {}}
+        onPress={() => setVisible(true)}
         style={styles.fab}
       />
       <Portal>
+        <BusinessScheduleModal
+          visible={visible}
+          onCloseModal={() => setVisible(false)}
+          onUpdateSchedules={handleUpdateSchedules}
+        />
         <BottomSheetModalProvider>
           <BottomSheetModal
             ref={bottomSheetModalRef}

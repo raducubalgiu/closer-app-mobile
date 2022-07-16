@@ -3,6 +3,7 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../../assets/styles/theme";
 import { CustomAvatar, Stack, Checkmark, Button } from "../../../core";
+import { Icon } from "@rneui/themed";
 
 const CardPostHeader = ({ userId, avatar, username, checkmark, name }) => {
   const navigation = useNavigation();
@@ -27,6 +28,7 @@ const CardPostHeader = ({ userId, avatar, username, checkmark, name }) => {
           </Stack>
         </Stack>
       </Button>
+      <Icon name="ellipsis1" type="antdesign" />
     </Stack>
   );
 };

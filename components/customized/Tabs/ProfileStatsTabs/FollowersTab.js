@@ -51,7 +51,6 @@ export const FollowersTab = (props) => {
 
   return (
     <View style={styles.screen}>
-      {loading && <Spinner />}
       {!loading && (
         <FlatList
           ListHeaderComponent={
