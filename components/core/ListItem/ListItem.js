@@ -18,6 +18,7 @@ export const ListItem = ({ between, around, mt, sx, onPress, children }) => {
       <Stack
         sx={{ marginTop: mt ? mt : 10, width: "100%", ...sx }}
         direction="row"
+        align="start"
         justify={justify}
       >
         {children}

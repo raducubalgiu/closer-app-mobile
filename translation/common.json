@@ -183,5 +183,17 @@
   "others": "Altele",
   "helpUsProvingCancelMotivation": "Ajută-ne să îmbunătăţim procesul de rezervare indicându-ne motivul anulării",
   "bookings": "Rezervări",
-  "dontHaveBookings": "Încă nu ai rezervat nici un serviciu"
+  "dontHaveBookings": "Încă nu ai rezervat nici un serviciu",
+  "last30Days": "Ultimele 30 de zile",
+  "quantities": "Cantităţi",
+  "sales": "Încasări",
+  "closer": "Closer",
+  "own": "Proprii",
+  "newClients": "Clienţi noi",
+  "total": "Total",
+  "pleaseMakePayment": "Te rugăm să efectuezi plata. În curând nu vei mai putea primi comenzi",
+  "salesWithCloser": "Încasări prin Closer",
+  "salesWithOwn": "Încasări prin clienţi proprii",
+  "totalSales": "Total încasări",
+  "closerCommission": "Comision Closer"
 }

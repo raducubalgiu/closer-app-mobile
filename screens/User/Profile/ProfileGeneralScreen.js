@@ -7,15 +7,12 @@ import {
   View,
   ScrollView,
 } from "react-native";
-import React, {
-  useState,
-  useCallback,
-  useEffect,
-  useRef,
-  useMemo,
-} from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
+import { Icon, Badge } from "@rneui/themed";
+import { THIRD_ROLE } from "@env";
 import {
   Stack,
   FollowButton,
@@ -33,17 +30,8 @@ import {
   JobsProfileTab,
   CardSuggestedPeople,
 } from "../../../components/customized";
-import { useAuth } from "../../../hooks/auth";
 import theme from "../../../assets/styles/theme";
-import { useTranslation } from "react-i18next";
-import {
-  BottomSheetModal,
-  BottomSheetModalProvider,
-  BottomSheetBackdrop,
-} from "@gorhom/bottom-sheet";
-import { Portal } from "@gorhom/portal";
-import { Icon, Avatar, Badge } from "@rneui/themed";
-import { THIRD_ROLE } from "@env";
+import { useSheet, useAuth } from "../../../hooks";
 
 const ProfileGeneralScreen = ({ badgeDetails, route }) => {
   const { user } = useAuth();
@@ -67,8 +55,6 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
   const [loading, setLoading] = useState(false);
   const [suggestedPeople, setSuggestedPeople] = useState([]);
   const Tab = createMaterialTopTabNavigator();
-  const bottomSheetModalRef = useRef(null);
-  const snapPoints = useMemo(() => ["1%", "45%"], []);
   const { t } = useTranslation();
 
   const fetchUser = useCallback(() => {
@@ -79,17 +65,13 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
           headers: { Authorization: `Bearer ${user?.token}` },
         }
       )
-      .then((res) => {
-        setUserDetails(res.data);
-      })
+      .then((res) => setUserDetails(res.data))
       .catch(() => console.log(err));
   }, [userId]);
 
   useEffect(() => {
     fetchUser();
   }, [fetchUser]);
-
-  console.log("USER DETAILS!!", userDetails);
 
   const handleSuggested = useCallback(() => {
     setLoading(true);
@@ -141,20 +123,6 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
     [userId]
   );
 
-  const renderBackdrop = useCallback(
-    (props) => (
-      <BottomSheetBackdrop
-        {...props}
-        appearsOnIndex={1}
-        disappearsOnIndex={0}
-      />
-    ),
-    []
-  );
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.present();
-  }, []);
-
   const renderSuggested = ({ item }) => {
     const { avatar, name, business, counter, username, _id } = item;
 
@@ -172,13 +140,36 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
     );
   };
 
+  const closeSheet = () => SHOW_BS();
+  const sheetContent = (
+    <Stack sx={{ margin: 30 }}>
+      <CustomAvatar avatar={avatar} size={70} />
+      <Text style={styles.followText}>
+        Urmareste pe fresh_salon pentru a avea acces la notificari cu privire la
+        postari si promotii
+      </Text>
+      <FollowButton
+        fullWidth
+        size="md"
+        followeeId={userId}
+        fetchUser={fetchUser}
+        fetchSuggested={handleSuggested}
+      />
+    </Stack>
+  );
+  const { BOTTOM_SHEET, SHOW_BS } = useSheet(
+    ["1%", "45%"],
+    sheetContent,
+    closeSheet
+  );
+
   return (
     <View style={styles.container}>
       <SafeAreaView>
         <HeaderProfileGeneral
           username={username}
           checkmark={checkmark}
-          onOpenNotifications={handlePresentModalPress}
+          onOpenNotifications={SHOW_BS}
         />
       </SafeAreaView>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -281,36 +272,7 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
           </TopTabContainer>
         </View>
       </ScrollView>
-      <Portal>
-        <BottomSheetModalProvider>
-          <BottomSheetModal
-            ref={bottomSheetModalRef}
-            index={1}
-            snapPoints={snapPoints}
-            backdropComponent={renderBackdrop}
-            handleIndicatorStyle={styles.indicatorStyle}
-            enablePanDownToClose={false}
-          >
-            <Stack sx={{ margin: 30 }}>
-              <CustomAvatar avatar={avatar} size={70} />
-              <Text
-                style={{
-                  marginTop: 15,
-                  marginBottom: 30,
-                  textAlign: "center",
-                  fontFamily: "Exo-Medium",
-                  fontSize: 14.5,
-                  color: theme.lightColors.black,
-                }}
-              >
-                Urmareste pe fresh_salon pentru a avea acces la notificari cu
-                privire la postari si promotii
-              </Text>
-              <MainButton title={t("follow")} fullWidth radius={0} />
-            </Stack>
-          </BottomSheetModal>
-        </BottomSheetModalProvider>
-      </Portal>
+      {BOTTOM_SHEET}
     </View>
   );
 };
@@ -374,5 +336,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#ddd",
     width: 45,
     height: 5,
+  },
+  followText: {
+    marginTop: 15,
+    marginBottom: 30,
+    textAlign: "center",
+    fontFamily: "Exo-Medium",
+    fontSize: 14.5,
+    color: theme.lightColors.black,
   },
 });

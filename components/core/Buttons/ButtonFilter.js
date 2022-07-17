@@ -3,14 +3,17 @@ import React from "react";
 import { Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 
+const { black } = theme.lightColors;
+
 export const ButtonFilter = ({ title, onPress, ...props }) => {
   return (
     <TouchableOpacity
       style={{ ...styles.button, ...props.sx }}
       onPress={onPress}
+      activeOpacity={1}
     >
-      <Text style={styles.buttonText}>{title}</Text>
-      <Icon name="keyboard-arrow-down" color={theme.lightColors.black} />
+      <Text style={{ ...styles.buttonText, ...props.sxText }}>{title}</Text>
+      <Icon name="keyboard-arrow-down" color={black} />
     </TouchableOpacity>
   );
 };
@@ -28,5 +31,6 @@ const styles = StyleSheet.create({
   buttonText: {
     fontFamily: "Exo-Medium",
     fontSize: 13,
+    color: black,
   },
 });

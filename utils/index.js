@@ -6,3 +6,4 @@ export { seconds } from "./seconds";
 export { formatSeconds } from "./format-seconds";
 export { displayDash } from "./display-dash";
 export { getStartTimeByDateAndHours } from "./format-dates";
+export { displayZero } from "./display-zero";

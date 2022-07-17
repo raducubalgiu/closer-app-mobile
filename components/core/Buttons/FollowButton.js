@@ -10,6 +10,7 @@ export const FollowButton = ({
   followeeId,
   fetchUser,
   fetchSuggested,
+  fullWidth,
   ...props
 }) => {
   const [follow, setFollow] = useState(true);
@@ -94,11 +95,13 @@ export const FollowButton = ({
       paddingHorizontal: props.size === "md" ? 20 : 15,
       borderRadius: 2.5,
       backgroundColor: follow ? "white" : theme.lightColors.primary,
+      width: fullWidth && "100%",
     },
     btnText: {
       fontFamily: "Exo-SemiBold",
       color: follow ? theme.lightColors.black : "white",
       fontSize: props.size === "md" ? 14 : 13,
+      textAlign: "center",
     },
   });
 

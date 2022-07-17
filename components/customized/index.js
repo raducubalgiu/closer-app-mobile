@@ -25,6 +25,9 @@ export { CalendarProfileTab } from "./Tabs/ProfileTabs/CalendarProfileTab";
 export { FollowersTab } from "./Tabs/ProfileStatsTabs/FollowersTab";
 export { FollowingsTab } from "./Tabs/ProfileStatsTabs/FollowingsTab";
 export { RatingsTab } from "./Tabs/ProfileStatsTabs/RatingsTab";
+export { DashboardScheduleTab } from "./Tabs/DashboardTabs/DashboardScheduleTab";
+export { DashboardPostsTab } from "./Tabs/DashboardTabs/DashboardPostsTab";
+export { DashboardJobsTab } from "./Tabs/DashboardTabs/DashboardJobsTab";
 
 export { CardPost } from "./Cards/CardPost/CardPost";
 export { CardPostGrid } from "./Cards/CardPostGrid/CardPostGrid";
@@ -65,3 +68,5 @@ export { AuthProviders } from "../customized/Forms/AuthProviders";
 export { BusinessScheduleModal } from "../customized/Modals/BusinessScheduleModal";
 
 export { EditProfileSheet } from "../customized/Sheets/EditProfileSheet";
+export { DashboardInfoSheet } from "../customized/Sheets/DashboardInfoSheet";
+export { DashboardCalendarSheet } from "../customized/Sheets/DashboardCalendarSheet";

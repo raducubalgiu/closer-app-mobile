@@ -3,10 +3,9 @@ import React, { lazy } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { Icon } from "@rneui/themed";
 import theme from "../../../../assets/styles/theme";
-import { TabBar } from "react-native-tab-view";
-import { StatusBar } from "react-native";
 
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
+const { primary, black } = theme.lightColors;
 
 export const TopTabContainer = ({
   children,
@@ -27,9 +26,6 @@ export const TopTabContainer = ({
         if (route.name === "Posts") {
           iconType = "feather";
           iconName = focused ? "grid" : "grid";
-          // } else if (route.name === "Products") {
-          //   iconType = "feather";
-          //   iconName = focused ? "shopping-bag" : "shopping-bag";
         } else if (route.name === "Calendar") {
           iconType = "feather";
           iconName = focused ? "clock" : "clock";
@@ -44,12 +40,13 @@ export const TopTabContainer = ({
           <Icon name={iconName} type={iconType} color={color} size={size} />
         );
       },
-      tabBarActiveTintColor: theme.lightColors.primary,
+      tabBarActiveTintColor: black,
       tabBarInactiveTintColor: "gray",
       headerShown: false,
       tabBarShowLabel: false,
       tabBarIndicatorStyle: {
-        backgroundColor: theme.lightColors.black,
+        backgroundColor: black,
+        marginBottom: 0.5,
       },
       lazy: true,
     });
