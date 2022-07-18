@@ -10,9 +10,9 @@ import {
   Accordion,
   FormInputSelect,
 } from "../../core";
-import { useAuth, useCalendar, useLocationStartEnd } from "../../../hooks";
+import { useAuth, useCalendar } from "../../../hooks";
 import theme from "../../../assets/styles/theme";
-import { getStartTimeByDateAndHours } from "../../../utils/format-dates";
+import { useDates } from "../../../hooks";
 import { scheduleChannel } from "../../../constants/constants";
 
 const { grey0 } = theme.lightColors;
@@ -23,6 +23,12 @@ export const BusinessScheduleModal = ({
   onUpdateSchedules,
 }) => {
   const { user } = useAuth();
+  const {
+    getStartTimeByDateAndHours,
+    getLocationStartAndEnd,
+    getEndTimeBySlot,
+    getStartSeconds,
+  } = useDates();
   const [products, setProducts] = useState([]);
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
@@ -50,7 +56,10 @@ export const BusinessScheduleModal = ({
 
   const { calendar } = useCalendar(() => {});
   const { selectedDate } = calendar;
-  const { locationStart, locationEnd } = useLocationStartEnd(
+  const startTime = getStartTimeByDateAndHours(selectedDate, selectedHour);
+  const endTime = getEndTimeBySlot(startTime);
+  const startSeconds = getStartSeconds(startTime);
+  const { locationStart, locationEnd } = getLocationStartAndEnd(
     user?.opening_hours?.normal_days,
     selectedDate
   );
@@ -64,11 +73,11 @@ export const BusinessScheduleModal = ({
     setDisabled(true);
     axios
       .post(
-        `${
-          process.env.BASE_ENDPOINT
-        }/schedules?slot=${29}&locationStart=${locationStart}&locationEnd=${locationEnd}`,
+        `${process.env.BASE_ENDPOINT}/schedules?locationStart=${locationStart}&locationEnd=${locationEnd}`,
         {
-          start: getStartTimeByDateAndHours(selectedDate, selectedHour),
+          start: startTime,
+          end: endTime,
+          startSeconds,
           owner: user._id,
           customer: {
             name: `${data.firstName} ${data.lastName}`,
@@ -162,7 +171,7 @@ export const BusinessScheduleModal = ({
           size="lg"
           title="Adauga"
           loading={loading}
-          disabled={disabled}
+          //disabled={disabled}
           onPress={handleSubmit(onSubmit)}
         />
       }
