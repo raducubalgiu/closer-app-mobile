@@ -38,6 +38,7 @@ export const useSheet = (intervals, sheetContent, closeSheet = null) => {
           snapPoints={snapPoints}
           backdropComponent={renderBackdrop}
           handleIndicatorStyle={styles.indicatorStyle}
+          onDismiss={handleCloseSheet}
         >
           {sheetContent}
         </BottomSheetModal>

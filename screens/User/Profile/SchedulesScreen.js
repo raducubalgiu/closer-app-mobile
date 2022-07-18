@@ -24,7 +24,7 @@ const { black } = theme.lightColors;
 const SchedulesScreen = ({ route }) => {
   const { user } = useAuth();
   const [schedules, setSchedules] = useState([]);
-  const newSched = route?.params?.scheduleStart;
+  const { schedule } = route.params || {};
   const navigation = useNavigation();
   const { t } = useTranslation();
 
@@ -47,14 +47,16 @@ const SchedulesScreen = ({ route }) => {
 
   const renderSchedules = ({ item }) => (
     <CardScheduleOverview
-      onPress={() => navigation.navigate("ScheduleDetails", { schedule: item })}
+      onPress={() =>
+        navigation.navigate("ScheduleDetails", { scheduleId: item._id })
+      }
       avatar={item.avatar}
       owner={item.owner.name}
       price={item.product.price}
       service={item.service.name}
       status={item.status}
       scheduleStart={item.scheduleStart}
-      newSched={newSched === item.scheduleStart}
+      newSched={false}
     />
   );
 
@@ -71,6 +73,24 @@ const SchedulesScreen = ({ route }) => {
       </Stack>
       <Divider />
       <View style={styles.container}>
+        {schedule && (
+          <View style={{ padding: 15 }}>
+            <CardScheduleOverview
+              onPress={() =>
+                navigation.navigate("ScheduleDetails", {
+                  scheduleId: schedule._id,
+                })
+              }
+              avatar={schedule.avatar}
+              owner={schedule.owner.name}
+              price={schedule.product.price}
+              service={schedule.service.name}
+              status={schedule.status}
+              scheduleStart={schedule.scheduleStart}
+              newSched={true}
+            />
+          </View>
+        )}
         {schedules.length > 0 && (
           <SectionList
             sections={schedules}

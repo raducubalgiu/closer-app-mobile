@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { CardFollowers } from "../../Cards/CardFollowers";
 import { useAuth } from "../../../../hooks/auth";
 import axios from "axios";
-import { Spinner, SearchBarInput } from "../../../core";
+import { SearchBarInput } from "../../../core";
 
 export const FollowersTab = (props) => {
   const { user } = useAuth();

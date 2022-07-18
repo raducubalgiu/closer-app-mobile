@@ -195,5 +195,11 @@
   "salesWithCloser": "Încasări prin Closer",
   "salesWithOwn": "Încasări prin clienţi proprii",
   "totalSales": "Total încasări",
-  "closerCommission": "Comision Closer"
+  "closerCommission": "Comision Closer",
+  "schedulesMessage": "Numărul total de programări, indiferent de canalul prin care au venit acestea.",
+  "salesMessage": "Suma totală încasată, indiferent de canalul prin care au venit programările.",
+  "salesCloserMessage": "Suma încasată pentru programările venite prin canalul Closer, reprezentând clienţii care au venit prin intermediul aplicaţiei. Pentru aceşti clienţi se percepe comision din partea aplicaţiei.",
+  "salesOwnMessage": "Suma incasată pentru programările venite prin clienţi proprii, reprezentând programările introduse manual in aplicaţie de către business. Pentru aceşti clienţi NU se percepe comision din partea aplicaţiei.",
+  "closerCommissionMessage": "Comisionul pentru clienţii care au venit prin intermediul aplicaţiei",
+  "confirm": "Confirmă"
 }

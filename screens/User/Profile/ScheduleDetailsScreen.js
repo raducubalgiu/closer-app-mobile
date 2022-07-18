@@ -1,5 +1,5 @@
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import {
   CustomAvatar,
   Header,
@@ -9,6 +9,7 @@ import {
   Feedback,
   Button,
 } from "../../../components/core";
+import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { Icon } from "@rneui/base";
 import theme from "../../../assets/styles/theme";
@@ -17,18 +18,31 @@ import { Divider } from "@rneui/themed";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { AddressFormat } from "../../../utils";
 import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 
 const { black, grey0, success, error } = theme.lightColors;
 
 const ScheduleDetailsScreen = ({ route }) => {
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
-  const { schedule } = route.params;
+  const { scheduleId } = route.params;
+  const [schedule, setSchedule] = useState(null);
   const { owner, product, scheduleStart, service, status, _id, employee } =
-    schedule;
-  const { coordinates } = owner.location;
+    schedule || {};
+  const { location } = owner || {};
   const formatScheduleStart = moment(scheduleStart).utc().format("lll");
   const { t } = useTranslation();
   const navigation = useNavigation();
+
+  useFocusEffect(
+    useCallback(() => {
+      axios
+        .get(`${process.env.BASE_ENDPOINT}/schedules/${scheduleId}`)
+        .then((res) => setSchedule(res.data))
+        .catch((err) => {
+          console.log(err);
+        });
+    }, [scheduleId])
+  );
 
   const goToOwner = () =>
     navigation.push("ProfileGeneral", {
@@ -99,20 +113,20 @@ const ScheduleDetailsScreen = ({ route }) => {
             <Text style={{ ...styles.status, ...statusColor }}>{status}</Text>
             <Stack direction="row" justify="start">
               <Text style={styles.date}>{formatScheduleStart}</Text>
-              <Text style={styles.service}>{service.name}</Text>
+              <Text style={styles.service}>{service?.name}</Text>
             </Stack>
             <Divider color="#ddd" style={styles.divider} />
             <Stack direction="row" align="start">
               <Stack align="start" sx={{ flex: 1 }}>
-                <Text style={styles.product}>{product.name}</Text>
+                <Text style={styles.product}>{product?.name}</Text>
                 <Stack direction="row" sx={{ marginVertical: 7.5 }}>
                   <Icon name="clock" type="feather" color={black} size={20} />
-                  <Text style={styles.duration}>{product.duration} min</Text>
+                  <Text style={styles.duration}>{product?.duration} min</Text>
                 </Stack>
               </Stack>
               <Stack align="end">
                 <Text style={styles.price}>
-                  {product.price} {t("ron")}
+                  {product?.price} {t("ron")}
                 </Text>
               </Stack>
             </Stack>
@@ -125,8 +139,8 @@ const ScheduleDetailsScreen = ({ route }) => {
           >
             <Marker
               coordinate={{
-                latitude: coordinates[0],
-                longitude: coordinates[1],
+                latitude: location?.coordinates[0],
+                longitude: location?.coordinates[1],
               }}
               image={require("../../../assets/images/map_marker.png")}
             ></Marker>
@@ -137,14 +151,14 @@ const ScheduleDetailsScreen = ({ route }) => {
               justify="start"
               sx={{ paddingHorizontal: 15 }}
             >
-              <CustomAvatar avatar={owner.avatar} size={30} iconSize={15} />
-              <Text style={styles.owner}>{owner.name}</Text>
+              <CustomAvatar avatar={owner?.avatar} size={30} iconSize={15} />
+              <Text style={styles.owner}>{owner?.name}</Text>
             </Stack>
           </Button>
           <Divider style={styles.divider} />
           <Stack direction="row" justify="start" sx={{ marginHorizontal: 15 }}>
             <IconLocation size={22} color={black} />
-            <Text style={styles.address}>{AddressFormat(owner.location)}</Text>
+            <Text style={styles.address}>{AddressFormat(owner?.location)}</Text>
           </Stack>
           <Stack align="start" sx={{ marginLeft: 15 }}>
             <MainButton

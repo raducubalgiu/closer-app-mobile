@@ -5,25 +5,31 @@ import { useNavigation } from "@react-navigation/native";
 import { Icon } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
 import { Header, MainButton, Stack } from "../components/core";
-import { useAuth, useLocationStartEnd, useDates } from "../hooks";
+import { useAuth, useDates } from "../hooks";
 import theme from "../assets/styles/theme";
 import { AddressFormat } from "../utils";
-import { scheduleChannel } from "../constants/constants";
 
 const { black, grey0 } = theme.lightColors;
 
 const ScheduleConfirmScreen = ({ route }) => {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
-  const { getStartTimeByDateAndHours } = useDates();
+  const {
+    getStartTimeByDateAndHours,
+    getEndTimeBySlot,
+    getStartSeconds,
+    getLocationStartAndEnd,
+  } = useDates();
   const navigation = useNavigation();
   const { t } = useTranslation();
   const { selectedDay, selectedHour, owner, service } = route.params;
   const { product, opening_hours, employee } = route.params;
   const { name, price, option, duration } = product;
-  const slot = 29;
 
-  const { locationStart, locationEnd } = useLocationStartEnd(
+  const startTime = getStartTimeByDateAndHours(selectedDay, selectedHour);
+  const endTime = getEndTimeBySlot(startTime);
+  const startSeconds = getStartSeconds(startTime);
+  const { locationStart, locationEnd } = getLocationStartAndEnd(
     opening_hours.normal_days,
     selectedDay
   );
@@ -32,9 +38,11 @@ const ScheduleConfirmScreen = ({ route }) => {
     setLoading(true);
     axios
       .post(
-        `${process.env.BASE_ENDPOINT}/schedules?slot=${slot}&locationStart=${locationStart}&locationEnd=${locationEnd}`,
+        `${process.env.BASE_ENDPOINT}/schedules?locationStart=${locationStart}&locationEnd=${locationEnd}`,
         {
-          start: getStartTimeByDateAndHours(selectedDay, selectedHour),
+          start: startTime,
+          end: endTime,
+          startSeconds,
           owner: owner._id,
           customer: {
             _id: user?._id,
@@ -51,14 +59,13 @@ const ScheduleConfirmScreen = ({ route }) => {
             option: option?.name,
             duration,
           },
-          channel: scheduleChannel.CLOSER,
         },
         { headers: { Authorization: `Bearer ${user?.token}` } }
       )
       .then((res) => {
         setLoading(false);
         navigation.navigate("Schedules", {
-          scheduleStart: res.data.schedule.scheduleStart,
+          schedule: res.data.schedule,
         });
       })
       .catch(() => {

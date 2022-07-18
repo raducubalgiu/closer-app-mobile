@@ -1,17 +1,12 @@
-import { SafeAreaView, StyleSheet, Text } from "react-native";
-import { useCallback } from "react";
+import { SafeAreaView, StyleSheet, Text, FlatList } from "react-native";
+import { useCallback, useState } from "react";
 import { Divider, Icon } from "@rneui/themed";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import theme from "../../../../assets/styles/theme";
-import {
-  Header,
-  ButtonFilter,
-  Stack,
-  Button,
-} from "../../../../components/core";
+import moment from "moment";
+import { Header, Stack, Button } from "../../../../components/core";
 import {
   DashboardInfoSheet,
-  DashboardCalendarSheet,
   TopTabContainer,
   DashboardScheduleTab,
   DashboardPostsTab,
@@ -20,24 +15,79 @@ import {
 import { useSheet } from "../../../../hooks";
 import { useTranslation } from "react-i18next";
 
-const { black } = theme.lightColors;
+const { primary, black } = theme.lightColors;
 
 const MyDashboardScreen = () => {
+  const [period, setPeriod] = useState({
+    _id: "1",
+    title: "Ultimele 7 zile",
+    days: 7,
+  });
   const { t } = useTranslation();
   const Tab = createMaterialTopTabNavigator();
 
-  const closeSheetCalendar = useCallback(() => CLOSE_BS(), []);
-  const dashboardCalendar = <DashboardCalendarSheet />;
-  const { BOTTOM_SHEET, SHOW_BS, CLOSE_BS } = useSheet(
-    ["1%", "80%"],
-    dashboardCalendar,
-    closeSheetCalendar
+  const closeSheetInfo = useCallback(() => CLOSE_BS_INFO(), []);
+  const dashboardInfo = <DashboardInfoSheet />;
+  const {
+    BOTTOM_SHEET: BS_INFO,
+    SHOW_BS: SHOW_BS_INFO,
+    CLOSE_BS: CLOSE_BS_INFO,
+  } = useSheet(["1%", "90%"], dashboardInfo, closeSheetInfo);
+
+  const startPeriod = moment.utc().format();
+  const lastPeriod = moment(startPeriod)
+    .clone()
+    .utc()
+    .subtract(period.days, "days")
+    .format();
+
+  const DashboardSchedule = useCallback(
+    () => (
+      <DashboardScheduleTab startPeriod={startPeriod} lastPeriod={lastPeriod} />
+    ),
+    [startPeriod, lastPeriod]
+  );
+  const DashboardPosts = useCallback(
+    () => (
+      <DashboardPostsTab startPeriod={startPeriod} lastPeriod={lastPeriod} />
+    ),
+    [startPeriod, lastPeriod]
+  );
+  const DashboardJobs = useCallback(
+    () => (
+      <DashboardJobsTab startPeriod={startPeriod} lastPeriod={lastPeriod} />
+    ),
+    [startPeriod, lastPeriod]
   );
 
-  const dashboardInfo = <DashboardInfoSheet />;
-  const { BOTTOM_SHEET: BS_INFO, SHOW_BS: SHOW_BS_INFO } = useSheet(
-    ["1%", "80%"],
-    dashboardInfo
+  const buttons = [
+    { _id: "1", title: "Ultimele 7 zile", days: 7 },
+    { _id: "2", title: "Ultimele 15 zile", days: 15 },
+    { _id: "3", title: "Ultimele 30 de zile", days: 30 },
+    { _id: "4", title: "Ultimele 3 luni", days: 120 },
+    { _id: "5", title: "Ultimele 6 luni", days: 240 },
+    { _id: "6", title: "Ultimul an", days: 365 },
+  ];
+
+  const renderButton = ({ item }) => (
+    <Button
+      onPress={() => setPeriod(item)}
+      sx={
+        item._id === period._id
+          ? { ...styles.btn, ...styles.btnActive }
+          : { ...styles.btn }
+      }
+    >
+      <Text
+        style={
+          item._id === period._id
+            ? { ...styles.btnTxt, ...styles.btnTxtActive }
+            : { ...styles.btnTxt }
+        }
+      >
+        {item.title}
+      </Text>
+    </Button>
   );
 
   return (
@@ -51,37 +101,33 @@ const MyDashboardScreen = () => {
           </Button>
         }
       />
-      <Stack
-        direction="row"
-        sx={{ paddingHorizontal: 15, paddingVertical: 10 }}
-      >
-        <ButtonFilter
-          title={t("last30Days")}
-          sx={{ backgroundColor: "#f1f1f1" }}
-          sxText={styles.dateBtnTxt}
-          onPress={() => SHOW_BS()}
+      <Stack direction="row" sx={{ paddingVertical: 10 }}>
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={buttons}
+          keyExtractor={(item) => item._id}
+          renderItem={renderButton}
         />
-        <Text style={styles.periodDate}>14 Iun. - 31 Iun.</Text>
       </Stack>
       <Divider />
       <TopTabContainer initialRouteName="DashboardSchedule">
         <Tab.Screen
           name="DashboardSchedule"
-          component={DashboardScheduleTab}
+          component={DashboardSchedule}
           options={{ tabBarLabel: t("schedules") }}
         />
         <Tab.Screen
           name="DashboardPosts"
-          component={DashboardPostsTab}
+          component={DashboardPosts}
           options={{ tabBarLabel: t("posts") }}
         />
         <Tab.Screen
           name="DashboardJobs"
-          component={DashboardJobsTab}
+          component={DashboardJobs}
           options={{ tabBarLabel: t("jobs") }}
         />
       </TopTabContainer>
-      {BOTTOM_SHEET}
       {BS_INFO}
     </SafeAreaView>
   );
@@ -94,10 +140,17 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     flex: 1,
   },
-  dateBtnTxt: {
-    fontFamily: "Exo-SemiBold",
-    fontSize: 14,
-    paddingVertical: 5,
+  btn: {
+    paddingVertical: 7.5,
+    paddingHorizontal: 15,
+    backgroundColor: "#f1f1f1",
+    borderRadius: 20,
+    marginLeft: 15,
   },
-  periodDate: { fontFamily: "Exo-SemiBold", color: black },
+  btnActive: { backgroundColor: primary },
+  btnTxt: {
+    fontFamily: "Exo-SemiBold",
+    color: black,
+  },
+  btnTxtActive: { color: "white" },
 });
