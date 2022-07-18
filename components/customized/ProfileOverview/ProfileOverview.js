@@ -137,8 +137,11 @@ export const ProfileOverview = ({
           <StatsButton
             onPress={() =>
               navigation.navigate("ProfileStats", {
+                screen: "Reviews",
                 userId: _id,
                 username: username,
+                initialRoute: "Reviews",
+                role,
               })
             }
             labelStats={t("reviews")}
@@ -154,10 +157,11 @@ export const ProfileOverview = ({
         <StatsButton
           onPress={() =>
             navigation.navigate("ProfileStats", {
-              screen: "ProfileStats",
+              screen: "Followers",
               userId: _id,
               username: username,
               initialRoute: "Followers",
+              role,
             })
           }
           labelStats={t("followers")}
@@ -166,10 +170,11 @@ export const ProfileOverview = ({
         <StatsButton
           onPress={() =>
             navigation.navigate("ProfileStats", {
-              screen: "ProfileStats",
+              screen: "Following",
               userId: _id,
               username: username,
               initialRoute: "Following",
+              role,
             })
           }
           labelStats={t("following")}

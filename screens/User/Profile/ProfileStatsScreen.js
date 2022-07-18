@@ -9,9 +9,10 @@ import {
 } from "../../../components/customized/index";
 import theme from "../../../assets/styles/theme";
 import { Header } from "../../../components/core";
+import { THIRD_ROLE } from "@env";
 
 const ProfileStatsScreen = ({ route }) => {
-  const { initialRoute, username, userId } = route.params;
+  const { initialRoute, username, userId, role } = route.params;
   const Tab = createMaterialTopTabNavigator();
 
   const Ratings = () => <RatingsTab userId={userId} />;
@@ -22,11 +23,13 @@ const ProfileStatsScreen = ({ route }) => {
     <SafeAreaView style={styles.screen}>
       <Header title={username} />
       <TopTabContainer initialRouteName={initialRoute}>
-        <Tab.Screen
-          name="Ratings"
-          component={Ratings}
-          options={{ tabBarLabel: "Recenzii" }}
-        />
+        {role !== THIRD_ROLE && (
+          <Tab.Screen
+            name="Ratings"
+            component={Ratings}
+            options={{ tabBarLabel: "Recenzii" }}
+          />
+        )}
         <Tab.Screen
           name="Followers"
           component={Followers}

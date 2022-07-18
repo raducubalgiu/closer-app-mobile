@@ -7,7 +7,7 @@ import {
   KeyboardAvoidingView,
   FlatList,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Divider } from "@rneui/themed";
 import axios from "axios";
 import { useAuth } from "../hooks/auth";
@@ -17,9 +17,11 @@ import {
   Header,
   CustomAvatar,
   Spinner,
+  Stack,
 } from "../components/core";
 import { useFocusEffect } from "@react-navigation/native";
-import { dateFormat } from "../utils";
+import { CardComment } from "../components/customized";
+import { useTranslation } from "react-i18next";
 
 const CommentsScreen = (props) => {
   const { user } = useAuth();
@@ -28,6 +30,7 @@ const CommentsScreen = (props) => {
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation();
 
   useFocusEffect(
     React.useCallback(() => {
@@ -58,7 +61,6 @@ const CommentsScreen = (props) => {
       )
       .then((res) => {
         const commentRes = res.data.comment;
-        console.log("COMMENT RES", commentRes);
         setComment("");
         setComments([
           {
@@ -76,9 +78,40 @@ const CommentsScreen = (props) => {
       .catch((err) => console.log(err));
   };
 
+  const renderHeader = () => (
+    <>
+      <View style={styles.headerCont}>
+        <CustomAvatar size={32.5} iconSize={15} avatar={avatar} />
+        <View style={{ marginLeft: 10, flex: 1 }}>
+          <Text>
+            <Text style={styles.username}>{username} </Text>
+            {description}
+          </Text>
+          <Text style={styles.date}>{date}</Text>
+        </View>
+      </View>
+      <Divider />
+    </>
+  );
+
+  const renderComment = useCallback(({ item }) => {
+    const { user, comment, createdAt } = item || {};
+
+    return (
+      <CardComment
+        userId={user?._id}
+        avatar={user?.avatar}
+        username={user?.username}
+        name={user?.name}
+        comment={comment}
+        createdAt={createdAt}
+      />
+    );
+  }, []);
+
   return (
     <SafeAreaView style={styles.screen}>
-      <Header title="Comentarii" divider={true} />
+      <Header title={t("comments")} divider={true} />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.container}
@@ -87,49 +120,16 @@ const CommentsScreen = (props) => {
           {loading && <Spinner />}
           {!loading && (
             <FlatList
-              ListHeaderComponent={
-                <>
-                  <View style={styles.headerCont}>
-                    <CustomAvatar size={32.5} iconSize={15} avatar={avatar} />
-                    <View style={{ marginLeft: 10, flex: 1 }}>
-                      <Text>
-                        <Text style={styles.username}>{username}</Text>
-                        {description}
-                      </Text>
-                      <Text style={styles.date}>{date}</Text>
-                    </View>
-                  </View>
-                  <Divider />
-                </>
-              }
+              ListHeaderComponent={renderHeader}
               data={comments}
               keyExtractor={(item) => item?._id}
-              renderItem={({ item }) => (
-                <View style={styles.commentsCont}>
-                  <CustomAvatar
-                    size={32.5}
-                    iconSize={15}
-                    avatar={item?.user?.avatar[0]?.url}
-                  />
-                  <View style={{ marginLeft: 10 }}>
-                    <Text>
-                      <Text style={styles.username}>
-                        {item?.user?.username}
-                      </Text>
-                      {item?.comment}
-                    </Text>
-                    <Text style={styles.date}>
-                      {dateFormat(item?.createdAt)}
-                    </Text>
-                  </View>
-                </View>
-              )}
+              renderItem={renderComment}
             />
           )}
         </View>
         <Divider />
-        <View style={styles.inputCont}>
-          <CustomAvatar size={45} iconSize={20} avatar={user?.avatar} />
+        <Stack direction="row" sx={styles.inputCont}>
+          <CustomAvatar size={40} iconSize={20} avatar={user?.avatar} />
           <TextInput
             onChangeText={(text) => setComment(text)}
             autoCapitalize="sentences"
@@ -146,7 +146,7 @@ const CommentsScreen = (props) => {
             color="white"
             onPress={handleComment}
           />
-        </View>
+        </Stack>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -166,19 +166,10 @@ const styles = StyleSheet.create({
     color: theme.lightColors.black,
   },
   date: {
-    fontFamily: "Exo-Medium",
-    color: theme.lightColors.grey0t,
-    fontSize: 13,
+    color: theme.lightColors.grey0,
     marginTop: 5,
   },
-  commentsCont: {
-    flexDirection: "row",
-    padding: 15,
-  },
   inputCont: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
     paddingHorizontal: 15,
     paddingVertical: 10,
   },

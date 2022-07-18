@@ -29,10 +29,15 @@ export const DashboardInfoSheet = () => {
     {
       _id: "4",
       title: t("salesWithOwn"),
-      message: t("salesOwnMessage"),
+      message: t("newClientsMessage"),
     },
     {
       _id: "5",
+      title: t("newClients"),
+      message: t("salesOwnMessage"),
+    },
+    {
+      _id: "6",
       title: t("closerCommission"),
       message: t("closerCommissionMessage"),
     },
@@ -48,18 +53,25 @@ export const DashboardInfoSheet = () => {
   return (
     <Stack sx={{ padding: 15 }}>
       <FlatList
+        showsVerticalScrollIndicator={false}
         bounces={false}
         data={MESSAGES}
         keyExtractor={(item) => item._id}
         renderItem={renderItem}
         ListHeaderComponent={
           <>
-            <Stack>
-              <Text style={styles.title}>Rezumat</Text>
-              <Text style={styles.description}>
-                Numarul total de programari, indiferent de canalul prin care au
-                venit acestea.
+            <Stack align="start">
+              <Text
+                style={{
+                  ...styles.title,
+                  fontSize: 18,
+                  marginBottom: 5,
+                  fontFamily: "Exo-Bold",
+                }}
+              >
+                {t("summary")}
               </Text>
+              <Text style={styles.description}>{t("dashboardNotes")}</Text>
             </Stack>
             <Divider style={{ marginVertical: 15 }} />
           </>

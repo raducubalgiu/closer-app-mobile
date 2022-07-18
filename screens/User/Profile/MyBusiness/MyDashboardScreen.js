@@ -18,12 +18,12 @@ import { useTranslation } from "react-i18next";
 const { primary, black } = theme.lightColors;
 
 const MyDashboardScreen = () => {
+  const { t } = useTranslation();
   const [period, setPeriod] = useState({
     _id: "1",
-    title: "Ultimele 7 zile",
+    title: t("last7Days"),
     days: 7,
   });
-  const { t } = useTranslation();
   const Tab = createMaterialTopTabNavigator();
 
   const closeSheetInfo = useCallback(() => CLOSE_BS_INFO(), []);
@@ -61,30 +61,23 @@ const MyDashboardScreen = () => {
   );
 
   const buttons = [
-    { _id: "1", title: "Ultimele 7 zile", days: 7 },
-    { _id: "2", title: "Ultimele 15 zile", days: 15 },
-    { _id: "3", title: "Ultimele 30 de zile", days: 30 },
-    { _id: "4", title: "Ultimele 3 luni", days: 120 },
-    { _id: "5", title: "Ultimele 6 luni", days: 240 },
-    { _id: "6", title: "Ultimul an", days: 365 },
+    { _id: "1", title: t("last7Days"), days: 7 },
+    { _id: "2", title: t("last15Days"), days: 15 },
+    { _id: "3", title: t("last30Days"), days: 30 },
+    { _id: "4", title: t("last3Months"), days: 120 },
+    { _id: "5", title: t("last6Months"), days: 240 },
+    { _id: "6", title: t("lastYear"), days: 365 },
   ];
+
+  const btnActive = { ...styles.btn, ...styles.btnActive };
+  const btnTxtActive = { ...styles.btnTxt, ...styles.btnTxtActive };
 
   const renderButton = ({ item }) => (
     <Button
       onPress={() => setPeriod(item)}
-      sx={
-        item._id === period._id
-          ? { ...styles.btn, ...styles.btnActive }
-          : { ...styles.btn }
-      }
+      sx={item._id === period._id ? btnActive : styles.btn}
     >
-      <Text
-        style={
-          item._id === period._id
-            ? { ...styles.btnTxt, ...styles.btnTxtActive }
-            : { ...styles.btnTxt }
-        }
-      >
+      <Text style={item._id === period._id ? btnTxtActive : styles.btnTxt}>
         {item.title}
       </Text>
     </Button>

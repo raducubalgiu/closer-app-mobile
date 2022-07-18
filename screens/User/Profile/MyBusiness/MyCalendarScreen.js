@@ -33,7 +33,14 @@ const MyCalendarScreen = () => {
 
           res.data.schedules.forEach((schedule) => {
             const { _id, schedules } = schedule;
-            const dayFormat = moment(_id).format("YYYY-MM-DD");
+
+            const dayFormat = moment
+              .utc({
+                year: _id.year,
+                month: _id.month,
+                day: _id.day,
+              })
+              .format("YYYY-MM-DD");
 
             schedulesObj = {
               ...schedulesObj,
@@ -46,6 +53,8 @@ const MyCalendarScreen = () => {
         .catch((err) => console.log(err));
     }, [])
   );
+
+  console.log("SCHEDULES!!", schedules);
 
   const sheetContent = <Text>Hello World</Text>;
   const { BOTTOM_SHEET, SHOW_BS } = useSheet(["25%", "60%"], sheetContent);
