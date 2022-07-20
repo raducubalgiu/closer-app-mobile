@@ -1,6 +1,5 @@
 import { StyleSheet, View, FlatList } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { CardFollowers } from "../../Cards/CardFollowers";
 import { useAuth } from "../../../../hooks/auth";
 import axios from "axios";
@@ -10,33 +9,31 @@ export const FollowersTab = (props) => {
   const { user } = useAuth();
   const [search, setSearch] = useState("");
   const [followers, setFollowers] = useState([]);
-  const [loading, setLoading] = useState(false);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      setLoading(true);
-      axios
-        .get(
-          `${process.env.BASE_ENDPOINT}/users/${props.userId}/follows/followers`,
-          {
-            headers: { Authorization: `Bearer ${user?.token}` },
-          }
-        )
-        .then((res) => {
-          console.log("Fetch followers");
-          setFollowers(res.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-          setLoading(false);
-        });
-    }, [props.userId, user?.token])
-  );
+  const fetchFollowers = useCallback(() => {
+    axios
+      .get(
+        `${process.env.BASE_ENDPOINT}/users/${props.userId}/follows/followers`,
+        {
+          headers: { Authorization: `Bearer ${user?.token}` },
+        }
+      )
+      .then((res) => {
+        console.log("Fetch followers");
+        setFollowers(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [props?.userId, user?.token]);
+
+  useEffect(() => {
+    fetchFollowers();
+  }, [fetchFollowers]);
 
   const updateSearch = (text) => setSearch(text);
 
-  const renderPerson = ({ item }) => {
+  const renderPerson = useCallback(({ item }) => {
     const { avatar, username, name, _id } = item.userId;
 
     return (
@@ -47,21 +44,26 @@ export const FollowersTab = (props) => {
         followeeId={_id}
       />
     );
-  };
+  }, []);
+
+  const header = useCallback(
+    () => (
+      <SearchBarInput
+        showCancel={false}
+        placeholder={t("search")}
+        value={search}
+        updateValue={updateSearch}
+        height={60}
+      />
+    ),
+    []
+  );
 
   return (
     <View style={styles.screen}>
-      {!loading && (
+      {followers.length > 0 && (
         <FlatList
-          ListHeaderComponent={
-            <SearchBarInput
-              showCancel={false}
-              placeholder="Cauta"
-              value={search}
-              updateValue={updateSearch}
-              height={60}
-            />
-          }
+          ListHeaderComponent={header}
           data={followers}
           keyExtractor={(item) => item?._id}
           renderItem={renderPerson}

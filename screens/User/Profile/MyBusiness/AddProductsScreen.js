@@ -62,10 +62,9 @@ const AddProductsScreen = () => {
         }
       )
       .then((res) => {
-        const { product } = res.data;
         navigation.navigate({
           name: "MyProducts",
-          params: { product },
+          params: { product: res.data },
           merge: true,
         });
       })

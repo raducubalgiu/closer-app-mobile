@@ -100,7 +100,7 @@ export const BusinessScheduleModal = ({
       .then((res) => {
         setLoading(false);
         setDisabled(false);
-        onUpdateSchedules(res.data.schedule);
+        onUpdateSchedules(res.data);
         onCloseModal();
       })
       .catch((err) => {

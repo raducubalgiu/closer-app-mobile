@@ -61,10 +61,9 @@ const EditProductScreen = ({ route }) => {
         { headers: { Authorization: `Bearer ${user?.token}` } }
       )
       .then((res) => {
-        const { product } = res.data;
         navigation.navigate({
           name: "MyProducts",
-          params: { product },
+          params: { product: res.data },
           merge: true,
         });
       })

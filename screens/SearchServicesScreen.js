@@ -1,11 +1,4 @@
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  FlatList,
-  ScrollView,
-  Keyboard,
-} from "react-native";
+import { SafeAreaView, StyleSheet, Text, FlatList } from "react-native";
 import React, { useState } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";

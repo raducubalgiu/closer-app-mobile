@@ -22,7 +22,7 @@ export const RatingsTab = ({ userId }) => {
           headers: { Authorization: `Bearer ${user?.token}` },
         })
         .then((res) => {
-          setReviews(res.data.reviews);
+          setReviews(res.data);
           setLoading(false);
         })
         .catch(() => {

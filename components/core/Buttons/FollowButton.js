@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import axios from "axios";
 import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../hooks/auth";
@@ -20,22 +20,20 @@ export const FollowButton = ({
   const FOLLOW_ENDPOINT = `${process.env.BASE_ENDPOINT}/follows?userId=${user?._id}&followeeId=${followeeId}`;
   const { t } = useTranslation();
 
-  const getFollow = useCallback(() => {
-    axios
-      .get(FOLLOW_ENDPOINT, {
-        headers: { Authorization: `Bearer ${user?.token}` },
-      })
-      .then((res) => {
-        setFollow(res.data.status);
-      })
-      .catch(() => {
-        setFollow(false);
-      });
-  }, [user, followeeId]);
-
-  useEffect(() => {
-    getFollow();
-  }, [getFollow]);
+  useFocusEffect(
+    useCallback(() => {
+      axios
+        .get(FOLLOW_ENDPOINT, {
+          headers: { Authorization: `Bearer ${user?.token}` },
+        })
+        .then((res) => {
+          setFollow(res.data.status);
+        })
+        .catch(() => {
+          setFollow(false);
+        });
+    }, [user, followeeId])
+  );
 
   const followHandler = useCallback(() => {
     setFollow(true);

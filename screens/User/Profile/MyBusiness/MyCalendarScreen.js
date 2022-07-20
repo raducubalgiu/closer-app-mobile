@@ -53,9 +53,6 @@ const MyCalendarScreen = () => {
         .catch((err) => console.log(err));
     }, [])
   );
-
-  console.log("SCHEDULES!!", schedules);
-
   const sheetContent = <Text>Hello World</Text>;
   const { BOTTOM_SHEET, SHOW_BS } = useSheet(["25%", "60%"], sheetContent);
 

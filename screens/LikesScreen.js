@@ -24,7 +24,7 @@ const LikesScreen = (props) => {
     axios
       .get(`${process.env.BASE_ENDPOINT}/posts/${postId}/get-likes`)
       .then((res) => {
-        setLikes(res.data.likes);
+        setLikes(res.data);
         setLoading(false);
       })
       .catch((err) => {

@@ -1,7 +1,7 @@
 import { Animated, StyleSheet, Pressable } from "react-native";
 import { Icon } from "@rneui/themed";
 import axios from "axios";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "../../../hooks/auth";
 import * as Haptics from "expo-haptics";
 import theme from "../../../assets/styles/theme";
@@ -15,7 +15,7 @@ export const LikeIButton = ({ postId, onAddLike, onRemoveLike, ...props }) => {
   const animatedScale = useRef(new Animated.Value(0)).current;
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       axios
         .get(
           `${process.env.BASE_ENDPOINT}/users/${user?._id}/posts/${postId}/likes`,

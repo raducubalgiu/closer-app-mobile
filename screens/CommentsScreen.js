@@ -60,7 +60,7 @@ const CommentsScreen = (props) => {
         { headers: { Authorization: `Bearer ${user?.token}` } }
       )
       .then((res) => {
-        const commentRes = res.data.comment;
+        const commentRes = res.data;
         setComment("");
         setComments([
           {
