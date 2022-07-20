@@ -23,10 +23,10 @@ export const PostsProfileTab = ({ userId, username }) => {
   useFocusEffect(
     React.useCallback(() => {
       axios
-        .get(`${process.env.BASE_ENDPOINT}/users/${userId}/get-posts`, {
+        .get(`${process.env.BASE_ENDPOINT}/users/${userId}/posts`, {
           headers: { Authorization: `Bearer ${user?.token}` },
         })
-        .then((res) => setPosts(res.data.posts))
+        .then((res) => setPosts(res.data))
         .catch((err) => console.log(err));
     }, [userId, user])
   );

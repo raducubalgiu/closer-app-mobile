@@ -22,7 +22,6 @@ const FeedScreen = () => {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
-  const [followingsPosts, setFollowingsPosts] = useState([]);
   const navigation = useNavigation();
   const ref = useRef(null);
   useScrollToTop(ref);
@@ -30,9 +29,11 @@ const FeedScreen = () => {
 
   const fetchAllPosts = useCallback(() => {
     axios
-      .get(`${process.env.BASE_ENDPOINT}/posts`)
+      .get(`${process.env.BASE_ENDPOINT}/posts/get-all-posts`, {
+        headers: { Authorization: `Bearer ${user.token}` },
+      })
       .then((res) => {
-        setPosts(res.data.posts);
+        setPosts(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -42,26 +43,6 @@ const FeedScreen = () => {
   useEffect(() => {
     fetchAllPosts();
   }, [fetchAllPosts]);
-
-  const fetchFollowings = useCallback(() => {
-    if (postsState.activeFollowings) {
-      setLoading(true);
-      const unsubscribe = axios
-        .get(
-          `${process.env.BASE_ENDPOINT}/users/${user?._id}/get-followings-posts`
-        )
-        .then((res) => {
-          setFollowingsPosts(res.data.posts);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-          setLoading(false);
-        });
-
-      return () => unsubscribe();
-    }
-  }, [postsState.activeFollowings]);
 
   const renderAllPosts = useCallback(({ item }) => {
     return <CardPost post={item} />;

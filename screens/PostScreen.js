@@ -4,30 +4,29 @@ import {
   FlatList,
   Dimensions,
   View,
-  Text,
 } from "react-native";
-import { Header, IconBackButton, Stack } from "../components/core";
-import React, { useState } from "react";
+import { useState, useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import axios from "axios";
-import { useAuth } from "../hooks";
+import { Header } from "../components/core";
 import { CardPost } from "../components/customized";
+import { useAuth } from "../hooks";
 
 const { width, height } = Dimensions.get("window");
 
 const PostScreen = ({ route }) => {
   const { user } = useAuth();
   const [posts, setPosts] = useState([]);
-  const { userId, postId } = route.params;
+  const { userId } = route.params;
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       axios
-        .get(`${process.env.BASE_ENDPOINT}/users/${userId}/get-posts`, {
+        .get(`${process.env.BASE_ENDPOINT}/users/${userId}/posts`, {
           headers: { Authorization: `Bearer ${user?.token}` },
         })
         .then((res) => {
-          setPosts(res.data.posts);
+          setPosts(res.data);
         })
         .catch((err) => console.log(err));
     }, [userId, user])

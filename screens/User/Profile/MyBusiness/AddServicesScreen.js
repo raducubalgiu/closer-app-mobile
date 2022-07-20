@@ -45,15 +45,12 @@ const AddServicesScreen = () => {
 
     axios
       .patch(
-        `${process.env.BASE_ENDPOINT}/users/${user?._id}/add-service`,
+        `${process.env.BASE_ENDPOINT}/users/${user?._id}/services/add-service`,
         { serviceId: service },
         { headers: { Authorization: `Bearer ${user?.token}` } }
       )
       .then((res) => {
-        const servicesBackend = res.data.user.services;
-        const newService = servicesBackend.filter(
-          (services) => services._id === service
-        );
+        const newService = res.data.filter((serv) => serv._id === service);
         setSelectedServices((selectedServices) =>
           selectedServices.concat(newService)
         );
@@ -72,7 +69,7 @@ const AddServicesScreen = () => {
   const removeServiceHandler = (serviceId) => {
     axios
       .patch(
-        `${process.env.BASE_ENDPOINT}/users/${user?._id}/remove-service`,
+        `${process.env.BASE_ENDPOINT}/users/${user?._id}/services/remove-service`,
         { serviceId },
         { headers: { Authorization: `Bearer ${user?.token}` } }
       )
@@ -117,7 +114,12 @@ const AddServicesScreen = () => {
             onPress={addServiceHandler}
             disabled={!service}
           >
-            <Icon name="add-outline" type="ionicon" size={25} />
+            <Icon
+              name="add-outline"
+              type="ionicon"
+              size={25}
+              color={service && "white"}
+            />
           </Button>
         </Stack>
       </Stack>
