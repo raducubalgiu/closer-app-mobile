@@ -1,13 +1,16 @@
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
+import { t } from "i18next";
 import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../hooks/auth";
 import InputCheck from "../../../components/core/Inputs/InputCheck";
+import { Feedback } from "../../../components/core";
 
 const UsernameScreen = (props) => {
   const { idTokenResult } = props.route.params;
   const { displayName, photoURL } = idTokenResult;
+  const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const { setUser } = useAuth();
 
   const handleSubmit = async (data) => {
@@ -28,40 +31,8 @@ const UsernameScreen = (props) => {
         }
       );
 
-      const {
-        _id,
-        name,
-        business,
-        username,
-        email,
-        avatar,
-        images,
-        role,
-        description,
-        website,
-        job,
-        location,
-        employees,
-        services,
-        validated,
-        opening_hours,
-      } = userResult.data;
-
       setUser({
-        _id,
-        name,
-        business,
-        username,
-        email,
-        avatar,
-        images,
-        role,
-        description,
-        website,
-        job,
-        location,
-        employees,
-        services,
+        ...userResult.data,
         counter: {
           ratingsAverage: 4.5,
           ratingsQuantity: 0,
@@ -69,21 +40,18 @@ const UsernameScreen = (props) => {
           followingCount: 0,
         },
         token: idTokenResult?.token,
-        validated,
-        opening_hours,
       });
     } catch (err) {
-      console.log(err);
+      setFeedback({ visible: true, message: t("somethingWentWrong") });
     }
   };
 
   return (
     <SafeAreaView style={styles.screen}>
+      <Feedback feedback={feedback} setFeedback={setFeedback} />
       <View style={styles.container}>
-        <Text style={styles.title}>Creeaza un nume de utilizator</Text>
-        <Text style={styles.description}>
-          Alege un nume de utilizator pentru contul tau. Il poti schimba oricand
-        </Text>
+        <Text style={styles.title}>{t("createAUsername")}</Text>
+        <Text style={styles.description}>{t("pickAUsername")}</Text>
       </View>
       <InputCheck
         endpoint={`${process.env.BASE_ENDPOINT}/users/check-username`}

@@ -13,47 +13,11 @@ export const AuthProvider = (props) => {
         const idTokenResult = await user.getIdTokenResult();
         getCurrentUser(idTokenResult?.token)
           .then((res) => {
-            const {
-              _id,
-              name,
-              business,
-              username,
-              email,
-              avatar,
-              images,
-              role,
-              description,
-              website,
-              job,
-              location,
-              employees,
-              services,
-              counter,
-              validated,
-              checkmark,
-              opening_hours,
-            } = res.data.user;
+            const { username } = res.data;
             if (username) {
               setUser({
-                _id,
-                name,
-                business: business,
-                username,
-                email,
-                avatar,
-                images,
-                role,
-                description,
-                website,
-                job,
-                location,
-                employees,
-                services,
-                counter,
+                ...res.data,
                 token: idTokenResult?.token,
-                validated,
-                checkmark,
-                opening_hours,
               });
             }
           })

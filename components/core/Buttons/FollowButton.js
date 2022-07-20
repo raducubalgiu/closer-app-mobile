@@ -17,7 +17,7 @@ export const FollowButton = ({
   const { user, setUser } = useAuth();
   const { followersCount, ratingsAverage, ratingsQuantity, followingCount } =
     user.counter || {};
-  const FOLLOW_ENDPOINT = `${process.env.BASE_ENDPOINT}/users/${user?._id}/follower/${followeeId}/followee/follows`;
+  const FOLLOW_ENDPOINT = `${process.env.BASE_ENDPOINT}/follows?userId=${user?._id}&followeeId=${followeeId}`;
   const { t } = useTranslation();
 
   const getFollow = useCallback(() => {
@@ -37,7 +37,7 @@ export const FollowButton = ({
     getFollow();
   }, [getFollow]);
 
-  const followHandler = () => {
+  const followHandler = useCallback(() => {
     setFollow(true);
     setUser({
       ...user,
@@ -51,9 +51,13 @@ export const FollowButton = ({
 
     if (!follow) {
       axios
-        .post(FOLLOW_ENDPOINT, {
-          headers: { Authorization: `Bearer ${user?.token}` },
-        })
+        .post(
+          `${process.env.BASE_ENDPOINT}/follows`,
+          { userId: user?._id, followeeId },
+          {
+            headers: { Authorization: `Bearer ${user?.token}` },
+          }
+        )
         .then(() => {
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
           fetchUser ? fetchUser() : null;
@@ -85,7 +89,7 @@ export const FollowButton = ({
         })
         .catch(() => setFollow(false));
     }
-  };
+  }, [user, followeeId, follow]);
 
   const styles = StyleSheet.create({
     btn: {

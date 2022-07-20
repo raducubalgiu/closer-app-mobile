@@ -17,14 +17,14 @@ export const FollowersTab = (props) => {
       setLoading(true);
       axios
         .get(
-          `${process.env.BASE_ENDPOINT}/users/${props.userId}/get-followers`,
+          `${process.env.BASE_ENDPOINT}/users/${props.userId}/follows/followers`,
           {
             headers: { Authorization: `Bearer ${user?.token}` },
           }
         )
         .then((res) => {
           console.log("Fetch followers");
-          setFollowers(res.data.followers);
+          setFollowers(res.data);
           setLoading(false);
         })
         .catch((err) => {

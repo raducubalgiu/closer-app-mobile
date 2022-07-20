@@ -10,11 +10,11 @@ export const useRefresh = (handleRefresh) => {
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
 
-    await handleRefresh();
-
     await wait(1000).then(() => {
       setRefreshing(false);
     });
+
+    await handleRefresh();
   }, []);
 
   return {
