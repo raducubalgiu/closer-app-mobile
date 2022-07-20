@@ -18,8 +18,6 @@ const SearchAllScreen = ({ route }) => {
   const { search } = route.params;
   const { t } = useTranslation();
 
-  console.log(search);
-
   const Tab = createMaterialTopTabNavigator();
 
   return (

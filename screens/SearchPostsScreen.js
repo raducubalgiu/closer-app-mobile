@@ -34,7 +34,7 @@ const SearchPostsScreen = () => {
       axios
         .get(`${process.env.BASE_ENDPOINT}/users/search?search=${search}`)
         .then((res) => {
-          setUsers(res.data.users);
+          setUsers(res.data);
         })
         .catch((err) => console.log(err));
     } else {
