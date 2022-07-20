@@ -5,8 +5,8 @@ import { CardRatings } from "../../Cards/CardRatings";
 import axios from "axios";
 import moment from "moment";
 import { useAuth } from "../../../../hooks";
-import { Spinner } from "../../../core";
 import { useTranslation } from "react-i18next";
+import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 
 export const RatingsTab = ({ userId }) => {
   const { user } = useAuth();
@@ -48,6 +48,12 @@ export const RatingsTab = ({ userId }) => {
 
   return (
     <>
+      {!loading && reviews.length === 0 && (
+        <NoFoundMessage
+          title={t("reviews")}
+          description={t("noFoundReviews")}
+        />
+      )}
       {!loading && (
         <FlatList
           data={reviews}

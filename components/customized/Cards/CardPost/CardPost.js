@@ -9,15 +9,14 @@ import { dateFormat } from "../../../../utils";
 export const CardPost = ({ post }) => {
   const {
     _id,
-    images,
     bookable,
     likesCount,
     commentsCount,
     description,
     createdAt,
     user,
-  } = post;
-  const { name, username, avatar, checkmark } = user;
+  } = post || {};
+  const { name, username, avatar, checkmark } = user || {};
 
   return (
     <View style={styles.container}>
@@ -31,7 +30,7 @@ export const CardPost = ({ post }) => {
       <View>
         <Image
           source={{
-            uri: `${images[0].url}`,
+            uri: `${post?.images[0]?.url}`,
           }}
           style={
             !bookable ? { ...styles.image, height: 450 } : { ...styles.image }

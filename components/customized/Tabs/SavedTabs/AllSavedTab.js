@@ -1,14 +1,9 @@
-import {
-  StyleSheet,
-  View,
-  Dimensions,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
-import React, { useEffect, useState } from "react";
-import { Image, Icon } from "@rneui/themed";
-import theme from "../../../../assets/styles/theme";
+import { StyleSheet, View, Dimensions, FlatList } from "react-native";
+import React, { useCallback, useState } from "react";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import axios from "axios";
+import { CardPostImage } from "../../Cards/CardPostImage";
+import theme from "../../../../assets/styles/theme";
 import { useAuth } from "../../../../hooks/auth";
 
 const { width } = Dimensions.get("window");
@@ -16,14 +11,39 @@ const { width } = Dimensions.get("window");
 export const AllSavedTab = () => {
   const { user } = useAuth();
   const [bookmarks, setBookmarks] = useState([]);
+  const navigation = useNavigation();
 
-  useEffect(() => {
-    axios
-      .get(`${process.env.BASE_ENDPOINT}/users/${user?._id}/bookmarks`, {
-        headers: { Authorization: `Bearer ${user?.token}` },
-      })
-      .then((res) => setBookmarks(res.data.bookmarks))
-      .catch((err) => console.log(err));
+  useFocusEffect(
+    useCallback(() => {
+      axios
+        .get(`${process.env.BASE_ENDPOINT}/users/${user?._id}/bookmarks`, {
+          headers: { Authorization: `Bearer ${user?.token}` },
+        })
+        .then((res) => setBookmarks(res.data))
+        .catch((err) => console.log(err));
+    }, [])
+  );
+
+  const renderBookmark = useCallback(({ item, i }) => {
+    const { post } = item;
+    const { bookable, postType } = post || {};
+    const { user } = item;
+
+    return (
+      <CardPostImage
+        onPress={() =>
+          navigation.navigate("AllBookmarks", {
+            postId: post?._id,
+            userId: user?._id,
+          })
+        }
+        index={i}
+        image={post?.images[0]?.url}
+        bookable={bookable}
+        fixed={null}
+        postType={postType}
+      />
+    );
   }, []);
 
   return (
@@ -32,27 +52,7 @@ export const AllSavedTab = () => {
         data={bookmarks}
         numColumns={3}
         keyExtractor={(item) => item?._id}
-        renderItem={({ item }) => (
-          <TouchableOpacity style={styles.box}>
-            <View style={{ position: "relative" }}>
-              <Image
-                containerStyle={styles.image}
-                source={{ uri: item?.post?.images[0]?.url }}
-              />
-              {item?.post?.bookable && (
-                <View style={styles.bookable}>
-                  <Icon
-                    name="shopping"
-                    type="material-community"
-                    color="white"
-                    size={20}
-                    style={{ marginLeft: 5 }}
-                  />
-                </View>
-              )}
-            </View>
-          </TouchableOpacity>
-        )}
+        renderItem={renderBookmark}
       />
     </View>
   );
