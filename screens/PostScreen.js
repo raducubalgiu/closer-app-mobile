@@ -5,34 +5,21 @@ import {
   Dimensions,
   View,
 } from "react-native";
-import { useState, useCallback } from "react";
-import { useFocusEffect } from "@react-navigation/native";
-import axios from "axios";
+import { useCallback } from "react";
 import { Header } from "../components/core";
 import { CardPost } from "../components/customized";
-import { useAuth } from "../hooks";
+import { useHttpGet } from "../hooks";
 
 const { width, height } = Dimensions.get("window");
 
 const PostScreen = ({ route }) => {
-  const { user } = useAuth();
-  const [posts, setPosts] = useState([]);
   const { userId } = route.params;
+  const { data: posts } = useHttpGet(`/users/${userId}/posts`);
 
-  useFocusEffect(
-    useCallback(() => {
-      axios
-        .get(`${process.env.BASE_ENDPOINT}/users/${userId}/posts`, {
-          headers: { Authorization: `Bearer ${user?.token}` },
-        })
-        .then((res) => {
-          setPosts(res.data);
-        })
-        .catch((err) => console.log(err));
-    }, [userId, user])
+  const renderUserPosts = useCallback(
+    ({ item }) => <CardPost post={item} />,
+    []
   );
-
-  const renderUserPosts = ({ item }) => <CardPost post={item} />;
   const getItemLayout = (data, index) => ({
     length: width,
     offset: height * index,

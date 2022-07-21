@@ -1,17 +1,15 @@
 import {
   SafeAreaView,
   StyleSheet,
-  RefreshControl,
   ScrollView,
   View,
   FlatList,
 } from "react-native";
-import React, { useCallback, useState, useRef, useEffect } from "react";
+import React, { useCallback, useRef } from "react";
 import { useNavigation, useScrollToTop } from "@react-navigation/native";
 import { Divider, Badge } from "@rneui/themed";
 import theme from "../assets/styles/theme";
-import axios from "axios";
-import { usePosts, useAuth } from "../hooks/index";
+import { usePosts, useHttpGet } from "../hooks/index";
 import { IconButton, Stack, FeedLabelButton } from "../components/core";
 import { CardPost } from "../components/customized";
 import { useTranslation } from "react-i18next";
@@ -19,48 +17,17 @@ import * as Haptics from "expo-haptics";
 
 const FeedScreen = () => {
   const { postsState, dispatchPosts } = usePosts();
-  const { user } = useAuth();
-  const [loading, setLoading] = useState(false);
-  const [posts, setPosts] = useState([]);
   const navigation = useNavigation();
   const ref = useRef(null);
   useScrollToTop(ref);
   const { t } = useTranslation();
 
-  const fetchAllPosts = useCallback(() => {
-    axios
-      .get(`${process.env.BASE_ENDPOINT}/posts/get-all-posts`, {
-        headers: { Authorization: `Bearer ${user.token}` },
-      })
-      .then((res) => {
-        setPosts(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  useEffect(() => {
-    fetchAllPosts();
-  }, [fetchAllPosts]);
+  const { data: posts } = useHttpGet("/posts/get-all-posts");
 
   const renderAllPosts = useCallback(({ item }) => {
     return <CardPost post={item} />;
   }, []);
-
   const keyExtractor = useCallback((item) => item?._id, []);
-
-  const refreshControl = (
-    <RefreshControl loading={loading} onRefresh={onRefresh} />
-  );
-  const wait = (timeout) => {
-    return new Promise((resolve) => setTimeout(resolve, timeout));
-  };
-  const onRefresh = React.useCallback(() => {
-    wait(1000).then(() => {
-      fetchAllPosts();
-    });
-  }, []);
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -135,7 +102,6 @@ const FeedScreen = () => {
       <Divider color="#ddd" />
       <FlatList
         ref={ref}
-        refreshControl={refreshControl}
         data={posts}
         nestedScrollEnabled={true}
         keyExtractor={keyExtractor}

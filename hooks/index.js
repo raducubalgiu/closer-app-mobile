@@ -10,3 +10,5 @@ export { useAgenda } from "./calendars/useAgenda";
 export { useDates } from "./useDates";
 export { useSheet } from "./useSheet";
 export { useRefresh } from "./useRefresh";
+
+export { useHttpGet, useHttpPost } from "./useHttp";

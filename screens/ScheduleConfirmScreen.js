@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { Icon } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
-import { Header, MainButton, Stack } from "../components/core";
+import { Feedback, Header, MainButton, Stack } from "../components/core";
 import { useAuth, useDates } from "../hooks";
 import theme from "../assets/styles/theme";
 import { AddressFormat } from "../utils";
@@ -14,6 +14,7 @@ const { black, grey0 } = theme.lightColors;
 const ScheduleConfirmScreen = ({ route }) => {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const {
     getStartTimeByDateAndHours,
     getEndTimeBySlot,
@@ -23,14 +24,14 @@ const ScheduleConfirmScreen = ({ route }) => {
   const navigation = useNavigation();
   const { t } = useTranslation();
   const { selectedDay, selectedHour, owner, service } = route.params;
-  const { product, opening_hours, employee } = route.params;
+  const { product, hours, employee } = route.params;
   const { name, price, option, duration } = product;
 
   const startTime = getStartTimeByDateAndHours(selectedDay, selectedHour);
   const endTime = getEndTimeBySlot(startTime);
   const startSeconds = getStartSeconds(startTime);
   const { locationStart, locationEnd } = getLocationStartAndEnd(
-    opening_hours.normal_days,
+    hours,
     selectedDay
   );
 
@@ -68,14 +69,17 @@ const ScheduleConfirmScreen = ({ route }) => {
           schedule: res.data,
         });
       })
-      .catch(() => {
+      .catch((err) => {
+        const { message } = err.response.data;
         setLoading(false);
+        setFeedback({ visible: true, message });
       });
   };
 
   return (
     <SafeAreaView style={styles.screen}>
       <Header title="Confirmare rezervare" />
+      <Feedback feedback={feedback} setFeedback={setFeedback} duration="LONG" />
       <ScrollView align="start" contentContainerStyle={styles.scrollView}>
         <Stack align="start">
           <Stack align="start" direction="row" sx={{ marginBottom: 50 }}>

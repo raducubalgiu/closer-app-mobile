@@ -56,9 +56,6 @@ export const DashboardScheduleTab = ({ startPeriod, lastPeriod }) => {
     ],
   };
 
-  console.log("START PERIOD!!!", startPeriod);
-  console.log("LAST PERIOD!!!", lastPeriod);
-
   const fetchStats = useCallback(() => {
     setLoading(true);
     axios

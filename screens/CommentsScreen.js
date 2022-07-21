@@ -38,7 +38,7 @@ const CommentsScreen = (props) => {
       axios
         .get(`${process.env.BASE_ENDPOINT}/posts/${postId}/get-comments`)
         .then((res) => {
-          setComments(res.data.comments);
+          setComments(res.data);
           setLoading(false);
         })
         .catch((err) => {

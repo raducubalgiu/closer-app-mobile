@@ -1,5 +1,5 @@
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import {
   Header,
   Stack,
@@ -18,8 +18,7 @@ const { grey0, primary } = theme.lightColors;
 
 const AddScheduleScreen = () => {
   const { user, setUser } = useAuth();
-  const { mon, tue, wed, thu, fri, sat, sun } =
-    user?.opening_hours?.normal_days || {};
+  const { mon, tue, wed, thu, fri, sat, sun } = user?.hours || {};
   const { t } = useTranslation();
   const methods = useForm({
     defaultValues: {
@@ -52,36 +51,34 @@ const AddScheduleScreen = () => {
       .patch(
         `${BASE_ENDPOINT}/users/${user?._id}/update`,
         {
-          opening_hours: {
-            normal_days: {
-              mon: {
-                startTime: data.startmon,
-                endTime: data.endmon,
-              },
-              tue: {
-                startTime: data.starttue,
-                endTime: data.endtue,
-              },
-              wed: {
-                startTime: data.startwed,
-                endTime: data.endwed,
-              },
-              thu: {
-                startTime: data.startthu,
-                endTime: data.endthu,
-              },
-              fri: {
-                startTime: data.startfri,
-                endTime: data.endfri,
-              },
-              sat: {
-                startTime: data.startsat,
-                endTime: data.endsat,
-              },
-              sun: {
-                startTime: data.startsun,
-                endTime: data.endsun,
-              },
+          hours: {
+            mon: {
+              startTime: data.startmon,
+              endTime: data.endmon,
+            },
+            tue: {
+              startTime: data.starttue,
+              endTime: data.endtue,
+            },
+            wed: {
+              startTime: data.startwed,
+              endTime: data.endwed,
+            },
+            thu: {
+              startTime: data.startthu,
+              endTime: data.endthu,
+            },
+            fri: {
+              startTime: data.startfri,
+              endTime: data.endfri,
+            },
+            sat: {
+              startTime: data.startsat,
+              endTime: data.endsat,
+            },
+            sun: {
+              startTime: data.startsun,
+              endTime: data.endsun,
             },
           },
         },
@@ -90,7 +87,7 @@ const AddScheduleScreen = () => {
         }
       )
       .then((res) => {
-        setUser({ ...user, opening_hours: res.data.user.opening_hours });
+        setUser({ ...user, hours: res.data.user.hours });
         setDisabled(false);
         setLoading(false);
         navigation.goBack();

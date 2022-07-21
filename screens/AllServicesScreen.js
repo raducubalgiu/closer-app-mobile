@@ -1,114 +1,68 @@
-import { StyleSheet, Text, SafeAreaView, ScrollView, View } from "react-native";
-import axios from "axios";
-import React, { useCallback, useEffect, useState } from "react";
-import { Icon } from "@rneui/themed";
-import {
-  Accordion,
-  Stack,
-  SearchBarInput,
-  Spinner,
-  Button,
-} from "../components/core";
-import theme from "../assets/styles/theme";
+import { StyleSheet, Text, SafeAreaView, View, FlatList } from "react-native";
+import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import { Divider } from "@rneui/base";
+import { Accordion, Spinner, Button, Header } from "../components/core";
+import theme from "../assets/styles/theme";
+import { useHttpGet } from "../hooks";
 
 const AllServicesScreen = () => {
-  const [search, setSearch] = useState("");
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [loadingSearch, setLoadingSearch] = useState(false);
   const { t } = useTranslation();
   const navigation = useNavigation();
+  const { data: categories, loading } = useHttpGet("/categories");
 
-  useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`${process.env.BASE_ENDPOINT}/categories`)
-      .then((resp) => {
-        setCategories(resp.data.categories);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
-      });
-  }, []);
+  const goToServices = () =>
+    navigation.navigate("Services", {
+      serviceId: _id,
+      serviceName: name,
+      period: {
+        code: process.env.ANYTIME_CODE,
+        type: t("anytime"),
+      },
+    });
 
-  const updateSearch = useCallback(
-    (search) => {
-      setSearch(search);
-      if (search) {
-      }
-    },
-    [search]
+  const ServiceItem = useCallback(
+    ({ name }) => (
+      <Button onPress={goToServices} sx={{ marginTop: 15 }}>
+        <Text style={styles.service}>{name}</Text>
+        <Divider color="#ddd" style={{ marginTop: 15 }} />
+      </Button>
+    ),
+    []
   );
 
-  const ServiceItem = ({ name, _id, servicesCount }) => (
-    <Button
-      onPress={() =>
-        navigation.navigate("Services", {
-          serviceId: _id,
-          serviceName: name,
-          period: {
-            code: process.env.ANYTIME_CODE,
-            type: t("anytime"),
-          },
-        })
-      }
-      sx={{
-        marginTop: 15,
-      }}
-    >
-      <Text style={styles.service}>{name}</Text>
-      <Divider color="#ddd" style={{ marginTop: 15 }} />
-    </Button>
+  const renderCategories = useCallback(
+    ({ item }) => (
+      <Accordion title={item?.name} initExpand={true} sx={styles.accordion}>
+        {item?.services?.map((service) => (
+          <ServiceItem
+            key={service._id}
+            name={service?.name}
+            _id={service?._id}
+            servicesCount={`100 rezultate`}
+          />
+        ))}
+      </Accordion>
+    ),
+    []
   );
+
+  const keyExtractor = useCallback((item) => item?._id, []);
 
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.servicesContainer}>
-        <Stack direction="row" justify="start">
-          <Button sx={{ marginRight: 10 }} onPress={() => navigation.goBack()}>
-            <Icon
-              name="chevron-thin-left"
-              type="entypo"
-              color={theme.lightColors.black}
-              size={22.5}
-            />
-          </Button>
-          <SearchBarInput
-            autoFocus={false}
-            placeholder={t("search")}
-            value={search}
-            updateValue={updateSearch}
-            cancelButtonTitle={""}
-            height={60}
-            showLoading={loadingSearch}
-          />
-        </Stack>
+        <Header title={t("categories")} divider />
         {loading && <Spinner />}
         {!loading && (
-          <ScrollView showsVerticalScrollIndicator={false}>
-            {categories.map((category, i) => (
-              <Accordion
-                key={i}
-                title={category?.name}
-                initExpand={true}
-                sx={styles.accordion}
-              >
-                {category?.services?.map((service, i) => (
-                  <ServiceItem
-                    key={i}
-                    name={service?.name}
-                    _id={service?._id}
-                    servicesCount={`100 rezultate`}
-                  />
-                ))}
-              </Accordion>
-            ))}
-          </ScrollView>
+          <FlatList
+            data={categories}
+            showsVerticalScrollIndicator={false}
+            initialNumToRender={4}
+            keyExtractor={keyExtractor}
+            renderItem={renderCategories}
+          />
         )}
       </View>
     </SafeAreaView>

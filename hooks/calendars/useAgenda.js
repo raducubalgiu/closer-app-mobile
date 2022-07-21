@@ -1,19 +1,21 @@
 import { useState } from "react";
-import { RefreshControl } from "react-native";
+import { View } from "react-native";
 import { Agenda } from "react-native-calendars";
 import { Icon } from "@rneui/themed";
 import { useDates } from "../useDates";
-import { useRefresh } from "../useRefresh";
 import theme from "../../assets/styles/theme";
 
 const { primary, grey0 } = theme.lightColors;
 
-export const useAgenda = (schedules, renderItem, noFoundData) => {
+export const useAgenda = (
+  schedules,
+  renderItem,
+  noFoundData,
+  selectedDay,
+  handleDayPress
+) => {
   const { _minDate, _maxDate } = useDates();
-  const [selectedDay, setSelectedDay] = useState(_minDate);
   const [knob, setKnob] = useState(false);
-
-  const { refreshing, onRefresh } = useRefresh(() => {});
 
   const showKnob = (
     <>
@@ -26,12 +28,11 @@ export const useAgenda = (schedules, renderItem, noFoundData) => {
     <Agenda
       items={schedules}
       renderItem={renderItem}
-      onDayPress={(day) => console.log("day pressed")}
-      onDayChange={(day) => setSelectedDay(day)}
+      onDayPress={(day) => handleDayPress(day)}
       renderDay={() => {}}
       firstDay={1}
       onCalendarToggled={(calendarOpened) => setKnob(calendarOpened)}
-      selected={_minDate}
+      selected={selectedDay}
       minDate={_minDate}
       maxDate={_maxDate}
       pastScrollRange={5}
@@ -42,10 +43,7 @@ export const useAgenda = (schedules, renderItem, noFoundData) => {
       rowHasChanged={(r1, r2) => r1.text !== r2.text}
       showClosingKnob={true}
       disabledByDefault={false}
-      refreshing={true}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }
+      showOnlySelectedDayItems={true}
       theme={{
         agendaDayTextColor: "yellow",
         agendaDayNumColor: "green",
@@ -60,12 +58,6 @@ export const useAgenda = (schedules, renderItem, noFoundData) => {
         nowIndicatorKnob: "red",
         todayTextColor: primary,
       }}
-      // markedDates={{
-      //   "2022-06-16": { selected: true, marked: true },
-      //   "2022-06-17": { marked: true },
-      //   "2022-06-18": { marked: true },
-      // }}
-      style={{}}
     />
   );
 

@@ -60,7 +60,7 @@ export const BusinessScheduleModal = ({
   const endTime = getEndTimeBySlot(startTime);
   const startSeconds = getStartSeconds(startTime);
   const { locationStart, locationEnd } = getLocationStartAndEnd(
-    user?.opening_hours?.normal_days,
+    user?.hours,
     selectedDate
   );
 

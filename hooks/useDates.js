@@ -3,6 +3,7 @@ import moment from "moment";
 export const useDates = () => {
   const SLOT = 29;
   const MAX_CALENDAR_DAYS = 120;
+  const NOW = moment().format();
 
   const getStartTimeByDateAndHours = (date, hour) => {
     return moment
@@ -27,8 +28,8 @@ export const useDates = () => {
     );
   };
 
-  const getLocationStartAndEnd = (openingHours, selectedDay) => {
-    const hoursArr = Object.entries(openingHours);
+  const getLocationStartAndEnd = (hours, selectedDay) => {
+    const hoursArr = Object.entries(hours);
     let dayNo = moment(selectedDay).day() - 1;
     dayNo = dayNo === -1 ? 6 : dayNo;
 
@@ -52,5 +53,6 @@ export const useDates = () => {
     getLocationStartAndEnd,
     _minDate,
     _maxDate,
+    NOW,
   };
 };

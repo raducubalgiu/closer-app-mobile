@@ -3,7 +3,7 @@ import React from "react";
 import { Stack, IconButtonEdit, MainButton } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { trimFunc } from "../../../utils";
-import { useDuration } from "../../../hooks";
+import { useAuth, useDuration } from "../../../hooks";
 import { useTranslation } from "react-i18next";
 import { IconButtonDelete } from "../../core/IconButton/IconButtonDelete";
 import { useNavigation } from "@react-navigation/native";
@@ -25,6 +25,7 @@ export const CardProduct = ({
     user,
     employee,
   } = product;
+
   const currDuration = duration ? useDuration(duration) : "";
   const navigation = useNavigation();
 
@@ -56,7 +57,7 @@ export const CardProduct = ({
                 product,
                 service,
                 owner: user,
-                opening_hours: user?.opening_hours,
+                hours: user?.hours,
                 employee,
               })
             }

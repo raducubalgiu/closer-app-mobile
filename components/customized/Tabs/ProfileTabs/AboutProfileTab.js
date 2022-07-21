@@ -22,9 +22,9 @@ export const AboutProfileTab = ({
   website,
   location,
   role,
-  openingHours,
+  hours,
 }) => {
-  const { mon, tue, wed, thu, fri, sat, sun } = openingHours?.normal_days || {};
+  const { mon, tue, wed, thu, fri, sat, sun } = hours || {};
   const schedules = [
     { day: "mon", ...mon },
     { day: "tue", ...tue },
@@ -82,7 +82,7 @@ export const AboutProfileTab = ({
         </Protected>
       </Stack>
       <Protected userRole={role} roles={[MAIN_ROLE, SECOND_ROLE]}>
-        {openingHours && (
+        {hours && (
           <Stack align="start" sx={styles.section}>
             <Stack direction="row">
               <Icon name="calendar" type="feather" color={primary} />

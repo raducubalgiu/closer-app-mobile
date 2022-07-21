@@ -50,12 +50,14 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
     services,
     business,
     counter,
-    opening_hours,
+    hours,
   } = userDetails || {};
   const [loading, setLoading] = useState(false);
   const [suggestedPeople, setSuggestedPeople] = useState([]);
   const Tab = createMaterialTopTabNavigator();
   const { t } = useTranslation();
+
+  console.log("HOURS!!!", hours);
 
   const fetchUser = useCallback(() => {
     axios
@@ -108,10 +110,10 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
         website={website}
         location={location}
         role={role}
-        openingHours={opening_hours}
+        openingHours={hours}
       />
     ),
-    [description, website, location, role, opening_hours]
+    [description, website, location, role, hours]
   );
 
   const removeCard = useCallback(

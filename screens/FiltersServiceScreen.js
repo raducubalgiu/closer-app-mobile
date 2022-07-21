@@ -15,6 +15,7 @@ import BottomSheet, {
 import { Stack, Spinner, Button } from "../components/core";
 import { SheetHeader } from "../components/customized";
 import theme from "../assets/styles/theme";
+import { useHttpGet } from "../hooks";
 
 const FiltersServiceScreen = ({ route }) => {
   const navigation = useNavigation();
