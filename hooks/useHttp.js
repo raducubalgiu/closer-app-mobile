@@ -11,6 +11,7 @@ export const useHttpGet = (route) => {
   const { user } = useAuth();
 
   const fetchData = useCallback(() => {
+    let isMounted = true;
     setLoading(true);
     axios
       .get(`${BASE_ENDPOINT}${route}`, {
@@ -26,6 +27,8 @@ export const useHttpGet = (route) => {
       .finally(() => {
         setLoading(false);
       });
+
+    return () => (isMounted = false);
   }, [route]);
 
   useEffect(() => {

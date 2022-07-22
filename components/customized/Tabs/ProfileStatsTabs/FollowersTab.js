@@ -1,35 +1,32 @@
 import { StyleSheet, View, FlatList } from "react-native";
 import React, { useCallback, useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import { CardFollowers } from "../../Cards/CardFollowers";
 import { useAuth } from "../../../../hooks/auth";
 import axios from "axios";
 import { SearchBarInput } from "../../../core";
+import { useTranslation } from "react-i18next";
 
-export const FollowersTab = (props) => {
+export const FollowersTab = ({ userId }) => {
   const { user } = useAuth();
   const [search, setSearch] = useState("");
   const [followers, setFollowers] = useState([]);
+  const { t } = useTranslation();
 
-  const fetchFollowers = useCallback(() => {
-    axios
-      .get(
-        `${process.env.BASE_ENDPOINT}/users/${props.userId}/follows/followers`,
-        {
+  useFocusEffect(
+    React.useCallback(() => {
+      axios
+        .get(`${process.env.BASE_ENDPOINT}/users/${userId}/follows/followers`, {
           headers: { Authorization: `Bearer ${user?.token}` },
-        }
-      )
-      .then((res) => {
-        console.log("Fetch followers");
-        setFollowers(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [props?.userId, user?.token]);
-
-  useEffect(() => {
-    fetchFollowers();
-  }, [fetchFollowers]);
+        })
+        .then((res) => {
+          setFollowers(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }, [userId, user?.token])
+  );
 
   const updateSearch = (text) => setSearch(text);
 

@@ -29,7 +29,6 @@ const ScheduleConfirmScreen = ({ route }) => {
 
   const startTime = getStartTimeByDateAndHours(selectedDay, selectedHour);
   const endTime = getEndTimeBySlot(startTime);
-  const startSeconds = getStartSeconds(startTime);
   const { locationStart, locationEnd } = getLocationStartAndEnd(
     hours,
     selectedDay
@@ -43,7 +42,6 @@ const ScheduleConfirmScreen = ({ route }) => {
         {
           start: startTime,
           end: endTime,
-          startSeconds,
           owner: owner._id,
           customer: {
             _id: user?._id,

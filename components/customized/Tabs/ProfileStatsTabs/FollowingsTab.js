@@ -1,5 +1,6 @@
 import { StyleSheet, View, FlatList, RefreshControl } from "react-native";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import { CardFollowers } from "../../Cards/CardFollowers";
 import axios from "axios";
 import { useAuth } from "../../../../hooks/auth";
@@ -7,31 +8,29 @@ import { SearchBarInput } from "../../../core";
 import { useRefresh } from "../../../../hooks";
 import { useTranslation } from "react-i18next";
 
-export const FollowingsTab = (props) => {
+export const FollowingsTab = ({ userId }) => {
   const { user } = useAuth();
   const [search, setSearch] = useState("");
   const [followings, setFollowings] = useState([]);
   const { t } = useTranslation();
 
-  const fetchFollowings = useCallback(() => {
-    axios
-      .get(
-        `${process.env.BASE_ENDPOINT}/users/${props.userId}/follows/followings`,
-        {
-          headers: { Authorization: `Bearer ${user?.token}` },
-        }
-      )
-      .then((res) => {
-        setFollowings(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [props?.userId, user?.token]);
-
-  useEffect(() => {
-    fetchFollowings();
-  }, [fetchFollowings]);
+  useFocusEffect(
+    React.useCallback(() => {
+      axios
+        .get(
+          `${process.env.BASE_ENDPOINT}/users/${userId}/follows/followings`,
+          {
+            headers: { Authorization: `Bearer ${user?.token}` },
+          }
+        )
+        .then((res) => {
+          setFollowings(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }, [userId, user?.token])
+  );
 
   const updateSearch = (text) => {
     setSearch(text);
