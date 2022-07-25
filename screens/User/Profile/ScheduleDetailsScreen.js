@@ -1,5 +1,5 @@
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import {
   CustomAvatar,
   Header,
@@ -9,7 +9,6 @@ import {
   Feedback,
   Button,
 } from "../../../components/core";
-import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { Icon } from "@rneui/base";
 import theme from "../../../assets/styles/theme";
@@ -18,14 +17,13 @@ import { Divider } from "@rneui/themed";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { AddressFormat } from "../../../utils";
 import { useNavigation } from "@react-navigation/native";
-import { useFocusEffect } from "@react-navigation/native";
+import { useHttpGet } from "../../../hooks";
 
 const { black, grey0, success, error } = theme.lightColors;
 
 const ScheduleDetailsScreen = ({ route }) => {
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const { scheduleId } = route.params;
-  const [schedule, setSchedule] = useState(null);
   const { owner, product, scheduleStart, service, status, _id, employee } =
     schedule || {};
   const { location } = owner || {};
@@ -33,16 +31,7 @@ const ScheduleDetailsScreen = ({ route }) => {
   const { t } = useTranslation();
   const navigation = useNavigation();
 
-  useFocusEffect(
-    useCallback(() => {
-      axios
-        .get(`${process.env.BASE_ENDPOINT}/schedules/${scheduleId}`)
-        .then((res) => setSchedule(res.data))
-        .catch((err) => {
-          console.log(err);
-        });
-    }, [scheduleId])
-  );
+  const { data: schedule } = useHttpGet(`/schedules/${scheduleId}`);
 
   const goToOwner = () =>
     navigation.push("ProfileGeneral", {

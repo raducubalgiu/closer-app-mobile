@@ -5,38 +5,33 @@ import {
   SafeAreaView,
   FlatList,
 } from "react-native";
-import { useState, useCallback } from "react";
-import { useFocusEffect } from "@react-navigation/native";
-import axios from "axios";
-import { useAuth } from "../../../hooks";
+import { useCallback } from "react";
+import { useTranslation } from "react-i18next";
+import { useAuth, useHttpGet } from "../../../hooks";
 import { Header } from "../../../components/core";
 import { CardPost } from "../../../components/customized";
-import { useTranslation } from "react-i18next";
 
 const { width, height } = Dimensions.get("window");
 
 const AllBookmarksScreens = () => {
   const { user } = useAuth();
-  const [bookmarks, setBookmarks] = useState([]);
   const { t } = useTranslation();
 
-  useFocusEffect(
-    useCallback(() => {
-      axios
-        .get(`${process.env.BASE_ENDPOINT}/users/${user?._id}/bookmarks`, {
-          headers: { Authorization: `Bearer ${user?.token}` },
-        })
-        .then((res) => setBookmarks(res.data))
-        .catch((err) => console.log(err));
-    }, [])
-  );
+  const { data: bookmarks } = useHttpGet(`/users/${user?._id}/bookmarks`);
 
-  const renderUserBookmarks = ({ item }) => <CardPost post={item?.post} />;
-  const getItemLayout = (data, index) => ({
-    length: width,
-    offset: height * index,
-    index,
-  });
+  const renderUserBookmarks = useCallback(
+    ({ item }) => <CardPost post={item?.post} />,
+    []
+  );
+  const getItemLayout = useCallback(
+    (data, index) => ({
+      length: width,
+      offset: height * index,
+      index,
+    }),
+    []
+  );
+  const keyExtractor = useCallback((item) => item?._id, []);
 
   return (
     <View style={styles.screen}>
@@ -48,7 +43,7 @@ const AllBookmarksScreens = () => {
         initialScrollIndex={3}
         getItemLayout={getItemLayout}
         data={bookmarks}
-        keyExtractor={(item) => item?._id}
+        keyExtractor={keyExtractor}
         renderItem={renderUserBookmarks}
       />
     </View>

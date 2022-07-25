@@ -58,15 +58,21 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
   const { t } = useTranslation();
 
   const fetchUser = useCallback(() => {
+    const controller = new AbortController();
     axios
       .get(
         `${process.env.BASE_ENDPOINT}/users/${userId}?latlng=26.100195,44.428286`,
         {
+          signal: controller.signal,
           headers: { Authorization: `Bearer ${user?.token}` },
         }
       )
       .then((res) => setUserDetails(res.data))
       .catch(() => console.log(err));
+
+    return () => {
+      controller.abort();
+    };
   }, [userId]);
 
   useEffect(() => {

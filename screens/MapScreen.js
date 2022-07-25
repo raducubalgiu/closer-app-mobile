@@ -5,10 +5,11 @@ import {
   Animated,
   Dimensions,
   Platform,
+  FlatList,
+  Image,
 } from "react-native";
-import React, { useRef, useState, useEffect, useCallback } from "react";
-import axios from "axios";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import React, { useRef, useEffect, useCallback } from "react";
+import { useNavigation } from "@react-navigation/native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import {
   Button,
@@ -17,10 +18,8 @@ import {
   IconStar,
   Stack,
 } from "../components/core";
-import { useAuth } from "../hooks";
-import { Image } from "@rneui/themed";
+import { useHttpGet } from "../hooks";
 import theme from "../assets/styles/theme";
-import { FlatList } from "react-native-gesture-handler";
 
 const { width, height } = Dimensions.get("window");
 const CARD_HEIGHT = 250;
@@ -28,44 +27,23 @@ const CARD_WIDTH = width * 0.8;
 const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
 
 const MapScreen = ({ route }) => {
-  const { user } = useAuth();
   const navigation = useNavigation();
   const { location, business } = route.params;
-  const [locations, setLocations] = useState([]);
-  const [initialIndex, setInitialIndex] = useState(0);
   const maxDistance = 50;
   const _map = useRef(null);
   const _scrollView = useRef(null);
   let mapIndex = 0;
   let mapAnimation = new Animated.Value(0);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      axios
-        .get(
-          `${process.env.BASE_ENDPOINT}/users/get-locations-map?latlng=26.100195,44.428286&business=${business?._id}&maxDistance=${maxDistance}`,
-          {
-            headers: { Authorization: `Bearer ${user?.token}` },
-          }
-        )
-        .then((res) => {
-          setLocations(res.data.locations);
-          const i = res.data.locations.findIndex(
-            (loc) => loc._id === business._id
-          );
-          setInitialIndex(i);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }, [business])
+  const { data: locations } = useHttpGet(
+    `/users/get-locations-map?latlng=26.100195,44.428286&business=${business?._id}&maxDistance=${maxDistance}`
   );
 
   useEffect(() => {
     mapAnimation.addListener(({ value }) => {
       let index = Math.floor(value / CARD_WIDTH + 0.3); // animate 30% away from landing on the next item
-      if (index >= locations.length) {
-        index = locations.length - 1;
+      if (index >= locations?.length) {
+        index = locations?.length - 1;
       }
       if (index <= 0) {
         index = 0;
@@ -90,7 +68,7 @@ const MapScreen = ({ route }) => {
     });
   });
 
-  const interpolations = locations.map((marker, index) => {
+  const interpolations = locations?.map((marker, index) => {
     const inputRange = [
       (index - 1) * CARD_WIDTH,
       index * CARD_WIDTH,
@@ -113,8 +91,6 @@ const MapScreen = ({ route }) => {
       name,
       avatar,
     });
-
-  console.log(location);
 
   const renderItem = useCallback(({ item }) => {
     return (
@@ -184,11 +160,14 @@ const MapScreen = ({ route }) => {
     );
   }, []);
 
-  const getItemLayout = (data, index) => ({
-    length: width,
-    offset: height * index,
-    index,
-  });
+  const getItemLayout = useCallback(
+    (data, index) => ({
+      length: width,
+      offset: height * index,
+      index,
+    }),
+    []
+  );
 
   return (
     <View>
@@ -204,7 +183,7 @@ const MapScreen = ({ route }) => {
         }}
         provider={PROVIDER_GOOGLE}
       >
-        {locations.map((loc, i) => {
+        {locations?.map((loc, i) => {
           const scaleStyle = {
             transform: [
               {

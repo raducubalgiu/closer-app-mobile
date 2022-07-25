@@ -37,21 +37,24 @@ const SearchServicesScreen = () => {
   const { t } = useTranslation();
   const navigation = useNavigation();
 
-  const updateSearch = (search) => {
-    setSearch(search);
-    if (search) {
-      axios
-        .get(`${process.env.BASE_ENDPOINT}/services/search/?name=${search}`, {
-          headers: { Authorization: `Bearer ${user?.token}` },
-        })
-        .then((res) => setServices(res.data))
-        .catch((err) => console.log(err));
-    } else {
-      setServices([]);
-    }
-  };
+  const updateSearch = useCallback(
+    (search) => {
+      setSearch(search);
+      if (search) {
+        axios
+          .get(`${process.env.BASE_ENDPOINT}/services/search/?name=${search}`, {
+            headers: { Authorization: `Bearer ${user?.token}` },
+          })
+          .then((res) => setServices(res.data))
+          .catch((err) => console.log(err));
+      } else {
+        setServices([]);
+      }
+    },
+    [search]
+  );
 
-  const renderSuggested = ({ item }) => {
+  const renderSuggested = useCallback(({ item }) => {
     <Button
       onPress={() => {
         navigation.navigate("FiltersDate", {
@@ -64,7 +67,7 @@ const SearchServicesScreen = () => {
       <Text style={styles.serviceItem}>{item.name}</Text>
       <Text style={styles.categoryItem}>{item.category.name}</Text>
     </Button>;
-  };
+  }, []);
 
   const renderServices = useCallback(
     ({ item }) => (

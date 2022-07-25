@@ -8,7 +8,7 @@ import {
   Stack,
 } from "../components/core";
 import { CardRecentSearch } from "../components/customized";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
@@ -27,48 +27,55 @@ const SearchPostsScreen = () => {
   const navigation = useNavigation();
   const { t } = useTranslation();
 
-  const updateSearch = (search) => {
-    setSearch(search);
+  const updateSearch = useCallback(
+    (search) => {
+      setSearch(search);
 
-    if (search) {
-      axios
-        .get(`${process.env.BASE_ENDPOINT}/users/search?search=${search}`)
-        .then((res) => {
-          setUsers(res.data);
-        })
-        .catch((err) => console.log(err));
-    } else {
-      setUsers([]);
-    }
-  };
-
-  const renderRecent = ({ item }) => (
-    <CardRecentSearch onPress={() => {}} word={item?.word} />
+      if (search) {
+        axios
+          .get(`${process.env.BASE_ENDPOINT}/users/search?search=${search}`)
+          .then((res) => {
+            setUsers(res.data);
+          })
+          .catch((err) => console.log(err));
+      } else {
+        setUsers([]);
+      }
+    },
+    [search]
   );
 
-  const renderUsers = ({ item }) => (
-    <Button
-      onPress={() =>
-        navigation.navigate("ProfileGeneral", {
-          userId: item?._id,
-          username: item?.username,
-          avatar: item?.avatar,
-          name: item?.name,
-          checkmark: item?.checkmark,
-        })
-      }
-    >
-      <Stack direction="row" justify="start" sx={styles.searchItem}>
-        <CustomAvatar avatar={item?.avatar} />
-        <Stack align="start" sx={{ marginLeft: 10 }}>
-          <Stack direction="row">
-            <Text style={styles.username}>{item.username}</Text>
-            {item.checkmark && <Checkmark />}
+  const renderRecent = useCallback(
+    ({ item }) => <CardRecentSearch onPress={() => {}} word={item?.word} />,
+    []
+  );
+
+  const renderUsers = useCallback(
+    ({ item }) => (
+      <Button
+        onPress={() =>
+          navigation.navigate("ProfileGeneral", {
+            userId: item?._id,
+            username: item?.username,
+            avatar: item?.avatar,
+            name: item?.name,
+            checkmark: item?.checkmark,
+          })
+        }
+      >
+        <Stack direction="row" justify="start" sx={styles.searchItem}>
+          <CustomAvatar avatar={item?.avatar} />
+          <Stack align="start" sx={{ marginLeft: 10 }}>
+            <Stack direction="row">
+              <Text style={styles.username}>{item.username}</Text>
+              {item.checkmark && <Checkmark />}
+            </Stack>
+            <Text style={styles.name}>{item.name}</Text>
           </Stack>
-          <Text style={styles.name}>{item.name}</Text>
         </Stack>
-      </Stack>
-    </Button>
+      </Button>
+    ),
+    []
   );
 
   const header = <Text style={styles.heading}>{t("recentSearch")}</Text>;

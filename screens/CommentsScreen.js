@@ -19,9 +19,9 @@ import {
   Spinner,
   Stack,
 } from "../components/core";
-import { useFocusEffect } from "@react-navigation/native";
 import { CardComment } from "../components/customized";
 import { useTranslation } from "react-i18next";
+import { useHttpGet } from "../hooks";
 
 const CommentsScreen = (props) => {
   const { user } = useAuth();
@@ -29,23 +29,10 @@ const CommentsScreen = (props) => {
     props.route.params;
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
-  const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
 
-  useFocusEffect(
-    React.useCallback(() => {
-      setLoading(true);
-      axios
-        .get(`${process.env.BASE_ENDPOINT}/posts/${postId}/get-comments`)
-        .then((res) => {
-          setComments(res.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-          setLoading(false);
-        });
-    }, [postId])
+  const { loading } = useHttpGet(`/posts/${postId}/get-comments`, (data) =>
+    setComments(data)
   );
 
   const handleComment = () => {
@@ -78,20 +65,23 @@ const CommentsScreen = (props) => {
       .catch((err) => console.log(err));
   };
 
-  const renderHeader = () => (
-    <>
-      <View style={styles.headerCont}>
-        <CustomAvatar size={32.5} iconSize={15} avatar={avatar} />
-        <View style={{ marginLeft: 10, flex: 1 }}>
-          <Text>
-            <Text style={styles.username}>{username} </Text>
-            {description}
-          </Text>
-          <Text style={styles.date}>{date}</Text>
+  const renderHeader = useCallback(
+    () => (
+      <>
+        <View style={styles.headerCont}>
+          <CustomAvatar size={32.5} iconSize={15} avatar={avatar} />
+          <View style={{ marginLeft: 10, flex: 1 }}>
+            <Text>
+              <Text style={styles.username}>{username} </Text>
+              {description}
+            </Text>
+            <Text style={styles.date}>{date}</Text>
+          </View>
         </View>
-      </View>
-      <Divider />
-    </>
+        <Divider />
+      </>
+    ),
+    []
   );
 
   const renderComment = useCallback(({ item }) => {

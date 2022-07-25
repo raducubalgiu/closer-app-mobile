@@ -5,7 +5,7 @@ import { useAuth } from "./auth";
 
 const BASE_ENDPOINT = `${process.env.BASE_ENDPOINT}`;
 
-export const useHttpGet = (route) => {
+export const useHttpGet = (route, callback) => {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
@@ -23,6 +23,7 @@ export const useHttpGet = (route) => {
         })
         .then((res) => {
           setData(res.data);
+          if (callback) callback(res.data);
         })
         .catch((err) => {
           const { message } = err.response.data;

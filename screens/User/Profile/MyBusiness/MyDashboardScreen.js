@@ -72,15 +72,18 @@ const MyDashboardScreen = () => {
   const btnActive = { ...styles.btn, ...styles.btnActive };
   const btnTxtActive = { ...styles.btnTxt, ...styles.btnTxtActive };
 
-  const renderButton = ({ item }) => (
-    <Button
-      onPress={() => setPeriod(item)}
-      sx={item._id === period._id ? btnActive : styles.btn}
-    >
-      <Text style={item._id === period._id ? btnTxtActive : styles.btnTxt}>
-        {item.title}
-      </Text>
-    </Button>
+  const renderButton = useCallback(
+    ({ item }) => (
+      <Button
+        onPress={() => setPeriod(item)}
+        sx={item._id === period._id ? btnActive : styles.btn}
+      >
+        <Text style={item._id === period._id ? btnTxtActive : styles.btnTxt}>
+          {item.title}
+        </Text>
+      </Button>
+    ),
+    []
   );
 
   return (

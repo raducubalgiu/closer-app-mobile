@@ -1,79 +1,57 @@
-import {
-  FlatList,
-  SafeAreaView,
-  StyleSheet,
-  View,
-  RefreshControl,
-} from "react-native";
-import React, { useEffect, useState } from "react";
+import { FlatList, SafeAreaView, StyleSheet, View } from "react-native";
+import React, { useCallback, useState } from "react";
 import { Header, Spinner } from "../components/core";
-import FakeSearchBarSimple from "../components/customized/FakeSearchBar/FakeSearchBarSimple";
-import axios from "axios";
-import { CardFollowers } from "../components/customized";
-import { useAuth } from "../hooks";
+import { CardFollowers, FakeSearchBarSimple } from "../components/customized";
+import { useAuth, useHttpGet } from "../hooks";
+import { useTranslation } from "react-i18next";
 
-const LikesScreen = (props) => {
+const LikesScreen = ({ route }) => {
   const { user } = useAuth();
-  const { postId } = props.route.params;
+  const { postId } = route.params;
   const [likes, setLikes] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
+  const { t } = useTranslation();
 
-  useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`${process.env.BASE_ENDPOINT}/posts/${postId}/get-likes`)
-      .then((res) => {
-        setLikes(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
-    setLoading(false);
-  }, []);
-
-  const wait = (timeout) => {
-    return new Promise((resolve) => setTimeout(resolve, timeout));
-  };
-
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    wait(1000).then(() => {
-      setRefreshing(false);
-    });
-  }, []);
-
-  const renderPerson = ({ item }) => (
-    <CardFollowers
-      avatar={item?.user?.avatar}
-      username={item?.user?.username}
-      name={item?.user?.name}
-      followeeId={item?.user?._id}
-      userId={user?._id}
-    />
+  const { loading } = useHttpGet(`/posts/${postId}/get-likes`, (data) =>
+    setLikes(data)
   );
+
+  const renderPerson = useCallback(
+    ({ item }) => (
+      <CardFollowers
+        avatar={item?.user?.avatar}
+        username={item?.user?.username}
+        name={item?.user?.name}
+        followeeId={item?.user?._id}
+        userId={user?._id}
+      />
+    ),
+    []
+  );
+
+  const header = useCallback(
+    () => <>{!loading && likes.length > 20 && <FakeSearchBarSimple />}</>,
+    []
+  );
+
+  const keyExtractor = useCallback((item) => item?._id, []);
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Header title="Aprecieri" divider={true} />
+      <Header title={t("likes")} divider={true} />
       <View style={styles.listContainer}>
-        <FlatList
-          style={{ paddingTop: 5 }}
-          showsVerticalScrollIndicator={false}
-          initialNumToRender={4}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-          ListHeaderComponent={
-            <>{!loading && likes.length > 20 && <FakeSearchBarSimple />}</>
-          }
-          contentContainerStyle={{ marginTop: 10 }}
-          data={likes}
-          keyExtractor={(item) => item?._id}
-          renderItem={loading ? <Spinner /> : renderPerson}
-        />
+        {loading && <Spinner />}
+        {!loading && (
+          <FlatList
+            style={{ paddingTop: 5 }}
+            showsVerticalScrollIndicator={false}
+            initialNumToRender={4}
+            ListHeaderComponent={header}
+            contentContainerStyle={{ marginTop: 10 }}
+            data={likes}
+            keyExtractor={keyExtractor}
+            renderItem={renderPerson}
+          />
+        )}
       </View>
     </SafeAreaView>
   );

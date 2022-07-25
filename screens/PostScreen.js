@@ -20,11 +20,15 @@ const PostScreen = ({ route }) => {
     ({ item }) => <CardPost post={item} />,
     []
   );
-  const getItemLayout = (data, index) => ({
-    length: width,
-    offset: height * index,
-    index,
-  });
+  const getItemLayout = useCallback(
+    (data, index) => ({
+      length: width,
+      offset: height * index,
+      index,
+    }),
+    []
+  );
+  const keyExtractor = useCallback((item) => item?._id, []);
 
   return (
     <View style={styles.screen}>
@@ -36,7 +40,7 @@ const PostScreen = ({ route }) => {
         initialScrollIndex={3}
         getItemLayout={getItemLayout}
         data={posts}
-        keyExtractor={(item) => item?._id}
+        keyExtractor={keyExtractor}
         renderItem={renderUserPosts}
       />
     </View>
