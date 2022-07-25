@@ -15,26 +15,22 @@ export const useHttpGet = (route) => {
     useCallback(() => {
       const controller = new AbortController();
 
-      const fetchData = async () => {
-        setLoading(true);
-        axios
-          .get(`${BASE_ENDPOINT}${route}`, {
-            signal: controller.signal,
-            headers: { Authorization: `Bearer ${user.token}` },
-          })
-          .then((res) => {
-            setData(res.data);
-          })
-          .catch((err) => {
-            const { message } = err.response.data;
-            setFeedback({ visible: true, message });
-          })
-          .finally(() => {
-            setLoading(false);
-          });
-      };
-
-      fetchData();
+      setLoading(true);
+      axios
+        .get(`${BASE_ENDPOINT}${route}`, {
+          signal: controller.signal,
+          headers: { Authorization: `Bearer ${user.token}` },
+        })
+        .then((res) => {
+          setData(res.data);
+        })
+        .catch((err) => {
+          const { message } = err.response.data;
+          setFeedback({ visible: true, message });
+        })
+        .finally(() => {
+          setLoading(false);
+        });
 
       return () => {
         controller.abort();
