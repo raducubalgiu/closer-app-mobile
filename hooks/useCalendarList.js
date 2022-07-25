@@ -1,8 +1,9 @@
-import React, { useState, useMemo, useCallback } from "react";
 import moment from "moment";
+import React, { useState, useMemo, useCallback, useEffect } from "react";
 import { CalendarList } from "react-native-calendars";
 import { LocaleConfig } from "react-native-calendars";
 import theme from "../assets/styles/theme";
+import { useDates } from "./useDates";
 
 LocaleConfig.locales["ro"] = {
   monthNames: [
@@ -47,38 +48,107 @@ LocaleConfig.locales["ro"] = {
 };
 LocaleConfig.defaultLocale = "ro";
 
+const { primary, black } = theme.lightColors;
+
 export const useCalendarList = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const minDate = moment().format("YYYY-MM-DD");
-  const maxDate = moment().add(120, "days").format("YYYY-MM-DD");
-
-  // const periods = ["2022-05-11", "2022-05-12", "2023-05-13", "2024-05-14"];
-  // const range = periods.map((period, i) => {
-  //   return {
-  //     period: {
-  //       color: "#f1f1f1",
-  //       textColor: theme.lightColors.grey0,
-  //     },
-  //   };
-  // })
-
-  const periods = ["2022-05-11", "2022-05-12", "2022-05-13", "2022-05-14"];
+  const { _minDate, _maxDate } = useDates();
 
   const marked = useMemo(() => {
     return {
       [startDate]: {
         startingDay: true,
-        color: theme.lightColors.primary,
+        color: primary,
         textColor: "white",
       },
-      // [period]: {
-      //   color: "#f1f1f1",
-      //   textColor: theme.lightColors.grey0,
-      // },
+      "2022-08-2": {
+        color: "#f1f1f1",
+        textColor: black,
+      },
+      "2022-08-03": {
+        color: "#f1f1f1",
+        textColor: black,
+      },
+      "2022-08-04": {
+        color: "#f1f1f1",
+        textColor: black,
+      },
+      "2022-08-05": {
+        color: "#f1f1f1",
+        textColor: black,
+      },
+      "2022-08-06": {
+        color: "#f1f1f1",
+        textColor: black,
+      },
+      "2022-08-07": {
+        color: "#f1f1f1",
+        textColor: black,
+      },
+      "2022-08-08": {
+        color: "#f1f1f1",
+        textColor: black,
+      },
+      "2022-08-09": {
+        color: "#f1f1f1",
+        textColor: black,
+      },
+      "2022-08-10": {
+        color: "#f1f1f1",
+        textColor: black,
+      },
+      "2022-08-11": {
+        color: "#f1f1f1",
+        textColor: black,
+      },
+      "2022-08-12": {
+        color: "#f1f1f1",
+        textColor: black,
+      },
+      "2022-08-13": {
+        color: "#f1f1f1",
+        textColor: black,
+      },
+      "2022-08-14": {
+        color: "#f1f1f1",
+        textColor: black,
+      },
+      "2022-08-15": {
+        color: "#f1f1f1",
+        textColor: black,
+      },
+      "2022-08-16": {
+        color: "#f1f1f1",
+        textColor: black,
+      },
+      "2022-08-17": {
+        color: "#f1f1f1",
+        textColor: black,
+      },
+      "2022-08-18": {
+        color: "#f1f1f1",
+        textColor: black,
+      },
+      "2022-08-19": {
+        color: "#f1f1f1",
+        textColor: black,
+      },
+      "2022-08-20": {
+        color: "#f1f1f1",
+        textColor: black,
+      },
+      "2022-08-21": {
+        color: "#f1f1f1",
+        textColor: black,
+      },
+      "2022-08-22": {
+        color: "#f1f1f1",
+        textColor: black,
+      },
       [endDate]: {
         endingDay: true,
-        color: theme.lightColors.primary,
+        color: primary,
         textColor: "white",
       },
     };
@@ -108,17 +178,17 @@ export const useCalendarList = () => {
         hideExtraDays={true}
         disableAllTouchEventsForDisabledDays
         firstDay={1}
-        minDate={minDate}
-        maxDate={maxDate}
+        minDate={_minDate}
+        maxDate={_maxDate}
         pastScrollRange={0}
-        futureScrollRange={5}
+        futureScrollRange={3}
         markingType={"period"}
         theme={{
           textDayHeaderFontFamily: "Exo-Medium",
           textMonthFontFamily: "Exo-SemiBold",
           textDayFontFamily: "Exo-SemiBold",
           textDayFontSize: 14,
-          arrowColor: theme.lightColors.primary,
+          arrowColor: primary,
           disabledArrowColor: "#f1f1f1",
         }}
         markedDates={marked}

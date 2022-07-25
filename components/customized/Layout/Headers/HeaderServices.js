@@ -12,12 +12,7 @@ import { Icon, Switch, Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 
-export const HeaderServices = ({
-  period,
-  onToggleSwitch,
-  serviceName,
-  checked,
-}) => {
+export const HeaderServices = ({ onToggleSwitch, serviceName, checked }) => {
   const navigation = useNavigation();
   const { t } = useTranslation();
 
@@ -34,11 +29,7 @@ export const HeaderServices = ({
         <TouchableOpacity style={styles.search}>
           <Icon name="search" size={18} color={theme.lightColors.grey0} />
           <Text style={styles.service}>{serviceName},</Text>
-          <Text style={styles.searchText}>
-            {period?.code === 0
-              ? displayPeriod(period?.startDate, period?.endDate)
-              : period?.type}
-          </Text>
+          <Text style={styles.searchText}>"Period"</Text>
         </TouchableOpacity>
       </Stack>
       <ScrollView

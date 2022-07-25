@@ -1,17 +1,18 @@
 import { useNavigation } from "@react-navigation/native";
+import React, { useCallback } from "react";
 import axios from "axios";
-import { StyleSheet } from "react-native";
-import theme from "../assets/styles/theme";
-import React, { useCallback, useState } from "react";
-import { useCalendarList } from "../hooks";
+import { StyleSheet, View } from "react-native";
 import { useTranslation } from "react-i18next";
+import { Divider } from "@rneui/themed";
+import moment from "moment";
+import theme from "../assets/styles/theme";
+import { useCalendarList } from "../hooks";
 import { ButtonGroup } from "../components/core";
 import { FiltersContainer, SheetHeader } from "../components/customized";
 
 const FiltersDateScreen = ({ route }) => {
   const { serviceId, serviceName } = route.params;
   const navigation = useNavigation();
-  const [activeHours, setActiveHours] = useState(0);
   const { calendar, startDate, endDate } = useCalendarList();
   const { t } = useTranslation();
 
@@ -30,7 +31,8 @@ const FiltersDateScreen = ({ route }) => {
           navigation.navigate("FiltersService", {
             serviceId,
             serviceName,
-            period: navigate(activeBtn),
+            startDate,
+            endDate,
           });
         }
       })
@@ -47,7 +49,7 @@ const FiltersDateScreen = ({ route }) => {
     setActiveBtn(index);
   }, []);
   const handleHoursBtns = useCallback((index) => {
-    setActiveHours(index);
+    //setActiveHours(index);
   }, []);
 
   const footerBtns = (
@@ -65,14 +67,21 @@ const FiltersDateScreen = ({ route }) => {
       onNext={goNext}
       footerExtraBtns={footerBtns}
     >
-      <SheetHeader title={serviceName} description="23 iun. - 14 iul." />
+      <SheetHeader
+        title={serviceName}
+        description={`${moment.utc(startDate).format("DD MMM")} - ${moment
+          .utc(endDate)
+          .format("DD MMM")}`}
+      />
       <ButtonGroup
         onPress={handleDateBtns}
         buttons={dateButtons}
         size="small"
         activeButton={0}
+        sx={{ marginBottom: 15 }}
       />
-      {calendar}
+      <Divider />
+      <View style={{ flex: 1 }}>{calendar}</View>
     </FiltersContainer>
   );
 };

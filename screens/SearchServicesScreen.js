@@ -1,5 +1,5 @@
 import { SafeAreaView, StyleSheet, Text, FlatList } from "react-native";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
@@ -30,9 +30,8 @@ const SUGGESTED_SERVICES = [
   },
 ];
 
-const SearchServicesScreen = ({ route }) => {
+const SearchServicesScreen = () => {
   const { user } = useAuth();
-  const { period } = route.params;
   const [search, setSearch] = useState("");
   const [services, setServices] = useState([]);
   const { t } = useTranslation();
@@ -45,9 +44,7 @@ const SearchServicesScreen = ({ route }) => {
         .get(`${process.env.BASE_ENDPOINT}/services/search/?name=${search}`, {
           headers: { Authorization: `Bearer ${user?.token}` },
         })
-        .then((res) => {
-          setServices(res.data.services);
-        })
+        .then((res) => setServices(res.data))
         .catch((err) => console.log(err));
     } else {
       setServices([]);
@@ -60,7 +57,6 @@ const SearchServicesScreen = ({ route }) => {
         navigation.navigate("FiltersDate", {
           serviceId: item._id,
           serviceName: item.name,
-          period,
         });
       }}
       sx={styles.item}
@@ -70,20 +66,22 @@ const SearchServicesScreen = ({ route }) => {
     </Button>;
   };
 
-  const renderServices = ({ item }) => (
-    <Button
-      onPress={() => {
-        navigation.navigate("FiltersDate", {
-          serviceId: item._id,
-          serviceName: item.name,
-          period,
-        });
-      }}
-      sx={styles.item}
-    >
-      <Text style={styles.serviceItem}>{item.name}</Text>
-      <Text style={styles.categoryItem}>{item.categoryName}</Text>
-    </Button>
+  const renderServices = useCallback(
+    ({ item }) => (
+      <Button
+        onPress={() => {
+          navigation.navigate("FiltersDate", {
+            serviceId: item._id,
+            serviceName: item.name,
+          });
+        }}
+        sx={styles.item}
+      >
+        <Text style={styles.serviceItem}>{item.name}</Text>
+        <Text style={styles.categoryItem}>{item.categoryName}</Text>
+      </Button>
+    ),
+    []
   );
 
   return (

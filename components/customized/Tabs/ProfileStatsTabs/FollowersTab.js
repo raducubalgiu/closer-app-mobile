@@ -1,32 +1,15 @@
 import { StyleSheet, View, FlatList } from "react-native";
 import React, { useCallback, useState } from "react";
-import { useFocusEffect } from "@react-navigation/native";
-import { CardFollowers } from "../../Cards/CardFollowers";
-import { useAuth } from "../../../../hooks/auth";
-import axios from "axios";
-import { SearchBarInput } from "../../../core";
 import { useTranslation } from "react-i18next";
+import { CardFollowers } from "../../Cards/CardFollowers";
+import { SearchBarInput } from "../../../core";
+import { useHttpGet } from "../../../../hooks";
 
 export const FollowersTab = ({ userId }) => {
-  const { user } = useAuth();
   const [search, setSearch] = useState("");
-  const [followers, setFollowers] = useState([]);
   const { t } = useTranslation();
 
-  useFocusEffect(
-    React.useCallback(() => {
-      axios
-        .get(`${process.env.BASE_ENDPOINT}/users/${userId}/follows/followers`, {
-          headers: { Authorization: `Bearer ${user?.token}` },
-        })
-        .then((res) => {
-          setFollowers(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }, [userId, user?.token])
-  );
+  const { data: followers } = useHttpGet(`/users/${userId}/follows/followers`);
 
   const updateSearch = (text) => setSearch(text);
 
@@ -56,13 +39,15 @@ export const FollowersTab = ({ userId }) => {
     []
   );
 
+  const keyExtractor = useCallback((item) => item?._id, []);
+
   return (
     <View style={styles.screen}>
-      {followers.length > 0 && (
+      {followers?.length > 0 && (
         <FlatList
           ListHeaderComponent={header}
           data={followers}
-          keyExtractor={(item) => item?._id}
+          keyExtractor={keyExtractor}
           renderItem={renderPerson}
           showsVerticalScrollIndicator={false}
         />

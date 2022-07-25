@@ -3,7 +3,7 @@ import React, { useCallback, useState } from "react";
 import theme from "../../../assets/styles/theme";
 import { Stack } from "../Stack/Stack";
 
-export const ButtonGroup = ({ activeButton, size, onPress, buttons }) => {
+export const ButtonGroup = ({ activeButton, size, onPress, buttons, sx }) => {
   const [activeBtn, setActiveBtn] = useState(activeButton);
 
   const styles = StyleSheet.create({
@@ -37,7 +37,7 @@ export const ButtonGroup = ({ activeButton, size, onPress, buttons }) => {
   const activeBtnTxt = { ...styles.btnTxt, ...styles.btnTxtActive };
 
   return (
-    <View style={styles.sx}>
+    <View style={sx}>
       <Stack>
         <View style={styles.buttonsContainer}>
           {buttons.map((button, index) => (

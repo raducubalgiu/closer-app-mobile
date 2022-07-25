@@ -183,7 +183,7 @@ export const Map = ({ locations, serviceName }) => {
       customMapStyle={mapStyle}
       provider={PROVIDER_GOOGLE}
     >
-      {locations.map((loc, i) => (
+      {locations?.map((loc, i) => (
         <Marker
           key={i}
           coordinate={{

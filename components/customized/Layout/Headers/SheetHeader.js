@@ -4,9 +4,9 @@ import { Icon } from "@rneui/themed";
 import { IconBackButton, Stack } from "../../../core";
 import theme from "../../../../assets/styles/theme";
 
-export const SheetHeader = ({ title, description }) => {
+export const SheetHeader = ({ title, description, sx }) => {
   return (
-    <Stack direction="row" sx={styles.sheetOverview}>
+    <Stack direction="row" sx={{ ...styles.sheetOverview, ...sx }}>
       <IconBackButton size={20} />
       <Stack>
         <Text style={styles.title}>{title}</Text>

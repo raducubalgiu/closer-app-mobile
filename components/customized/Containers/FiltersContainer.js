@@ -13,6 +13,7 @@ export const FiltersContainer = ({
   headerTitle,
   headerDescription,
   footerExtraBtns,
+  footerJustify,
 }) => {
   const { t } = useTranslation();
 
@@ -27,7 +28,11 @@ export const FiltersContainer = ({
           <View style={styles.body}>{children}</View>
         </View>
       </SafeAreaView>
-      <Stack direction="row" sx={styles.footer} justify="between">
+      <Stack
+        direction="row"
+        sx={styles.footer}
+        justify={footerJustify ? footerJustify : "between"}
+      >
         {footerExtraBtns}
         <MainButton size="lg" onPress={onNext} title={t("next")} />
       </Stack>
@@ -40,7 +45,7 @@ const styles = StyleSheet.create({
     backgroundColor: primary,
     flex: 1,
   },
-  header: { height: height / 8, margin: 15 },
+  header: { height: height / 8, margin: 25 },
   mainHeading: { color: "white", fontFamily: "Exo-ExtraBold", fontSize: 28 },
   body: {
     flex: 1,

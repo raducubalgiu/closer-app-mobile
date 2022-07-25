@@ -1,16 +1,15 @@
-import { StyleSheet, Text, FlatList, SafeAreaView } from "react-native";
-import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, FlatList } from "react-native";
+import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
-import { Stack, Spinner, Button, MainButton } from "../components/core";
-import { SheetHeader } from "../components/customized";
+import { Button } from "../components/core";
+import { FiltersContainer, SheetHeader } from "../components/customized";
 import theme from "../assets/styles/theme";
-import { useSheetView } from "../hooks";
 import { useTranslation } from "react-i18next";
 
 const FiltersServiceScreen = ({ route }) => {
   const navigation = useNavigation();
-  const { serviceId, serviceName, period } = route.params;
+  const { serviceId, serviceName, startDate, endDate } = route.params;
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState(null);
   const [disabled, setDisabled] = useState(true);
@@ -18,95 +17,65 @@ const FiltersServiceScreen = ({ route }) => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    setLoading(true);
     axios
       .get(`${process.env.BASE_ENDPOINT}/services/${serviceId}`)
       .then((res) => {
         setFilter(res.data.service.filters[0]);
-        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
-        setLoading(false);
       });
   }, [serviceId]);
 
-  const disabledStyle = { ...styles.mainButton, backgroundColor: "#ccc" };
+  const activeBtn = { ...styles.button, backgroundColor: "#bbb" };
+  const activeBtnTxt = { ...styles.buttonText, color: "white" };
 
   const goToServices = () =>
     navigation.navigate("Locations", {
       serviceId,
       serviceName,
       optionId: option?._id,
-      period,
+      startDate,
+      endDate,
     });
 
-  const renderOption = ({ item }) => (
-    <Button
-      onPress={() => {
-        setDisabled(false);
-        setOption(item);
-      }}
-      sx={
-        item._id !== option._id
-          ? styles.button
-          : { ...styles.button, backgroundColor: "#bbb" }
-      }
-    >
-      <Text
-        style={
-          item._id !== option._id
-            ? styles.buttonText
-            : { ...styles.buttonText, color: "white" }
-        }
+  const renderOption = useCallback(
+    ({ item }) => (
+      <Button
+        onPress={() => {
+          setDisabled(false);
+          setOption(item);
+        }}
+        sx={item._id !== option._id ? styles.button : activeBtn}
       >
-        {item?.name}
-      </Text>
-    </Button>
+        <Text
+          style={item._id !== option._id ? styles.buttonText : activeBtnTxt}
+        >
+          {item?.name}
+        </Text>
+      </Button>
+    ),
+    [activeBtn, activeBtnTxt]
   );
 
-  const sheetContent = (
-    <>
+  return (
+    <FiltersContainer
+      headerTitle={"Filtreaza"}
+      headerDescription={"serviciile"}
+      footerJustify="end"
+      onNext={goToServices}
+    >
       <SheetHeader
         title={`Filtru - ${filter?.name}`}
         description={option?.name}
       />
-      {loading && <Spinner />}
-      {!loading && (
-        <FlatList
-          bounces={false}
-          data={filter?.options}
-          keyExtractor={(item) => item._id}
-          renderItem={renderOption}
-        />
-      )}
-    </>
-  );
-  const footerContent = (
-    <Stack direction="row" justify="end" sx={styles.footerContainer}>
-      <MainButton
-        title={t("next")}
-        size="lg"
-        onPress={goToServices}
-        style={disabled ? disabledStyle : styles.mainButton}
+      <FlatList
+        bounces={false}
+        data={filter?.options}
+        keyExtractor={(item) => item._id}
+        renderItem={renderOption}
       />
-    </Stack>
-  );
-
-  const { BOTTOM_SHEET } = useSheetView(
-    ["75%", "90%"],
-    sheetContent,
-    footerContent
-  );
-
-  return (
-    <SafeAreaView style={styles.screen}>
-      <Stack align="start" sx={{ margin: 25 }}>
-        <Text style={styles.mainHeading}>Filtreaza</Text>
-        <Text style={styles.mainHeading}>serviciile</Text>
-      </Stack>
-      {BOTTOM_SHEET}
-    </SafeAreaView>
+    </FiltersContainer>
   );
 };
 
