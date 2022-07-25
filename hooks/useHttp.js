@@ -13,12 +13,13 @@ export const useHttpGet = (route) => {
 
   useFocusEffect(
     useCallback(() => {
-      let isActive = false;
+      const controller = new AbortController();
 
       const fetchData = async () => {
         setLoading(true);
         axios
           .get(`${BASE_ENDPOINT}${route}`, {
+            signal: controller.signal,
             headers: { Authorization: `Bearer ${user.token}` },
           })
           .then((res) => {
@@ -36,7 +37,7 @@ export const useHttpGet = (route) => {
       fetchData();
 
       return () => {
-        isActive = false;
+        controller.abort();
       };
     }, [route])
   );

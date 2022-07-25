@@ -21,7 +21,6 @@ export { PostsProfileTab } from "./Tabs/ProfileTabs/PostsProfileTab";
 export { ProductsProfileTab } from "./Tabs/ProfileTabs/ProductsProfileTab";
 export { AboutProfileTab } from "./Tabs/ProfileTabs/AboutProfileTab";
 export { JobsProfileTab } from "./Tabs/ProfileTabs/JobsProfileTab";
-export { CalendarProfileTab } from "./Tabs/ProfileTabs/CalendarProfileTab";
 export { FollowersTab } from "./Tabs/ProfileStatsTabs/FollowersTab";
 export { FollowingsTab } from "./Tabs/ProfileStatsTabs/FollowingsTab";
 export { RatingsTab } from "./Tabs/ProfileStatsTabs/RatingsTab";

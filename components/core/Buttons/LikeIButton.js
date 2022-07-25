@@ -16,12 +16,13 @@ export const LikeIButton = ({ postId, onAddLike, onRemoveLike, ...props }) => {
 
   useFocusEffect(
     useCallback(() => {
-      let isActive = true;
+      const controller = new AbortController();
 
       axios
         .get(
           `${process.env.BASE_ENDPOINT}/users/${user?._id}/posts/${postId}/likes`,
           {
+            signal: controller.signal,
             headers: { Authorization: `Bearer ${user?.token}` },
           }
         )
@@ -30,8 +31,10 @@ export const LikeIButton = ({ postId, onAddLike, onRemoveLike, ...props }) => {
         })
         .catch(() => {});
 
-      return () => (isActive = false);
-    }, [postId])
+      return () => {
+        controller.abort();
+      };
+    }, [postId, user])
   );
 
   const likeHandler = useCallback(() => {

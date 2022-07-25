@@ -1,37 +1,17 @@
 import { FlatList } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
-import React, { useState } from "react";
-import { CardRatings } from "../../Cards/CardRatings";
-import axios from "axios";
+import { useCallback } from "react";
 import moment from "moment";
-import { useAuth } from "../../../../hooks";
 import { useTranslation } from "react-i18next";
+import { CardRatings } from "../../Cards/CardRatings";
+import { useHttpGet } from "../../../../hooks";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 
 export const RatingsTab = ({ userId }) => {
-  const { user } = useAuth();
-  const [reviews, setReviews] = useState([]);
-  const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
 
-  useFocusEffect(
-    React.useCallback(() => {
-      setLoading(true);
-      axios
-        .get(`${process.env.BASE_ENDPOINT}/users/${userId}/reviews`, {
-          headers: { Authorization: `Bearer ${user?.token}` },
-        })
-        .then((res) => {
-          setReviews(res.data);
-          setLoading(false);
-        })
-        .catch(() => {
-          setLoading(false);
-        });
-    }, [userId, user?.token])
-  );
+  const { data: reviews } = useHttpGet(`/users/${userId}/reviews`);
 
-  const renderRatings = ({ item }) => {
+  const renderRatings = useCallback(({ item }) => {
     const { reviewer, rating, review, createdAt } = item;
 
     return (
@@ -44,24 +24,24 @@ export const RatingsTab = ({ userId }) => {
         service={"Tuns"}
       />
     );
-  };
+  }, []);
+
+  const keyExtractor = useCallback((item) => item?._id, []);
 
   return (
     <>
-      {!loading && reviews.length === 0 && (
+      {reviews?.length === 0 && (
         <NoFoundMessage
           title={t("reviews")}
           description={t("noFoundReviews")}
         />
       )}
-      {!loading && (
-        <FlatList
-          data={reviews}
-          keyExtractor={(item) => item?._id}
-          renderItem={renderRatings}
-          showsVerticalScrollIndicator={false}
-        />
-      )}
+      <FlatList
+        data={reviews}
+        keyExtractor={keyExtractor}
+        renderItem={renderRatings}
+        showsVerticalScrollIndicator={false}
+      />
     </>
   );
 };

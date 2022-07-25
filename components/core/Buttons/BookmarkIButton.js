@@ -15,14 +15,23 @@ export const BookmarkIButton = ({ postId, sx, size }) => {
 
   useFocusEffect(
     React.useCallback(() => {
+      const controller = new AbortController();
+
       axios
         .get(BOOKMARK_ENDPOINT, {
-          headers: { Authorization: `Bearer ${user?.token}` },
+          signal: controller.signal,
+          headers: {
+            Authorization: `Bearer ${user?.token}`,
+          },
         })
         .then((res) => {
           setBookmarked(res.data.status);
         })
         .catch(() => {});
+
+      return () => {
+        controller.abort();
+      };
     }, [BOOKMARK_ENDPOINT])
   );
 

@@ -1,63 +1,24 @@
-import { StyleSheet, Dimensions, View } from "react-native";
-import axios from "axios";
-import { useFocusEffect } from "@react-navigation/native";
-import { Image, Icon } from "@rneui/themed";
-import React, { useEffect, useState } from "react";
+import { StyleSheet, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import CompleteProfile from "../../CompleteProfile/CompleteProfile";
-import NoFoundPosts from "../../NotFoundContent/NoFoundPosts";
-import theme from "../../../../assets/styles/theme";
-import { useAuth } from "../../../../hooks/auth";
-import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
-import { useTranslation } from "react-i18next";
 import { CardPostImage } from "../../Cards/CardPostImage";
-
-const { width, height } = Dimensions.get("window");
+import { useHttpGet } from "../../../../hooks";
 
 export const PostsProfileTab = ({ userId, username }) => {
-  const [posts, setPosts] = useState([]);
-  const { user } = useAuth();
   const navigation = useNavigation();
-  const { t } = useTranslation();
 
-  useFocusEffect(
-    React.useCallback(() => {
-      axios
-        .get(`${process.env.BASE_ENDPOINT}/users/${userId}/posts`, {
-          headers: { Authorization: `Bearer ${user?.token}` },
-        })
-        .then((res) => setPosts(res.data))
-        .catch((err) => console.log(err));
-    }, [userId, user])
-  );
+  const { data: posts } = useHttpGet(`/users/${userId}/posts`);
 
-  let noFoundPosts;
-  if (posts.length === 0 && user?._id !== userId) {
-    noFoundPosts = (
-      <NoFoundMessage
-        sx={{ marginTop: 50 }}
-        title={t("posts")}
-        description={`${t("postsCreatedBy")} ${username} ${t("willApearHere")}`}
-      />
-    );
-  } else if (posts.length === 0 && user?._id === userId) {
-    noFoundPosts = <NoFoundPosts />;
-  }
-  let completeProfile;
-  if (user?._id === userId) {
-    completeProfile = <CompleteProfile />;
-  }
+  const goToPosts = (item) =>
+    navigation.navigate("Post", {
+      postId: item._id,
+      userId: item.user._id,
+    });
 
   return (
     <View style={styles.container}>
-      {posts.map((item, i) => (
+      {posts?.map((item, i) => (
         <CardPostImage
-          onPress={() =>
-            navigation.navigate("Post", {
-              postId: item._id,
-              userId: item.user._id,
-            })
-          }
+          onPress={() => goToPosts(item)}
           key={i}
           index={i}
           image={item?.images[0]?.url}
