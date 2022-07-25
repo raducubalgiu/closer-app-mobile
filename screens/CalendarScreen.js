@@ -47,6 +47,16 @@ const CalendarScreen = ({ route }) => {
     fetchSlots();
   }, [fetchSlots]);
 
+  const renderSlot = (slot) => {
+    return (
+      <Button onPress={() => goToConfirm(slot)}>
+        <Stack direction="row" justify="start" sx={styles.slot}>
+          <Text style={styles.slotText}>{slot}</Text>
+        </Stack>
+      </Button>
+    );
+  };
+
   const goToConfirm = (slot) => {
     navigation.navigate("ScheduleConfirm", {
       selectedDay,
@@ -57,16 +67,6 @@ const CalendarScreen = ({ route }) => {
       hours,
       employee,
     });
-  };
-
-  const renderSlot = (slot) => {
-    return (
-      <Button onPress={() => goToConfirm(slot)}>
-        <Stack direction="row" justify="start" sx={styles.slot}>
-          <Text style={styles.slotText}>{slot}</Text>
-        </Stack>
-      </Button>
-    );
   };
 
   const noFoundData = (
@@ -82,8 +82,6 @@ const CalendarScreen = ({ route }) => {
       )}
     </>
   );
-
-  console.log("SELECTED DAY!!", selectedDay);
 
   const handleDayPress = useCallback((day) => {
     setSelectedDay(day.dateString);

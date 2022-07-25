@@ -43,10 +43,10 @@ export const CardLocation = ({ location, initServ }) => {
             <Stack direction="row" sx={styles.ratings}>
               <IconStar />
               <Text style={styles.ratingsAverage}>
-                {counter[0]?.ratingsAverage?.toFixed(1)}
+                {counter?.ratingsAverage?.toFixed(1)}
               </Text>
               <Text style={styles.ratingsQuantity}>
-                {counter[0]?.ratingsQuantity} {t("reviews")}
+                {counter?.ratingsQuantity} {t("reviews")}
               </Text>
             </Stack>
           </Stack>

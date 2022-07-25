@@ -1,31 +1,21 @@
 import { StyleSheet, Text, FlatList, SafeAreaView } from "react-native";
-import React, {
-  useEffect,
-  useState,
-  useCallback,
-  useMemo,
-  useRef,
-} from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
-import BottomSheet, {
-  BottomSheetView,
-  BottomSheetFooter,
-} from "@gorhom/bottom-sheet";
-import { Stack, Spinner, Button } from "../components/core";
+import { Stack, Spinner, Button, MainButton } from "../components/core";
 import { SheetHeader } from "../components/customized";
 import theme from "../assets/styles/theme";
-import { useHttpGet } from "../hooks";
+import { useSheetView } from "../hooks";
+import { useTranslation } from "react-i18next";
 
 const FiltersServiceScreen = ({ route }) => {
   const navigation = useNavigation();
-  const sheetRef = useRef(null);
-  const snapPoints = useMemo(() => ["75%", "90%"], []);
   const { serviceId, serviceName, period } = route.params;
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState(null);
   const [disabled, setDisabled] = useState(true);
   const [option, setOption] = useState("");
+  const { t } = useTranslation();
 
   useEffect(() => {
     setLoading(true);
@@ -43,29 +33,13 @@ const FiltersServiceScreen = ({ route }) => {
 
   const disabledStyle = { ...styles.mainButton, backgroundColor: "#ccc" };
 
-  const renderFooter = useCallback(
-    (props) => (
-      <BottomSheetFooter {...props}>
-        <Stack direction="row" justify="end" sx={styles.footerContainer}>
-          <Button
-            disabled={disabled}
-            onPress={() =>
-              navigation.navigate("Locations", {
-                serviceId,
-                serviceName,
-                optionId: option?._id,
-                period,
-              })
-            }
-            style={disabled ? disabledStyle : styles.mainButton}
-          >
-            <Text style={styles.mainButtonText}>Inainte</Text>
-          </Button>
-        </Stack>
-      </BottomSheetFooter>
-    ),
-    [disabled]
-  );
+  const goToServices = () =>
+    navigation.navigate("Locations", {
+      serviceId,
+      serviceName,
+      optionId: option?._id,
+      period,
+    });
 
   const renderOption = ({ item }) => (
     <Button
@@ -91,34 +65,47 @@ const FiltersServiceScreen = ({ route }) => {
     </Button>
   );
 
+  const sheetContent = (
+    <>
+      <SheetHeader
+        title={`Filtru - ${filter?.name}`}
+        description={option?.name}
+      />
+      {loading && <Spinner />}
+      {!loading && (
+        <FlatList
+          bounces={false}
+          data={filter?.options}
+          keyExtractor={(item) => item._id}
+          renderItem={renderOption}
+        />
+      )}
+    </>
+  );
+  const footerContent = (
+    <Stack direction="row" justify="end" sx={styles.footerContainer}>
+      <MainButton
+        title={t("next")}
+        size="lg"
+        onPress={goToServices}
+        style={disabled ? disabledStyle : styles.mainButton}
+      />
+    </Stack>
+  );
+
+  const { BOTTOM_SHEET } = useSheetView(
+    ["75%", "90%"],
+    sheetContent,
+    footerContent
+  );
+
   return (
     <SafeAreaView style={styles.screen}>
       <Stack align="start" sx={{ margin: 25 }}>
         <Text style={styles.mainHeading}>Filtreaza</Text>
         <Text style={styles.mainHeading}>serviciile</Text>
       </Stack>
-      <BottomSheet
-        handleIndicatorStyle={styles.indicatorStyle}
-        ref={sheetRef}
-        snapPoints={snapPoints}
-        footerComponent={renderFooter}
-      >
-        <BottomSheetView>
-          <SheetHeader
-            title={`Filtru - ${filter?.name}`}
-            description={option?.name}
-          />
-          {loading && <Spinner />}
-          {!loading && (
-            <FlatList
-              bounces={false}
-              data={filter?.options}
-              keyExtractor={(item) => item._id}
-              renderItem={renderOption}
-            />
-          )}
-        </BottomSheetView>
-      </BottomSheet>
+      {BOTTOM_SHEET}
     </SafeAreaView>
   );
 };
@@ -131,15 +118,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   mainHeading: { color: "white", fontFamily: "Exo-ExtraBold", fontSize: 28 },
-  indicatorStyle: {
-    backgroundColor: "#ddd",
-    width: 45,
-    height: 5,
-  },
   footerContainer: {
     backgroundColor: "white",
-    paddingTop: 20,
-    paddingBottom: 40,
+    paddingTop: 10,
+    paddingBottom: 20,
     borderTopWidth: 0.5,
     borderTopColor: "#ddd",
     paddingHorizontal: 15,
@@ -155,16 +137,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: theme.lightColors.black,
     fontFamily: "Exo-SemiBold",
-  },
-  mainButton: {
-    paddingVertical: 12,
-    paddingHorizontal: 25,
-    backgroundColor: theme.lightColors.primary,
-    borderRadius: 5,
-  },
-  mainButtonText: {
-    fontFamily: "Exo-Medium",
-    color: "white",
-    fontSize: 14,
   },
 });

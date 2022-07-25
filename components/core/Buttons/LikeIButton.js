@@ -16,6 +16,8 @@ export const LikeIButton = ({ postId, onAddLike, onRemoveLike, ...props }) => {
 
   useFocusEffect(
     useCallback(() => {
+      let isActive = true;
+
       axios
         .get(
           `${process.env.BASE_ENDPOINT}/users/${user?._id}/posts/${postId}/likes`,
@@ -27,6 +29,8 @@ export const LikeIButton = ({ postId, onAddLike, onRemoveLike, ...props }) => {
           setLiked(res.data.status);
         })
         .catch(() => {});
+
+      return () => (isActive = false);
     }, [postId])
   );
 

@@ -57,8 +57,6 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
   const Tab = createMaterialTopTabNavigator();
   const { t } = useTranslation();
 
-  console.log("HOURS!!!", hours);
-
   const fetchUser = useCallback(() => {
     axios
       .get(
@@ -110,7 +108,7 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
         website={website}
         location={location}
         role={role}
-        openingHours={hours}
+        hours={hours}
       />
     ),
     [description, website, location, role, hours]

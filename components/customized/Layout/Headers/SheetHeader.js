@@ -27,14 +27,13 @@ const styles = StyleSheet.create({
     fontFamily: "Exo-SemiBold",
     textAlign: "center",
     marginTop: 10,
-    fontSize: 16,
+    fontSize: 17,
   },
   description: {
     color: theme.lightColors.grey0,
-    fontFamily: "Exo-Medium",
     marginTop: 5,
     textAlign: "center",
-    fontSize: 13,
+    fontSize: 17,
     marginBottom: 15,
   },
 });

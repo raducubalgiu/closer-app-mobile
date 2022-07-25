@@ -126,6 +126,6 @@ export const useCalendarList = () => {
       />
     ),
     startDate,
-    endDate
+    endDate,
   };
 };

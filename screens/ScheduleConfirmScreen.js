@@ -18,7 +18,6 @@ const ScheduleConfirmScreen = ({ route }) => {
   const {
     getStartTimeByDateAndHours,
     getEndTimeBySlot,
-    getStartSeconds,
     getLocationStartAndEnd,
   } = useDates();
   const navigation = useNavigation();

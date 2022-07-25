@@ -103,11 +103,12 @@ const FeedScreen = () => {
       <FlatList
         ref={ref}
         data={posts}
+        removeClippedSubviews={true}
         nestedScrollEnabled={true}
         keyExtractor={keyExtractor}
         showsVerticalScrollIndicator={false}
-        maxToRenderPerBatch={2}
-        initialNumToRender={2}
+        maxToRenderPerBatch={5}
+        initialNumToRender={5}
         renderItem={renderAllPosts}
       />
     </SafeAreaView>

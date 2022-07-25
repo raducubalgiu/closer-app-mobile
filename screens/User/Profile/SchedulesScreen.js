@@ -5,12 +5,11 @@ import {
   View,
   Text,
 } from "react-native";
-import React, { useState } from "react";
-import axios from "axios";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import React, { useCallback } from "react";
+import { useNavigation } from "@react-navigation/native";
 import { IconButton, Stack } from "../../../components/core";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "../../../hooks";
+import { useAuth, useHttpGet } from "../../../hooks";
 import {
   CardScheduleOverview,
   NoFoundMessage,
@@ -23,42 +22,46 @@ const { black } = theme.lightColors;
 
 const SchedulesScreen = ({ route }) => {
   const { user } = useAuth();
-  const [schedules, setSchedules] = useState([]);
   const { schedule } = route.params || {};
   const navigation = useNavigation();
   const { t } = useTranslation();
 
-  useFocusEffect(
-    React.useCallback(() => {
-      axios
-        .get(`${process.env.BASE_ENDPOINT}/users/${user?._id}/schedules`, {
-          headers: { Authorization: `Bearer ${user?.token}` },
-        })
-        .then((res) => setSchedules(res.data.schedules))
-        .catch((err) => console.log(err));
-    }, [])
+  const { data: schedules } = useHttpGet(`/users/${user?._id}/schedules`);
+
+  const goToDetails = () =>
+    navigation.navigate("ScheduleDetails", {
+      scheduleId: schedule._id,
+    });
+
+  const renderHeader = useCallback(
+    ({ section }) => (
+      <Text style={styles.headerList}>
+        {moment(section._id).utc().format("YYYY MMMM")}
+      </Text>
+    ),
+    []
   );
 
-  const renderHeader = ({ section }) => (
-    <Text style={styles.headerList}>
-      {moment(section._id).utc().format("YYYY MMMM")}
-    </Text>
-  );
+  const renderSchedules = useCallback(({ item }) => {
+    const { avatar, owner, product, service, status, scheduleStart } = item;
 
-  const renderSchedules = ({ item }) => (
-    <CardScheduleOverview
-      onPress={() =>
-        navigation.navigate("ScheduleDetails", { scheduleId: item._id })
-      }
-      avatar={item.avatar}
-      owner={item.owner.name}
-      price={item.product.price}
-      service={item.service.name}
-      status={item.status}
-      scheduleStart={item.scheduleStart}
-      newSched={false}
-    />
-  );
+    return (
+      <CardScheduleOverview
+        onPress={() =>
+          navigation.navigate("ScheduleDetails", { scheduleId: item._id })
+        }
+        avatar={avatar}
+        owner={owner.name}
+        price={product.price}
+        service={service.name}
+        status={status}
+        scheduleStart={scheduleStart}
+        newSched={false}
+      />
+    );
+  }, []);
+
+  const keyExtractor = useCallback((item, index) => item + index, []);
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -76,11 +79,7 @@ const SchedulesScreen = ({ route }) => {
         {schedule && (
           <View style={{ padding: 15 }}>
             <CardScheduleOverview
-              onPress={() =>
-                navigation.navigate("ScheduleDetails", {
-                  scheduleId: schedule._id,
-                })
-              }
+              onPress={goToDetails}
               avatar={schedule.avatar}
               owner={schedule.owner.name}
               price={schedule.product.price}
@@ -91,17 +90,17 @@ const SchedulesScreen = ({ route }) => {
             />
           </View>
         )}
-        {schedules.length > 0 && (
+        {schedules?.length > 0 && (
           <SectionList
             sections={schedules}
-            keyExtractor={(item, index) => item + index}
+            keyExtractor={keyExtractor}
             stickySectionHeadersEnabled={false}
             renderItem={renderSchedules}
             renderSectionHeader={renderHeader}
             contentContainerStyle={{ padding: 15 }}
           />
         )}
-        {schedules.length === 0 && (
+        {schedules?.length === 0 && (
           <NoFoundMessage
             title={t("bookings")}
             description={t("dontHaveBookings")}

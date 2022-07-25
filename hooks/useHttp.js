@@ -1,5 +1,6 @@
+import { useFocusEffect } from "@react-navigation/native";
 import axios from "axios";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useAuth } from "./auth";
 
 const BASE_ENDPOINT = `${process.env.BASE_ENDPOINT}`;
@@ -10,33 +11,37 @@ export const useHttpGet = (route) => {
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const { user } = useAuth();
 
-  const fetchData = useCallback(() => {
-    let isMounted = true;
-    setLoading(true);
-    axios
-      .get(`${BASE_ENDPOINT}${route}`, {
-        headers: { Authorization: `Bearer ${user.token}` },
-      })
-      .then((res) => {
-        setData(res.data);
-      })
-      .catch((err) => {
-        const { message } = err.response.data;
-        setFeedback({ visible: true, message });
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+  useFocusEffect(
+    useCallback(() => {
+      let isActive = false;
 
-    return () => (isMounted = false);
-  }, [route]);
+      const fetchData = async () => {
+        setLoading(true);
+        axios
+          .get(`${BASE_ENDPOINT}${route}`, {
+            headers: { Authorization: `Bearer ${user.token}` },
+          })
+          .then((res) => {
+            setData(res.data);
+          })
+          .catch((err) => {
+            const { message } = err.response.data;
+            setFeedback({ visible: true, message });
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+      };
 
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+      fetchData();
+
+      return () => {
+        isActive = false;
+      };
+    }, [route])
+  );
 
   return {
-    fetchData,
     data,
     loading,
     feedback,

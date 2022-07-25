@@ -71,3 +71,5 @@ export { BusinessScheduleModal } from "../customized/Modals/BusinessScheduleModa
 export { EditProfileSheet } from "../customized/Sheets/EditProfileSheet";
 export { DashboardInfoSheet } from "../customized/Sheets/DashboardInfoSheet";
 export { DashboardCalendarSheet } from "../customized/Sheets/DashboardCalendarSheet";
+
+export { FiltersContainer } from "../customized/Containers/FiltersContainer";
