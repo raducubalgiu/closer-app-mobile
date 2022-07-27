@@ -27,12 +27,8 @@ export const FollowButton = ({
         .get(FOLLOW_ENDPOINT, {
           headers: { Authorization: `Bearer ${user?.token}` },
         })
-        .then((res) => {
-          setFollow(res.data.status);
-        })
-        .catch(() => {
-          setFollow(false);
-        });
+        .then((res) => setFollow(res.data.status))
+        .catch(() => setFollow(false));
     }, [user, followeeId])
   );
 

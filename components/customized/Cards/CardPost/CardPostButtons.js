@@ -1,6 +1,9 @@
 import { StyleSheet, Text, Share } from "react-native";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Icon, Divider } from "@rneui/themed";
+import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
+import { SECOND_ROLE, THIRD_ROLE } from "@env";
 import {
   Stack,
   Button,
@@ -9,11 +12,10 @@ import {
   ShareIButton,
   Protected,
 } from "../../../core";
-import { useNavigation } from "@react-navigation/native";
-import theme from "../../../../assets/styles/theme";
-import { useTranslation } from "react-i18next";
-import { SECOND_ROLE, THIRD_ROLE } from "@env";
 import { useAuth } from "../../../../hooks";
+import theme from "../../../../assets/styles/theme";
+
+const { black } = theme.lightColors;
 
 const CardPostButtons = ({ bookable, postId, likesCount }) => {
   const { user } = useAuth();
@@ -55,7 +57,7 @@ const CardPostButtons = ({ bookable, postId, likesCount }) => {
       <Button onPress={goToCalendar}>
         <Stack direction="row" sx={styles.bookable}>
           <Text style={styles.book}>{t("book")}</Text>
-          <Icon name="keyboard-arrow-right" color={theme.lightColors.black} />
+          <Icon name="keyboard-arrow-right" color={black} size={22.5} />
         </Stack>
       </Button>
     </Protected>
@@ -95,11 +97,11 @@ const styles = StyleSheet.create({
     paddingVertical: 7.5,
   },
   book: {
-    color: theme.lightColors.black,
-    fontSize: 13.5,
+    color: black,
+    fontSize: 14.5,
     fontFamily: "Exo-SemiBold",
   },
   buttons: { paddingHorizontal: 15, paddingVertical: 2.5 },
   button: { marginLeft: 15 },
-  likes: { color: theme.lightColors.black, fontWeight: "bold" },
+  likes: { color: black, fontWeight: "bold" },
 });

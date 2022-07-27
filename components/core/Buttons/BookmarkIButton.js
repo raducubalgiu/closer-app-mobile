@@ -25,9 +25,7 @@ export const BookmarkIButton = ({ postId, sx, size }) => {
             headers: { Authorization: `Bearer ${user?.token}` },
           }
         )
-        .then((res) => {
-          setBookmarked(res.data.status);
-        })
+        .then((res) => setBookmarked(res.data.status))
         .catch(() => {});
 
       return () => {
