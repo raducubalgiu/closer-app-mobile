@@ -18,12 +18,13 @@ export const BookmarkIButton = ({ postId, sx, size }) => {
       const controller = new AbortController();
 
       axios
-        .get(BOOKMARK_ENDPOINT, {
-          signal: controller.signal,
-          headers: {
-            Authorization: `Bearer ${user?.token}`,
-          },
-        })
+        .get(
+          `${process.env.BASE_ENDPOINT}/users/${user?._id}/posts/${postId}/bookmarks/check`,
+          {
+            signal: controller.signal,
+            headers: { Authorization: `Bearer ${user?.token}` },
+          }
+        )
         .then((res) => {
           setBookmarked(res.data.status);
         })
@@ -58,7 +59,6 @@ export const BookmarkIButton = ({ postId, sx, size }) => {
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
         })
         .catch((err) => {
-          console.log(err);
           console.log(err.message);
         });
     } else {

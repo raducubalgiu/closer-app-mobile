@@ -5,18 +5,19 @@ import {
   View,
   FlatList,
 } from "react-native";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigation, useScrollToTop } from "@react-navigation/native";
 import axios from "axios";
 import { Divider, Badge } from "@rneui/themed";
 import theme from "../assets/styles/theme";
-import { usePosts, useHttpGet, useSheet, useAuth } from "../hooks/index";
-import { IconButton, Stack, FeedLabelButton } from "../components/core";
+import { usePosts, useSheet, useAuth } from "../hooks/index";
 import {
-  CardPost,
-  PostInfoSheet,
-  DeleteConfirmationModal,
-} from "../components/customized";
+  IconButton,
+  Stack,
+  FeedLabelButton,
+  Spinner,
+} from "../components/core";
+import { CardPost, PostInfoSheet } from "../components/customized";
 import { useTranslation } from "react-i18next";
 import * as Haptics from "expo-haptics";
 import { ConfirmModal } from "../components/customized/Modals/ConfirmModal";
@@ -33,8 +34,57 @@ const FeedScreen = () => {
   useScrollToTop(ref);
   const { t } = useTranslation();
 
-  const handlePosts = useCallback((data) => setPosts(data), []);
-  useHttpGet("/posts/get-all-posts", handlePosts);
+  const fetchAllPosts = useCallback(() => {
+    const controller = new AbortController();
+    setLoading(true);
+
+    axios
+      .get(`${process.env.BASE_ENDPOINT}/posts/get-all-posts`, {
+        signal: controller.signal,
+        headers: { Authorization: `Bearer ${user.token}` },
+      })
+      .then((res) => {
+        setPosts(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+
+    return () => {
+      controller.abort();
+    };
+  }, [user]);
+
+  useEffect(() => {
+    fetchAllPosts();
+  }, [fetchAllPosts]);
+
+  const fetchFollowings = useCallback(() => {
+    const controller = new AbortController();
+    setLoading(true);
+
+    axios
+      .get(
+        `${process.env.BASE_ENDPOINT}/users/${user._id}/posts/get-followings-posts`,
+        {
+          signal: controller.signal,
+          headers: { Authorization: `Bearer ${user.token}` },
+        }
+      )
+      .then((res) => {
+        setPosts(res.data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
+
+    return () => {
+      controller.abort();
+    };
+  }, [user]);
 
   const showConfirm = useCallback(() => {
     CLOSE_BS();
@@ -167,6 +217,7 @@ const FeedScreen = () => {
         maxToRenderPerBatch={5}
         initialNumToRender={5}
         renderItem={renderAllPosts}
+        ListHeaderComponent={loading && <Spinner sx={{ marginVertical: 10 }} />}
       />
       {BOTTOM_SHEET}
       <ConfirmModal
