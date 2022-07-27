@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 5,
     color: theme.lightColors.black,
+    textTransform: "capitalize",
   },
   description: {
     color: theme.lightColors.grey0,
