@@ -1,23 +1,37 @@
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  Touchable,
-  TouchableOpacity,
-} from "react-native";
+import { ScrollView, StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import theme from "../../../../assets/styles/theme";
 import { Stack, ButtonFilter, IconBackButton } from "../../../core";
-import { Icon, Switch, Divider } from "@rneui/themed";
+import { Icon, Switch } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
+import { useDates } from "../../../../hooks";
 
-export const HeaderServices = ({ onToggleSwitch, serviceName, checked }) => {
+const { grey0, black } = theme.lightColors;
+
+export const HeaderServices = ({
+  onToggleSwitch,
+  serviceName,
+  checked,
+  period,
+}) => {
   const navigation = useNavigation();
   const { t } = useTranslation();
+  const { SHORT_DATE } = useDates();
 
-  const displayPeriod = (startDate, endDate) => {
-    return "Calendar";
+  const displayPeriod = (period) => {
+    switch (period.code) {
+      case 0:
+        return t("anytime");
+      case 1:
+        return t("now");
+      case 2:
+        return `${SHORT_DATE(period.startDate)} - ${SHORT_DATE(
+          period.endDate
+        )}`;
+      default:
+        return "-";
+    }
   };
 
   const toggleSwitch = () => onToggleSwitch();
@@ -27,9 +41,9 @@ export const HeaderServices = ({ onToggleSwitch, serviceName, checked }) => {
       <Stack direction="row" sx={styles.header}>
         <IconBackButton onPress={() => navigation.navigate("Home")} />
         <TouchableOpacity style={styles.search}>
-          <Icon name="search" size={18} color={theme.lightColors.grey0} />
+          <Icon name="search" size={18} color={grey0} />
           <Text style={styles.service}>{serviceName},</Text>
-          <Text style={styles.searchText}>"Period"</Text>
+          <Text style={styles.searchText}>{displayPeriod(period)}</Text>
         </TouchableOpacity>
       </Stack>
       <ScrollView
@@ -81,12 +95,12 @@ const styles = StyleSheet.create({
   service: {
     fontFamily: "Exo-Bold",
     marginLeft: 10,
-    color: theme.lightColors.black,
+    color: black,
   },
   searchText: {
     fontFamily: "Exo-Medium",
     marginLeft: 5,
-    color: theme.lightColors.grey0,
+    color: grey0,
   },
   filters: {
     paddingHorizontal: 5,

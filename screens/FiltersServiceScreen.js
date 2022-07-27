@@ -1,31 +1,20 @@
 import { StyleSheet, Text, FlatList } from "react-native";
-import React, { useCallback, useEffect, useState } from "react";
-import axios from "axios";
+import React, { useCallback, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Button } from "../components/core";
+import { Button, Spinner } from "../components/core";
 import { FiltersContainer, SheetHeader } from "../components/customized";
 import theme from "../assets/styles/theme";
-import { useTranslation } from "react-i18next";
+import { useHttpGet } from "../hooks";
 
 const FiltersServiceScreen = ({ route }) => {
   const navigation = useNavigation();
-  const { serviceId, serviceName, startDate, endDate } = route.params;
-  const [loading, setLoading] = useState(false);
+  const { serviceId, serviceName, period } = route.params;
   const [filter, setFilter] = useState(null);
-  const [disabled, setDisabled] = useState(true);
   const [option, setOption] = useState("");
-  const { t } = useTranslation();
 
-  useEffect(() => {
-    axios
-      .get(`${process.env.BASE_ENDPOINT}/services/${serviceId}`)
-      .then((res) => {
-        setFilter(res.data.service.filters[0]);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [serviceId]);
+  const { loading } = useHttpGet(`/services/${serviceId}`, (data) =>
+    setFilter(data.service.filters[0])
+  );
 
   const activeBtn = { ...styles.button, backgroundColor: "#bbb" };
   const activeBtnTxt = { ...styles.buttonText, color: "white" };
@@ -35,17 +24,13 @@ const FiltersServiceScreen = ({ route }) => {
       serviceId,
       serviceName,
       optionId: option?._id,
-      startDate,
-      endDate,
+      period,
     });
 
   const renderOption = useCallback(
     ({ item }) => (
       <Button
-        onPress={() => {
-          setDisabled(false);
-          setOption(item);
-        }}
+        onPress={() => setOption(item)}
         sx={item._id !== option._id ? styles.button : activeBtn}
       >
         <Text
@@ -69,12 +54,15 @@ const FiltersServiceScreen = ({ route }) => {
         title={`Filtru - ${filter?.name}`}
         description={option?.name}
       />
-      <FlatList
-        bounces={false}
-        data={filter?.options}
-        keyExtractor={(item) => item._id}
-        renderItem={renderOption}
-      />
+      {loading && <Spinner />}
+      {!loading && (
+        <FlatList
+          bounces={false}
+          data={filter?.options}
+          keyExtractor={(item) => item._id}
+          renderItem={renderOption}
+        />
+      )}
     </FiltersContainer>
   );
 };

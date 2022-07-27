@@ -1,20 +1,33 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import axios from "axios";
-import { StyleSheet, View } from "react-native";
+import { View, Text } from "react-native";
 import { useTranslation } from "react-i18next";
 import { Divider } from "@rneui/themed";
-import moment from "moment";
-import theme from "../assets/styles/theme";
-import { useCalendarList } from "../hooks";
-import { ButtonGroup } from "../components/core";
+import { useCalendarList, useDates } from "../hooks";
+import {
+  ButtonGroup,
+  CModal,
+  FormInputSelect,
+  MainButton,
+  Stack,
+} from "../components/core";
 import { FiltersContainer, SheetHeader } from "../components/customized";
+import { FormProvider, useForm } from "react-hook-form";
 
 const FiltersDateScreen = ({ route }) => {
-  const { serviceId, serviceName } = route.params;
+  const { serviceId, serviceName, period } = route.params;
   const navigation = useNavigation();
   const { calendar, startDate, endDate } = useCalendarList();
+  const [activeBtn, setActiveBtn] = useState(period.code);
+  const [activeHours, setActiveHours] = useState(0);
+  const [visible, setVisible] = useState(false);
+  const { SHORT_DATE } = useDates();
   const { t } = useTranslation();
+  const methods = useForm({ defaultValues: { startHour: "", endHour: "" } });
+  const { handleSubmit, watch } = methods;
+
+  console.log("ACTIVE HOURS!!", activeHours);
 
   const goNext = () => {
     axios
@@ -24,15 +37,13 @@ const FiltersDateScreen = ({ route }) => {
           navigation.navigate("Services", {
             serviceId,
             serviceName,
-            startDate,
-            endDate,
+            period: { ...period, code: activeBtn, startDate, endDate },
           });
         } else {
           navigation.navigate("FiltersService", {
             serviceId,
             serviceName,
-            startDate,
-            endDate,
+            period: { ...period, code: activeBtn, startDate, endDate },
           });
         }
       })
@@ -49,57 +60,85 @@ const FiltersDateScreen = ({ route }) => {
     setActiveBtn(index);
   }, []);
   const handleHoursBtns = useCallback((index) => {
-    //setActiveHours(index);
+    setActiveHours(index);
+    if (index === 1) setVisible(true);
+    if (index === 0) setVisible(false);
   }, []);
 
   const footerBtns = (
     <ButtonGroup
-      buttons={hoursButtons}
       onPress={handleHoursBtns}
-      activeButton={0}
+      buttons={hoursButtons}
+      activeButton={activeHours}
     />
   );
 
+  const handleHours = (data) => console.log(data);
+  const modalFooter = (
+    <MainButton
+      onPress={handleSubmit(handleHours)}
+      title="Adauga"
+      disabled={true}
+    />
+  );
+
+  const hours = [
+    { _id: "00:00", name: "00:00" },
+    { _id: "00:30", name: "00:30" },
+    { _id: "01:00", name: "01:00" },
+  ];
+
   return (
-    <FiltersContainer
-      headerTitle={t("selectPeriod").split(" ")[0]}
-      headerDescription={t("selectPeriod").split(" ")[1]}
-      onNext={goNext}
-      footerExtraBtns={footerBtns}
-    >
-      <SheetHeader
-        title={serviceName}
-        description={`${moment.utc(startDate).format("DD MMM")} - ${moment
-          .utc(endDate)
-          .format("DD MMM")}`}
-      />
-      <ButtonGroup
-        onPress={handleDateBtns}
-        buttons={dateButtons}
-        size="small"
-        activeButton={0}
-        sx={{ marginBottom: 15 }}
-      />
-      <Divider />
-      <View style={{ flex: 1 }}>{calendar}</View>
-    </FiltersContainer>
+    <>
+      <FiltersContainer
+        headerTitle={t("selectPeriod").split(" ")[0]}
+        headerDescription={t("selectPeriod").split(" ")[1]}
+        onNext={goNext}
+        footerExtraBtns={footerBtns}
+      >
+        <SheetHeader
+          title={serviceName}
+          description={`${SHORT_DATE(startDate)} - ${SHORT_DATE(endDate)}`}
+        />
+        <ButtonGroup
+          onPress={handleDateBtns}
+          buttons={dateButtons}
+          size="small"
+          activeButton={activeBtn}
+          sx={{ marginBottom: 15 }}
+        />
+        <Divider />
+        <View style={{ flex: 1 }}>{activeBtn === 2 && calendar}</View>
+      </FiltersContainer>
+      <CModal
+        size="sm"
+        visible={visible}
+        onCloseModal={() => handleHoursBtns(0)}
+        footer={modalFooter}
+      >
+        <FormProvider {...methods}>
+          <Stack direction="row" sx={{ flex: 1, marginHorizontal: 25 }}>
+            <View style={{ flex: 1, marginRight: 20 }}>
+              <FormInputSelect
+                items={hours}
+                name="startHour"
+                placeholder="De la"
+                label="De la"
+              />
+            </View>
+            <View style={{ flex: 1 }}>
+              <FormInputSelect
+                items={hours}
+                name="endHour"
+                placeholder="Pana la"
+                label="Pana la"
+              />
+            </View>
+          </Stack>
+        </FormProvider>
+      </CModal>
+    </>
   );
 };
 
 export default FiltersDateScreen;
-
-const styles = StyleSheet.create({
-  button: {
-    paddingVertical: 7.5,
-    paddingHorizontal: 12.5,
-    marginLeft: 5,
-    borderWidth: 2,
-    borderColor: "#ccc",
-    marginTop: 20,
-    borderRadius: 20,
-  },
-  buttonActive: {
-    borderColor: theme.lightColors.primary,
-  },
-  buttonText: { color: theme.lightColors.black, fontFamily: "Exo-Medium" },
-});

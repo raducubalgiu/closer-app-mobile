@@ -6,7 +6,7 @@ import CardPostButtons from "./CardPostButtons";
 import CardPostFooter from "./CardPostFooter";
 import { dateFormat } from "../../../../utils";
 
-export const CardPost = ({ post }) => {
+export const CardPost = ({ post, onShowDetails }) => {
   const {
     _id,
     bookable,
@@ -26,6 +26,7 @@ export const CardPost = ({ post }) => {
         username={username}
         name={name}
         checkmark={checkmark}
+        onShowDetails={onShowDetails}
       />
       <View>
         <Image

@@ -1,57 +1,22 @@
-import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-  Text,
-  FlatList,
-  RefreshControl,
-} from "react-native";
-import React, { useState, useEffect, useCallback, useRef } from "react";
-import axios from "axios";
+import { SafeAreaView, StyleSheet, View, Text, FlatList } from "react-native";
+import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Divider } from "@rneui/themed";
 import FakeSearchBar from "../components/customized/FakeSearchBar/FakeSearchBar";
 import theme from "../assets/styles/theme";
-import { useAuth } from "../hooks/auth";
 import { useScrollToTop } from "@react-navigation/native";
 import { ServicesList, CardRecommended } from "../components/customized";
-
-const wait = (timeout) => {
-  return new Promise((resolve) => setTimeout(resolve, timeout));
-};
+import { useHttpGet } from "../hooks";
 
 const HomeScreen = () => {
-  const { user } = useAuth();
-  const [locations, setLocations] = useState([]);
   const { t } = useTranslation();
-  const [refreshing, setRefreshing] = useState(false);
   const ref = useRef(null);
 
   useScrollToTop(ref);
 
-  const fetchRecommended = useCallback(() => {
-    axios
-      .get(
-        `${process.env.BASE_ENDPOINT}/users/get-recommended?latlng=26.100195,44.428286`,
-        { headers: { Authorization: `Bearer ${user?.token}` } }
-      )
-      .then((resp) => {
-        setLocations(resp.data.services);
-      })
-      .catch((error) => console.log(error));
-  }, []);
-
-  useEffect(() => {
-    fetchRecommended();
-  }, [fetchRecommended]);
-
-  const onRefresh = useCallback(() => {
-    setRefreshing(true);
-    wait(1000).then(() => {
-      setRefreshing(false);
-      fetchRecommended();
-    });
-  }, []);
+  const { data: locations } = useHttpGet(
+    `/users/get-recommended?latlng=26.100195,44.428286`
+  );
 
   const renderRecommended = ({ item }) => <CardRecommended location={item} />;
 
@@ -61,9 +26,6 @@ const HomeScreen = () => {
         <FakeSearchBar />
         <FlatList
           ref={ref}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
           ListHeaderComponent={
             <>
               <ServicesList />

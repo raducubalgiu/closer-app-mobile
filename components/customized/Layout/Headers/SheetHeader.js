@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     color: theme.lightColors.grey0,
     marginTop: 5,
     textAlign: "center",
-    fontSize: 17,
+    fontSize: 16,
     marginBottom: 15,
   },
 });

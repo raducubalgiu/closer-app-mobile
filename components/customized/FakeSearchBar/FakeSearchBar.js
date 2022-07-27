@@ -4,6 +4,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";
+import { Button } from "../../core";
 
 const FakeSearchBar = () => {
   const { t } = useTranslation();
@@ -11,14 +12,13 @@ const FakeSearchBar = () => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        activeOpacity={1}
+      <Button
         onPress={() =>
           navigation.navigate("SearchServices", {
-            period: { type: "calendar", code: 0 },
+            period: { code: 0 },
           })
         }
-        style={{ flexDirection: "row", flex: 1, alignItems: "center" }}
+        sx={{ flexDirection: "row", flex: 1, alignItems: "center" }}
       >
         <Icon
           name="search"
@@ -27,12 +27,12 @@ const FakeSearchBar = () => {
           size={20}
         />
         <Text style={styles.fakeInputText}>{t("searchService")}</Text>
-      </TouchableOpacity>
+      </Button>
       <Divider orientation="vertical" style={{ marginRight: 15 }} />
       <TouchableOpacity
         onPress={() =>
           navigation.navigate("SearchServices", {
-            period: { type: "now", code: 1 },
+            period: { code: 1 },
           })
         }
         style={styles.nowBtn}

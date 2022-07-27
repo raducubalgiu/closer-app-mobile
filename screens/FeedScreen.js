@@ -4,12 +4,13 @@ import {
   ScrollView,
   View,
   FlatList,
+  Text,
 } from "react-native";
 import React, { useCallback, useRef } from "react";
 import { useNavigation, useScrollToTop } from "@react-navigation/native";
 import { Divider, Badge } from "@rneui/themed";
 import theme from "../assets/styles/theme";
-import { usePosts, useHttpGet } from "../hooks/index";
+import { usePosts, useHttpGet, useSheet } from "../hooks/index";
 import { IconButton, Stack, FeedLabelButton } from "../components/core";
 import { CardPost } from "../components/customized";
 import { useTranslation } from "react-i18next";
@@ -24,8 +25,11 @@ const FeedScreen = () => {
 
   const { data: posts } = useHttpGet("/posts/get-all-posts");
 
+  const sheetContent = <Text>Hello World</Text>;
+  const { BOTTOM_SHEET, SHOW_BS } = useSheet(["10%", "50%"], sheetContent);
+
   const renderAllPosts = useCallback(({ item }) => {
-    return <CardPost post={item} />;
+    return <CardPost post={item} onShowDetails={() => SHOW_BS()} />;
   }, []);
   const keyExtractor = useCallback((item) => item?._id, []);
 
@@ -111,6 +115,7 @@ const FeedScreen = () => {
         initialNumToRender={5}
         renderItem={renderAllPosts}
       />
+      {BOTTOM_SHEET}
     </SafeAreaView>
   );
 };

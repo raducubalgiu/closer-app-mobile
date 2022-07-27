@@ -5,7 +5,14 @@ import theme from "../../../../assets/styles/theme";
 import { CustomAvatar, Stack, Checkmark, Button } from "../../../core";
 import { Icon } from "@rneui/themed";
 
-const CardPostHeader = ({ userId, avatar, username, checkmark, name }) => {
+const CardPostHeader = ({
+  userId,
+  avatar,
+  username,
+  checkmark,
+  name,
+  onShowDetails,
+}) => {
   const navigation = useNavigation();
 
   const goToUser = (userId) => {
@@ -28,7 +35,9 @@ const CardPostHeader = ({ userId, avatar, username, checkmark, name }) => {
           </Stack>
         </Stack>
       </Button>
-      <Icon name="ellipsis1" type="antdesign" />
+      <Button onPress={onShowDetails}>
+        <Icon name="ellipsis1" type="antdesign" />
+      </Button>
     </Stack>
   );
 };

@@ -4,7 +4,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "../../../../hooks";
+import { useAuth, useHttpPost } from "../../../../hooks";
 import {
   MainButton,
   FormInput,
@@ -52,7 +52,6 @@ const AddProductsScreen = () => {
   const onSubmit = (data) => {
     const { description, price, discount, name, duration, service, option } =
       data;
-
     axios
       .post(
         `${BASE_ENDPOINT}/users/${user?._id}/products`,

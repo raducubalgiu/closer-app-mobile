@@ -42,9 +42,16 @@ export const useDates = () => {
     };
   };
 
-  // For Calendars
+  // Formats
   const _minDate = moment().format("YYYY-MM-DD");
   const _maxDate = moment().add(MAX_CALENDAR_DAYS, "days").format("YYYY-MM-DD");
+  const SHORT_DATE = (date) => {
+    if (date) {
+      return moment.utc(date).format("DD MMM");
+    } else {
+      return "";
+    }
+  };
 
   return {
     getStartTimeByDateAndHours,
@@ -54,5 +61,6 @@ export const useDates = () => {
     _minDate,
     _maxDate,
     NOW,
+    SHORT_DATE,
   };
 };

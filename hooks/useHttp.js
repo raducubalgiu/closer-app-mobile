@@ -47,32 +47,27 @@ export const useHttpGet = (route, callback) => {
   };
 };
 
-export const useHttpPost = (route, body, liftState) => {
+export const useHttpPost = (route, body, updateState) => {
   const [loading, setLoading] = useState(false);
-  const [feedback, setFeedback] = useState({ visible: false, message: "" });
+  const [error, setError] = useState(null);
   const { user } = useAuth();
 
-  const fetchData = useCallback(() => {
-    setLoading(true);
-    axios
-      .post(`${BASE_ENDPOINT}${route}`, body, {
-        headers: { Authorization: `Bearer ${user.token}` },
-      })
-      .then((res) => liftState(res.data))
-      .catch((err) => {
-        const { message } = err.response.data;
-        setFeedback({ visible: true, message });
-      })
-      .finally(() => {
-        setLoading(false);
-        setFeedback(feedback);
-      });
-  }, [route, body]);
+  setLoading(true);
+  axios
+    .post(`${BASE_ENDPOINT}${route}`, body, {
+      headers: { Authorization: `Bearer ${user.token}` },
+    })
+    .then((res) => updateState(res.data))
+    .catch((err) => {
+      setError(err);
+      setLoading(false);
+    })
+    .finally(() => {
+      setLoading(false);
+    });
 
   return {
-    fetchData,
     loading,
-    feedback,
-    setFeedback,
+    error,
   };
 };

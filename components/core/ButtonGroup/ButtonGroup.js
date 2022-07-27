@@ -1,7 +1,8 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import React, { useCallback, useState } from "react";
 import theme from "../../../assets/styles/theme";
 import { Stack } from "../Stack/Stack";
+import { Button } from "../Buttons/Button";
 
 export const ButtonGroup = ({ activeButton, size, onPress, buttons, sx }) => {
   const [activeBtn, setActiveBtn] = useState(activeButton);
@@ -28,7 +29,7 @@ export const ButtonGroup = ({ activeButton, size, onPress, buttons, sx }) => {
     btnTxtActive: { fontFamily: "Exo-SemiBold", fontSize: 13.5 },
   });
 
-  const handleButton = useCallback(() => {
+  const handleButton = useCallback((index) => {
     setActiveBtn(index);
     onPress(index);
   }, []);
@@ -41,16 +42,15 @@ export const ButtonGroup = ({ activeButton, size, onPress, buttons, sx }) => {
       <Stack>
         <View style={styles.buttonsContainer}>
           {buttons.map((button, index) => (
-            <TouchableOpacity
+            <Button
               key={index}
-              activeOpacity={1}
-              onPress={handleButton}
-              style={index === activeBtn ? activeBtnStyle : styles.button}
+              onPress={() => handleButton(index)}
+              sx={index === activeBtn ? activeBtnStyle : styles.button}
             >
               <Text style={index === activeBtn ? activeBtnTxt : styles.btnTxt}>
                 {button.title}
               </Text>
-            </TouchableOpacity>
+            </Button>
           ))}
         </View>
       </Stack>

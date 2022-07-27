@@ -30,12 +30,13 @@ const SUGGESTED_SERVICES = [
   },
 ];
 
-const SearchServicesScreen = () => {
+const SearchServicesScreen = ({ route }) => {
   const { user } = useAuth();
   const [search, setSearch] = useState("");
   const [services, setServices] = useState([]);
   const { t } = useTranslation();
   const navigation = useNavigation();
+  const { period } = route.params || {};
 
   const updateSearch = useCallback(
     (search) => {
@@ -54,16 +55,16 @@ const SearchServicesScreen = () => {
     [search]
   );
 
+  const goToFilters = (item) => {
+    navigation.navigate("FiltersDate", {
+      serviceId: item._id,
+      serviceName: item.name,
+      period,
+    });
+  };
+
   const renderSuggested = useCallback(({ item }) => {
-    <Button
-      onPress={() => {
-        navigation.navigate("FiltersDate", {
-          serviceId: item._id,
-          serviceName: item.name,
-        });
-      }}
-      sx={styles.item}
-    >
+    <Button onPress={() => goToFilters(item)} sx={styles.item}>
       <Text style={styles.serviceItem}>{item.name}</Text>
       <Text style={styles.categoryItem}>{item.category.name}</Text>
     </Button>;
@@ -71,15 +72,7 @@ const SearchServicesScreen = () => {
 
   const renderServices = useCallback(
     ({ item }) => (
-      <Button
-        onPress={() => {
-          navigation.navigate("FiltersDate", {
-            serviceId: item._id,
-            serviceName: item.name,
-          });
-        }}
-        sx={styles.item}
-      >
+      <Button onPress={() => goToFilters(item)} sx={styles.item}>
         <Text style={styles.serviceItem}>{item.name}</Text>
         <Text style={styles.categoryItem}>{item.categoryName}</Text>
       </Button>
