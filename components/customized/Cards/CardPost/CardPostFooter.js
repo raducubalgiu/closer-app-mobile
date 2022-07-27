@@ -6,6 +6,7 @@ import { trimFunc } from "../../../../utils";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import theme from "../../../../assets/styles/theme";
+import { useAuth } from "../../../../hooks";
 
 const CardPostFooter = ({
   postId,
@@ -18,6 +19,7 @@ const CardPostFooter = ({
   const [comments, setComments] = useState(commentsCount);
   const navigation = useNavigation();
   const { t } = useTranslation();
+  const { user } = useAuth();
 
   const goToComments = (focus) =>
     navigation.navigate("Comments", {
@@ -68,7 +70,7 @@ const CardPostFooter = ({
         onPress={() => goToComments(true)}
       >
         <Stack direction="row" justify="start">
-          <CustomAvatar size={22.5} iconSize={10} avatar={avatar} />
+          <CustomAvatar size={22.5} iconSize={10} avatar={user?.avatar} />
           <Text style={styles.addCommText}>{t("addComment")}</Text>
         </Stack>
       </Button>

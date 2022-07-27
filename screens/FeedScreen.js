@@ -4,34 +4,87 @@ import {
   ScrollView,
   View,
   FlatList,
-  Text,
 } from "react-native";
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { useNavigation, useScrollToTop } from "@react-navigation/native";
+import axios from "axios";
 import { Divider, Badge } from "@rneui/themed";
 import theme from "../assets/styles/theme";
-import { usePosts, useHttpGet, useSheet } from "../hooks/index";
+import { usePosts, useHttpGet, useSheet, useAuth } from "../hooks/index";
 import { IconButton, Stack, FeedLabelButton } from "../components/core";
-import { CardPost } from "../components/customized";
+import {
+  CardPost,
+  PostInfoSheet,
+  DeleteConfirmationModal,
+} from "../components/customized";
 import { useTranslation } from "react-i18next";
 import * as Haptics from "expo-haptics";
+import { ConfirmModal } from "../components/customized/Modals/ConfirmModal";
 
 const FeedScreen = () => {
+  const { user } = useAuth();
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [postId, setPostId] = useState(null);
+  const [visible, setVisible] = useState(false);
   const { postsState, dispatchPosts } = usePosts();
   const navigation = useNavigation();
   const ref = useRef(null);
   useScrollToTop(ref);
   const { t } = useTranslation();
 
-  const { data: posts } = useHttpGet("/posts/get-all-posts");
+  const handlePosts = useCallback((data) => setPosts(data), []);
+  useHttpGet("/posts/get-all-posts", handlePosts);
 
-  const sheetContent = <Text>Hello World</Text>;
-  const { BOTTOM_SHEET, SHOW_BS } = useSheet(["10%", "50%"], sheetContent);
+  const showConfirm = useCallback(() => {
+    CLOSE_BS();
+    setVisible(true);
+  }, []);
+  const updatePosts = useCallback(
+    () => setPosts((posts) => posts.filter((p) => p._id !== postId)),
+    [postId]
+  );
 
+  const sheetContent = (
+    <PostInfoSheet
+      postId={postId}
+      onCloseBS={() => CLOSE_BS()}
+      onShowConfirm={showConfirm}
+      onUpdatePosts={updatePosts}
+    />
+  );
+  const { BOTTOM_SHEET, SHOW_BS, CLOSE_BS } = useSheet(
+    ["10%", "30%"],
+    sheetContent
+  );
+  const showDetails = useCallback((item) => {
+    setPostId(item._id);
+    SHOW_BS();
+  }, []);
   const renderAllPosts = useCallback(({ item }) => {
-    return <CardPost post={item} onShowDetails={() => SHOW_BS()} />;
+    return <CardPost post={item} onShowDetails={() => showDetails(item)} />;
   }, []);
   const keyExtractor = useCallback((item) => item?._id, []);
+
+  const handleDelete = useCallback(() => {
+    CLOSE_BS();
+    setLoading(true);
+
+    axios
+      .delete(
+        `${process.env.BASE_ENDPOINT}/users/${user?._id}/posts/${postId}`,
+        { headers: { Authorization: `Bearer ${user.token}` } }
+      )
+      .then(() => {
+        setPosts((posts) => posts.filter((p) => p._id !== postId));
+        setVisible(false);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  }, [user, postId]);
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -116,6 +169,13 @@ const FeedScreen = () => {
         renderItem={renderAllPosts}
       />
       {BOTTOM_SHEET}
+      <ConfirmModal
+        title={t("deletePost")}
+        description={t("areYouSureDeletePost")}
+        visible={visible}
+        onDelete={handleDelete}
+        onCloseModal={() => setVisible(false)}
+      />
     </SafeAreaView>
   );
 };

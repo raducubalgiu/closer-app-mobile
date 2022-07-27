@@ -22,6 +22,8 @@ export const CModal = ({
   visible,
   headerTitle,
   footer,
+  header = true,
+  sx,
 }) => {
   const backdrop = (
     <TouchableWithoutFeedback onPress={onCloseModal}>
@@ -58,21 +60,29 @@ export const CModal = ({
       isVisible={visible}
       deviceWidth={width}
       deviceHeight={height}
-      style={{ marginVertical: mVertical, marginHorizontal: mHorizontal }}
+      style={{
+        marginVertical: mVertical,
+        marginHorizontal: mHorizontal,
+        ...sx,
+      }}
       customBackdrop={backdrop}
       propagateSwipe
       animationInTiming={200}
       animationOutTiming={200}
     >
       <SafeAreaView style={styles.container}>
-        <Stack direction="row" sx={styles.header}>
-          <Icon name="close" color="white" />
-          <Text style={styles.headerTitle}>{headerTitle}</Text>
-          <Button onPress={onCloseModal}>
-            <Icon name="close" />
-          </Button>
-        </Stack>
-        <Divider />
+        {header && (
+          <>
+            <Stack direction="row" sx={styles.header}>
+              <Icon name="close" color="white" />
+              <Text style={styles.headerTitle}>{headerTitle}</Text>
+              <Button onPress={onCloseModal}>
+                <Icon name="close" />
+              </Button>
+            </Stack>
+            <Divider />
+          </>
+        )}
         <View style={styles.body}>{children}</View>
         <View style={styles.footer}>{footer}</View>
       </SafeAreaView>
@@ -84,7 +94,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
-    borderRadius: 10,
+    borderRadius: 15,
   },
   header: {
     paddingVertical: 10,

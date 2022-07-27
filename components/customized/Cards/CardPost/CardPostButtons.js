@@ -7,17 +7,29 @@ import {
   LikeIButton,
   BookmarkIButton,
   ShareIButton,
+  Protected,
 } from "../../../core";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
+import { SECOND_ROLE, THIRD_ROLE } from "@env";
+import { useAuth } from "../../../../hooks";
 
 const CardPostButtons = ({ bookable, postId, likesCount }) => {
+  const { user } = useAuth();
   const [likes, setLikes] = useState(likesCount);
   const navigation = useNavigation();
   const { t } = useTranslation();
 
   const goToLikes = () => navigation.navigate("Likes", { postId: postId });
+  const goToCalendar = () =>
+    navigation.navigate("CalendarBig", {
+      product,
+      service,
+      owner: user,
+      hours,
+      employee,
+    });
 
   const onShare = async () => {
     try {
@@ -39,12 +51,14 @@ const CardPostButtons = ({ bookable, postId, likesCount }) => {
   };
 
   const bookableSection = (
-    <Stack direction="row" sx={styles.bookable}>
-      <Button>
-        <Text style={styles.book}>{t("book")}</Text>
+    <Protected roles={[SECOND_ROLE, THIRD_ROLE]} userRole={user.role}>
+      <Button onPress={goToCalendar}>
+        <Stack direction="row" sx={styles.bookable}>
+          <Text style={styles.book}>{t("book")}</Text>
+          <Icon name="keyboard-arrow-right" color={theme.lightColors.black} />
+        </Stack>
       </Button>
-      <Icon name="keyboard-arrow-right" color={theme.lightColors.black} />
-    </Stack>
+    </Protected>
   );
 
   return (

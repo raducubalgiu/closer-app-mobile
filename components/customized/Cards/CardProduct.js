@@ -1,12 +1,13 @@
 import { StyleSheet, Text } from "react-native";
 import React from "react";
-import { Stack, IconButtonEdit, MainButton } from "../../core";
+import { Stack, IconButtonEdit, MainButton, Protected } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { trimFunc } from "../../../utils";
-import { useDuration } from "../../../hooks";
+import { useAuth, useDuration } from "../../../hooks";
 import { useTranslation } from "react-i18next";
 import { IconButtonDelete } from "../../core/IconButton/IconButtonDelete";
 import { useNavigation } from "@react-navigation/native";
+import { SECOND_ROLE, THIRD_ROLE } from "@env";
 
 export const CardProduct = ({
   product,
@@ -14,6 +15,7 @@ export const CardProduct = ({
   onEditProduct,
   canBook,
 }) => {
+  const { user: userContext } = useAuth();
   const { t } = useTranslation();
   const {
     name,
@@ -28,6 +30,15 @@ export const CardProduct = ({
   const { hours } = user || {};
   const currDuration = duration ? useDuration(duration) : "";
   const navigation = useNavigation();
+
+  const goToCalendar = () =>
+    navigation.navigate("CalendarBig", {
+      product,
+      service,
+      owner: user,
+      hours,
+      employee,
+    });
 
   return (
     <Stack align="start" sx={styles.card}>
@@ -48,20 +59,17 @@ export const CardProduct = ({
           </Text>
         </Stack>
         {canBook && hours && (
-          <MainButton
-            size="md"
-            variant="outlined"
-            title={t("book")}
-            onPress={() =>
-              navigation.navigate("CalendarBig", {
-                product,
-                service,
-                owner: user,
-                hours,
-                employee,
-              })
-            }
-          />
+          <Protected
+            roles={[SECOND_ROLE, THIRD_ROLE]}
+            userRole={userContext.role}
+          >
+            <MainButton
+              size="md"
+              variant="outlined"
+              title={t("book")}
+              onPress={goToCalendar}
+            />
+          </Protected>
         )}
         {!canBook && (
           <Stack direction="row">

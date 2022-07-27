@@ -215,5 +215,10 @@
   "savedPosts": "Postări salvate",
   "createAUsername": "Creează un nume de utilizator",
   "pickAUsername": "Alege un nume de utilizator pentru contul tău. Îl poţi schimba oricând",
-  "categories": "Categorii"
+  "categories": "Categorii",
+  "stopComments": "Opreşte comentariile",
+  "postInOtherApps": "Postează în alte aplicaţii",
+  "deletePost": "Ştergi postarea?",
+  "areYouSureDeletePost": "Eşti sigur că vrei sa ştergi această postare?",
+  "isDeleting": "Se şterge..."
 }
