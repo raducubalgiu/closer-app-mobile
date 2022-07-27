@@ -1,5 +1,5 @@
 import { SafeAreaView, StyleSheet, View, Text, FlatList } from "react-native";
-import React, { useRef } from "react";
+import React, { useCallback, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Divider } from "@rneui/themed";
 import FakeSearchBar from "../components/customized/FakeSearchBar/FakeSearchBar";
@@ -18,7 +18,11 @@ const HomeScreen = () => {
     `/users/get-recommended?latlng=26.100195,44.428286`
   );
 
-  const renderRecommended = ({ item }) => <CardRecommended location={item} />;
+  const renderRecommended = useCallback(
+    ({ item }) => <CardRecommended location={item} />,
+    []
+  );
+  const keyExtractor = useCallback((item) => item._id, []);
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -29,16 +33,17 @@ const HomeScreen = () => {
           ListHeaderComponent={
             <>
               <ServicesList />
-              <View>
+              <View style={{ paddingHorizontal: 15 }}>
                 <Text style={styles.sheetHeading}>{t("nearYou")}</Text>
                 <Divider width={2} color="#f1f1f1" style={styles.divider} />
               </View>
             </>
           }
           data={locations}
-          keyExtractor={(item) => item._id}
+          keyExtractor={keyExtractor}
           showsVerticalScrollIndicator={false}
           renderItem={renderRecommended}
+          // contentContainerStyle={{ paddingHorizontal: 15 }}
         />
       </View>
     </SafeAreaView>
@@ -51,7 +56,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    paddingHorizontal: 15,
     flex: 1,
   },
   sheetHeading: {

@@ -1,83 +1,49 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  FlatList,
-  Image,
-} from "react-native";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Divider } from "@rneui/themed";
-import { useAuth } from "../../../hooks/auth";
-import { useTranslation } from "react-i18next";
+import { StyleSheet, Text, FlatList } from "react-native";
+import React, { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";
-import { Stack } from "../../core";
+import { Button } from "../../core";
+import { useHttpGet } from "../../../hooks";
 
 export const ServicesList = () => {
-  const { user } = useAuth();
-  const { t } = useTranslation();
   const navigation = useNavigation();
-  const [services, setServices] = useState([]);
 
-  useEffect(() => {
-    axios
-      .get(`${process.env.BASE_ENDPOINT}/services`, {
-        headers: { Authorization: `Bearer ${user?.token}` },
-      })
-      .then((resp) => {
-        setServices(resp.data.services);
-        console.log("FetchServices");
-      })
-      .catch((error) => console.log(error));
-  }, []);
+  const { data: services } = useHttpGet(`/services`);
+
+  const goToFilters = (item) =>
+    navigation.navigate("FiltersDate", {
+      serviceId: item._id,
+      serviceName: item.name,
+      period: { code: 0 },
+    });
+
+  const renderService = useCallback(
+    ({ item }) => (
+      <Button sx={styles.serviceBtn} onPress={() => goToFilters(item)}>
+        <Text style={styles.servicesTitle}>{item.name}</Text>
+      </Button>
+    ),
+    []
+  );
+  const keyExtractor = useCallback((item) => item.id, []);
 
   return (
-    <View style={styles.container}>
-      <Stack direction="row" sx={styles.headingContainer}>
-        <Text style={styles.heading}>{t("servicesHeading")}</Text>
-        <TouchableOpacity onPress={() => navigation.navigate("AllServices")}>
-          <Text style={styles.seeAll}>{t("seeAll")}</Text>
-        </TouchableOpacity>
-      </Stack>
-      <Divider />
-      <FlatList
-        nestedScrollEnabled={true}
-        showsHorizontalScrollIndicator={false}
-        horizontal
-        data={services}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.serviceItem}>
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate("Services", {
-                  serviceId: item._id,
-                  serviceName: item.name,
-                })
-              }
-            >
-              <Image
-                style={styles.image}
-                source={{
-                  uri: item?.logo[0]?.url,
-                }}
-              />
-            </TouchableOpacity>
-            <Text style={styles.servicesTitle}>{item.name}</Text>
-          </View>
-        )}
-      />
-    </View>
+    <FlatList
+      nestedScrollEnabled={true}
+      showsHorizontalScrollIndicator={false}
+      horizontal
+      data={services}
+      keyExtractor={keyExtractor}
+      renderItem={renderService}
+      contentContainerStyle={styles.container}
+    />
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 10,
-    marginTop: 5,
-    flex: 1,
+    marginBottom: 5,
+    paddingRight: 15,
   },
   headingContainer: {
     paddingBottom: 20,
@@ -93,21 +59,20 @@ const styles = StyleSheet.create({
     fontFamily: "Exo-SemiBold",
     color: theme.lightColors.grey0,
   },
+  serviceBtn: {
+    backgroundColor: "#f1f1f1",
+    paddingVertical: 9,
+    paddingHorizontal: 20,
+    borderRadius: 25,
+    marginLeft: 10,
+    minWidth: 90,
+  },
   servicesTitle: {
-    marginTop: 10,
-    maxWidth: 150,
     textAlign: "center",
     fontSize: 13,
     fontFamily: "Exo-SemiBold",
     color: theme.lightColors.black,
     fontSize: 13,
-  },
-  serviceItem: {
-    alignItems: "center",
-    marginRight: 20,
-    paddingVertical: 20,
-    flex: 1,
-    paddingHorizontal: 5,
   },
   image: {
     width: 70,

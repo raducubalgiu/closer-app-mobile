@@ -1,52 +1,45 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { Icon, Divider } from "@rneui/themed";
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";
-import { Button } from "../../core";
+import { Button, Stack } from "../../core";
+
+const { black, grey0 } = theme.lightColors;
 
 const FakeSearchBar = () => {
   const { t } = useTranslation();
   const navigation = useNavigation();
 
+  const goToServicesAnytime = () =>
+    navigation.navigate("SearchServices", {
+      period: { code: 0 },
+    });
+  const goToServicesNow = () =>
+    navigation.navigate("SearchServices", {
+      period: { code: 1 },
+    });
+
   return (
     <View style={styles.container}>
-      <Button
-        onPress={() =>
-          navigation.navigate("SearchServices", {
-            period: { code: 0 },
-          })
-        }
-        sx={{ flexDirection: "row", flex: 1, alignItems: "center" }}
-      >
-        <Icon
-          name="search"
-          type="feather"
-          color={theme.lightColors.black}
-          size={20}
-        />
-        <Text style={styles.fakeInputText}>{t("searchService")}</Text>
+      <Button onPress={goToServicesAnytime} sx={{ flex: 1 }}>
+        <Stack direction="row" justify="start">
+          <Icon name="search" type="feather" color={black} size={20} />
+          <Text style={styles.fakeInputText}>{t("searchService")}</Text>
+        </Stack>
       </Button>
       <Divider orientation="vertical" style={{ marginRight: 15 }} />
-      <TouchableOpacity
-        onPress={() =>
-          navigation.navigate("SearchServices", {
-            period: { code: 1 },
-          })
-        }
-        style={styles.nowBtn}
-      >
+      <Button onPress={goToServicesNow} sx={styles.nowBtn}>
         <Icon
           name="clock"
           type="feather"
           size={15}
           style={{ marginRight: 5 }}
-          color={theme.lightColors.black}
+          color={black}
         />
         <Text style={styles.nowBtnText}>{t("now")}</Text>
-        <Icon name="keyboard-arrow-down" color={theme.lightColors.black} />
-      </TouchableOpacity>
+        <Icon name="keyboard-arrow-down" color={black} />
+      </Button>
     </View>
   );
 };
@@ -63,7 +56,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#f1f1f1",
     paddingVertical: 6,
     paddingHorizontal: 15,
-    borderRadius: 2.5,
+    marginHorizontal: 10,
+    borderRadius: 10,
   },
   fakeInput: {
     flexDirection: "row",
@@ -76,10 +70,9 @@ const styles = StyleSheet.create({
     borderColor: "#f1f1f1",
   },
   fakeInputText: {
-    marginLeft: 10,
-    fontSize: 14.5,
-    color: theme.lightColors.grey0,
-    fontFamily: "Exo-Regular",
+    marginLeft: 7.5,
+    fontSize: 15,
+    color: grey0,
   },
   datePicker: {
     textAlign: "center",
@@ -101,7 +94,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
     fontSize: 13,
     fontFamily: "Exo-SemiBold",
-    color: theme.lightColors.black,
+    color: black,
   },
   iconSearch: {
     backgroundColor: "white",
@@ -119,7 +112,7 @@ const styles = StyleSheet.create({
   nowBtnText: {
     marginRight: 5,
     fontFamily: "Exo-SemiBold",
-    color: theme.lightColors.black,
+    color: black,
     fontSize: 13.5,
   },
 });

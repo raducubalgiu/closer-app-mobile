@@ -46,13 +46,13 @@ export const CardRecommended = ({ location }) => {
           <Stack direction="row">
             <Text style={styles.service}>{services[0]?.name}</Text>
           </Stack>
-          <Stack direction="row">
+          <Stack direction="row" align="center">
             <IconStar />
             <Text style={styles.ratingsAvg}>
-              {counter[0]?.ratingsAverage.toFixed(1)}
+              {counter?.ratingsAverage.toFixed(1)}
             </Text>
             <Text style={styles.ratingsQuant}>
-              {counter[0]?.ratingsQuantity} {t("reviews")}
+              {counter?.ratingsQuantity} {t("reviews")}
             </Text>
           </Stack>
         </Stack>
@@ -63,7 +63,7 @@ export const CardRecommended = ({ location }) => {
 
 const styles = StyleSheet.create({
   button: {
-    paddingVertical: 15,
+    padding: 15,
   },
   item: {
     borderRadius: 5,
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginTop: 2,
     color: theme.lightColors.grey0,
-    fontFamily: "Exo-Medium",
+    fontSize: 13,
   },
   service: {
     fontSize: 11,
@@ -111,16 +111,15 @@ const styles = StyleSheet.create({
   },
   ratingsAvg: {
     marginLeft: 2,
-    fontSize: 12,
+    fontSize: 13,
     fontFamily: "Exo-Bold",
     color: theme.lightColors.black,
   },
   ratingsQuant: {
     marginLeft: 4,
-    fontSize: 12,
+    fontSize: 13,
     padding: 2,
     color: theme.lightColors.grey0,
-    fontFamily: "Exo-Medium",
   },
   iconVideo: {
     position: "absolute",
