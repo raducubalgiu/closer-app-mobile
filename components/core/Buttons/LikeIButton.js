@@ -10,7 +10,7 @@ import { useFocusEffect } from "@react-navigation/native";
 const { error } = theme.lightColors;
 
 export const LikeIButton = ({ postId, onAddLike, onRemoveLike, ...props }) => {
-  const [liked, setLiked] = useState(false);
+  const [liked, setLiked] = useState(true);
   const { user } = useAuth();
   const animatedScale = useRef(new Animated.Value(0)).current;
 
@@ -26,9 +26,7 @@ export const LikeIButton = ({ postId, onAddLike, onRemoveLike, ...props }) => {
             headers: { Authorization: `Bearer ${user?.token}` },
           }
         )
-        .then((res) => {
-          setLiked(res.data.status);
-        })
+        .then((res) => setLiked(res.data.status))
         .catch(() => {});
 
       return () => {
