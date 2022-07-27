@@ -83,7 +83,7 @@ const MyDashboardScreen = () => {
         </Text>
       </Button>
     ),
-    []
+    [period]
   );
 
   return (
