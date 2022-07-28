@@ -7,16 +7,12 @@ import {
 } from "react-native";
 import React, { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { IconButton, Stack } from "../../../components/core";
+import { Header } from "../components/core";
 import { useTranslation } from "react-i18next";
-import { useAuth, useHttpGet } from "../../../hooks";
-import {
-  CardScheduleOverview,
-  NoFoundMessage,
-} from "../../../components/customized";
+import { useAuth, useHttpGet } from "../hooks";
+import { CardScheduleOverview, NoFoundMessage } from "../components/customized";
 import moment from "moment";
-import theme from "../../../assets/styles/theme";
-import { Divider, Icon } from "@rneui/themed";
+import theme from "../assets/styles/theme";
 
 const { black } = theme.lightColors;
 
@@ -65,16 +61,7 @@ const SchedulesScreen = ({ route }) => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Stack direction="row" sx={styles.header}>
-        <IconButton
-          iconName="arrow-back-ios"
-          size={21}
-          onPress={() => navigation.navigate("Profile")}
-        />
-        <Text style={styles.title}>{t("mySchedules")}</Text>
-        <Icon name="arrow-back-ios" size={21} color="white" />
-      </Stack>
-      <Divider />
+      <Header title={t("myOrders")} hideBtnLeft divider />
       <View style={styles.container}>
         {schedule && (
           <View style={{ padding: 15 }}>
@@ -104,9 +91,6 @@ const SchedulesScreen = ({ route }) => {
           <NoFoundMessage
             title={t("bookings")}
             description={t("dontHaveBookings")}
-            iconName="calendar-clock"
-            iconType="material-community"
-            iconSize={60}
           />
         )}
       </View>

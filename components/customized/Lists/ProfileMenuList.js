@@ -44,14 +44,6 @@ export const ProfileMenuList = ({ onCloseSheet }) => {
       roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE],
     },
     {
-      _id: "3",
-      title: t("mySchedules"),
-      iconName: "bars",
-      iconType: "antdesign",
-      navigation: "Schedules",
-      roles: [THIRD_ROLE],
-    },
-    {
       _id: "4",
       title: t("discounts"),
       iconName: "gift",

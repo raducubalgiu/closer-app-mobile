@@ -40,10 +40,12 @@ const SearchServicesScreen = ({ route }) => {
 
   const updateSearch = useCallback(
     (search) => {
+      const controller = new AbortController();
       setSearch(search);
       if (search) {
         axios
           .get(`${process.env.BASE_ENDPOINT}/services/search/?name=${search}`, {
+            signal: controller.signal,
             headers: { Authorization: `Bearer ${user?.token}` },
           })
           .then((res) => setServices(res.data))
@@ -51,6 +53,10 @@ const SearchServicesScreen = ({ route }) => {
       } else {
         setServices([]);
       }
+
+      return () => {
+        controller.abort();
+      };
     },
     [search]
   );

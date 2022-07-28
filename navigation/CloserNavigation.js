@@ -17,7 +17,7 @@ import EditWebsiteScreen from "../screens/User/Profile/EditProfile/EditWebsiteSc
 import EditBioScreen from "../screens/User/Profile/EditProfile/EditBioScreen";
 import EditPhotoLibraryScreen from "../screens/User/Profile/EditProfile/EditPhotoLibraryScreen";
 import SettingsScreen from "../screens/User/Profile/SettingsProfileScreen";
-import SchedulesScreen from "../screens/User/Profile/SchedulesScreen";
+import SchedulesScreen from "../screens/SchedulesScreen";
 import DiscountsScreen from "../screens/User/Profile/DiscountScreen";
 import FindFriendsScreen from "../screens/User/Profile/FindFriendsScreen";
 import SearchServicesScreen from "../screens/SearchServicesScreen";
@@ -114,23 +114,31 @@ const TabsScreen = () => {
         tabBarIcon: ({ focused, color }) => {
           let iconName;
           let iconType;
+          let iconSize;
           if (route.name === "Home") {
             iconType = "feather";
             iconName = focused ? "search" : "search";
-          } else if (route.name === "Explore") {
-            iconType = "feather";
-            iconName = focused ? "video" : "video";
-          } else if (route.name === "FeedStack") {
-            iconType = "feather";
-            iconName = focused ? "compass" : "compass";
           } else if (route.name === "Messages") {
             iconType = "feather";
             iconName = focused ? "message-circle" : "message-circle";
+          } else if (route.name === "FeedStack") {
+            iconType = "feather";
+            iconName = focused ? "compass" : "compass";
+          } else if (route.name === "Schedules") {
+            iconType = "feather";
+            iconName = focused ? "calendar" : "calendar";
           } else if (route.name === "Profile") {
             iconType = "feather";
             iconName = focused ? "user" : "user";
           }
-          return <Icon name={iconName} type={iconType} color={color} />;
+          return (
+            <Icon
+              name={iconName}
+              type={iconType}
+              color={color}
+              size={iconSize}
+            />
+          );
         },
         tabBarActiveTintColor: theme.lightColors.black,
         tabBarInactiveTintColor: "gray",
@@ -140,9 +148,9 @@ const TabsScreen = () => {
       sceneContainerStyle={{ backgroundColor: "white" }}
     >
       <Tab.Screen name="FeedStack" component={FeedStackNavigator} />
-      <Tab.Screen name="Explore" component={ExploreScreen} />
-      <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Messages" component={MessagesScreen} />
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Schedules" component={SchedulesScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
@@ -202,7 +210,6 @@ const CloserNavigation = () => {
               component={EditPhotoLibraryScreen}
             />
             <Stack.Screen name="Settings" component={SettingsScreen} />
-            <Stack.Screen name="Schedules" component={SchedulesScreen} />
             <Stack.Screen
               name="ScheduleDetails"
               component={ScheduleDetailsScreen}

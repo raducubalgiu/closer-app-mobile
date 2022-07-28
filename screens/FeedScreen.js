@@ -25,9 +25,11 @@ import { ConfirmModal } from "../components/customized/Modals/ConfirmModal";
 const FeedScreen = () => {
   const { user } = useAuth();
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [postId, setPostId] = useState(null);
   const [visible, setVisible] = useState(false);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [fetchMore, setFetchMore] = useState(false);
   const { postsState, dispatchPosts } = usePosts();
   const navigation = useNavigation();
   const ref = useRef(null);
@@ -37,25 +39,32 @@ const FeedScreen = () => {
   const fetchAllPosts = useCallback(() => {
     const controller = new AbortController();
     setLoading(true);
+    setFetchMore(true);
 
     axios
-      .get(`${process.env.BASE_ENDPOINT}/posts/get-all-posts`, {
-        signal: controller.signal,
-        headers: { Authorization: `Bearer ${user.token}` },
-      })
+      .get(
+        `${process.env.BASE_ENDPOINT}/posts/get-all-posts?page=${page}&limit=5`,
+        {
+          signal: controller.signal,
+          headers: { Authorization: `Bearer ${user.token}` },
+        }
+      )
       .then((res) => {
-        setPosts(res.data);
+        if (res.data.length === 0) {
+          setFetchMore(false);
+        }
+        setPosts([...posts, ...res.data]);
         setLoading(false);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         setLoading(false);
+        setFetchMore(false);
       });
 
     return () => {
       controller.abort();
     };
-  }, [user]);
+  }, [user, page]);
 
   useEffect(() => {
     fetchAllPosts();
@@ -64,21 +73,26 @@ const FeedScreen = () => {
   const fetchFollowings = useCallback(() => {
     const controller = new AbortController();
     setLoading(true);
+    setFetchMore(true);
 
     axios
       .get(
-        `${process.env.BASE_ENDPOINT}/users/${user._id}/posts/get-followings-posts`,
+        `${process.env.BASE_ENDPOINT}/users/${user._id}/posts/get-followings-posts?page${page}&limit=5`,
         {
           signal: controller.signal,
           headers: { Authorization: `Bearer ${user.token}` },
         }
       )
       .then((res) => {
-        setPosts(res.data);
+        if (res.data.length === 0) {
+          setFetchMore(false);
+        }
+        setPosts([...posts, ...res.data]);
         setLoading(false);
       })
       .catch(() => {
         setLoading(false);
+        setFetchMore(false);
       });
 
     return () => {
@@ -130,11 +144,12 @@ const FeedScreen = () => {
         setVisible(false);
         setLoading(false);
       })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
+      .catch(() => setLoading(false));
   }, [user, postId]);
+
+  const onEndReached = () => {
+    if (fetchMore) setPage(page + 1);
+  };
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -163,6 +178,8 @@ const FeedScreen = () => {
             <Divider orientation="vertical" style={{ marginHorizontal: 15 }} />
             <FeedLabelButton
               onPress={() => {
+                setPage(1);
+                setPosts([]);
                 dispatchPosts({ type: "FETCH_ALL" });
                 fetchAllPosts();
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -172,6 +189,8 @@ const FeedScreen = () => {
             />
             <FeedLabelButton
               onPress={() => {
+                setPage(1);
+                setPosts([]);
                 dispatchPosts({ type: "FETCH_FOLLOWINGS" });
                 fetchFollowings();
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -210,6 +229,8 @@ const FeedScreen = () => {
       <FlatList
         ref={ref}
         data={posts}
+        onEndReached={onEndReached}
+        onEndReachedThreshold={0.5}
         removeClippedSubviews={true}
         nestedScrollEnabled={true}
         keyExtractor={keyExtractor}
@@ -217,7 +238,9 @@ const FeedScreen = () => {
         maxToRenderPerBatch={5}
         initialNumToRender={5}
         renderItem={renderAllPosts}
-        ListHeaderComponent={loading && <Spinner sx={{ marginVertical: 10 }} />}
+        ListFooterComponent={
+          fetchMore && <Spinner sx={{ marginVertical: 5 }} />
+        }
       />
       {BOTTOM_SHEET}
       <ConfirmModal

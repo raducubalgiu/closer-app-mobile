@@ -35,8 +35,6 @@ export { IconVideo } from "./Icons/IconVideo";
 export { IconLocation } from "./Icons/IconLocation";
 export { IconNavigation } from "./Icons/IconNavigation";
 
-export { default as Modal } from "./Modal/Modal";
-
 export { ListItem } from "./ListItem/ListItem";
 
 export { Spinner } from "./Spinner/Spinner";

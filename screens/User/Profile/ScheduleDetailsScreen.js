@@ -24,14 +24,14 @@ const { black, grey0, success, error } = theme.lightColors;
 const ScheduleDetailsScreen = ({ route }) => {
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const { scheduleId } = route.params;
-  const { owner, product, scheduleStart, service, status, _id, employee } =
-    schedule || {};
   const { location } = owner || {};
   const formatScheduleStart = moment(scheduleStart).utc().format("lll");
   const { t } = useTranslation();
   const navigation = useNavigation();
 
   const { data: schedule } = useHttpGet(`/schedules/${scheduleId}`);
+  const { owner, product, scheduleStart, service, status, _id, employee } =
+    schedule || {};
 
   const goToOwner = () =>
     navigation.push("ProfileGeneral", {
