@@ -3,7 +3,8 @@ import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CardFollowers } from "../../Cards/CardFollowers";
 import { SearchBarInput } from "../../../core";
-import { useHttpGet, useRefresh } from "../../../../hooks";
+import { useHttpGet } from "../../../../hooks";
+import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 
 export const FollowingsTab = ({ userId }) => {
   const [search, setSearch] = useState("");
@@ -47,13 +48,21 @@ export const FollowingsTab = ({ userId }) => {
 
   return (
     <View style={styles.screen}>
-      <FlatList
-        ListHeaderComponent={header}
-        data={followings}
-        keyExtractor={keyExtractor}
-        renderItem={renderPerson}
-        showsVerticalScrollIndicator={false}
-      />
+      {followings?.length > 0 && (
+        <FlatList
+          ListHeaderComponent={header}
+          data={followings}
+          keyExtractor={keyExtractor}
+          renderItem={renderPerson}
+          showsVerticalScrollIndicator={false}
+        />
+      )}
+      {followings?.length === 0 && (
+        <NoFoundMessage
+          title={t("followings")}
+          description={t("noFoundFollowings")}
+        />
+      )}
     </View>
   );
 };

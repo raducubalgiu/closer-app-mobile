@@ -10,10 +10,12 @@ import {
 import theme from "../../../assets/styles/theme";
 import { Header } from "../../../components/core";
 import { THIRD_ROLE } from "@env";
+import { useTranslation } from "react-i18next";
 
 const ProfileStatsScreen = ({ route }) => {
   const { initialRoute, username, userId, role } = route.params;
   const Tab = createMaterialTopTabNavigator();
+  const { t } = useTranslation();
 
   const Ratings = () => <RatingsTab userId={userId} />;
   const Followers = () => <FollowersTab userId={userId} />;
@@ -27,18 +29,18 @@ const ProfileStatsScreen = ({ route }) => {
           <Tab.Screen
             name="Ratings"
             component={Ratings}
-            options={{ tabBarLabel: "Recenzii" }}
+            options={{ tabBarLabel: t("reviews") }}
           />
         )}
         <Tab.Screen
           name="Followers"
           component={Followers}
-          options={{ tabBarLabel: "Urmaritori" }}
+          options={{ tabBarLabel: t("followers") }}
         />
         <Tab.Screen
           name="Following"
           component={Followings}
-          options={{ tabBarLabel: "Urmaresti" }}
+          options={{ tabBarLabel: t("followings") }}
         />
       </TopTabContainer>
     </SafeAreaView>

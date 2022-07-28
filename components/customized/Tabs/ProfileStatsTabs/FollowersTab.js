@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { CardFollowers } from "../../Cards/CardFollowers";
 import { SearchBarInput } from "../../../core";
 import { useHttpGet } from "../../../../hooks";
+import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 
 export const FollowersTab = ({ userId }) => {
   const [search, setSearch] = useState("");
@@ -50,6 +51,12 @@ export const FollowersTab = ({ userId }) => {
           keyExtractor={keyExtractor}
           renderItem={renderPerson}
           showsVerticalScrollIndicator={false}
+        />
+      )}
+      {followers?.length === 0 && (
+        <NoFoundMessage
+          title={t("followers")}
+          description={t("noFoundFollowers")}
         />
       )}
     </View>
