@@ -23,8 +23,8 @@ const { black, grey0, success, error } = theme.lightColors;
 
 const ScheduleDetailsScreen = ({ route }) => {
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
-  const { scheduleId } = route.params;
-  const { location } = owner || {};
+  const { scheduleId, location } = route.params;
+  const { coordinates } = location;
   const formatScheduleStart = moment(scheduleStart).utc().format("lll");
   const { t } = useTranslation();
   const navigation = useNavigation();
@@ -128,8 +128,8 @@ const ScheduleDetailsScreen = ({ route }) => {
           >
             <Marker
               coordinate={{
-                latitude: location?.coordinates[0],
-                longitude: location?.coordinates[1],
+                latitude: coordinates[0],
+                longitude: coordinates[1],
               }}
               image={require("../assets/images/map_marker.png")}
             ></Marker>

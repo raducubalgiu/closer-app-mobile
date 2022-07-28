@@ -63,7 +63,7 @@ const ScheduleConfirmScreen = ({ route }) => {
       .then((res) => {
         setLoading(false);
         navigation.navigate("Schedules", {
-          schedule: res.data,
+          schedule: { ...res.data, owner },
         });
       })
       .catch((err) => {

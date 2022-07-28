@@ -37,25 +37,21 @@ const SchedulesScreen = ({ route }) => {
     ),
     []
   );
-
-  const renderSchedules = useCallback(({ item }) => {
-    const { avatar, owner, product, service, status, scheduleStart } = item;
-
-    return (
+  const renderSchedules = useCallback(
+    ({ item }) => (
       <CardScheduleOverview
         onPress={() =>
-          navigation.navigate("ScheduleDetails", { scheduleId: item._id })
+          navigation.navigate("ScheduleDetails", {
+            scheduleId: item._id,
+            location: item.owner.location,
+          })
         }
-        avatar={avatar}
-        owner={owner.name}
-        price={product.price}
-        service={service.name}
-        status={status}
-        scheduleStart={scheduleStart}
+        schedule={item}
         newSched={false}
       />
-    );
-  }, []);
+    ),
+    []
+  );
 
   const keyExtractor = useCallback((item, index) => item + index, []);
 
@@ -67,12 +63,7 @@ const SchedulesScreen = ({ route }) => {
           <View style={{ padding: 15 }}>
             <CardScheduleOverview
               onPress={goToDetails}
-              avatar={schedule.avatar}
-              owner={schedule.owner.name}
-              price={schedule.product.price}
-              service={schedule.service.name}
-              status={schedule.status}
-              scheduleStart={schedule.scheduleStart}
+              schedule={schedule}
               newSched={true}
             />
           </View>

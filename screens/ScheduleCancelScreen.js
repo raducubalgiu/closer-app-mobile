@@ -60,7 +60,7 @@ const ScheduleCancelScreen = ({ route }) => {
           setDisabled(false);
           navigation.navigate({
             name: "ScheduleDetails",
-            params: { schedule: res.data.schedule },
+            params: { schedule: res.data },
             merge: true,
           });
         })
