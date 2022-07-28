@@ -7,10 +7,10 @@ import {
   Header,
   MainButton,
   Textarea,
-} from "../../../components/core";
-import { useAuth } from "../../../hooks";
+} from "../components/core";
+import { useAuth } from "../hooks";
 import { useTranslation } from "react-i18next";
-import theme from "../../../assets/styles/theme";
+import theme from "../assets/styles/theme";
 import moment from "moment";
 import { Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";

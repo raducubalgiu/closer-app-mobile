@@ -8,16 +8,16 @@ import {
   IconLocation,
   Feedback,
   Button,
-} from "../../../components/core";
+} from "../components/core";
 import { useTranslation } from "react-i18next";
 import { Icon } from "@rneui/base";
-import theme from "../../../assets/styles/theme";
+import theme from "../assets/styles/theme";
 import moment from "moment";
 import { Divider } from "@rneui/themed";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
-import { AddressFormat } from "../../../utils";
+import { AddressFormat } from "../utils";
 import { useNavigation } from "@react-navigation/native";
-import { useHttpGet } from "../../../hooks";
+import { useHttpGet } from "../hooks";
 
 const { black, grey0, success, error } = theme.lightColors;
 
@@ -131,7 +131,7 @@ const ScheduleDetailsScreen = ({ route }) => {
                 latitude: location?.coordinates[0],
                 longitude: location?.coordinates[1],
               }}
-              image={require("../../../assets/images/map_marker.png")}
+              image={require("../assets/images/map_marker.png")}
             ></Marker>
           </MapView>
           <Button onPress={goToOwner}>

@@ -61,10 +61,10 @@ import ScheduleScreen from "../screens/ScheduleScreen";
 import { PortalProvider } from "@gorhom/portal";
 import AddScheduleScreen from "../screens/User/Profile/MyBusiness/AddScheduleScreen";
 import ScheduleOverviewScreen from "../screens/ScheduleOverviewScreen";
-import ScheduleDetailsScreen from "../screens/User/Profile/ScheduleDetailsScreen";
+import ScheduleDetailsScreen from "../screens/ScheduleDetailsScreen";
 import MapScreen from "../screens/MapScreen";
 import ScheduleConfirmScreen from "../screens/ScheduleConfirmScreen";
-import ScheduleCancelScreen from "../screens/User/Profile/ScheduleCancelScreen";
+import ScheduleCancelScreen from "../screens/ScheduleCancelScreen";
 import AllBookmarksScreens from "../screens/User/Profile/AllBookmarksScreens";
 
 const Stack = createNativeStackNavigator();
