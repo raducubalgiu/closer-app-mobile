@@ -110,6 +110,7 @@ const SearchServicesScreen = ({ route }) => {
           </>
         }
         contentContainerStyle={{ paddingHorizontal: 15 }}
+        keyboardShouldPersistTaps={"handled"}
       />
     </SafeAreaView>
   );

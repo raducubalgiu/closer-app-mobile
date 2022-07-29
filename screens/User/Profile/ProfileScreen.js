@@ -24,10 +24,10 @@ import {
 
 const { height } = Dimensions.get("window");
 
-const ProfileScreen = (props) => {
+const ProfileScreen = ({ badgeDetails }) => {
   const { user } = useAuth();
   const { _id, name, username, avatar, checkmark, description } = user || {};
-  const { counter, role, services, opening_hours } = user || {};
+  const { counter, role, services, hours } = user || {};
   const { website, location, business } = user || {};
   const navigation = useNavigation();
   const Tab = createMaterialTopTabNavigator();
@@ -45,10 +45,10 @@ const ProfileScreen = (props) => {
         website={website}
         location={location}
         role={role}
-        openingHours={opening_hours}
+        hours={hours}
       />
     ),
-    [description, website, location, role, opening_hours]
+    [description, website, location, role, hours]
   );
 
   const closeSheet = useCallback(() => CLOSE_BS(), []);
@@ -82,7 +82,7 @@ const ProfileScreen = (props) => {
           business={business}
           counter={counter}
           withBadge
-          badgeDetails={props.badgeDetails}
+          badgeDetails={badgeDetails}
           withAvailable={false}
           available={false}
           showDetails={false}

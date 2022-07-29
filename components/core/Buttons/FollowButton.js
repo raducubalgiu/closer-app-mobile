@@ -14,7 +14,8 @@ export const FollowButton = ({
   fullWidth,
   ...props
 }) => {
-  const [follow, setFollow] = useState(true);
+  const [follow, setFollow] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { user, setUser } = useAuth();
   const { followersCount, ratingsAverage, ratingsQuantity, followingCount } =
     user.counter || {};
@@ -23,12 +24,26 @@ export const FollowButton = ({
 
   useFocusEffect(
     useCallback(() => {
+      const controller = new AbortController();
+      setLoading(true);
+
       axios
         .get(FOLLOW_ENDPOINT, {
+          signal: controller.signal,
           headers: { Authorization: `Bearer ${user?.token}` },
         })
-        .then((res) => setFollow(res.data.status))
-        .catch(() => setFollow(false));
+        .then((res) => {
+          setFollow(res.data.status);
+          setLoading(false);
+        })
+        .catch(() => {
+          setFollow(false);
+          setLoading(false);
+        });
+
+      return () => {
+        controller.abort();
+      };
     }, [user, followeeId])
   );
 
@@ -105,14 +120,18 @@ export const FollowButton = ({
   });
 
   return (
-    <TouchableOpacity
-      activeOpacity={1}
-      style={{ ...styles.btn, ...props.sxBtn }}
-      onPress={followHandler}
-    >
-      <Text style={{ ...styles.btnText, ...props.sxBtnText }}>
-        {follow ? t("following") : t("follow")}
-      </Text>
-    </TouchableOpacity>
+    <>
+      {!loading && (
+        <TouchableOpacity
+          activeOpacity={1}
+          style={{ ...styles.btn, ...props.sxBtn }}
+          onPress={followHandler}
+        >
+          <Text style={{ ...styles.btnText, ...props.sxBtnText }}>
+            {follow ? t("following") : t("follow")}
+          </Text>
+        </TouchableOpacity>
+      )}
+    </>
   );
 };

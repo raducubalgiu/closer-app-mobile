@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform, Keyboard } from "react-native";
 import { SearchBar } from "@rneui/themed";
 import React from "react";
 import theme from "../../../assets/styles/theme";
@@ -49,7 +49,7 @@ export const SearchBarInput = ({
             }
           : { color: "gray", buttonTextStyle: styles.cancelBtnText }
       }
-      platform={"ios"}
+      platform={Platform.OS === "ios" ? "ios" : "android"}
       containerStyle={styles.containerStyle}
       inputContainerStyle={styles.inputContainerStyle}
       inputStyle={styles.inputStyle}

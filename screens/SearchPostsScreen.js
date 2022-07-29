@@ -1,19 +1,21 @@
 import { SafeAreaView, StyleSheet, View, Text, FlatList } from "react-native";
+import React, { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
+import { Icon } from "@rneui/themed";
 import {
   Button,
   Checkmark,
   CustomAvatar,
+  Feedback,
   IconBackButton,
   SearchBarInput,
   Stack,
 } from "../components/core";
 import { CardRecentSearch } from "../components/customized";
-import React, { useCallback, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { useNavigation } from "@react-navigation/native";
-import axios from "axios";
 import theme from "../assets/styles/theme";
-import { Icon } from "@rneui/themed";
+import { useAuth } from "../hooks";
 
 const RECENT_SEARCH = [
   { _id: "1", word: "Patrice Evra" },
@@ -22,25 +24,38 @@ const RECENT_SEARCH = [
 ];
 
 const SearchPostsScreen = () => {
+  const { user } = useAuth();
   const [search, setSearch] = useState("");
   const [users, setUsers] = useState([]);
+  const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const navigation = useNavigation();
   const { t } = useTranslation();
 
   const updateSearch = useCallback(
     (search) => {
+      const controller = new AbortController();
       setSearch(search);
 
       if (search) {
         axios
-          .get(`${process.env.BASE_ENDPOINT}/users/search?search=${search}`)
-          .then((res) => {
-            setUsers(res.data);
-          })
-          .catch((err) => console.log(err));
+          .get(
+            `${process.env.BASE_ENDPOINT}/users/search?search=${search}&page=1&limit=10`,
+            {
+              signal: controller.signal,
+              headers: { Authorization: `Bearer ${user.token}` },
+            }
+          )
+          .then((res) => setUsers(res.data))
+          .catch(() =>
+            setFeedback({ visible: true, message: t("somethingWentWrong") })
+          );
       } else {
         setUsers([]);
       }
+
+      return () => {
+        controller.abort();
+      };
     },
     [search]
   );
@@ -50,19 +65,21 @@ const SearchPostsScreen = () => {
     []
   );
 
+  const goToUser = (item) => {
+    const { _id, username, avatar, name, checkmark } = item;
+
+    navigation.navigate("ProfileGeneral", {
+      userId: _id,
+      username,
+      avatar,
+      name,
+      checkmark,
+    });
+  };
+
   const renderUsers = useCallback(
     ({ item }) => (
-      <Button
-        onPress={() =>
-          navigation.navigate("ProfileGeneral", {
-            userId: item?._id,
-            username: item?.username,
-            avatar: item?.avatar,
-            name: item?.name,
-            checkmark: item?.checkmark,
-          })
-        }
-      >
+      <Button onPress={() => goToUser(item)}>
         <Stack direction="row" justify="start" sx={styles.searchItem}>
           <CustomAvatar avatar={item?.avatar} />
           <Stack align="start" sx={{ marginLeft: 10 }}>
@@ -80,15 +97,22 @@ const SearchPostsScreen = () => {
 
   const header = <Text style={styles.heading}>{t("recentSearch")}</Text>;
 
-  const footer = (
-    <Button sx={{ marginTop: 30 }}>
-      <Stack direction="row" align="center" justify="center">
-        <Icon name="search" type="feather" color={theme.lightColors.primary} />
-        <Button onPress={() => navigation.navigate("SearchAll", { search })}>
-          <Text style={styles.searchAll}>{t("seeAllResults")}</Text>
-        </Button>
-      </Stack>
-    </Button>
+  const footer = useCallback(
+    () => (
+      <Button sx={{ marginTop: 30 }}>
+        <Stack direction="row" align="center" justify="center">
+          <Icon
+            name="search"
+            type="feather"
+            color={theme.lightColors.primary}
+          />
+          <Button onPress={() => navigation.navigate("SearchAll", { search })}>
+            <Text style={styles.searchAll}>{t("seeAllResults")}</Text>
+          </Button>
+        </Stack>
+      </Button>
+    ),
+    []
   );
 
   return (
@@ -106,12 +130,14 @@ const SearchPostsScreen = () => {
             height={60}
           />
         </Stack>
+        <Feedback feedback={feedback} setFeedback={setFeedback} />
         <FlatList
-          ListHeaderComponent={users.length === 0 && header}
-          data={users.length > 0 ? users : RECENT_SEARCH}
+          ListHeaderComponent={!users.length && header}
+          data={users.length ? users : RECENT_SEARCH}
           keyExtractor={(item) => item._id}
-          renderItem={users.length > 0 ? renderUsers : renderRecent}
-          ListFooterComponent={users.length > 0 && footer}
+          renderItem={users.length ? renderUsers : renderRecent}
+          ListFooterComponent={users.length && footer}
+          keyboardShouldPersistTaps={"handled"}
         />
       </View>
     </SafeAreaView>

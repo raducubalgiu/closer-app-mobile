@@ -1,6 +1,8 @@
-import { StyleSheet, SafeAreaView } from "react-native";
+import { StyleSheet, SafeAreaView, View } from "react-native";
 import React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { THIRD_ROLE } from "@env";
+import { useTranslation } from "react-i18next";
 import {
   FollowersTab,
   FollowingsTab,
@@ -9,8 +11,6 @@ import {
 } from "../../../components/customized/index";
 import theme from "../../../assets/styles/theme";
 import { Header } from "../../../components/core";
-import { THIRD_ROLE } from "@env";
-import { useTranslation } from "react-i18next";
 
 const ProfileStatsScreen = ({ route }) => {
   const { initialRoute, username, userId, role } = route.params;
@@ -22,8 +22,10 @@ const ProfileStatsScreen = ({ route }) => {
   const Followings = () => <FollowingsTab userId={userId} />;
 
   return (
-    <SafeAreaView style={styles.screen}>
-      <Header title={username} />
+    <View style={styles.screen}>
+      <SafeAreaView>
+        <Header title={username} />
+      </SafeAreaView>
       <TopTabContainer initialRouteName={initialRoute}>
         {role !== THIRD_ROLE && (
           <Tab.Screen
@@ -43,7 +45,7 @@ const ProfileStatsScreen = ({ route }) => {
           options={{ tabBarLabel: t("followings") }}
         />
       </TopTabContainer>
-    </SafeAreaView>
+    </View>
   );
 };
 

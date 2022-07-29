@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import React, { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Header } from "../components/core";
+import { Header, Spinner } from "../components/core";
 import { useTranslation } from "react-i18next";
 import { useAuth, useHttpGet } from "../hooks";
 import { CardScheduleOverview, NoFoundMessage } from "../components/customized";
@@ -22,7 +22,9 @@ const SchedulesScreen = ({ route }) => {
   const navigation = useNavigation();
   const { t } = useTranslation();
 
-  const { data: schedules } = useHttpGet(`/users/${user?._id}/schedules`);
+  const { data: schedules, loading } = useHttpGet(
+    `/users/${user?._id}/schedules`
+  );
 
   const goToDetails = () =>
     navigation.navigate("ScheduleDetails", {
@@ -76,12 +78,14 @@ const SchedulesScreen = ({ route }) => {
             renderItem={renderSchedules}
             renderSectionHeader={renderHeader}
             contentContainerStyle={{ padding: 15 }}
-          />
-        )}
-        {schedules?.length === 0 && (
-          <NoFoundMessage
-            title={t("bookings")}
-            description={t("dontHaveBookings")}
+            ListFooterComponent={
+              schedules?.length === 0 && (
+                <NoFoundMessage
+                  title={t("bookings")}
+                  description={t("dontHaveBookings")}
+                />
+              )
+            }
           />
         )}
       </View>
