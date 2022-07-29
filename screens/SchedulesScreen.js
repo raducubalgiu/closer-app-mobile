@@ -5,7 +5,7 @@ import {
   View,
   Text,
 } from "react-native";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Header, Spinner } from "../components/core";
 import { useTranslation } from "react-i18next";
@@ -55,6 +55,12 @@ const SchedulesScreen = ({ route }) => {
     []
   );
 
+  useEffect(() => {
+    if (schedule) {
+      schedules.filter((sched) => sched._id !== schedule._id);
+    }
+  }, [schedule]);
+
   const keyExtractor = useCallback((item, index) => item + index, []);
 
   return (
@@ -78,14 +84,12 @@ const SchedulesScreen = ({ route }) => {
             renderItem={renderSchedules}
             renderSectionHeader={renderHeader}
             contentContainerStyle={{ padding: 15 }}
-            ListFooterComponent={
-              schedules?.length === 0 && (
-                <NoFoundMessage
-                  title={t("bookings")}
-                  description={t("dontHaveBookings")}
-                />
-              )
-            }
+          />
+        )}
+        {schedules?.length === 0 && (
+          <NoFoundMessage
+            title={t("bookings")}
+            description={t("dontHaveBookings")}
           />
         )}
       </View>
