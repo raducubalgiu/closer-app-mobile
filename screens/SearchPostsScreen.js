@@ -4,19 +4,13 @@ import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { Icon } from "@rneui/themed";
-import {
-  Button,
-  Checkmark,
-  CustomAvatar,
-  Feedback,
-  IconBackButton,
-  SearchBarInput,
-  Stack,
-} from "../components/core";
+import { Button, Checkmark, CustomAvatar, Feedback } from "../components/core";
+import { IconBackButton, SearchBarInput, Stack } from "../components/core";
 import { CardRecentSearch } from "../components/customized";
 import theme from "../assets/styles/theme";
 import { useAuth } from "../hooks";
 
+const { grey0, primary, black } = theme.lightColors;
 const RECENT_SEARCH = [
   { _id: "1", word: "Patrice Evra" },
   { _id: "2", word: "Cristiano Ronaldo" },
@@ -97,22 +91,23 @@ const SearchPostsScreen = () => {
 
   const header = <Text style={styles.heading}>{t("recentSearch")}</Text>;
 
+  const goToSearchAll = useCallback(() => {
+    if (search.length === 0) return;
+    navigation.navigate("SearchAll", { search });
+  }, [search]);
+
   const footer = useCallback(
     () => (
       <Button sx={{ marginTop: 30 }}>
         <Stack direction="row" align="center" justify="center">
-          <Icon
-            name="search"
-            type="feather"
-            color={theme.lightColors.primary}
-          />
-          <Button onPress={() => navigation.navigate("SearchAll", { search })}>
+          <Icon name="search" type="feather" color={primary} />
+          <Button onPress={goToSearchAll}>
             <Text style={styles.searchAll}>{t("seeAllResults")}</Text>
           </Button>
         </Stack>
       </Button>
     ),
-    []
+    [search]
   );
 
   return (
@@ -125,10 +120,13 @@ const SearchPostsScreen = () => {
             placeholder={t("search")}
             value={search}
             onChangeText={updateSearch}
-            cancelButtonTitle={t("search")}
-            onCancel={() => navigation.navigate("SearchAll", { search })}
+            showCancel={false}
+            onCancel={goToSearchAll}
             height={60}
           />
+          <Button onPress={goToSearchAll}>
+            <Text style={styles.cancelBtnText}>{t("search")}</Text>
+          </Button>
         </Stack>
         <Feedback feedback={feedback} setFeedback={setFeedback} />
         <FlatList
@@ -138,6 +136,7 @@ const SearchPostsScreen = () => {
           renderItem={users.length ? renderUsers : renderRecent}
           ListFooterComponent={users.length && footer}
           keyboardShouldPersistTaps={"handled"}
+          showsVerticalScrollIndicator={false}
         />
       </View>
     </SafeAreaView>
@@ -170,11 +169,18 @@ const styles = StyleSheet.create({
   },
   name: {
     fontFamily: "Exo-Medium",
-    color: theme.lightColors.grey0,
+    color: grey0,
   },
   searchAll: {
     fontFamily: "Exo-Bold",
-    color: theme.lightColors.primary,
+    color: primary,
     marginLeft: 5,
+  },
+  cancelBtnText: {
+    fontSize: 13.5,
+    fontFamily: "Exo-Bold",
+    color: black,
+    backgroundColor: "white",
+    padding: 5,
   },
 });

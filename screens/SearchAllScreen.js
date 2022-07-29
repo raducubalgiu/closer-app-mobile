@@ -1,5 +1,5 @@
 import { SafeAreaView, StyleSheet, View } from "react-native";
-import React from "react";
+import React, { useCallback } from "react";
 import { Stack, SearchBarInput, IconBackButton } from "../components/core";
 import theme from "../assets/styles/theme";
 import { useTranslation } from "react-i18next";
@@ -20,10 +20,13 @@ const SearchAllScreen = ({ route }) => {
 
   const Tab = createMaterialTopTabNavigator();
 
+  const Populars = useCallback(() => <SearchPopularTab search={search} />, []);
+  const SearchUsers = useCallback(() => <SearchUsersTab search={search} />, []);
+
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.container}>
-        <Stack direction="row" justify="start">
+        <Stack direction="row" justify="start" sx={{ paddingHorizontal: 15 }}>
           <IconBackButton sx={{ marginRight: 10 }} />
           <SearchBarInput
             value={search}
@@ -35,12 +38,12 @@ const SearchAllScreen = ({ route }) => {
         <TopTabContainer initialRouteName="SearchPopular" tabBarScrollEnabled>
           <Tab.Screen
             name="SearchPopular"
-            component={SearchPopularTab}
+            component={Populars}
             options={{ tabBarLabel: "Populare" }}
           />
           <Tab.Screen
             name="SearchUsers"
-            component={SearchUsersTab}
+            component={SearchUsers}
             options={{ tabBarLabel: "Utilizatori" }}
           />
           <Tab.Screen
@@ -77,7 +80,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   container: {
-    paddingHorizontal: 15,
     flex: 1,
   },
   labelStyle: {

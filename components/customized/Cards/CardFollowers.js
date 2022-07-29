@@ -1,16 +1,19 @@
 import { StyleSheet, Text } from "react-native";
-import React from "react";
-import { Stack, CustomAvatar, Button, FollowButton } from "../../core";
+import { useNavigation } from "@react-navigation/native";
+import { Stack, CustomAvatar, Button } from "../../core";
+import { FollowButton, Checkmark } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../hooks/auth";
-import { useNavigation } from "@react-navigation/native";
+import { useCallback } from "react";
+
+const { grey0, black } = theme.lightColors;
 
 export const CardFollowers = ({
   avatar,
   followeeId,
   username,
   name,
-  counter,
+  checkmark,
 }) => {
   const navigation = useNavigation();
   const { user } = useAuth();
@@ -21,7 +24,7 @@ export const CardFollowers = ({
       username,
       avatar,
       name,
-      counter,
+      checkmark,
     });
   };
 
@@ -30,7 +33,10 @@ export const CardFollowers = ({
       <Button sx={styles.goToUser} onPress={() => goToUser(followeeId)}>
         <CustomAvatar avatar={avatar} withBadge={false} />
         <Stack align="start" sx={{ marginLeft: 10 }}>
-          <Text style={styles.username}>{username}</Text>
+          <Stack direction="row">
+            <Text style={styles.username}>{username}</Text>
+            {checkmark && <Checkmark sx={{ marginLeft: 10 }} />}
+          </Stack>
           <Text style={styles.name}>{name}</Text>
         </Stack>
       </Button>
@@ -43,11 +49,12 @@ const styles = StyleSheet.create({
   container: { marginBottom: 15 },
   username: {
     fontFamily: "Exo-SemiBold",
-    fontSize: 13.5,
+    fontSize: 14,
+    color: black,
   },
   name: {
     fontFamily: "Exo-Medium",
-    color: theme.lightColors.grey0,
+    color: grey0,
     fontSize: 13.5,
   },
   goToUser: {
@@ -63,7 +70,12 @@ const styles = StyleSheet.create({
   },
   btnText: {
     fontFamily: "Exo-SemiBold",
-    color: theme.lightColors.black,
+    color: black,
     fontSize: 13,
+  },
+  followers: {
+    color: grey0,
+    marginTop: 2.5,
+    fontSize: 13.5,
   },
 });
