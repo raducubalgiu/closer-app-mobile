@@ -4,32 +4,22 @@ import {
   ScrollView,
   KeyboardAvoidingView,
 } from "react-native";
-import { useForm, FormProvider } from "react-hook-form";
+import { useState } from "react";
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import { useForm, FormProvider } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "../../../../hooks";
-import {
-  MainButton,
-  FormInput,
-  Stack,
-  Header,
-  Feedback,
-  FormInputSelect,
-} from "../../../../components/core";
+import { useAuth, useHttpGet } from "../../../../hooks";
+import { required, maxField, minField } from "../../../../constants/validation";
+import { MainButton, FormInput, Stack } from "../../../../components/core";
+import { Header, Feedback, FormInputSelect } from "../../../../components/core";
 import { BASE_ENDPOINT } from "@env";
-import {
-  required,
-  maxField,
-  minField,
-} from "../../../../constants/validation-rules";
 
 const defaultValues = {
   name: "",
   description: "",
   price: "",
-  discount: "",
+  discount: 0,
   duration: "",
 };
 
@@ -39,33 +29,22 @@ const AddProductsScreen = () => {
   const { t } = useTranslation();
   const [options, setOptions] = useState([]);
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
-  const [disabled, setDisabled] = useState(true);
-  const methods = useForm({ defaultValues });
+  const methods = useForm({
+    defaultValues: { ...defaultValues, service: user?.services[0]?._id },
+  });
   const { handleSubmit, watch } = methods;
   const selectedService = watch("service");
   const isRequired = required(t);
 
-  useEffect(() => {
-    if (selectedService) {
-      axios
-        .get(`${BASE_ENDPOINT}/services/${selectedService}`)
-        .then((res) => {
-          const { options } = res.data.service.filters[0];
-          setOptions(options);
-        })
-        .catch(() =>
-          setFeedback({ visible: true, message: t("somethingWentWrong") })
-        );
-    }
-  }, [selectedService]);
+  useHttpGet(`/services/${selectedService}`, (data) =>
+    setOptions(data.service.filters[0].options)
+  );
 
-  const onSubmit = (data) => {
-    const { description, price, discount, name, duration, service, option } =
-      data;
+  const handleProduct = (data) => {
     axios
       .post(
         `${BASE_ENDPOINT}/users/${user?._id}/products`,
-        { name, description, price, discount, service, option, duration },
+        { ...data },
         {
           headers: { Authorization: `Bearer ${user?.token}` },
         }
@@ -109,7 +88,7 @@ const AddProductsScreen = () => {
               <FormInput
                 label={t("name")}
                 name="name"
-                placeholder={t("name")}
+                placeholder={t("nameOfProduct")}
                 rules={{ ...isRequired, ...maxField(30), ...minField(3) }}
                 maxLength={30}
               />
@@ -121,25 +100,25 @@ const AddProductsScreen = () => {
                 maxLength={300}
               />
               <FormInput
-                label={t("duration")}
+                label={`${t("duration")} (${t("minutes")})`}
                 name="duration"
                 placeholder={t("duration")}
                 keyboardType="numeric"
                 rules={{ ...isRequired }}
               />
               <FormInput
-                label={t("price")}
+                label={`${t("price")} (RON)`}
                 name="price"
                 placeholder={t("price")}
                 keyboardType="numeric"
                 rules={{ ...isRequired }}
               />
               <FormInput
-                label={t("discount")}
+                label={`${t("discount")} (%)`}
                 name="discount"
                 placeholder={t("discount")}
                 keyboardType="numeric"
-                rules={{ ...isRequired }}
+                rules={{ ...isRequired, ...maxField(2) }}
               />
             </FormProvider>
           </Stack>
@@ -150,8 +129,7 @@ const AddProductsScreen = () => {
             radius={10}
             fullWidth
             title={t("add")}
-            onPress={handleSubmit(onSubmit)}
-            //disabled={disabled}
+            onPress={handleSubmit(handleProduct)}
           />
         </Stack>
       </KeyboardAvoidingView>

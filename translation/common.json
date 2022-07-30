@@ -232,5 +232,6 @@
   "isDeleting": "Se şterge...",
   "myOrders": "Comenzile mele",
   "maxFieldError": "Acest câmp este limitat la 200 de caractere",
-  "fieldRequiredError": "Acest câmp este obligatoriu"
+  "fieldRequiredError": "Acest câmp este obligatoriu",
+  "nameOfProduct": "Numele produsului"
 }

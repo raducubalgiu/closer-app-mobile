@@ -46,11 +46,10 @@ export const useHttpGet = (route, callback) => {
 };
 
 export const useHttpPost = (route, body, updateState) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { user } = useAuth();
 
-  setLoading(true);
   axios
     .post(`${BASE_ENDPOINT}${route}`, body, {
       headers: { Authorization: `Bearer ${user.token}` },
