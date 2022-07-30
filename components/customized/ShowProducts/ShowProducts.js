@@ -2,7 +2,6 @@ import { StyleSheet, FlatList, Text, View } from "react-native";
 import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { CardProduct } from "../Cards/CardProduct";
-import { NoFoundMessage } from "../NotFoundContent/NoFoundMessage";
 import { Button, Stack } from "../../core";
 import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";

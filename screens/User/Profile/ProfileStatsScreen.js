@@ -1,5 +1,5 @@
 import { StyleSheet, SafeAreaView, View } from "react-native";
-import React from "react";
+import React, { useCallback } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { THIRD_ROLE } from "@env";
 import { useTranslation } from "react-i18next";
@@ -17,9 +17,15 @@ const ProfileStatsScreen = ({ route }) => {
   const Tab = createMaterialTopTabNavigator();
   const { t } = useTranslation();
 
-  const Ratings = () => <RatingsTab userId={userId} />;
-  const Followers = () => <FollowersTab userId={userId} />;
-  const Followings = () => <FollowingsTab userId={userId} />;
+  const Ratings = useCallback(() => <RatingsTab userId={userId} />, [userId]);
+  const Followers = useCallback(
+    () => <FollowersTab userId={userId} />,
+    [userId]
+  );
+  const Followings = useCallback(
+    () => <FollowingsTab userId={userId} />,
+    [userId]
+  );
 
   return (
     <View style={styles.screen}>

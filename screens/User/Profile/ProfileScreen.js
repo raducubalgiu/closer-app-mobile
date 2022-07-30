@@ -35,7 +35,7 @@ const ProfileScreen = ({ badgeDetails }) => {
 
   const PostsProfile = useCallback(
     () => <PostsProfileTab userId={_id} username={username} />,
-    [_id]
+    [_id, username]
   );
 
   const AboutProfile = useCallback(

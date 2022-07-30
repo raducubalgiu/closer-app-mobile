@@ -4,10 +4,11 @@ import { CardPostImage } from "../../Cards/CardPostImage";
 import { useHttpGet } from "../../../../hooks";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { useTranslation } from "react-i18next";
+import { Spinner } from "../../../core";
 
 export const PostsProfileTab = ({ userId }) => {
   const navigation = useNavigation();
-  const { data: posts } = useHttpGet(`/users/${userId}/posts`);
+  const { data: posts, loading } = useHttpGet(`/users/${userId}/posts`);
   const { t } = useTranslation();
 
   const goToPosts = (item) =>
@@ -16,28 +17,33 @@ export const PostsProfileTab = ({ userId }) => {
       userId: item.user._id,
     });
 
+  const noFoundMessage = (
+    <NoFoundMessage
+      sx={{ marginTop: 50 }}
+      title={t("posts")}
+      description={t("noFoundPosts")}
+    />
+  );
+
   return (
     <>
-      <View style={styles.container}>
-        {posts?.map((item, i) => (
-          <CardPostImage
-            onPress={() => goToPosts(item)}
-            key={i}
-            index={i}
-            image={item?.images[0]?.url}
-            bookable={item?.bookable}
-            fixed={item?.fixed}
-            postType={item?.postType}
-          />
-        ))}
-      </View>
-      {posts?.length === 0 && (
-        <NoFoundMessage
-          sx={{ marginTop: 50 }}
-          title={t("posts")}
-          description={t("noFoundPosts")}
-        />
+      {!loading && (
+        <View style={styles.container}>
+          {posts?.map((item, i) => (
+            <CardPostImage
+              onPress={() => goToPosts(item)}
+              key={i}
+              index={i}
+              image={item?.images[0]?.url}
+              bookable={item?.bookable}
+              fixed={item?.fixed}
+              postType={item?.postType}
+            />
+          ))}
+        </View>
       )}
+      {!loading && !posts?.length && noFoundMessage}
+      {loading && <Spinner />}
     </>
   );
 };

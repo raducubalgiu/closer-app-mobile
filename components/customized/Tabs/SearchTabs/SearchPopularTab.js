@@ -4,7 +4,7 @@ import { Image } from "@rneui/themed";
 import { useHttpGet } from "../../../../hooks";
 import theme from "../../../../assets/styles/theme";
 import { CardFollowers } from "../../Cards/CardFollowers";
-import { Stack } from "../../../core";
+import { Spinner, Stack } from "../../../core";
 
 const { black } = theme.lightColors;
 
@@ -69,12 +69,15 @@ export const SearchPopularTab = ({ search }) => {
 
   return (
     <View style={styles.screen}>
-      <FlatList
-        data={users}
-        keyExtractor={(item) => item._id}
-        renderItem={renderUsers}
-        ListHeaderComponent={headerUsers}
-      />
+      {!loading && (
+        <FlatList
+          data={users}
+          keyExtractor={(item) => item._id}
+          renderItem={renderUsers}
+          ListHeaderComponent={headerUsers}
+        />
+      )}
+      {loading && <Spinner />}
     </View>
   );
 };
