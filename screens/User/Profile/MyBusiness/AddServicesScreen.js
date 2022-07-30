@@ -106,7 +106,7 @@ const AddServicesScreen = () => {
               value={service}
               placeholder={t("selectService")}
               onValueChange={(value) => setService(value)}
-              items={services}
+              items={user?.services}
             />
           </View>
           <Button

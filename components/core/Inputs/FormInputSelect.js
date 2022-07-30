@@ -7,7 +7,7 @@ import { has, get } from "lodash";
 import { Stack } from "../Stack/Stack";
 import { Icon } from "@rneui/themed";
 
-const { black, error } = theme.lightColors;
+const { black, error, grey0 } = theme.lightColors;
 
 export const FormInputSelect = ({
   name,
@@ -49,7 +49,8 @@ export const FormInputSelect = ({
       fontSize: 14,
       paddingHorizontal: 10,
       paddingVertical: 8,
-      borderWidth: 0.5,
+      borderWidth: 1,
+      borderColor: has(errors, name) ? error : "#ccc",
       borderRadius: 5,
       color: disabled ? "#9EA0A4" : black,
       fontFamily: "Exo-Medium",
@@ -60,7 +61,7 @@ export const FormInputSelect = ({
     label: {
       fontFamily: "Exo-SemiBold",
       textTransform: "uppercase",
-      color: theme.lightColors.grey0,
+      color: grey0,
       marginBottom: 2.5,
     },
     errMsg: {
@@ -83,7 +84,7 @@ export const FormInputSelect = ({
       <Controller
         control={control}
         rules={{ ...rules }}
-        render={({ field: { onChange, onBlur, value } }) => (
+        render={({ field: { onChange, value } }) => (
           <RNPickerSelect
             disabled={disabled}
             placeholder={inputPlaceholder}

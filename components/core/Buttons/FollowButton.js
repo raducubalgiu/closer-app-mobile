@@ -21,8 +21,9 @@ export const FollowButton = ({
   const FOLLOW_ENDPOINT = `${process.env.BASE_ENDPOINT}/follows?userId=${user?._id}&followeeId=${followeeId}`;
   const { t } = useTranslation();
 
-  const { loading } = useHttpGet(FOLLOW_ENDPOINT, (data) =>
-    setFollow(data.status)
+  const { loading } = useHttpGet(
+    `/follows?userId=${user?._id}&followeeId=${followeeId}`,
+    (data) => setFollow(data.status)
   );
 
   const followHandler = useCallback(() => {
