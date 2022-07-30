@@ -2,7 +2,7 @@ import { StyleSheet, View, FlatList } from "react-native";
 import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CardFollowers } from "../../Cards/CardFollowers";
-import { SearchBarInput } from "../../../core";
+import { SearchBarInput, Spinner } from "../../../core";
 import { useHttpGet } from "../../../../hooks";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 
@@ -10,7 +10,9 @@ export const FollowersTab = ({ userId }) => {
   const [search, setSearch] = useState("");
   const { t } = useTranslation();
 
-  const { data: followers } = useHttpGet(`/users/${userId}/follows/followers`);
+  const { data: followers, loading } = useHttpGet(
+    `/users/${userId}/follows/followers`
+  );
 
   const updateSearch = (text) => setSearch(text);
 
@@ -42,23 +44,26 @@ export const FollowersTab = ({ userId }) => {
 
   const keyExtractor = useCallback((item) => item?._id, []);
 
+  const noFoundMessage = (
+    <NoFoundMessage
+      title={t("followers")}
+      description={t("noFoundFollowers")}
+    />
+  );
+
   return (
     <View style={styles.screen}>
-      {followers?.length > 0 && (
+      {!loading && (
         <FlatList
           ListHeaderComponent={header}
           data={followers}
           keyExtractor={keyExtractor}
           renderItem={renderPerson}
           showsVerticalScrollIndicator={false}
+          ListFooterComponent={!loading & !followers?.length && noFoundMessage}
         />
       )}
-      {followers?.length === 0 && (
-        <NoFoundMessage
-          title={t("followers")}
-          description={t("noFoundFollowers")}
-        />
-      )}
+      {loading && <Spinner />}
     </View>
   );
 };

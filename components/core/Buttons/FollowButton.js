@@ -1,11 +1,11 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React, { useState, useCallback } from "react";
-import { useFocusEffect } from "@react-navigation/native";
 import axios from "axios";
 import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../hooks/auth";
 import { useTranslation } from "react-i18next";
 import * as Haptics from "expo-haptics";
+import { useHttpGet } from "../../../hooks";
 
 export const FollowButton = ({
   followeeId,
@@ -15,36 +15,14 @@ export const FollowButton = ({
   ...props
 }) => {
   const [follow, setFollow] = useState(false);
-  const [loading, setLoading] = useState(false);
   const { user, setUser } = useAuth();
   const { followersCount, ratingsAverage, ratingsQuantity, followingCount } =
     user.counter || {};
   const FOLLOW_ENDPOINT = `${process.env.BASE_ENDPOINT}/follows?userId=${user?._id}&followeeId=${followeeId}`;
   const { t } = useTranslation();
 
-  useFocusEffect(
-    useCallback(() => {
-      const controller = new AbortController();
-      setLoading(true);
-
-      axios
-        .get(FOLLOW_ENDPOINT, {
-          signal: controller.signal,
-          headers: { Authorization: `Bearer ${user?.token}` },
-        })
-        .then((res) => {
-          setFollow(res.data.status);
-          setLoading(false);
-        })
-        .catch(() => {
-          setFollow(false);
-          setLoading(false);
-        });
-
-      return () => {
-        controller.abort();
-      };
-    }, [user, followeeId])
+  const { loading } = useHttpGet(FOLLOW_ENDPOINT, (data) =>
+    setFollow(data.status)
   );
 
   const followHandler = useCallback(() => {

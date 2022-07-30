@@ -1,10 +1,14 @@
-import { StyleSheet, FlatList } from "react-native";
+import { StyleSheet, FlatList, View } from "react-native";
 import { useCallback, useState } from "react";
 import { useHttpGet } from "../../../../hooks";
 import { CardFollowers } from "../../Cards/CardFollowers";
+import { useTranslation } from "react-i18next";
+import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
+import { Spinner } from "../../../core";
 
 export const SearchUsersTab = ({ search }) => {
   const [page, setPage] = useState(1);
+  const { t } = useTranslation();
 
   const { data: users, loading } = useHttpGet(
     `/users/search?search=${search}&page=${page}&limit=10`
@@ -23,20 +27,30 @@ export const SearchUsersTab = ({ search }) => {
     ),
     []
   );
+  const keyExtractor = useCallback((item) => item._id, []);
+
+  const noFoundMessage = (
+    <NoFoundMessage title="Users" description={t("noFoundUsers")} />
+  );
 
   return (
-    <FlatList
-      data={users}
-      keyExtractor={(item) => item._id}
-      renderItem={renderUsers}
-      contentContainerStyle={styles.screen}
-    />
+    <View style={styles.screen}>
+      {!loading && (
+        <FlatList
+          data={users}
+          keyExtractor={keyExtractor}
+          renderItem={renderUsers}
+          contentContainerStyle={{ paddingTop: 15, paddingHorizontal: 15 }}
+          ListHeaderComponent={!loading && !users?.length && noFoundMessage}
+        />
+      )}
+      {loading && <Spinner />}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    padding: 15,
   },
 });

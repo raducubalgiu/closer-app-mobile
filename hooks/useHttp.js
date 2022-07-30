@@ -7,7 +7,7 @@ const BASE_ENDPOINT = `${process.env.BASE_ENDPOINT}`;
 
 export const useHttpGet = (route, callback) => {
   const [data, setData] = useState();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const { user } = useAuth();
 
@@ -15,7 +15,6 @@ export const useHttpGet = (route, callback) => {
     useCallback(() => {
       const controller = new AbortController();
 
-      setLoading(true);
       axios
         .get(`${BASE_ENDPOINT}${route}`, {
           signal: controller.signal,
@@ -32,7 +31,6 @@ export const useHttpGet = (route, callback) => {
         .finally(() => {
           setLoading(false);
         });
-
       return () => {
         controller.abort();
       };

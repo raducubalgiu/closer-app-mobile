@@ -56,7 +56,7 @@ const SchedulesScreen = ({ route }) => {
   );
 
   useEffect(() => {
-    if (schedule) {
+    if (schedule && schedules) {
       schedules.filter((sched) => sched._id !== schedule._id);
     }
   }, [schedule]);

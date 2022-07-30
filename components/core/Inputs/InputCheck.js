@@ -1,31 +1,18 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  ActivityIndicator,
-} from "react-native";
+import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
 import axios from "axios";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import { MainButton } from "../Buttons/MainButton";
 import React, { useEffect, useState } from "react";
 import theme from "../../../assets/styles/theme";
 import { Icon } from "@rneui/themed";
+import { Stack } from "../Stack/Stack";
+import { FormInput } from "./FormInput";
 
-const InputCheck = (props) => {
+const InputCheck = ({ inputName, endpoint, onSubmit, loadingBtn }) => {
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(null);
-  const { inputName, endpoint } = props;
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-    watch,
-  } = useForm({
-    defaultValues: {
-      inputName: "",
-    },
-  });
+  const methods = useForm({ defaultValues: { inputName: "" } });
+  const { handleSubmit, watch } = methods;
   const input = watch(inputName);
 
   useEffect(() => {
@@ -66,40 +53,31 @@ const InputCheck = (props) => {
     showStatus = <Text></Text>;
   }
 
-  const onSubmit = (data) => {
-    if (status === "success") props.onSubmit(data);
+  const onHandleSubmit = (data) => {
+    if (status === "success") onSubmit(data);
   };
 
   return (
     <View style={styles.container}>
-      <View style={styles.inputCheck}>
-        <Controller
-          control={control}
-          rules={{
-            required: true,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
+      <FormProvider {...methods}>
+        <View style={{ flex: 1 }}>
+          <Stack direction="row" align="center">
+            <FormInput
+              sx={{ flex: 1 }}
+              name={inputName}
               placeholder="Nume de utilizator"
-              placeholderTextColor={theme.lightColors.grey0}
             />
-          )}
-          name={inputName}
+            <View style={{ padding: 10 }}>{showStatus}</View>
+          </Stack>
+        </View>
+        <MainButton
+          onPress={handleSubmit(onHandleSubmit)}
+          title="Continuare"
+          disabled={!input ? true : false}
+          loading={loadingBtn}
+          size="lg"
         />
-        <View style={{ padding: 10 }}>{showStatus}</View>
-      </View>
-      {errors.username && (
-        <Text style={styles.error}>Acest camp este obligatoriu.</Text>
-      )}
-      <MainButton
-        onPress={handleSubmit(onSubmit)}
-        title="Continuare"
-        disabled={!input ? true : false}
-      />
+      </FormProvider>
     </View>
   );
 };
@@ -117,7 +95,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginHorizontal: 10,
   },
   input: { flex: 1, padding: 15 },
   error: {

@@ -6,10 +6,7 @@ import { useTranslation } from "react-i18next";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import {
   SearchHashtagsTab,
-  SearchJobsTab,
-  SearchServicesTab,
   SearchUsersTab,
-  SearchVideoTab,
   SearchPopularTab,
   TopTabContainer,
 } from "../components/customized";
@@ -22,10 +19,14 @@ const SearchAllScreen = ({ route }) => {
 
   const Populars = useCallback(() => <SearchPopularTab search={search} />, []);
   const SearchUsers = useCallback(() => <SearchUsersTab search={search} />, []);
+  const SearchHashtags = useCallback(
+    () => <SearchHashtagsTab search={search} />,
+    []
+  );
 
   return (
-    <SafeAreaView style={styles.screen}>
-      <View style={styles.container}>
+    <View style={styles.screen}>
+      <SafeAreaView>
         <Stack direction="row" justify="start" sx={{ paddingHorizontal: 15 }}>
           <IconBackButton sx={{ marginRight: 10 }} />
           <SearchBarInput
@@ -35,40 +36,25 @@ const SearchAllScreen = ({ route }) => {
             showCancel={false}
           />
         </Stack>
-        <TopTabContainer initialRouteName="SearchPopular" tabBarScrollEnabled>
-          <Tab.Screen
-            name="SearchPopular"
-            component={Populars}
-            options={{ tabBarLabel: "Populare" }}
-          />
-          <Tab.Screen
-            name="SearchUsers"
-            component={SearchUsers}
-            options={{ tabBarLabel: "Utilizatori" }}
-          />
-          <Tab.Screen
-            name="SearchServices"
-            component={SearchServicesTab}
-            options={{ tabBarLabel: "Servicii" }}
-          />
-          <Tab.Screen
-            name="SearchJobs"
-            component={SearchJobsTab}
-            options={{ tabBarLabel: "Joburi" }}
-          />
-          <Tab.Screen
-            name="SearchVideo"
-            component={SearchVideoTab}
-            options={{ tabBarLabel: "Videoclipuri" }}
-          />
-          <Tab.Screen
-            name="SearchHashtags"
-            component={SearchHashtagsTab}
-            options={{ tabBarLabel: "Hashtaguri" }}
-          />
-        </TopTabContainer>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+      <TopTabContainer initialRouteName="SearchPopular">
+        <Tab.Screen
+          name="SearchPopular"
+          component={Populars}
+          options={{ tabBarLabel: "Populare" }}
+        />
+        <Tab.Screen
+          name="SearchUsers"
+          component={SearchUsers}
+          options={{ tabBarLabel: "Utilizatori" }}
+        />
+        <Tab.Screen
+          name="SearchHashtags"
+          component={SearchHashtags}
+          options={{ tabBarLabel: "Hashtaguri" }}
+        />
+      </TopTabContainer>
+    </View>
   );
 };
 

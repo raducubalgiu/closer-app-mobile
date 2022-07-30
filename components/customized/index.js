@@ -48,6 +48,7 @@ export { HeaderServices } from "../customized/Layout/Headers/HeaderServices";
 export { HeaderEdit } from "../customized/Layout/Headers/HeaderEdit";
 
 export { MessageItem } from "../customized/ListItems/MessageItem";
+export { HashtagListItem } from "../customized/ListItems/HashtagListItem";
 
 export { ServicesList } from "./Lists/ServicesList";
 export { ProfileMenuList } from "./Lists/ProfileMenuList";

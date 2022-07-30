@@ -7,22 +7,25 @@ import { useAuth } from "../../../hooks/auth";
 import InputCheck from "../../../components/core/Inputs/InputCheck";
 import { Feedback } from "../../../components/core";
 
-const UsernameScreen = (props) => {
-  const { idTokenResult } = props.route.params;
+const UsernameScreen = ({ route }) => {
+  const { idTokenResult } = route.params;
   const { displayName, photoURL } = idTokenResult;
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
+  const [loading, setLoading] = useState(false);
   const { setUser } = useAuth();
 
   const handleSubmit = async (data) => {
     try {
+      setLoading(true);
+
       const userResult = await axios.post(
         `${process.env.BASE_ENDPOINT}/users/create-or-update-user`,
         {
           username: data.username,
           name: displayName ? displayName : data.username,
           avatar: photoURL ? photoURL : [],
-          role: props.route.params.role,
-          business: props.route.params.business,
+          role: route.params.role,
+          business: route.params.business,
         },
         {
           headers: {
@@ -38,10 +41,14 @@ const UsernameScreen = (props) => {
           ratingsQuantity: 0,
           followersCount: 0,
           followingCount: 0,
+          postsCount: 0,
         },
         token: idTokenResult?.token,
       });
+
+      setLoading(false);
     } catch (err) {
+      setLoading(false);
       setFeedback({ visible: true, message: t("somethingWentWrong") });
     }
   };
@@ -53,11 +60,14 @@ const UsernameScreen = (props) => {
         <Text style={styles.title}>{t("createAUsername")}</Text>
         <Text style={styles.description}>{t("pickAUsername")}</Text>
       </View>
-      <InputCheck
-        endpoint={`${process.env.BASE_ENDPOINT}/users/check-username`}
-        inputName="username"
-        onSubmit={handleSubmit}
-      />
+      <View style={{ flex: 1, marginHorizontal: 15 }}>
+        <InputCheck
+          endpoint={`${process.env.BASE_ENDPOINT}/users/check-username`}
+          inputName="username"
+          onSubmit={handleSubmit}
+          loadingBtn={loading}
+        />
+      </View>
     </SafeAreaView>
   );
 };
