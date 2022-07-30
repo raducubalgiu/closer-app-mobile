@@ -230,5 +230,7 @@
   "deletePost": "Ştergi postarea?",
   "areYouSureDeletePost": "Eşti sigur că vrei sa ştergi această postare?",
   "isDeleting": "Se şterge...",
-  "myOrders": "Comenzile mele"
+  "myOrders": "Comenzile mele",
+  "maxFieldError": "Acest câmp este limitat la 200 de caractere",
+  "fieldRequiredError": "Acest câmp este obligatoriu"
 }

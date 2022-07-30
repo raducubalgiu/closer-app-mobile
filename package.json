@@ -33,6 +33,7 @@
     "expo-status-bar": "~1.2.0",
     "firebase": "^9.6.10",
     "i18next": "^21.6.11",
+    "lodash": "^4.17.21",
     "moment": "^2.29.2",
     "moment-timezone": "^0.5.34",
     "react": "17.0.1",

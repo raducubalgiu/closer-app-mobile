@@ -1,7 +1,12 @@
 import { StyleSheet, TextInput, Text } from "react-native";
 import React from "react";
 import { useFormContext, Controller } from "react-hook-form";
+import { has, get } from "lodash";
 import theme from "../../../assets/styles/theme";
+import { Icon } from "@rneui/themed";
+import { Stack } from "../Stack/Stack";
+
+const { error, grey0 } = theme.lightColors;
 
 export const FormInput = ({
   name,
@@ -11,7 +16,15 @@ export const FormInput = ({
   label,
   ...props
 }) => {
-  const { errors, control } = useFormContext();
+  const { formState, control } = useFormContext();
+  const { errors } = formState;
+
+  const errMsg = (
+    <Stack direction="row" sx={{ marginBottom: 10 }}>
+      <Icon name="alert-circle" type="feather" size={20} color={error} />
+      <Text style={styles.errMsg}>{get(errors, name)?.message}</Text>
+    </Stack>
+  );
 
   return (
     <>
@@ -23,7 +36,11 @@ export const FormInput = ({
           <TextInput
             {...props}
             placeholder={placeholder}
-            style={{ ...styles.input, ...sx }}
+            style={{
+              ...styles.input,
+              borderColor: has(errors, name) ? error : "#ccc",
+              ...sx,
+            }}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -32,6 +49,7 @@ export const FormInput = ({
         )}
         name={name}
       />
+      {has(errors, name) && errMsg}
     </>
   );
 };
@@ -40,7 +58,6 @@ const styles = StyleSheet.create({
   input: {
     padding: 12.5,
     borderWidth: 1,
-    borderColor: "#ccc",
     fontFamily: "Exo-Regular",
     width: "100%",
     marginBottom: 10,
@@ -50,7 +67,12 @@ const styles = StyleSheet.create({
   label: {
     fontFamily: "Exo-SemiBold",
     textTransform: "uppercase",
-    color: theme.lightColors.grey0,
+    color: grey0,
     marginBottom: 2.5,
+  },
+  errMsg: {
+    color: error,
+    marginLeft: 5,
+    fontFamily: "Exo-Regular",
   },
 });

@@ -1,10 +1,15 @@
-import { SafeAreaView, StyleSheet, ScrollView } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  KeyboardAvoidingView,
+} from "react-native";
 import { useForm, FormProvider } from "react-hook-form";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { useAuth, useHttpPost } from "../../../../hooks";
+import { useAuth } from "../../../../hooks";
 import {
   MainButton,
   FormInput,
@@ -13,8 +18,12 @@ import {
   Feedback,
   FormInputSelect,
 } from "../../../../components/core";
-import TooltipTitle from "../../../../components/customized/ListItems/TooltipItem";
 import { BASE_ENDPOINT } from "@env";
+import {
+  required,
+  maxField,
+  minField,
+} from "../../../../constants/validation-rules";
 
 const defaultValues = {
   name: "",
@@ -34,6 +43,7 @@ const AddProductsScreen = () => {
   const methods = useForm({ defaultValues });
   const { handleSubmit, watch } = methods;
   const selectedService = watch("service");
+  const isRequired = required(t);
 
   useEffect(() => {
     if (selectedService) {
@@ -74,50 +84,77 @@ const AddProductsScreen = () => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Header title={t("addProduct")} />
+      <Header title={t("addProduct")} divider />
       <Feedback feedback={feedback} setFeedback={setFeedback} />
-      <ScrollView bounces={false} showsVerticalScrollIndicator={true}>
-        <Stack align="start" sx={{ margin: 15 }}>
-          <TooltipTitle title={t("products")} sx={{ marginBottom: 15 }} />
-          <FormProvider {...methods}>
-            <FormInputSelect
-              name="service"
-              placeholder={t("selectProductService")}
-              items={user?.services}
-            />
-            <FormInputSelect
-              name="option"
-              placeholder={t("selectProductCategory")}
-              items={options}
-            />
-            <FormInput name="name" placeholder={t("name")} />
-            <FormInput name="description" placeholder={t("description")} />
-            <FormInput
-              name="duration"
-              placeholder={t("duration")}
-              keyboardType="numeric"
-            />
-            <FormInput
-              name="price"
-              placeholder={t("price")}
-              keyboardType="numeric"
-            />
-            <FormInput
-              name="discount"
-              placeholder={t("discount")}
-              keyboardType="numeric"
-            />
-            <MainButton
-              size="lg"
-              radius={10}
-              fullWidth
-              title={t("add")}
-              onPress={handleSubmit(onSubmit)}
-              //disabled={disabled}
-            />
-          </FormProvider>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <ScrollView showsVerticalScrollIndicator={true}>
+          <Stack align="start" sx={{ margin: 15 }}>
+            <FormProvider {...methods}>
+              <FormInputSelect
+                label="Serviciu"
+                name="service"
+                placeholder={t("selectProductService")}
+                items={user?.services}
+                rules={{ ...isRequired }}
+              />
+              <FormInputSelect
+                label="Categorie"
+                name="option"
+                placeholder={t("selectProductCategory")}
+                items={options}
+                rules={{ ...isRequired }}
+              />
+              <FormInput
+                label={t("name")}
+                name="name"
+                placeholder={t("name")}
+                rules={{ ...isRequired, ...maxField(30), ...minField(3) }}
+                maxLength={30}
+              />
+              <FormInput
+                label={t("description")}
+                name="description"
+                placeholder={t("description")}
+                rules={{ ...isRequired, ...maxField(300), ...minField(10) }}
+                maxLength={300}
+              />
+              <FormInput
+                label={t("duration")}
+                name="duration"
+                placeholder={t("duration")}
+                keyboardType="numeric"
+                rules={{ ...isRequired }}
+              />
+              <FormInput
+                label={t("price")}
+                name="price"
+                placeholder={t("price")}
+                keyboardType="numeric"
+                rules={{ ...isRequired }}
+              />
+              <FormInput
+                label={t("discount")}
+                name="discount"
+                placeholder={t("discount")}
+                keyboardType="numeric"
+                rules={{ ...isRequired }}
+              />
+            </FormProvider>
+          </Stack>
+        </ScrollView>
+        <Stack sx={styles.btnContainer}>
+          <MainButton
+            size="lg"
+            radius={10}
+            fullWidth
+            title={t("add")}
+            onPress={handleSubmit(onSubmit)}
+            //disabled={disabled}
+          />
         </Stack>
-      </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
@@ -128,5 +165,11 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: "white",
+  },
+  btnContainer: {
+    marginHorizontal: 15,
+    marginBottom: 10,
+    borderTopWidth: 1,
+    borderTopColor: "#ddd",
   },
 });
