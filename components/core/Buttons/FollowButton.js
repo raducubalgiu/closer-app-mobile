@@ -7,17 +7,20 @@ import { useTranslation } from "react-i18next";
 import * as Haptics from "expo-haptics";
 import { useHttpGet } from "../../../hooks";
 
+const { primary, black } = theme.lightColors;
+
 export const FollowButton = ({
   followeeId,
   fetchUser,
   fetchSuggested,
   fullWidth,
-  ...props
+  size,
+  sxBtn,
+  sxBtnText,
 }) => {
-  const [follow, setFollow] = useState(false);
   const { user, setUser } = useAuth();
-  const { followersCount, ratingsAverage, ratingsQuantity, followingCount } =
-    user.counter || {};
+  const [follow, setFollow] = useState(false);
+  const { followingCount } = user.counter || {};
   const FOLLOW_ENDPOINT = `${process.env.BASE_ENDPOINT}/follows?userId=${user?._id}&followeeId=${followeeId}`;
   const { t } = useTranslation();
 
@@ -30,12 +33,7 @@ export const FollowButton = ({
     setFollow(true);
     setUser({
       ...user,
-      counter: {
-        followersCount,
-        ratingsAverage,
-        ratingsQuantity,
-        followingCount: followingCount + 1,
-      },
+      counter: { ...user.counter, followingCount: followingCount + 1 },
     });
 
     if (!follow) {
@@ -43,29 +41,20 @@ export const FollowButton = ({
         .post(
           `${process.env.BASE_ENDPOINT}/follows`,
           { userId: user?._id, followeeId },
-          {
-            headers: { Authorization: `Bearer ${user?.token}` },
-          }
+          { headers: { Authorization: `Bearer ${user?.token}` } }
         )
         .then(() => {
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
           fetchUser ? fetchUser() : null;
           fetchSuggested ? fetchSuggested() : null;
         })
-        .catch(() => {
-          setFollow(false);
-        });
+        .catch(() => setFollow(false));
     }
     if (follow) {
       setFollow(false);
       setUser({
         ...user,
-        counter: {
-          followersCount,
-          ratingsAverage,
-          ratingsQuantity,
-          followingCount: followingCount - 1,
-        },
+        counter: { ...user.counter, followingCount: followingCount - 1 },
       });
 
       axios
@@ -83,17 +72,17 @@ export const FollowButton = ({
   const styles = StyleSheet.create({
     btn: {
       borderWidth: 1,
-      borderColor: follow ? "#ddd" : theme.lightColors.primary,
-      paddingVertical: props.size === "md" ? 11 : 4.5,
-      paddingHorizontal: props.size === "md" ? 20 : 15,
+      borderColor: follow ? "#ddd" : primary,
+      paddingVertical: size === "md" ? 11 : 4.5,
+      paddingHorizontal: size === "md" ? 20 : 15,
       borderRadius: 2.5,
-      backgroundColor: follow ? "white" : theme.lightColors.primary,
+      backgroundColor: follow ? "white" : primary,
       width: fullWidth && "100%",
     },
     btnText: {
       fontFamily: "Exo-SemiBold",
-      color: follow ? theme.lightColors.black : "white",
-      fontSize: props.size === "md" ? 14 : 13,
+      color: follow ? black : "white",
+      fontSize: size === "md" ? 14 : 13,
       textAlign: "center",
     },
   });
@@ -103,10 +92,10 @@ export const FollowButton = ({
       {!loading && (
         <TouchableOpacity
           activeOpacity={1}
-          style={{ ...styles.btn, ...props.sxBtn }}
+          style={{ ...styles.btn, ...sxBtn }}
           onPress={followHandler}
         >
-          <Text style={{ ...styles.btnText, ...props.sxBtnText }}>
+          <Text style={{ ...styles.btnText, ...sxBtnText }}>
             {follow ? t("following") : t("follow")}
           </Text>
         </TouchableOpacity>
