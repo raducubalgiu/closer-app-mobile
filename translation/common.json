@@ -235,5 +235,10 @@
   "myOrders": "Comenzile mele",
   "maxFieldError": "Acest câmp este limitat la 200 de caractere",
   "fieldRequiredError": "Acest câmp este obligatoriu",
-  "nameOfProduct": "Numele produsului"
+  "nameOfProduct": "Numele produsului",
+  "goToServices": "Mergi la servicii",
+  "cannotAddProducts": "Pentru a putea adăuga produsele, este necesar să adaugi minim un serviciu",
+  "servicesNotAdded": "Nu ai adăugat serviciile",
+  "deleteService": "Ştergi acest serviciu?",
+  "deleteServiceDescription": "Atenţie! Ştergerea acestui serviciu va declansa ştergerea tuturor produselor asociate acestuia"
 }

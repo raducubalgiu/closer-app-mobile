@@ -4,6 +4,8 @@ import { Stack } from "../../core";
 import { Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 
+const { black, grey0 } = theme.lightColors;
+
 export const NoFoundMessage = ({
   title,
   description,
@@ -33,11 +35,10 @@ const styles = StyleSheet.create({
     fontSize: 19.5,
     marginTop: 15,
     marginBottom: 5,
-    color: theme.lightColors.black,
-    textTransform: "capitalize",
+    color: black,
   },
   description: {
-    color: theme.lightColors.grey0,
+    color: grey0,
     textAlign: "center",
     fontSize: 15.5,
   },

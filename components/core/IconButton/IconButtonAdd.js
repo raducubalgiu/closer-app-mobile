@@ -3,6 +3,8 @@ import React, { useRef, useEffect } from "react";
 import { Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 
+const { primary } = theme.lightColors;
+
 export const IconButtonAdd = ({ onPress, sx, disabled }) => {
   const animatedScale = useRef(new Animated.Value(0)).current;
 
@@ -28,7 +30,7 @@ export const IconButtonAdd = ({ onPress, sx, disabled }) => {
         <Icon
           name="pluscircle"
           type="antdesign"
-          color={!disabled && theme.lightColors.primary}
+          color={!disabled ? primary : "#ddd"}
           size={30}
         />
       </Animated.View>

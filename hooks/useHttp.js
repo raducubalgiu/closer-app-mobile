@@ -75,7 +75,7 @@ export const useHttpPost = (route, callback) => {
   };
 };
 
-export const useHttpPatch = (route, callback) => {
+export const useHttpPatch = (route, callback, message) => {
   const [loading, setLoading] = useState(false);
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const { user } = useAuth();

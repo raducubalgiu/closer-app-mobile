@@ -1,5 +1,8 @@
 import { SafeAreaView, StyleSheet, Text, View, ScrollView } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import { Icon } from "@rneui/themed";
+import { useTranslation } from "react-i18next";
 import {
   Stack,
   InputSelect,
@@ -8,31 +11,24 @@ import {
   Button,
   IconButtonDelete,
 } from "../../../../components/core";
-import { Icon } from "@rneui/themed";
-import TooltipTitle from "../../../../components/customized/ListItems/TooltipItem";
-import axios from "axios";
 import theme from "../../../../assets/styles/theme";
-import { useAuth } from "../../../../hooks/auth";
-import { useTranslation } from "react-i18next";
+import { useAuth, useHttpGet } from "../../../../hooks";
+import { ConfirmModal } from "../../../../components/customized/Modals/ConfirmModal";
 
 const AddServicesScreen = () => {
   const { user, setUser } = useAuth();
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
-  const [services, setServices] = useState([]);
+  const [visible, setVisible] = useState(false);
   const [selectedServices, setSelectedServices] = useState(user?.services);
   const [service, setService] = useState(null);
   const { t } = useTranslation();
 
-  useEffect(() => {
-    axios
-      .get(`${process.env.BASE_ENDPOINT}/services`, {
-        headers: { Authorization: `Bearer ${user?.token}` },
-      })
-      .then((res) => setServices(res.data.services))
-      .catch(() =>
-        setFeedback({ visible: true, message: t("somethingWentWrongLater") })
-      );
-  }, []);
+  const { data: services } = useHttpGet(`/services`);
+
+  const closeModal = () => {
+    setVisible(false);
+    setService(null);
+  };
 
   const addServiceHandler = () => {
     if (selectedServices.filter((el) => el._id === service).length > 0) {
@@ -84,6 +80,8 @@ const AddServicesScreen = () => {
           ),
         });
         setService(null);
+        closeModal();
+
         setFeedback({
           visible: true,
           message: t("serviceRemovedMessage"),
@@ -99,15 +97,16 @@ const AddServicesScreen = () => {
       <Header title={t("myServices")} divider={true} />
       <Feedback feedback={feedback} setFeedback={setFeedback} />
       <Stack align="start" sx={{ margin: 15 }}>
-        <TooltipTitle title={t("services")} sx={{ marginBottom: 25 }} />
         <Stack direction="row" sx={{ width: "100%" }}>
           <View style={{ flex: 1 }}>
-            <InputSelect
-              value={service}
-              placeholder={t("selectService")}
-              onValueChange={(value) => setService(value)}
-              items={user?.services}
-            />
+            {services && (
+              <InputSelect
+                value={service}
+                placeholder={t("selectService")}
+                onValueChange={(value) => setService(value)}
+                items={services}
+              />
+            )}
           </View>
           <Button
             sx={!service ? styles.disabledBtn : styles.addIcon}
@@ -128,15 +127,25 @@ const AddServicesScreen = () => {
         bounces={false}
         showsVerticalScrollIndicator={false}
       >
-        {selectedServices.map((service, i) => (
+        {selectedServices?.map((service, i) => (
           <Stack direction="row" sx={styles.service} key={i}>
             <Text style={styles.name}>{service?.name}</Text>
             <IconButtonDelete
-              onPress={() => removeServiceHandler(service?._id)}
+              onPress={() => {
+                setVisible(true);
+                setService(service);
+              }}
             />
           </Stack>
         ))}
       </ScrollView>
+      <ConfirmModal
+        onDelete={() => removeServiceHandler(service?._id)}
+        visible={visible}
+        onCloseModal={closeModal}
+        title={t("deleteService")}
+        description={t("deleteServiceDescription")}
+      />
     </SafeAreaView>
   );
 };

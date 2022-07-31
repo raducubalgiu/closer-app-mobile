@@ -2,10 +2,10 @@ import { StyleSheet, FlatList, Text, View } from "react-native";
 import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { CardProduct } from "../Cards/CardProduct";
-import { Button, Stack } from "../../core";
+import { Button, Spinner, Stack } from "../../core";
 import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";
-import { useAuth } from "../../../hooks";
+import { useAuth, useHttpGet } from "../../../hooks";
 import { useNavigation } from "@react-navigation/native";
 import { BASE_ENDPOINT } from "@env";
 
@@ -20,8 +20,8 @@ export const ShowProducts = ({
   const [activeService, setActiveService] = useState(
     serviceId ? serviceId : initServ
   );
+  const [loading, setLoading] = useState(false);
   const { user } = useAuth();
-  const { t } = useTranslation();
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -33,6 +33,7 @@ export const ShowProducts = ({
 
   const fetchProducts = useCallback(() => {
     if (userId && activeService) {
+      setLoading(true);
       axios
         .get(
           `${BASE_ENDPOINT}/users/${userId}/services/${activeService}/products`,
@@ -42,10 +43,9 @@ export const ShowProducts = ({
         )
         .then((res) => {
           setProducts(res.data.products);
+          setLoading(false);
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch(() => setLoading(false));
     }
   }, [userId, activeService]);
 
@@ -119,7 +119,8 @@ export const ShowProducts = ({
   return (
     <>
       <View>{renderHeader}</View>
-      {products.map((product, i) => renderProducts(product, i))}
+      {!loading && products.map((product, i) => renderProducts(product, i))}
+      {loading && <Spinner />}
     </>
   );
 };
