@@ -1,6 +1,7 @@
 import { useFocusEffect } from "@react-navigation/native";
 import axios from "axios";
 import { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "./auth";
 
 const BASE_ENDPOINT = `${process.env.BASE_ENDPOINT}`;
@@ -45,26 +46,60 @@ export const useHttpGet = (route, callback) => {
   };
 };
 
-export const useHttpPost = (route, body, updateState) => {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+export const useHttpPost = (route, callback) => {
+  const [loading, setLoading] = useState(false);
+  const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const { user } = useAuth();
+  const { t } = useTranslation();
 
-  axios
-    .post(`${BASE_ENDPOINT}${route}`, body, {
-      headers: { Authorization: `Bearer ${user.token}` },
-    })
-    .then((res) => updateState(res.data))
-    .catch((err) => {
-      setError(err);
-      setLoading(false);
-    })
-    .finally(() => {
-      setLoading(false);
-    });
+  const makePost = (body) => {
+    setLoading(true);
+
+    axios
+      .post(`${BASE_ENDPOINT}${route}`, body, {
+        headers: { Authorization: `Bearer ${user.token}` },
+      })
+      .then((res) => callback(res.data))
+      .catch(() => {
+        setFeedback({ visible: true, message: t("somethingWentWrong") });
+        setLoading(false);
+      })
+      .finally(() => setLoading(false));
+  };
 
   return {
     loading,
-    error,
+    feedback,
+    setFeedback,
+    makePost,
+  };
+};
+
+export const useHttpPatch = (route, callback) => {
+  const [loading, setLoading] = useState(false);
+  const [feedback, setFeedback] = useState({ visible: false, message: "" });
+  const { user } = useAuth();
+  const { t } = useTranslation();
+
+  const makePatch = (body) => {
+    setLoading(true);
+
+    axios
+      .patch(`${BASE_ENDPOINT}${route}`, body, {
+        headers: { Authorization: `Bearer ${user.token}` },
+      })
+      .then((res) => callback(res.data))
+      .catch(() => {
+        setFeedback({ visible: true, message: t("somethingWentWrong") });
+        setLoading(false);
+      })
+      .finally(() => setLoading(false));
+  };
+
+  return {
+    loading,
+    feedback,
+    setFeedback,
+    makePatch,
   };
 };

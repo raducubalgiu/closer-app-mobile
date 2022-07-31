@@ -5,15 +5,13 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import { useState } from "react";
-import axios from "axios";
 import { useForm, FormProvider } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { useAuth, useHttpGet } from "../../../../hooks";
+import { useAuth, useHttpGet, useHttpPost } from "../../../../hooks";
 import { required, maxField, minField } from "../../../../constants/validation";
 import { MainButton, FormInput, Stack } from "../../../../components/core";
 import { Header, Feedback, FormInputSelect } from "../../../../components/core";
-import { BASE_ENDPOINT } from "@env";
 
 const defaultValues = {
   name: "",
@@ -25,10 +23,10 @@ const defaultValues = {
 
 const AddProductsScreen = () => {
   const { user } = useAuth();
-  const navigation = useNavigation();
-  const { t } = useTranslation();
   const [options, setOptions] = useState([]);
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
+  const navigation = useNavigation();
+  const { t } = useTranslation();
   const methods = useForm({
     defaultValues: { ...defaultValues, service: user?.services[0]?._id },
   });
@@ -40,26 +38,17 @@ const AddProductsScreen = () => {
     setOptions(data.service.filters[0].options)
   );
 
-  const handleProduct = (data) => {
-    axios
-      .post(
-        `${BASE_ENDPOINT}/users/${user?._id}/products`,
-        { ...data },
-        {
-          headers: { Authorization: `Bearer ${user?.token}` },
-        }
-      )
-      .then((res) => {
-        navigation.navigate({
-          name: "MyProducts",
-          params: { product: res.data },
-          merge: true,
-        });
-      })
-      .catch(() =>
-        setFeedback({ visible: true, message: t("somethingWentWrong") })
-      );
-  };
+  const goBack = (data) =>
+    navigation.navigate({
+      name: "MyProducts",
+      params: { product: data },
+      merge: true,
+    });
+  const { makePost, loading } = useHttpPost(
+    `/users/${user?._id}/products`,
+    goBack
+  );
+  const handleCreate = (data) => makePost(data);
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -72,14 +61,14 @@ const AddProductsScreen = () => {
           <Stack align="start" sx={{ margin: 15 }}>
             <FormProvider {...methods}>
               <FormInputSelect
-                label="Serviciu"
+                label={t("service")}
                 name="service"
                 placeholder={t("selectProductService")}
                 items={user?.services}
                 rules={{ ...isRequired }}
               />
               <FormInputSelect
-                label="Categorie"
+                label={t("category")}
                 name="option"
                 placeholder={t("selectProductCategory")}
                 items={options}
@@ -118,7 +107,7 @@ const AddProductsScreen = () => {
                 name="discount"
                 placeholder={t("discount")}
                 keyboardType="numeric"
-                rules={{ ...isRequired, ...maxField(2) }}
+                rules={{ ...isRequired }}
               />
             </FormProvider>
           </Stack>
@@ -129,7 +118,8 @@ const AddProductsScreen = () => {
             radius={10}
             fullWidth
             title={t("add")}
-            onPress={handleSubmit(handleProduct)}
+            onPress={handleSubmit(handleCreate)}
+            loading={loading}
           />
         </Stack>
       </KeyboardAvoidingView>

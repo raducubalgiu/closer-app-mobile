@@ -12,4 +12,4 @@ export { useSheet } from "./useSheet";
 export { useSheetView } from "./useSheetView";
 export { useRefresh } from "./useRefresh";
 
-export { useHttpGet, useHttpPost } from "./useHttp";
+export { useHttpGet, useHttpPost, useHttpPatch } from "./useHttp";
