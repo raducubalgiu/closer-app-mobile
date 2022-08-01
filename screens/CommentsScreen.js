@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import React, { useCallback, useState } from "react";
 import { Divider } from "@rneui/themed";
-import axios from "axios";
 import { useAuth } from "../hooks/auth";
 import theme from "../assets/styles/theme";
 import {
@@ -21,12 +20,11 @@ import {
 } from "../components/core";
 import { CardComment } from "../components/customized";
 import { useTranslation } from "react-i18next";
-import { useHttpGet } from "../hooks";
+import { useHttpGet, useHttpPost } from "../hooks";
 
-const CommentsScreen = (props) => {
+const CommentsScreen = ({ route }) => {
   const { user } = useAuth();
-  const { postId, description, avatar, username, date, focus } =
-    props.route.params;
+  const { postId, description, avatar, username, date, focus } = route.params;
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
   const { t } = useTranslation();
@@ -35,35 +33,29 @@ const CommentsScreen = (props) => {
     setComments(data)
   );
 
-  const handleComment = () => {
-    axios
-      .post(
-        `${process.env.BASE_ENDPOINT}/comments`,
-        {
-          comment,
-          post: postId,
-          user: user?._id,
+  const handleUpdateAfterPost = (res) => {
+    setComment("");
+    setComments([
+      {
+        _id: res?._id,
+        comment: res?.comment,
+        user: {
+          username: user?.username,
+          avatar: user?.avatar,
         },
-        { headers: { Authorization: `Bearer ${user?.token}` } }
-      )
-      .then((res) => {
-        const commentRes = res.data;
-        setComment("");
-        setComments([
-          {
-            _id: commentRes?._id,
-            comment: commentRes?.comment,
-            user: {
-              username: user?.username,
-              avatar: user?.avatar,
-            },
-            createdAt: commentRes?.createdAt,
-          },
-          ...comments,
-        ]);
-      })
-      .catch((err) => console.log(err));
+        createdAt: res?.createdAt,
+      },
+      ...comments,
+    ]);
   };
+  const { makePost } = useHttpPost(`/comments`, handleUpdateAfterPost);
+
+  const handleComment = () =>
+    makePost({
+      comment,
+      post: postId,
+      user: user?._id,
+    });
 
   const renderHeader = useCallback(
     () => (
@@ -81,7 +73,7 @@ const CommentsScreen = (props) => {
         <Divider />
       </>
     ),
-    []
+    [username, description, avatar]
   );
 
   const renderComment = useCallback(({ item }) => {
@@ -125,7 +117,7 @@ const CommentsScreen = (props) => {
             autoCapitalize="sentences"
             autoFocus={focus}
             value={comment}
-            placeholder="Adauga un comentariu..."
+            placeholder={t("addComment")}
             style={styles.input}
           />
           <IconButton
