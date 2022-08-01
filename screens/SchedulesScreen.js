@@ -67,7 +67,7 @@ const SchedulesScreen = ({ route }) => {
     <SafeAreaView style={styles.screen}>
       <Header title={t("myOrders")} hideBtnLeft divider />
       <View style={styles.container}>
-        {schedule && (
+        {schedule && !loading && (
           <View style={{ padding: 15 }}>
             <CardScheduleOverview
               onPress={goToDetails}
@@ -76,7 +76,7 @@ const SchedulesScreen = ({ route }) => {
             />
           </View>
         )}
-        {schedules?.length > 0 && (
+        {schedules?.length && !loading && (
           <SectionList
             sections={schedules}
             keyExtractor={keyExtractor}
@@ -86,12 +86,13 @@ const SchedulesScreen = ({ route }) => {
             contentContainerStyle={{ padding: 15 }}
           />
         )}
-        {schedules?.length === 0 && (
+        {!schedules?.length && !loading && (
           <NoFoundMessage
             title={t("bookings")}
             description={t("dontHaveBookings")}
           />
         )}
+        {loading && <Spinner />}
       </View>
     </SafeAreaView>
   );

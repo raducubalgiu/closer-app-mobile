@@ -103,5 +103,5 @@ const styles = StyleSheet.create({
   },
   buttons: { paddingHorizontal: 15, paddingVertical: 2.5 },
   button: { marginLeft: 15 },
-  likes: { color: black, fontWeight: "bold" },
+  likes: { color: black, fontWeight: "bold", textTransform: "lowercase" },
 });

@@ -39,14 +39,16 @@ const LikesScreen = ({ route }) => {
 
   const keyExtractor = useCallback((item) => item?._id, []);
 
+  const noFoundLikes = (
+    <NoFoundMessage title={t("likes")} description={t("noFoundLikes")} />
+  );
+
   return (
     <SafeAreaView style={styles.screen}>
       <Header title={t("likes")} divider={true} />
-      {!loading && likes.length === 0 && (
-        <NoFoundMessage title={t("likes")} description={t("noFoundLikes")} />
-      )}
       <View style={styles.listContainer}>
         {loading && <Spinner />}
+        {!loading && !likes.length && noFoundLikes}
         {!loading && (
           <FlatList
             style={{ paddingTop: 5 }}
