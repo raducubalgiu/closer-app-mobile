@@ -75,12 +75,11 @@ export const TopTabContainer = ({
 const styles = StyleSheet.create({
   tabLabel: {
     fontFamily: "Exo-SemiBold",
-    //textTransform: "capitalize",
+    textTransform: "capitalize",
     fontSize: 14,
   },
   tabStyle: { backgroundColor: "white" },
   tabIndicator: {
-    //backgroundColor: theme.lightColors.black,
-    backgroundColor: "transparent",
+    backgroundColor: black,
   },
 });

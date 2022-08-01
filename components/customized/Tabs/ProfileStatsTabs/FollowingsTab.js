@@ -14,9 +14,7 @@ export const FollowingsTab = ({ userId }) => {
     `/users/${userId}/follows/followings`
   );
 
-  const updateSearch = (text) => {
-    setSearch(text);
-  };
+  const updateSearch = useCallback((search) => setSearch(search), [search]);
 
   const renderPerson = useCallback(({ item }) => {
     const { avatar, username, name, _id } = item.followeeId;
@@ -31,17 +29,14 @@ export const FollowingsTab = ({ userId }) => {
     );
   }, []);
 
-  const header = useCallback(
-    () => (
-      <SearchBarInput
-        showCancel={false}
-        placeholder={t("search")}
-        value={search}
-        updateValue={updateSearch}
-        height={60}
-      />
-    ),
-    []
+  const header = (
+    <SearchBarInput
+      showCancel={false}
+      placeholder={t("search")}
+      value={search}
+      onChangeText={updateSearch}
+      height={60}
+    />
   );
 
   const keyExtractor = useCallback((item) => item?._id, []);

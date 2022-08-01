@@ -14,7 +14,7 @@ export const FollowersTab = ({ userId }) => {
     `/users/${userId}/follows/followers`
   );
 
-  const updateSearch = (text) => setSearch(text);
+  const updateSearch = useCallback((search) => setSearch(search), [search]);
 
   const renderPerson = useCallback(({ item }) => {
     const { avatar, username, name, _id } = item.userId;
@@ -29,17 +29,14 @@ export const FollowersTab = ({ userId }) => {
     );
   }, []);
 
-  const header = useCallback(
-    () => (
-      <SearchBarInput
-        showCancel={false}
-        placeholder={t("search")}
-        value={search}
-        updateValue={updateSearch}
-        height={60}
-      />
-    ),
-    []
+  const header = (
+    <SearchBarInput
+      showCancel={false}
+      placeholder={t("search")}
+      value={search}
+      onChangeText={updateSearch}
+      height={60}
+    />
   );
 
   const keyExtractor = useCallback((item) => item?._id, []);
@@ -55,7 +52,7 @@ export const FollowersTab = ({ userId }) => {
     <View style={styles.screen}>
       {!loading && (
         <FlatList
-          ListHeaderComponent={!followers?.length && header}
+          ListHeaderComponent={followers?.length && header}
           data={followers}
           keyExtractor={keyExtractor}
           renderItem={renderPerson}
