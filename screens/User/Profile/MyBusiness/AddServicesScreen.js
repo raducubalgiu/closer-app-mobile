@@ -1,6 +1,5 @@
 import { SafeAreaView, StyleSheet, Text, View, ScrollView } from "react-native";
 import React, { useState } from "react";
-import axios from "axios";
 import { Icon } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
 import {
@@ -12,7 +11,7 @@ import {
   IconButtonDelete,
 } from "../../../../components/core";
 import theme from "../../../../assets/styles/theme";
-import { useAuth, useHttpGet } from "../../../../hooks";
+import { useAuth, useHttpGet, useHttpPatch } from "../../../../hooks";
 import { ConfirmModal } from "../../../../components/customized/Modals/ConfirmModal";
 
 const AddServicesScreen = () => {
@@ -22,6 +21,7 @@ const AddServicesScreen = () => {
   const [selectedServices, setSelectedServices] = useState(user?.services);
   const [service, setService] = useState(null);
   const { t } = useTranslation();
+  const ENDPOINT = `/users/${user?._id}/services`;
 
   const { data: services } = useHttpGet(`/services`);
 
@@ -29,6 +29,23 @@ const AddServicesScreen = () => {
     setVisible(false);
     setService(null);
   };
+
+  const handleUpdateAfterAdd = (data) => {
+    const newService = data.filter((serv) => serv._id === service);
+    setSelectedServices((selectedServices) =>
+      selectedServices.concat(newService)
+    );
+    setUser({ ...user, services: user.services.concat(newService) });
+    setService(null);
+    setFeedback({
+      visible: true,
+      message: t("serviceAddedMessage"),
+    });
+  };
+  const { makePatch: makePatchAdd } = useHttpPatch(
+    `${ENDPOINT}/add-service`,
+    handleUpdateAfterAdd
+  );
 
   const addServiceHandler = () => {
     if (selectedServices.filter((el) => el._id === service).length > 0) {
@@ -39,58 +56,29 @@ const AddServicesScreen = () => {
       return;
     }
 
-    axios
-      .patch(
-        `${process.env.BASE_ENDPOINT}/users/${user?._id}/services/add-service`,
-        { serviceId: service },
-        { headers: { Authorization: `Bearer ${user?.token}` } }
-      )
-      .then((res) => {
-        const newService = res.data.filter((serv) => serv._id === service);
-        setSelectedServices((selectedServices) =>
-          selectedServices.concat(newService)
-        );
-        setUser({ ...user, services: user.services.concat(newService) });
-        setService(null);
-        setFeedback({
-          visible: true,
-          message: t("serviceAddedMessage"),
-        });
-      })
-      .catch(() =>
-        setFeedback({ visible: true, message: t("somethingWentWrong") })
-      );
+    makePatchAdd({ serviceId: service });
   };
 
-  const removeServiceHandler = (serviceId) => {
-    axios
-      .patch(
-        `${process.env.BASE_ENDPOINT}/users/${user?._id}/services/remove-service`,
-        { serviceId },
-        { headers: { Authorization: `Bearer ${user?.token}` } }
-      )
-      .then(() => {
-        setSelectedServices((selectedServices) =>
-          selectedServices.filter((service) => service._id !== serviceId)
-        );
-        setUser({
-          ...user,
-          services: user.services.filter(
-            (services) => services._id !== serviceId
-          ),
-        });
-        setService(null);
-        closeModal();
+  const handleUpdateAfterRemove = () => {
+    setSelectedServices((selServ) =>
+      selServ.filter((serv) => serv._id !== service._id)
+    );
+    setUser({
+      ...user,
+      services: user.services.filter((serv) => serv._id !== service._id),
+    });
+    setService(null);
+    closeModal();
 
-        setFeedback({
-          visible: true,
-          message: t("serviceRemovedMessage"),
-        });
-      })
-      .catch(() =>
-        setFeedback({ visible: true, message: t("somethingWentWrong") })
-      );
+    setFeedback({
+      visible: true,
+      message: t("serviceRemovedMessage"),
+    });
   };
+  const { makePatch: makePatchRemove } = useHttpPatch(
+    `${ENDPOINT}/remove-service`,
+    handleUpdateAfterRemove
+  );
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -140,7 +128,7 @@ const AddServicesScreen = () => {
         ))}
       </ScrollView>
       <ConfirmModal
-        onDelete={() => removeServiceHandler(service?._id)}
+        onDelete={() => makePatchRemove({ serviceId: service?._id })}
         visible={visible}
         onCloseModal={closeModal}
         title={t("deleteService")}
