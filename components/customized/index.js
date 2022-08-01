@@ -27,6 +27,7 @@ export { RatingsTab } from "./Tabs/ProfileStatsTabs/RatingsTab";
 export { DashboardScheduleTab } from "./Tabs/DashboardTabs/DashboardScheduleTab";
 export { DashboardPostsTab } from "./Tabs/DashboardTabs/DashboardPostsTab";
 export { DashboardJobsTab } from "./Tabs/DashboardTabs/DashboardJobsTab";
+export { ServiceTab } from "./Tabs/ServiceTab/ServiceTab";
 
 export { CardPost } from "./Cards/CardPost/CardPost";
 export { CardPostGrid } from "./Cards/CardPostGrid/CardPostGrid";

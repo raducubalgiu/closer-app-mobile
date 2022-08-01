@@ -57,12 +57,14 @@ export const FollowingsTab = ({ userId }) => {
     <View style={styles.screen}>
       {!loading && (
         <FlatList
-          ListHeaderComponent={header}
+          ListHeaderComponent={followings?.length && header}
           data={followings}
           keyExtractor={keyExtractor}
           renderItem={renderPerson}
           showsVerticalScrollIndicator={false}
-          ListFooterComponent={!loading && !followings?.length & NoFoundMessage}
+          ListFooterComponent={
+            !loading && !followings?.length && noFoundMessage
+          }
         />
       )}
       {loading && <Spinner />}

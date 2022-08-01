@@ -9,12 +9,14 @@ import { useCallback } from "react";
 import { Header } from "../components/core";
 import { CardPost } from "../components/customized";
 import { useHttpGet } from "../hooks";
+import { useTranslation } from "react-i18next";
 
 const { width, height } = Dimensions.get("window");
 
 const PostScreen = ({ route }) => {
   const { userId } = route.params;
   const { data: posts } = useHttpGet(`/users/${userId}/posts`);
+  const { t } = useTranslation();
 
   const renderUserPosts = useCallback(
     ({ item }) => <CardPost post={item} />,
@@ -33,7 +35,7 @@ const PostScreen = ({ route }) => {
   return (
     <View style={styles.screen}>
       <SafeAreaView>
-        <Header title="Postări" divider />
+        <Header title={t("posts")} divider />
       </SafeAreaView>
       <FlatList
         showsVerticalScrollIndicator={false}

@@ -24,7 +24,7 @@ const ScheduleConfirmScreen = ({ route }) => {
   const { t } = useTranslation();
   const { selectedDay, selectedHour, owner, service } = route.params;
   const { product, hours, employee } = route.params;
-  const { name, price, option, duration } = product;
+  const { name, price, option, duration, description } = product;
 
   const startTime = getStartTimeByDateAndHours(selectedDay, selectedHour);
   const endTime = getEndTimeBySlot(startTime);
@@ -53,6 +53,7 @@ const ScheduleConfirmScreen = ({ route }) => {
           },
           product: {
             name,
+            description,
             price,
             option: option?.name,
             duration,
@@ -75,7 +76,7 @@ const ScheduleConfirmScreen = ({ route }) => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Header title="Confirmare rezervare" />
+      <Header title={t("checkBookingDetails")} />
       <Feedback feedback={feedback} setFeedback={setFeedback} duration="LONG" />
       <ScrollView align="start" contentContainerStyle={styles.scrollView}>
         <Stack align="start">
@@ -102,9 +103,7 @@ const ScheduleConfirmScreen = ({ route }) => {
               <Text style={styles.heading}>
                 {service.name} - {product.name}
               </Text>
-              <Text style={styles.description}>
-                Include spalat, aranjat, barba precum si alte detalii
-              </Text>
+              <Text style={styles.description}>{description}</Text>
               <Text style={styles.description}>
                 {option.name || option}, {duration} min
               </Text>
@@ -113,9 +112,9 @@ const ScheduleConfirmScreen = ({ route }) => {
           <Stack align="start" direction="row" sx={{ marginBottom: 50 }}>
             <Icon name="credit-card" type="feather" size={27.5} color={grey0} />
             <Stack align="start" sx={{ marginLeft: 15, flex: 1 }}>
-              <Text style={styles.heading}>Plata</Text>
+              <Text style={styles.heading}>{t("payment")}</Text>
               <Text style={styles.description}>{t("paymentDetails")}</Text>
-              <Text style={styles.price}>150 LEI</Text>
+              <Text style={styles.price}>{price} LEI</Text>
             </Stack>
           </Stack>
         </Stack>
@@ -148,11 +147,11 @@ const styles = StyleSheet.create({
   heading: {
     fontFamily: "Exo-SemiBold",
     color: black,
-    fontSize: 15,
+    fontSize: 16,
   },
   description: {
     marginTop: 5,
-    fontFamily: "Exo-Medium",
+    //fontFamily: "Exo-Medium",
     color: grey0,
     fontSize: 16,
   },

@@ -9,6 +9,8 @@ import { IconButtonDelete } from "../../core/IconButton/IconButtonDelete";
 import { useNavigation } from "@react-navigation/native";
 import { SECOND_ROLE, THIRD_ROLE } from "@env";
 
+const { black, grey0, primary } = theme.lightColors;
+
 export const CardProduct = ({
   product,
   onDeleteProduct,
@@ -96,37 +98,40 @@ const styles = StyleSheet.create({
   },
   name: {
     fontFamily: "Exo-SemiBold",
-    fontSize: 15,
+    fontSize: 17,
     marginBottom: 1,
+    color: black,
   },
   option: {
     fontFamily: "Exo-SemiBold",
-    color: theme.lightColors.primary,
+    color: primary,
     fontSize: 15,
   },
   duration: {
     fontFamily: "Exo-Regular",
-    color: theme.lightColors.grey0,
+    color: grey0,
     marginLeft: 10,
   },
   descriptionCont: { marginRight: 5, flex: 1 },
   description: {
-    fontFamily: "Exo-Regular",
-    color: theme.lightColors.grey0,
+    color: grey0,
+    marginTop: 5,
   },
   price: {
     fontFamily: "Exo-Bold",
     marginTop: 10,
+    fontSize: 16,
+    color: black,
   },
   button: {
     backgroundColor: "white",
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderWidth: 2,
-    borderColor: theme.lightColors.primary,
+    borderColor: primary,
   },
   buttonText: {
-    color: theme.lightColors.black,
+    color: black,
     fontFamily: "Exo-Medium",
   },
 });

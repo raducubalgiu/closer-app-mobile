@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";
@@ -28,7 +28,6 @@ export const ProfileOverview = ({
   counter,
   distance,
   role,
-  services,
   business,
   withBadge,
   withAvailable,
@@ -48,14 +47,6 @@ export const ProfileOverview = ({
   } = counter || {};
   const navigation = useNavigation();
   const { t } = useTranslation();
-
-  const handleGoToProducts = (serviceId) => {
-    if (_id === userContext?._id) {
-      navigation.navigate("MyProducts", { serviceId });
-    } else {
-      navigation.navigate("Products", { serviceId });
-    }
-  };
 
   let status = available
     ? `${t("isClosingAt")} ${moment()
@@ -118,19 +109,6 @@ export const ProfileOverview = ({
             </Stack>
           )}
         </Protected>
-      </Stack>
-      <Stack justify="center" align="center" sx={styles.servicesContainer}>
-        <ScrollView
-          bounces={false}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-        >
-          {services?.map((service, i) => (
-            <Button key={i} onPress={() => handleGoToProducts(service?._id)}>
-              <Text style={styles.service}>{service?.name}</Text>
-            </Button>
-          ))}
-        </ScrollView>
       </Stack>
       <Stack direction="row" justify="between" sx={styles.statsContainer}>
         <Protected userRole={role} roles={[MAIN_ROLE, SECOND_ROLE]}>
@@ -227,6 +205,7 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingHorizontal: 60,
     marginBottom: 2.5,
+    marginTop: 20,
   },
   buttonsContainer: {
     marginVertical: 10,

@@ -55,7 +55,7 @@ export const FollowersTab = ({ userId }) => {
     <View style={styles.screen}>
       {!loading && (
         <FlatList
-          ListHeaderComponent={header}
+          ListHeaderComponent={!followers?.length && header}
           data={followers}
           keyExtractor={keyExtractor}
           renderItem={renderPerson}
