@@ -226,7 +226,7 @@ const FeedScreen = () => {
         </ScrollView>
       </Stack>
       <Divider color="#ddd" />
-      {/* <FlatList
+      <FlatList
         ref={ref}
         data={posts}
         onEndReached={onEndReached}
@@ -241,7 +241,7 @@ const FeedScreen = () => {
         ListFooterComponent={
           fetchMore && <Spinner sx={{ marginVertical: 5 }} />
         }
-      /> */}
+      />
       {BOTTOM_SHEET}
       <ConfirmModal
         title={t("deletePost")}

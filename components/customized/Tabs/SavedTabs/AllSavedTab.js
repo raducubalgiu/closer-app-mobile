@@ -1,27 +1,18 @@
 import { StyleSheet, View, Dimensions, FlatList } from "react-native";
-import React, { useCallback, useState } from "react";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import axios from "axios";
+import React, { useCallback } from "react";
+import { useNavigation } from "@react-navigation/native";
 import { CardPostImage } from "../../Cards/CardPostImage";
 import theme from "../../../../assets/styles/theme";
-import { useAuth } from "../../../../hooks/auth";
+import { useHttpGet } from "../../../../hooks";
+import { Spinner } from "../../../core";
 
 const { width } = Dimensions.get("window");
 
-export const AllSavedTab = () => {
-  const { user } = useAuth();
-  const [bookmarks, setBookmarks] = useState([]);
+export const AllSavedTab = ({ user }) => {
   const navigation = useNavigation();
 
-  useFocusEffect(
-    useCallback(() => {
-      axios
-        .get(`${process.env.BASE_ENDPOINT}/users/${user?._id}/bookmarks`, {
-          headers: { Authorization: `Bearer ${user?.token}` },
-        })
-        .then((res) => setBookmarks(res.data))
-        .catch((err) => console.log(err));
-    }, [])
+  const { data: bookmarks, loading } = useHttpGet(
+    `/users/${user?._id}/bookmarks`
   );
 
   const renderBookmark = useCallback(({ item, i }) => {
@@ -47,21 +38,23 @@ export const AllSavedTab = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={bookmarks}
-        numColumns={3}
-        keyExtractor={(item) => item?._id}
-        renderItem={renderBookmark}
-      />
+    <View style={styles.screen}>
+      {!loading && (
+        <FlatList
+          data={bookmarks}
+          numColumns={3}
+          keyExtractor={(item) => item?._id}
+          renderItem={renderBookmark}
+        />
+      )}
+      {loading && <Spinner />}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  screen: {
     flex: 1,
-    backgroundColor: "white",
   },
   box: {
     width: width / 3,

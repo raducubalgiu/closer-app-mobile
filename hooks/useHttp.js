@@ -75,7 +75,7 @@ export const useHttpPost = (route, callback) => {
   };
 };
 
-export const useHttpPatch = (route, callback, message) => {
+export const useHttpPatch = (route, callback) => {
   const [loading, setLoading] = useState(false);
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const { user } = useAuth();
@@ -101,5 +101,34 @@ export const useHttpPatch = (route, callback, message) => {
     feedback,
     setFeedback,
     makePatch,
+  };
+};
+
+export const useHttpDelete = (route, callback) => {
+  const [loading, setLoading] = useState(false);
+  const [feedback, setFeedback] = useState({ visible: false, message: "" });
+  const { user } = useAuth();
+  const { t } = useTranslation();
+
+  const makeDelete = () => {
+    setLoading(true);
+
+    axios
+      .delete(`${BASE_ENDPOINT}${route}`, {
+        headers: { Authorization: `Bearer ${user.token}` },
+      })
+      .then((res) => callback(res.data))
+      .catch(() => {
+        setFeedback({ visible: true, message: t("somethingWentWrong") });
+        setLoading(false);
+      })
+      .finally(() => setLoading(false));
+  };
+
+  return {
+    loading,
+    feedback,
+    setFeedback,
+    makeDelete,
   };
 };

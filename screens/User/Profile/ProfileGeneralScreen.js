@@ -31,7 +31,7 @@ import {
   CardSuggestedPeople,
 } from "../../../components/customized";
 import theme from "../../../assets/styles/theme";
-import { useSheet, useAuth } from "../../../hooks";
+import { useSheet, useAuth, useHttpGet } from "../../../hooks";
 
 const ProfileGeneralScreen = ({ badgeDetails, route }) => {
   const { user } = useAuth();

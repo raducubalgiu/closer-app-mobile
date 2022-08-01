@@ -1,11 +1,11 @@
 import { Dimensions, StyleSheet } from "react-native";
-import React, { lazy } from "react";
+import React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { Icon } from "@rneui/themed";
 import theme from "../../../../assets/styles/theme";
 
 const { width } = Dimensions.get("window");
-const { primary, black } = theme.lightColors;
+const { black } = theme.lightColors;
 
 export const TopTabContainer = ({
   children,

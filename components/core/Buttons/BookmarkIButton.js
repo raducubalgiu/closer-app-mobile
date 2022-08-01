@@ -1,37 +1,28 @@
 import { StyleSheet, Animated, Pressable } from "react-native";
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import axios from "axios";
 import { Icon } from "@rneui/themed";
 import { useAuth } from "../../../hooks/auth";
 import theme from "../../../assets/styles/theme";
 import * as Haptics from "expo-haptics";
-import { useFocusEffect } from "@react-navigation/native";
+import { useHttpGet, useHttpPost, useHttpDelete } from "../../../hooks";
+
+const { black } = theme.lightColors;
 
 export const BookmarkIButton = ({ postId, sx, size }) => {
   const { user } = useAuth();
   const [bookmarked, setBookmarked] = useState(false);
   const animatedScale = useRef(new Animated.Value(0)).current;
-  const BOOKMARK_ENDPOINT = `${process.env.BASE_ENDPOINT}/users/${user?._id}/posts/${postId}/bookmarks`;
+  const BOOKMARK_ENDPOINT = `/users/${user?._id}/posts/${postId}/bookmarks`;
 
-  useFocusEffect(
-    React.useCallback(() => {
-      const controller = new AbortController();
+  useHttpGet(`${BOOKMARK_ENDPOINT}/check`, (data) => setBookmarked(data));
 
-      axios
-        .get(
-          `${process.env.BASE_ENDPOINT}/users/${user?._id}/posts/${postId}/bookmarks/check`,
-          {
-            signal: controller.signal,
-            headers: { Authorization: `Bearer ${user?.token}` },
-          }
-        )
-        .then((res) => setBookmarked(res.data.status))
-        .catch(() => {});
+  const { makePost } = useHttpPost(BOOKMARK_ENDPOINT, () => {
+    setBookmarked(true);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  });
 
-      return () => {
-        controller.abort();
-      };
-    }, [BOOKMARK_ENDPOINT])
+  const { makeDelete } = useHttpDelete(BOOKMARK_ENDPOINT, (data) =>
+    setBookmarked(data)
   );
 
   const handleBookmark = useCallback(() => {
@@ -43,30 +34,7 @@ export const BookmarkIButton = ({ postId, sx, size }) => {
       useNativeDriver: true,
     }).start();
 
-    if (!bookmarked) {
-      axios
-        .post(
-          BOOKMARK_ENDPOINT,
-          {},
-          {
-            headers: { Authorization: `Bearer ${user?.token}` },
-          }
-        )
-        .then(() => {
-          setBookmarked(true);
-          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-        })
-        .catch((err) => {
-          console.log(err.message);
-        });
-    } else {
-      axios
-        .delete(BOOKMARK_ENDPOINT, {
-          headers: { Authorization: `Bearer ${user?.token}` },
-        })
-        .then((res) => setBookmarked(res.data.status))
-        .catch((err) => console.log(err));
-    }
+    !bookmarked ? makePost({}) : makeDelete();
   }, [BOOKMARK_ENDPOINT, bookmarked]);
 
   useEffect(() => {
@@ -85,7 +53,7 @@ export const BookmarkIButton = ({ postId, sx, size }) => {
           type="feather"
           name={bookmarked ? "check-square" : "bookmark"}
           size={size ? size : 24}
-          color={bookmarked ? "#333333" : theme.lightColors.black}
+          color={bookmarked ? "#333333" : black}
         />
       </Animated.View>
     </Pressable>

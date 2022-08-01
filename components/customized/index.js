@@ -9,7 +9,7 @@ export { ProfileOverview } from "./ProfileOverview/ProfileOverview";
 
 export { TopTabContainer } from "./Tabs/TopTabContainer/TopTabContainer";
 export { AllSavedTab } from "./Tabs/SavedTabs/AllSavedTab";
-export { OpportunitiesTab } from "./Tabs/SavedTabs/OpportunitiesTab";
+export { SavedHashtagsTab } from "./Tabs/SavedTabs/SavedHashtagsTab";
 export { SavedVideoTab } from "./Tabs/SavedTabs/SavedVideoTab";
 export { SearchHashtagsTab } from "./Tabs/SearchTabs/SearchHashtagsTab";
 export { SearchJobsTab } from "./Tabs/SearchTabs/SearchJobsTab";

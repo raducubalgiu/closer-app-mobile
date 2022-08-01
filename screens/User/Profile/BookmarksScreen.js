@@ -1,17 +1,25 @@
 import { SafeAreaView, StyleSheet } from "react-native";
-import React from "react";
+import { useCallback } from "react";
 import {
   AllSavedTab,
   SavedVideoTab,
-  OpportunitiesTab,
+  SavedHashtagsTab,
   TopTabContainer,
 } from "../../../components/customized/index";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { Header } from "../../../components/core";
 import theme from "../../../assets/styles/theme";
+import { useAuth } from "../../../hooks";
 
 const BookmarksScreen = () => {
+  const { user } = useAuth();
   const Tab = createMaterialTopTabNavigator();
+
+  const AllSaved = useCallback(() => <AllSavedTab user={user} />, [user]);
+  const SavedHashtags = useCallback(
+    () => <SavedHashtagsTab user={user} />,
+    [user]
+  );
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -19,7 +27,7 @@ const BookmarksScreen = () => {
       <TopTabContainer initialRouteName="SavedAll">
         <Tab.Screen
           name="SavedAll"
-          component={AllSavedTab}
+          component={AllSaved}
           options={{ tabBarLabel: "Toate" }}
         />
         <Tab.Screen
@@ -28,9 +36,9 @@ const BookmarksScreen = () => {
           options={{ tabBarLabel: "Video" }}
         />
         <Tab.Screen
-          name="Opportunities"
-          component={OpportunitiesTab}
-          options={{ tabBarLabel: "Oportunitati" }}
+          name="Hashtags"
+          component={SavedHashtags}
+          options={{ tabBarLabel: "Hashtaguri" }}
         />
       </TopTabContainer>
     </SafeAreaView>

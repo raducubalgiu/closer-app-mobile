@@ -207,7 +207,7 @@ export const DashboardScheduleTab = ({ startPeriod, lastPeriod }) => {
                 </Stack>
               </Stack>
             )}
-            {stats.length > 0 && (
+            {stats?.length > 0 && (
               <BarChart
                 style={{
                   paddingTop: 15,
