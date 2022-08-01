@@ -7,14 +7,11 @@ import { useHttpGet } from "../../../../hooks";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 
 export const FollowingsTab = ({ userId }) => {
-  const [search, setSearch] = useState("");
   const { t } = useTranslation();
 
   const { data: followings, loading } = useHttpGet(
     `/users/${userId}/follows/followings`
   );
-
-  const updateSearch = useCallback((search) => setSearch(search), [search]);
 
   const renderPerson = useCallback(({ item }) => {
     const { avatar, username, name, _id } = item.followeeId;
@@ -29,16 +26,6 @@ export const FollowingsTab = ({ userId }) => {
     );
   }, []);
 
-  const header = (
-    <SearchBarInput
-      showCancel={false}
-      placeholder={t("search")}
-      value={search}
-      onChangeText={updateSearch}
-      height={60}
-    />
-  );
-
   const keyExtractor = useCallback((item) => item?._id, []);
 
   const noFoundMessage = (
@@ -52,7 +39,6 @@ export const FollowingsTab = ({ userId }) => {
     <View style={styles.screen}>
       {!loading && (
         <FlatList
-          ListHeaderComponent={followings?.length && header}
           data={followings}
           keyExtractor={keyExtractor}
           renderItem={renderPerson}
@@ -60,6 +46,7 @@ export const FollowingsTab = ({ userId }) => {
           ListFooterComponent={
             !loading && !followings?.length && noFoundMessage
           }
+          contentContainerStyle={{ paddingVertical: 15 }}
         />
       )}
       {loading && <Spinner />}

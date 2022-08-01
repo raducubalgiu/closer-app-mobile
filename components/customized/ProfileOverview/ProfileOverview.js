@@ -120,6 +120,7 @@ export const ProfileOverview = ({
                 username: username,
                 initialRoute: "Reviews",
                 role,
+                counter,
               })
             }
             labelStats={t("reviews")}
@@ -140,6 +141,7 @@ export const ProfileOverview = ({
               username: username,
               initialRoute: "Followers",
               role,
+              counter,
             })
           }
           labelStats={t("followers")}
@@ -153,6 +155,7 @@ export const ProfileOverview = ({
               username: username,
               initialRoute: "Following",
               role,
+              counter,
             })
           }
           labelStats={t("following")}
