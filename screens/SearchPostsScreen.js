@@ -3,7 +3,11 @@ import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
+<<<<<<< HEAD
 import { Icon } from "@rneui/themed";
+=======
+import { Divider, Icon } from "@rneui/themed";
+>>>>>>> bf4ba3bdf2098719ef9959ddd47838b27b7bf850
 import {
   Button,
   Checkmark,
@@ -14,7 +18,11 @@ import {
 import { IconBackButton, SearchBarInput, Stack } from "../components/core";
 import { CardRecentSearch } from "../components/customized";
 import theme from "../assets/styles/theme";
+<<<<<<< HEAD
 import { useAuth, useHttpDelete, useHttpGet } from "../hooks";
+=======
+import { useAuth, useHttpGet } from "../hooks";
+>>>>>>> bf4ba3bdf2098719ef9959ddd47838b27b7bf850
 import { trimFunc } from "../utils";
 
 const { grey0, primary, black } = theme.lightColors;
@@ -24,7 +32,10 @@ const SearchPostsScreen = () => {
   const [search, setSearch] = useState("");
   const [users, setUsers] = useState([]);
   const [words, setWords] = useState([]);
+<<<<<<< HEAD
   const [searchedUsers, setSearchedUsers] = useState([]);
+=======
+>>>>>>> bf4ba3bdf2098719ef9959ddd47838b27b7bf850
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const navigation = useNavigation();
   const { t } = useTranslation();
@@ -32,6 +43,7 @@ const SearchPostsScreen = () => {
   useHttpGet(`/users/${user?._id}/searches/searched-word`, (data) =>
     setWords(data)
   );
+<<<<<<< HEAD
   useHttpGet(`/users/${user?._id}/searches/searched-user`, (data) =>
     setSearchedUsers(data)
   );
@@ -43,6 +55,10 @@ const SearchPostsScreen = () => {
   const { makeDelete } = useHttpDelete(
     `/users/${user?._id}/searches`,
     deleteHistory
+=======
+  const { data: searchedUsers } = useHttpGet(
+    `/users/${user?._id}/searches/searched-user`
+>>>>>>> bf4ba3bdf2098719ef9959ddd47838b27b7bf850
   );
 
   const updateSearch = useCallback(
@@ -74,8 +90,25 @@ const SearchPostsScreen = () => {
     [search]
   );
 
+  const deleteSearch = (searchId) => {
+    axios
+      .delete(`${process.env.BASE_ENDPOINT}/searches/${searchId}`)
+      .then(() =>
+        setWords((searches) => searches.filter((s) => s._id !== searchId))
+      )
+      .catch(() =>
+        setFeedback({ visible: true, message: t("somethingWentWrong") })
+      );
+  };
+
   const renderRecent = useCallback(
-    ({ item }) => <CardRecentSearch onPress={() => {}} word={item?.word} />,
+    ({ item }) => (
+      <CardRecentSearch
+        onDelete={() => deleteSearch(item._id)}
+        onPress={() => {}}
+        word={item?.word}
+      />
+    ),
     []
   );
 
@@ -130,24 +163,41 @@ const SearchPostsScreen = () => {
   );
 
   const renderSearchedUsers = useCallback(({ item }) => {
+<<<<<<< HEAD
     const { username, avatar } = item.searchedUser;
     return (
       <Stack sx={{ marginRight: 10, minWidth: 80 }}>
         <CustomAvatar size={70} avatar={avatar} sx={{ marginBottom: 5 }} />
         <Text style={{ fontSize: 13 }}>{trimFunc(username, 15)}</Text>
+=======
+    const { name, username, avatar } = item.searchedUser;
+
+    return (
+      <Stack sx={{ marginRight: 10 }}>
+        <CustomAvatar avatar={avatar} sx={{ marginBottom: 5 }} />
+        <Text style={{ fontFamily: "Exo-Medium" }}>{trimFunc(name, 10)}</Text>
+        <Text style={{ fontSize: 13, color: grey0 }}>
+          @{trimFunc(username, 10)}
+        </Text>
+>>>>>>> bf4ba3bdf2098719ef9959ddd47838b27b7bf850
       </Stack>
     );
   }, []);
 
   const header = (
     <View>
+<<<<<<< HEAD
       <Stack direction="row" sx={{ marginVertical: 10, paddingHorizontal: 15 }}>
+=======
+      <Stack direction="row" sx={{ marginTop: 10 }}>
+>>>>>>> bf4ba3bdf2098719ef9959ddd47838b27b7bf850
         <Text style={{ fontWeight: "bold", color: black, fontSize: 17 }}>
           {t("recentSearch")}
         </Text>
         <IconButton
           iconName="close"
           color="white"
+<<<<<<< HEAD
           size={17}
           sx={{ backgroundColor: "#ddd", borderRadius: 50, padding: 3 }}
           onPress={() => makeDelete()}
@@ -163,11 +213,26 @@ const SearchPostsScreen = () => {
           renderItem={renderSearchedUsers}
         />
       )}
+=======
+          size={20}
+          sx={{ backgroundColor: "#ccc", borderRadius: 50, padding: 2.5 }}
+        />
+      </Stack>
+      <FlatList
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        data={searchedUsers}
+        keyExtractor={(item) => item._id}
+        contentContainerStyle={{ marginVertical: 20 }}
+        renderItem={renderSearchedUsers}
+      />
+>>>>>>> bf4ba3bdf2098719ef9959ddd47838b27b7bf850
     </View>
   );
 
   return (
     <SafeAreaView style={styles.screen}>
+<<<<<<< HEAD
       <Stack direction="row" justify="start" sx={{ paddingHorizontal: 15 }}>
         <IconBackButton sx={{ marginRight: 10 }} />
         <SearchBarInput
@@ -205,6 +270,46 @@ const SearchPostsScreen = () => {
           showsVerticalScrollIndicator={false}
         />
       )}
+=======
+      <View style={styles.container}>
+        <Stack direction="row" justify="start">
+          <IconBackButton sx={{ marginRight: 10 }} />
+          <SearchBarInput
+            autoFocus={true}
+            placeholder={t("search")}
+            value={search}
+            onChangeText={updateSearch}
+            showCancel={false}
+            onCancel={goToSearchAll}
+            height={60}
+          />
+          <Button onPress={goToSearchAll} sx={{ marginLeft: 10 }}>
+            <Text style={styles.cancelBtnText}>{t("search")}</Text>
+          </Button>
+        </Stack>
+        <Feedback feedback={feedback} setFeedback={setFeedback} />
+        {users.length > 0 && (
+          <FlatList
+            data={users}
+            keyExtractor={(item) => item._id}
+            renderItem={renderUsers}
+            ListFooterComponent={users.length && footer}
+            keyboardShouldPersistTaps={"handled"}
+            showsVerticalScrollIndicator={false}
+          />
+        )}
+        {users.length === 0 && (
+          <FlatList
+            ListHeaderComponent={header}
+            data={words}
+            keyExtractor={(item) => item._id}
+            renderItem={renderRecent}
+            keyboardShouldPersistTaps={"handled"}
+            showsVerticalScrollIndicator={false}
+          />
+        )}
+      </View>
+>>>>>>> bf4ba3bdf2098719ef9959ddd47838b27b7bf850
     </SafeAreaView>
   );
 };
