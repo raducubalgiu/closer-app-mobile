@@ -29,12 +29,9 @@ export const useHttpGet = (route, callback) => {
           const { message } = err.response.data;
           setFeedback({ visible: true, message });
         })
-        .finally(() => {
-          setLoading(false);
-        });
-      return () => {
-        controller.abort();
-      };
+        .finally(() => setLoading(false));
+
+      return () => controller.abort();
     }, [route])
   );
 

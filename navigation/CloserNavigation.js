@@ -64,6 +64,7 @@ import MapScreen from "../screens/MapScreen";
 import ScheduleConfirmScreen from "../screens/ScheduleConfirmScreen";
 import ScheduleCancelScreen from "../screens/ScheduleCancelScreen";
 import AllBookmarksScreens from "../screens/User/Profile/AllBookmarksScreens";
+import HashtagScreen from "../screens/HashtagScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -229,6 +230,7 @@ const CloserNavigation = () => {
             <Stack.Screen name="Comments" component={CommentsScreen} />
             <Stack.Screen name="MessageItem" component={MessageItemScreen} />
             <Stack.Screen name="SearchAll" component={SearchAllScreen} />
+            <Stack.Screen name="Hashtag" component={HashtagScreen} />
             <Stack.Screen
               name="Notifications"
               component={NotificationsScreen}

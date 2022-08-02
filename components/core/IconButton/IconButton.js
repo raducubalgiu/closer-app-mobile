@@ -1,4 +1,4 @@
-import { TouchableOpacity } from "react-native";
+import { ActivityIndicator, TouchableOpacity } from "react-native";
 import { Icon } from "@rneui/themed";
 import React from "react";
 import theme from "../../../assets/styles/theme";
@@ -10,17 +10,21 @@ export const IconButton = ({
   iconType,
   size,
   color,
+  loading,
   sx,
   ...props
 }) => {
   return (
     <TouchableOpacity {...props} activeOpacity={1} style={{ ...sx }}>
-      <Icon
-        type={iconType}
-        name={iconName}
-        size={size ? size : 24}
-        color={color ? color : black}
-      />
+      {!loading && (
+        <Icon
+          type={iconType}
+          name={iconName}
+          size={size ? size : 24}
+          color={color ? color : black}
+        />
+      )}
+      {loading && <ActivityIndicator />}
     </TouchableOpacity>
   );
 };

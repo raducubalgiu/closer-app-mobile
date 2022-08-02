@@ -55,6 +55,34 @@ export const ProfileOverview = ({
         .format("HH")}`
     : t("closed");
 
+  const goToFollowers = () =>
+    navigation.navigate("ProfileStats", {
+      screen: "Followers",
+      userId: _id,
+      username: username,
+      initialRoute: "Followers",
+      role,
+      counter,
+    });
+  const goToReviews = () =>
+    navigation.navigate("ProfileStats", {
+      screen: "Reviews",
+      userId: _id,
+      username: username,
+      initialRoute: "Reviews",
+      role,
+      counter,
+    });
+  const goToFollowings = () =>
+    navigation.navigate("ProfileStats", {
+      screen: "Following",
+      userId: _id,
+      username: username,
+      initialRoute: "Following",
+      role,
+      counter,
+    });
+
   return (
     <View style={styles.container}>
       <Stack justify="center" align="center">
@@ -72,57 +100,38 @@ export const ProfileOverview = ({
         <Text style={styles.name}>{name}</Text>
         <Protected userRole={role} roles={[MAIN_ROLE, SECOND_ROLE]}>
           <Stack direction="row" justify="start">
-            {business && (
-              <>
-                <Text style={styles.business}>
-                  {displayDash(business?.name)}
-                </Text>
-                <IconStar sx={styles.star} />
-              </>
-            )}
+            <Text style={styles.business}>{displayDash(business?.name)}</Text>
+            <IconStar sx={styles.star} />
             <Text style={styles.ratingsAverage}>
               {displayDash(ratingsAverage?.toFixed(1))}
             </Text>
           </Stack>
-          {showDetails && (
-            <Stack direction="row" sx={{ marginTop: 10 }}>
-              <Button onPress={() => navigation.navigate("About")}>
-                <Stack direction="row">
-                  <Icon name="keyboard-arrow-down" size={15} color="white" />
-                  <Icon name="clock" type="feather" color={grey0} size={17.5} />
-                  <Text style={styles.text}>{displayDash(status)}</Text>
-                </Stack>
-              </Button>
-              <Button
-                onPress={() =>
-                  navigation.navigate("Map", { location, business })
-                }
-              >
-                <Stack direction="row" sx={{ marginLeft: 10 }}>
-                  <IconLocation color={grey0} size={17.5} />
-                  <Text style={styles.text}>
-                    {t("at")} {displayDash(distance?.toFixed(0))} km
-                  </Text>
-                  <Icon name="keyboard-arrow-down" size={15} color={black} />
-                </Stack>
-              </Button>
-            </Stack>
-          )}
+          <Stack direction="row" sx={{ marginTop: 10 }}>
+            <Button onPress={() => navigation.navigate("About")}>
+              <Stack direction="row">
+                <Icon name="keyboard-arrow-down" size={15} color="white" />
+                <Icon name="clock" type="feather" color={grey0} size={17.5} />
+                <Text style={styles.text}>{displayDash(status)}</Text>
+              </Stack>
+            </Button>
+            <Button
+              onPress={() => navigation.navigate("Map", { location, business })}
+            >
+              <Stack direction="row" sx={{ marginLeft: 10 }}>
+                <IconLocation color={grey0} size={17.5} />
+                <Text style={styles.text}>
+                  {t("at")} {displayDash(distance?.toFixed(0))} km
+                </Text>
+                <Icon name="keyboard-arrow-down" size={15} color={black} />
+              </Stack>
+            </Button>
+          </Stack>
         </Protected>
       </Stack>
       <Stack direction="row" justify="between" sx={styles.statsContainer}>
         <Protected userRole={role} roles={[MAIN_ROLE, SECOND_ROLE]}>
           <StatsButton
-            onPress={() =>
-              navigation.navigate("ProfileStats", {
-                screen: "Reviews",
-                userId: _id,
-                username: username,
-                initialRoute: "Reviews",
-                role,
-                counter,
-              })
-            }
+            onPress={goToReviews}
             labelStats={t("reviews")}
             statsNo={displayDash(ratingsQuantity)}
           />
@@ -134,30 +143,12 @@ export const ProfileOverview = ({
           />
         </Protected>
         <StatsButton
-          onPress={() =>
-            navigation.navigate("ProfileStats", {
-              screen: "Followers",
-              userId: _id,
-              username: username,
-              initialRoute: "Followers",
-              role,
-              counter,
-            })
-          }
+          onPress={goToFollowers}
           labelStats={t("followers")}
           statsNo={displayDash(followersCount)}
         />
         <StatsButton
-          onPress={() =>
-            navigation.navigate("ProfileStats", {
-              screen: "Following",
-              userId: _id,
-              username: username,
-              initialRoute: "Following",
-              role,
-              counter,
-            })
-          }
+          onPress={goToFollowings}
           labelStats={t("following")}
           statsNo={displayDash(followingCount)}
         />

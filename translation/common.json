@@ -244,5 +244,6 @@
   "deleteService": "Ştergi acest serviciu?",
   "deleteServiceDescription": "Atenţie! Ştergerea acestui serviciu va declansa ştergerea tuturor produselor asociate acestuia",
   "payment": "Plată",
-  "checkBookingDetails": "Detaliile rezervării"
+  "checkBookingDetails": "Detaliile rezervării",
+  "deleteHistory": "Şterge istoricul"
 }
