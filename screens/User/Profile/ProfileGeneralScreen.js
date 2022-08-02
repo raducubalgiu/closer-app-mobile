@@ -3,7 +3,6 @@ import {
   StyleSheet,
   FlatList,
   Text,
-  ActivityIndicator,
   View,
   ScrollView,
 } from "react-native";
@@ -11,7 +10,6 @@ import React, { useState, useCallback, useEffect } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
-import { Icon, Badge } from "@rneui/themed";
 import { THIRD_ROLE } from "@env";
 import {
   Stack,
@@ -29,13 +27,16 @@ import {
   AboutProfileTab,
   JobsProfileTab,
   CardSuggestedPeople,
+  TabBadge,
 } from "../../../components/customized";
 import theme from "../../../assets/styles/theme";
-import { useSheet, useAuth, useHttpGet } from "../../../hooks";
+import { useSheet, useAuth, useHttpPost } from "../../../hooks";
+
+const { black } = theme.lightColors;
 
 const ProfileGeneralScreen = ({ badgeDetails, route }) => {
   const { user } = useAuth();
-  const { userId, username, avatar, name } = route.params;
+  const { userId, username, avatar, name, searchedUser } = route.params;
   const [userDetails, setUserDetails] = useState([]);
   const {
     _id,
@@ -56,6 +57,12 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
   const [suggestedPeople, setSuggestedPeople] = useState([]);
   const Tab = createMaterialTopTabNavigator();
   const { t } = useTranslation();
+
+  const { makePost } = useHttpPost(`/searches`);
+
+  useEffect(() => {
+    makePost({ searchedUser, user });
+  }, [searchedUser]);
 
   const fetchUser = useCallback(() => {
     const controller = new AbortController();
@@ -209,21 +216,15 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
             sx={styles.messageBtn}
             onPress={() => {}}
           />
-          {!loading && (
-            <IconButton
-              sx={styles.iconBtn}
-              size={20}
-              color={theme.lightColors.black}
-              iconType="antdesign"
-              iconName="adduser"
-              onPress={handleSuggested}
-            />
-          )}
-          {loading && (
-            <View style={styles.activityIndicator}>
-              <ActivityIndicator />
-            </View>
-          )}
+          <IconButton
+            sx={styles.iconBtn}
+            size={20}
+            color={black}
+            iconType="antdesign"
+            iconName="adduser"
+            onPress={handleSuggested}
+            loading={loading}
+          />
         </ProfileOverview>
         {suggestedPeople.length !== 0 && (
           <Stack align="start" justify="start" sx={styles.suggestedPeople}>
@@ -240,38 +241,16 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
         <View style={styles.tabsCont}>
           <TopTabContainer initialRouteName="Posts" profileTabs={true}>
             <Tab.Screen name="Posts" component={PostsProfile} />
-            {role !== "subscriber" && (
+            {role !== THIRD_ROLE && (
               <Tab.Screen
                 name="Products"
                 component={ProductsProfile}
                 options={{
-                  tabBarIcon: ({ focused }) => (
-                    <View>
-                      <Icon name="shopping-bag" type="feather" />
-                      <Badge
-                        value={counter?.productsCount}
-                        containerStyle={{
-                          position: "absolute",
-                          top: -10,
-                          left: 15,
-                        }}
-                        badgeStyle={{
-                          backgroundColor: theme.lightColors.primary,
-                          width: 22.5,
-                          height: 21,
-                          borderRadius: 50,
-                        }}
-                        textStyle={{
-                          fontFamily: "Exo-SemiBold",
-                          fontSize: 10.5,
-                        }}
-                      />
-                    </View>
-                  ),
+                  tabBarIcon: () => <TabBadge value={counter?.productsCount} />,
                 }}
               />
             )}
-            {role !== "subscriber" && (
+            {role !== THIRD_ROLE && (
               <Tab.Screen name="Jobs" component={JobsProfile} />
             )}
             <Tab.Screen name="About" component={AboutProfile} />
@@ -304,7 +283,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 2.5,
   },
-  followBtnText: { color: theme.lightColors.black, fontFamily: "Exo-SemiBold" },
+  followBtnText: { color: black, fontFamily: "Exo-SemiBold" },
   btnMessage: {
     marginLeft: 5,
     borderWidth: 1,
@@ -322,7 +301,7 @@ const styles = StyleSheet.create({
   },
   suggestedTitle: {
     fontFamily: "Exo-SemiBold",
-    color: theme.lightColors.black,
+    color: black,
     marginBottom: 10,
     fontSize: 15,
   },
@@ -349,6 +328,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontFamily: "Exo-Medium",
     fontSize: 14.5,
-    color: theme.lightColors.black,
+    color: black,
   },
 });

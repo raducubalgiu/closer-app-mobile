@@ -4,16 +4,13 @@ import { Icon } from "@rneui/themed";
 import { Stack, Button } from "../../core";
 import theme from "../../../assets/styles/theme";
 
+const { black } = theme.lightColors;
+
 export const CardRecentSearch = ({ onPress, word }) => {
   return (
     <Button sx={styles.item} onPress={onPress}>
       <Stack direction="row" justify="start">
-        <Icon
-          name="search"
-          type="feather"
-          color={theme.lightColors.grey0}
-          size={17.5}
-        />
+        <Icon name="search" type="feather" color={black} size={20} />
         <Text style={styles.searchItem}>{word}</Text>
       </Stack>
     </Button>
@@ -22,7 +19,8 @@ export const CardRecentSearch = ({ onPress, word }) => {
 
 const styles = StyleSheet.create({
   item: {
-    paddingVertical: 10,
+    paddingVertical: 15,
+    paddingHorizontal: 15,
   },
   searchItem: {
     fontFamily: "Exo-Medium",

@@ -4,26 +4,46 @@ import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { Icon } from "@rneui/themed";
-import { Button, Checkmark, CustomAvatar, Feedback } from "../components/core";
+import {
+  Button,
+  Checkmark,
+  CustomAvatar,
+  Feedback,
+  IconButton,
+} from "../components/core";
 import { IconBackButton, SearchBarInput, Stack } from "../components/core";
 import { CardRecentSearch } from "../components/customized";
 import theme from "../assets/styles/theme";
-import { useAuth } from "../hooks";
+import { useAuth, useHttpDelete, useHttpGet } from "../hooks";
+import { trimFunc } from "../utils";
 
 const { grey0, primary, black } = theme.lightColors;
-const RECENT_SEARCH = [
-  { _id: "1", word: "Patrice Evra" },
-  { _id: "2", word: "Cristiano Ronaldo" },
-  { _id: "3", word: "jamie carlin" },
-];
 
 const SearchPostsScreen = () => {
   const { user } = useAuth();
   const [search, setSearch] = useState("");
   const [users, setUsers] = useState([]);
+  const [words, setWords] = useState([]);
+  const [searchedUsers, setSearchedUsers] = useState([]);
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const navigation = useNavigation();
   const { t } = useTranslation();
+
+  useHttpGet(`/users/${user?._id}/searches/searched-word`, (data) =>
+    setWords(data)
+  );
+  useHttpGet(`/users/${user?._id}/searches/searched-user`, (data) =>
+    setSearchedUsers(data)
+  );
+
+  const deleteHistory = () => {
+    setWords([]);
+    setSearchedUsers([]);
+  };
+  const { makeDelete } = useHttpDelete(
+    `/users/${user?._id}/searches`,
+    deleteHistory
+  );
 
   const updateSearch = useCallback(
     (search) => {
@@ -68,6 +88,7 @@ const SearchPostsScreen = () => {
       avatar,
       name,
       checkmark,
+      searchedUser: { _id, name, username, avatar },
     });
   };
 
@@ -89,8 +110,6 @@ const SearchPostsScreen = () => {
     []
   );
 
-  const header = <Text style={styles.heading}>{t("recentSearch")}</Text>;
-
   const goToSearchAll = useCallback(() => {
     if (search.length === 0) return;
     navigation.navigate("SearchAll", { search });
@@ -110,35 +129,82 @@ const SearchPostsScreen = () => {
     [search]
   );
 
+  const renderSearchedUsers = useCallback(({ item }) => {
+    const { username, avatar } = item.searchedUser;
+    return (
+      <Stack sx={{ marginRight: 10, minWidth: 80 }}>
+        <CustomAvatar size={70} avatar={avatar} sx={{ marginBottom: 5 }} />
+        <Text style={{ fontSize: 13 }}>{trimFunc(username, 15)}</Text>
+      </Stack>
+    );
+  }, []);
+
+  const header = (
+    <View>
+      <Stack direction="row" sx={{ marginVertical: 10, paddingHorizontal: 15 }}>
+        <Text style={{ fontWeight: "bold", color: black, fontSize: 17 }}>
+          {t("recentSearch")}
+        </Text>
+        <IconButton
+          iconName="close"
+          color="white"
+          size={17}
+          sx={{ backgroundColor: "#ddd", borderRadius: 50, padding: 3 }}
+          onPress={() => makeDelete()}
+        />
+      </Stack>
+      {searchedUsers.length > 0 && (
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={searchedUsers}
+          keyExtractor={(item) => item._id}
+          contentContainerStyle={{ marginVertical: 15, paddingHorizontal: 15 }}
+          renderItem={renderSearchedUsers}
+        />
+      )}
+    </View>
+  );
+
   return (
     <SafeAreaView style={styles.screen}>
-      <View style={styles.container}>
-        <Stack direction="row" justify="start">
-          <IconBackButton sx={{ marginRight: 10 }} />
-          <SearchBarInput
-            autoFocus={true}
-            placeholder={t("search")}
-            value={search}
-            onChangeText={updateSearch}
-            showCancel={false}
-            onCancel={goToSearchAll}
-            height={60}
-          />
-          <Button onPress={goToSearchAll}>
-            <Text style={styles.cancelBtnText}>{t("search")}</Text>
-          </Button>
-        </Stack>
-        <Feedback feedback={feedback} setFeedback={setFeedback} />
+      <Stack direction="row" justify="start" sx={{ paddingHorizontal: 15 }}>
+        <IconBackButton sx={{ marginRight: 10 }} />
+        <SearchBarInput
+          autoFocus={true}
+          placeholder={t("search")}
+          value={search}
+          onChangeText={updateSearch}
+          showCancel={false}
+          onCancel={goToSearchAll}
+          height={60}
+        />
+        <Button onPress={goToSearchAll} sx={{ marginLeft: 10 }}>
+          <Text style={styles.cancelBtnText}>{t("search")}</Text>
+        </Button>
+      </Stack>
+      <Feedback feedback={feedback} setFeedback={setFeedback} />
+      {users.length > 0 && (
         <FlatList
-          ListHeaderComponent={!users.length && header}
-          data={users.length ? users : RECENT_SEARCH}
+          data={users}
           keyExtractor={(item) => item._id}
-          renderItem={users.length ? renderUsers : renderRecent}
+          renderItem={renderUsers}
           ListFooterComponent={users.length && footer}
           keyboardShouldPersistTaps={"handled"}
           showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingHorizontal: 15 }}
         />
-      </View>
+      )}
+      {!users.length && !search && (
+        <FlatList
+          ListHeaderComponent={header}
+          data={words}
+          keyExtractor={(item) => item._id}
+          renderItem={renderRecent}
+          keyboardShouldPersistTaps={"handled"}
+          showsVerticalScrollIndicator={false}
+        />
+      )}
     </SafeAreaView>
   );
 };
@@ -177,10 +243,9 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   cancelBtnText: {
-    fontSize: 13.5,
     fontFamily: "Exo-Bold",
-    color: black,
+    color: primary,
     backgroundColor: "white",
-    padding: 5,
+    padding: 2.5,
   },
 });

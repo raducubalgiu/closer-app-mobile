@@ -1,5 +1,5 @@
 import { SafeAreaView, StyleSheet, View } from "react-native";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Stack, SearchBarInput, IconBackButton } from "../components/core";
 import theme from "../assets/styles/theme";
 import { useTranslation } from "react-i18next";
@@ -10,10 +10,18 @@ import {
   SearchPopularTab,
   TopTabContainer,
 } from "../components/customized";
+import { useAuth, useHttpPost } from "../hooks";
 
 const SearchAllScreen = ({ route }) => {
+  const { user } = useAuth();
   const { search } = route.params;
   const { t } = useTranslation();
+
+  const { makePost } = useHttpPost(`/searches`);
+
+  useEffect(() => {
+    makePost({ word: search, user });
+  }, [search]);
 
   const Tab = createMaterialTopTabNavigator();
 

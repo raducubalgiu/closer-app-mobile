@@ -5,15 +5,23 @@ import { HashtagListItem } from "../../ListItems/HashtagListItem";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { useTranslation } from "react-i18next";
 import { Spinner } from "../../../core";
+import { useNavigation } from "@react-navigation/native";
 
 export const SearchHashtagsTab = ({ search }) => {
   const { data: hashtags, loading } = useHttpGet(
     `/hashtags/search?name=${search}`
   );
   const { t } = useTranslation();
+  const navigation = useNavigation();
 
   const renderHashtags = useCallback(
-    ({ item }) => <HashtagListItem name={item.name} postsCount={100} />,
+    ({ item }) => (
+      <HashtagListItem
+        name={item.name}
+        postsCount={100}
+        onPress={() => navigation.navigate("Hashtag", { name: item.name })}
+      />
+    ),
     []
   );
   const keyExtractor = useCallback((item) => item._id, []);
