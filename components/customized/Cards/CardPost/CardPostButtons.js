@@ -80,7 +80,7 @@ const CardPostButtons = ({ bookable, postId, likesCount }) => {
             onRemoveLike={() => setLikes((likes) => likes - 1)}
             sx={styles.button}
           />
-          <BookmarkIButton postId={postId} sx={styles.button} />
+          <BookmarkIButton type="posts" typeId={postId} sx={styles.button} />
           <ShareIButton onPress={onShare} sx={styles.button} />
         </Stack>
       </Stack>

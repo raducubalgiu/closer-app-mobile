@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
-export const SavedVideoTab = () => {
+export const SavedProductsTab = () => {
   return (
     <View>
-      <Text>SavedVideoTab</Text>
+      <Text>SavedProductsTab</Text>
     </View>
   );
 };

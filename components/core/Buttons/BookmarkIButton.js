@@ -8,15 +8,20 @@ import { useHttpGet, useHttpPost, useHttpDelete } from "../../../hooks";
 
 const { black } = theme.lightColors;
 
-export const BookmarkIButton = ({ postId, sx, size }) => {
+export const BookmarkIButton = ({ sx, size, type, typeId }) => {
   const { user } = useAuth();
   const [bookmarked, setBookmarked] = useState(false);
   const animatedScale = useRef(new Animated.Value(0)).current;
-  const BOOKMARK_ENDPOINT = `/users/${user?._id}/posts/${postId}/bookmarks`;
+  const BOOKMARK_ENDPOINT = `/users/${user._id}/${type}/${typeId}/bookmarks`;
 
-  useHttpGet(`${BOOKMARK_ENDPOINT}/check`, (data) => setBookmarked(data));
+  let postBody;
+  if (type === "posts") postBody = { post: typeId };
+  if (type === "hashtags") postBody = { hashtag: typeId };
+  if (type === "products") postBody = { product: typeId };
 
-  const { makePost } = useHttpPost(BOOKMARK_ENDPOINT, () => {
+  useHttpGet(BOOKMARK_ENDPOINT, (data) => setBookmarked(data));
+
+  const { makePost } = useHttpPost(`/bookmarks`, () => {
     setBookmarked(true);
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   });
@@ -34,8 +39,8 @@ export const BookmarkIButton = ({ postId, sx, size }) => {
       useNativeDriver: true,
     }).start();
 
-    !bookmarked ? makePost({}) : makeDelete();
-  }, [BOOKMARK_ENDPOINT, bookmarked]);
+    !bookmarked ? makePost({ user: user?._id, ...postBody }) : makeDelete();
+  }, [bookmarked, BOOKMARK_ENDPOINT]);
 
   useEffect(() => {
     animatedScale.setValue(1);

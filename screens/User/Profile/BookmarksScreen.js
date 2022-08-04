@@ -1,44 +1,44 @@
 import { SafeAreaView, StyleSheet } from "react-native";
 import { useCallback } from "react";
 import {
-  AllSavedTab,
-  SavedVideoTab,
   SavedHashtagsTab,
   TopTabContainer,
+  SavedProductsTab,
+  SavedPostsTab,
 } from "../../../components/customized/index";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { Header } from "../../../components/core";
 import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../hooks";
+import { useTranslation } from "react-i18next";
 
 const BookmarksScreen = () => {
   const { user } = useAuth();
   const Tab = createMaterialTopTabNavigator();
+  const { t } = useTranslation();
 
-  const AllSaved = useCallback(() => <AllSavedTab user={user} />, [user]);
-  const SavedHashtags = useCallback(
-    () => <SavedHashtagsTab user={user} />,
-    [user]
-  );
+  const SavedPosts = useCallback(() => <SavedPostsTab user={user} />, []);
+  const SavedProducts = useCallback(() => <SavedProductsTab user={user} />, []);
+  const SavedHashtags = useCallback(() => <SavedHashtagsTab user={user} />, []);
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Header title="Salvate" />
+      <Header title={t("saved")} />
       <TopTabContainer initialRouteName="SavedAll">
         <Tab.Screen
-          name="SavedAll"
-          component={AllSaved}
-          options={{ tabBarLabel: "Toate" }}
+          name="SavedPosts"
+          component={SavedPosts}
+          options={{ tabBarLabel: t("posts") }}
         />
         <Tab.Screen
-          name="SavedVideo"
-          component={SavedVideoTab}
-          options={{ tabBarLabel: "Video" }}
+          name="SavedProducts"
+          component={SavedProducts}
+          options={{ tabBarLabel: t("products") }}
         />
         <Tab.Screen
-          name="Hashtags"
+          name="SavedHashtags"
           component={SavedHashtags}
-          options={{ tabBarLabel: "Hashtaguri" }}
+          options={{ tabBarLabel: t("hashtags") }}
         />
       </TopTabContainer>
     </SafeAreaView>

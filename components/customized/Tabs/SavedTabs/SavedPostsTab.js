@@ -8,11 +8,11 @@ import { Spinner } from "../../../core";
 
 const { width } = Dimensions.get("window");
 
-export const AllSavedTab = ({ user }) => {
+export const SavedPostsTab = ({ user }) => {
   const navigation = useNavigation();
 
   const { data: bookmarks, loading } = useHttpGet(
-    `/users/${user?._id}/bookmarks`
+    `/users/${user?._id}/bookmarks/posts`
   );
 
   const renderBookmark = useCallback(({ item, i }) => {

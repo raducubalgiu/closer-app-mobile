@@ -8,9 +8,9 @@ export { Footer } from "./Layout/Footers/Footer";
 export { ProfileOverview } from "./ProfileOverview/ProfileOverview";
 
 export { TopTabContainer } from "./Tabs/TopTabContainer/TopTabContainer";
-export { AllSavedTab } from "./Tabs/SavedTabs/AllSavedTab";
+export { SavedPostsTab } from "./Tabs/SavedTabs/SavedPostsTab";
 export { SavedHashtagsTab } from "./Tabs/SavedTabs/SavedHashtagsTab";
-export { SavedVideoTab } from "./Tabs/SavedTabs/SavedVideoTab";
+export { SavedProductsTab } from "./Tabs/SavedTabs/SavedProductsTab";
 export { SearchHashtagsTab } from "./Tabs/SearchTabs/SearchHashtagsTab";
 export { SearchJobsTab } from "./Tabs/SearchTabs/SearchJobsTab";
 export { SearchServicesTab } from "./Tabs/SearchTabs/SearchServicesTab";
