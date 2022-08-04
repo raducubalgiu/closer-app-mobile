@@ -1,5 +1,5 @@
 import { FlatList, SafeAreaView, StyleSheet } from "react-native";
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import { Header, Spinner } from "../components/core";
 import {
   CardFollowers,
@@ -12,12 +12,9 @@ import { useTranslation } from "react-i18next";
 const LikesScreen = ({ route }) => {
   const { user } = useAuth();
   const { postId } = route.params;
-  const [likes, setLikes] = useState([]);
   const { t } = useTranslation();
 
-  const { loading } = useHttpGet(`/posts/${postId}/get-likes`, (data) =>
-    setLikes(data)
-  );
+  const { data: likes, loading } = useHttpGet(`/posts/${postId}/get-likes`);
 
   const renderPerson = useCallback(
     ({ item }) => (
