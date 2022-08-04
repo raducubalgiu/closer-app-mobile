@@ -1,4 +1,4 @@
-import { FlatList, SafeAreaView, StyleSheet, View } from "react-native";
+import { FlatList, SafeAreaView, StyleSheet } from "react-native";
 import React, { useCallback, useState } from "react";
 import { Header, Spinner } from "../components/core";
 import {
@@ -46,22 +46,17 @@ const LikesScreen = ({ route }) => {
   return (
     <SafeAreaView style={styles.screen}>
       <Header title={t("likes")} divider={true} />
-      <View style={styles.listContainer}>
-        {loading && <Spinner />}
-        {!loading && !likes.length && noFoundLikes}
-        {!loading && (
-          <FlatList
-            style={{ paddingTop: 5 }}
-            showsVerticalScrollIndicator={false}
-            initialNumToRender={4}
-            ListHeaderComponent={header}
-            contentContainerStyle={{ marginTop: 10 }}
-            data={likes}
-            keyExtractor={keyExtractor}
-            renderItem={renderPerson}
-          />
-        )}
-      </View>
+      {!loading && !likes.length && noFoundLikes}
+      {!loading && (
+        <FlatList
+          ListHeaderComponent={header}
+          contentContainerStyle={{ padding: 15 }}
+          data={likes}
+          keyExtractor={keyExtractor}
+          renderItem={renderPerson}
+        />
+      )}
+      {loading && <Spinner />}
     </SafeAreaView>
   );
 };
@@ -73,5 +68,4 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
   },
-  listContainer: { marginHorizontal: 15, flex: 1 },
 });
