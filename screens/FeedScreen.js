@@ -29,7 +29,6 @@ const FeedScreen = () => {
   const [visible, setVisible] = useState(false);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
-  const [fetchMore, setFetchMore] = useState(false);
   const { postsState, dispatchPosts } = usePosts();
   const navigation = useNavigation();
   const ref = useRef(null);
@@ -39,7 +38,6 @@ const FeedScreen = () => {
   const fetchAllPosts = useCallback(() => {
     const controller = new AbortController();
     setLoading(true);
-    setFetchMore(true);
 
     axios
       .get(
@@ -50,15 +48,12 @@ const FeedScreen = () => {
         }
       )
       .then((res) => {
-        if (res.data.length === 0) {
-          setFetchMore(false);
-        }
-        setPosts([...posts, ...res.data]);
+        setPosts(res.data);
         setLoading(false);
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err);
         setLoading(false);
-        setFetchMore(false);
       });
 
     return () => {
@@ -73,7 +68,6 @@ const FeedScreen = () => {
   const fetchFollowings = useCallback(() => {
     const controller = new AbortController();
     setLoading(true);
-    setFetchMore(true);
 
     axios
       .get(
@@ -84,15 +78,11 @@ const FeedScreen = () => {
         }
       )
       .then((res) => {
-        if (res.data.length === 0) {
-          setFetchMore(false);
-        }
-        setPosts([...posts, ...res.data]);
+        setPosts(res.data);
         setLoading(false);
       })
       .catch(() => {
         setLoading(false);
-        setFetchMore(false);
       });
 
     return () => {
@@ -147,10 +137,6 @@ const FeedScreen = () => {
       .catch(() => setLoading(false));
   }, [user, postId]);
 
-  const onEndReached = () => {
-    if (fetchMore) setPage(page + 1);
-  };
-
   return (
     <SafeAreaView style={styles.screen}>
       <Stack justify="start">
@@ -178,9 +164,8 @@ const FeedScreen = () => {
             <Divider orientation="vertical" style={{ marginHorizontal: 15 }} />
             <FeedLabelButton
               onPress={() => {
-                setPage(1);
-                setPosts([]);
                 dispatchPosts({ type: "FETCH_ALL" });
+                setPosts([]);
                 fetchAllPosts();
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
               }}
@@ -189,9 +174,8 @@ const FeedScreen = () => {
             />
             <FeedLabelButton
               onPress={() => {
-                setPage(1);
-                setPosts([]);
                 dispatchPosts({ type: "FETCH_FOLLOWINGS" });
+                setPosts([]);
                 fetchFollowings();
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
               }}
@@ -206,31 +190,15 @@ const FeedScreen = () => {
               isActive={postsState.activeLastMinute}
               text={t("lastMinute")}
             />
-            <FeedLabelButton
-              onPress={() => {
-                dispatchPosts({ type: "FETCH_JOBS" });
-                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-              }}
-              isActive={postsState.activeJobs}
-              text={t("jobs")}
-            />
-            <FeedLabelButton
-              onPress={() => {
-                dispatchPosts({ type: "FETCH_VIDEO" });
-                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-              }}
-              isActive={postsState.activeVideo}
-              text={t("videoContent")}
-            />
           </Stack>
         </ScrollView>
       </Stack>
       <Divider color="#ddd" />
-      {/* <FlatList
+      <FlatList
         ref={ref}
         data={posts}
-        onEndReached={onEndReached}
-        onEndReachedThreshold={0.5}
+        // onEndReached={onEndReached}
+        // onEndReachedThreshold={0.5}
         removeClippedSubviews={true}
         nestedScrollEnabled={true}
         keyExtractor={keyExtractor}
@@ -238,10 +206,8 @@ const FeedScreen = () => {
         maxToRenderPerBatch={5}
         initialNumToRender={5}
         renderItem={renderAllPosts}
-        ListFooterComponent={
-          fetchMore && <Spinner sx={{ marginVertical: 5 }} />
-        }
-      /> */}
+        ListFooterComponent={loading && <Spinner sx={{ marginVertical: 5 }} />}
+      />
       {BOTTOM_SHEET}
       <ConfirmModal
         title={t("deletePost")}

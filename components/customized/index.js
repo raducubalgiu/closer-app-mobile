@@ -76,3 +76,5 @@ export { DashboardCalendarSheet } from "../customized/Sheets/DashboardCalendarSh
 export { PostInfoSheet } from "../customized/Sheets/PostInfoSheet";
 
 export { FiltersContainer } from "../customized/Containers/FiltersContainer";
+
+export { SearchPopularHeading } from "../customized/Headings/SearchPopularHeading";

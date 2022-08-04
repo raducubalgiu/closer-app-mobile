@@ -61,7 +61,9 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
   const { makePost } = useHttpPost(`/searches`);
 
   useEffect(() => {
-    makePost({ searchedUser, user });
+    if (searchedUser) {
+      makePost({ searchedUser, user: user?._id });
+    }
   }, [searchedUser]);
 
   const fetchUser = useCallback(() => {

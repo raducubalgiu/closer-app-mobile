@@ -1,16 +1,15 @@
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Text } from "react-native";
-import { Icon } from "@rneui/themed";
 import { Button, Stack } from "../../core";
 import theme from "../../../assets/styles/theme";
 
 const { black, grey0 } = theme.lightColors;
 
-export const HashtagListItem = ({ name, postsCount, onPress }) => {
+export const HashtagListItem = ({ name, postsCount, onPress, sx }) => {
   const { t } = useTranslation();
 
   return (
-    <Button onPress={onPress}>
+    <Button onPress={onPress} sx={sx}>
       <Stack direction="row" sx={{ marginBottom: 20 }}>
         <Stack direction="row">
           <Stack sx={styles.hashtagIc}>
@@ -23,7 +22,6 @@ export const HashtagListItem = ({ name, postsCount, onPress }) => {
             </Text>
           </Stack>
         </Stack>
-        <Icon name="right" type="antdesign" color={"#ccc"} size={15} />
       </Stack>
     </Button>
   );
@@ -31,8 +29,8 @@ export const HashtagListItem = ({ name, postsCount, onPress }) => {
 
 const styles = StyleSheet.create({
   hashtagIc: {
-    paddingVertical: 12.5,
-    paddingHorizontal: 17.5,
+    paddingVertical: 10,
+    paddingHorizontal: 15.5,
     borderWidth: 1,
     borderColor: "#ddd",
     borderRadius: 50,

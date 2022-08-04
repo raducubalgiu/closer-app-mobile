@@ -1,6 +1,11 @@
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { SafeAreaView, StyleSheet, View, Text } from "react-native";
 import React, { useCallback, useEffect } from "react";
-import { Stack, SearchBarInput, IconBackButton } from "../components/core";
+import {
+  Stack,
+  SearchBarInput,
+  IconBackButton,
+  Button,
+} from "../components/core";
 import theme from "../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
@@ -11,16 +16,21 @@ import {
   TopTabContainer,
 } from "../components/customized";
 import { useAuth, useHttpPost } from "../hooks";
+import { Icon } from "@rneui/themed";
+import { useNavigation } from "@react-navigation/native";
 
 const SearchAllScreen = ({ route }) => {
   const { user } = useAuth();
   const { search } = route.params;
   const { t } = useTranslation();
+  const navigation = useNavigation();
 
   const { makePost } = useHttpPost(`/searches`);
 
   useEffect(() => {
-    makePost({ word: search, user });
+    if (search) {
+      makePost({ word: search, user: user?._id });
+    }
   }, [search]);
 
   const Tab = createMaterialTopTabNavigator();
@@ -35,14 +45,48 @@ const SearchAllScreen = ({ route }) => {
   return (
     <View style={styles.screen}>
       <SafeAreaView>
-        <Stack direction="row" justify="start" sx={{ paddingHorizontal: 15 }}>
+        <Stack
+          direction="row"
+          justify="start"
+          sx={{ paddingHorizontal: 15, height: 60 }}
+        >
           <IconBackButton sx={{ marginRight: 10 }} />
-          <SearchBarInput
-            value={search}
-            cancelButtonTitle={t("search")}
-            height={60}
-            showCancel={false}
-          />
+          <Button
+            sx={{
+              flex: 1,
+              backgroundColor: "#f1f1f1",
+              padding: 8,
+              borderRadius: 2.5,
+            }}
+            onPress={() => navigation.goBack()}
+          >
+            <Stack direction="row">
+              <Stack direction="row">
+                <Icon
+                  name="search"
+                  type="ionicon"
+                  color={theme.lightColors.black}
+                  size={20}
+                />
+                <Text
+                  style={{
+                    fontSize: 15,
+                    color: theme.lightColors.grey0,
+                    fontFamily: "Exo-Regular",
+                    marginLeft: 7.5,
+                  }}
+                >
+                  {search}
+                </Text>
+              </Stack>
+              <Icon
+                name="closecircle"
+                type="antdesign"
+                size={16}
+                color="#bbb"
+              />
+            </Stack>
+          </Button>
         </Stack>
       </SafeAreaView>
       <TopTabContainer initialRouteName="SearchPopular">

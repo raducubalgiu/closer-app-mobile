@@ -14,6 +14,7 @@ export const CardFollowers = ({
   username,
   name,
   checkmark,
+  sx,
 }) => {
   const navigation = useNavigation();
   const { user } = useAuth();
@@ -29,7 +30,7 @@ export const CardFollowers = ({
   };
 
   return (
-    <Stack direction="row" sx={styles.container}>
+    <Stack direction="row" sx={{ ...styles.container, ...sx }}>
       <Button sx={styles.goToUser} onPress={() => goToUser(followeeId)}>
         <CustomAvatar avatar={avatar} withBadge={false} />
         <Stack align="start" sx={{ marginLeft: 10 }}>

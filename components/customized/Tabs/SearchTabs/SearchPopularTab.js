@@ -1,56 +1,71 @@
-import { StyleSheet, Text, View, FlatList } from "react-native";
-import React, { useCallback } from "react";
+import { StyleSheet, View, FlatList, Dimensions, Text } from "react-native";
+import React, { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Image } from "@rneui/themed";
+import { useNavigation } from "@react-navigation/native";
 import { useHttpGet } from "../../../../hooks";
-import theme from "../../../../assets/styles/theme";
 import { CardFollowers } from "../../Cards/CardFollowers";
-import { Spinner, Stack } from "../../../core";
+import { HashtagListItem } from "../../ListItems/HashtagListItem";
+import { SearchPopularHeading } from "../../Headings/SearchPopularHeading";
+import { Spinner } from "../../../core";
 
-const { black } = theme.lightColors;
-
-const POPULAR_POSTS = [
-  {
-    _id: "1",
-    description: "Lorem ipsum generator geloo world and this bla",
-    hashtags: ["#haircut", "$postoftheday", "$ilovemyhair"],
-    images: [
-      "https://res.cloudinary.com/closer-app/image/upload/v1658162774/good-looking-hipster-young-bearded-man-visiting-hairstylist-barber-shop-barber-is-wearing-face-protective-mask-due-coronavirus_473712-4628_xfz0th.webp",
-    ],
-    bookable: false,
-    postType: "post",
-    likesCount: 200,
-  },
-];
-const OPORTUNITIES = [];
-const LAST_MINUTE = [
-  {
-    id: "1",
-    images:
-      "https://res.cloudinary.com/closer-app/image/upload/v1658162625/0_x22z5g.jpg",
-    likesCount: 200,
-  },
-  {
-    id: "2",
-    images:
-      "https://res.cloudinary.com/closer-app/image/upload/v1658162625/0_x22z5g.jpg",
-    likesCount: 200,
-  },
-];
+const { width } = Dimensions.get("window");
 
 export const SearchPopularTab = ({ search }) => {
-  const { data: users, loading } = useHttpGet(
-    `/users/search?search=${search}&page=1&limit=3`
+  const [page, setPage] = useState(1);
+  const navigation = useNavigation();
+  const { t } = useTranslation();
+
+  const { data: users, loading: loadUsers } = useHttpGet(
+    `/users/search?search=${search}&page=1&limit=2`
+  );
+  const { data: hashtags, loading: loadHashtags } = useHttpGet(
+    `/hashtags/search?name=${search}&page=1&limit=3`
+  );
+  const { data: bookablePosts, loading: loadBookable } = useHttpGet(
+    "/posts/get-bookable-posts?latlng=26.100195,44.428286"
+  );
+  const { data: popularPosts, loading: loadPosts } = useHttpGet(
+    `/posts/get-all-posts?page=${page}&limit=12`
   );
 
   const headerUsers = useCallback(
     () => (
-      <Stack align="start" sx={{ marginVertical: 20 }}>
-        <Text style={{ fontFamily: "Exo-Bold", color: black, fontSize: 15.5 }}>
-          Utilizatori
-        </Text>
-      </Stack>
+      <SearchPopularHeading heading={t("users")} seeAll collection={users} />
     ),
-    []
+    [users]
+  );
+  const headerBookable = useCallback(
+    () => (
+      <SearchPopularHeading
+        heading={t("book")}
+        seeAll
+        collection={bookablePosts}
+      />
+    ),
+    [bookablePosts]
+  );
+  const headerHashtags = useCallback(
+    () => (
+      <SearchPopularHeading
+        heading={t("hashtags")}
+        seeAll
+        collection={hashtags}
+        onSeeAll={() =>
+          navigation.navigate("SearchAll", { screen: "SearchHashtags", search })
+        }
+      />
+    ),
+    [hashtags]
+  );
+  const headerPopularPosts = useCallback(
+    () => (
+      <SearchPopularHeading
+        heading={t("popularPosts")}
+        collection={popularPosts}
+      />
+    ),
+    [popularPosts]
   );
 
   const renderUsers = useCallback(
@@ -62,22 +77,101 @@ export const SearchPopularTab = ({ search }) => {
         name={item.name}
         counter={item.counter}
         checkmark={item.checkmark}
+        sx={{ paddingHorizontal: 15, marginBottom: 20 }}
       />
     ),
     []
   );
 
+  const renderBookables = useCallback(
+    ({ item }) => (
+      <View style={styles.boxImage}>
+        <Image
+          source={{ uri: `${item?.posts?.images[0]?.url}` }}
+          containerStyle={styles.image}
+        />
+      </View>
+    ),
+    []
+  );
+
+  const renderHashtags = useCallback(
+    ({ item }) => (
+      <HashtagListItem
+        sx={{ paddingHorizontal: 15 }}
+        name={item.name}
+        postsCount={100}
+        onPress={() => navigation.navigate("Hashtag", { name: item.name })}
+      />
+    ),
+    []
+  );
+
+  const renderPopularPosts = useCallback(
+    ({ item }) => (
+      <View style={styles.boxImage}>
+        <Image
+          source={{ uri: `${item?.images[0]?.url}` }}
+          containerStyle={styles.image}
+        />
+      </View>
+    ),
+    []
+  );
+
+  const popularPostsList = useCallback(
+    () => (
+      <FlatList
+        ListHeaderComponent={headerPopularPosts}
+        numColumns={2}
+        data={popularPosts}
+        keyExtractor={(item) => item._id}
+        renderItem={renderPopularPosts}
+      />
+    ),
+    [headerPopularPosts, popularPosts, renderPopularPosts]
+  );
+
+  const hashtagsList = useCallback(
+    () => (
+      <FlatList
+        ListHeaderComponent={headerHashtags}
+        data={hashtags}
+        keyExtractor={(item) => item._id}
+        renderItem={renderHashtags}
+        ListFooterComponent={popularPostsList}
+      />
+    ),
+    [headerHashtags, hashtags, popularPostsList]
+  );
+
+  const bookableList = useCallback(
+    () => (
+      <FlatList
+        ListHeaderComponent={headerBookable}
+        numColumns={2}
+        data={bookablePosts}
+        keyExtractor={(item) => item.posts._id}
+        renderItem={renderBookables}
+        ListFooterComponent={hashtagsList}
+      />
+    ),
+    [headerBookable, bookablePosts, renderBookables, hashtagsList]
+  );
+
   return (
-    <View style={styles.screen}>
-      {!loading && (
+    <View style={{ flex: 1 }}>
+      {!loadUsers && !loadBookable && !loadHashtags && !loadPosts && (
         <FlatList
+          ListHeaderComponent={headerUsers}
           data={users}
           keyExtractor={(item) => item._id}
+          showsVerticalScrollIndicator={false}
           renderItem={renderUsers}
-          ListHeaderComponent={headerUsers}
+          ListFooterComponent={bookableList}
         />
       )}
-      {loading && <Spinner />}
+      {loadUsers && loadBookable && loadHashtags && loadPosts && <Spinner />}
     </View>
   );
 };
@@ -85,15 +179,10 @@ export const SearchPopularTab = ({ search }) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    paddingHorizontal: 15,
   },
+  boxImage: { width: width / 2, flex: 1, margin: 1 },
   image: {
     aspectRatio: 1,
-    width: "100%",
     flex: 1,
-  },
-  container: {
-    flexDirection: "row",
-    flexWrap: "wrap",
   },
 });

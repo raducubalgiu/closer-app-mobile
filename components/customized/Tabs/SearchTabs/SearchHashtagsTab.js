@@ -1,5 +1,5 @@
 import { StyleSheet, FlatList, View } from "react-native";
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useHttpGet } from "../../../../hooks";
 import { HashtagListItem } from "../../ListItems/HashtagListItem";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
@@ -8,8 +8,10 @@ import { Spinner } from "../../../core";
 import { useNavigation } from "@react-navigation/native";
 
 export const SearchHashtagsTab = ({ search }) => {
+  const [page, setPage] = useState(1);
+
   const { data: hashtags, loading } = useHttpGet(
-    `/hashtags/search?name=${search}`
+    `/hashtags/search?name=${search}&page=${page}&limit=10`
   );
   const { t } = useTranslation();
   const navigation = useNavigation();
@@ -36,7 +38,7 @@ export const SearchHashtagsTab = ({ search }) => {
           data={hashtags}
           keyExtractor={keyExtractor}
           renderItem={renderHashtags}
-          ListFooterComponent={!loading && !hashtags.length && noFoundMessage}
+          ListFooterComponent={!loading && !hashtags?.length && noFoundMessage}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingTop: 15, paddingHorizontal: 15 }}
         />
