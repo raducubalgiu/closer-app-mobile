@@ -38,7 +38,7 @@ export const SearchPopularTab = ({ search }) => {
   const headerBookable = useCallback(
     () => (
       <SearchPopularHeading
-        heading={t("book")}
+        heading={t("bookables")}
         seeAll
         collection={bookablePosts}
       />
@@ -60,10 +60,7 @@ export const SearchPopularTab = ({ search }) => {
   );
   const headerPopularPosts = useCallback(
     () => (
-      <SearchPopularHeading
-        heading={t("popularPosts")}
-        collection={popularPosts}
-      />
+      <SearchPopularHeading heading={t("populars")} collection={popularPosts} />
     ),
     [popularPosts]
   );

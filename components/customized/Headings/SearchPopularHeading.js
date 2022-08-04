@@ -1,7 +1,7 @@
 import { StyleSheet, Text } from "react-native";
 import { Button, Stack } from "../../core";
 import theme from "../../../assets/styles/theme";
-import { Divider, Icon } from "@rneui/themed";
+import { Icon } from "@rneui/themed";
 
 const { black, grey0 } = theme.lightColors;
 

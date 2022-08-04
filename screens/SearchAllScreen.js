@@ -1,11 +1,6 @@
 import { SafeAreaView, StyleSheet, View, Text } from "react-native";
 import React, { useCallback, useEffect } from "react";
-import {
-  Stack,
-  SearchBarInput,
-  IconBackButton,
-  Button,
-} from "../components/core";
+import { Stack, IconBackButton, Button } from "../components/core";
 import theme from "../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
@@ -14,6 +9,7 @@ import {
   SearchUsersTab,
   SearchPopularTab,
   TopTabContainer,
+  SearchBookablesTab,
 } from "../components/customized";
 import { useAuth, useHttpPost } from "../hooks";
 import { Icon } from "@rneui/themed";
@@ -39,6 +35,10 @@ const SearchAllScreen = ({ route }) => {
   const SearchUsers = useCallback(() => <SearchUsersTab search={search} />, []);
   const SearchHashtags = useCallback(
     () => <SearchHashtagsTab search={search} />,
+    []
+  );
+  const SearchBookable = useCallback(
+    () => <SearchBookablesTab search={search} />,
     []
   );
 
@@ -89,21 +89,30 @@ const SearchAllScreen = ({ route }) => {
           </Button>
         </Stack>
       </SafeAreaView>
-      <TopTabContainer initialRouteName="SearchPopular">
+      <TopTabContainer
+        initialRouteName="SearchPopular"
+        tabBarScrollEnabled={true}
+        options={{ tabBarItemStyle: { width: 110 } }}
+      >
         <Tab.Screen
           name="SearchPopular"
           component={Populars}
-          options={{ tabBarLabel: "Populare" }}
+          options={{ tabBarLabel: t("populars") }}
         />
         <Tab.Screen
           name="SearchUsers"
           component={SearchUsers}
-          options={{ tabBarLabel: "Utilizatori" }}
+          options={{ tabBarLabel: t("users") }}
         />
         <Tab.Screen
           name="SearchHashtags"
           component={SearchHashtags}
-          options={{ tabBarLabel: "Hashtaguri" }}
+          options={{ tabBarLabel: t("hashtags") }}
+        />
+        <Tab.Screen
+          name="SearchBookable"
+          component={SearchBookable}
+          options={{ tabBarLabel: t("bookables") }}
         />
       </TopTabContainer>
     </View>

@@ -248,5 +248,7 @@
   "deleteHistory": "Şterge istoricul",
   "bookablePosts": "Postări rezervabile",
   "users": "Utilizatori",
-  "popularPosts": "Postări populare"
+  "popularPosts": "Postări populare",
+  "bookables": "Rezervabile",
+  "populars": "Populare"
 }
