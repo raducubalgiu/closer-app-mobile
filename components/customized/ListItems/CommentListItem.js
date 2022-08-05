@@ -7,7 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 
 const { black, grey0, error } = theme.lightColors;
 
-export const CardComment = ({
+export const CommentListItem = ({
   avatar,
   username,
   comment,

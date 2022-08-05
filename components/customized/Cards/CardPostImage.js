@@ -24,12 +24,7 @@ export const CardPostImage = ({
 
   return (
     <Button sx={{ ...styles.box, ...borderBox }} onPress={onPress}>
-      <Image
-        source={{
-          uri: `${image}`,
-        }}
-        containerStyle={styles.image}
-      />
+      <Image source={{ uri: `${image}` }} containerStyle={styles.image} />
       {bookable && (
         <View style={styles.bookable}>
           <Icon

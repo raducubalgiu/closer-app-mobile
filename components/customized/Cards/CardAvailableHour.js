@@ -1,6 +1,6 @@
 import { StyleSheet, Text } from "react-native";
 import React from "react";
-import { Stack, OutlinedButton, MainButton } from "../../core";
+import { Stack, MainButton } from "../../core";
 import { useTranslation } from "react-i18next";
 
 export const CardAvailableHour = ({ date, hour }) => {

@@ -44,7 +44,6 @@ export { CardServicesHeader } from "./Cards/CardServicesHeader";
 export { CardSlotDetails } from "./Cards/CardSlotDetails";
 export { CardPostImage } from "./Cards/CardPostImage";
 export { CardScheduleOverview } from "./Cards/CardScheduleOverview";
-export { CardComment } from "./Cards/CardComment";
 
 export { HeaderServices } from "../customized/Layout/Headers/HeaderServices";
 export { HeaderEdit } from "../customized/Layout/Headers/HeaderEdit";
@@ -52,6 +51,7 @@ export { HeaderEdit } from "../customized/Layout/Headers/HeaderEdit";
 export { MessageItem } from "../customized/ListItems/MessageItem";
 export { HashtagListItem } from "../customized/ListItems/HashtagListItem";
 export { UserListItem } from "../customized/ListItems/UserListItem";
+export { CommentListItem } from "../customized/ListItems/CommentListItem";
 
 export { ServicesList } from "./Lists/ServicesList";
 export { ProfileMenuList } from "./Lists/ProfileMenuList";

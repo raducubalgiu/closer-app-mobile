@@ -18,7 +18,7 @@ import {
   Spinner,
   Stack,
 } from "../components/core";
-import { CardComment } from "../components/customized";
+import { CommentListItem } from "../components/customized";
 import { useTranslation } from "react-i18next";
 import { useHttpGet, useHttpPost } from "../hooks";
 
@@ -80,7 +80,7 @@ const CommentsScreen = ({ route }) => {
     const { user, comment, createdAt } = item || {};
 
     return (
-      <CardComment
+      <CommentListItem
         userId={user?._id}
         avatar={user?.avatar}
         username={user?.username}
