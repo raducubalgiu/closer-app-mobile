@@ -1,13 +1,13 @@
-import { StyleSheet, View, FlatList, Dimensions, Text } from "react-native";
+import { StyleSheet, View, FlatList, Dimensions } from "react-native";
 import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Image } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useHttpGet } from "../../../../hooks";
-import { CardFollowers } from "../../Cards/CardFollowers";
 import { HashtagListItem } from "../../ListItems/HashtagListItem";
 import { SearchPopularHeading } from "../../Headings/SearchPopularHeading";
 import { Spinner } from "../../../core";
+import { UserListItem } from "../../ListItems/UserListItem";
 
 const { width } = Dimensions.get("window");
 
@@ -70,7 +70,7 @@ export const SearchPopularTab = ({ search }) => {
 
   const renderUsers = useCallback(
     ({ item }) => (
-      <CardFollowers
+      <UserListItem
         avatar={item.avatar}
         followeeId={item._id}
         username={item.username}

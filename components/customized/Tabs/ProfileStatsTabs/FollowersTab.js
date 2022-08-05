@@ -1,10 +1,10 @@
 import { StyleSheet, View, FlatList } from "react-native";
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { CardFollowers } from "../../Cards/CardFollowers";
-import { SearchBarInput, Spinner } from "../../../core";
+import { Spinner } from "../../../core";
 import { useHttpGet } from "../../../../hooks";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
+import { UserListItem } from "../../ListItems/UserListItem";
 
 export const FollowersTab = ({ userId }) => {
   const { t } = useTranslation();
@@ -17,7 +17,7 @@ export const FollowersTab = ({ userId }) => {
     const { avatar, username, name, _id } = item.userId;
 
     return (
-      <CardFollowers
+      <UserListItem
         avatar={avatar}
         username={username}
         name={name}

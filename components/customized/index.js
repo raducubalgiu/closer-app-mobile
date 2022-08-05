@@ -34,7 +34,6 @@ export { SearchBookablesTab } from "./Tabs/SearchTabs/SearchBookablesTab";
 export { CardPost } from "./Cards/CardPost/CardPost";
 export { CardPostGrid } from "./Cards/CardPostGrid/CardPostGrid";
 export { CardRecentSearch } from "./Cards/CardRecentSearch";
-export { CardFollowers } from "./Cards/CardFollowers";
 export { CardRatings } from "./Cards/CardRatings";
 export { CardProduct } from "./Cards/CardProduct";
 export { CardSuggestedPeople } from "./Cards/CardSuggestedPeople";
@@ -52,6 +51,7 @@ export { HeaderEdit } from "../customized/Layout/Headers/HeaderEdit";
 
 export { MessageItem } from "../customized/ListItems/MessageItem";
 export { HashtagListItem } from "../customized/ListItems/HashtagListItem";
+export { UserListItem } from "../customized/ListItems/UserListItem";
 
 export { ServicesList } from "./Lists/ServicesList";
 export { ProfileMenuList } from "./Lists/ProfileMenuList";
@@ -61,8 +61,6 @@ export { VideoItem } from "./VideoItem/VideoItem";
 export { NoFoundMessage } from "./NotFoundContent/NoFoundMessage";
 
 export { Map } from "../customized/Map/Map";
-
-export { SheetService } from "./Sheets/SheetService";
 
 export { ShowProducts } from "../customized/ShowProducts/ShowProducts";
 
@@ -75,6 +73,7 @@ export { EditProfileSheet } from "../customized/Sheets/EditProfileSheet";
 export { DashboardInfoSheet } from "../customized/Sheets/DashboardInfoSheet";
 export { DashboardCalendarSheet } from "../customized/Sheets/DashboardCalendarSheet";
 export { PostInfoSheet } from "../customized/Sheets/PostInfoSheet";
+export { SheetService } from "./Sheets/SheetService";
 
 export { FiltersContainer } from "../customized/Containers/FiltersContainer";
 

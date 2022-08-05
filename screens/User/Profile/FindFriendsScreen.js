@@ -1,6 +1,6 @@
 import { StyleSheet, SafeAreaView, FlatList, View } from "react-native";
 import React, { useEffect, useState } from "react";
-import { CardFollowers } from "../../../components/customized";
+import { UserListItem } from "../../../components/customized";
 import theme from "../../../assets/styles/theme";
 import * as Contacts from "expo-contacts";
 import { Header, SearchBarInput } from "../../../components/core";
@@ -25,7 +25,7 @@ const FindFriendsScreen = () => {
   }, []);
 
   const renderPerson = ({ item }) => (
-    <CardFollowers
+    <UserListItem
       username={item?.name}
       name={"Din contactele tale"}
       sxBtn={styles.btnFollow}

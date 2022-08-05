@@ -1,10 +1,10 @@
 import { StyleSheet, FlatList, View } from "react-native";
 import { useCallback, useState } from "react";
 import { useHttpGet } from "../../../../hooks";
-import { CardFollowers } from "../../Cards/CardFollowers";
 import { useTranslation } from "react-i18next";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { Spinner } from "../../../core";
+import { UserListItem } from "../../ListItems/UserListItem";
 
 export const SearchUsersTab = ({ search }) => {
   const [page, setPage] = useState(1);
@@ -16,7 +16,7 @@ export const SearchUsersTab = ({ search }) => {
 
   const renderUsers = useCallback(
     ({ item }) => (
-      <CardFollowers
+      <UserListItem
         avatar={item.avatar}
         followeeId={item._id}
         username={item.username}

@@ -4,11 +4,10 @@ import { Stack, CustomAvatar, Button } from "../../core";
 import { FollowButton, Checkmark } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../hooks/auth";
-import { useCallback } from "react";
 
 const { grey0, black } = theme.lightColors;
 
-export const CardFollowers = ({
+export const UserListItem = ({
   avatar,
   followeeId,
   username,
