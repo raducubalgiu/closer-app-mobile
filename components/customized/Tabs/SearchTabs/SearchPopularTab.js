@@ -41,6 +41,9 @@ export const SearchPopularTab = ({ search }) => {
         heading={t("bookables")}
         seeAll
         collection={bookablePosts}
+        onSeeAll={() =>
+          navigation.navigate("SearchAll", { screen: "SearchBookable", search })
+        }
       />
     ),
     [bookablePosts]

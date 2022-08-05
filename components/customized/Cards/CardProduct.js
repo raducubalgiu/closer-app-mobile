@@ -1,6 +1,12 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { Stack, IconButtonEdit, MainButton, Protected } from "../../core";
+import {
+  Stack,
+  IconButtonEdit,
+  MainButton,
+  Protected,
+  BookmarkIButton,
+} from "../../core";
 import theme from "../../../assets/styles/theme";
 import { trimFunc } from "../../../utils";
 import { useAuth, useDuration } from "../../../hooks";
@@ -43,7 +49,7 @@ export const CardProduct = ({
     });
 
   return (
-    <Stack align="start" sx={styles.card}>
+    <Stack sx={styles.card}>
       <Stack direction="row" sx={{ width: "100%" }} align="start">
         <Stack align="start" sx={styles.descriptionCont}>
           <Text style={styles.name}>{name}</Text>
@@ -60,29 +66,39 @@ export const CardProduct = ({
             {price} {t("ron")}
           </Text>
         </Stack>
-        {canBook && hours && (
-          <Protected
-            roles={[SECOND_ROLE, THIRD_ROLE]}
-            userRole={userContext.role}
-          >
-            <MainButton
-              size="md"
-              variant="outlined"
-              title={t("book")}
-              onPress={goToCalendar}
-            />
-          </Protected>
-        )}
-        {!canBook && (
-          <Stack direction="row">
-            <IconButtonEdit onPress={onEditProduct} />
-            <IconButtonDelete
-              onPress={onDeleteProduct}
-              sx={{ marginLeft: 20 }}
-            />
-          </Stack>
-        )}
+        <Stack>
+          {canBook && hours && (
+            <Protected
+              roles={[SECOND_ROLE, THIRD_ROLE]}
+              userRole={userContext.role}
+            >
+              <MainButton
+                size="md"
+                variant="outlined"
+                title={t("book")}
+                onPress={goToCalendar}
+              />
+            </Protected>
+          )}
+          {!canBook && (
+            <Stack direction="row">
+              <IconButtonEdit onPress={onEditProduct} />
+              <IconButtonDelete
+                onPress={onDeleteProduct}
+                sx={{ marginLeft: 20 }}
+              />
+            </Stack>
+          )}
+        </Stack>
       </Stack>
+      <View
+        style={{
+          width: "100%",
+          alignItems: "flex-end",
+        }}
+      >
+        <BookmarkIButton type="products" typeId={product._id} />
+      </View>
     </Stack>
   );
 };
@@ -98,7 +114,7 @@ const styles = StyleSheet.create({
   },
   name: {
     fontFamily: "Exo-SemiBold",
-    fontSize: 17,
+    fontSize: 18,
     marginBottom: 1,
     color: black,
   },

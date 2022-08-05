@@ -54,7 +54,7 @@ const ProfileScreen = ({ badgeDetails }) => {
   const closeSheet = useCallback(() => CLOSE_BS(), []);
   const profileMenu = <ProfileMenuList onCloseSheet={closeSheet} />;
   const { BOTTOM_SHEET, SHOW_BS, CLOSE_BS } = useSheet(
-    ["25%", "60%"],
+    ["10%", "60%"],
     profileMenu,
     closeSheet
   );

@@ -17,7 +17,7 @@ const AllBookmarksScreens = () => {
   const { user } = useAuth();
   const { t } = useTranslation();
 
-  const { data: bookmarks } = useHttpGet(`/users/${user?._id}/bookmarks`);
+  const { data: bookmarks } = useHttpGet(`/users/${user?._id}/bookmarks/posts`);
 
   const renderUserBookmarks = useCallback(
     ({ item }) => <CardPost post={item?.post} />,

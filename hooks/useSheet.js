@@ -17,6 +17,11 @@ export const useSheet = (intervals, sheetContent, closeSheet = null) => {
   const handleCloseSheet = useCallback(() => {
     bottomSheetModalRef.current?.close();
   }, []);
+  const handleSheetChange = useCallback((index) => {
+    if (index === 0) {
+      bottomSheetModalRef.current?.close();
+    }
+  }, []);
 
   const renderBackdrop = useCallback(
     (props) => (
@@ -39,6 +44,7 @@ export const useSheet = (intervals, sheetContent, closeSheet = null) => {
           backdropComponent={renderBackdrop}
           handleIndicatorStyle={styles.indicatorStyle}
           onDismiss={handleCloseSheet}
+          onChange={handleSheetChange}
         >
           {sheetContent}
         </BottomSheetModal>

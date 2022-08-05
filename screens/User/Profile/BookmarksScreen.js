@@ -1,16 +1,16 @@
 import { SafeAreaView, StyleSheet } from "react-native";
 import { useCallback } from "react";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { useTranslation } from "react-i18next";
 import {
   SavedHashtagsTab,
   TopTabContainer,
   SavedProductsTab,
   SavedPostsTab,
 } from "../../../components/customized/index";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { Header } from "../../../components/core";
 import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../hooks";
-import { useTranslation } from "react-i18next";
 
 const BookmarksScreen = () => {
   const { user } = useAuth();
