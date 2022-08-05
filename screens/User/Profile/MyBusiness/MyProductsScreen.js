@@ -9,10 +9,7 @@ import {
   MainButton,
   Stack,
 } from "../../../../components/core";
-import {
-  NoFoundMessage,
-  ShowProducts,
-} from "../../../../components/customized";
+import { NoFoundMessage } from "../../../../components/customized";
 import { useAuth } from "../../../../hooks/auth";
 
 const MyProductsScreen = ({ route }) => {
@@ -48,14 +45,6 @@ const MyProductsScreen = ({ route }) => {
     <SafeAreaView style={styles.screen}>
       <Header title={t("myProducts")} actionBtn={addBtn} divider />
       <Feedback feedback={feedback} setFeedback={setFeedback} />
-      <ShowProducts
-        userId={user?._id}
-        product={product}
-        services={services}
-        initServ={services[0]?._id}
-        serviceId={serviceId}
-      />
-      {!services.length && noServices}
     </SafeAreaView>
   );
 };

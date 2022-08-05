@@ -4,7 +4,7 @@ import theme from "../../../../assets/styles/theme";
 import { ServiceTab } from "../ServiceTab/ServiceTab";
 import { useCallback } from "react";
 
-const { black, primary } = theme.lightColors;
+const { black } = theme.lightColors;
 const { width } = Dimensions.get("window");
 
 export const ProductsProfileTab = ({ userId, services, initialRoute }) => {
