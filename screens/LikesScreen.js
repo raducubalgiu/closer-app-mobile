@@ -1,5 +1,6 @@
 import { FlatList, SafeAreaView, StyleSheet } from "react-native";
 import React, { useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { Header, Spinner } from "../components/core";
 import {
   FakeSearchBarSimple,
@@ -7,7 +8,6 @@ import {
   UserListItem,
 } from "../components/customized";
 import { useAuth, useHttpGet } from "../hooks";
-import { useTranslation } from "react-i18next";
 
 const LikesScreen = ({ route }) => {
   const { user } = useAuth();

@@ -100,10 +100,10 @@ export const ProfileOverview = ({
         <Text style={styles.name}>{name}</Text>
         <Protected userRole={role} roles={[MAIN_ROLE, SECOND_ROLE]}>
           <Stack direction="row" justify="start">
-            <Text style={styles.business}>{displayDash(business?.name)}</Text>
+            <Text style={styles.business}>{business?.name}</Text>
             <IconStar sx={styles.star} />
             <Text style={styles.ratingsAverage}>
-              {displayDash(ratingsAverage?.toFixed(1))}
+              {ratingsAverage?.toFixed(1)}
             </Text>
           </Stack>
           <Stack direction="row" sx={{ marginTop: 10 }}>
@@ -111,7 +111,7 @@ export const ProfileOverview = ({
               <Stack direction="row">
                 <Icon name="keyboard-arrow-down" size={15} color="white" />
                 <Icon name="clock" type="feather" color={grey0} size={17.5} />
-                <Text style={styles.text}>{displayDash(status)}</Text>
+                <Text style={styles.text}>{status}</Text>
               </Stack>
             </Button>
             <Button
@@ -120,7 +120,7 @@ export const ProfileOverview = ({
               <Stack direction="row" sx={{ marginLeft: 10 }}>
                 <IconLocation color={grey0} size={17.5} />
                 <Text style={styles.text}>
-                  {t("at")} {displayDash(distance?.toFixed(0))} km
+                  {t("at")} {distance?.toFixed(0)} km
                 </Text>
                 <Icon name="keyboard-arrow-down" size={15} color={black} />
               </Stack>
@@ -133,24 +133,21 @@ export const ProfileOverview = ({
           <StatsButton
             onPress={goToReviews}
             labelStats={t("reviews")}
-            statsNo={displayDash(ratingsQuantity)}
+            statsNo={ratingsQuantity}
           />
         </Protected>
         <Protected userRole={role} roles={[THIRD_ROLE]}>
-          <StatsButton
-            labelStats={t("posts")}
-            statsNo={displayDash(postsCount)}
-          />
+          <StatsButton labelStats={t("posts")} statsNo={postsCount} />
         </Protected>
         <StatsButton
           onPress={goToFollowers}
           labelStats={t("followers")}
-          statsNo={displayDash(followersCount)}
+          statsNo={followersCount}
         />
         <StatsButton
           onPress={goToFollowings}
           labelStats={t("following")}
-          statsNo={displayDash(followingCount)}
+          statsNo={followingCount}
         />
       </Stack>
       <Stack direction="row" justify="center" sx={styles.buttonsContainer}>
