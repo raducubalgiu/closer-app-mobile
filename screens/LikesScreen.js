@@ -2,9 +2,9 @@ import { FlatList, SafeAreaView, StyleSheet } from "react-native";
 import React, { useCallback } from "react";
 import { Header, Spinner } from "../components/core";
 import {
-  CardFollowers,
   FakeSearchBarSimple,
   NoFoundMessage,
+  UserListItem,
 } from "../components/customized";
 import { useAuth, useHttpGet } from "../hooks";
 import { useTranslation } from "react-i18next";
@@ -18,7 +18,7 @@ const LikesScreen = ({ route }) => {
 
   const renderPerson = useCallback(
     ({ item }) => (
-      <CardFollowers
+      <UserListItem
         avatar={item?.user?.avatar}
         username={item?.user?.username}
         name={item?.user?.name}
