@@ -1,42 +1,28 @@
 import { SafeAreaView, StyleSheet, Keyboard } from "react-native";
-import axios from "axios";
 import React, { useState } from "react";
-import { useAuth } from "../../../../hooks/auth";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { Feedback, InputEdit, Spinner } from "../../../../components/core";
 import { HeaderEdit } from "../../../../components/customized";
+import { useHttpPatch, useAuth } from "../../../../hooks";
 
 const EditWebsiteScreen = () => {
   const { user, setUser } = useAuth();
   const [website, setWebsite] = useState(user?.website);
-  const [loading, setLoading] = useState(false);
-  const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const navigation = useNavigation();
   const { t } = useTranslation();
 
+  const updateUser = (data) => {
+    setUser({ ...user, website: data.user.website });
+    navigation.goBack();
+  };
+  const { makePatch, loading, feedback, setFeedback } = useHttpPatch(
+    `/users/${user?._id}/update`,
+    updateUser
+  );
   const updateWebsite = () => {
     Keyboard.dismiss();
-    setLoading(true);
-    axios
-      .patch(
-        `${process.env.BASE_ENDPOINT}/users/${user?._id}/update`,
-        {
-          website,
-        },
-        {
-          headers: { Authorization: `Bearer ${user?.token}` },
-        }
-      )
-      .then((res) => {
-        setUser({ ...user, website: res.data.user.website });
-        setLoading(false);
-        navigation.goBack();
-      })
-      .catch(() => {
-        setLoading(false);
-        setFeedback({ visible: true, message: t("somethingWentWrong") });
-      });
+    makePatch({ website });
   };
 
   return (
@@ -48,6 +34,7 @@ const EditWebsiteScreen = () => {
         value={website}
         fieldLength={40}
         updateValue={(website) => setWebsite(website)}
+        withDetails
       />
       {loading && <Spinner />}
     </SafeAreaView>
