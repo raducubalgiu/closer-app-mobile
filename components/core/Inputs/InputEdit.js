@@ -3,7 +3,13 @@ import React from "react";
 import { SearchBar } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 
-export const InputEdit = ({ value, fieldLength, placeholder, updateValue }) => {
+export const InputEdit = ({
+  value,
+  fieldLength,
+  placeholder,
+  updateValue,
+  withDetails,
+}) => {
   return (
     <>
       <View style={{ marginVertical: 10 }}>
@@ -22,15 +28,17 @@ export const InputEdit = ({ value, fieldLength, placeholder, updateValue }) => {
           maxLength={fieldLength}
         />
       </View>
-      <Text
-        style={
-          value.length < fieldLength
-            ? styles.strokeLength
-            : { ...styles.strokeLength, color: "#F72A50" }
-        }
-      >
-        {value.length} / {fieldLength}
-      </Text>
+      {withDetails && (
+        <Text
+          style={
+            value.length < fieldLength
+              ? styles.strokeLength
+              : { ...styles.strokeLength, color: "#F72A50" }
+          }
+        >
+          {value.length} / {fieldLength}
+        </Text>
+      )}
     </>
   );
 };

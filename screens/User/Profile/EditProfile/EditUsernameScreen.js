@@ -1,26 +1,42 @@
-import { StyleSheet, Text, SafeAreaView } from "react-native";
+import { StyleSheet, SafeAreaView, Keyboard } from "react-native";
 import React, { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 import { HeaderEdit } from "../../../../components/customized";
 import { useTranslation } from "react-i18next";
-import { InputEdit } from "../../../../components/core";
-import { useAuth } from "../../../../hooks";
+import { Feedback, InputEdit, Spinner } from "../../../../components/core";
+import { useAuth, useHttpPatch } from "../../../../hooks";
 
 const EditUsernameScreen = () => {
   const { user } = useAuth();
   const [username, setUsername] = useState(user?.username);
   const { t } = useTranslation();
+  const navigation = useNavigation();
 
-  const updateUsername = () => {};
+  const updateUser = (data) => {
+    setUser({ ...user, username: data.user.username });
+    navigation.goBack();
+  };
+  const { makePatch, feedback, setFeedback, loading } = useHttpPatch(
+    `/users/update`,
+    updateUser
+  );
+
+  const updateUsername = () => {
+    Keyboard.dismiss();
+    makePatch({ username });
+  };
 
   return (
     <SafeAreaView style={styles.screen}>
       <HeaderEdit title={t("username")} onSave={updateUsername} />
+      <Feedback feedback={feedback} setFeedback={setFeedback} />
       <InputEdit
         placeholder={t("addUsername")}
         value={username}
         updateValue={(username) => setUsername(username)}
         fieldLength={28}
       />
+      {loading && <Spinner />}
     </SafeAreaView>
   );
 };

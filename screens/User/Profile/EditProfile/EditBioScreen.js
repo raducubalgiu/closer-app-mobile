@@ -35,7 +35,7 @@ const EditBioScreen = () => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <HeaderEdit title={t("name")} onSave={updateBio} />
+      <HeaderEdit title={t("name")} onSave={updateBio} disabled={loading} />
       <Feedback feedback={feedback} setFeedback={setFeedback} />
       <View style={styles.textAreaContainer}>
         <TextInput

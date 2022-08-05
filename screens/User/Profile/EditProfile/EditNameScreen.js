@@ -28,7 +28,7 @@ const EditNameScreen = () => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <HeaderEdit title={t("name")} onSave={updateName} />
+      <HeaderEdit title={t("name")} onSave={updateName} disabled={loading} />
       <Feedback feedback={feedback} setFeedback={setFeedback} />
       <InputEdit
         placeholder={t("addName")}

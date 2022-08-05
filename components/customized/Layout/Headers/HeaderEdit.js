@@ -5,17 +5,17 @@ import { useNavigation } from "@react-navigation/native";
 import theme from "../../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 
-export const HeaderEdit = ({ onSave, title }) => {
+export const HeaderEdit = ({ onSave, title, disabled }) => {
   const navigation = useNavigation();
   const { t } = useTranslation();
 
   return (
     <Stack direction="row" sx={styles.headerCont}>
-      <Button onPress={() => navigation.goBack()}>
+      <Button onPress={() => navigation.goBack()} disabled={disabled}>
         <Text style={styles.cancel}>{t("cancel")}</Text>
       </Button>
       <Text style={styles.field}>{title}</Text>
-      <Button onPress={onSave}>
+      <Button onPress={onSave} disabled={disabled}>
         <Text style={styles.save}>{t("save")}</Text>
       </Button>
     </Stack>

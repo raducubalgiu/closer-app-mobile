@@ -27,7 +27,11 @@ const EditWebsiteScreen = () => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <HeaderEdit title={t("website")} onSave={updateWebsite} />
+      <HeaderEdit
+        title={t("website")}
+        onSave={updateWebsite}
+        disabled={loading}
+      />
       <Feedback feedback={feedback} setFeedback={setFeedback} />
       <InputEdit
         placeholder={t("addWebsite")}
