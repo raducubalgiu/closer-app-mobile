@@ -92,7 +92,7 @@ export const ProfileOverview = ({
             size={95}
             avatar={avatar}
             withBadge={withBadge}
-            badgeDetails={{ name: "plus", type: "entypo" }}
+            badgeDetails={{ name: "plus", type: "entypo", size: 17 }}
             withAvailable={withAvailable}
             available={available}
           />

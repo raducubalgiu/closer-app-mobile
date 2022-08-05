@@ -1,4 +1,4 @@
-import { FlatList } from "react-native";
+import { FlatList, View } from "react-native";
 import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
@@ -35,7 +35,7 @@ export const SavedHashtagsTab = ({ user }) => {
 
   return (
     <>
-      {!loading && (
+      {!loading && hashtags.length > 0 && (
         <FlatList
           data={hashtags}
           keyExtractor={keyExtractor}
