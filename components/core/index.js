@@ -48,7 +48,6 @@ export { Textarea } from "./Inputs/Textarea";
 
 export { Protected } from "./Protected/Protected";
 
-export { SwipableItem } from "./SwipableItem/SwipableItem";
 export { Feedback } from "./Feedback/Feedback";
 
 export { ImageSlider } from "./ImageSlider/ImageSlider";

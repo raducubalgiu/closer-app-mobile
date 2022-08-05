@@ -15,7 +15,9 @@ export const Feedback = ({ feedback, setFeedback, duration }) => {
       );
     }
 
-    return () => (isMounted = false);
+    return () => {
+      isMounted = false;
+    };
   }, [feedback]);
 
   return (

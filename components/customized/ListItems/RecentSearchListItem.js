@@ -6,7 +6,7 @@ import theme from "../../../assets/styles/theme";
 
 const { black } = theme.lightColors;
 
-export const CardRecentSearch = ({ onPress, word }) => {
+export const RecentSearchListItem = ({ onPress, word }) => {
   return (
     <Button sx={styles.item} onPress={onPress}>
       <Stack direction="row" justify="start">

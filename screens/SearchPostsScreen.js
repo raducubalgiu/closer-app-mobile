@@ -12,7 +12,7 @@ import {
   IconButton,
 } from "../components/core";
 import { IconBackButton, SearchBarInput, Stack } from "../components/core";
-import { CardRecentSearch } from "../components/customized";
+import { RecentSearchListItem } from "../components/customized";
 import theme from "../assets/styles/theme";
 import { useAuth, useHttpDelete, useHttpGet } from "../hooks";
 import { trimFunc } from "../utils";
@@ -89,7 +89,7 @@ const SearchPostsScreen = () => {
 
   const renderRecent = useCallback(
     ({ item }) => (
-      <CardRecentSearch
+      <RecentSearchListItem
         onDelete={() => deleteSearch(item._id)}
         onPress={() => navigation.navigate("SearchAll", { search: item.word })}
         word={item?.word}

@@ -66,29 +66,6 @@ const MessagesScreen = () => {
     });
   }, []);
 
-  const renderMessages = ({ item }) => (
-    <SwipableItem
-      onPress={() =>
-        navigation.navigate("MessageItem", {
-          userId: item?._id,
-          name: item?.name,
-          username: item?.username,
-          avatar: item?.avatar,
-          socket,
-        })
-      }
-      onDelete={() => {}}
-    >
-      <MessageItem
-        name={item?.name}
-        avatar={item?.avatar}
-        checkmark={false}
-        message={"Hello World"}
-        date={"15s"}
-      />
-    </SwipableItem>
-  );
-
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.container}>
@@ -98,7 +75,7 @@ const MessagesScreen = () => {
           hideBtnLeft={true}
         />
         {loading && <Spinner />}
-        {!loading && (
+        {/* {!loading && (
           <FlatList
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -116,7 +93,7 @@ const MessagesScreen = () => {
             keyExtractor={(item) => item?._id}
             renderItem={renderMessages}
           />
-        )}
+        )} */}
       </View>
     </SafeAreaView>
   );

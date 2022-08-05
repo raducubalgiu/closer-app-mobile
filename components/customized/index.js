@@ -33,7 +33,6 @@ export { SearchBookablesTab } from "./Tabs/SearchTabs/SearchBookablesTab";
 
 export { CardPost } from "./Cards/CardPost/CardPost";
 export { CardPostGrid } from "./Cards/CardPostGrid/CardPostGrid";
-export { CardRecentSearch } from "./Cards/CardRecentSearch";
 export { CardRatings } from "./Cards/CardRatings";
 export { CardProduct } from "./Cards/CardProduct";
 export { CardSuggestedPeople } from "./Cards/CardSuggestedPeople";
@@ -52,6 +51,7 @@ export { MessageItem } from "../customized/ListItems/MessageItem";
 export { HashtagListItem } from "../customized/ListItems/HashtagListItem";
 export { UserListItem } from "../customized/ListItems/UserListItem";
 export { CommentListItem } from "../customized/ListItems/CommentListItem";
+export { RecentSearchListItem } from "../customized/ListItems/RecentSearchListItem";
 
 export { ServicesList } from "./Lists/ServicesList";
 export { ProfileMenuList } from "./Lists/ProfileMenuList";

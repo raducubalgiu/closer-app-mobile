@@ -1,5 +1,4 @@
 import { StyleSheet, Text, Image, Dimensions } from "react-native";
-import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { Button, IconLocation, IconStar, IconVideo, Stack } from "../../core";
@@ -27,12 +26,7 @@ export const CardRecommended = ({ location }) => {
     <Button sx={styles.button} onPress={goToUser}>
       <Stack direction="row" sx={styles.item}>
         <Stack>
-          <Image
-            style={styles.image}
-            source={{
-              uri: `${images[0]?.url}`,
-            }}
-          />
+          <Image style={styles.image} source={{ uri: `${images[0]?.url}` }} />
           <IconVideo sx={styles.iconVideo} />
         </Stack>
         <Stack align="start" sx={styles.info}>
