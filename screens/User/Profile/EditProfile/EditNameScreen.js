@@ -1,42 +1,29 @@
 import { SafeAreaView, StyleSheet, Keyboard } from "react-native";
-import axios from "axios";
 import React, { useState } from "react";
-import { useAuth } from "../../../../hooks/auth";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { HeaderEdit } from "../../../../components/customized";
 import { Feedback, InputEdit, Spinner } from "../../../../components/core";
+import { useHttpPatch, useAuth } from "../../../../hooks";
 
 const EditNameScreen = () => {
   const { user, setUser } = useAuth();
   const [name, setName] = useState(user?.name);
-  const [loading, setLoading] = useState(false);
-  const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const navigation = useNavigation();
   const { t } = useTranslation();
 
+  const updateUser = (data) => {
+    setUser({ ...user, name: data.user.name });
+    navigation.goBack();
+  };
+  const { makePatch, loading, feedback, setFeedback } = useHttpPatch(
+    `/users/update`,
+    updateUser
+  );
+
   const updateName = () => {
     Keyboard.dismiss();
-    setLoading(true);
-    axios
-      .patch(
-        `${process.env.BASE_ENDPOINT}/users/update`,
-        {
-          name,
-        },
-        {
-          headers: { Authorization: `Bearer ${user?.token}` },
-        }
-      )
-      .then((res) => {
-        setUser({ ...user, name: res.data.user.name });
-        setLoading(false);
-        navigation.goBack();
-      })
-      .catch(() => {
-        setFeedback({ visible: true, message: t("somethingWentWrong") });
-        setLoading(false);
-      });
+    makePatch({ name });
   };
 
   return (
@@ -48,6 +35,7 @@ const EditNameScreen = () => {
         value={name}
         fieldLength={30}
         updateValue={(name) => setName(name)}
+        withDetails
       />
       {loading && <Spinner />}
     </SafeAreaView>
