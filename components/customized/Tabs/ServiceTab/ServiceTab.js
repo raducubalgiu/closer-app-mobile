@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { StyleSheet, View, ActivityIndicator } from "react-native";
+import { StyleSheet, View, ActivityIndicator, ScrollView } from "react-native";
 import { useAuth, useHttpGet } from "../../../../hooks";
 import { CardProduct } from "../../Cards/CardProduct";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";

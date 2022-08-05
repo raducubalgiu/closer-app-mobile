@@ -1,59 +1,28 @@
-import { StyleSheet, Dimensions } from "react-native";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import theme from "../../../../assets/styles/theme";
-import { ServiceTab } from "../ServiceTab/ServiceTab";
-import { useCallback } from "react";
-
-const { black } = theme.lightColors;
-const { width } = Dimensions.get("window");
+import { TopTabProducts } from "../TopTabContainer/TopTabProducts";
+import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
+import { useTranslation } from "react-i18next";
 
 export const ProductsProfileTab = ({ userId, services, initialRoute }) => {
-  const Tab = createMaterialTopTabNavigator();
+  const { t } = useTranslation();
 
-  const screenOptions = {
-    tabBarActiveTintColor: black,
-    tabBarLabelStyle: styles.tabLabel,
-    tabBarIndicatorStyle: styles.tabIndicator,
-    tabBarScrollEnabled: true,
-    tabBarItemStyle: { width: 120 },
-  };
+  const noFoundProducts = (
+    <NoFoundMessage
+      title={t("products")}
+      description={t("noFoundProducts")}
+      sx={{ marginTop: 50 }}
+    />
+  );
 
   return (
-    <Tab.Navigator
-      initialRouteName={
-        initialRoute ? initialRoute : services[0]?.name.toString()
-      }
-      screenOptions={screenOptions}
-      sceneContainerStyle={{ backgroundColor: "white" }}
-      initialLayout={{ width, height: 0 }}
-    >
-      {services?.map((el) => {
-        const Service = useCallback(
-          () => <ServiceTab userId={userId} service={el} />,
-          [userId, el]
-        );
-
-        return (
-          <Tab.Screen
-            key={el._id}
-            name={el.name.toLowerCase()}
-            component={Service}
-            options={{
-              tabBarLabel: el.name,
-            }}
-          />
-        );
-      })}
-    </Tab.Navigator>
+    <>
+      {services?.length > 0 && (
+        <TopTabProducts
+          userId={userId}
+          services={services}
+          initialRoute={initialRoute}
+        />
+      )}
+      {!services?.length && noFoundProducts}
+    </>
   );
 };
-
-const styles = StyleSheet.create({
-  tabLabel: {
-    fontFamily: "Exo-SemiBold",
-    fontSize: 14.5,
-  },
-  tabIndicator: {
-    backgroundColor: "transparent",
-  },
-});

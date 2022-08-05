@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
@@ -11,11 +11,11 @@ import {
 } from "../../../../components/core";
 import { NoFoundMessage } from "../../../../components/customized";
 import { useAuth } from "../../../../hooks/auth";
+import { TopTabProducts } from "../../../../components/customized/Tabs/TopTabContainer/TopTabProducts";
 
-const MyProductsScreen = ({ route }) => {
+const MyProductsScreen = () => {
   const { user } = useAuth();
   const { services } = user;
-  const { product, serviceId } = route.params || {};
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const navigation = useNavigation();
   const { t } = useTranslation();
@@ -42,10 +42,16 @@ const MyProductsScreen = ({ route }) => {
   );
 
   return (
-    <SafeAreaView style={styles.screen}>
-      <Header title={t("myProducts")} actionBtn={addBtn} divider />
-      <Feedback feedback={feedback} setFeedback={setFeedback} />
-    </SafeAreaView>
+    <View style={styles.screen}>
+      <SafeAreaView>
+        <Header title={t("myProducts")} actionBtn={addBtn} divider />
+        <Feedback feedback={feedback} setFeedback={setFeedback} />
+      </SafeAreaView>
+      {services.length > 0 && (
+        <TopTabProducts userId={user?._id} services={services} />
+      )}
+      {!services?.length && noServices}
+    </View>
   );
 };
 
