@@ -8,6 +8,7 @@ export { Footer } from "./Layout/Footers/Footer";
 export { ProfileOverview } from "./ProfileOverview/ProfileOverview";
 
 export { TopTabContainer } from "./Tabs/TopTabContainer/TopTabContainer";
+export { TopTabProfileGeneral } from "./Tabs/TopTabContainer/TopTabProfileGeneral";
 export { SavedPostsTab } from "./Tabs/SavedTabs/SavedPostsTab";
 export { SavedHashtagsTab } from "./Tabs/SavedTabs/SavedHashtagsTab";
 export { SavedProductsTab } from "./Tabs/SavedTabs/SavedProductsTab";
@@ -55,6 +56,7 @@ export { RecentSearchListItem } from "../customized/ListItems/RecentSearchListIt
 
 export { ServicesList } from "./Lists/ServicesList";
 export { ProfileMenuList } from "./Lists/ProfileMenuList";
+export { SuggestedUsersList } from "./Lists/SuggestedUsersList";
 
 export { VideoItem } from "./VideoItem/VideoItem";
 
@@ -72,6 +74,7 @@ export { DashboardInfoSheet } from "../customized/Sheets/DashboardInfoSheet";
 export { DashboardCalendarSheet } from "../customized/Sheets/DashboardCalendarSheet";
 export { PostInfoSheet } from "../customized/Sheets/PostInfoSheet";
 export { SheetService } from "./Sheets/SheetService";
+export { FollowUserSheet } from "./Sheets/FollowUserSheet";
 
 export { FiltersContainer } from "../customized/Containers/FiltersContainer";
 

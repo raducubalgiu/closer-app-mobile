@@ -11,7 +11,6 @@ const { primary, black } = theme.lightColors;
 
 export const FollowButton = ({
   followeeId,
-  fetchUser,
   fetchSuggested,
   fullWidth,
   size,
@@ -45,7 +44,6 @@ export const FollowButton = ({
         )
         .then(() => {
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-          fetchUser ? fetchUser() : null;
           fetchSuggested ? fetchSuggested() : null;
         })
         .catch(() => setFollow(false));
@@ -63,7 +61,6 @@ export const FollowButton = ({
         })
         .then(() => {
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-          fetchUser ? fetchUser() : null;
         })
         .catch(() => setFollow(false));
     }

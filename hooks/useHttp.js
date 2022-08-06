@@ -129,3 +129,36 @@ export const useHttpDelete = (route, callback) => {
     makeDelete,
   };
 };
+
+export const useHttpGetFunc = (route, callback) => {
+  const [loading, setLoading] = useState(false);
+  const [feedback, setFeedback] = useState({ visible: false, message: "" });
+  const { user } = useAuth();
+  const { t } = useTranslation();
+
+  const makeGet = useCallback(() => {
+    const controller = new AbortController();
+    setLoading(true);
+
+    axios
+      .get(`${BASE_ENDPOINT}${route}`, {
+        signal: controller.signal,
+        headers: { Authorization: `Bearer ${user.token}` },
+      })
+      .then((res) => callback(res.data))
+      .catch(() => {
+        setFeedback({ visible: true, message: t("somethingWentWrong") });
+        setLoading(false);
+      })
+      .finally(() => setLoading(false));
+
+    return () => controller.abort();
+  }, [route, callback, user, BASE_ENDPOINT]);
+
+  return {
+    loading,
+    feedback,
+    setFeedback,
+    makeGet,
+  };
+};

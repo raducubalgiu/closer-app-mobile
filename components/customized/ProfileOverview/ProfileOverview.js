@@ -1,6 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
+import { MAIN_ROLE, SECOND_ROLE, THIRD_ROLE } from "@env";
+import { useTranslation } from "react-i18next";
+import { Icon } from "@rneui/themed";
+import moment from "moment";
 import theme from "../../../assets/styles/theme";
 import {
   CustomAvatar,
@@ -11,44 +15,18 @@ import {
   Button,
   IconLocation,
 } from "../../core";
-import { MAIN_ROLE, SECOND_ROLE, THIRD_ROLE } from "@env";
-import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../hooks";
-import { Icon } from "@rneui/themed";
-import { displayDash } from "../../../utils";
-import moment from "moment";
 
 const { black, grey0, primary } = theme.lightColors;
 
-export const ProfileOverview = ({
-  _id,
-  name,
-  username,
-  avatar,
-  counter,
-  distance,
-  role,
-  business,
-  withBadge,
-  withAvailable,
-  available,
-  location,
-  children,
-  endTime,
-  showDetails,
-}) => {
+export const ProfileOverview = ({ name, username, avatar, children, user }) => {
   const { user: userContext } = useAuth();
-  const {
-    ratingsAverage,
-    ratingsQuantity,
-    followersCount,
-    followingCount,
-    postsCount,
-  } = counter || {};
+  const { counter, role, distance, business, status, endTime, location } =
+    user || {};
   const navigation = useNavigation();
   const { t } = useTranslation();
 
-  let status = available
+  let available = status
     ? `${t("isClosingAt")} ${moment()
         .startOf("day")
         .seconds(endTime)
@@ -58,7 +36,7 @@ export const ProfileOverview = ({
   const goToFollowers = () =>
     navigation.navigate("ProfileStats", {
       screen: "Followers",
-      userId: _id,
+      userId: user?._id,
       username: username,
       initialRoute: "Followers",
       role,
@@ -67,7 +45,7 @@ export const ProfileOverview = ({
   const goToReviews = () =>
     navigation.navigate("ProfileStats", {
       screen: "Reviews",
-      userId: _id,
+      userId: user?._id,
       username: username,
       initialRoute: "Reviews",
       role,
@@ -76,7 +54,7 @@ export const ProfileOverview = ({
   const goToFollowings = () =>
     navigation.navigate("ProfileStats", {
       screen: "Following",
-      userId: _id,
+      userId: user?._id,
       username: username,
       initialRoute: "Following",
       role,
@@ -91,9 +69,9 @@ export const ProfileOverview = ({
             iconSize={37}
             size={95}
             avatar={avatar}
-            withBadge={withBadge}
+            withBadge={userContext?._id === user?._id}
             badgeDetails={{ name: "plus", type: "entypo", size: 17 }}
-            withAvailable={withAvailable}
+            withAvailable={role !== THIRD_ROLE}
             available={available}
           />
         </Button>
@@ -103,7 +81,7 @@ export const ProfileOverview = ({
             <Text style={styles.business}>{business?.name}</Text>
             <IconStar sx={styles.star} />
             <Text style={styles.ratingsAverage}>
-              {ratingsAverage?.toFixed(1)}
+              {counter?.ratingsAverage?.toFixed(1)}
             </Text>
           </Stack>
           <Stack direction="row" sx={{ marginTop: 10 }}>
@@ -111,7 +89,7 @@ export const ProfileOverview = ({
               <Stack direction="row">
                 <Icon name="keyboard-arrow-down" size={15} color="white" />
                 <Icon name="clock" type="feather" color={grey0} size={17.5} />
-                <Text style={styles.text}>{status}</Text>
+                <Text style={styles.text}>{available}</Text>
               </Stack>
             </Button>
             <Button
@@ -129,25 +107,22 @@ export const ProfileOverview = ({
         </Protected>
       </Stack>
       <Stack direction="row" justify="between" sx={styles.statsContainer}>
-        <Protected userRole={role} roles={[MAIN_ROLE, SECOND_ROLE]}>
-          <StatsButton
-            onPress={goToReviews}
-            labelStats={t("reviews")}
-            statsNo={ratingsQuantity}
-          />
-        </Protected>
-        <Protected userRole={role} roles={[THIRD_ROLE]}>
-          <StatsButton labelStats={t("posts")} statsNo={postsCount} />
-        </Protected>
+        <StatsButton
+          onPress={role !== THIRD_ROLE && goToReviews}
+          labelStats={role !== THIRD_ROLE ? t("reviews") : t("posts")}
+          statsNo={
+            role !== THIRD_ROLE ? counter?.ratingsQuantity : counter?.postsCount
+          }
+        />
         <StatsButton
           onPress={goToFollowers}
           labelStats={t("followers")}
-          statsNo={followersCount}
+          statsNo={counter?.followersCount}
         />
         <StatsButton
           onPress={goToFollowings}
           labelStats={t("following")}
-          statsNo={followingCount}
+          statsNo={counter?.followingCount}
         />
       </Stack>
       <Stack direction="row" justify="center" sx={styles.buttonsContainer}>

@@ -14,6 +14,7 @@ export { useRefresh } from "./useRefresh";
 
 export {
   useHttpGet,
+  useHttpGetFunc,
   useHttpPost,
   useHttpPatch,
   useHttpDelete,

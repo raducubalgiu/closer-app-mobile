@@ -24,10 +24,10 @@ import {
 
 const { height } = Dimensions.get("window");
 
-const ProfileScreen = ({ badgeDetails }) => {
+const ProfileScreen = () => {
   const { user } = useAuth();
-  const { _id, name, username, avatar, checkmark, description } = user || {};
-  const { counter, role, services, hours } = user || {};
+  const { _id, name, username, avatar, checkmark, description, role, hours } =
+    user || {};
   const { website, location, business } = user || {};
   const navigation = useNavigation();
   const Tab = createMaterialTopTabNavigator();
@@ -73,19 +73,10 @@ const ProfileScreen = ({ badgeDetails }) => {
       />
       <ScrollView showsVerticalScrollIndicator={false}>
         <ProfileOverview
-          _id={user?._id}
+          user={user}
           name={name}
           username={username}
           avatar={avatar}
-          role={role}
-          services={services}
-          business={business}
-          counter={counter}
-          withBadge
-          badgeDetails={badgeDetails}
-          withAvailable={false}
-          available={false}
-          showDetails={false}
         >
           <MainButton
             variant="outlined"
