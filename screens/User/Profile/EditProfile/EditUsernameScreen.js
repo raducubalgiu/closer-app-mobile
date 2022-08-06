@@ -1,8 +1,8 @@
 import { StyleSheet, SafeAreaView, Keyboard } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { HeaderEdit } from "../../../../components/customized";
 import { useTranslation } from "react-i18next";
+import { HeaderEdit } from "../../../../components/customized";
 import { Feedback, InputEdit, Spinner } from "../../../../components/core";
 import { useAuth, useHttpPatch } from "../../../../hooks";
 
@@ -17,10 +17,9 @@ const EditUsernameScreen = () => {
     navigation.goBack();
   };
   const { makePatch, feedback, setFeedback, loading } = useHttpPatch(
-    `/users/update`,
+    `/users/${user?._id}/update`,
     updateUser
   );
-
   const updateUsername = () => {
     Keyboard.dismiss();
     makePatch({ username });

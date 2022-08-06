@@ -8,11 +8,11 @@ import { HashtagListItem } from "../../ListItems/HashtagListItem";
 import { SearchPopularHeading } from "../../Headings/SearchPopularHeading";
 import { Spinner } from "../../../core";
 import { UserListItem } from "../../ListItems/UserListItem";
+import { CardPostImage } from "../../Cards/CardPostImage";
 
 const { width } = Dimensions.get("window");
 
 export const SearchPopularTab = ({ search }) => {
-  const [page, setPage] = useState(1);
   const navigation = useNavigation();
   const { t } = useTranslation();
 
@@ -23,10 +23,10 @@ export const SearchPopularTab = ({ search }) => {
     `/hashtags/search?name=${search}&page=1&limit=3`
   );
   const { data: bookablePosts, loading: loadBookable } = useHttpGet(
-    "/posts/get-bookable-posts?latlng=26.100195,44.428286"
+    `/posts/get-bookable-posts?search=${search}&latlng=26.100195,44.428286`
   );
   const { data: popularPosts, loading: loadPosts } = useHttpGet(
-    `/posts/get-all-posts?page=${page}&limit=12`
+    `/posts/get-all-posts?search=${search}&page=1&limit=20`
   );
 
   const headerUsers = useCallback(
@@ -83,17 +83,20 @@ export const SearchPopularTab = ({ search }) => {
     []
   );
 
-  const renderBookables = useCallback(
-    ({ item }) => (
-      <View style={styles.boxImage}>
-        <Image
-          source={{ uri: `${item?.posts?.images[0]?.url}` }}
-          containerStyle={styles.image}
-        />
-      </View>
-    ),
-    []
-  );
+  const renderBookables = useCallback(({ item, index }) => {
+    const { posts } = item;
+    const { images, bookable, postType } = posts;
+
+    return (
+      <CardPostImage
+        index={index}
+        image={images[0]?.url}
+        bookable={bookable}
+        postType={postType}
+        col={2}
+      />
+    );
+  }, []);
 
   const renderHashtags = useCallback(
     ({ item }) => (

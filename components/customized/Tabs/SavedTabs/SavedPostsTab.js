@@ -12,7 +12,7 @@ export const SavedPostsTab = ({ user }) => {
     `/users/${user?._id}/bookmarks/posts`
   );
 
-  const renderBookmark = useCallback(({ item, i }) => {
+  const renderBookmark = useCallback(({ item, index }) => {
     const { post } = item;
     const { bookable, postType } = post || {};
     const { user } = item;
@@ -25,7 +25,7 @@ export const SavedPostsTab = ({ user }) => {
             userId: user?._id,
           })
         }
-        index={i}
+        index={index}
         image={post?.images[0]?.url}
         bookable={bookable}
         fixed={null}

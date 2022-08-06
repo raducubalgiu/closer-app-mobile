@@ -31,15 +31,21 @@ const SearchAllScreen = ({ route }) => {
 
   const Tab = createMaterialTopTabNavigator();
 
-  const Populars = useCallback(() => <SearchPopularTab search={search} />, []);
-  const SearchUsers = useCallback(() => <SearchUsersTab search={search} />, []);
+  const Populars = useCallback(
+    () => <SearchPopularTab search={search} />,
+    [search]
+  );
+  const SearchUsers = useCallback(
+    () => <SearchUsersTab search={search} />,
+    [search]
+  );
   const SearchHashtags = useCallback(
     () => <SearchHashtagsTab search={search} />,
-    []
+    [search]
   );
   const SearchBookable = useCallback(
     () => <SearchBookablesTab search={search} />,
-    []
+    [search]
   );
 
   return (

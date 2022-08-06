@@ -13,17 +13,27 @@ export const CardPostImage = ({
   fixed,
   postType,
   onPress,
+  col,
 }) => {
   let borderBox;
+  const columns = col ? col : 3;
 
-  if (index % 3 !== 0) {
+  if (index % columns !== 0) {
     borderBox = { paddingLeft: 2 };
   } else {
     borderBox = { paddingLeft: 0 };
   }
 
+  const imageBox = StyleSheet.create({
+    box: {
+      width: width / columns,
+      height: width / columns,
+      marginBottom: 2,
+    },
+  });
+
   return (
-    <Button sx={{ ...styles.box, ...borderBox }} onPress={onPress}>
+    <Button sx={{ ...imageBox.box, ...borderBox }} onPress={onPress}>
       <Image source={{ uri: `${image}` }} containerStyle={styles.image} />
       {bookable && (
         <View style={styles.bookable}>
@@ -57,11 +67,6 @@ export const CardPostImage = ({
 };
 
 const styles = StyleSheet.create({
-  box: {
-    width: width / 3,
-    height: width / 3,
-    marginBottom: 2,
-  },
   image: {
     flex: 1,
   },

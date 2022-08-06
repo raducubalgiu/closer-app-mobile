@@ -11,6 +11,7 @@ export const useHttpGet = (route, callback) => {
   const [loading, setLoading] = useState(true);
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const { user } = useAuth();
+  const { t } = useTranslation();
 
   useFocusEffect(
     useCallback(() => {
@@ -25,9 +26,8 @@ export const useHttpGet = (route, callback) => {
           setData(res.data);
           if (callback) callback(res.data);
         })
-        .catch((err) => {
-          const { message } = err.response.data;
-          setFeedback({ visible: true, message });
+        .catch(() => {
+          setFeedback({ visible: true, message: t("somethingWentWrong") });
         })
         .finally(() => setLoading(false));
 
