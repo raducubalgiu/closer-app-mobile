@@ -16,7 +16,7 @@ import { FiltersContainer, SheetHeader } from "../components/customized";
 import { FormProvider, useForm } from "react-hook-form";
 
 const FiltersDateScreen = ({ route }) => {
-  const { serviceId, serviceName, period } = route.params;
+  const { service, period } = route.params;
   const navigation = useNavigation();
   const { calendar, startDate, endDate } = useCalendarList();
   const [activeBtn, setActiveBtn] = useState(period.code);
@@ -27,22 +27,18 @@ const FiltersDateScreen = ({ route }) => {
   const methods = useForm({ defaultValues: { startHour: "", endHour: "" } });
   const { handleSubmit, watch } = methods;
 
-  console.log("ACTIVE HOURS!!", activeHours);
-
   const goNext = () => {
     axios
-      .get(`${process.env.BASE_ENDPOINT}/services/${serviceId}/filters`)
+      .get(`${process.env.BASE_ENDPOINT}/services/${service?._id}/filters`)
       .then((res) => {
         if (res.data.filters.length === 0) {
           navigation.navigate("Services", {
-            serviceId,
-            serviceName,
+            service,
             period: { ...period, code: activeBtn, startDate, endDate },
           });
         } else {
           navigation.navigate("FiltersService", {
-            serviceId,
-            serviceName,
+            service,
             period: { ...period, code: activeBtn, startDate, endDate },
           });
         }
@@ -97,7 +93,7 @@ const FiltersDateScreen = ({ route }) => {
         footerExtraBtns={footerBtns}
       >
         <SheetHeader
-          title={serviceName}
+          title={service?.name}
           description={`${SHORT_DATE(startDate)} - ${SHORT_DATE(endDate)}`}
         />
         <ButtonGroup

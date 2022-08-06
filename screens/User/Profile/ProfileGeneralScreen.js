@@ -36,7 +36,8 @@ const { black } = theme.lightColors;
 
 const ProfileGeneralScreen = ({ badgeDetails, route }) => {
   const { user } = useAuth();
-  const { userId, username, avatar, name, searchedUser } = route.params;
+  const { userId, username, avatar, name, searchedUser, service, option } =
+    route.params;
   const [userDetails, setUserDetails] = useState([]);
   const {
     _id,
@@ -109,8 +110,15 @@ const ProfileGeneralScreen = ({ badgeDetails, route }) => {
     [userId, username]
   );
   const ProductsProfile = useCallback(
-    () => <ProductsProfileTab userId={userId} services={services} />,
-    [userId, services]
+    () => (
+      <ProductsProfileTab
+        userId={userId}
+        services={services}
+        service={service}
+        option={option}
+      />
+    ),
+    [userId, services, service, option]
   );
   const JobsProfile = useCallback(
     () => <JobsProfileTab userId={userId} username={username} />,
@@ -317,7 +325,7 @@ const styles = StyleSheet.create({
     padding: 7,
     borderRadius: 5,
   },
-  tabsCont: { flex: 1, height: 700 },
+  tabsCont: { flex: 1, height: 1000 },
   messageBtn: { borderWidth: 1, borderColor: "#ddd", marginLeft: 5 },
   indicatorStyle: {
     backgroundColor: "#ddd",

@@ -12,8 +12,6 @@ import HeaderMessageItem from "../components/customized/Layout/Headers/HeaderMes
 import { useAuth } from "../hooks/auth";
 import axios from "axios";
 import { Stack, Button } from "../components/core";
-import { v4 as uuidv4 } from "uuid";
-import "react-native-get-random-values";
 import theme from "../assets/styles/theme";
 import MessReceivedItem from "../components/customized/ListItems/MessReceivedItem";
 import MessSentItem from "../components/customized/ListItems/MessSentItem";
@@ -101,7 +99,7 @@ const MessageItemScreen = (props) => {
       >
         <FlatList
           contentContainerStyle={{ margin: 15 }}
-          keyExtractor={() => uuidv4()}
+          //keyExtractor={() => uuidv4()}
           data={messages}
           renderItem={renderItem}
         />

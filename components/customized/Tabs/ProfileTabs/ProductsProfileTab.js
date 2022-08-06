@@ -2,7 +2,7 @@ import { TopTabProducts } from "../TopTabContainer/TopTabProducts";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { useTranslation } from "react-i18next";
 
-export const ProductsProfileTab = ({ userId, services, initialRoute }) => {
+export const ProductsProfileTab = ({ userId, services, service, option }) => {
   const { t } = useTranslation();
 
   const noFoundProducts = (
@@ -19,7 +19,8 @@ export const ProductsProfileTab = ({ userId, services, initialRoute }) => {
         <TopTabProducts
           userId={userId}
           services={services}
-          initialRoute={initialRoute}
+          initialRoute={service?.name.toLowerCase()}
+          option={option}
         />
       )}
       {!services?.length && noFoundProducts}

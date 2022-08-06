@@ -43,7 +43,6 @@ const HomeScreen = () => {
           keyExtractor={keyExtractor}
           showsVerticalScrollIndicator={false}
           renderItem={renderRecommended}
-          // contentContainerStyle={{ paddingHorizontal: 15 }}
         />
       </View>
     </SafeAreaView>

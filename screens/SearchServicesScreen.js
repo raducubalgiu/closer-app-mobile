@@ -63,8 +63,7 @@ const SearchServicesScreen = ({ route }) => {
 
   const goToFilters = (item) => {
     navigation.navigate("FiltersDate", {
-      serviceId: item._id,
-      serviceName: item.name,
+      service: item,
       period,
     });
   };

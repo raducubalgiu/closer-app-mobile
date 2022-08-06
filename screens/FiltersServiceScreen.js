@@ -8,11 +8,11 @@ import { useHttpGet } from "../hooks";
 
 const FiltersServiceScreen = ({ route }) => {
   const navigation = useNavigation();
-  const { serviceId, serviceName, period } = route.params;
+  const { service, period } = route.params;
   const [filter, setFilter] = useState(null);
   const [option, setOption] = useState("");
 
-  const { loading } = useHttpGet(`/services/${serviceId}`, (data) =>
+  const { loading } = useHttpGet(`/services/${service?._id}`, (data) =>
     setFilter(data.service.filters[0])
   );
 
@@ -21,9 +21,8 @@ const FiltersServiceScreen = ({ route }) => {
 
   const goToServices = () =>
     navigation.navigate("Locations", {
-      serviceId,
-      serviceName,
-      optionId: option?._id,
+      service,
+      option,
       period,
     });
 

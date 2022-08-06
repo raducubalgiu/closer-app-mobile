@@ -7,7 +7,7 @@ import { ServiceTab } from "../ServiceTab/ServiceTab";
 const { black } = theme.lightColors;
 const { width } = Dimensions.get("window");
 
-export const TopTabProducts = ({ userId, services, initialRoute }) => {
+export const TopTabProducts = ({ userId, services, initialRoute, option }) => {
   const Tab = createMaterialTopTabNavigator();
 
   const screenOptions = {
@@ -29,7 +29,9 @@ export const TopTabProducts = ({ userId, services, initialRoute }) => {
     >
       {services?.map((service) => {
         const Service = useCallback(
-          () => <ServiceTab userId={userId} service={service} />,
+          () => (
+            <ServiceTab userId={userId} service={service} option={option} />
+          ),
           [userId, service]
         );
 

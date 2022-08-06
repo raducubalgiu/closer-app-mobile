@@ -4,13 +4,19 @@ import { useAuth, useHttpGet } from "../../../../hooks";
 import { CardProduct } from "../../Cards/CardProduct";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 
-export const ServiceTab = ({ userId, service }) => {
+export const ServiceTab = ({ userId, service, option }) => {
   const { user } = useAuth();
   const { t } = useTranslation();
 
   const { data: products, loading } = useHttpGet(
     `/users/${userId}/services/${service?._id}/products`
   );
+
+  const filteredProducts = products?.filter(
+    (prod) => prod?.option?._id === option?._id
+  );
+
+  const results = option ? filteredProducts : products;
 
   const noFoundProducts = (
     <NoFoundMessage
@@ -23,7 +29,7 @@ export const ServiceTab = ({ userId, service }) => {
   return (
     <View style={styles.screen}>
       {!loading &&
-        products?.map((product, i) => (
+        results?.map((product, i) => (
           <CardProduct
             key={i}
             product={product}

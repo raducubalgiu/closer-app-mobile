@@ -10,7 +10,7 @@ import {
 } from "../components/customized";
 
 const LocationsScreen = ({ route }) => {
-  const { serviceId, serviceName, optionId, period } = route.params;
+  const { service, option, period } = route.params;
   const { startDate, endDate } = period;
   const [results, setResults] = useState(0);
   const [checked, setChecked] = useState(true);
@@ -44,8 +44,8 @@ const LocationsScreen = ({ route }) => {
     axios
       .post(`${process.env.BASE_ENDPOINT}/users/get-by-distance`, {
         latlng: "26.100195,44.428286",
-        serviceId,
-        option: optionId,
+        serviceId: service?._id,
+        option: option?._id,
         start: customPeriod.startDate,
         end: customPeriod.endDate,
       })
@@ -57,7 +57,8 @@ const LocationsScreen = ({ route }) => {
     ({ item }) => (
       <CardLocation
         location={item}
-        service={serviceName}
+        service={service}
+        option={option}
         distance={item.distance}
       />
     ),
@@ -83,17 +84,17 @@ const LocationsScreen = ({ route }) => {
       <HeaderServices
         period={period}
         onToggleSwitch={toggleSwitch}
-        serviceName={serviceName}
+        serviceName={service?.name}
         checked={checked}
       />
       {!checked && list}
       {checked && (
         <>
-          <Map locations={locations} serviceName={serviceName} />
+          <Map locations={locations} serviceName={service?.name} />
           <SheetService
             list={list}
             results={locations?.length === 0 ? 0 : results}
-            serviceName={serviceName}
+            serviceName={service?.name}
           />
         </>
       )}

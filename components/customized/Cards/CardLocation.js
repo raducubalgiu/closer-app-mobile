@@ -8,7 +8,7 @@ import { Button, IconLocation, IconStar, IconVideo, Stack } from "../../core";
 
 const { width } = Dimensions.get("window");
 
-export const CardLocation = ({ location, initServ }) => {
+export const CardLocation = ({ location, service, option }) => {
   const { images, name, counter, minPrice, distance, _id, username, avatar } =
     location;
   const navigation = useNavigation();
@@ -16,10 +16,13 @@ export const CardLocation = ({ location, initServ }) => {
 
   const goToUser = () =>
     navigation.push("ProfileGeneral", {
+      screen: `Products`,
       userId: _id,
       username,
       name,
       avatar,
+      service,
+      option,
     });
 
   return (
