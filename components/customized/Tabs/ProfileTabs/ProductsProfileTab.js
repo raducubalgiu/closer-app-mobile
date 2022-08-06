@@ -5,14 +5,6 @@ import { useTranslation } from "react-i18next";
 export const ProductsProfileTab = ({ userId, services, service, option }) => {
   const { t } = useTranslation();
 
-  const noFoundProducts = (
-    <NoFoundMessage
-      title={t("products")}
-      description={t("noFoundProducts")}
-      sx={{ marginTop: 50 }}
-    />
-  );
-
   return (
     <>
       {services?.length > 0 && (
@@ -23,7 +15,6 @@ export const ProductsProfileTab = ({ userId, services, service, option }) => {
           option={option}
         />
       )}
-      {!services?.length && noFoundProducts}
     </>
   );
 };

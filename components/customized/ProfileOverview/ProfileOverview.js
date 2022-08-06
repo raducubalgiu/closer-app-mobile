@@ -8,7 +8,6 @@ import moment from "moment";
 import theme from "../../../assets/styles/theme";
 import {
   CustomAvatar,
-  Protected,
   Stack,
   StatsButton,
   IconStar,
