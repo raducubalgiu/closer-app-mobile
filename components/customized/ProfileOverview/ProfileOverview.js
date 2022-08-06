@@ -105,7 +105,7 @@ export const ProfileOverview = ({ name, username, avatar, children, user }) => {
       </Stack>
       <Stack direction="row" justify="between" sx={styles.statsContainer}>
         <StatsButton
-          onPress={role !== THIRD_ROLE && goToReviews}
+          onPress={role !== THIRD_ROLE ? goToReviews : null}
           labelStats={role !== THIRD_ROLE ? t("reviews") : t("posts")}
           statsNo={
             role !== THIRD_ROLE ? counter?.ratingsQuantity : counter?.postsCount

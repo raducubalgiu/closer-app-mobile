@@ -3,12 +3,9 @@ import React, { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";
 import { Button } from "../../core";
-import { useHttpGet } from "../../../hooks";
 
-export const ServicesList = () => {
+export const ServicesList = ({ services }) => {
   const navigation = useNavigation();
-
-  const { data: services } = useHttpGet(`/services`);
 
   const goToFilters = (item) =>
     navigation.navigate("FiltersDate", {

@@ -7,6 +7,7 @@ import theme from "../assets/styles/theme";
 import { useScrollToTop } from "@react-navigation/native";
 import { ServicesList, CardRecommended } from "../components/customized";
 import { useHttpGet } from "../hooks";
+import { Spinner } from "../components/core";
 
 const HomeScreen = () => {
   const { t } = useTranslation();
@@ -14,9 +15,11 @@ const HomeScreen = () => {
 
   useScrollToTop(ref);
 
-  const { data: locations } = useHttpGet(
+  const { data: locations, loadLocations } = useHttpGet(
     `/users/get-recommended?latlng=26.100195,44.428286`
   );
+
+  const { data: services, loading: loadServices } = useHttpGet(`/services`);
 
   const renderRecommended = useCallback(
     ({ item }) => <CardRecommended location={item} />,
@@ -28,22 +31,25 @@ const HomeScreen = () => {
     <SafeAreaView style={styles.screen}>
       <View style={styles.container}>
         <FakeSearchBar />
-        <FlatList
-          ref={ref}
-          ListHeaderComponent={
-            <>
-              <ServicesList />
-              <View style={{ paddingHorizontal: 15 }}>
-                <Text style={styles.sheetHeading}>{t("nearYou")}</Text>
-                <Divider width={2} color="#f1f1f1" style={styles.divider} />
-              </View>
-            </>
-          }
-          data={locations}
-          keyExtractor={keyExtractor}
-          showsVerticalScrollIndicator={false}
-          renderItem={renderRecommended}
-        />
+        {(!loadLocations || loadServices) && locations?.length > 0 && (
+          <FlatList
+            ref={ref}
+            ListHeaderComponent={
+              <>
+                <ServicesList services={services} />
+                <View style={{ paddingHorizontal: 15 }}>
+                  <Text style={styles.sheetHeading}>{t("nearYou")}</Text>
+                  <Divider width={2} color="#f1f1f1" style={styles.divider} />
+                </View>
+              </>
+            }
+            data={locations}
+            keyExtractor={keyExtractor}
+            showsVerticalScrollIndicator={false}
+            renderItem={renderRecommended}
+          />
+        )}
+        {(loadLocations || loadServices) && <Spinner />}
       </View>
     </SafeAreaView>
   );

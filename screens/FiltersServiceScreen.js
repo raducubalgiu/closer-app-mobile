@@ -53,7 +53,6 @@ const FiltersServiceScreen = ({ route }) => {
         title={`Filtru - ${filter?.name}`}
         description={option?.name}
       />
-      {loading && <Spinner />}
       {!loading && (
         <FlatList
           bounces={false}
