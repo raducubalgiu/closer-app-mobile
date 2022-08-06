@@ -43,7 +43,6 @@ export const PostsProfileTab = ({ userId }) => {
         </View>
       )}
       {!loading && !posts?.length && noFoundMessage}
-      {loading && <Spinner />}
     </>
   );
 };
