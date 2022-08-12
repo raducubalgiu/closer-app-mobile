@@ -1,14 +1,17 @@
 import { View, FlatList } from "react-native";
 import React, { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 import { CardPostImage } from "../../Cards/CardPostImage";
 import { useHttpGet } from "../../../../hooks";
 import { Spinner } from "../../../core";
+import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 
 export const SavedPostsTab = ({ user }) => {
   const navigation = useNavigation();
+  const { t } = useTranslation();
 
-  const { data: bookmarks, loading } = useHttpGet(
+  const { data: posts, loading } = useHttpGet(
     `/users/${user?._id}/bookmarks/posts`
   );
 
@@ -34,11 +37,16 @@ export const SavedPostsTab = ({ user }) => {
     );
   }, []);
 
+  const noFoundProducts = (
+    <NoFoundMessage title={t("posts")} description={t("noFoundSavedPosts")} />
+  );
+
   return (
     <View style={{ flex: 1 }}>
+      {!posts?.length && !loading && noFoundProducts}
       {!loading && (
         <FlatList
-          data={bookmarks}
+          data={posts}
           numColumns={3}
           keyExtractor={(item) => item?._id}
           renderItem={renderBookmark}
