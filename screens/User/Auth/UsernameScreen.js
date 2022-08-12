@@ -8,7 +8,7 @@ import InputCheck from "../../../components/core/Inputs/InputCheck";
 import { Feedback } from "../../../components/core";
 
 const UsernameScreen = ({ route }) => {
-  const { idTokenResult } = route.params;
+  const { idTokenResult, role } = route.params;
   const { displayName, photoURL } = idTokenResult;
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const [loading, setLoading] = useState(false);
@@ -19,13 +19,12 @@ const UsernameScreen = ({ route }) => {
       setLoading(true);
 
       const userResult = await axios.post(
-        `${process.env.BASE_ENDPOINT}/users/create-or-update-user`,
+        `${process.env.BASE_ENDPOINT}/users/register`,
         {
           username: data.username,
           name: displayName ? displayName : data.username,
           avatar: photoURL ? photoURL : [],
-          role: route.params.role,
-          business: route.params.business,
+          role,
         },
         {
           headers: {

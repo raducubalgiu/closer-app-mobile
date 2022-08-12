@@ -38,18 +38,18 @@ const ProfileScreen = () => {
     [_id, username]
   );
 
-  const AboutProfile = useCallback(
-    () => (
-      <AboutProfileTab
-        biography={description}
-        website={website}
-        location={location}
-        role={role}
-        hours={hours}
-      />
-    ),
-    [description, website, location, role, hours]
-  );
+  // const AboutProfile = useCallback(
+  //   () => (
+  //     <AboutProfileTab
+  //       biography={description}
+  //       website={website}
+  //       location={location}
+  //       role={role}
+  //       hours={hours}
+  //     />
+  //   ),
+  //   [description, website, location, role, hours]
+  // );
 
   const closeSheet = useCallback(() => CLOSE_BS(), []);
   const profileMenu = <ProfileMenuList onCloseSheet={closeSheet} />;
@@ -92,7 +92,7 @@ const ProfileScreen = () => {
         <View style={{ height }}>
           <TopTabContainer initialRouteName="Posts" profileTabs={true}>
             <Tab.Screen name="Posts" component={PostsProfile} />
-            <Tab.Screen name="About" component={AboutProfile} />
+            {/* <Tab.Screen name="About" component={AboutProfile} /> */}
           </TopTabContainer>
         </View>
       </ScrollView>

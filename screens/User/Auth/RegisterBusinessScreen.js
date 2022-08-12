@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { AuthService } from "../../../services/AuthService";
 import { Header, Feedback } from "../../../components/core";
 import { LoginRegisterForm } from "../../../components/customized";
-import { FIRST_ROLE } from "@env";
+import { MAIN_ROLE } from "@env";
 import { useTranslation } from "react-i18next";
 
 const RegisterBusinessScreen = () => {
@@ -22,7 +22,7 @@ const RegisterBusinessScreen = () => {
         password
       );
 
-      if (err && err.code === "auth/email-already-in-use") {
+      if (error && error.code === "auth/email-already-in-use") {
         setLoading(false);
         setFeedback({ visible: true, message: t("emailAlreadyInUse") });
         return;
@@ -30,12 +30,12 @@ const RegisterBusinessScreen = () => {
 
       if (user && !error) {
         const idTokenResult = await user.getIdTokenResult();
+        setLoading(false);
+
         navigation.navigate("Username", {
-          role: FIRST_ROLE,
-          business: process.env.DEFAULT_BUSINESS,
+          role: MAIN_ROLE,
           idTokenResult,
         });
-        setLoading(false);
       }
     } catch (err) {
       setLoading(false);

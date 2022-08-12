@@ -11,16 +11,12 @@ import React, { useState } from "react";
 import theme from "../../../../assets/styles/theme";
 import TooltipTitle from "../../../../components/customized/ListItems/TooltipItem";
 import { AutocompleteGoogle } from "../../../../components/customized";
-import {
-  Stack,
-  Header,
-  MainButton,
-} from "../../../../components/core";
+import { Stack, Header, MainButton } from "../../../../components/core";
 import { Icon, Avatar, Badge } from "@rneui/themed";
-import axios from "axios";
 import { useAuth } from "../../../../hooks/auth";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
+import { useHttpPost } from "../../../../hooks";
 
 const defaultValues = {
   street: "",
@@ -33,7 +29,7 @@ const defaultValues = {
 };
 
 const AddLocationScreen = () => {
-  const { user, setUser } = useAuth();
+  const { user } = useAuth();
   const [location, setLocation] = useState(defaultValues);
   const [images, setImages] = useState([]);
   const [blockApartment, setBlockApartment] = useState("");
@@ -42,21 +38,12 @@ const AddLocationScreen = () => {
 
   const handleSetLocation = (location) => setLocation(location);
 
-  const onSubmit = () => {
-    axios
-      .patch(
-        `${process.env.BASE_ENDPOINT}/users/${user?._id}/update`,
-        {
-          location: { ...location, blockApartment, type: "Point" },
-        },
-        { headers: { Authorization: `Bearer ${user?.token}` } }
-      )
-      .then((res) => {
-        setUser({ ...user, location: res.data.user.location });
-        navigation.navigate("Profile");
-      })
-      .catch(() => setVisible(true));
-  };
+  const { makePost, loading } = useHttpPost(
+    `/users/${user?._id}/locations`,
+    () => navigation.navigate("Profile")
+  );
+  const onSubmit = () =>
+    makePost({ location: { ...location, blockApartment, type: "Point" } });
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -176,7 +163,13 @@ const AddLocationScreen = () => {
         />
       </ScrollView>
       <View style={styles.actionButtons}>
-        <MainButton size="lg" fullWidth title={t("save")} onPress={onSubmit} />
+        <MainButton
+          size="lg"
+          fullWidth
+          title={t("save")}
+          onPress={onSubmit}
+          loading={loading}
+        />
       </View>
     </SafeAreaView>
   );

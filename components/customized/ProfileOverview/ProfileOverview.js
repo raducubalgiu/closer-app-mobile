@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { MAIN_ROLE, SECOND_ROLE, THIRD_ROLE } from "@env";
+import { THIRD_ROLE } from "@env";
 import { useTranslation } from "react-i18next";
 import { Icon } from "@rneui/themed";
 import moment from "moment";
@@ -20,17 +20,17 @@ const { black, grey0, primary } = theme.lightColors;
 
 export const ProfileOverview = ({ name, username, avatar, children, user }) => {
   const { user: userContext } = useAuth();
-  const { counter, role, distance, business, status, endTime, location } =
+  const { counter, role, distance, profession, status, endTime, location } =
     user || {};
   const navigation = useNavigation();
   const { t } = useTranslation();
 
-  let available = status
-    ? `${t("isClosingAt")} ${moment()
-        .startOf("day")
-        .seconds(endTime)
-        .format("HH")}`
-    : t("closed");
+  // let available = status
+  //   ? `${t("isClosingAt")} ${moment()
+  //       .startOf("day")
+  //       .seconds(endTime)
+  //       .format("HH")}`
+  //   : t("closed");
 
   const goToFollowers = () =>
     navigation.navigate("ProfileStats", {
@@ -60,6 +60,9 @@ export const ProfileOverview = ({ name, username, avatar, children, user }) => {
       counter,
     });
 
+  const withBadge = userContext?._id === user?._id && user?.role === THIRD_ROLE;
+  const badgeDetails = { name: "plus", type: "entypo", size: 17 };
+
   return (
     <View style={styles.container}>
       <Stack justify="center" align="center">
@@ -68,21 +71,21 @@ export const ProfileOverview = ({ name, username, avatar, children, user }) => {
             iconSize={37}
             size={95}
             avatar={avatar}
-            withBadge={userContext?._id === user?._id}
-            badgeDetails={{ name: "plus", type: "entypo", size: 17 }}
+            withBadge={withBadge}
+            badgeDetails={badgeDetails}
             withAvailable={role !== THIRD_ROLE}
-            available={available}
+            available={false}
           />
         </Button>
         <Text style={styles.name}>{name}</Text>
         <Stack direction="row" justify="start">
-          <Text style={styles.business}>{business?.name}</Text>
+          <Text style={styles.business}>{profession}</Text>
           <IconStar sx={styles.star} />
           <Text style={styles.ratingsAverage}>
             {counter?.ratingsAverage?.toFixed(1)}
           </Text>
         </Stack>
-        <Stack direction="row" sx={{ marginTop: 10 }}>
+        {/* <Stack direction="row" sx={{ marginTop: 10 }}>
           <Button onPress={() => navigation.navigate("About")}>
             <Stack direction="row">
               <Icon name="keyboard-arrow-down" size={15} color="white" />
@@ -91,7 +94,7 @@ export const ProfileOverview = ({ name, username, avatar, children, user }) => {
             </Stack>
           </Button>
           <Button
-            onPress={() => navigation.navigate("Map", { location, business })}
+            onPress={() => navigation.navigate("Map", { location, profession })}
           >
             <Stack direction="row" sx={{ marginLeft: 10 }}>
               <IconLocation color={grey0} size={17.5} />
@@ -101,7 +104,7 @@ export const ProfileOverview = ({ name, username, avatar, children, user }) => {
               <Icon name="keyboard-arrow-down" size={15} color={black} />
             </Stack>
           </Button>
-        </Stack>
+        </Stack> */}
       </Stack>
       <Stack direction="row" justify="between" sx={styles.statsContainer}>
         <StatsButton

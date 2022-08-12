@@ -30,7 +30,6 @@ const RegisterScreen = () => {
         const idTokenResult = await user.getIdTokenResult();
         navigation.navigate("Username", {
           role: "subscriber",
-          business: undefined,
           idTokenResult,
         });
         setLoading(false);

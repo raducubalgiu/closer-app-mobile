@@ -1,20 +1,12 @@
 import { SafeAreaView, StyleSheet, View, ScrollView } from "react-native";
-import React, { useState, useCallback, useEffect } from "react";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { THIRD_ROLE } from "@env";
 import { FollowButton, IconButton, MainButton } from "../../../components/core";
 import theme from "../../../assets/styles/theme";
 import { useSheet, useAuth, useHttpPost, useHttpGetFunc } from "../../../hooks";
 import {
   ProfileOverview,
   HeaderProfileGeneral,
-  TopTabContainer,
-  PostsProfileTab,
-  ProductsProfileTab,
-  AboutProfileTab,
-  JobsProfileTab,
-  TabBadge,
   SuggestedUsersList,
   FollowUserSheet,
   TopTabProfileGeneral,

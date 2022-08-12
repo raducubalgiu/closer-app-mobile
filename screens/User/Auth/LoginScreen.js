@@ -28,7 +28,7 @@ const LoginScreen = () => {
       } else {
         const idTokenResult = await user?.getIdTokenResult();
         const userResult = await axios.post(
-          `${process.env.BASE_ENDPOINT}/users/create-or-update-user`,
+          `${process.env.BASE_ENDPOINT}/users/login`,
           {},
           {
             headers: {
@@ -37,45 +37,7 @@ const LoginScreen = () => {
           }
         );
         setLoading(false);
-        const {
-          _id,
-          name,
-          business,
-          username,
-          email,
-          avatar,
-          images,
-          role,
-          description,
-          website,
-          job,
-          location,
-          employees,
-          services,
-          counter,
-          validated,
-          opening_hours,
-        } = userResult.data.user;
-        setUser({
-          _id,
-          name,
-          username,
-          email,
-          business: business,
-          avatar,
-          images,
-          role,
-          description,
-          website,
-          job,
-          location,
-          employees,
-          services,
-          counter,
-          token: idTokenResult?.token,
-          validated,
-          opening_hours,
-        });
+        setUser(userResult);
       }
     } catch (err) {
       setLoading(false);
