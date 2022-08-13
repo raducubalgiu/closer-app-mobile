@@ -31,12 +31,12 @@ export const InputEdit = ({
       {withDetails && (
         <Text
           style={
-            value.length < fieldLength
+            value?.length < fieldLength
               ? styles.strokeLength
               : { ...styles.strokeLength, color: "#F72A50" }
           }
         >
-          {value.length} / {fieldLength}
+          {value?.length ? value?.length : 0} / {fieldLength}
         </Text>
       )}
     </>

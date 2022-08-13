@@ -15,7 +15,7 @@ export const SavedPostsTab = ({ user }) => {
     `/users/${user?._id}/bookmarks/posts`
   );
 
-  const renderBookmark = useCallback(({ item, index }) => {
+  const renderPosts = useCallback(({ item, index }) => {
     const { post } = item;
     const { bookable, postType } = post || {};
     const { user } = item;
@@ -49,7 +49,7 @@ export const SavedPostsTab = ({ user }) => {
           data={posts}
           numColumns={3}
           keyExtractor={(item) => item?._id}
-          renderItem={renderBookmark}
+          renderItem={renderPosts}
         />
       )}
       {loading && <Spinner />}

@@ -39,6 +39,7 @@ export { ListItem } from "./ListItem/ListItem";
 
 export { Spinner } from "./Spinner/Spinner";
 
+export { FormInputRadio } from "./Inputs/FormInputRadio";
 export { InputSelect } from "./Inputs/InputSelect";
 export { SearchBarInput } from "./Inputs/SearchBarInput";
 export { InputEdit } from "./Inputs/InputEdit";

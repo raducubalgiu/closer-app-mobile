@@ -1,5 +1,5 @@
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import {
   Header,
   Stack,
@@ -10,92 +10,96 @@ import {
 import { useTranslation } from "react-i18next";
 import { useForm, FormProvider } from "react-hook-form";
 import theme from "../../../../assets/styles/theme";
-import { useAuth, useSeconds } from "../../../../hooks";
-import axios from "axios";
-import { BASE_ENDPOINT } from "@env";
+import {
+  useAuth,
+  useHttpGet,
+  useHttpPatch,
+  useSeconds,
+} from "../../../../hooks";
 import { useNavigation } from "@react-navigation/native";
 const { grey0, primary } = theme.lightColors;
 
 const AddScheduleScreen = () => {
-  const { user, setUser } = useAuth();
-  const { mon, tue, wed, thu, fri, sat, sun } = user?.hours || {};
+  const { user } = useAuth();
   const { t } = useTranslation();
+  const { data: location } = useHttpGet(`/locations/${user?.location}`);
+  const { mon, tue, wed, thu, fri, sat, sun } = location?.hours || {};
+
+  const getStart = (day, def) => {
+    if (day?.startTime) {
+      return day.startTime;
+    } else {
+      return def;
+    }
+  };
+  const getEnd = (day, def) => {
+    if (day?.endTime) {
+      return day.endTime;
+    } else {
+      return def;
+    }
+  };
+
   const methods = useForm({
     defaultValues: {
-      startmon: mon?.startTime ? mon?.startTime : 32400,
-      endmon: mon?.endTime ? mon?.endTime : 64800,
-      starttue: tue?.startTime ? tue?.startTime : 118800,
-      endtue: tue?.endTime ? tue?.endTime : 151200,
-      startwed: wed?.startTime ? wed?.startTime : 205200,
-      endwed: wed?.endTime ? wed?.endTime : 237600,
-      startthu: thu?.startTime ? thu?.startTime : 291600,
-      endthu: thu?.endTime ? thu?.endTime : 324000,
-      startfri: fri?.startTime ? fri?.startTime : 378000,
-      endfri: fri?.endTime ? fri?.endTime : 410400,
-      startsat: sat?.startTime ? sat?.startTime : -1,
-      endsat: sat?.endTime ? sat?.endTime : -1,
-      startsun: sun?.startTime ? sun?.startTime : -1,
-      endsun: sun?.endTime ? sun?.endTime : -1,
+      startmon: getStart(mon, 32400),
+      endmon: getEnd(mon, 64800),
+      starttue: getStart(tue, 118800),
+      endtue: getEnd(tue, 151200),
+      startwed: getStart(wed, 205200),
+      endwed: getEnd(wed, 237600),
+      startthu: getStart(thu, 291600),
+      endthu: getEnd(thu, 324000),
+      startfri: getStart(fri, 378000),
+      endfri: getEnd(fri, 410400),
+      startsat: getStart(sat, -1),
+      endsat: getEnd(sat, -1),
+      startsun: getStart(sun, -1),
+      endsun: getEnd(sun, -1),
     },
   });
-  const [disabled, setDisabled] = useState(false);
-  const [loading, setLoading] = useState(false);
   const { handleSubmit, getValues, setValue, watch } = methods;
   const { seconds } = useSeconds();
   const navigation = useNavigation();
 
+  const { makePatch, loading } = useHttpPatch(
+    `/locations/${user?.location}`,
+    () => navigation.goBack()
+  );
+
   const onSubmit = (data) => {
-    setDisabled(true);
-    setLoading(true);
-    axios
-      .patch(
-        `${BASE_ENDPOINT}/users/${user?._id}/update`,
-        {
-          hours: {
-            mon: {
-              startTime: data.startmon,
-              endTime: data.endmon,
-            },
-            tue: {
-              startTime: data.starttue,
-              endTime: data.endtue,
-            },
-            wed: {
-              startTime: data.startwed,
-              endTime: data.endwed,
-            },
-            thu: {
-              startTime: data.startthu,
-              endTime: data.endthu,
-            },
-            fri: {
-              startTime: data.startfri,
-              endTime: data.endfri,
-            },
-            sat: {
-              startTime: data.startsat,
-              endTime: data.endsat,
-            },
-            sun: {
-              startTime: data.startsun,
-              endTime: data.endsun,
-            },
-          },
+    makePatch({
+      hours: {
+        mon: {
+          startTime: data.startmon,
+          endTime: data.endmon,
         },
-        {
-          headers: { Authorization: `Bearer ${user?.token}` },
-        }
-      )
-      .then((res) => {
-        setUser({ ...user, hours: res.data.user.hours });
-        setDisabled(false);
-        setLoading(false);
-        navigation.goBack();
-      })
-      .catch(() => {
-        setDisabled(false);
-        setLoading(false);
-      });
+        tue: {
+          startTime: data.starttue,
+          endTime: data.endtue,
+        },
+        wed: {
+          startTime: data.startwed,
+          endTime: data.endwed,
+        },
+        thu: {
+          startTime: data.startthu,
+          endTime: data.endthu,
+        },
+        fri: {
+          startTime: data.startfri,
+          endTime: data.endfri,
+        },
+        sat: {
+          startTime: data.startsat,
+          endTime: data.endsat,
+        },
+        sun: {
+          startTime: data.startsun,
+          endTime: data.endsun,
+        },
+      },
+    });
   };
 
   const handleChangeSwitch = (checked, startName, endName) => {
@@ -155,7 +159,6 @@ const AddScheduleScreen = () => {
               title={t("save")}
               loading={loading}
               onPress={handleSubmit(onSubmit)}
-              disabled={disabled}
             />
           </View>
         </FormProvider>

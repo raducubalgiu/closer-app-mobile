@@ -13,7 +13,7 @@ const EditUsernameScreen = () => {
   const navigation = useNavigation();
 
   const updateUser = (data) => {
-    setUser({ ...user, username: data.user.username });
+    setUser({ ...user, username: data.username });
     navigation.goBack();
   };
   const { makePatch, feedback, setFeedback, loading } = useHttpPatch(

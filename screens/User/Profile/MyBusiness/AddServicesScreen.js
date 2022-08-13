@@ -21,7 +21,7 @@ const AddServicesScreen = () => {
   const [selectedServices, setSelectedServices] = useState(user?.services);
   const [service, setService] = useState(null);
   const { t } = useTranslation();
-  const ENDPOINT = `/users/${user?._id}/services`;
+  const ENDPOINT = `/locations/${user?.location}/services`;
 
   const { data: services } = useHttpGet(`/services`);
 

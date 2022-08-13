@@ -13,7 +13,7 @@ const EditWebsiteScreen = () => {
   const { t } = useTranslation();
 
   const updateUser = (data) => {
-    setUser({ ...user, website: data.user.website });
+    setUser({ ...user, website: data.website });
     navigation.goBack();
   };
   const { makePatch, loading, feedback, setFeedback } = useHttpPatch(

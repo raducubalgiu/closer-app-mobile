@@ -38,9 +38,10 @@ const AddLocationScreen = () => {
 
   const handleSetLocation = (location) => setLocation(location);
 
+  const navigate = () => navigation.navigate("Profile");
   const { makePost, loading } = useHttpPost(
     `/users/${user?._id}/locations`,
-    () => navigation.navigate("Profile")
+    navigate
   );
   const onSubmit = () =>
     makePost({ location: { ...location, blockApartment, type: "Point" } });

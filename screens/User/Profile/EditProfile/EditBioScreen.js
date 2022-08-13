@@ -21,7 +21,7 @@ const EditBioScreen = () => {
   const { t } = useTranslation();
 
   const updateUser = (data) => {
-    setUser({ ...user, description: data.user.description });
+    setUser({ ...user, description: data.description });
     navigation.goBack();
   };
   const { makePatch, loading, feedback, setFeedback } = useHttpPatch(
@@ -53,12 +53,12 @@ const EditBioScreen = () => {
       </View>
       <Text
         style={
-          bio.length < 200
+          bio?.length < 200
             ? styles.strokeLength
             : { ...styles.strokeLength, color: "#F72A50" }
         }
       >
-        {bio.length} / 200
+        {bio?.length ? bio?.length : 0} / 200
       </Text>
       {loading && <Spinner />}
     </SafeAreaView>

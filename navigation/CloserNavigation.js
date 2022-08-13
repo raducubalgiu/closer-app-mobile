@@ -17,6 +17,7 @@ import EditNameScreen from "../screens/User/Profile/EditProfile/EditNameScreen";
 import EditWebsiteScreen from "../screens/User/Profile/EditProfile/EditWebsiteScreen";
 import EditBioScreen from "../screens/User/Profile/EditProfile/EditBioScreen";
 import EditPhotoLibraryScreen from "../screens/User/Profile/EditProfile/EditPhotoLibraryScreen";
+import EditProfessionScreen from "../screens/User/Profile/EditProfile/EditProfessionScreen";
 import SettingsScreen from "../screens/User/Profile/SettingsProfileScreen";
 import SchedulesScreen from "../screens/SchedulesScreen";
 import DiscountsScreen from "../screens/User/Profile/DiscountScreen";
@@ -204,6 +205,10 @@ const CloserNavigation = () => {
             <Stack.Screen name="EditWebsite" component={EditWebsiteScreen} />
             <Stack.Screen name="EditBio" component={EditBioScreen} />
             <Stack.Screen name="EditUsername" component={EditUsernameScreen} />
+            <Stack.Screen
+              name="EditProfession"
+              component={EditProfessionScreen}
+            />
             <Stack.Screen
               name="EditPhotoLibrary"
               component={EditPhotoLibraryScreen}

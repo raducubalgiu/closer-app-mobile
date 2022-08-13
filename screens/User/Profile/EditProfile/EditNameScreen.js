@@ -13,7 +13,7 @@ const EditNameScreen = () => {
   const { t } = useTranslation();
 
   const updateUser = (data) => {
-    setUser({ ...user, name: data.user.name });
+    setUser({ ...user, name: data.name });
     navigation.goBack();
   };
   const { makePatch, loading, feedback, setFeedback } = useHttpPatch(

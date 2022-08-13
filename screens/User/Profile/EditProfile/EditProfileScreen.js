@@ -20,15 +20,24 @@ const { grey0, black } = theme.lightColors;
 
 const EditProfileScreen = () => {
   const { user } = useAuth();
+  const { name, username, profession, website, description } = user;
   const navigation = useNavigation();
   const { t } = useTranslation();
 
   const list = [
-    { label: "name", val: user?.name, nav: "EditName" },
-    { label: "username", val: user?.username, nav: "EditUsername" },
-    { label: "profession", val: "Liber Profesionist", nav: "EditProfession" },
-    { label: "website", val: user?.website, nav: "EditWebsite" },
-    { label: "description", val: user?.description, nav: "EditBio" },
+    { label: "name", val: name, nav: "EditName" },
+    { label: "username", val: username, nav: "EditUsername" },
+    { label: "profession", val: profession?.name, nav: "EditProfession" },
+    {
+      label: "website",
+      val: website ? website : "Adauga website",
+      nav: "EditWebsite",
+    },
+    {
+      label: "biography",
+      val: description ? description : "Adauga biografia",
+      nav: "EditBio",
+    },
   ];
 
   const closeModal = useCallback(() => CLOSE_BS(), []);

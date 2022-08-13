@@ -79,7 +79,7 @@ export const ProfileOverview = ({ name, username, avatar, children, user }) => {
         </Button>
         <Text style={styles.name}>{name}</Text>
         <Stack direction="row" justify="start">
-          <Text style={styles.business}>{profession}</Text>
+          <Text style={styles.business}>{profession?.name}</Text>
           <IconStar sx={styles.star} />
           <Text style={styles.ratingsAverage}>
             {counter?.ratingsAverage?.toFixed(1)}
