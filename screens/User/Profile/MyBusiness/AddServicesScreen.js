@@ -6,7 +6,6 @@ import {
   Stack,
   InputSelect,
   Header,
-  Feedback,
   Button,
   IconButtonDelete,
 } from "../../../../components/core";
@@ -15,90 +14,64 @@ import { useAuth, useHttpGet, useHttpPatch } from "../../../../hooks";
 import { ConfirmModal } from "../../../../components/customized/Modals/ConfirmModal";
 
 const AddServicesScreen = () => {
-  const { user, setUser } = useAuth();
-  const [feedback, setFeedback] = useState({ visible: false, message: "" });
+  const { user } = useAuth();
   const [visible, setVisible] = useState(false);
-  const [selectedServices, setSelectedServices] = useState(user?.services);
+  const [services, setServices] = useState([]);
   const [service, setService] = useState(null);
   const { t } = useTranslation();
-  const ENDPOINT = `/locations/${user?.location}/services`;
 
-  const { data: services } = useHttpGet(`/services`);
+  const { data: allServices } = useHttpGet(`/services`);
+
+  useHttpGet(
+    `/users/${user?._id}/locations/${user?.location}/services`,
+    (res) => setServices(res)
+  );
 
   const closeModal = () => {
     setVisible(false);
     setService(null);
   };
 
-  const handleUpdateAfterAdd = (data) => {
-    const newService = data.filter((serv) => serv._id === service);
-    setSelectedServices((selectedServices) =>
-      selectedServices.concat(newService)
-    );
-    setUser({ ...user, services: user.services.concat(newService) });
+  const handleAfterAdd = (res) => {
+    setServices((services) => services.concat(res));
     setService(null);
-    setFeedback({
-      visible: true,
-      message: t("serviceAddedMessage"),
-    });
-  };
-  const { makePatch: makePatchAdd } = useHttpPatch(
-    `${ENDPOINT}/add-service`,
-    handleUpdateAfterAdd
-  );
-
-  const addServiceHandler = () => {
-    if (selectedServices.filter((el) => el._id === service).length > 0) {
-      setFeedback({
-        visible: true,
-        message: t("alreadyServiceAdded"),
-      });
-      return;
-    }
-
-    makePatchAdd({ serviceId: service });
   };
 
-  const handleUpdateAfterRemove = () => {
-    setSelectedServices((selServ) =>
-      selServ.filter((serv) => serv._id !== service._id)
-    );
-    setUser({
-      ...user,
-      services: user.services.filter((serv) => serv._id !== service._id),
-    });
-    setService(null);
+  const handleAfterRemove = (res) => {
+    setServices((services) => services.filter((serv) => serv._id !== res._id));
     closeModal();
-
-    setFeedback({
-      visible: true,
-      message: t("serviceRemovedMessage"),
-    });
   };
-  const { makePatch: makePatchRemove } = useHttpPatch(
-    `${ENDPOINT}/remove-service`,
-    handleUpdateAfterRemove
+
+  const { makePatch: makePatchAdd } = useHttpPatch(
+    `/locations/${user?.location}/add-service`,
+    handleAfterAdd
   );
+
+  const { makePatch: makePatchRemove } = useHttpPatch(
+    `/locations/${user?.location}/remove-service`,
+    handleAfterRemove
+  );
+
+  console.log("USER!!", user);
 
   return (
     <SafeAreaView style={styles.screen}>
       <Header title={t("myServices")} divider={true} />
-      <Feedback feedback={feedback} setFeedback={setFeedback} />
       <Stack align="start" sx={{ margin: 15 }}>
         <Stack direction="row" sx={{ width: "100%" }}>
           <View style={{ flex: 1 }}>
-            {services && (
+            {allServices && (
               <InputSelect
                 value={service}
                 placeholder={t("selectService")}
                 onValueChange={(value) => setService(value)}
-                items={services}
+                items={allServices}
               />
             )}
           </View>
           <Button
             sx={!service ? styles.disabledBtn : styles.addIcon}
-            onPress={addServiceHandler}
+            onPress={() => makePatchAdd({ serviceId: service })}
             disabled={!service}
           >
             <Icon
@@ -115,7 +88,7 @@ const AddServicesScreen = () => {
         bounces={false}
         showsVerticalScrollIndicator={false}
       >
-        {selectedServices?.map((service, i) => (
+        {services?.map((service, i) => (
           <Stack direction="row" sx={styles.service} key={i}>
             <Text style={styles.name}>{service?.name}</Text>
             <IconButtonDelete

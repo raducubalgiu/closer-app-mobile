@@ -34,7 +34,7 @@ const defaultValues = {
 };
 
 const AddLocationScreen = () => {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   const [location, setLocation] = useState(defaultValues);
   const [images, setImages] = useState([]);
   const [blockApartment, setBlockApartment] = useState("");
@@ -43,14 +43,16 @@ const AddLocationScreen = () => {
 
   const handleSetLocation = (location) => setLocation(location);
 
-  const navigate = () => navigation.navigate("Profile");
-
+  const handleAfterAdd = (res) => {
+    setUser({ ...user, location: res._id });
+    navigation.navigate("Profile");
+  };
   const { makePost, loading, feedback, setFeedback } = useHttpPost(
     `/users/${user?._id}/locations`,
-    navigate
+    handleAfterAdd
   );
   const onSubmit = () =>
-    makePost({ location: { ...location, blockApartment, type: "Point" } });
+    makePost({ address: { ...location, blockApartment, type: "Point" } });
 
   return (
     <SafeAreaView style={styles.screen}>
