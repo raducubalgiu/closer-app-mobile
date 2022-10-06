@@ -5,6 +5,9 @@ import {
   ActivityIndicator,
 } from "react-native";
 import React, { useCallback, useState } from "react";
+import { Icon } from "@rneui/themed";
+import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 import {
   Button,
   Feedback,
@@ -14,19 +17,19 @@ import {
 } from "../../../../components/core";
 import theme from "../../../../assets/styles/theme";
 import { useAuth, useHttpGet, useHttpPatch } from "../../../../hooks";
-import { Icon } from "@rneui/themed";
-import { useNavigation } from "@react-navigation/native";
 
 const { primary } = theme.lightColors;
 
 const EditProfessionScreen = () => {
   const { user, setUser } = useAuth();
+  const { role } = user;
   const [selected, setSelected] = useState(null);
   const navigation = useNavigation();
   const { data: businesses, loading } = useHttpGet(`/businesses`);
+  const { data: jobs } = useHttpGet("/jobs");
+  const { t } = useTranslation();
 
   const callback = (data) => {
-    console.log("DATA!!", data);
     setUser({ ...user, profession: data.profession });
     navigation.goBack();
   };
@@ -72,16 +75,20 @@ const EditProfessionScreen = () => {
   );
   const keyExtractor = useCallback((item) => item._id, []);
 
+  let data;
+  if (role === "admin") data = businesses;
+
   return (
     <SafeAreaView style={styles.screen}>
       <Header
+        title={t("addCategory")}
         divider
         actionBtn={!loadingPatch ? actionBtn : <ActivityIndicator />}
       />
       <Feedback feedback={feedback} setFeedback={setFeedback} />
       {!loading && (
         <FlatList
-          data={businesses}
+          data={data}
           keyExtractor={keyExtractor}
           renderItem={renderBusiness}
           contentContainerStyle={{ padding: 15 }}

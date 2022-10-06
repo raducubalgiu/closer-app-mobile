@@ -1,10 +1,10 @@
-import { StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import { StyleSheet, Text } from "react-native";
+import React from "react";
 import { Stack } from "../Stack/Stack";
 import { CheckBox } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 
-const { black, grey0 } = theme.lightColors;
+const { black } = theme.lightColors;
 
 export const FormInputRadio = ({ text, checked, onPress }) => {
   return (

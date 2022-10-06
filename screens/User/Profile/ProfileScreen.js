@@ -28,7 +28,7 @@ const ProfileScreen = () => {
   const { user } = useAuth();
   const { _id, name, username, avatar, checkmark, description, role, hours } =
     user || {};
-  const { website, location, business } = user || {};
+  const { website, location } = user || {};
   const navigation = useNavigation();
   const Tab = createMaterialTopTabNavigator();
   const { t } = useTranslation();
@@ -38,18 +38,10 @@ const ProfileScreen = () => {
     [_id, username]
   );
 
-  // const AboutProfile = useCallback(
-  //   () => (
-  //     <AboutProfileTab
-  //       biography={description}
-  //       website={website}
-  //       location={location}
-  //       role={role}
-  //       hours={hours}
-  //     />
-  //   ),
-  //   [description, website, location, role, hours]
-  // );
+  const AboutProfile = useCallback(
+    () => <AboutProfileTab biography={description} userId={user._id} />,
+    [description, website, location, role, hours]
+  );
 
   const closeSheet = useCallback(() => CLOSE_BS(), []);
   const profileMenu = <ProfileMenuList onCloseSheet={closeSheet} />;
@@ -92,7 +84,7 @@ const ProfileScreen = () => {
         <View style={{ height }}>
           <TopTabContainer initialRouteName="Posts" profileTabs={true}>
             <Tab.Screen name="Posts" component={PostsProfile} />
-            {/* <Tab.Screen name="About" component={AboutProfile} /> */}
+            <Tab.Screen name="About" component={AboutProfile} />
           </TopTabContainer>
         </View>
       </ScrollView>

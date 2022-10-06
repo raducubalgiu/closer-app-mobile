@@ -11,7 +11,12 @@ import React, { useState } from "react";
 import theme from "../../../../assets/styles/theme";
 import TooltipTitle from "../../../../components/customized/ListItems/TooltipItem";
 import { AutocompleteGoogle } from "../../../../components/customized";
-import { Stack, Header, MainButton } from "../../../../components/core";
+import {
+  Stack,
+  Header,
+  MainButton,
+  Feedback,
+} from "../../../../components/core";
 import { Icon, Avatar, Badge } from "@rneui/themed";
 import { useAuth } from "../../../../hooks/auth";
 import { useNavigation } from "@react-navigation/native";
@@ -39,7 +44,8 @@ const AddLocationScreen = () => {
   const handleSetLocation = (location) => setLocation(location);
 
   const navigate = () => navigation.navigate("Profile");
-  const { makePost, loading } = useHttpPost(
+
+  const { makePost, loading, feedback, setFeedback } = useHttpPost(
     `/users/${user?._id}/locations`,
     navigate
   );
@@ -49,6 +55,7 @@ const AddLocationScreen = () => {
   return (
     <SafeAreaView style={styles.screen}>
       <Header title="Adauga locatia" divider />
+      <Feedback feedback={feedback} setFeedback={setFeedback} />
       <AutocompleteGoogle onSetLocation={handleSetLocation} />
       <ScrollView style={{ padding: 15 }} bounces={false}>
         <TooltipTitle

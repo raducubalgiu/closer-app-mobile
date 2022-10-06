@@ -17,23 +17,17 @@ import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 
 const { black, primary, grey0 } = theme.lightColors;
 
-export const AboutProfileTab = ({
-  biography,
-  website,
-  location,
-  role,
-  hours,
-}) => {
-  const { mon, tue, wed, thu, fri, sat, sun } = hours || {};
-  const schedules = [
-    { day: "mon", ...mon },
-    { day: "tue", ...tue },
-    { day: "wed", ...wed },
-    { day: "thu", ...thu },
-    { day: "fri", ...fri },
-    { day: "sat", ...sat },
-    { day: "sun", ...sun },
-  ];
+export const AboutProfileTab = ({ biography }) => {
+  // const { mon, tue, wed, thu, fri, sat, sun } = hours || {};
+  // const schedules = [
+  //   { day: "mon", ...mon },
+  //   { day: "tue", ...tue },
+  //   { day: "wed", ...wed },
+  //   { day: "thu", ...thu },
+  //   { day: "fri", ...fri },
+  //   { day: "sat", ...sat },
+  //   { day: "sun", ...sun },
+  // ];
   const { t } = useTranslation();
 
   const handleClosed = (startTime, endTime) => {
@@ -54,7 +48,7 @@ export const AboutProfileTab = ({
       </Stack>
       <Stack align="start" sx={styles.section}>
         <Text style={styles.heading}>{t("contact")}</Text>
-        <Stack direction="row" sx={styles.stack}>
+        {/* <Stack direction="row" sx={styles.stack}>
           <Icon name="link" type="feather" size={20} color={grey0} />
           <Button sx={{ marginLeft: 10 }}>
             {website && <Text style={styles.actionBtn}>{website}</Text>}
@@ -62,8 +56,8 @@ export const AboutProfileTab = ({
               <Text style={{ fontFamily: "Exo-Regular" }}>{t("notAdded")}</Text>
             )}
           </Button>
-        </Stack>
-        <Protected userRole={role} roles={[SECOND_ROLE]}>
+        </Stack> */}
+        {/* <Protected userRole={role} roles={[SECOND_ROLE]}>
           <Stack direction="row" sx={styles.stack}>
             <Icon name="award" type="feather" size={20} color={grey0} />
             <Text style={styles.label}>Angajat la </Text>
@@ -79,9 +73,9 @@ export const AboutProfileTab = ({
               {location ? AddressFormat(location) : t("notAdded")}
             </Text>
           </Stack>
-        </Protected>
+        </Protected> */}
       </Stack>
-      <Protected userRole={role} roles={[MAIN_ROLE, SECOND_ROLE]}>
+      {/* <Protected userRole={role} roles={[MAIN_ROLE, SECOND_ROLE]}>
         {hours && (
           <Stack align="start" sx={styles.section}>
             <Stack direction="row">
@@ -120,7 +114,7 @@ export const AboutProfileTab = ({
             ></Marker>
           </MapView>
         </Stack>
-      )}
+      )} */}
     </View>
   );
 };

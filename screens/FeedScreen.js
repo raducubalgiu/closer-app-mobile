@@ -41,7 +41,7 @@ const FeedScreen = () => {
 
     axios
       .get(
-        `${process.env.BASE_ENDPOINT}/posts/get-all-posts?page=${page}&limit=5`,
+        `${process.env.BASE_ENDPOINT}/posts/get-all-posts?page=${page}&limit=20`,
         {
           signal: controller.signal,
           headers: { Authorization: `Bearer ${user.token}` },
@@ -71,7 +71,7 @@ const FeedScreen = () => {
 
     axios
       .get(
-        `${process.env.BASE_ENDPOINT}/users/${user._id}/posts/get-followings-posts?page${page}&limit=5`,
+        `${process.env.BASE_ENDPOINT}/users/${user._id}/posts/get-followings-posts?page${page}&limit=20`,
         {
           signal: controller.signal,
           headers: { Authorization: `Bearer ${user.token}` },

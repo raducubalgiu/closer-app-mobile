@@ -32,9 +32,9 @@ const SearchPostsScreen = () => {
   useHttpGet(`/users/${user?._id}/searches/searched-word`, (data) =>
     setWords(data)
   );
-  useHttpGet(`/users/${user?._id}/searches/searched-user`, (data) =>
-    setSearchedUsers(data)
-  );
+  useHttpGet(`/users/${user?._id}/searches/searched-user`, (data) => {
+    setSearchedUsers(data);
+  });
 
   const deleteHistory = () => {
     setWords([]);
