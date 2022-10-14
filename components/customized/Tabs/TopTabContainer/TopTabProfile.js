@@ -6,15 +6,8 @@ import { ProductsProfileTab } from "../ProfileTabs/ProductsProfileTab";
 import { JobsProfileTab } from "../ProfileTabs/JobsProfileTab";
 import { AboutProfileTab } from "../ProfileTabs/AboutProfileTab";
 import { TabBadge } from "../TabBadge/TabBadge";
-import { THIRD_ROLE } from "@env";
 
-export const TopTabProfileGeneral = ({
-  userId,
-  username,
-  service,
-  option,
-  user,
-}) => {
+export const TopTabProfile = ({ userId, username, service, option, user }) => {
   const Tab = createMaterialTopTabNavigator();
   const { description, website, location, role, hours, counter, services } =
     user;
@@ -54,18 +47,14 @@ export const TopTabProfileGeneral = ({
   return (
     <TopTabContainer initialRouteName="Posts" profileTabs={true}>
       <Tab.Screen name="Posts" component={PostsProfile} />
-      {role !== THIRD_ROLE && (
-        <Tab.Screen
-          name="Products"
-          component={ProductsProfile}
-          options={{
-            tabBarIcon: () => <TabBadge value={counter?.productsCount} />,
-          }}
-        />
-      )}
-      {role !== THIRD_ROLE && (
-        <Tab.Screen name="Jobs" component={JobsProfile} />
-      )}
+      <Tab.Screen
+        name="Products"
+        component={ProductsProfile}
+        options={{
+          tabBarIcon: () => <TabBadge value={counter?.productsCount} />,
+        }}
+      />
+      <Tab.Screen name="Jobs" component={JobsProfile} />
       <Tab.Screen name="About" component={AboutProfile} />
     </TopTabContainer>
   );

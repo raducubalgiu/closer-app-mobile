@@ -20,6 +20,7 @@ import {
   PostsProfileTab,
   AboutProfileTab,
   HeaderProfile,
+  TopTabProfile,
 } from "../../../components/customized";
 
 const { height } = Dimensions.get("window");
@@ -82,10 +83,13 @@ const ProfileScreen = () => {
           <SocialIconButton onPress={navigateYoutube} name="youtube" />
         </ProfileOverview>
         <View style={{ height }}>
-          <TopTabContainer initialRouteName="Posts" profileTabs={true}>
-            <Tab.Screen name="Posts" component={PostsProfile} />
-            <Tab.Screen name="About" component={AboutProfile} />
-          </TopTabContainer>
+          <TopTabProfile
+            userId={user?._id}
+            username={username}
+            service={null}
+            option={null}
+            user={user}
+          />
         </View>
       </ScrollView>
       <Protected roles={[MAIN_ROLE, SECOND_ROLE]} userRole={role}>

@@ -51,8 +51,11 @@ const AddLocationScreen = () => {
     `/users/${user?._id}/locations`,
     handleAfterAdd
   );
-  const onSubmit = () =>
-    makePost({ address: { ...location, blockApartment, type: "Point" } });
+  const onSubmit = () => {
+    makePost({
+      address: { ...location, blockApartment },
+    });
+  };
 
   return (
     <SafeAreaView style={styles.screen}>

@@ -7,7 +7,7 @@ import { useAuth } from "./auth";
 const BASE_ENDPOINT = `${process.env.BASE_ENDPOINT}`;
 
 export const useHttpGet = (route, callback) => {
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const { user } = useAuth();

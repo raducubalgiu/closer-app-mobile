@@ -9,7 +9,7 @@ import {
   HeaderProfileGeneral,
   SuggestedUsersList,
   FollowUserSheet,
-  TopTabProfileGeneral,
+  TopTabProfile,
 } from "../../../components/customized";
 
 const { black } = theme.lightColors;
@@ -23,9 +23,8 @@ const ProfileGeneralScreen = ({ route }) => {
   const { t } = useTranslation();
 
   const { makePost } = useHttpPost(`/searches`);
-  const { makeGet: fetchUser } = useHttpGetFunc(
-    `/users/${userId}?latlng=26.100195,44.428286`,
-    (data) => setUserDetails(data)
+  const { makeGet: fetchUser } = useHttpGetFunc(`/users/${userId}`, (data) =>
+    setUserDetails(data)
   );
 
   const { makeGet: handleSuggested, loading } = useHttpGetFunc(
@@ -101,7 +100,7 @@ const ProfileGeneralScreen = ({ route }) => {
           <SuggestedUsersList suggested={suggested} userId={userId} />
         )}
         <View style={styles.tabsCont}>
-          <TopTabProfileGeneral
+          <TopTabProfile
             userId={userId}
             username={username}
             service={service}

@@ -36,7 +36,7 @@ export const ServiceTab = ({ userId, service, option }) => {
             canBook={user?._id !== product?.user?._id}
           />
         ))}
-      {!loading && !products.length && noFoundProducts}
+      {!loading && !products?.length && noFoundProducts}
       {loading && <ActivityIndicator style={{ marginVertical: 25 }} />}
     </View>
   );

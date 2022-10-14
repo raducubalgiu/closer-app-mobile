@@ -12,10 +12,10 @@ import {
 import { NoFoundMessage } from "../../../../components/customized";
 import { useAuth } from "../../../../hooks/auth";
 import { TopTabProducts } from "../../../../components/customized/Tabs/TopTabContainer/TopTabProducts";
+import { useHttpGet } from "../../../../hooks";
 
 const MyProductsScreen = () => {
   const { user } = useAuth();
-  const { services } = user;
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const navigation = useNavigation();
   const { t } = useTranslation();
@@ -23,7 +23,11 @@ const MyProductsScreen = () => {
   const goToAddProduct = () => navigation.navigate("AddProducts");
 
   const addBtn = (
-    <IconButtonAdd onPress={goToAddProduct} disabled={!services.length} />
+    <IconButtonAdd onPress={goToAddProduct} disabled={services?.length > 0} />
+  );
+
+  const { data: services } = useHttpGet(
+    `/locations/${user?.location}/services`
   );
 
   const noServices = (
@@ -47,7 +51,7 @@ const MyProductsScreen = () => {
         <Header title={t("myProducts")} actionBtn={addBtn} divider />
         <Feedback feedback={feedback} setFeedback={setFeedback} />
       </SafeAreaView>
-      {services.length > 0 && (
+      {services?.length > 0 && (
         <TopTabProducts userId={user?._id} services={services} />
       )}
       {!services?.length && noServices}

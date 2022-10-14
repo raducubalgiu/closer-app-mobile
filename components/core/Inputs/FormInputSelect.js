@@ -13,7 +13,7 @@ export const FormInputSelect = ({
   name,
   placeholder,
   rules = {},
-  items,
+  items = [],
   disabled,
   label,
 }) => {
@@ -98,7 +98,10 @@ export const FormInputSelect = ({
             items={items?.map((item) => {
               return {
                 label: item?.name,
-                value: item?._id,
+                value: {
+                  _id: item?._id,
+                  name: item?.name,
+                },
               };
             })}
           />

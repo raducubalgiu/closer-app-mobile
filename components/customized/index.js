@@ -8,7 +8,7 @@ export { Footer } from "./Layout/Footers/Footer";
 export { ProfileOverview } from "./ProfileOverview/ProfileOverview";
 
 export { TopTabContainer } from "./Tabs/TopTabContainer/TopTabContainer";
-export { TopTabProfileGeneral } from "./Tabs/TopTabContainer/TopTabProfileGeneral";
+export { TopTabProfile } from "./Tabs/TopTabContainer/TopTabProfile";
 export { SavedPostsTab } from "./Tabs/SavedTabs/SavedPostsTab";
 export { SavedHashtagsTab } from "./Tabs/SavedTabs/SavedHashtagsTab";
 export { SavedProductsTab } from "./Tabs/SavedTabs/SavedProductsTab";
