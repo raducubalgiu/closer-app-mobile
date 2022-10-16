@@ -3,6 +3,8 @@ import { Icon } from "@rneui/themed";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 
+const { black } = theme.lightColors;
+
 export const ButtonProvider = ({
   onPress,
   iconName,
@@ -40,6 +42,6 @@ const styles = StyleSheet.create({
   },
   providerBtnText: {
     textAlign: "center",
-    color: theme.lightColors.black,
+    color: black,
   },
 });

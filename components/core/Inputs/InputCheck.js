@@ -8,6 +8,8 @@ import { Icon } from "@rneui/themed";
 import { Stack } from "../Stack/Stack";
 import { FormInput } from "./FormInput";
 
+const { error } = theme.lightColors;
+
 const InputCheck = ({ inputName, endpoint, onSubmit, loadingBtn }) => {
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(null);
@@ -98,7 +100,7 @@ const styles = StyleSheet.create({
   },
   input: { flex: 1, padding: 15 },
   error: {
-    color: theme.lightColors.error,
+    color: error,
     marginLeft: 10,
     marginTop: 5,
     fontSize: 13,

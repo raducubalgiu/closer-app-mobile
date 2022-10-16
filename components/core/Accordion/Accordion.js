@@ -3,6 +3,8 @@ import { ListItem } from "@rneui/themed";
 import React, { useState } from "react";
 import theme from "../../../assets/styles/theme";
 
+const { black } = theme.lightColors;
+
 export const Accordion = ({ title, children, initExpand, ...props }) => {
   const [expanded, setExpanded] = useState(initExpand);
 
@@ -28,7 +30,7 @@ const styles = StyleSheet.create({
     padding: 0,
   },
   title: {
-    color: theme.lightColors.black,
+    color: black,
     fontSize: 15,
   },
 });

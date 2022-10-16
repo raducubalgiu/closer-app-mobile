@@ -7,7 +7,7 @@ import { has, get } from "lodash";
 import { Stack } from "../Stack/Stack";
 import { Icon } from "@rneui/themed";
 
-const { black, error, grey0 } = theme.lightColors;
+const { black, error } = theme.lightColors;
 
 export const FormInputSelect = ({
   name,

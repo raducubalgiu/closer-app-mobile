@@ -3,6 +3,8 @@ import { Icon } from "@rneui/themed";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 
+const { secondary } = theme.lightColors;
+
 export const Checkmark = ({ size, sx }) => {
   return (
     <Icon
@@ -17,7 +19,7 @@ export const Checkmark = ({ size, sx }) => {
 
 const styles = StyleSheet.create({
   checkmark: {
-    backgroundColor: theme.lightColors.secondary,
+    backgroundColor: secondary,
     marginLeft: 7.5,
     paddingVertical: 1.5,
     paddingHorizontal: 1.75,

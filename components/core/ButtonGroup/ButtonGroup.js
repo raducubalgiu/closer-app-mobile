@@ -4,6 +4,8 @@ import theme from "../../../assets/styles/theme";
 import { Stack } from "../Stack/Stack";
 import { Button } from "../Buttons/Button";
 
+const { black } = theme.lightColors;
+
 export const ButtonGroup = ({ activeButton, size, onPress, buttons, sx }) => {
   const [activeBtn, setActiveBtn] = useState(activeButton);
 
@@ -22,7 +24,7 @@ export const ButtonGroup = ({ activeButton, size, onPress, buttons, sx }) => {
     },
     active: { backgroundColor: "white" },
     btnTxt: {
-      color: theme.lightColors.black,
+      color: black,
       fontSize: 13,
     },
     btnTxtActive: { fontSize: 13.5 },

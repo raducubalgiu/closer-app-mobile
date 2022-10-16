@@ -3,6 +3,8 @@ import React, { useRef, useEffect } from "react";
 import { Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 
+const { black } = theme.lightColors;
+
 export const IconButtonDelete = ({ onPress, sx }) => {
   const animatedScale = useRef(new Animated.Value(0)).current;
 
@@ -25,11 +27,7 @@ export const IconButtonDelete = ({ onPress, sx }) => {
   return (
     <Pressable onPress={handlePress} style={sx}>
       <Animated.View style={[{ transform: [{ scale: animatedScale }] }]}>
-        <Icon
-          name="minuscircleo"
-          type="antdesign"
-          color={theme.lightColors.black}
-        />
+        <Icon name="minuscircleo" type="antdesign" color={black} />
       </Animated.View>
     </Pressable>
   );

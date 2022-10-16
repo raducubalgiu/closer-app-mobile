@@ -4,7 +4,15 @@ import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";
 
-export const IconBackButton = ({ onPress, size, color, sx, withBackground }) => {
+const { black } = theme.lightColors;
+
+export const IconBackButton = ({
+  onPress,
+  size,
+  color,
+  sx,
+  withBackground,
+}) => {
   const navigation = useNavigation();
 
   return (
@@ -15,7 +23,7 @@ export const IconBackButton = ({ onPress, size, color, sx, withBackground }) => 
       <Icon
         name="arrow-back-ios"
         size={size ? size : 21}
-        color={color ? color : theme.lightColors.black}
+        color={color ? color : black}
         containerStyle={withBackground && styles.containerStyle}
       />
     </TouchableOpacity>

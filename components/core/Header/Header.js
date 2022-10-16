@@ -6,6 +6,8 @@ import { useNavigation } from "@react-navigation/native";
 import { Stack } from "../Stack/Stack";
 import { IconBackButton } from "../IconButton/IconBackButton";
 
+const { black, grey0 } = theme.lightColors;
+
 export const Header = ({
   hideBtnLeft,
   title,
@@ -21,9 +23,7 @@ export const Header = ({
     <View>
       <Stack direction="row" sx={styles.container}>
         <TouchableOpacity onPress={!hideBtnLeft ? () => handleBack : null}>
-          <IconBackButton
-            color={!hideBtnLeft ? theme.lightColors.black : "white"}
-          />
+          <IconBackButton color={!hideBtnLeft ? black : "white"} />
         </TouchableOpacity>
         <Stack>
           <Text style={styles.title}>{title}</Text>
@@ -41,12 +41,12 @@ const styles = StyleSheet.create({
   container: { paddingVertical: 10, paddingHorizontal: 15 },
   title: {
     fontSize: 16,
-    color: theme.lightColors.black,
+    color: black,
     marginRight: 10,
     fontWeight: "700",
   },
   description: {
-    color: theme.lightColors.grey0,
+    color: grey0,
     fontSize: 15,
   },
 });

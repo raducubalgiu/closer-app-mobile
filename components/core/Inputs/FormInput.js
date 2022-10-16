@@ -6,7 +6,7 @@ import theme from "../../../assets/styles/theme";
 import { Icon } from "@rneui/themed";
 import { Stack } from "../Stack/Stack";
 
-const { error, grey0 } = theme.lightColors;
+const { error } = theme.lightColors;
 
 export const FormInput = ({
   name,

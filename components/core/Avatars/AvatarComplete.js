@@ -3,6 +3,8 @@ import { Avatar, Badge, Icon } from "@rneui/themed";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 
+const { black, success } = theme.lightColors;
+
 export const AvatarComplete = (props) => {
   return (
     <View>
@@ -12,7 +14,7 @@ export const AvatarComplete = (props) => {
           name: props.iconName,
           type: props.iconType,
           size: 25,
-          color: theme.lightColors.black,
+          color: black,
         }}
         containerStyle={styles.avatarContainer}
       />
@@ -20,7 +22,7 @@ export const AvatarComplete = (props) => {
         <Badge
           containerStyle={styles.badgeContainer}
           value={<Icon name="check" type="entypo" size={10} color="white" />}
-          badgeStyle={{ backgroundColor: theme.lightColors.success }}
+          badgeStyle={{ backgroundColor: success }}
         />
       )}
     </View>

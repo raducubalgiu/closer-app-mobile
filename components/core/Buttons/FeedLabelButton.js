@@ -2,6 +2,8 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 
+const { black } = theme.lightColors;
+
 export const FeedLabelButton = ({ isActive, text, onPress }) => {
   return (
     <TouchableOpacity
@@ -34,7 +36,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   btnText: {
-    color: theme.lightColors.black,
+    color: black,
     fontSize: 13,
     fontWeight: "500",
   },
@@ -44,7 +46,7 @@ const styles = StyleSheet.create({
     borderColor: "#f1f1f1",
   },
   activeBtnText: {
-    color: theme.lightColors.black,
+    color: black,
     fontWeight: "600",
   },
 });

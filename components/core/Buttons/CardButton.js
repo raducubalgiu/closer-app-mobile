@@ -2,6 +2,8 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 
+const { black, primary } = theme.lightColors;
+
 export const CardButton = ({ completed, onPress, title }) => {
   return (
     <TouchableOpacity
@@ -37,13 +39,13 @@ const styles = StyleSheet.create({
     fontSize: 12.5,
   },
   completedBtn: {
-    backgroundColor: theme.lightColors.primary,
-    borderColor: theme.lightColors.primary,
+    backgroundColor: primary,
+    borderColor: primary,
   },
   incompletedBtn: {
     backgroundColor: "white",
     borderColor: "#ddd",
   },
   completedText: { color: "white" },
-  incompletedText: { color: theme.lightColors.black },
+  incompletedText: { color: black },
 });

@@ -1,6 +1,9 @@
 import { StyleSheet } from "react-native";
 import React from "react";
 import RNPickerSelect from "react-native-picker-select";
+import theme from "../../../assets/styles/theme";
+
+const { black } = theme.lightColors;
 
 export const InputSelect = ({ value, onValueChange, items, ...props }) => {
   const placeholder = {
@@ -35,7 +38,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ddd",
     borderRadius: 10,
-    color: "black",
+    color: black,
     paddingRight: 30,
   },
   inputAndroid: {
@@ -45,7 +48,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: "purple",
     borderRadius: 10,
-    color: "black",
+    color: black,
     paddingRight: 30,
   },
 });

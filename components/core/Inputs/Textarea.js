@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   },
   label: {
     textTransform: "uppercase",
-    color: theme.lightColors.grey0,
+    color: grey0,
     marginBottom: 2.5,
   },
 });

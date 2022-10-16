@@ -2,6 +2,8 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 
+const { grey3 } = theme.lightColors;
+
 export const StatsButton = ({ onPress, statsNo, labelStats }) => {
   return (
     <TouchableOpacity
@@ -18,7 +20,7 @@ export const StatsButton = ({ onPress, statsNo, labelStats }) => {
 const styles = StyleSheet.create({
   container: { alignItems: "center", minWidth: 75 },
   statsText: {
-    color: theme.lightColors.grey3,
+    color: grey3,
     fontSize: 13,
     marginTop: 5,
     fontWeight: "500",

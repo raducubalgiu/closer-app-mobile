@@ -3,6 +3,8 @@ import React, { useRef, useEffect } from "react";
 import { Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 
+const { black } = theme.lightColors;
+
 export const IconButtonEdit = ({ onPress }) => {
   const animatedScale = useRef(new Animated.Value(0)).current;
 
@@ -25,7 +27,7 @@ export const IconButtonEdit = ({ onPress }) => {
   return (
     <Pressable onPress={handlePress}>
       <Animated.View style={[{ transform: [{ scale: animatedScale }] }]}>
-        <Icon name="edit" type="feather" color={theme.lightColors.black} />
+        <Icon name="edit" type="feather" color={black} />
       </Animated.View>
     </Pressable>
   );

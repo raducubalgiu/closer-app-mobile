@@ -3,6 +3,8 @@ import React from "react";
 import { SearchBar } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 
+const { grey0 } = theme.lightColors;
+
 export const InputEdit = ({
   value,
   fieldLength,
@@ -59,6 +61,6 @@ const styles = StyleSheet.create({
   },
   strokeLength: {
     paddingHorizontal: 10,
-    color: theme.lightColors.grey0,
+    color: grey0,
   },
 });
