@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
   btnText: {
     color: theme.lightColors.black,
     fontSize: 13,
+    fontWeight: "500",
   },
   activeBtn: {
     borderWidth: 1.25,
@@ -44,5 +45,6 @@ const styles = StyleSheet.create({
   },
   activeBtnText: {
     color: theme.lightColors.black,
+    fontWeight: "600",
   },
 });

@@ -77,7 +77,8 @@ export const TopTabContainer = ({
 const styles = StyleSheet.create({
   tabLabel: {
     textTransform: "capitalize",
-    fontSize: 14,
+    fontSize: 13.5,
+    fontWeight: "600",
   },
   tabStyle: { backgroundColor: "white" },
   tabIndicator: {
