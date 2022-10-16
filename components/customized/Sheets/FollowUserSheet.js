@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 30,
     textAlign: "center",
-    fontFamily: "Exo-Medium",
     fontSize: 14.5,
     color: black,
   },

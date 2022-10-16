@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   name: {
-    fontFamily: "Exo-Medium",
     color: theme.lightColors.black,
     fontSize: 14,
     marginRight: 5,

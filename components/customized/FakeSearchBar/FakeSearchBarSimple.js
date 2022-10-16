@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
     paddingVertical: 9,
   },
   text: {
-    fontFamily: "Exo-Regular",
     marginLeft: 15,
     color: theme.lightColors.grey0,
   },

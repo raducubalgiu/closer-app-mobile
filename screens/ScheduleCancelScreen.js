@@ -151,12 +151,10 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   heading: {
-    fontFamily: "Exo-SemiBold",
     color: black,
     fontSize: 25,
   },
   secondHeading: {
-    fontFamily: "Exo-Medium",
     color: grey0,
     fontSize: 15,
     marginTop: 5,
@@ -175,12 +173,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#222222",
   },
   btnText: {
-    fontFamily: "Exo-Medium",
     fontSize: 14,
     color: black,
   },
   activeTxt: {
     color: "white",
-    fontFamily: "Exo-Regular",
   },
 });

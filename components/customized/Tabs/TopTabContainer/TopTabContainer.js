@@ -22,7 +22,7 @@ export const TopTabContainer = ({
       tabBarIcon: ({ focused, color }) => {
         let iconName;
         let iconType;
-        let size;
+        let size = 22;
 
         if (route.name === "Posts") {
           iconType = "feather";
@@ -42,7 +42,7 @@ export const TopTabContainer = ({
         );
       },
       tabBarActiveTintColor: black,
-      tabBarInactiveTintColor: "gray",
+      tabBarInactiveTintColor: "#ccc",
       headerShown: false,
       tabBarShowLabel: false,
       tabBarIndicatorStyle: {
@@ -76,7 +76,6 @@ export const TopTabContainer = ({
 
 const styles = StyleSheet.create({
   tabLabel: {
-    fontFamily: "Exo-SemiBold",
     textTransform: "capitalize",
     fontSize: 14,
   },

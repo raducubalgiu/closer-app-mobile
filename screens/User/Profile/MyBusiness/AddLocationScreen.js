@@ -23,6 +23,8 @@ import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { useHttpPost } from "../../../../hooks";
 
+const { primary, black } = theme.lightColors;
+
 const defaultValues = {
   street: "",
   number: "",
@@ -200,7 +202,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ddd",
     borderRadius: 10,
-    fontFamily: "Exo-Regular",
   },
   disabled: {
     backgroundColor: "#f1f1f1",
@@ -216,18 +217,17 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     paddingVertical: 10,
     paddingHorizontal: 15,
-    borderColor: theme.lightColors.primary,
-    backgroundColor: theme.lightColors.primary,
+    borderColor: primary,
+    backgroundColor: primary,
     marginRight: 10,
     borderRadius: 5,
   },
   nextBtnTextStyle: {
     fontSize: 15,
     color: "white",
-    fontFamily: "Exo-Medium",
   },
   badgeStyle: {
-    backgroundColor: theme.lightColors.black,
+    backgroundColor: black,
     width: 22.5,
     height: 22.5,
     borderRadius: 50,

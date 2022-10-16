@@ -93,7 +93,6 @@ const styles = StyleSheet.create({
     marginLeft: 3,
     marginRight: 10,
     fontSize: 13,
-    fontFamily: "Exo-SemiBold",
     color: black,
   },
   iconSearch: {
@@ -111,7 +110,6 @@ const styles = StyleSheet.create({
   },
   nowBtnText: {
     marginRight: 5,
-    fontFamily: "Exo-SemiBold",
     color: black,
     fontSize: 13.5,
   },

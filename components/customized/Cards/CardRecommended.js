@@ -83,13 +83,11 @@ const styles = StyleSheet.create({
   name: {
     flex: 1,
     color: theme.lightColors.black,
-    fontFamily: "Exo-SemiBold",
     fontSize: 14,
     textTransform: "capitalize",
   },
   distance: {
     fontSize: 12,
-    fontFamily: "Exo-Bold",
     color: theme.lightColors.black,
   },
   address: {
@@ -108,12 +106,10 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     paddingHorizontal: 10,
     color: theme.lightColors.black,
-    fontFamily: "Exo-SemiBold",
   },
   ratingsAvg: {
     marginLeft: 2,
     fontSize: 13,
-    fontFamily: "Exo-Bold",
     color: theme.lightColors.black,
   },
   ratingsQuant: {

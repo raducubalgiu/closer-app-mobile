@@ -18,10 +18,10 @@ export const StatsButton = ({ onPress, statsNo, labelStats }) => {
 const styles = StyleSheet.create({
   container: { alignItems: "center", minWidth: 75 },
   statsText: {
-    fontFamily: "Exo-Medium",
-    color: theme.lightColors.grey0,
+    color: theme.lightColors.grey3,
     fontSize: 13,
     marginTop: 5,
+    fontWeight: "500",
   },
-  statsNumber: { fontFamily: "Exo-Bold", fontSize: 16 },
+  statsNumber: { fontSize: 16, fontWeight: "700" },
 });

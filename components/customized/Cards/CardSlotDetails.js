@@ -45,9 +45,7 @@ export const CardSlotDetails = ({
             <Stack align="start" sx={{ marginLeft: 10, flex: 1 }}>
               <Text style={styles.customer}>{customer}</Text>
               <Stack align="start">
-                <Text style={{ fontFamily: "Exo-Bold", color: black }}>
-                  {service}
-                </Text>
+                <Text style={{ color: black }}>{service}</Text>
                 <Text style={styles.product}>{product}</Text>
               </Stack>
               <Stack direction="row" sx={{ marginTop: 15 }}>
@@ -56,9 +54,7 @@ export const CardSlotDetails = ({
                   {price} {t("ron")}
                 </Text>
               </Stack>
-              <Text style={{ marginTop: 10, fontFamily: "Exo-Bold" }}>
-                {day}
-              </Text>
+              <Text style={{ marginTop: 10 }}>{day}</Text>
             </Stack>
           </Stack>
         </Stack>
@@ -75,7 +71,6 @@ const styles = StyleSheet.create({
   startHour: {
     color: black,
     fontSize: 14,
-    fontFamily: "Exo-SemiBold",
   },
   slotDetails: {
     marginLeft: 15,
@@ -83,28 +78,23 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   customer: {
-    fontFamily: "Exo-SemiBold",
     color: black,
     fontSize: 16.5,
     marginBottom: 5,
   },
   product: {
-    fontFamily: "Exo-Medium",
     color: black,
     fontSize: 16,
   },
   option: {
     color: black,
-    fontFamily: "Exo-Medium",
     fontSize: 13,
   },
   priceLabel: {
     color: black,
     fontSize: 15,
-    fontFamily: "Exo-SemiBold",
   },
   priceNo: {
-    fontFamily: "Exo-SemiBold",
     color: black,
     fontSize: 14.5,
     marginLeft: 5,

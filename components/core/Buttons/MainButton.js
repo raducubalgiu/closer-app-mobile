@@ -74,7 +74,7 @@ export const MainButton = ({
       marginVertical: 10,
     },
     titleStyle: {
-      fontFamily: "Exo-SemiBold",
+      fontWeight: "600",
       fontSize,
       color,
       ...btnText,

@@ -101,7 +101,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   headerTitle: {
-    fontFamily: "Exo-SemiBold",
     fontSize: 16,
     color: black,
   },

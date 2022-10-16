@@ -43,5 +43,5 @@ export const HeaderProfileGeneral = ({
 
 const styles = StyleSheet.create({
   container: { marginHorizontal: 15, marginVertical: 10 },
-  name: { fontFamily: "Exo-SemiBold", fontSize: 15, color: black },
+  name: { fontSize: 15, color: black },
 });

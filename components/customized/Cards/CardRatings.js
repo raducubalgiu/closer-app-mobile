@@ -57,17 +57,14 @@ const styles = StyleSheet.create({
     borderColor: "#ddd",
   },
   name: {
-    fontFamily: "Exo-SemiBold",
     fontSize: 15,
     marginBottom: 2.5,
   },
   date: {
-    fontFamily: "Exo-Medium",
     color: theme.lightColors.grey0,
     fontSize: 13,
   },
   service: {
-    fontFamily: "Exo-SemiBold",
     color: theme.lightColors.black,
     borderWidth: 1,
     borderColor: "#ccc",
@@ -76,7 +73,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   review: {
-    fontFamily: "Exo-Medium",
     fontSize: 14,
     marginVertical: 10,
     color: theme.lightColors.black,

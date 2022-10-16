@@ -31,11 +31,11 @@ export const NoFoundMessage = ({
 const styles = StyleSheet.create({
   container: { marginTop: 100, paddingHorizontal: 50 },
   title: {
-    fontFamily: "Exo-SemiBold",
-    fontSize: 19.5,
+    fontSize: 19,
     marginTop: 15,
     marginBottom: 5,
     color: black,
+    fontWeight: "600",
   },
   description: {
     color: grey0,

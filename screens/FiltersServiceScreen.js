@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.lightColors.primary,
     flex: 1,
   },
-  mainHeading: { color: "white", fontFamily: "Exo-ExtraBold", fontSize: 28 },
+  mainHeading: { color: "white", fontSize: 28 },
   footerContainer: {
     backgroundColor: "white",
     paddingTop: 10,
@@ -91,6 +91,5 @@ const styles = StyleSheet.create({
   buttonText: {
     textAlign: "center",
     color: theme.lightColors.black,
-    fontFamily: "Exo-SemiBold",
   },
 });

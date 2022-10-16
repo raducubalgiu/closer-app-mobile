@@ -87,18 +87,15 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   mainHeading: {
-    fontFamily: "Exo-SemiBold",
     fontSize: 27,
     color: black,
   },
   mainBtnText: {
     textAlign: "center",
     color: "white",
-    fontFamily: "Exo-SemiBold",
     fontSize: 15,
   },
   secondHeading: {
-    fontFamily: "Exo-Medium",
     color: grey0,
     fontSize: 16,
     marginTop: 2.5,
@@ -114,13 +111,11 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   textAction: {
-    fontFamily: "Exo-Regular",
     fontSize: 14,
     color: black,
     marginLeft: 20,
   },
   btnAction: {
-    fontFamily: "Exo-SemiBold",
     fontSize: 15,
     color: black,
   },
@@ -130,17 +125,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   businessText: {
-    fontFamily: "Exo-Regular",
     fontSize: 15,
   },
   registerBtnText: {
     marginTop: 5,
-    fontFamily: "Exo-SemiBold",
     fontSize: 15,
   },
   listItem: { marginBottom: 10 },
   text: {
-    fontFamily: "Exo-Regular",
     fontSize: 17,
     color: theme.lightColors.black,
     marginLeft: 10,

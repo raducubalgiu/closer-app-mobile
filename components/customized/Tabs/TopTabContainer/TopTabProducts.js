@@ -3,6 +3,8 @@ import { useCallback } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import theme from "../../../../assets/styles/theme";
 import { ServiceTab } from "../ServiceTab/ServiceTab";
+import { useHttpGet } from "../../../../hooks";
+import { countBy } from "lodash";
 
 const { black } = theme.lightColors;
 const { width } = Dimensions.get("window");
@@ -15,8 +17,13 @@ export const TopTabProducts = ({ userId, services, initialRoute, option }) => {
     tabBarLabelStyle: styles.tabLabel,
     tabBarIndicatorStyle: styles.tabIndicator,
     tabBarScrollEnabled: true,
-    tabBarItemStyle: { width: 120 },
+    tabBarItemStyle: {
+      width: 90,
+    },
+    tabBarContentContainerStyle: { height: 35 },
   };
+
+  const { data: products } = useHttpGet(`/users/${userId}/products/all`);
 
   return (
     <Tab.Navigator
@@ -41,7 +48,9 @@ export const TopTabProducts = ({ userId, services, initialRoute, option }) => {
             name={service.name.toLowerCase()}
             component={Service}
             options={{
-              tabBarLabel: service.name,
+              tabBarLabel: `${service?.name} ${
+                products.filter((prod) => prod.service === service?._id).length
+              }`,
             }}
           />
         );
@@ -52,8 +61,10 @@ export const TopTabProducts = ({ userId, services, initialRoute, option }) => {
 
 const styles = StyleSheet.create({
   tabLabel: {
-    fontFamily: "Exo-SemiBold",
-    fontSize: 14.5,
+    fontSize: 14,
+    marginTop: -10,
+    textTransform: "capitalize",
+    fontWeight: "600",
   },
   tabIndicator: {
     backgroundColor: "transparent",

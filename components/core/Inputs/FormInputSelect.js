@@ -42,7 +42,6 @@ export const FormInputSelect = ({
       borderRadius: 5,
       color: disabled ? "#9EA0A4" : black,
       paddingRight: 30,
-      fontFamily: "Exo-Medium",
       marginBottom: 10,
     },
     inputAndroid: {
@@ -53,21 +52,19 @@ export const FormInputSelect = ({
       borderColor: has(errors, name) ? error : "#ccc",
       borderRadius: 5,
       color: disabled ? "#9EA0A4" : black,
-      fontFamily: "Exo-Medium",
       paddingRight: 30,
-      fontFamily: "Exo-Medium",
       marginBottom: 10,
     },
     label: {
-      fontFamily: "Exo-SemiBold",
       textTransform: "uppercase",
-      color: grey0,
+      color: black,
       marginBottom: 2.5,
+      fontSize: 13.5,
+      fontWeight: "600",
     },
     errMsg: {
       color: error,
       marginLeft: 5,
-      fontFamily: "Exo-Regular",
     },
   });
 

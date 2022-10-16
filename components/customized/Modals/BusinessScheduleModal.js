@@ -242,7 +242,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   label: {
-    fontFamily: "Exo-SemiBold",
     textTransform: "uppercase",
     color: grey0,
     marginBottom: 2.5,

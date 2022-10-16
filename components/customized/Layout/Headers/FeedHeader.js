@@ -89,7 +89,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#f1f1f1",
   },
   exploreText: {
-    fontFamily: "Exo-Medium",
     color: theme.lightColors.black,
     marginLeft: 5,
   },

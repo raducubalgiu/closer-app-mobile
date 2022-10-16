@@ -49,11 +49,9 @@ export default HeaderMessageItem;
 const styles = StyleSheet.create({
   container: { paddingVertical: 10, paddingHorizontal: 15 },
   name: {
-    fontFamily: "Exo-SemiBold",
     fontSize: 15,
   },
   username: {
-    fontFamily: "Exo-Medium",
     color: theme.lightColors.grey0,
   },
 });

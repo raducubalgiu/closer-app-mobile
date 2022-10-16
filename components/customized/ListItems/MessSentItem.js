@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   messageText: {
-    fontFamily: "Exo-Medium",
     color: theme.lightColors.black,
   },
 });

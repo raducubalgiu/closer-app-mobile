@@ -42,19 +42,16 @@ const styles = StyleSheet.create({
   },
   firstBox: { paddingRight: 10, flex: 1 },
   name: {
-    fontFamily: "Exo-SemiBold",
     color: theme.lightColors.black,
     marginBottom: 1,
     fontSize: 16,
   },
   description: {
     color: theme.lightColors.grey0,
-    fontFamily: "Exo-Regular",
     marginBottom: 10,
     fontSize: 13,
   },
   priority: {
-    fontFamily: "Exo-SemiBold",
     marginLeft: 10,
     color: theme.lightColors.primary,
   },

@@ -53,12 +53,10 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   headerTitle: {
-    fontFamily: "Exo-Bold",
     fontSize: 16,
     color: theme.lightColors.black,
   },
   labelStyle: {
-    fontFamily: "Exo-SemiBold",
     textTransform: "capitalize",
     fontSize: 14,
   },

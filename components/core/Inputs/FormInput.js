@@ -58,21 +58,20 @@ const styles = StyleSheet.create({
   input: {
     padding: 12.5,
     borderWidth: 1,
-    fontFamily: "Exo-Regular",
     width: "100%",
     marginBottom: 10,
     borderRadius: 10,
     borderRadius: 5,
   },
   label: {
-    fontFamily: "Exo-SemiBold",
     textTransform: "uppercase",
-    color: grey0,
+    color: theme.lightColors.black,
     marginBottom: 2.5,
+    fontWeight: "600",
+    fontSize: 13.5,
   },
   errMsg: {
     color: error,
     marginLeft: 5,
-    fontFamily: "Exo-Regular",
   },
 });

@@ -17,7 +17,7 @@ import {
   useSeconds,
 } from "../../../../hooks";
 import { useNavigation } from "@react-navigation/native";
-const { grey0, primary } = theme.lightColors;
+const { grey0, primary, black } = theme.lightColors;
 
 const AddScheduleScreen = () => {
   const { user } = useAuth();
@@ -183,9 +183,9 @@ const styles = StyleSheet.create({
   endDay: { flex: 1 },
   dayCont: { marginBottom: 15 },
   day: {
-    fontFamily: "Exo-SemiBold",
     fontSize: 15,
     flex: 1,
-    color: grey0,
+    color: black,
+    fontWeight: "600",
   },
 });

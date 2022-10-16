@@ -52,11 +52,9 @@ const styles = StyleSheet.create({
   inputStyle: {
     fontSize: 15,
     color: grey0,
-    fontFamily: "Exo-Regular",
   },
   cancelBtnText: {
     fontSize: 13.5,
-    fontFamily: "Exo-Bold",
     color: black,
     backgroundColor: "white",
     padding: 10,

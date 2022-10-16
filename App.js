@@ -10,32 +10,32 @@ import "./firebase/firebase.config";
 
 enableScreens();
 
-const fetchFonts = () => {
-  return Font.loadAsync({
-    "Exo-Black": require("./assets/fonts/static/Exo-Black.ttf"),
-    "Exo-Bold": require("./assets/fonts/static/Exo-Bold.ttf"),
-    "Exo-SemiBold": require("./assets/fonts/static/Exo-SemiBold.ttf"),
-    "Exo-ExtraBold": require("./assets/fonts/static/Exo-ExtraBold.ttf"),
-    "Exo-Light": require("./assets/fonts/static/Exo-Light.ttf"),
-    "Exo-Regular": require("./assets/fonts/static/Exo-Regular.ttf"),
-    "Exo-ExtraLight": require("./assets/fonts/static/Exo-ExtraLight.ttf"),
-    "Exo-Medium": require("./assets/fonts/static/Exo-Medium.ttf"),
-    "Exo-SemiBold": require("./assets/fonts/static/Exo-SemiBold.ttf"),
-  });
-};
+// const fetchFonts = () => {
+//   return Font.loadAsync({
+//     "Exo-Black": require("./assets/fonts/static/Exo-Black.ttf"),
+//     "Exo-Bold": require("./assets/fonts/static/Exo-Bold.ttf"),
+//     "Exo-SemiBold": require("./assets/fonts/static/Exo-SemiBold.ttf"),
+//     "Exo-ExtraBold": require("./assets/fonts/static/Exo-ExtraBold.ttf"),
+//     "Exo-Light": require("./assets/fonts/static/Exo-Light.ttf"),
+//     "Exo-Regular": require("./assets/fonts/static/Exo-Regular.ttf"),
+//     "Exo-ExtraLight": require("./assets/fonts/static/Exo-ExtraLight.ttf"),
+//     "Exo-Medium": require("./assets/fonts/static/Exo-Medium.ttf"),
+//     "Exo-SemiBold": require("./assets/fonts/static/Exo-SemiBold.ttf"),
+//   });
+// };
 
 const App = () => {
-  const [fontLoaded, setFontLoaded] = useState(false);
+  // const [fontLoaded, setFontLoaded] = useState(false);
 
-  if (!fontLoaded) {
-    return (
-      <AppLoading
-        startAsync={fetchFonts}
-        onFinish={() => setFontLoaded(true)}
-        onError={() => setFontLoaded(false)}
-      />
-    );
-  }
+  // if (!fontLoaded) {
+  //   return (
+  //     <AppLoading
+  //       startAsync={fetchFonts}
+  //       onFinish={() => setFontLoaded(true)}
+  //       onError={() => setFontLoaded(false)}
+  //     />
+  //   );
+  // }
 
   return (
     <AuthProvider>

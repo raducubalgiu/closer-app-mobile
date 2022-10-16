@@ -52,10 +52,10 @@ export const CardProduct = ({
     <Stack sx={styles.card}>
       <Stack direction="row" sx={{ width: "100%" }} align="start">
         <Stack align="start" sx={styles.descriptionCont}>
-          <Text style={styles.name}>{name}</Text>
+          <Text style={styles.name}>{name} </Text>
           {option && (
             <Stack direction="row">
-              <Text style={styles.option}>{option?.name}</Text>
+              <Text style={styles.option}>Barbati</Text>
               <Text style={styles.duration}>{currDuration}</Text>
             </Stack>
           )}
@@ -80,25 +80,20 @@ export const CardProduct = ({
               />
             </Protected>
           )}
-          {!canBook && (
-            <Stack direction="row">
-              <IconButtonEdit onPress={onEditProduct} />
-              <IconButtonDelete
-                onPress={onDeleteProduct}
-                sx={{ marginLeft: 20 }}
-              />
-            </Stack>
-          )}
+          <Stack direction="row">
+            <IconButtonEdit onPress={onEditProduct} />
+            <IconButtonDelete
+              onPress={onDeleteProduct}
+              sx={{ marginLeft: 20 }}
+            />
+          </Stack>
         </Stack>
       </Stack>
-      <View
-        style={{
-          width: "100%",
-          alignItems: "flex-end",
-        }}
-      >
-        <BookmarkIButton type="products" typeId={product._id} />
-      </View>
+      {user !== userContext._id && (
+        <View style={styles.bookmark}>
+          <BookmarkIButton type="products" typeId={product._id} />
+        </View>
+      )}
     </Stack>
   );
 };
@@ -113,20 +108,20 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   name: {
-    fontFamily: "Exo-SemiBold",
-    fontSize: 18,
-    marginBottom: 1,
+    fontSize: 16,
+    marginBottom: 5,
     color: black,
+    fontWeight: "600",
   },
   option: {
-    fontFamily: "Exo-SemiBold",
     color: primary,
-    fontSize: 15,
+    fontSize: 14,
+    fontWeight: "600",
   },
   duration: {
-    fontFamily: "Exo-Regular",
-    color: grey0,
+    color: theme.lightColors.black,
     marginLeft: 10,
+    fontWeight: "500",
   },
   descriptionCont: { marginRight: 5, flex: 1 },
   description: {
@@ -134,10 +129,10 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   price: {
-    fontFamily: "Exo-Bold",
     marginTop: 10,
-    fontSize: 16,
+    fontSize: 15,
     color: black,
+    fontWeight: "700",
   },
   button: {
     backgroundColor: "white",
@@ -148,6 +143,9 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: black,
-    fontFamily: "Exo-Medium",
+  },
+  bookmark: {
+    width: "100%",
+    alignItems: "flex-end",
   },
 });

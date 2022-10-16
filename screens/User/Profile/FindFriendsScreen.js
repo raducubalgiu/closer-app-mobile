@@ -58,7 +58,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   title: {
-    fontFamily: "Exo-SemiBold",
     color: theme.lightColors.black,
     fontSize: 15,
   },

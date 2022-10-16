@@ -142,7 +142,6 @@ const styles = StyleSheet.create({
   },
   input: { flex: 1, marginLeft: 10 },
   sendBtnText: {
-    fontFamily: "Exo-Bold",
     color: theme.lightColors.primary,
   },
 });

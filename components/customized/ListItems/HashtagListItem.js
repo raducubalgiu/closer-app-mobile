@@ -36,8 +36,8 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     marginRight: 10,
   },
-  hashtagT: { fontFamily: "Exo-Bold", fontSize: 17, color: black },
-  name: { fontFamily: "Exo-SemiBold", color: black },
+  hashtagT: { fontSize: 17, color: black },
+  name: { color: black },
   posts: {
     color: grey0,
     textTransform: "lowercase",

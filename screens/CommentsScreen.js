@@ -144,12 +144,14 @@ const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: "space-between" },
   headerCont: { flexDirection: "row", margin: 15 },
   username: {
-    fontFamily: "Exo-SemiBold",
     color: theme.lightColors.black,
+    fontWeight: "600",
+    fontSize: 15.5,
   },
   date: {
     color: theme.lightColors.grey0,
-    marginTop: 5,
+    marginTop: 1,
+    fontSize: 13,
   },
   inputCont: {
     paddingHorizontal: 15,

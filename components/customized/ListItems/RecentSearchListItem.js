@@ -23,7 +23,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   searchItem: {
-    fontFamily: "Exo-Medium",
     color: theme.lightColors.black,
     marginLeft: 10,
   },

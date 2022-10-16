@@ -47,12 +47,10 @@ const styles = StyleSheet.create({
   },
   heading: {
     color: theme.lightColors.black,
-    fontFamily: "Exo-SemiBold",
     fontSize: 15,
   },
   seeAll: {
     fontSize: 12.5,
-    fontFamily: "Exo-SemiBold",
     color: theme.lightColors.grey0,
   },
   serviceBtn: {
@@ -66,7 +64,6 @@ const styles = StyleSheet.create({
   servicesTitle: {
     textAlign: "center",
     fontSize: 13,
-    fontFamily: "Exo-SemiBold",
     color: theme.lightColors.black,
     fontSize: 13,
   },

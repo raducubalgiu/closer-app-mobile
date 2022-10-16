@@ -78,7 +78,6 @@ const SearchAllScreen = ({ route }) => {
                   style={{
                     fontSize: 15,
                     color: theme.lightColors.grey0,
-                    fontFamily: "Exo-Regular",
                     marginLeft: 7.5,
                   }}
                 >
@@ -136,7 +135,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   labelStyle: {
-    fontFamily: "Exo-SemiBold",
     textTransform: "capitalize",
     fontSize: 14,
   },

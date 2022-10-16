@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   btnText: {
-    fontFamily: "Exo-Medium",
     fontSize: 12.5,
   },
   completedBtn: {

@@ -118,10 +118,10 @@ const styles = StyleSheet.create({
     paddingBottom: 12.5,
   },
   text: {
-    fontFamily: "Exo-Medium",
     color: theme.lightColors.black,
-    fontSize: 14.5,
+    fontSize: 15,
     paddingVertical: 2.5,
     marginLeft: 10,
+    fontWeight: "400",
   },
 });

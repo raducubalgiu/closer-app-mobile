@@ -34,13 +34,11 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   cancel: {
-    fontFamily: "Exo-Medium",
     color: theme.lightColors.grey0,
     fontSize: 14,
   },
-  field: { fontFamily: "Exo-SemiBold", fontSize: 16 },
+  field: { fontSize: 16 },
   save: {
-    fontFamily: "Exo-Bold",
     color: theme.lightColors.primary,
     fontSize: 15,
   },

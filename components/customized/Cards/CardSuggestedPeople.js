@@ -76,27 +76,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
   },
   name: {
-    fontFamily: "Exo-Medium",
     color: theme.lightColors.black,
   },
   username: {
-    fontFamily: "Exo-SemiBold",
     color: theme.lightColors.black,
     marginTop: 5,
     marginBottom: 1,
   },
   followers: {
-    fontFamily: "Exo-Medium",
     color: theme.lightColors.grey0,
     fontSize: 13,
     marginTop: 20,
   },
   business: {
-    fontFamily: "Exo-SemiBold",
     color: theme.lightColors.primary,
     textTransform: "capitalize",
   },
   followBtn: { width: "100%", marginTop: 10 },
   followBtnText: { textAlign: "center" },
-  ratingsAverage: { fontFamily: "Exo-SemiBold", marginLeft: 2.5 },
+  ratingsAverage: { marginLeft: 2.5 },
 });

@@ -118,7 +118,6 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   name: {
-    fontFamily: "Exo-Bold",
     fontSize: 16,
     color: black,
   },
@@ -129,26 +128,25 @@ const styles = StyleSheet.create({
   },
   sectionHeading: {
     marginBottom: 10,
-    fontFamily: "Exo-SemiBold",
     color: grey0,
     fontSize: 13,
     marginTop: 5,
+    fontWeight: "600",
   },
   text: {
     marginTop: 15,
-    fontFamily: "Exo-Bold",
     color: black,
     fontSize: 15,
+    fontWeight: "700",
   },
   label: {
-    fontFamily: "Exo-Medium",
     color: black,
     fontSize: 15,
+    fontWeight: "500",
   },
   buttonText: {
-    fontFamily: "Exo-Medium",
     marginRight: 10,
-    fontSize: 14,
+    fontSize: 14.5,
     color: grey0,
   },
   listItem: {

@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 2.5,
   },
-  followBtnText: { color: black, fontFamily: "Exo-SemiBold" },
+  followBtnText: { color: black },
   btnMessage: {
     marginLeft: 5,
     borderWidth: 1,

@@ -107,7 +107,6 @@ const styles = StyleSheet.create({
   },
   header: { paddingHorizontal: 15, paddingVertical: 10 },
   title: {
-    fontFamily: "Exo-Bold",
     fontSize: 17,
     color: theme.lightColors.black,
     marginRight: 10,
@@ -121,7 +120,6 @@ const styles = StyleSheet.create({
   headerList: {
     padding: 10,
     textTransform: "capitalize",
-    fontFamily: "Exo-Bold",
     fontSize: 15.5,
     color: black,
     marginBottom: 20,

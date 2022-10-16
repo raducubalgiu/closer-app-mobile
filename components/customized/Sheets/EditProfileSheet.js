@@ -52,7 +52,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   sheetText: {
-    fontFamily: "Exo-Medium",
     color: black,
   },
   cancelBtn: {
@@ -64,7 +63,6 @@ const styles = StyleSheet.create({
   },
   cancelBtnText: {
     textAlign: "center",
-    fontFamily: "Exo-SemiBold",
     color: black,
   },
 });

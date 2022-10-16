@@ -43,7 +43,6 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingLeft: 15,
     color: theme.lightColors.black,
-    fontFamily: "Exo-SemiBold",
     fontSize: 15,
     textAlign: "center",
   },

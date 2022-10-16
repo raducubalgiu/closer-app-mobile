@@ -6,11 +6,15 @@ import { ProductsProfileTab } from "../ProfileTabs/ProductsProfileTab";
 import { JobsProfileTab } from "../ProfileTabs/JobsProfileTab";
 import { AboutProfileTab } from "../ProfileTabs/AboutProfileTab";
 import { TabBadge } from "../TabBadge/TabBadge";
+import { useHttpGet } from "../../../../hooks";
 
 export const TopTabProfile = ({ userId, username, service, option, user }) => {
   const Tab = createMaterialTopTabNavigator();
-  const { description, website, location, role, hours, counter, services } =
-    user;
+  const { description, website, location, role, hours, counter } = user;
+
+  const { data: services } = useHttpGet(
+    `/locations/${user?.location}/services`
+  );
 
   const PostsProfile = useCallback(
     () => <PostsProfileTab userId={userId} username={username} />,

@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
   },
   details: { marginLeft: 10, flex: 1 },
   name: {
-    fontFamily: "Exo-SemiBold",
     color: theme.lightColors.black,
     fontSize: 14,
     marginRight: 5,
@@ -59,7 +58,6 @@ const styles = StyleSheet.create({
     borderRadius: 2.5,
   },
   btnText: {
-    fontFamily: "Exo-SemiBold",
     color: theme.lightColors.black,
     fontSize: 13,
   },

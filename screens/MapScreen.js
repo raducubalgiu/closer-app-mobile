@@ -21,6 +21,7 @@ import {
 import { useHttpGet } from "../hooks";
 import theme from "../assets/styles/theme";
 
+const { grey0, black, primary } = theme.lightColors;
 const { width, height } = Dimensions.get("window");
 const CARD_HEIGHT = 250;
 const CARD_WIDTH = width * 0.8;
@@ -127,7 +128,6 @@ const MapScreen = ({ route }) => {
             <IconStar />
             <Text
               style={{
-                fontFamily: "Exo-Bold",
                 marginLeft: 5,
                 fontSize: 15,
               }}
@@ -136,7 +136,6 @@ const MapScreen = ({ route }) => {
             </Text>
             <Text
               style={{
-                fontFamily: "Exo-Medium",
                 color: theme.lightColors.grey0,
                 marginLeft: 5,
               }}
@@ -294,18 +293,16 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 16,
-    fontFamily: "Exo-Bold",
-    color: theme.lightColors.black,
+    color: black,
     marginRight: 7.5,
   },
   username: {
-    fontFamily: "Exo-Medium",
-    color: theme.lightColors.grey0,
+    color: grey0,
     fontSize: 14.5,
   },
   avatar: {
     borderWidth: 2,
-    borderColor: theme.lightColors.primary,
+    borderColor: primary,
     borderRadius: 50,
     marginRight: 5,
   },
@@ -316,9 +313,8 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 15,
     borderRadius: 15,
-    fontFamily: "Exo-SemiBold",
     fontSize: 13,
-    color: theme.lightColors.black,
+    color: black,
     marginRight: 5,
   },
 });

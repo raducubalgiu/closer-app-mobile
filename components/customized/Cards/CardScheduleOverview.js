@@ -61,13 +61,11 @@ export const CardScheduleOverview = ({ schedule, onPress, newSched }) => {
 
 const styles = StyleSheet.create({
   owner: {
-    fontFamily: "Exo-SemiBold",
     fontSize: 15,
     color: black,
     marginLeft: 10,
   },
   service: {
-    fontFamily: "Exo-SemiBold",
     color: black,
     fontSize: 15,
     textTransform: "uppercase",
@@ -77,7 +75,6 @@ const styles = StyleSheet.create({
     fontSize: 14.5,
   },
   price: {
-    fontFamily: "Exo-Bold",
     fontSize: 15.5,
     color: black,
     marginBottom: 5,
@@ -86,7 +83,6 @@ const styles = StyleSheet.create({
     color: grey0,
     fontSize: 12,
     textTransform: "uppercase",
-    fontFamily: "Exo-Medium",
   },
   newCont: {
     marginLeft: 5,
@@ -95,7 +91,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   new: {
-    fontFamily: "Exo-Medium",
     color: "white",
     paddingHorizontal: 10,
     paddingVertical: 5,

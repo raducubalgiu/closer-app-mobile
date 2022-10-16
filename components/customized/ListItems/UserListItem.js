@@ -48,14 +48,14 @@ export const UserListItem = ({
 const styles = StyleSheet.create({
   container: { marginBottom: 15 },
   username: {
-    fontFamily: "Exo-SemiBold",
     fontSize: 14,
     color: black,
+    fontWeight: "600",
   },
   name: {
-    fontFamily: "Exo-Medium",
     color: grey0,
-    fontSize: 13.5,
+    fontSize: 13,
+    marginTop: 2.5,
   },
   goToUser: {
     flexDirection: "row",
@@ -69,7 +69,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   btnText: {
-    fontFamily: "Exo-SemiBold",
     color: black,
     fontSize: 13,
   },

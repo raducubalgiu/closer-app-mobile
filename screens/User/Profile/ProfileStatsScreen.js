@@ -64,7 +64,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   heading: {
-    fontFamily: "Exo-Bold",
     color: theme.lightColors.black,
     fontSize: 16,
   },

@@ -282,14 +282,12 @@ const styles = StyleSheet.create({
     color: grey0,
   },
   number: {
-    fontFamily: "Exo-Bold",
     color: black,
     fontSize: 17,
     marginTop: 7.5,
   },
   percentage: { marginTop: 5, color: success },
   sectionTitle: {
-    fontFamily: "Exo-Bold",
     color: black,
     paddingVertical: 15,
     fontSize: 17,
@@ -302,9 +300,8 @@ const styles = StyleSheet.create({
     padding: 5,
     opacity: 0.85,
   },
-  label: { fontFamily: "Exo-Medium", color: black, fontSize: 15 },
+  label: { color: black, fontSize: 15 },
   amount: {
-    fontFamily: "Exo-SemiBold",
     color: black,
   },
   percentage: { marginLeft: 2.5, fontSize: 13 },
@@ -315,6 +312,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#f1f1f1",
   },
   btnActive: { backgroundColor: primary },
-  btnTxt: { fontFamily: "Exo-SemiBold", color: black },
-  btnTxtActive: { fontFamily: "Exo-Bold", color: "white" },
+  btnTxt: { color: black },
+  btnTxtActive: { color: "white" },
 });

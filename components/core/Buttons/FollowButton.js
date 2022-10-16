@@ -70,17 +70,17 @@ export const FollowButton = ({
     btn: {
       borderWidth: 1,
       borderColor: follow ? "#ddd" : primary,
-      paddingVertical: size === "md" ? 11 : 4.5,
+      paddingVertical: size === "md" ? 11 : 5.5,
       paddingHorizontal: size === "md" ? 20 : 15,
       borderRadius: 2.5,
       backgroundColor: follow ? "white" : primary,
       width: fullWidth && "100%",
     },
     btnText: {
-      fontFamily: "Exo-SemiBold",
       color: follow ? black : "white",
       fontSize: size === "md" ? 14 : 13,
       textAlign: "center",
+      fontWeight: "600",
     },
   });
 

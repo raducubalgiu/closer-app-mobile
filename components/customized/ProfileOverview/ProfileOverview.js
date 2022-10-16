@@ -137,27 +137,26 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   name: {
-    fontFamily: "Exo-SemiBold",
     color: black,
     fontSize: 16,
     marginTop: 5,
     marginBottom: 5,
+    fontWeight: "600",
   },
   business: {
-    fontFamily: "Exo-Bold",
     color: primary,
     marginLeft: 5,
     fontSize: 14.5,
     textTransform: "capitalize",
+    fontWeight: "700",
   },
-  ratingsAverage: { fontFamily: "Exo-SemiBold", marginLeft: 2.5 },
+  ratingsAverage: { marginLeft: 2.5, fontWeight: "700" },
   servicesContainer: {
     marginTop: 10,
     marginBottom: 20,
     marginHorizontal: 40,
   },
   service: {
-    fontFamily: "Exo-SemiBold",
     borderWidth: 1,
     borderColor: "#ddd",
     paddingVertical: 2.5,
@@ -178,7 +177,6 @@ const styles = StyleSheet.create({
   },
   star: { marginLeft: 7.5 },
   text: {
-    fontFamily: "Exo-SemiBold",
     fontSize: 13.5,
     marginLeft: 5,
     color: black,

@@ -37,7 +37,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     color: "black",
     paddingRight: 30,
-    fontFamily: "Exo-Medium",
   },
   inputAndroid: {
     fontSize: 15,
@@ -47,8 +46,6 @@ const styles = StyleSheet.create({
     borderColor: "purple",
     borderRadius: 10,
     color: "black",
-    fontFamily: "Exo-Medium",
     paddingRight: 30,
-    fontFamily: "Exo-Medium",
   },
 });

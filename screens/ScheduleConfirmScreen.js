@@ -145,18 +145,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   heading: {
-    fontFamily: "Exo-SemiBold",
     color: black,
     fontSize: 16,
   },
   description: {
     marginTop: 5,
-    //fontFamily: "Exo-Medium",
     color: grey0,
     fontSize: 16,
   },
   price: {
-    fontFamily: "Exo-SemiBold",
     marginTop: 15,
     color: black,
     fontSize: 25,

@@ -8,7 +8,7 @@ const { primary } = theme.lightColors;
 export const TabBadge = ({ value }) => {
   return (
     <View>
-      <Icon name="shopping-bag" type="feather" />
+      <Icon name="shopping-bag" type="feather" size={22} />
       <Badge
         value={value}
         containerStyle={styles.containerStyle}
@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   textStyle: {
-    fontFamily: "Exo-SemiBold",
     fontSize: 10.5,
   },
 });

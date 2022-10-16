@@ -28,14 +28,14 @@ const styles = StyleSheet.create({
     paddingVertical: 7.5,
   },
   cancel: {
-    fontFamily: "Exo-Medium",
     color: theme.lightColors.grey0,
     fontSize: 15,
+    fontWeight: "500",
   },
-  field: { fontFamily: "Exo-SemiBold", fontSize: 17 },
+  field: { fontSize: 17 },
   save: {
-    fontFamily: "Exo-Bold",
     color: theme.lightColors.primary,
     fontSize: 16,
+    fontWeight: "700",
   },
 });

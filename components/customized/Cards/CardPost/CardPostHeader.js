@@ -48,12 +48,12 @@ const styles = StyleSheet.create({
   avatarContainer: {
     marginVertical: 10,
   },
-  name: { fontFamily: "Exo-SemiBold", marginLeft: 10 },
+  name: { marginLeft: 10, fontWeight: "600", fontSize: 14 },
   job: {
     marginLeft: 10,
-    fontFamily: "Exo-Medium",
     color: theme.lightColors.black,
-    fontSize: 13,
+    fontSize: 12,
     textTransform: "capitalize",
+    fontWeight: "500",
   },
 });

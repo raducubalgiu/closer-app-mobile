@@ -175,14 +175,12 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   date: {
-    fontFamily: "Exo-SemiBold",
     fontSize: 15.5,
     color: black,
   },
   service: {
     color: grey0,
     fontSize: 14,
-    fontFamily: "Exo-Medium",
     borderWidth: 1,
     borderColor: "#ddd",
     paddingVertical: 2.5,
@@ -196,13 +194,11 @@ const styles = StyleSheet.create({
   divider: { marginTop: 20, marginBottom: 10 },
   status: {
     textTransform: "uppercase",
-    fontFamily: "Exo-Medium",
     fontSize: 15,
     marginBottom: 5,
   },
-  product: { fontFamily: "Exo-Medium", color: black, fontSize: 17 },
+  product: { color: black, fontSize: 17 },
   price: {
-    fontFamily: "Exo-SemiBold",
     color: black,
     fontSize: 15,
     flex: 1,
@@ -211,10 +207,8 @@ const styles = StyleSheet.create({
     color: grey0,
     fontSize: 14.5,
     marginLeft: 5,
-    fontFamily: "Exo-Regular",
   },
   owner: {
-    fontFamily: "Exo-Medium",
     fontSize: 16,
     color: black,
     marginLeft: 10,
@@ -222,13 +216,11 @@ const styles = StyleSheet.create({
   address: {
     color: grey0,
     fontSize: 14.5,
-    fontFamily: "Exo-Regular",
     marginLeft: 10,
   },
   map: { height: 200, width: "100%", marginVertical: 20 },
   navigate: {
     marginLeft: 10,
-    fontFamily: "Exo-SemiBold",
     color: black,
     fontSize: 15,
   },

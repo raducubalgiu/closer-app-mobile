@@ -86,7 +86,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   fixedText: {
-    fontFamily: "Exo-SemiBold",
     fontSize: 12,
     color: theme.lightColors.black,
   },

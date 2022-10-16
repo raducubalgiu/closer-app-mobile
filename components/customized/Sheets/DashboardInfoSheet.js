@@ -66,7 +66,6 @@ export const DashboardInfoSheet = () => {
                   ...styles.title,
                   fontSize: 18,
                   marginBottom: 5,
-                  fontFamily: "Exo-Bold",
                 }}
               >
                 {t("summary")}
@@ -83,7 +82,6 @@ export const DashboardInfoSheet = () => {
 
 const styles = StyleSheet.create({
   title: {
-    fontFamily: "Exo-SemiBold",
     color: black,
     fontSize: 15,
   },

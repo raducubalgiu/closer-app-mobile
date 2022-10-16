@@ -22,6 +22,8 @@ import { useTranslation } from "react-i18next";
 import * as Haptics from "expo-haptics";
 import { ConfirmModal } from "../components/customized/Modals/ConfirmModal";
 
+const { grey0, black } = theme.lightColors;
+
 const FeedScreen = () => {
   const { user } = useAuth();
   const [posts, setPosts] = useState([]);
@@ -225,28 +227,24 @@ export default FeedScreen;
 const styles = StyleSheet.create({
   screen: { backgroundColor: "white", flex: 1 },
   exploreText: {
-    fontFamily: "Exo-Medium",
-    color: theme.lightColors.black,
+    color: black,
     marginLeft: 5,
   },
   contentContainerStyle: { marginTop: 50 },
   welcome: {
-    fontFamily: "Exo-SemiBold",
     fontSize: 21,
     marginBottom: 2.5,
   },
   bookmark: { padding: 5, marginLeft: 10 },
   description: {
-    fontFamily: "Exo-Regular",
-    color: theme.lightColors.grey0,
+    color: grey0,
     fontSize: 15,
     textAlign: "center",
     paddingHorizontal: 30,
   },
   title: {
-    fontFamily: "Exo-SemiBold",
     fontSize: 18,
-    color: theme.lightColors.black,
+    color: black,
     paddingLeft: 10,
     marginTop: 30,
   },

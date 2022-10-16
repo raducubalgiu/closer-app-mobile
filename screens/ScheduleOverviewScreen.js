@@ -53,19 +53,16 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
   },
   title: {
-    fontFamily: "Exo-Bold",
     fontSize: 20,
     marginVertical: 10,
     color: black,
   },
   message: {
-    fontFamily: "Exo-Medium",
     color: grey0,
     marginBottom: 5,
     fontSize: 15,
   },
   date: {
-    fontFamily: "Exo-SemiBold",
     color: black,
     fontSize: 15,
   },

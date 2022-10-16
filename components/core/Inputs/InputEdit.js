@@ -55,12 +55,10 @@ const styles = StyleSheet.create({
     borderBottomColor: "#ccc",
   },
   input: {
-    fontFamily: "Exo-Medium",
     fontSize: 15,
   },
   strokeLength: {
     paddingHorizontal: 10,
-    fontFamily: "Exo-Medium",
     color: theme.lightColors.grey0,
   },
 });

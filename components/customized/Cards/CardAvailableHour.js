@@ -30,11 +30,8 @@ const styles = StyleSheet.create({
     borderBottomColor: "#ddd",
   },
   heading: {
-    fontFamily: "Exo-SemiBold",
     fontSize: 15,
     marginRight: 7.5,
   },
-  description: {
-    fontFamily: "Exo-Medium",
-  },
+  description: {},
 });

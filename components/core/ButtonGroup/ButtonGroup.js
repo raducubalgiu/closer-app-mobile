@@ -22,11 +22,10 @@ export const ButtonGroup = ({ activeButton, size, onPress, buttons, sx }) => {
     },
     active: { backgroundColor: "white" },
     btnTxt: {
-      fontFamily: "Exo-SemiBold",
       color: theme.lightColors.black,
       fontSize: 13,
     },
-    btnTxtActive: { fontFamily: "Exo-SemiBold", fontSize: 13.5 },
+    btnTxtActive: { fontSize: 13.5 },
   });
 
   const handleButton = useCallback((index) => {

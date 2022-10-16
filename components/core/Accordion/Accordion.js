@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
     padding: 0,
   },
   title: {
-    fontFamily: "Exo-Medium",
     color: theme.lightColors.black,
     fontSize: 15,
   },

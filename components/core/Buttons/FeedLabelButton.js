@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   btnText: {
-    fontFamily: "Exo-SemiBold",
     color: theme.lightColors.black,
     fontSize: 13,
   },
@@ -45,6 +44,5 @@ const styles = StyleSheet.create({
   },
   activeBtnText: {
     color: theme.lightColors.black,
-    fontFamily: "Exo-SemiBold",
   },
 });

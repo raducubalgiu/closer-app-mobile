@@ -53,7 +53,7 @@ export const AboutProfileTab = ({ biography }) => {
           <Button sx={{ marginLeft: 10 }}>
             {website && <Text style={styles.actionBtn}>{website}</Text>}
             {!website && (
-              <Text style={{ fontFamily: "Exo-Regular" }}>{t("notAdded")}</Text>
+              <Text >{t("notAdded")}</Text>
             )}
           </Button>
         </Stack> */}
@@ -126,36 +126,29 @@ const styles = StyleSheet.create({
   },
   section: { marginVertical: 15, marginHorizontal: 15 },
   heading: {
-    fontFamily: "Exo-SemiBold",
     color: black,
-    fontSize: 15.5,
+    fontWeight: "600",
   },
   seeMoreBtn: {
-    fontFamily: "Exo-SemiBold",
     color: primary,
     fontSize: 14,
     marginLeft: 5,
   },
   bio: {
-    fontFamily: "Exo-Regular",
     marginTop: 10,
-    fontSize: 14,
-    color: black,
+    color: grey0,
   },
   label: {
-    fontFamily: "Exo-Regular",
     color: black,
     marginLeft: 10,
   },
   actionBtn: {
-    fontFamily: "Exo-SemiBold",
     color: black,
     fontSize: 14.5,
   },
   location: {
     flex: 1,
     marginLeft: 10,
-    fontFamily: "Exo-Medium",
     fontSize: 13.5,
     color: black,
     paddingRight: 10,
@@ -163,11 +156,9 @@ const styles = StyleSheet.create({
   distance: {
     flex: 1,
     marginLeft: 5,
-    fontFamily: "Exo-Bold",
     fontSize: 13.5,
     color: primary,
   },
   stack: { marginTop: 10 },
   schedule: { marginTop: 10 },
-  day: { fontFamily: "Exo-SemiBold" },
 });

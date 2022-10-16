@@ -115,11 +115,9 @@ const styles = StyleSheet.create({
     height: 100,
     justifyContent: "flex-start",
     padding: 10,
-    fontFamily: "Exo-Medium",
   },
   strokeLength: {
     paddingHorizontal: 10,
-    fontFamily: "Exo-Medium",
     color: theme.lightColors.grey0,
     marginTop: 10,
   },

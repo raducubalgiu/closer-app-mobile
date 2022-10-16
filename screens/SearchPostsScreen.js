@@ -245,7 +245,6 @@ const styles = StyleSheet.create({
   },
   heading: {
     textTransform: "uppercase",
-    fontFamily: "Exo-SemiBold",
     marginVertical: 10,
     fontSize: 13.5,
   },
@@ -253,20 +252,16 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   username: {
-    fontFamily: "Exo-SemiBold",
     marginRight: 5,
   },
   name: {
-    fontFamily: "Exo-Medium",
     color: grey0,
   },
   searchAll: {
-    fontFamily: "Exo-Bold",
     color: primary,
     marginLeft: 5,
   },
   cancelBtnText: {
-    fontFamily: "Exo-Bold",
     color: primary,
     backgroundColor: "white",
     padding: 2.5,

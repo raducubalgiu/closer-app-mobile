@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   buttonText: {
-    fontFamily: "Exo-Medium",
     fontSize: 13,
     color: black,
   },

@@ -88,11 +88,8 @@ const styles = StyleSheet.create({
     borderRadius: 2.5,
   },
   service: {
-    fontFamily: "Exo-SemiBold",
     textTransform: "uppercase",
     color: theme.lightColors.black,
   },
-  results: {
-    fontFamily: "Exo-Medium",
-  },
+  results: {},
 });

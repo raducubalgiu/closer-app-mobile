@@ -29,6 +29,6 @@ export const SearchPopularHeading = ({
 
 const styles = StyleSheet.create({
   container: { marginVertical: 20, paddingHorizontal: 15 },
-  heading: { fontFamily: "Exo-Bold", color: black, fontSize: 16 },
-  seeAll: { color: grey0, fontSize: 13, fontFamily: "Exo-Medium" },
+  heading: { color: black, fontSize: 16 },
+  seeAll: { color: grey0, fontSize: 13 },
 });

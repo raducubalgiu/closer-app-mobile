@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
   },
   title: {
-    fontFamily: "Exo-SemiBold",
     textAlign: "center",
     marginTop: 10,
     fontSize: 17,

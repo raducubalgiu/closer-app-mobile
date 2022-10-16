@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   providerBtnText: {
-    fontFamily: "Exo-Medium",
     textAlign: "center",
     color: theme.lightColors.black,
   },

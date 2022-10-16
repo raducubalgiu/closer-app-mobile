@@ -37,8 +37,6 @@ const styles = StyleSheet.create({
   activeBtn: {
     backgroundColor: theme.lightColors.primary,
   },
-  btnText: {
-    fontFamily: "Exo-SemiBold",
-  },
+  btnText: {},
   activeBtnText: { color: "white" },
 });

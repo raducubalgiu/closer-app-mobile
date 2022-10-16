@@ -99,7 +99,6 @@ const styles = StyleSheet.create({
   input: { flex: 1, padding: 15 },
   error: {
     color: theme.lightColors.error,
-    fontFamily: "Exo-Regular",
     marginLeft: 10,
     marginTop: 5,
     fontSize: 13,

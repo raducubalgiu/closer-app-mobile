@@ -50,15 +50,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontFamily: "Exo-SemiBold",
     marginVertical: 10,
     fontSize: 15,
     color: theme.lightColors.black,
     textAlign: "center",
+    fontWeight: "600",
   },
   description: {
     textAlign: "center",
-    fontFamily: "Exo-Medium",
     color: theme.lightColors.grey0,
   },
 });

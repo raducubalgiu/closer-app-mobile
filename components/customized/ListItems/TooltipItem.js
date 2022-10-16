@@ -31,11 +31,10 @@ export default TooltipTitle;
 
 const styles = StyleSheet.create({
   step: {
-    fontFamily: "Exo-Medium",
     marginLeft: 10,
     color: theme.lightColors.black,
     fontSize: 14.5,
   },
-  tooltipContainer: { color: "white", fontFamily: "Exo-Medium" },
-  tooltipText: { color: "white", fontFamily: "Exo-Medium" },
+  tooltipContainer: { color: "white" },
+  tooltipText: { color: "white" },
 });

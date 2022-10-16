@@ -37,7 +37,6 @@ const styles = StyleSheet.create({
     marginRight: width / 4,
   },
   messageText: {
-    fontFamily: "Exo-Medium",
     color: theme.lightColors.black,
   },
   likeBtn: { marginLeft: 25, marginTop: 5 },

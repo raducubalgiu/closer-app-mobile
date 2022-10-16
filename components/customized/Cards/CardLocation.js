@@ -95,11 +95,9 @@ const styles = StyleSheet.create({
   },
   business: {
     fontSize: 16,
-    fontFamily: "Exo-SemiBold",
     color: theme.lightColors.black,
   },
   address: {
-    fontFamily: "Exo-Medium",
     color: theme.lightColors.grey0,
     marginTop: 1,
     fontSize: 13,
@@ -108,11 +106,9 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   ratingsAverage: {
-    fontFamily: "Exo-SemiBold",
     marginLeft: 2.5,
   },
   ratingsQuantity: {
-    fontFamily: "Exo-Medium",
     marginLeft: 7.5,
     fontSize: 12,
     color: theme.lightColors.grey0,
@@ -123,30 +119,25 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   service: {
-    fontFamily: "Exo-SemiBold",
     backgroundColor: "#f1f1f1",
     padding: 5,
     fontSize: 12,
   },
   price: {
-    fontFamily: "Exo-Bold",
     fontSize: 15,
     marginLeft: 5,
   },
   from: {
-    fontFamily: "Exo-Regular",
     fontSize: 12,
   },
   warning: {
     marginTop: 5,
-    fontFamily: "Exo-Regular",
     fontSize: 13,
   },
   distanceC: {
     marginTop: 15,
   },
   distance: {
-    fontFamily: "Exo-SemiBold",
     marginLeft: 5,
     fontSize: 13,
     color: theme.lightColors.black,

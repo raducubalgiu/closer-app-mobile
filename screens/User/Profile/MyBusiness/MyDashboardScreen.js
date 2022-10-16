@@ -145,7 +145,6 @@ const styles = StyleSheet.create({
   },
   btnActive: { backgroundColor: primary },
   btnTxt: {
-    fontFamily: "Exo-SemiBold",
     color: black,
   },
   btnTxtActive: { color: "white" },

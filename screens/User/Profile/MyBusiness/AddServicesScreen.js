@@ -13,6 +13,8 @@ import theme from "../../../../assets/styles/theme";
 import { useAuth, useHttpGet, useHttpPatch } from "../../../../hooks";
 import { ConfirmModal } from "../../../../components/customized/Modals/ConfirmModal";
 
+const { primary } = theme.lightColors;
+
 const AddServicesScreen = () => {
   const { user } = useAuth();
   const [visible, setVisible] = useState(false);
@@ -51,8 +53,6 @@ const AddServicesScreen = () => {
     `/locations/${user?.location}/remove-service`,
     handleAfterRemove
   );
-
-  console.log("USER!!", user);
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -127,10 +127,10 @@ const styles = StyleSheet.create({
   addIcon: {
     marginLeft: 10,
     borderWidth: 1,
-    borderColor: theme.lightColors.primary,
+    borderColor: primary,
     padding: 7.5,
     borderRadius: 10,
-    backgroundColor: theme.lightColors.primary,
+    backgroundColor: primary,
   },
   disabledBtn: {
     marginLeft: 10,
@@ -140,5 +140,5 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: "#ddd",
   },
-  name: { fontFamily: "Exo-Medium" },
+  name: { fontWeight: "500" },
 });

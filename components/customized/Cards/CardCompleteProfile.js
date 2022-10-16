@@ -39,13 +39,11 @@ const styles = StyleSheet.create({
     height: 210,
   },
   title: {
-    fontFamily: "Exo-SemiBold",
     color: theme.lightColors.black,
     textAlign: "center",
     marginBottom: 2.5,
   },
   description: {
-    fontFamily: "Exo-Regular",
     color: theme.lightColors.grey0,
     fontSize: 12,
     textAlign: "center",

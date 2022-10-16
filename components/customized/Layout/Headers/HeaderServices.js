@@ -93,12 +93,10 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   service: {
-    fontFamily: "Exo-Bold",
     marginLeft: 10,
     color: black,
   },
   searchText: {
-    fontFamily: "Exo-Medium",
     marginLeft: 5,
     color: grey0,
   },

@@ -121,12 +121,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   product: {
-    fontFamily: "Exo-SemiBold",
     fontSize: 17,
     color: black,
   },
   price: {
-    fontFamily: "Exo-SemiBold",
     fontSize: 16.5,
     color: primary,
   },
@@ -143,7 +141,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   slotText: {
-    fontFamily: "Exo-SemiBold",
     fontSize: 13,
   },
   active: {

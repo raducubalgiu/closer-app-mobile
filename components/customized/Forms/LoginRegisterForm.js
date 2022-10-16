@@ -81,14 +81,13 @@ export const LoginRegisterForm = ({
 const styles = StyleSheet.create({
   container: { paddingHorizontal: 20 },
   heading: {
-    fontFamily: "Exo-SemiBold",
     fontSize: 25,
     color: theme.lightColors.black,
     marginTop: 30,
     marginBottom: 25,
   },
-  statusText: { fontFamily: "Exo-Regular", marginRight: 5 },
-  statusBtn: { fontFamily: "Exo-SemiBold" },
+  statusText: { marginRight: 5 },
+  statusBtn: {},
   inputEmail: {
     marginBottom: 0,
     borderBottomLeftRadius: 0,

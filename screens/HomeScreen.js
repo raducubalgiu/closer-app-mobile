@@ -31,24 +31,22 @@ const HomeScreen = () => {
     <SafeAreaView style={styles.screen}>
       <View style={styles.container}>
         <FakeSearchBar />
-        {(!loadLocations || loadServices) && locations?.length > 0 && (
-          <FlatList
-            ref={ref}
-            ListHeaderComponent={
-              <>
-                <ServicesList services={services} />
-                <View style={{ paddingHorizontal: 15 }}>
-                  <Text style={styles.sheetHeading}>{t("nearYou")}</Text>
-                  <Divider width={2} color="#f1f1f1" style={styles.divider} />
-                </View>
-              </>
-            }
-            data={locations}
-            keyExtractor={keyExtractor}
-            showsVerticalScrollIndicator={false}
-            renderItem={renderRecommended}
-          />
-        )}
+        <FlatList
+          ref={ref}
+          ListHeaderComponent={
+            <>
+              <ServicesList services={services} />
+              <View style={{ paddingHorizontal: 15 }}>
+                <Text style={styles.sheetHeading}>{t("nearYou")}</Text>
+                <Divider width={2} color="#f1f1f1" style={styles.divider} />
+              </View>
+            </>
+          }
+          data={locations}
+          keyExtractor={keyExtractor}
+          showsVerticalScrollIndicator={false}
+          renderItem={renderRecommended}
+        />
         {(loadLocations || loadServices) && <Spinner />}
       </View>
     </SafeAreaView>
@@ -66,7 +64,6 @@ const styles = StyleSheet.create({
   sheetHeading: {
     paddingVertical: 15,
     color: theme.lightColors.black,
-    fontFamily: "Exo-SemiBold",
     fontSize: 15,
   },
   indicatorStyle: {

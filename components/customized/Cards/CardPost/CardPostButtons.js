@@ -99,7 +99,6 @@ const styles = StyleSheet.create({
   book: {
     color: black,
     fontSize: 14.5,
-    fontFamily: "Exo-SemiBold",
   },
   buttons: { paddingHorizontal: 15, paddingVertical: 2.5 },
   button: { marginLeft: 15 },

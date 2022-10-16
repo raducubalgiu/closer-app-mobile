@@ -111,7 +111,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   tabBarStyle: {
-    fontFamily: "Exo-SemiBold",
     textTransform: "capitalize",
     fontSize: 14,
   },

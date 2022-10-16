@@ -56,7 +56,6 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   username: {
-    fontFamily: "Exo-SemiBold",
     color: black,
   },
   date: {

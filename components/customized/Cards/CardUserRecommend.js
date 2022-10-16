@@ -33,19 +33,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   name: {
-    fontFamily: "Exo-Bold",
     marginTop: 10,
     fontSize: 16,
     color: theme.lightColors.black,
   },
   followersCount: {
-    fontFamily: "Exo-SemiBold",
     fontSize: 12,
     marginTop: 1,
     marginBottom: 10,
   },
   job: {
-    fontFamily: "Exo-Medium",
     color: theme.lightColors.grey0,
     marginTop: 2,
   },

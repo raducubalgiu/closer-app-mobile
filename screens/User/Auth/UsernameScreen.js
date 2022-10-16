@@ -85,13 +85,11 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   title: {
-    fontFamily: "Exo-Medium",
     fontSize: 23,
     textAlign: "center",
     marginHorizontal: 30,
   },
   description: {
-    fontFamily: "Exo-Regular",
     textAlign: "center",
     marginVertical: 15,
     marginHorizontal: 10,
@@ -102,7 +100,6 @@ const styles = StyleSheet.create({
     padding: 15,
     borderWidth: 1,
     borderColor: "#ccc",
-    fontFamily: "Exo-Regular",
     width: "100%",
     borderRadius: 10,
     marginTop: 10,

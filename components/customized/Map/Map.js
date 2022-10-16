@@ -229,23 +229,18 @@ const styles = StyleSheet.create({
   callOut: {
     padding: 5,
   },
-  name: {
-    fontFamily: "Exo-Bold",
-  },
+  name: {},
   priceName: {
-    fontFamily: "Exo-SemiBold",
     color: theme.lightColors.grey0,
   },
   ratingsC: {
     marginVertical: 5,
   },
   ratingsAvg: {
-    fontFamily: "Exo-SemiBold",
     marginLeft: 2.5,
   },
   ratingsQuant: {
     marginLeft: 5,
-    fontFamily: "Exo-Medium",
     color: theme.lightColors.grey0,
     fontSize: 12,
   },
@@ -258,19 +253,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   distance: {
-    fontFamily: "Exo-Medium",
     fontSize: 13,
     marginLeft: 5,
     color: theme.lightColors.grey0,
   },
   from: {
-    fontFamily: "Exo-Regular",
     color: theme.lightColors.grey0,
     marginLeft: 10,
     fontSize: 10,
   },
   price: {
-    fontFamily: "Exo-SemiBold",
     marginLeft: 2.5,
     fontSize: 13.5,
   },

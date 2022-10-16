@@ -129,7 +129,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   slotText: {
-    fontFamily: "Exo-SemiBold",
     fontSize: 13,
   },
 });

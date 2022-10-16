@@ -127,7 +127,6 @@ const styles = StyleSheet.create({
   },
   heading: {
     textTransform: "uppercase",
-    fontFamily: "Exo-SemiBold",
     paddingTop: 15,
     paddingBottom: 10,
   },
@@ -138,7 +137,6 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     fontSize: 13,
     color: theme.lightColors.black,
-    fontFamily: "Exo-SemiBold",
   },
   categoryItem: {
     color: theme.lightColors.grey0,

@@ -50,9 +50,9 @@ export const DashboardCalendarSheet = () => {
 
 const styles = StyleSheet.create({
   cancelBtn: {},
-  cancelBtnTxt: { fontFamily: "Exo-Bold", fontSize: 15, color: black },
-  confirmBtnTxt: { fontFamily: "Exo-Bold", fontSize: 15, color: primary },
-  period: { fontFamily: "Exo-SemiBold", color: black, fontSize: 15 },
+  cancelBtnTxt: { fontSize: 15, color: black },
+  confirmBtnTxt: { fontSize: 15, color: primary },
+  period: { color: black, fontSize: 15 },
   button: {
     paddingVertical: 7.5,
     paddingHorizontal: 10,
@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   buttonTxt: {
-    fontFamily: "Exo-Medium",
     color: black,
   },
 });
