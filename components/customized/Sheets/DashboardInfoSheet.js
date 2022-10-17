@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
   title: {
     color: black,
     fontSize: 15,
+    fontWeight: "500",
   },
   description: { marginTop: 2.5, color: grey0 },
 });

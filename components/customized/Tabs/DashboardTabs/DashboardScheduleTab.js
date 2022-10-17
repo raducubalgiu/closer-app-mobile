@@ -280,17 +280,20 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16.5,
     color: grey0,
+    fontWeight: "500",
   },
   number: {
     color: black,
     fontSize: 17,
     marginTop: 7.5,
+    fontWeight: "600",
   },
   percentage: { marginTop: 5, color: success },
   sectionTitle: {
     color: black,
     paddingVertical: 15,
-    fontSize: 17,
+    fontSize: 16,
+    fontWeight: "600",
   },
   paymentMessage: {
     textAlign: "center",
@@ -303,6 +306,7 @@ const styles = StyleSheet.create({
   label: { color: black, fontSize: 15 },
   amount: {
     color: black,
+    fontWeight: "500",
   },
   percentage: { marginLeft: 2.5, fontSize: 13 },
   btn: {

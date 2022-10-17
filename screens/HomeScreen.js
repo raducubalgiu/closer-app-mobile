@@ -9,6 +9,8 @@ import { ServicesList, CardRecommended } from "../components/customized";
 import { useHttpGet } from "../hooks";
 import { Spinner } from "../components/core";
 
+const { black } = theme.lightColors;
+
 const HomeScreen = () => {
   const { t } = useTranslation();
   const ref = useRef(null);
@@ -63,8 +65,9 @@ const styles = StyleSheet.create({
   },
   sheetHeading: {
     paddingVertical: 15,
-    color: theme.lightColors.black,
+    color: black,
     fontSize: 15,
+    fontWeight: "600",
   },
   indicatorStyle: {
     backgroundColor: "#ddd",

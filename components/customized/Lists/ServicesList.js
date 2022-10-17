@@ -4,6 +4,8 @@ import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";
 import { Button } from "../../core";
 
+const { grey0, black } = theme.lightColors;
+
 export const ServicesList = ({ services }) => {
   const navigation = useNavigation();
 
@@ -46,12 +48,12 @@ const styles = StyleSheet.create({
     paddingTop: 5,
   },
   heading: {
-    color: theme.lightColors.black,
+    color: black,
     fontSize: 15,
   },
   seeAll: {
     fontSize: 12.5,
-    color: theme.lightColors.grey0,
+    color: grey0,
   },
   serviceBtn: {
     backgroundColor: "#f1f1f1",
@@ -64,8 +66,9 @@ const styles = StyleSheet.create({
   servicesTitle: {
     textAlign: "center",
     fontSize: 13,
-    color: theme.lightColors.black,
+    color: black,
     fontSize: 13,
+    fontWeight: "500",
   },
   image: {
     width: 70,

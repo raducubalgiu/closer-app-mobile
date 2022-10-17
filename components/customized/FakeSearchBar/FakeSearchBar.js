@@ -112,5 +112,6 @@ const styles = StyleSheet.create({
     marginRight: 5,
     color: black,
     fontSize: 13.5,
+    fontWeight: "600",
   },
 });

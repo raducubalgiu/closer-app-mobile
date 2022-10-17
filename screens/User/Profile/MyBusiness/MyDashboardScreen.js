@@ -146,6 +146,8 @@ const styles = StyleSheet.create({
   btnActive: { backgroundColor: primary },
   btnTxt: {
     color: black,
+    fontWeight: "500",
+    fontSize: 13.5,
   },
-  btnTxtActive: { color: "white" },
+  btnTxtActive: { color: "white", fontWeight: "600" },
 });

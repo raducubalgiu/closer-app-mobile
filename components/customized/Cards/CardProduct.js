@@ -55,7 +55,7 @@ export const CardProduct = ({
           <Text style={styles.name}>{name} </Text>
           {option && (
             <Stack direction="row">
-              <Text style={styles.option}>Barbati</Text>
+              <Text style={styles.option}>{option?.name}</Text>
               <Text style={styles.duration}>{currDuration}</Text>
             </Stack>
           )}

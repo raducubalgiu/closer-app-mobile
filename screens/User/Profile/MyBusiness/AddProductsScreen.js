@@ -10,12 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { useAuth, useHttpGet, useHttpPost } from "../../../../hooks";
 import { required, maxField, minField } from "../../../../constants/validation";
-import {
-  MainButton,
-  FormInput,
-  Stack,
-  Spinner,
-} from "../../../../components/core";
+import { MainButton, FormInput, Stack } from "../../../../components/core";
 import { Header, Feedback, FormInputSelect } from "../../../../components/core";
 
 const defaultValues = {
@@ -53,12 +48,11 @@ const AddProductsScreen = () => {
       merge: true,
     });
 
-  const { makePost } = useHttpPost(`/products`, goBack);
+  const { makePost, loading: loadingSubmit } = useHttpPost(`/products`, goBack);
 
   const handleCreate = (data) => {
     makePost({
       ...data,
-      option: data.option._id,
       user: user._id,
       location: user.location,
     });
@@ -136,7 +130,7 @@ const AddProductsScreen = () => {
               fullWidth
               title={t("add")}
               onPress={handleSubmit(handleCreate)}
-              loading={loading}
+              loading={loadingSubmit}
             />
           </Stack>
         </KeyboardAvoidingView>
