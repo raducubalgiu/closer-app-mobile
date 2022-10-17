@@ -4,6 +4,8 @@ import { Icon } from "@rneui/themed";
 import { IconBackButton, Stack } from "../../../core";
 import theme from "../../../../assets/styles/theme";
 
+const { grey0 } = theme.lightColors;
+
 export const SheetHeader = ({ title, description, sx }) => {
   return (
     <Stack direction="row" sx={{ ...styles.sheetOverview, ...sx }}>
@@ -27,12 +29,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 10,
     fontSize: 17,
+    fontWeight: "600",
   },
   description: {
-    color: theme.lightColors.grey0,
+    color: grey0,
     marginTop: 5,
     textAlign: "center",
-    fontSize: 16,
+    fontSize: 15,
     marginBottom: 15,
   },
 });

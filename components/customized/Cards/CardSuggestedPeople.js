@@ -10,13 +10,14 @@ import {
 } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
+import { trimFunc } from "../../../utils";
 
-const { grey0 } = theme.lightColors;
+const { grey0, black, primary } = theme.lightColors;
 
 export const CardSuggestedPeople = ({
   avatar,
   username,
-  business,
+  profession,
   noFollowers,
   onPress,
   followeeId,
@@ -42,8 +43,8 @@ export const CardSuggestedPeople = ({
           <CustomAvatar avatar={avatar} size={75} iconSize={35} />
         </Stack>
         <Text style={styles.username}>@{username}</Text>
-        <Stack direction="row">
-          <Text style={styles.business}>{business}</Text>
+        <Stack direction="row" sx={{ marginTop: 2.5 }}>
+          <Text style={styles.business}>{trimFunc(profession, 12)}</Text>
           <Stack direction="row" sx={{ marginLeft: 2.5 }}>
             <IconStar />
             <Text style={styles.ratingsAverage}>{ratingsAverage}</Text>
@@ -76,23 +77,26 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
   },
   name: {
-    color: theme.lightColors.black,
+    color: black,
+    fontWeight: "600",
   },
   username: {
-    color: theme.lightColors.black,
+    color: black,
     marginTop: 5,
     marginBottom: 1,
+    fontWeight: "600",
   },
   followers: {
-    color: theme.lightColors.grey0,
+    color: grey0,
     fontSize: 13,
     marginTop: 20,
   },
   business: {
-    color: theme.lightColors.primary,
+    color: primary,
     textTransform: "capitalize",
+    fontWeight: "600",
   },
   followBtn: { width: "100%", marginTop: 10 },
   followBtnText: { textAlign: "center" },
-  ratingsAverage: { marginLeft: 2.5 },
+  ratingsAverage: { marginLeft: 2.5, fontWeight: "600" },
 });

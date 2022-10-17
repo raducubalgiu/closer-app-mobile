@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: { height: height / 8, margin: 25 },
-  mainHeading: { color: "white", fontSize: 28 },
+  mainHeading: { color: "white", fontSize: 28, fontWeight: "700" },
   body: {
     flex: 1,
     backgroundColor: "white",

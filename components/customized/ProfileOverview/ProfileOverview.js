@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { THIRD_ROLE } from "@env";
+import { MAIN_ROLE, SECOND_ROLE, THIRD_ROLE } from "@env";
 import { useTranslation } from "react-i18next";
 import { Icon } from "@rneui/themed";
 import moment from "moment";
@@ -13,6 +13,7 @@ import {
   IconStar,
   Button,
   IconLocation,
+  Protected,
 } from "../../core";
 import { useAuth } from "../../../hooks";
 
@@ -80,10 +81,12 @@ export const ProfileOverview = ({ name, username, avatar, children, user }) => {
         <Text style={styles.name}>{name}</Text>
         <Stack direction="row" justify="start">
           <Text style={styles.business}>{profession?.name}</Text>
-          <IconStar sx={styles.star} />
-          <Text style={styles.ratingsAverage}>
-            {counter?.ratingsAverage?.toFixed(1)}
-          </Text>
+          <Protected userRole={role} roles={[MAIN_ROLE, SECOND_ROLE]}>
+            <IconStar sx={styles.star} />
+            <Text style={styles.ratingsAverage}>
+              {counter?.ratingsAverage?.toFixed(1)}
+            </Text>
+          </Protected>
         </Stack>
         {/* <Stack direction="row" sx={{ marginTop: 10 }}>
           <Button onPress={() => navigation.navigate("About")}>

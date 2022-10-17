@@ -62,87 +62,87 @@ export const useCalendarList = () => {
         color: primary,
         textColor: "white",
       },
-      "2022-08-2": {
+      "2022-11-2": {
         color: "#f1f1f1",
         textColor: black,
       },
-      "2022-08-03": {
+      "2022-11-03": {
         color: "#f1f1f1",
         textColor: black,
       },
-      "2022-08-04": {
+      "2022-11-04": {
         color: "#f1f1f1",
         textColor: black,
       },
-      "2022-08-05": {
+      "2022-11-05": {
         color: "#f1f1f1",
         textColor: black,
       },
-      "2022-08-06": {
+      "2022-11-06": {
         color: "#f1f1f1",
         textColor: black,
       },
-      "2022-08-07": {
+      "2022-11-07": {
         color: "#f1f1f1",
         textColor: black,
       },
-      "2022-08-08": {
+      "2022-11-08": {
         color: "#f1f1f1",
         textColor: black,
       },
-      "2022-08-09": {
+      "2022-11-09": {
         color: "#f1f1f1",
         textColor: black,
       },
-      "2022-08-10": {
+      "2022-11-10": {
         color: "#f1f1f1",
         textColor: black,
       },
-      "2022-08-11": {
+      "2022-11-11": {
         color: "#f1f1f1",
         textColor: black,
       },
-      "2022-08-12": {
+      "2022-11-12": {
         color: "#f1f1f1",
         textColor: black,
       },
-      "2022-08-13": {
+      "2022-11-13": {
         color: "#f1f1f1",
         textColor: black,
       },
-      "2022-08-14": {
+      "2022-11-14": {
         color: "#f1f1f1",
         textColor: black,
       },
-      "2022-08-15": {
+      "2022-11-15": {
         color: "#f1f1f1",
         textColor: black,
       },
-      "2022-08-16": {
+      "2022-11-16": {
         color: "#f1f1f1",
         textColor: black,
       },
-      "2022-08-17": {
+      "2022-11-17": {
         color: "#f1f1f1",
         textColor: black,
       },
-      "2022-08-18": {
+      "2022-11-18": {
         color: "#f1f1f1",
         textColor: black,
       },
-      "2022-08-19": {
+      "2022-11-19": {
         color: "#f1f1f1",
         textColor: black,
       },
-      "2022-08-20": {
+      "2022-11-20": {
         color: "#f1f1f1",
         textColor: black,
       },
-      "2022-08-21": {
+      "2022-11-21": {
         color: "#f1f1f1",
         textColor: black,
       },
-      "2022-08-22": {
+      "2022-11-22": {
         color: "#f1f1f1",
         textColor: black,
       },
@@ -184,12 +184,11 @@ export const useCalendarList = () => {
         futureScrollRange={3}
         markingType={"period"}
         theme={{
-          textDayHeaderFontFamily: "Exo-Medium",
-          textMonthFontFamily: "Exo-SemiBold",
-          textDayFontFamily: "Exo-SemiBold",
           textDayFontSize: 14,
+          textDayFontWeight: "500",
           arrowColor: primary,
           disabledArrowColor: "#f1f1f1",
+          textMonthFontWeight: "600",
         }}
         markedDates={marked}
         automaticallyAdjustContentInsets={true}

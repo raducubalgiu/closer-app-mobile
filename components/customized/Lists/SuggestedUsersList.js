@@ -19,13 +19,13 @@ export const SuggestedUsersList = ({ suggested, userId }) => {
   );
 
   const renderSuggested = useCallback(({ item }) => {
-    const { avatar, name, business, counter, username, _id } = item;
+    const { avatar, name, profession, counter, username, _id } = item;
 
     return (
       <CardSuggestedPeople
         avatar={avatar}
         title={name}
-        business={business?.name}
+        profession={profession?.name}
         noFollowers={counter?.followersCount}
         ratingsAverage={counter?.ratingsAverage?.toFixed(1)}
         username={username}
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     margin: 15,
   },
   title: {
-    fontFamily: "Exo-SemiBold",
+    fontWeight: "600",
     color: black,
     marginBottom: 10,
     fontSize: 15,

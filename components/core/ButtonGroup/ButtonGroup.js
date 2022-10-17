@@ -26,8 +26,9 @@ export const ButtonGroup = ({ activeButton, size, onPress, buttons, sx }) => {
     btnTxt: {
       color: black,
       fontSize: 13,
+      fontWeight: "500",
     },
-    btnTxtActive: { fontSize: 13.5 },
+    btnTxtActive: { fontSize: 13.5, fontWeight: "600" },
   });
 
   const handleButton = useCallback((index) => {
