@@ -15,6 +15,8 @@ export const HeaderServices = ({
   checked,
   period,
   onDisplayPrice,
+  onDisplayDistance,
+  onDisplayRating,
 }) => {
   const navigation = useNavigation();
   const { t } = useTranslation();
@@ -67,12 +69,12 @@ export const HeaderServices = ({
         <ButtonFilter
           sx={styles.item}
           title={t("distance")}
-          onPress={() => {}}
+          onPress={onDisplayDistance}
         />
         <ButtonFilter
           sx={styles.item}
           title={t("ratings")}
-          onPress={() => {}}
+          onPress={onDisplayRating}
         />
       </ScrollView>
     </Stack>

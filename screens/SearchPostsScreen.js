@@ -118,7 +118,7 @@ const SearchPostsScreen = () => {
           <CustomAvatar avatar={item?.avatar} />
           <Stack align="start" sx={{ marginLeft: 10 }}>
             <Stack direction="row">
-              <Text style={styles.username}>{item.username}</Text>
+              <Text style={styles.username}>@{item.username}</Text>
               {item.checkmark && <Checkmark />}
             </Stack>
             <Text style={styles.name}>{item.name}</Text>
@@ -253,6 +253,8 @@ const styles = StyleSheet.create({
   },
   username: {
     marginRight: 5,
+    fontWeight: "500",
+    fontSize: 15,
   },
   name: {
     color: grey0,

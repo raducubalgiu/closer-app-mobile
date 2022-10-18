@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
   },
   username: {
     color: black,
+    fontWeight: "600",
   },
   date: {
     color: grey0,

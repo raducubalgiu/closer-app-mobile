@@ -5,11 +5,14 @@ import theme from "../../../../assets/styles/theme";
 import { CustomAvatar, Stack, Checkmark, Button } from "../../../core";
 import { Icon } from "@rneui/themed";
 
+const { grey0 } = theme.lightColors;
+
 const CardPostHeader = ({
   userId,
   avatar,
   username,
   checkmark,
+  profession,
   name,
   onShowDetails,
 }) => {
@@ -30,8 +33,8 @@ const CardPostHeader = ({
         <Stack direction="row" sx={styles.avatarContainer}>
           <CustomAvatar avatar={avatar} size={35} iconSize={15} />
           <Stack align="start">
-            <Text style={styles.name}>{username}</Text>
-            <Text style={styles.job}>Service Auto</Text>
+            <Text style={styles.name}>@{username}</Text>
+            <Text style={styles.profession}>{profession?.name}</Text>
           </Stack>
         </Stack>
       </Button>
@@ -49,10 +52,10 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   name: { marginLeft: 10, fontWeight: "600", fontSize: 14 },
-  job: {
+  profession: {
     marginLeft: 10,
-    color: theme.lightColors.black,
-    fontSize: 12,
+    color: grey0,
+    fontSize: 12.5,
     textTransform: "capitalize",
     fontWeight: "500",
   },

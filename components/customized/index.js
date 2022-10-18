@@ -68,6 +68,9 @@ export { LoginRegisterForm } from "../customized/Forms/LoginRegisterForm";
 export { AuthProviders } from "../customized/Forms/AuthProviders";
 
 export { BusinessScheduleModal } from "../customized/Modals/BusinessScheduleModal";
+export { FilterPriceModal } from "../customized/Modals/FilterPriceModal";
+export { FilterDistanceModal } from "../customized/Modals/FilterDistanceModal";
+export { FilterRatingModal } from "../customized/Modals/FilterRatingModal";
 
 export { EditProfileSheet } from "../customized/Sheets/EditProfileSheet";
 export { DashboardInfoSheet } from "../customized/Sheets/DashboardInfoSheet";

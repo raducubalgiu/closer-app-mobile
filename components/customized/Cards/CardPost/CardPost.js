@@ -16,7 +16,7 @@ export const CardPost = ({ post, onShowDetails }) => {
     createdAt,
     user,
   } = post || {};
-  const { name, username, avatar, checkmark } = user || {};
+  const { name, username, avatar, checkmark, profession } = user || {};
 
   return (
     <View style={styles.container}>
@@ -25,6 +25,7 @@ export const CardPost = ({ post, onShowDetails }) => {
         avatar={avatar}
         username={username}
         name={name}
+        profession={profession}
         checkmark={checkmark}
         onShowDetails={onShowDetails}
       />

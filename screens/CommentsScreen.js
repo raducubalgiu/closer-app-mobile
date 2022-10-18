@@ -22,6 +22,8 @@ import { CommentListItem } from "../components/customized";
 import { useTranslation } from "react-i18next";
 import { useHttpGet, useHttpPost } from "../hooks";
 
+const { black, grey0, primary } = theme.lightColors;
+
 const CommentsScreen = ({ route }) => {
   const { user } = useAuth();
   const { postId, description, avatar, username, date, focus } = route.params;
@@ -64,7 +66,7 @@ const CommentsScreen = ({ route }) => {
           <CustomAvatar size={32.5} iconSize={15} avatar={avatar} />
           <View style={{ marginLeft: 10, flex: 1 }}>
             <Text>
-              <Text style={styles.username}>{username} </Text>
+              <Text style={styles.username}>@{username} </Text>
               {description}
             </Text>
             <Text style={styles.date}>{date}</Text>
@@ -144,12 +146,12 @@ const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: "space-between" },
   headerCont: { flexDirection: "row", margin: 15 },
   username: {
-    color: theme.lightColors.black,
-    fontWeight: "600",
+    color: black,
+    fontWeight: "500",
     fontSize: 15.5,
   },
   date: {
-    color: theme.lightColors.grey0,
+    color: grey0,
     marginTop: 1,
     fontSize: 13,
   },
@@ -166,7 +168,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   iconBtn: {
-    backgroundColor: theme.lightColors.primary,
+    backgroundColor: primary,
     padding: 7.5,
     marginLeft: 10,
     borderRadius: 50,

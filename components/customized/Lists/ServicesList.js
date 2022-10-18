@@ -23,7 +23,7 @@ export const ServicesList = ({ services }) => {
     ),
     []
   );
-  const keyExtractor = useCallback((item) => item.id, []);
+  const keyExtractor = useCallback((item) => item._id, []);
 
   return (
     <FlatList

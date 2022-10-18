@@ -41,6 +41,7 @@ const UsernameScreen = ({ route }) => {
           followersCount: 0,
           followingCount: 0,
           postsCount: 0,
+          productsCount: 0,
         },
         token: idTokenResult?.token,
       });

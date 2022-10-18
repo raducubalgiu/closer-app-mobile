@@ -6,9 +6,11 @@ import {
   CardLocation,
   Map,
   SheetService,
+  FilterPriceModal,
+  FilterDistanceModal,
+  FilterRatingModal,
 } from "../components/customized";
 import { useHttpGet } from "../hooks";
-import { CModal, MainButton } from "../components/core";
 
 const LocationsScreen = ({ route }) => {
   const { service, option, period } = route.params;
@@ -20,7 +22,11 @@ const LocationsScreen = ({ route }) => {
   const latlng = "26.100195,44.428286";
   const [results, setResults] = useState(0);
   const [checked, setChecked] = useState(true);
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState({
+    price: false,
+    distance: false,
+    rating: false,
+  });
   const NOW = moment.utc();
 
   let customPeriod;
@@ -78,21 +84,26 @@ const LocationsScreen = ({ route }) => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <CModal
-        visible={visible}
-        size="sm"
-        headerTitle="Filtreaza pretul"
-        footer={<MainButton title="Submit" />}
-        onCloseModal={() => setVisible(false)}
-      >
-        <Text>Hello World</Text>
-      </CModal>
+      <FilterPriceModal
+        visible={visible.price}
+        onClose={() => setVisible({ ...visible, price: false })}
+      />
+      <FilterDistanceModal
+        visible={visible.distance}
+        onClose={() => setVisible({ ...visible, distance: false })}
+      />
+      <FilterRatingModal
+        visible={visible.rating}
+        onClose={() => setVisible({ ...visible, rating: false })}
+      />
       <HeaderServices
         period={period}
         onToggleSwitch={toggleSwitch}
         serviceName={service?.name}
         checked={checked}
-        onDisplayPrice={() => setVisible(true)}
+        onDisplayPrice={() => setVisible({ ...visible, price: true })}
+        onDisplayDistance={() => setVisible({ ...visible, distance: true })}
+        onDisplayRating={() => setVisible({ ...visible, rating: true })}
       />
       {!checked && list}
       {checked && (
