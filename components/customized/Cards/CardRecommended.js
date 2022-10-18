@@ -6,16 +6,17 @@ import theme from "../../../assets/styles/theme";
 import { AddressFormat, trimFunc } from "../../../utils";
 
 const { width } = Dimensions.get("window");
+const { black, grey0 } = theme.lightColors;
 
 export const CardRecommended = ({ location }) => {
-  const { _id, images, name, username, avatar, distance, services, counter } =
-    location;
+  const { images, distance, services, counter, address, owner } = location;
+  const { name, username, avatar } = owner;
   const navigation = useNavigation();
   const { t } = useTranslation();
 
   const goToUser = () => {
     navigation.push("ProfileGeneral", {
-      userId: _id,
+      userId: owner?._id,
       avatar,
       username,
       name,
@@ -42,7 +43,7 @@ export const CardRecommended = ({ location }) => {
             </Stack>
           </Stack>
           <Text style={styles.address}>
-            {trimFunc(AddressFormat(location?.location), 30)}
+            {trimFunc(AddressFormat(address), 30)}
           </Text>
           <Stack direction="row">
             <Text style={styles.service}>{services[0]?.name}</Text>
@@ -82,18 +83,20 @@ const styles = StyleSheet.create({
   },
   name: {
     flex: 1,
-    color: theme.lightColors.black,
+    color: black,
     fontSize: 14,
     textTransform: "capitalize",
+    fontWeight: "600",
   },
   distance: {
     fontSize: 12,
-    color: theme.lightColors.black,
+    color: black,
+    fontWeight: "600",
   },
   address: {
     fontSize: 12,
     marginTop: 2,
-    color: theme.lightColors.grey0,
+    color: grey0,
     fontSize: 13,
   },
   service: {
@@ -105,18 +108,19 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingVertical: 2,
     paddingHorizontal: 10,
-    color: theme.lightColors.black,
+    color: black,
   },
   ratingsAvg: {
     marginLeft: 2,
     fontSize: 13,
-    color: theme.lightColors.black,
+    color: black,
+    fontWeight: "600",
   },
   ratingsQuant: {
     marginLeft: 4,
     fontSize: 13,
     padding: 2,
-    color: theme.lightColors.grey0,
+    color: grey0,
   },
   iconVideo: {
     position: "absolute",

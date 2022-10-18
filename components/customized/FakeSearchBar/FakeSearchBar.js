@@ -1,35 +1,24 @@
 import { StyleSheet, Text, View } from "react-native";
 import { Icon, Divider } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
-import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";
 import { Button, Stack } from "../../core";
 
 const { black, grey0 } = theme.lightColors;
 
-const FakeSearchBar = () => {
+const FakeSearchBar = ({ onGoAnytime, onGoNow }) => {
   const { t } = useTranslation();
-  const navigation = useNavigation();
-
-  const goToServicesAnytime = () =>
-    navigation.navigate("SearchServices", {
-      period: { code: 0 },
-    });
-  const goToServicesNow = () =>
-    navigation.navigate("SearchServices", {
-      period: { code: 1 },
-    });
 
   return (
     <View style={styles.container}>
-      <Button onPress={goToServicesAnytime} sx={{ flex: 1 }}>
+      <Button onPress={onGoAnytime} sx={{ flex: 1 }}>
         <Stack direction="row" justify="start">
           <Icon name="search" type="feather" color={black} size={20} />
           <Text style={styles.fakeInputText}>{t("searchService")}</Text>
         </Stack>
       </Button>
       <Divider orientation="vertical" style={{ marginRight: 15 }} />
-      <Button onPress={goToServicesNow} sx={styles.nowBtn}>
+      <Button onPress={onGoNow} sx={styles.nowBtn}>
         <Icon
           name="clock"
           type="feather"

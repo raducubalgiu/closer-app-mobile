@@ -14,6 +14,7 @@ export const HeaderServices = ({
   serviceName,
   checked,
   period,
+  onDisplayPrice,
 }) => {
   const navigation = useNavigation();
   const { t } = useTranslation();
@@ -39,7 +40,7 @@ export const HeaderServices = ({
   return (
     <Stack>
       <Stack direction="row" sx={styles.header}>
-        <IconBackButton onPress={() => navigation.navigate("Home")} />
+        <IconBackButton onPress={() => navigation.goBack()} />
         <TouchableOpacity style={styles.search}>
           <Icon name="search" size={18} color={grey0} />
           <Text style={styles.service}>{serviceName},</Text>
@@ -58,7 +59,11 @@ export const HeaderServices = ({
           color="#f1f1f1"
           style={styles.item}
         />
-        <ButtonFilter sx={styles.item} title={t("price")} onPress={() => {}} />
+        <ButtonFilter
+          sx={styles.item}
+          title={t("price")}
+          onPress={onDisplayPrice}
+        />
         <ButtonFilter
           sx={styles.item}
           title={t("distance")}
@@ -95,10 +100,12 @@ const styles = StyleSheet.create({
   service: {
     marginLeft: 10,
     color: black,
+    fontWeight: "700",
   },
   searchText: {
     marginLeft: 5,
     color: grey0,
+    fontWeight: "500",
   },
   filters: {
     paddingHorizontal: 5,

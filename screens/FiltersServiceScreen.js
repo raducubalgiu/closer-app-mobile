@@ -1,23 +1,27 @@
 import { StyleSheet, Text, FlatList } from "react-native";
 import React, { useCallback, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Button, Spinner } from "../components/core";
+import { Button } from "../components/core";
 import { FiltersContainer, SheetHeader } from "../components/customized";
 import theme from "../assets/styles/theme";
-import { useHttpGet } from "../hooks";
+
+const { black, primary } = theme.lightColors;
 
 const FiltersServiceScreen = ({ route }) => {
   const navigation = useNavigation();
   const { service, period } = route.params;
-  const [filter, setFilter] = useState(null);
+  const { filters } = service;
   const [option, setOption] = useState("");
 
-  const { loading } = useHttpGet(`/services/${service?._id}`, (data) =>
-    setFilter(data.service.filters[0])
-  );
-
-  const activeBtn = { ...styles.button, backgroundColor: "#bbb" };
-  const activeBtnTxt = { ...styles.buttonText, color: "white" };
+  const activeBtn = {
+    ...styles.button,
+    backgroundColor: "#bbb",
+  };
+  const activeBtnTxt = {
+    ...styles.buttonText,
+    color: "white",
+    fontWeight: "600",
+  };
 
   const goToServices = () =>
     navigation.navigate("Locations", {
@@ -50,17 +54,15 @@ const FiltersServiceScreen = ({ route }) => {
       onNext={goToServices}
     >
       <SheetHeader
-        title={`Filtru - ${filter?.name}`}
-        description={option?.name}
+        title={`Filtru - ${filters[0]?.name}`}
+        description={"Radu"}
       />
-      {!loading && (
-        <FlatList
-          bounces={false}
-          data={filter?.options}
-          keyExtractor={(item) => item._id}
-          renderItem={renderOption}
-        />
-      )}
+      <FlatList
+        bounces={false}
+        data={filters[0]?.options}
+        keyExtractor={(item) => item._id}
+        renderItem={renderOption}
+      />
     </FiltersContainer>
   );
 };
@@ -69,7 +71,7 @@ export default FiltersServiceScreen;
 
 const styles = StyleSheet.create({
   screen: {
-    backgroundColor: theme.lightColors.primary,
+    backgroundColor: primary,
     flex: 1,
   },
   mainHeading: { color: "white", fontSize: 28 },
@@ -90,6 +92,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     textAlign: "center",
-    color: theme.lightColors.black,
+    color: black,
+    fontWeight: "500",
   },
 });

@@ -17,6 +17,7 @@ import { FormProvider, useForm } from "react-hook-form";
 
 const FiltersDateScreen = ({ route }) => {
   const { service, period } = route.params;
+  const { filters } = service;
   const navigation = useNavigation();
   const { calendar, startDate, endDate } = useCalendarList();
   const [activeBtn, setActiveBtn] = useState(period.code);
@@ -28,22 +29,17 @@ const FiltersDateScreen = ({ route }) => {
   const { handleSubmit, watch } = methods;
 
   const goNext = () => {
-    axios
-      .get(`${process.env.BASE_ENDPOINT}/services/${service?._id}/filters`)
-      .then((res) => {
-        if (res.data.filters.length === 0) {
-          navigation.navigate("Services", {
-            service,
-            period: { ...period, code: activeBtn, startDate, endDate },
-          });
-        } else {
-          navigation.navigate("FiltersService", {
-            service,
-            period: { ...period, code: activeBtn, startDate, endDate },
-          });
-        }
-      })
-      .catch((err) => console.log(err));
+    if (filters.length > 0) {
+      navigation.navigate("FiltersService", {
+        service,
+        period: { ...period, code: activeBtn, startDate, endDate },
+      });
+    } else {
+      navigation.navigate("Locations", {
+        service,
+        period: { ...period, code: activeBtn, startDate, endDate },
+      });
+    }
   };
 
   const dateButtons = [

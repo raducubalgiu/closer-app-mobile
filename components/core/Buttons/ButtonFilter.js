@@ -31,5 +31,6 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 13,
     color: black,
+    fontWeight: "500",
   },
 });

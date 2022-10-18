@@ -28,7 +28,7 @@ export const ListItem = ({
       <Stack
         sx={{ marginTop: mt ? mt : 10, ...sx }}
         direction="row"
-        align="start"
+        align="center"
         justify={justify}
       >
         {children}

@@ -4,7 +4,6 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import theme from "../../../../assets/styles/theme";
 import { ServiceTab } from "../ServiceTab/ServiceTab";
 import { useHttpGet } from "../../../../hooks";
-import { countBy } from "lodash";
 
 const { black } = theme.lightColors;
 const { width } = Dimensions.get("window");
@@ -17,9 +16,7 @@ export const TopTabProducts = ({ userId, services, initialRoute, option }) => {
     tabBarLabelStyle: styles.tabLabel,
     tabBarIndicatorStyle: styles.tabIndicator,
     tabBarScrollEnabled: true,
-    tabBarItemStyle: {
-      width: 90,
-    },
+    tabBarItemStyle: { width: 90 },
     tabBarContentContainerStyle: { height: 35 },
   };
 

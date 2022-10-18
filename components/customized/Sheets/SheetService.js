@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     color: theme.lightColors.black,
     fontSize: 15,
     textAlign: "center",
+    fontWeight: "600",
   },
   indicatorStyle: {
     backgroundColor: "#ddd",

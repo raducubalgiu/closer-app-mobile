@@ -1,20 +1,26 @@
-import { SafeAreaView, StyleSheet, View, FlatList } from "react-native";
-import React, { useState, useCallback, useEffect } from "react";
+import { SafeAreaView, StyleSheet, View, FlatList, Text } from "react-native";
+import React, { useState, useCallback } from "react";
 import moment from "moment";
-import axios from "axios";
 import {
   HeaderServices,
   CardLocation,
   Map,
   SheetService,
 } from "../components/customized";
+import { useHttpGet } from "../hooks";
+import { CModal, MainButton } from "../components/core";
 
 const LocationsScreen = ({ route }) => {
   const { service, option, period } = route.params;
   const { startDate, endDate } = period;
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(1000);
+  const [minDistance, setMinDistance] = useState(0);
+  const [maxDistance, setMaxDistance] = useState(50000);
+  const latlng = "26.100195,44.428286";
   const [results, setResults] = useState(0);
   const [checked, setChecked] = useState(true);
-  const [locations, setLocations] = useState([]);
+  const [visible, setVisible] = useState(false);
   const NOW = moment.utc();
 
   let customPeriod;
@@ -40,18 +46,9 @@ const LocationsScreen = ({ route }) => {
       customPeriod = { ...period };
   }
 
-  useEffect(() => {
-    axios
-      .post(`${process.env.BASE_ENDPOINT}/users/get-by-distance`, {
-        latlng: "26.100195,44.428286",
-        serviceId: service?._id,
-        option: option?._id,
-        start: customPeriod.startDate,
-        end: customPeriod.endDate,
-      })
-      .then((res) => setLocations(res.data))
-      .catch((err) => console.log(err));
-  }, []);
+  const { data: locations } = useHttpGet(
+    `/locations?latlng=${latlng}&serviceId=${service?._id}&option=${option?._id}&minprice=${minPrice}&maxprice=${maxPrice}&mindistance=${minDistance}&maxdistance=${maxDistance}`
+  );
 
   const renderLocation = useCallback(
     ({ item }) => (
@@ -81,11 +78,21 @@ const LocationsScreen = ({ route }) => {
 
   return (
     <SafeAreaView style={styles.screen}>
+      <CModal
+        visible={visible}
+        size="sm"
+        headerTitle="Filtreaza pretul"
+        footer={<MainButton title="Submit" />}
+        onCloseModal={() => setVisible(false)}
+      >
+        <Text>Hello World</Text>
+      </CModal>
       <HeaderServices
         period={period}
         onToggleSwitch={toggleSwitch}
         serviceName={service?.name}
         checked={checked}
+        onDisplayPrice={() => setVisible(true)}
       />
       {!checked && list}
       {checked && (

@@ -89,11 +89,13 @@ const styles = StyleSheet.create({
   mainHeading: {
     fontSize: 27,
     color: black,
+    fontWeight: "600",
   },
   mainBtnText: {
     textAlign: "center",
     color: "white",
     fontSize: 15,
+    fontWeight: "500",
   },
   secondHeading: {
     color: grey0,
@@ -116,8 +118,9 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   btnAction: {
-    fontSize: 15,
+    fontSize: 15.5,
     color: black,
+    fontWeight: "600",
   },
   businessContainer: {
     marginVertical: 10,
@@ -129,12 +132,13 @@ const styles = StyleSheet.create({
   },
   registerBtnText: {
     marginTop: 5,
-    fontSize: 15,
+    fontSize: 15.5,
+    fontWeight: "600",
   },
   listItem: { marginBottom: 10 },
   text: {
-    fontSize: 17,
-    color: theme.lightColors.black,
+    fontSize: 16,
+    color: black,
     marginLeft: 10,
   },
 });

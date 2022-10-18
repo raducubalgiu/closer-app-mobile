@@ -3,7 +3,6 @@ import { StyleSheet, View, ActivityIndicator } from "react-native";
 import { useAuth, useHttpGet } from "../../../../hooks";
 import { CardProduct } from "../../Cards/CardProduct";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
-import { find } from "lodash";
 
 export const ServiceTab = ({ userId, service, option }) => {
   const { user } = useAuth();
@@ -13,7 +12,9 @@ export const ServiceTab = ({ userId, service, option }) => {
     `/users/${userId}/services/${service?._id}/products`
   );
 
-  const filteredProducts = find(products, { option });
+  const filteredProducts = products.filter(
+    (prod) => prod.option._id === option?._id
+  );
   const results = option ? filteredProducts : products;
 
   const noFoundProducts = (

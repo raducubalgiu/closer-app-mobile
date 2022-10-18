@@ -48,10 +48,7 @@ const SearchServicesScreen = ({ route }) => {
             signal: controller.signal,
             headers: { Authorization: `Bearer ${user?.token}` },
           })
-          .then((res) => {
-            console.log("SERVICES!!", res.data);
-            setServices(res.data);
-          })
+          .then((res) => setServices(res.data))
           .catch((err) => console.log(err));
       } else {
         setServices([]);

@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Divider } from "@rneui/themed";
 import FakeSearchBar from "../components/customized/FakeSearchBar/FakeSearchBar";
 import theme from "../assets/styles/theme";
-import { useScrollToTop } from "@react-navigation/native";
+import { useNavigation, useScrollToTop } from "@react-navigation/native";
 import { ServicesList, CardRecommended } from "../components/customized";
 import { useHttpGet } from "../hooks";
 import { Spinner } from "../components/core";
@@ -14,11 +14,12 @@ const { black } = theme.lightColors;
 const HomeScreen = () => {
   const { t } = useTranslation();
   const ref = useRef(null);
+  const navigation = useNavigation();
 
   useScrollToTop(ref);
 
   const { data: locations, loadLocations } = useHttpGet(
-    `/users/get-recommended?latlng=26.100195,44.428286`
+    `/locations/get-recommended?latlng=26.100195,44.428286`
   );
 
   const { data: services, loading: loadServices } = useHttpGet(`/services`);
@@ -29,21 +30,35 @@ const HomeScreen = () => {
   );
   const keyExtractor = useCallback((item) => item._id, []);
 
+  const goToServicesAnytime = () =>
+    navigation.navigate("SearchServices", {
+      period: { code: 0 },
+    });
+  const goToServicesNow = () =>
+    navigation.navigate("SearchServices", {
+      period: { code: 1 },
+    });
+
+  const header = (
+    <>
+      <ServicesList services={services} />
+      <View style={{ paddingHorizontal: 15 }}>
+        <Text style={styles.sheetHeading}>{t("nearYou")}</Text>
+        <Divider width={2} color="#f1f1f1" style={styles.divider} />
+      </View>
+    </>
+  );
+
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.container}>
-        <FakeSearchBar />
+        <FakeSearchBar
+          onGoAnytime={goToServicesAnytime}
+          onGoNow={goToServicesNow}
+        />
         <FlatList
           ref={ref}
-          ListHeaderComponent={
-            <>
-              <ServicesList services={services} />
-              <View style={{ paddingHorizontal: 15 }}>
-                <Text style={styles.sheetHeading}>{t("nearYou")}</Text>
-                <Divider width={2} color="#f1f1f1" style={styles.divider} />
-              </View>
-            </>
-          }
+          ListHeaderComponent={header}
           data={locations}
           keyExtractor={keyExtractor}
           showsVerticalScrollIndicator={false}

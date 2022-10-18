@@ -7,20 +7,25 @@ import { trimFunc, AddressFormat } from "../../../utils";
 import { Button, IconLocation, IconStar, IconVideo, Stack } from "../../core";
 
 const { width } = Dimensions.get("window");
+const { black, grey0 } = theme.lightColors;
 
 export const CardLocation = ({ location, service, option }) => {
-  const { images, name, counter, minPrice, distance, _id, username, avatar } =
-    location;
+  const { images, minPrice, distance, owner, address } = location;
+  const { name, username, avatar, checkmark } = owner;
   const navigation = useNavigation();
   const { t } = useTranslation();
+
+  console.log("SERVICE!!", service);
+  console.log("OPTION!!!", option);
 
   const goToUser = () =>
     navigation.push("ProfileGeneral", {
       screen: `Products`,
-      userId: _id,
+      userId: owner?._id,
       username,
       name,
       avatar,
+      checkmark,
       service,
       option,
     });
@@ -41,16 +46,12 @@ export const CardLocation = ({ location, service, option }) => {
           <Stack align="start">
             <Text style={styles.business}>{name}</Text>
             <Text style={styles.address}>
-              {trimFunc(AddressFormat(location?.location), 60)}{" "}
+              {trimFunc(AddressFormat(address), 60)}{" "}
             </Text>
             <Stack direction="row" sx={styles.ratings}>
               <IconStar />
-              <Text style={styles.ratingsAverage}>
-                {counter?.ratingsAverage?.toFixed(1)}
-              </Text>
-              <Text style={styles.ratingsQuantity}>
-                {counter?.ratingsQuantity} {t("reviews")}
-              </Text>
+              <Text style={styles.ratingsAverage}>4.5</Text>
+              <Text style={styles.ratingsQuantity}>100 {t("reviews")}</Text>
             </Stack>
           </Stack>
           <Stack align="end">
@@ -95,10 +96,11 @@ const styles = StyleSheet.create({
   },
   business: {
     fontSize: 16,
-    color: theme.lightColors.black,
+    color: black,
+    fontWeight: "600",
   },
   address: {
-    color: theme.lightColors.grey0,
+    color: grey0,
     marginTop: 1,
     fontSize: 13,
   },
@@ -107,11 +109,12 @@ const styles = StyleSheet.create({
   },
   ratingsAverage: {
     marginLeft: 2.5,
+    fontWeight: "600",
   },
   ratingsQuantity: {
     marginLeft: 7.5,
-    fontSize: 12,
-    color: theme.lightColors.grey0,
+    fontSize: 13,
+    color: grey0,
   },
   serviceContainer: {
     flexDirection: "row",
@@ -126,6 +129,7 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 15,
     marginLeft: 5,
+    fontWeight: "600",
   },
   from: {
     fontSize: 12,
@@ -140,7 +144,8 @@ const styles = StyleSheet.create({
   distance: {
     marginLeft: 5,
     fontSize: 13,
-    color: theme.lightColors.black,
+    color: black,
+    fontWeight: "500",
   },
   iconVideo: {
     position: "absolute",

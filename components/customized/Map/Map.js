@@ -187,8 +187,8 @@ export const Map = ({ locations, serviceName }) => {
         <Marker
           key={i}
           coordinate={{
-            latitude: loc.location.coordinates[0],
-            longitude: loc.location.coordinates[1],
+            latitude: loc.address.coordinates[0],
+            longitude: loc.address.coordinates[1],
           }}
           image={require("../../../assets/images/map_marker_yellow.png")}
         >
