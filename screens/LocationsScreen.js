@@ -20,7 +20,7 @@ const LocationsScreen = ({ route }) => {
   const [minDistance, setMinDistance] = useState(0);
   const [maxDistance, setMaxDistance] = useState(50000);
   const latlng = "26.100195,44.428286";
-  const [results, setResults] = useState(0);
+  //const [results, setResults] = useState(0);
   const [checked, setChecked] = useState(true);
   const [visible, setVisible] = useState({
     price: false,
@@ -111,7 +111,7 @@ const LocationsScreen = ({ route }) => {
           <Map locations={locations} serviceName={service?.name} />
           <SheetService
             list={list}
-            results={locations?.length === 0 ? 0 : results}
+            results={locations?.length === 0 ? 0 : locations.length}
             serviceName={service?.name}
           />
         </>

@@ -16,8 +16,9 @@ import {
   Protected,
 } from "../../core";
 import { useAuth } from "../../../hooks";
+import { displayDash } from "../../../utils";
 
-const { black, grey0, primary } = theme.lightColors;
+const { black, primary } = theme.lightColors;
 
 export const ProfileOverview = ({ name, username, avatar, children, user }) => {
   const { user: userContext } = useAuth();
@@ -113,19 +114,19 @@ export const ProfileOverview = ({ name, username, avatar, children, user }) => {
         <StatsButton
           onPress={role !== THIRD_ROLE ? goToReviews : null}
           labelStats={role !== THIRD_ROLE ? t("reviews") : t("posts")}
-          statsNo={
+          statsNo={displayDash(
             role !== THIRD_ROLE ? counter?.ratingsQuantity : counter?.postsCount
-          }
+          )}
         />
         <StatsButton
           onPress={goToFollowers}
           labelStats={t("followers")}
-          statsNo={counter?.followersCount}
+          statsNo={displayDash(counter?.followersCount)}
         />
         <StatsButton
           onPress={goToFollowings}
           labelStats={t("following")}
-          statsNo={counter?.followingCount}
+          statsNo={displayDash(counter?.followingCount)}
         />
       </Stack>
       <Stack direction="row" justify="center" sx={styles.buttonsContainer}>

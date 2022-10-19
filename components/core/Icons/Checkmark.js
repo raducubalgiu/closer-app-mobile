@@ -20,7 +20,6 @@ export const Checkmark = ({ size, sx }) => {
 const styles = StyleSheet.create({
   checkmark: {
     backgroundColor: secondary,
-    marginLeft: 7.5,
     paddingVertical: 1.5,
     paddingHorizontal: 1.75,
     borderRadius: 50,

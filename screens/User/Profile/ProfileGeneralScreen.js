@@ -23,7 +23,7 @@ const ProfileGeneralScreen = ({ route }) => {
   const { t } = useTranslation();
 
   const { makePost } = useHttpPost(`/searches`);
-  const { makeGet: fetchUser } = useHttpGetFunc(`/users/${userId}`, (data) =>
+  const { makeGet: fetchUser } = useHttpGetFunc(`/users/${username}`, (data) =>
     setUserDetails(data)
   );
 
@@ -69,9 +69,9 @@ const ProfileGeneralScreen = ({ route }) => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <ProfileOverview
           user={userDetails}
-          name={name}
+          name={name ? name : userDetails?.name}
           username={username}
-          avatar={avatar}
+          avatar={avatar ? avatar : userDetails?.avatar}
         >
           <FollowButton
             size="md"

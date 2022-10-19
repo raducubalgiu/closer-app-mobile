@@ -29,11 +29,12 @@ const CommentsScreen = ({ route }) => {
   const { postId, description, avatar, username, date, focus } = route.params;
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
+  const [commentId, setCommentId] = useState(null);
+  const [prevComment, setPrevComment] = useState(null);
   const { t } = useTranslation();
+  const commentsEndpoint = `/posts/${postId}/comments`;
 
-  const { loading } = useHttpGet(`/posts/${postId}/get-comments`, (data) =>
-    setComments(data)
-  );
+  const { loading } = useHttpGet(commentsEndpoint, (data) => setComments(data));
 
   const handleUpdateAfterPost = (res) => {
     setComment("");
@@ -45,18 +46,20 @@ const CommentsScreen = ({ route }) => {
           username: user?.username,
           avatar: user?.avatar,
         },
+        previousComment: commentId,
         createdAt: res?.createdAt,
       },
       ...comments,
     ]);
   };
-  const { makePost } = useHttpPost(`/comments`, handleUpdateAfterPost);
+  const { makePost } = useHttpPost(commentsEndpoint, handleUpdateAfterPost);
 
   const handleComment = () =>
     makePost({
       comment,
       post: postId,
       user: user?._id,
+      previousComment: prevComment ? prevComment : commentId,
     });
 
   const renderHeader = useCallback(
@@ -66,32 +69,28 @@ const CommentsScreen = ({ route }) => {
           <CustomAvatar size={32.5} iconSize={15} avatar={avatar} />
           <View style={{ marginLeft: 10, flex: 1 }}>
             <Text>
-              <Text style={styles.username}>@{username} </Text>
+              <Text style={styles.username}>{username} </Text>
               {description}
             </Text>
             <Text style={styles.date}>{date}</Text>
           </View>
         </View>
-        <Divider />
+        <Divider style={{ marginVertical: 15 }} />
       </>
     ),
     [username, description, avatar]
   );
 
-  const renderComment = useCallback(({ item }) => {
-    const { user, comment, createdAt } = item || {};
+  const handleReply = (text, commentId, previousComment) => {
+    setComment(`@${text} `);
+    setCommentId(commentId);
+    setPrevComment(previousComment);
+  };
 
-    return (
-      <CommentListItem
-        userId={user?._id}
-        avatar={user?.avatar}
-        username={user?.username}
-        name={user?.name}
-        comment={comment}
-        createdAt={createdAt}
-      />
-    );
-  }, []);
+  const renderComment = useCallback(
+    ({ item }) => <CommentListItem item={item} onReply={handleReply} />,
+    []
+  );
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -108,12 +107,13 @@ const CommentsScreen = ({ route }) => {
               data={comments}
               keyExtractor={(item) => item?._id}
               renderItem={renderComment}
+              contentContainerStyle={{ padding: 15 }}
             />
           )}
         </View>
         <Divider />
         <Stack direction="row" sx={styles.inputCont}>
-          <CustomAvatar size={40} iconSize={20} avatar={user?.avatar} />
+          <CustomAvatar size={50} iconSize={20} avatar={user?.avatar} />
           <TextInput
             onChangeText={(text) => setComment(text)}
             autoCapitalize="sentences"
@@ -123,7 +123,7 @@ const CommentsScreen = ({ route }) => {
             style={styles.input}
           />
           <IconButton
-            size={17.5}
+            size={20}
             iconName="arrowup"
             iconType="antdesign"
             sx={styles.iconBtn}
@@ -144,11 +144,11 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   container: { flex: 1, justifyContent: "space-between" },
-  headerCont: { flexDirection: "row", margin: 15 },
+  headerCont: { flexDirection: "row" },
   username: {
     color: black,
     fontWeight: "500",
-    fontSize: 15.5,
+    fontSize: 15,
   },
   date: {
     color: grey0,

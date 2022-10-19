@@ -7,6 +7,8 @@ export { Footer } from "./Layout/Footers/Footer";
 
 export { ProfileOverview } from "./ProfileOverview/ProfileOverview";
 
+export { LikeCommentButton } from "./Buttons/LikeCommentButton";
+
 export { TopTabContainer } from "./Tabs/TopTabContainer/TopTabContainer";
 export { TopTabProfile } from "./Tabs/TopTabContainer/TopTabProfile";
 export { SavedPostsTab } from "./Tabs/SavedTabs/SavedPostsTab";
@@ -52,6 +54,7 @@ export { MessageItem } from "../customized/ListItems/MessageItem";
 export { HashtagListItem } from "../customized/ListItems/HashtagListItem";
 export { UserListItem } from "../customized/ListItems/UserListItem";
 export { CommentListItem } from "../customized/ListItems/CommentListItem";
+export { RelatedCommentsList } from "../customized/ListItems/RelatedCommentsList";
 export { RecentSearchListItem } from "../customized/ListItems/RecentSearchListItem";
 
 export { ServicesList } from "./Lists/ServicesList";

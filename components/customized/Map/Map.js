@@ -6,6 +6,8 @@ import theme from "../../../assets/styles/theme";
 import { IconLocation, IconStar, Stack } from "../../core";
 import { useNavigation } from "@react-navigation/native";
 
+const { grey0, black } = theme.lightColors;
+
 export const Map = ({ locations, serviceName }) => {
   const { t } = useTranslation();
   const navigation = useNavigation();
@@ -84,8 +86,11 @@ export const Map = ({ locations, serviceName }) => {
             latitude: loc.address.coordinates[0],
             longitude: loc.address.coordinates[1],
           }}
-          image={require("../../../assets/images/map_marker_yellow.png")}
+          //image={require("../../../assets/images/map_marker_yellow.png")}
         >
+          <Stack sx={styles.priceLabel}>
+            <Text style={{ fontWeight: "700" }}>{loc?.minPrice} LEI</Text>
+          </Stack>
           <Callout
             onPress={() =>
               navigation.push("LocationItem", { locationId: loc?._id })
@@ -125,7 +130,7 @@ const styles = StyleSheet.create({
   },
   name: {},
   priceName: {
-    color: theme.lightColors.grey0,
+    color: grey0,
   },
   ratingsC: {
     marginVertical: 5,
@@ -135,7 +140,7 @@ const styles = StyleSheet.create({
   },
   ratingsQuant: {
     marginLeft: 5,
-    color: theme.lightColors.grey0,
+    color: grey0,
     fontSize: 12,
   },
   markerDistance: {
@@ -149,10 +154,10 @@ const styles = StyleSheet.create({
   distance: {
     fontSize: 13,
     marginLeft: 5,
-    color: theme.lightColors.grey0,
+    color: grey0,
   },
   from: {
-    color: theme.lightColors.grey0,
+    color: grey0,
     marginLeft: 10,
     fontSize: 10,
   },
@@ -160,4 +165,5 @@ const styles = StyleSheet.create({
     marginLeft: 2.5,
     fontSize: 13.5,
   },
+  priceLabel: { backgroundColor: "white", padding: 10, borderRadius: 50 },
 });
