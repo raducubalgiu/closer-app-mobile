@@ -89,7 +89,13 @@ export const Map = ({ locations, serviceName }) => {
           //image={require("../../../assets/images/map_marker_yellow.png")}
         >
           <Stack sx={styles.priceLabel}>
-            <Text style={{ fontWeight: "700" }}>{loc?.minPrice} LEI</Text>
+            <Text
+              style={{
+                fontWeight: "700",
+              }}
+            >
+              {loc?.minPrice} LEI
+            </Text>
           </Stack>
           <Callout
             onPress={() =>
@@ -165,5 +171,13 @@ const styles = StyleSheet.create({
     marginLeft: 2.5,
     fontSize: 13.5,
   },
-  priceLabel: { backgroundColor: "white", padding: 10, borderRadius: 50 },
+  priceLabel: {
+    backgroundColor: "white",
+    padding: 10,
+    borderRadius: 50,
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+  },
 });

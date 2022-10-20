@@ -97,12 +97,12 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   header: {
-    paddingVertical: 10,
-    paddingHorizontal: 15,
+    padding: 15,
   },
   headerTitle: {
     fontSize: 16,
     color: black,
+    fontWeight: "600",
   },
   body: {
     flex: 1,

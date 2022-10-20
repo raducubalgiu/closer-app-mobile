@@ -3,17 +3,20 @@ import { StyleSheet, Text, View } from "react-native";
 import { Divider } from "@rneui/themed";
 import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 import theme from "../../../assets/styles/theme";
+import { Spinner } from "../../core";
 
-export const SheetService = ({ results, list, ...props }) => {
+const { black } = theme.lightColors;
+
+export const SheetService = ({ results, list, loading, ...props }) => {
   const sheetRef = useRef(null);
-  const snapPoints = useMemo(() => ["25%", "90%"], []);
+  const snapPoints = useMemo(() => [80, "60%", "90%"], []);
 
   const renderBackdrop = useCallback(
     (props) => (
       <BottomSheetBackdrop
         {...props}
-        disappearsOnIndex={0}
-        appearsOnIndex={1}
+        disappearsOnIndex={1}
+        appearsOnIndex={2}
       />
     ),
     []
@@ -26,13 +29,17 @@ export const SheetService = ({ results, list, ...props }) => {
       handleIndicatorStyle={styles.indicatorStyle}
       enableOverDrag={true}
       backdropComponent={renderBackdrop}
+      index={1}
     >
       <View style={{ flex: 1 }}>
-        <Text style={styles.sheetHeading}>
-          {results} {results > 19 ? "de rezultate" : "rezultate"}
-        </Text>
+        <View style={{ height: 50 }}>
+          <Text style={styles.sheetHeading}>
+            {results} {results > 19 ? "de rezultate" : "rezultate"}
+          </Text>
+        </View>
         <Divider width={2} color="#f1f1f1" style={styles.divider} />
-        {list}
+        {!loading && list}
+        {loading && <Spinner />}
       </View>
     </BottomSheet>
   );
@@ -40,9 +47,7 @@ export const SheetService = ({ results, list, ...props }) => {
 
 const styles = StyleSheet.create({
   sheetHeading: {
-    paddingVertical: 5,
-    paddingLeft: 15,
-    color: theme.lightColors.black,
+    color: black,
     fontSize: 15,
     textAlign: "center",
     fontWeight: "600",

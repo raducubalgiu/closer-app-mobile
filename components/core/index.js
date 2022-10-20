@@ -6,7 +6,6 @@ export { MainButton } from "./Buttons/MainButton";
 export { ButtonProvider } from "./Buttons/ButtonProvider";
 export { CardButton } from "./Buttons/CardButton";
 export { FollowButton } from "./Buttons/FollowButton";
-export { LikeIButton } from "./Buttons/LikeIButton";
 export { CommentsIButton } from "./Buttons/CommentsIButton";
 export { ShareIButton } from "./Buttons/ShareIButton";
 export { BookmarkIButton } from "./Buttons/BookmarkIButton";

@@ -52,7 +52,7 @@ const LocationsScreen = ({ route }) => {
       customPeriod = { ...period };
   }
 
-  const { data: locations } = useHttpGet(
+  const { data: locations, loading } = useHttpGet(
     `/locations?latlng=${latlng}&serviceId=${service?._id}&option=${option?._id}&minprice=${minPrice}&maxprice=${maxPrice}&mindistance=${minDistance}&maxdistance=${maxDistance}`
   );
 
@@ -113,6 +113,7 @@ const LocationsScreen = ({ route }) => {
             list={list}
             results={locations?.length === 0 ? 0 : locations.length}
             serviceName={service?.name}
+            loading={loading}
           />
         </>
       )}

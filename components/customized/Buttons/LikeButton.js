@@ -8,7 +8,7 @@ import { useHttpGet, useHttpPost, useHttpDelete } from "../../../hooks";
 
 const { error } = theme.lightColors;
 
-export const LikeIButton = ({ postId, onAddLike, onRemoveLike, ...props }) => {
+export const LikeButton = ({ postId, onAddLike, onRemoveLike, ...props }) => {
   const [liked, setLiked] = useState(true);
   const { user } = useAuth();
   const likeEndpoints = `/users/${user?._id}/posts/${postId}/likes`;

@@ -7,13 +7,13 @@ import { SECOND_ROLE, THIRD_ROLE } from "@env";
 import {
   Stack,
   Button,
-  LikeIButton,
   BookmarkIButton,
   ShareIButton,
   Protected,
 } from "../../../core";
 import { useAuth } from "../../../../hooks";
 import theme from "../../../../assets/styles/theme";
+import { LikeButton } from "../../Buttons/LikeButton";
 
 const { black } = theme.lightColors;
 
@@ -74,7 +74,7 @@ const CardPostButtons = ({ bookable, postId, likesCount }) => {
           </Text>
         </Button>
         <Stack direction="row">
-          <LikeIButton
+          <LikeButton
             postId={postId}
             onAddLike={() => setLikes((likes) => likes + 1)}
             onRemoveLike={() => setLikes((likes) => likes - 1)}

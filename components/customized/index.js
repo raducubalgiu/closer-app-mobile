@@ -8,6 +8,7 @@ export { Footer } from "./Layout/Footers/Footer";
 export { ProfileOverview } from "./ProfileOverview/ProfileOverview";
 
 export { LikeCommentButton } from "./Buttons/LikeCommentButton";
+export { LikeButton } from "./Buttons/LikeButton";
 
 export { TopTabContainer } from "./Tabs/TopTabContainer/TopTabContainer";
 export { TopTabProfile } from "./Tabs/TopTabContainer/TopTabProfile";
