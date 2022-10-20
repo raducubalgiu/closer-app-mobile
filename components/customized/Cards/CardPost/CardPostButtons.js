@@ -4,16 +4,11 @@ import { Icon, Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { SECOND_ROLE, THIRD_ROLE } from "@env";
-import {
-  Stack,
-  Button,
-  BookmarkIButton,
-  ShareIButton,
-  Protected,
-} from "../../../core";
+import { Stack, Button, ShareIButton, Protected } from "../../../core";
 import { useAuth } from "../../../../hooks";
 import theme from "../../../../assets/styles/theme";
 import { LikeButton } from "../../Buttons/LikeButton";
+import { BookmarkButton } from "../../Buttons/BookmarkButton";
 
 const { black } = theme.lightColors;
 
@@ -80,7 +75,7 @@ const CardPostButtons = ({ bookable, postId, likesCount }) => {
             onRemoveLike={() => setLikes((likes) => likes - 1)}
             sx={styles.button}
           />
-          <BookmarkIButton type="posts" typeId={postId} sx={styles.button} />
+          <BookmarkButton type="posts" typeId={postId} sx={styles.button} />
           <ShareIButton onPress={onShare} sx={styles.button} />
         </Stack>
       </Stack>

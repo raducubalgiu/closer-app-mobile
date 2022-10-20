@@ -8,7 +8,7 @@ import { useHttpGet, useHttpPost, useHttpDelete } from "../../../hooks";
 
 const { black } = theme.lightColors;
 
-export const BookmarkIButton = ({ sx, size, type, typeId }) => {
+export const BookmarkButton = ({ sx, size, type, typeId }) => {
   const { user } = useAuth();
   const [bookmarked, setBookmarked] = useState(false);
   const animatedScale = useRef(new Animated.Value(0)).current;

@@ -1,12 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import {
-  Stack,
-  IconButtonEdit,
-  MainButton,
-  Protected,
-  BookmarkIButton,
-} from "../../core";
+import { Stack, IconButtonEdit, MainButton, Protected } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { trimFunc } from "../../../utils";
 import { useAuth, useDuration } from "../../../hooks";
@@ -14,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { IconButtonDelete } from "../../core/IconButton/IconButtonDelete";
 import { useNavigation } from "@react-navigation/native";
 import { SECOND_ROLE, THIRD_ROLE } from "@env";
+import { BookmarkButton } from "../Buttons/BookmarkButton";
 
 const { black, grey0, primary } = theme.lightColors;
 
@@ -91,7 +86,7 @@ export const CardProduct = ({
       </Stack>
       {user !== userContext._id && (
         <View style={styles.bookmark}>
-          <BookmarkIButton type="products" typeId={product._id} />
+          <BookmarkButton type="products" typeId={product._id} />
         </View>
       )}
     </Stack>

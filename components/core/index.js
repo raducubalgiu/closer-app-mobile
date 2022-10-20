@@ -8,7 +8,6 @@ export { CardButton } from "./Buttons/CardButton";
 export { FollowButton } from "./Buttons/FollowButton";
 export { CommentsIButton } from "./Buttons/CommentsIButton";
 export { ShareIButton } from "./Buttons/ShareIButton";
-export { BookmarkIButton } from "./Buttons/BookmarkIButton";
 export { StatsButton } from "./Buttons/StatsButton";
 export { FeedLabelButton } from "./Buttons/FeedLabelButton";
 export { SocialIconButton } from "./Buttons/SocialIconButton";

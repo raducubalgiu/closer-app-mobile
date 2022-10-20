@@ -9,6 +9,7 @@ export { ProfileOverview } from "./ProfileOverview/ProfileOverview";
 
 export { LikeCommentButton } from "./Buttons/LikeCommentButton";
 export { LikeButton } from "./Buttons/LikeButton";
+export { BookmarkButton } from "./Buttons/BookmarkButton";
 
 export { TopTabContainer } from "./Tabs/TopTabContainer/TopTabContainer";
 export { TopTabProfile } from "./Tabs/TopTabContainer/TopTabProfile";
