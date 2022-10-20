@@ -1,33 +1,48 @@
 import { StyleSheet } from "react-native";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { IconButton } from "../../core";
 import theme from "../../../assets/styles/theme";
-import { useHttpPost, useHttpDelete, useHttpGet } from "../../../hooks";
+import {
+  useHttpPost,
+  useHttpDelete,
+  useHttpGet,
+  useAuth,
+  useHttpPatch,
+} from "../../../hooks";
 
 const { grey0, error } = theme.lightColors;
 
-export const LikeCommentButton = ({ userId, commentId, onLikes }) => {
+export const LikeCommentButton = ({
+  userId,
+  commentId,
+  onLikes,
+  creatorId,
+}) => {
+  const { user } = useAuth();
   const [liked, setLiked] = useState(false);
-  const likeEndpoints = `/users/${userId}/comments/${commentId}`;
+  const likeEndpoints = `/users/${userId}/comments/${commentId}/likes`;
 
-  useHttpGet(`${likeEndpoints}/check-like`, (data) => {
+  useHttpGet(`${likeEndpoints}/check`, (data) => {
     if (data.status === true) setLiked(true);
   });
 
-  const { makePost } = useHttpPost(`${likeEndpoints}/like`);
-  const { makeDelete } = useHttpDelete(`${likeEndpoints}/unlike`);
+  const { makePost } = useHttpPost(likeEndpoints);
+  const { makeDelete } = useHttpDelete(likeEndpoints);
+  const { makePatch } = useHttpPatch(`/comments/${commentId}`);
 
-  const handleLike = () => {
+  const handleLike = useCallback(() => {
     if (!liked) {
       setLiked(true);
+      if (creatorId === user?._id) makePatch({ likedByCreator: true });
       onLikes(1);
       makePost();
     } else {
       setLiked(false);
+      if (creatorId === user?._id) makePatch({ likedByCreator: false });
       onLikes(-1);
       makeDelete();
     }
-  };
+  }, [liked, likeEndpoints]);
 
   return (
     <IconButton

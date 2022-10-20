@@ -2,7 +2,7 @@ import { Text, View, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Button, Stack, CustomAvatar, Checkmark, Spinner } from "../../core";
 import theme from "../../../assets/styles/theme";
-import { useAuth, useHttpGet } from "../../../hooks";
+import { useAuth } from "../../../hooks";
 import { useTranslation } from "react-i18next";
 import { LikeCommentButton } from "../Buttons/LikeCommentButton";
 import { RelatedCommentsList } from "./RelatedCommentsList";
@@ -12,6 +12,7 @@ const { black, grey0, grey1 } = theme.lightColors;
 
 export const DisplayComment = ({
   item,
+  creatorId,
   onReply,
   onHandleRelated,
   relatedComments,
@@ -27,16 +28,15 @@ export const DisplayComment = ({
     relatedCommentsCount,
     likesCount,
     previousComment,
+    likedByCreator,
   } = item;
   const { username, name, avatar, checkmark } = user;
   const [likes, setLikes] = useState(likesCount);
-
-  const { data: likedByCreator } = useHttpGet(
-    `/users/${userContext?._id}/comments/${_id}/check-like`
-  );
+  const [creatorLike, setCreatorLike] = useState(likedByCreator);
 
   const goToUser = (uName) =>
     navigation.push("ProfileGeneral", { username: uName });
+
   const goToUserExtra = () =>
     navigation.push("ProfileGeneral", {
       userId: user?._id,
@@ -101,17 +101,18 @@ export const DisplayComment = ({
               <Text style={styles.reply}>{t("reply")}</Text>
             </Button>
           </Stack>
-          {likedByCreator.status && (
+          {creatorLike && (
             <Text style={styles.likeCreator}>{t("likedByCreator")}</Text>
           )}
           {!loadingRelated && (
             <RelatedCommentsList
               relatedComments={relatedComments}
+              creatorId={creatorId}
               onReply={onReply}
             />
           )}
           {loadingRelated && (
-            <Spinner sx={{ width: "100%", marginVertical: 5 }} />
+            <Spinner sx={{ width: "100%", marginVertical: 25 }} />
           )}
           {showMore}
         </Stack>
@@ -120,6 +121,7 @@ export const DisplayComment = ({
         userId={userContext?._id}
         commentId={_id}
         onLikes={(action) => setLikes(likes + action)}
+        creatorId={creatorId}
       />
     </Stack>
   );

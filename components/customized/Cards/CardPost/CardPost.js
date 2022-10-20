@@ -46,6 +46,7 @@ export const CardPost = ({ post, onShowDetails }) => {
       />
       <CardPostFooter
         postId={_id}
+        creatorId={user?._id}
         description={description}
         username={username}
         date={dateFormat(createdAt)}

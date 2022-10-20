@@ -10,6 +10,7 @@ import { useAuth } from "../../../../hooks";
 
 const CardPostFooter = ({
   postId,
+  creatorId,
   description,
   username,
   date,
@@ -24,6 +25,7 @@ const CardPostFooter = ({
   const goToComments = (focus) =>
     navigation.navigate("Comments", {
       postId,
+      creatorId,
       description,
       username,
       date,

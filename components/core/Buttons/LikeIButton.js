@@ -1,39 +1,22 @@
 import { Animated, StyleSheet, Pressable } from "react-native";
 import { Icon } from "@rneui/themed";
-import axios from "axios";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "../../../hooks/auth";
 import * as Haptics from "expo-haptics";
 import theme from "../../../assets/styles/theme";
-import { useFocusEffect } from "@react-navigation/native";
+import { useHttpGet, useHttpPost, useHttpDelete } from "../../../hooks";
 
 const { error } = theme.lightColors;
 
 export const LikeIButton = ({ postId, onAddLike, onRemoveLike, ...props }) => {
   const [liked, setLiked] = useState(true);
   const { user } = useAuth();
+  const likeEndpoints = `/users/${user?._id}/posts/${postId}/likes`;
   const animatedScale = useRef(new Animated.Value(0)).current;
 
-  useFocusEffect(
-    useCallback(() => {
-      const controller = new AbortController();
-
-      axios
-        .get(
-          `${process.env.BASE_ENDPOINT}/users/${user?._id}/posts/${postId}/likes`,
-          {
-            signal: controller.signal,
-            headers: { Authorization: `Bearer ${user?.token}` },
-          }
-        )
-        .then((res) => setLiked(res.data.status))
-        .catch(() => {});
-
-      return () => {
-        controller.abort();
-      };
-    }, [postId, user])
-  );
+  useHttpGet(`${likeEndpoints}/check`, (data) => setLiked(data.status));
+  const { makePost } = useHttpPost(likeEndpoints);
+  const { makeDelete } = useHttpDelete(likeEndpoints);
 
   const likeHandler = useCallback(() => {
     animatedScale.setValue(0.8);
@@ -46,32 +29,15 @@ export const LikeIButton = ({ postId, onAddLike, onRemoveLike, ...props }) => {
 
     if (!liked) {
       setLiked(true);
+      onAddLike();
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-      axios
-        .post(
-          `${process.env.BASE_ENDPOINT}/users/${user?._id}/posts/${postId}/likes`,
-          {
-            postId: postId,
-          },
-          { headers: { Authorization: `Bearer ${user?.token}` } }
-        )
-        .then(() => {
-          onAddLike();
-        })
-        .catch(() => setLiked(false));
+      makePost();
     } else {
-      axios
-        .delete(
-          `${process.env.BASE_ENDPOINT}/users/${user?._id}/posts/${postId}/likes`,
-          { headers: { Authorization: `Bearer ${user?.token}` } }
-        )
-        .then(() => {
-          setLiked(false);
-          onRemoveLike();
-        })
-        .catch(() => setLiked(true));
+      setLiked(false);
+      onRemoveLike();
+      makeDelete();
     }
-  }, [postId, user, liked]);
+  }, [liked, likeEndpoints]);
 
   useEffect(() => {
     animatedScale.setValue(1);

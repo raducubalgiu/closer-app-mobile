@@ -34,7 +34,7 @@ export const HeaderProfile = ({
       </Stack>
       <Stack direction="row">
         <Text style={styles.name}>@{username}</Text>
-        {checkmark && <Checkmark />}
+        {checkmark && <Checkmark sx={{ marginLeft: 5 }} />}
       </Stack>
       <Stack direction="row">
         <IconButton

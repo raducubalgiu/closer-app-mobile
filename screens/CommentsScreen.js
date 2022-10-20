@@ -26,7 +26,8 @@ const { black, grey0, primary } = theme.lightColors;
 
 const CommentsScreen = ({ route }) => {
   const { user } = useAuth();
-  const { postId, description, avatar, username, date, focus } = route.params;
+  const { postId, description, avatar, username, date, focus, creatorId } =
+    route.params;
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
   const [commentId, setCommentId] = useState(null);
@@ -88,7 +89,13 @@ const CommentsScreen = ({ route }) => {
   };
 
   const renderComment = useCallback(
-    ({ item }) => <CommentListItem item={item} onReply={handleReply} />,
+    ({ item }) => (
+      <CommentListItem
+        item={item}
+        onReply={handleReply}
+        creatorId={creatorId}
+      />
+    ),
     []
   );
 
@@ -100,16 +107,14 @@ const CommentsScreen = ({ route }) => {
         style={styles.container}
       >
         <View style={{ flex: 1 }}>
+          <FlatList
+            ListHeaderComponent={renderHeader}
+            data={comments}
+            keyExtractor={(item) => item?._id}
+            renderItem={!loading && renderComment}
+            contentContainerStyle={{ padding: 15 }}
+          />
           {loading && <Spinner />}
-          {!loading && (
-            <FlatList
-              ListHeaderComponent={renderHeader}
-              data={comments}
-              keyExtractor={(item) => item?._id}
-              renderItem={renderComment}
-              contentContainerStyle={{ padding: 15 }}
-            />
-          )}
         </View>
         <Divider />
         <Stack direction="row" sx={styles.inputCont}>
