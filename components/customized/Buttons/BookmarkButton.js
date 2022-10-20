@@ -12,23 +12,14 @@ export const BookmarkButton = ({ sx, size, type, typeId }) => {
   const { user } = useAuth();
   const [bookmarked, setBookmarked] = useState(false);
   const animatedScale = useRef(new Animated.Value(0)).current;
-  const BOOKMARK_ENDPOINT = `/users/${user._id}/${type}/${typeId}/bookmarks`;
+  const bookmarkEndpoints = `/users/${user._id}/${type}/${typeId}/bookmarks`;
 
-  let postBody;
-  if (type === "posts") postBody = { post: typeId };
-  if (type === "hashtags") postBody = { hashtag: typeId };
-  if (type === "products") postBody = { product: typeId };
-
-  useHttpGet(BOOKMARK_ENDPOINT, (data) => setBookmarked(data));
-
-  const { makePost } = useHttpPost(`/bookmarks`, () => {
-    setBookmarked(true);
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-  });
-
-  const { makeDelete } = useHttpDelete(BOOKMARK_ENDPOINT, (data) =>
-    setBookmarked(data)
+  useHttpGet(`${bookmarkEndpoints}/check`, (data) =>
+    setBookmarked(data.status)
   );
+
+  const { makePost } = useHttpPost(bookmarkEndpoints);
+  const { makeDelete } = useHttpDelete(bookmarkEndpoints);
 
   const handleBookmark = useCallback(() => {
     animatedScale.setValue(0.8);
@@ -39,8 +30,15 @@ export const BookmarkButton = ({ sx, size, type, typeId }) => {
       useNativeDriver: true,
     }).start();
 
-    !bookmarked ? makePost({ user: user?._id, ...postBody }) : makeDelete();
-  }, [bookmarked, BOOKMARK_ENDPOINT]);
+    if (!bookmarked) {
+      setBookmarked(true);
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      makePost();
+    } else {
+      setBookmarked(false);
+      makeDelete();
+    }
+  }, [bookmarked, bookmarkEndpoints]);
 
   useEffect(() => {
     animatedScale.setValue(1);
