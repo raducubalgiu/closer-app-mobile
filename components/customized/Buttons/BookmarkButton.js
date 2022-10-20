@@ -14,9 +14,7 @@ export const BookmarkButton = ({ sx, size, type, typeId }) => {
   const animatedScale = useRef(new Animated.Value(0)).current;
   const bookmarkEndpoints = `/users/${user._id}/${type}/${typeId}/bookmarks`;
 
-  useHttpGet(`${bookmarkEndpoints}/check`, (data) =>
-    setBookmarked(data.status)
-  );
+  useHttpGet(`${bookmarkEndpoints}`, (data) => setBookmarked(data.status));
 
   const { makePost } = useHttpPost(bookmarkEndpoints);
   const { makeDelete } = useHttpDelete(bookmarkEndpoints);

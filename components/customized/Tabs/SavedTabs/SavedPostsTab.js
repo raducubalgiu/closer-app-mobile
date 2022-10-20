@@ -12,7 +12,7 @@ export const SavedPostsTab = ({ user }) => {
   const { t } = useTranslation();
 
   const { data: posts, loading } = useHttpGet(
-    `/users/${user?._id}/bookmarks/posts`
+    `/users/${user?._id}/posts/bookmarks`
   );
 
   const renderPosts = useCallback(({ item, index }) => {
