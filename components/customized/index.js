@@ -9,6 +9,7 @@ export { ProfileOverview } from "./ProfileOverview/ProfileOverview";
 
 export { LikeCommentButton } from "./Buttons/LikeCommentButton";
 export { LikeButton } from "./Buttons/LikeButton";
+export { BookmarkIconButton } from "./Buttons/BookmarkIconButton";
 export { BookmarkButton } from "./Buttons/BookmarkButton";
 
 export { TopTabContainer } from "./Tabs/TopTabContainer/TopTabContainer";
@@ -48,6 +49,7 @@ export { CardServicesHeader } from "./Cards/CardServicesHeader";
 export { CardSlotDetails } from "./Cards/CardSlotDetails";
 export { CardPostImage } from "./Cards/CardPostImage";
 export { CardScheduleOverview } from "./Cards/CardScheduleOverview";
+export { CardHashtagOverview } from "./Cards/CardHashtagOverview";
 
 export { HeaderServices } from "../customized/Layout/Headers/HeaderServices";
 export { HeaderEdit } from "../customized/Layout/Headers/HeaderEdit";

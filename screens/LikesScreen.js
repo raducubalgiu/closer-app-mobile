@@ -16,6 +16,8 @@ const LikesScreen = ({ route }) => {
 
   const { data: likes, loading } = useHttpGet(`/posts/${postId}/get-likes`);
 
+  console.log("LIKES!!", likes);
+
   const renderPerson = useCallback(
     ({ item }) => (
       <UserListItem

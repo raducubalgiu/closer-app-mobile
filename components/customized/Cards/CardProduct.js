@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import { IconButtonDelete } from "../../core/IconButton/IconButtonDelete";
 import { useNavigation } from "@react-navigation/native";
 import { SECOND_ROLE, THIRD_ROLE } from "@env";
-import { BookmarkButton } from "../Buttons/BookmarkButton";
+import { BookmarkIconButton } from "../Buttons/BookmarkIconButton";
 
 const { black, grey0, primary } = theme.lightColors;
 
@@ -86,7 +86,7 @@ export const CardProduct = ({
       </Stack>
       {user !== userContext._id && (
         <View style={styles.bookmark}>
-          <BookmarkButton type="products" typeId={product._id} />
+          <BookmarkIconButton type="products" typeId={product._id} />
         </View>
       )}
     </Stack>

@@ -8,7 +8,7 @@ import { Stack, Button, ShareIButton, Protected } from "../../../core";
 import { useAuth } from "../../../../hooks";
 import theme from "../../../../assets/styles/theme";
 import { LikeButton } from "../../Buttons/LikeButton";
-import { BookmarkButton } from "../../Buttons/BookmarkButton";
+import { BookmarkIconButton } from "../../Buttons/BookmarkIconButton";
 
 const { black } = theme.lightColors;
 
@@ -75,7 +75,7 @@ const CardPostButtons = ({ bookable, postId, likesCount }) => {
             onRemoveLike={() => setLikes((likes) => likes - 1)}
             sx={styles.button}
           />
-          <BookmarkButton type="posts" typeId={postId} sx={styles.button} />
+          <BookmarkIconButton type="posts" typeId={postId} sx={styles.button} />
           <ShareIButton onPress={onShare} sx={styles.button} />
         </Stack>
       </Stack>

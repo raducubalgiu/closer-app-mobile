@@ -11,12 +11,12 @@ const { error } = theme.lightColors;
 export const LikeButton = ({ postId, onAddLike, onRemoveLike, ...props }) => {
   const [liked, setLiked] = useState(true);
   const { user } = useAuth();
-  const likeEndpoints = `/users/${user?._id}/posts/${postId}/likes`;
+  const endpoints = `/users/${user?._id}/posts/${postId}/likes`;
   const animatedScale = useRef(new Animated.Value(0)).current;
 
-  useHttpGet(`${likeEndpoints}/check`, (data) => setLiked(data.status));
-  const { makePost } = useHttpPost(likeEndpoints);
-  const { makeDelete } = useHttpDelete(likeEndpoints);
+  useHttpGet(`${endpoints}`, (data) => setLiked(data.status));
+  const { makePost } = useHttpPost(endpoints);
+  const { makeDelete } = useHttpDelete(endpoints);
 
   const likeHandler = useCallback(() => {
     animatedScale.setValue(0.8);
@@ -37,7 +37,7 @@ export const LikeButton = ({ postId, onAddLike, onRemoveLike, ...props }) => {
       onRemoveLike();
       makeDelete();
     }
-  }, [liked, likeEndpoints]);
+  }, [liked, endpoints]);
 
   useEffect(() => {
     animatedScale.setValue(1);

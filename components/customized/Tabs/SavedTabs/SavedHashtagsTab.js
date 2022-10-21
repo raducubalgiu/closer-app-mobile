@@ -1,6 +1,7 @@
-import { FlatList, View } from "react-native";
+import { FlatList } from "react-native";
 import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigation } from "@react-navigation/native";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { useHttpGet } from "../../../../hooks";
 import { Spinner } from "../../../core";
@@ -8,9 +9,10 @@ import { HashtagListItem } from "../../ListItems/HashtagListItem";
 
 export const SavedHashtagsTab = ({ user }) => {
   const { t } = useTranslation();
+  const navigation = useNavigation();
 
   const { data: hashtags, loading } = useHttpGet(
-    `/users/${user?._id}/bookmarks/hashtags`
+    `/users/${user?._id}/hashtags/bookmarks`
   );
 
   const noFoundMessage = (
@@ -20,16 +22,17 @@ export const SavedHashtagsTab = ({ user }) => {
     />
   );
 
-  const renderHashtags = useCallback(
-    ({ item }) => (
+  const renderHashtags = useCallback(({ item }) => {
+    const { name, postsCount } = item.hashtag;
+
+    return (
       <HashtagListItem
-        name={item.hashtag.name}
-        postsCount={100}
-        onPress={() => {}}
+        name={name}
+        postsCount={postsCount}
+        onPress={() => navigation.navigate("Hashtag", { name })}
       />
-    ),
-    []
-  );
+    );
+  }, []);
 
   const keyExtractor = useCallback((item) => item._id, []);
 

@@ -1,69 +1,64 @@
-import { StyleSheet, Animated, Pressable } from "react-native";
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import { StyleSheet, Text, Pressable } from "react-native";
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Icon } from "@rneui/themed";
-import { useAuth } from "../../../hooks/auth";
+import { Stack } from "../../core";
+import {
+  useAuth,
+  useHttpDelete,
+  useHttpGet,
+  useHttpPost,
+} from "../../../hooks";
 import theme from "../../../assets/styles/theme";
-import * as Haptics from "expo-haptics";
-import { useHttpGet, useHttpPost, useHttpDelete } from "../../../hooks";
 
 const { black } = theme.lightColors;
 
-export const BookmarkButton = ({ sx, size, type, typeId }) => {
+export const BookmarkButton = ({ type, typeId, onBookmarksCount }) => {
   const { user } = useAuth();
   const [bookmarked, setBookmarked] = useState(false);
-  const animatedScale = useRef(new Animated.Value(0)).current;
-  const bookmarkEndpoints = `/users/${user._id}/${type}/${typeId}/bookmarks`;
+  const { t } = useTranslation();
+  const endoints = `/users/${user?._id}/${type}/${typeId}/bookmarks`;
 
-  useHttpGet(`${bookmarkEndpoints}`, (data) => setBookmarked(data.status));
+  useHttpGet(endoints, (data) => setBookmarked(data.status));
+  const { makePost } = useHttpPost(endoints);
+  const { makeDelete } = useHttpDelete(endoints);
 
-  const { makePost } = useHttpPost(bookmarkEndpoints);
-  const { makeDelete } = useHttpDelete(bookmarkEndpoints);
-
-  const handleBookmark = useCallback(() => {
-    animatedScale.setValue(0.8);
-    Animated.spring(animatedScale, {
-      toValue: 1,
-      bounciness: 15,
-      speed: 20,
-      useNativeDriver: true,
-    }).start();
-
+  const handleBookmark = () => {
     if (!bookmarked) {
       setBookmarked(true);
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      onBookmarksCount(1);
       makePost();
     } else {
       setBookmarked(false);
+      onBookmarksCount(-1);
       makeDelete();
     }
-  }, [bookmarked, bookmarkEndpoints]);
-
-  useEffect(() => {
-    animatedScale.setValue(1);
-  }, []);
+  };
 
   return (
-    <Pressable onPress={handleBookmark}>
-      <Animated.View
-        style={[
-          { ...styles.default, ...sx },
-          { transform: [{ scale: animatedScale }] },
-        ]}
-      >
+    <Pressable style={styles.button} onPress={handleBookmark}>
+      <Stack direction="row">
         <Icon
-          type="feather"
-          name={bookmarked ? "check-square" : "bookmark"}
-          size={size ? size : 24}
-          color={bookmarked ? "#333333" : black}
+          name={bookmarked ? "bookmark" : "bookmark-o"}
+          type="font-awesome"
+          color={black}
+          size={17.5}
         />
-      </Animated.View>
+        <Text style={styles.buttonText}>
+          {bookmarked ? t("addedToBookmarks") : t("addToBookmarks")}
+        </Text>
+      </Stack>
     </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
-  default: {
-    marginLeft: 20,
-    padding: 5,
+  button: {
+    borderWidth: 1,
+    borderColor: "#ddd",
+    paddingVertical: 5,
+    paddingHorizontal: 12.5,
+    borderRadius: 5,
   },
+  buttonText: { color: black, fontWeight: "600", marginLeft: 10 },
 });

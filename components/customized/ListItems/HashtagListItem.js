@@ -16,7 +16,7 @@ export const HashtagListItem = ({ name, postsCount, onPress, sx }) => {
             <Text style={styles.hashtagT}>#</Text>
           </Stack>
           <Stack align="start">
-            <Text style={styles.name}>{name}</Text>
+            <Text style={styles.name}>#{name}</Text>
             <Text style={styles.posts}>
               {postsCount} {t("posts")}
             </Text>
