@@ -262,10 +262,13 @@ const styles = StyleSheet.create({
   searchAll: {
     color: primary,
     marginLeft: 5,
+    fontWeight: "600",
+    fontSize: 15,
   },
   cancelBtnText: {
     color: primary,
     backgroundColor: "white",
     padding: 2.5,
+    fontWeight: "700",
   },
 });

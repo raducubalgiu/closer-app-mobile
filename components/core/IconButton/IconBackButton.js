@@ -18,7 +18,7 @@ export const IconBackButton = ({
   return (
     <TouchableOpacity
       onPress={onPress ? onPress : () => navigation.goBack()}
-      style={sx}
+      style={{ ...styles.btn, sx }}
     >
       <Icon
         name="arrow-back-ios"
@@ -37,5 +37,8 @@ const styles = StyleSheet.create({
     paddingLeft: 11,
     paddingRight: 5,
     borderRadius: 50,
+  },
+  btn: {
+    padding: 5,
   },
 });

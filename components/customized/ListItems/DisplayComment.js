@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { LikeCommentButton } from "../Buttons/LikeCommentButton";
 import { RelatedCommentsList } from "./RelatedCommentsList";
 import { useState } from "react";
+import DisplayText from "../DisplayText/DisplayText";
 
 const { black, grey0, grey1 } = theme.lightColors;
 
@@ -21,21 +22,11 @@ export const DisplayComment = ({
   const { user: userContext } = useAuth();
   const navigation = useNavigation();
   const { t } = useTranslation();
-  const {
-    user,
-    comment,
-    _id,
-    relatedCommentsCount,
-    likesCount,
-    previousComment,
-    likedByCreator,
-  } = item;
+  const { user, comment, _id, relatedCommentsCount } = item;
+  const { likesCount, previousComment, likedByCreator } = item;
   const { username, name, avatar, checkmark } = user;
   const [likes, setLikes] = useState(likesCount);
   const [creatorLike, setCreatorLike] = useState(likedByCreator);
-
-  const goToUser = (uName) =>
-    navigation.push("ProfileGeneral", { username: uName });
 
   const goToUserExtra = () =>
     navigation.push("ProfileGeneral", {
@@ -44,24 +35,6 @@ export const DisplayComment = ({
       username,
       name,
     });
-
-  const displayedComment = [];
-  const wordsArr = comment.split(" ");
-
-  for (let i = 0; i < wordsArr.length; i++) {
-    if (wordsArr[i].startsWith("@")) {
-      displayedComment.push(
-        <Button
-          key={wordsArr[i]}
-          onPress={() => goToUser(wordsArr[i].split("@")[1])}
-        >
-          <Text style={{ color: "#002266" }}>{`${wordsArr[i]} `}</Text>
-        </Button>
-      );
-    } else {
-      displayedComment.push(<Text key={wordsArr[i]}>{`${wordsArr[i]} `}</Text>);
-    }
-  }
 
   let showMore;
   if (
@@ -87,13 +60,12 @@ export const DisplayComment = ({
       </Button>
       <Stack direction="row" align="start" sx={{ marginLeft: 10, flex: 1 }}>
         <Stack align="start" sx={{ flex: 1 }}>
-          <View style={styles.comment}>
-            <Button onPress={goToUserExtra}>
-              <Text style={styles.username}>{username} </Text>
-            </Button>
-            {checkmark && <Checkmark size={7.5} sx={{ marginRight: 5 }} />}
-            {displayedComment.map((el) => el)}
-          </View>
+          <DisplayText
+            text={comment}
+            username={username}
+            checkmark={checkmark}
+            goToUserAllInfo={goToUserExtra}
+          />
           <Stack direction="row" align="center" sx={{ marginTop: 5 }}>
             <Text style={styles.date}>1z</Text>
             <Text style={styles.likesCount}>{likes} aprecieri</Text>

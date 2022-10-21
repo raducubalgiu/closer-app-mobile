@@ -36,8 +36,8 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     marginRight: 10,
   },
-  hashtagT: { fontSize: 17, color: black },
-  name: { color: black },
+  hashtagT: { fontSize: 17, color: black, fontWeight: "600" },
+  name: { color: black, fontWeight: "500", fontSize: 15, marginBottom: 2.5 },
   posts: {
     color: grey0,
     textTransform: "lowercase",

@@ -21,6 +21,7 @@ import {
 import { CommentListItem } from "../components/customized";
 import { useTranslation } from "react-i18next";
 import { useHttpGet, useHttpPost } from "../hooks";
+import DisplayText from "../components/customized/DisplayText/DisplayText";
 
 const { black, grey0, primary } = theme.lightColors;
 
@@ -68,11 +69,13 @@ const CommentsScreen = ({ route }) => {
       <>
         <View style={styles.headerCont}>
           <CustomAvatar size={32.5} iconSize={15} avatar={avatar} />
-          <View style={{ marginLeft: 10, flex: 1 }}>
-            <Text>
-              <Text style={styles.username}>{username} </Text>
-              {description}
-            </Text>
+          <View
+            style={{
+              marginLeft: 10,
+              flex: 1,
+            }}
+          >
+            <DisplayText text={description} maxWords={10} username={username} />
             <Text style={styles.date}>{date}</Text>
           </View>
         </View>
@@ -150,11 +153,6 @@ const styles = StyleSheet.create({
   },
   container: { flex: 1, justifyContent: "space-between" },
   headerCont: { flexDirection: "row" },
-  username: {
-    color: black,
-    fontWeight: "500",
-    fontSize: 15,
-  },
   date: {
     color: grey0,
     marginTop: 1,

@@ -260,5 +260,7 @@
   "addCategory": "Adaugă categoria",
   "reply": "Răspunde",
   "seeReplies": "Vezi răspunsurile",
-  "likedByCreator": "Apreciat de creator"
+  "likedByCreator": "Apreciat de creator",
+  "addToBookmarks": "Adaugă la salvate",
+  "addedToBookmarks": "Adăugat la salvate"
 }

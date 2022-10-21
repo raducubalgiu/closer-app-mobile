@@ -19,9 +19,7 @@ export const SearchPopularTab = ({ search }) => {
   const { data: users, loading: loadUsers } = useHttpGet(
     `/users/search?search=${search}&page=1&limit=2`
   );
-  const { data: hashtags, loading: loadHashtags } = useHttpGet(
-    `/hashtags/search?name=${search}&page=1&limit=3`
-  );
+  const { data: hashtags, loading: loadHashtags } = useHttpGet(`/hashtags`);
   const { data: bookablePosts, loading: loadBookable } = useHttpGet(
     `/posts/get-bookable-posts?search=${search}&latlng=26.100195,44.428286`
   );
@@ -104,7 +102,7 @@ export const SearchPopularTab = ({ search }) => {
         sx={{ paddingHorizontal: 15 }}
         name={item.name}
         postsCount={100}
-        onPress={() => navigation.navigate("Hashtag", { name: item.name })}
+        onPress={() => navigation.navigate("Hashtag", { item })}
       />
     ),
     []

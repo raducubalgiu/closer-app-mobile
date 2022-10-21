@@ -1,6 +1,7 @@
 export { Accordion } from "./Accordion/Accordion";
 
 export { Button } from "./Buttons/Button";
+export { ButtonLink } from "./Buttons/ButtonLink";
 export { ButtonFilter } from "./Buttons/ButtonFilter";
 export { MainButton } from "./Buttons/MainButton";
 export { ButtonProvider } from "./Buttons/ButtonProvider";

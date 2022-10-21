@@ -11,7 +11,7 @@ export const SearchHashtagsTab = ({ search }) => {
   const [page, setPage] = useState(1);
 
   const { data: hashtags, loading } = useHttpGet(
-    `/hashtags/search?name=${search}&page=${page}&limit=10`
+    `/hashtags?page=${page}&limit=10`
   );
   const { t } = useTranslation();
   const navigation = useNavigation();
@@ -21,7 +21,7 @@ export const SearchHashtagsTab = ({ search }) => {
       <HashtagListItem
         name={item.name}
         postsCount={100}
-        onPress={() => navigation.navigate("Hashtag", { name: item.name })}
+        onPress={() => navigation.navigate("Hashtag", { item })}
       />
     ),
     []

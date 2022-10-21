@@ -7,6 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import theme from "../../../../assets/styles/theme";
 import { useAuth } from "../../../../hooks";
+import DisplayText from "../../DisplayText/DisplayText";
 
 const CardPostFooter = ({
   postId,
@@ -36,11 +37,7 @@ const CardPostFooter = ({
   return (
     <>
       <Stack align="start" sx={{ paddingHorizontal: 15, paddingTop: 10 }}>
-        {description && (
-          <Text>
-            <Text style={styles.description}>{trimFunc(description, 120)}</Text>
-          </Text>
-        )}
+        {description && <DisplayText text={description} maxWords={10} />}
       </Stack>
       {comments > 0 && (
         <Button

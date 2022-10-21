@@ -48,13 +48,12 @@ export const UserListItem = ({
 const styles = StyleSheet.create({
   container: { marginBottom: 15 },
   username: {
-    fontSize: 14,
+    fontSize: 15,
     color: black,
     fontWeight: "600",
   },
   name: {
     color: grey0,
-    fontSize: 13,
     marginTop: 2.5,
   },
   goToUser: {
