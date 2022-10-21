@@ -68,7 +68,9 @@ export const DisplayComment = ({
           />
           <Stack direction="row" align="center" sx={{ marginTop: 5 }}>
             <Text style={styles.date}>1z</Text>
-            <Text style={styles.likesCount}>{likes} aprecieri</Text>
+            <Text style={styles.likesCount}>
+              {likes} {t("likes")}
+            </Text>
             <Button onPress={() => onReply(username, _id, previousComment)}>
               <Text style={styles.reply}>{t("reply")}</Text>
             </Button>
@@ -127,6 +129,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     marginHorizontal: 10,
     fontSize: 12.5,
+    textTransform: "lowercase",
   },
   likeCreator: {
     color: grey0,

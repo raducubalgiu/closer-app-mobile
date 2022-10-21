@@ -49,6 +49,7 @@ export const CardPost = ({ post, onShowDetails }) => {
         creatorId={user?._id}
         description={description}
         username={username}
+        name={name}
         date={dateFormat(createdAt)}
         avatar={avatar}
         bookable={bookable}

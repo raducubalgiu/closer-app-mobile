@@ -22,13 +22,23 @@ import { CommentListItem } from "../components/customized";
 import { useTranslation } from "react-i18next";
 import { useHttpGet, useHttpPost } from "../hooks";
 import DisplayText from "../components/customized/DisplayText/DisplayText";
+import { useNavigation } from "@react-navigation/native";
 
 const { black, grey0, primary } = theme.lightColors;
 
 const CommentsScreen = ({ route }) => {
   const { user } = useAuth();
-  const { postId, description, avatar, username, date, focus, creatorId } =
-    route.params;
+  const navigation = useNavigation();
+  const {
+    postId,
+    description,
+    avatar,
+    username,
+    name,
+    date,
+    focus,
+    creatorId,
+  } = route.params;
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
   const [commentId, setCommentId] = useState(null);
@@ -64,6 +74,14 @@ const CommentsScreen = ({ route }) => {
       previousComment: prevComment ? prevComment : commentId,
     });
 
+  const goToUserExtra = () =>
+    navigation.push("ProfileGeneral", {
+      userId: user?._id,
+      avatar,
+      username,
+      name,
+    });
+
   const renderHeader = useCallback(
     () => (
       <>
@@ -75,7 +93,12 @@ const CommentsScreen = ({ route }) => {
               flex: 1,
             }}
           >
-            <DisplayText text={description} maxWords={10} username={username} />
+            <DisplayText
+              text={description}
+              maxWords={10}
+              username={username}
+              goToUserAllInfo={goToUserExtra}
+            />
             <Text style={styles.date}>{date}</Text>
           </View>
         </View>
