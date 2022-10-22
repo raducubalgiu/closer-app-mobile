@@ -11,19 +11,19 @@ export const SearchBarInput = ({
   showCancel,
   ...props
 }) => {
+  let cancel = !showCancel
+    ? {
+        color: "gray",
+        display: "none",
+        buttonTextStyle: styles.cancelBtnText,
+      }
+    : { color: "gray", buttonTextStyle: styles.cancelBtnText };
+
   return (
     <SearchBar
       {...props}
       cancelButtonTitle={cancelButtonTitle}
-      cancelButtonProps={
-        showCancel === false
-          ? {
-              color: "gray",
-              display: "none",
-              buttonTextStyle: styles.cancelBtnText,
-            }
-          : { color: "gray", buttonTextStyle: styles.cancelBtnText }
-      }
+      cancelButtonProps={cancel}
       platform={Platform.OS === "ios" ? "ios" : "android"}
       containerStyle={{
         ...styles.containerStyle,

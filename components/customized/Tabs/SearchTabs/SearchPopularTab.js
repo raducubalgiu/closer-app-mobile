@@ -101,8 +101,8 @@ export const SearchPopularTab = ({ search }) => {
       <HashtagListItem
         sx={{ paddingHorizontal: 15 }}
         name={item.name}
-        postsCount={100}
-        onPress={() => navigation.navigate("Hashtag", { item })}
+        postsCount={item.postsCount}
+        onPress={() => navigation.navigate("Hashtag", { name: item.name })}
       />
     ),
     []

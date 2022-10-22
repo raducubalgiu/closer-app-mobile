@@ -16,20 +16,19 @@ const LikesScreen = ({ route }) => {
 
   const { data: likes, loading } = useHttpGet(`/posts/${postId}/get-likes`);
 
-  console.log("LIKES!!", likes);
+  const renderPerson = useCallback(({ item }) => {
+    const { _id, username, name, avatar } = item.user;
 
-  const renderPerson = useCallback(
-    ({ item }) => (
+    return (
       <UserListItem
-        avatar={item?.user?.avatar}
-        username={item?.user?.username}
-        name={item?.user?.name}
-        followeeId={item?.user?._id}
+        avatar={avatar}
+        username={username}
+        name={name}
+        followeeId={_id}
         userId={user?._id}
       />
-    ),
-    []
-  );
+    );
+  }, []);
 
   const header = useCallback(
     () => <>{!loading && likes.length > 20 && <FakeSearchBarSimple />}</>,

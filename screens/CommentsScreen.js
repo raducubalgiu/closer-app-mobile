@@ -7,7 +7,7 @@ import {
   KeyboardAvoidingView,
   FlatList,
 } from "react-native";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { Divider } from "@rneui/themed";
 import { useAuth } from "../hooks/auth";
 import theme from "../assets/styles/theme";
@@ -24,7 +24,7 @@ import { useHttpGet, useHttpPost } from "../hooks";
 import DisplayText from "../components/customized/DisplayText/DisplayText";
 import { useNavigation } from "@react-navigation/native";
 
-const { black, grey0, primary } = theme.lightColors;
+const { grey0, primary } = theme.lightColors;
 
 const CommentsScreen = ({ route }) => {
   const { user } = useAuth();
@@ -43,6 +43,7 @@ const CommentsScreen = ({ route }) => {
   const [comment, setComment] = useState("");
   const [commentId, setCommentId] = useState(null);
   const [prevComment, setPrevComment] = useState(null);
+  const refInput = useRef();
   const { t } = useTranslation();
   const commentsEndpoint = `/posts/${postId}/comments`;
 
@@ -109,6 +110,7 @@ const CommentsScreen = ({ route }) => {
   );
 
   const handleReply = (text, commentId, previousComment) => {
+    refInput.current.focus();
     setComment(`@${text} `);
     setCommentId(commentId);
     setPrevComment(previousComment);
@@ -146,6 +148,7 @@ const CommentsScreen = ({ route }) => {
         <Stack direction="row" sx={styles.inputCont}>
           <CustomAvatar size={50} iconSize={20} avatar={user?.avatar} />
           <TextInput
+            ref={refInput}
             onChangeText={(text) => setComment(text)}
             autoCapitalize="sentences"
             autoFocus={focus}

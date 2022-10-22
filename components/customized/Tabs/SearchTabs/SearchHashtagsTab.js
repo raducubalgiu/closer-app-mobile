@@ -20,7 +20,7 @@ export const SearchHashtagsTab = ({ search }) => {
     ({ item }) => (
       <HashtagListItem
         name={item.name}
-        postsCount={100}
+        postsCount={item.postsCount}
         onPress={() => navigation.navigate("Hashtag", { name: item.name })}
       />
     ),
