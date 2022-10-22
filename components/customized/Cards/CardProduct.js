@@ -1,36 +1,36 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { Stack, IconButtonEdit, MainButton, Protected } from "../../core";
+import {
+  Stack,
+  IconButtonEdit,
+  MainButton,
+  Protected,
+  CustomAvatar,
+  Button,
+} from "../../core";
 import theme from "../../../assets/styles/theme";
 import { trimFunc } from "../../../utils";
 import { useAuth, useDuration } from "../../../hooks";
 import { useTranslation } from "react-i18next";
 import { IconButtonDelete } from "../../core/IconButton/IconButtonDelete";
+import { Checkmark } from "../../core";
 import { useNavigation } from "@react-navigation/native";
-import { SECOND_ROLE, THIRD_ROLE } from "@env";
-import { BookmarkIconButton } from "../Buttons/BookmarkIconButton";
+import { MAIN_ROLE, SECOND_ROLE, THIRD_ROLE } from "@env";
+import { BookmarkButton } from "../Buttons/BookmarkButton";
 
 const { black, grey0, primary } = theme.lightColors;
 
 export const CardProduct = ({
   product,
+  ownerInfo = false,
   onDeleteProduct,
   onEditProduct,
   canBook,
 }) => {
   const { user: userContext } = useAuth();
   const { t } = useTranslation();
-  const {
-    name,
-    duration,
-    description,
-    price,
-    option,
-    service,
-    user,
-    employee,
-  } = product || {};
-  const { hours } = user || {};
+  const { name, duration, description, price } = product || {};
+  const { option, service, user, employee } = product || {};
   const currDuration = duration ? useDuration(duration) : "";
   const navigation = useNavigation();
 
@@ -42,6 +42,10 @@ export const CardProduct = ({
       hours,
       employee,
     });
+
+  const goToOwner = () => {
+    navigation.navigate("ProfileGeneral", { ...user });
+  };
 
   return (
     <Stack sx={styles.card}>
@@ -62,33 +66,47 @@ export const CardProduct = ({
           </Text>
         </Stack>
         <Stack>
-          {canBook && hours && (
-            <Protected
-              roles={[SECOND_ROLE, THIRD_ROLE]}
-              userRole={userContext.role}
-            >
-              <MainButton
-                size="md"
-                variant="outlined"
-                title={t("book")}
-                onPress={goToCalendar}
-              />
-            </Protected>
-          )}
-          <Stack direction="row">
+          <Protected
+            roles={[SECOND_ROLE, THIRD_ROLE]}
+            userRole={userContext.role}
+          >
+            <MainButton
+              size="md"
+              //variant="outlined"
+              title={t("book")}
+              onPress={goToCalendar}
+            />
+          </Protected>
+          {/* <Stack direction="row">
             <IconButtonEdit onPress={onEditProduct} />
             <IconButtonDelete
               onPress={onDeleteProduct}
               sx={{ marginLeft: 20 }}
             />
-          </Stack>
+          </Stack> */}
         </Stack>
       </Stack>
-      {user !== userContext._id && (
-        <View style={styles.bookmark}>
-          <BookmarkIconButton type="products" typeId={product._id} />
-        </View>
+      {ownerInfo && (
+        <Stack align="start" sx={styles.owner}>
+          <Stack direction="row">
+            <CustomAvatar avatar={user?.avatar} size={40} iconSize={17.5} />
+            <Button onPress={goToOwner}>
+              <Stack align="start" justify="start" sx={{ marginLeft: 10 }}>
+                <Stack direction="row">
+                  <Text style={styles.ownerName}>{user.name}</Text>
+                  {user.checkmark && <Checkmark />}
+                </Stack>
+                <Text style={{ color: grey0 }}>{user.profession.name}</Text>
+              </Stack>
+            </Button>
+          </Stack>
+        </Stack>
       )}
+      <Protected roles={[SECOND_ROLE, THIRD_ROLE]} userRole={userContext.role}>
+        <Stack align="end" sx={styles.bookmark}>
+          <BookmarkButton type="products" typeId={product._id} />
+        </Stack>
+      </Protected>
     </Stack>
   );
 };
@@ -141,6 +159,13 @@ const styles = StyleSheet.create({
   },
   bookmark: {
     width: "100%",
-    alignItems: "flex-end",
+    marginTop: 10,
+  },
+  owner: { width: "100%", marginTop: 20, marginBottom: 5 },
+  ownerName: {
+    color: black,
+    fontWeight: "600",
+    fontSize: 15,
+    marginRight: 5,
   },
 });

@@ -3,7 +3,7 @@ import { Avatar, Badge, Icon } from "@rneui/themed";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 
-const { primary, success } = theme.lightColors;
+const { primary } = theme.lightColors;
 
 export const CustomAvatar = ({
   avatar,
@@ -12,8 +12,6 @@ export const CustomAvatar = ({
   withBadge,
   badgeContainer,
   badgeDetails,
-  withAvailable,
-  available,
   sx,
   badgeSx,
 }) => {
@@ -61,23 +59,6 @@ export const CustomAvatar = ({
           containerStyle={{ ...styles.badgeContainer, ...badgeContainer }}
           badgeStyle={{ ...styles.badge, ...badgeSx }}
           value={<Icon {...badgeDetails} color="white" />}
-        />
-      )}
-      {withAvailable && (
-        <Badge
-          containerStyle={styles.availableCont}
-          status="success"
-          badgeStyle={
-            available
-              ? {
-                  ...styles.availableBadge,
-                  backgroundColor: success,
-                }
-              : {
-                  ...styles.availableBadge,
-                  backgroundColor: "#ccc",
-                }
-          }
         />
       )}
     </View>

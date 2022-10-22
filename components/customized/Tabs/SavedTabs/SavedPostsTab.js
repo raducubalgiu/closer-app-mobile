@@ -42,7 +42,7 @@ export const SavedPostsTab = ({ user }) => {
   );
 
   return (
-    <View style={{ flex: 1 }}>
+    <>
       {!posts?.length && !loading && noFoundProducts}
       {!loading && (
         <FlatList
@@ -53,6 +53,6 @@ export const SavedPostsTab = ({ user }) => {
         />
       )}
       {loading && <Spinner />}
-    </View>
+    </>
   );
 };

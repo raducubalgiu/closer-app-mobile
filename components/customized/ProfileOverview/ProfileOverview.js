@@ -3,8 +3,6 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { MAIN_ROLE, SECOND_ROLE, THIRD_ROLE } from "@env";
 import { useTranslation } from "react-i18next";
-import { Icon } from "@rneui/themed";
-import moment from "moment";
 import theme from "../../../assets/styles/theme";
 import {
   CustomAvatar,
@@ -12,7 +10,6 @@ import {
   StatsButton,
   IconStar,
   Button,
-  IconLocation,
   Protected,
 } from "../../core";
 import { useAuth } from "../../../hooks";
@@ -22,17 +19,9 @@ const { black, primary } = theme.lightColors;
 
 export const ProfileOverview = ({ name, username, avatar, children, user }) => {
   const { user: userContext } = useAuth();
-  const { counter, role, distance, profession, status, endTime, location } =
-    user || {};
+  const { counter, role, profession } = user || {};
   const navigation = useNavigation();
   const { t } = useTranslation();
-
-  // let available = status
-  //   ? `${t("isClosingAt")} ${moment()
-  //       .startOf("day")
-  //       .seconds(endTime)
-  //       .format("HH")}`
-  //   : t("closed");
 
   const goToFollowers = () =>
     navigation.navigate("ProfileStats", {
@@ -75,8 +64,6 @@ export const ProfileOverview = ({ name, username, avatar, children, user }) => {
             avatar={avatar}
             withBadge={withBadge}
             badgeDetails={badgeDetails}
-            withAvailable={role !== THIRD_ROLE}
-            available={false}
           />
         </Button>
         <Text style={styles.name}>{name}</Text>

@@ -7,10 +7,12 @@ import {
   TopTabContainer,
   SavedProductsTab,
   SavedPostsTab,
+  SavedServicesTab,
 } from "../../../components/customized/index";
 import { Header } from "../../../components/core";
 import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../hooks";
+import { trimFunc } from "../../../utils";
 
 const BookmarksScreen = () => {
   const { user } = useAuth();
@@ -18,17 +20,27 @@ const BookmarksScreen = () => {
   const { t } = useTranslation();
 
   const SavedPosts = useCallback(() => <SavedPostsTab user={user} />, []);
+  const SavedServices = useCallback(() => <SavedServicesTab user={user} />, []);
   const SavedProducts = useCallback(() => <SavedProductsTab user={user} />, []);
   const SavedHashtags = useCallback(() => <SavedHashtagsTab user={user} />, []);
 
   return (
     <SafeAreaView style={styles.screen}>
       <Header title={t("saved")} />
-      <TopTabContainer initialRouteName="SavedAll">
+      <TopTabContainer
+        initialRouteName="SavedAll"
+        tabBarScrollEnabled={true}
+        options={{ tabBarItemStyle: { width: 90 } }}
+      >
         <Tab.Screen
           name="SavedPosts"
           component={SavedPosts}
           options={{ tabBarLabel: t("posts") }}
+        />
+        <Tab.Screen
+          name="SavedServices"
+          component={SavedServices}
+          options={{ tabBarLabel: t("services") }}
         />
         <Tab.Screen
           name="SavedProducts"
@@ -38,7 +50,7 @@ const BookmarksScreen = () => {
         <Tab.Screen
           name="SavedHashtags"
           component={SavedHashtags}
-          options={{ tabBarLabel: t("hashtags") }}
+          options={{ tabBarLabel: t("hashtag") }}
         />
       </TopTabContainer>
     </SafeAreaView>

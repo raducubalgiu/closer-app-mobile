@@ -26,11 +26,11 @@ export const BookmarkButton = ({ type, typeId, onBookmarksCount }) => {
   const handleBookmark = () => {
     if (!bookmarked) {
       setBookmarked(true);
-      onBookmarksCount(1);
+      onBookmarksCount && onBookmarksCount(1);
       makePost();
     } else {
       setBookmarked(false);
-      onBookmarksCount(-1);
+      onBookmarksCount && onBookmarksCount(-1);
       makeDelete();
     }
   };

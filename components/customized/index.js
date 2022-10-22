@@ -17,6 +17,7 @@ export { TopTabProfile } from "./Tabs/TopTabContainer/TopTabProfile";
 export { SavedPostsTab } from "./Tabs/SavedTabs/SavedPostsTab";
 export { SavedHashtagsTab } from "./Tabs/SavedTabs/SavedHashtagsTab";
 export { SavedProductsTab } from "./Tabs/SavedTabs/SavedProductsTab";
+export { SavedServicesTab } from "./Tabs/SavedTabs/SavedServicesTab";
 export { SearchHashtagsTab } from "./Tabs/SearchTabs/SearchHashtagsTab";
 export { SearchJobsTab } from "./Tabs/SearchTabs/SearchJobsTab";
 export { SearchServicesTab } from "./Tabs/SearchTabs/SearchServicesTab";

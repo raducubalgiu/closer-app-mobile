@@ -79,12 +79,23 @@ const ProfileGeneralScreen = ({ route }) => {
             fetchSuggested={handleSuggested}
             fetchUser={fetchUser}
           />
-          <MainButton
-            variant="outlined"
-            title={t("message")}
-            radius={2.5}
-            sx={styles.messageBtn}
-            onPress={() => {}}
+          <IconButton
+            sx={styles.iconBtn}
+            size={20}
+            color={black}
+            iconType="feather"
+            iconName="message-circle"
+            onPress={handleSuggested}
+            loading={loading}
+          />
+          <IconButton
+            sx={styles.iconBtn}
+            size={20}
+            color={black}
+            iconType="feather"
+            iconName="map-pin"
+            onPress={handleSuggested}
+            loading={loading}
           />
           <IconButton
             sx={styles.iconBtn}
