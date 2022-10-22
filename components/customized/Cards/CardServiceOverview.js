@@ -6,11 +6,17 @@ import { Stack } from "../../core";
 import { displayCount } from "../../../utils";
 import theme from "../../../assets/styles/theme";
 import { BookmarkButton } from "../Buttons/BookmarkButton";
+import { useAuth, useHttpGet } from "../../../hooks";
 
 const { grey0 } = theme.lightColors;
 
 export const CardServiceOverview = ({ name, postsCount, serviceId }) => {
+  const { user } = useAuth();
   const { t } = useTranslation();
+
+  const { data, loading } = useHttpGet(
+    `/users/${user?._id}/services/${serviceId}/bookmarks`
+  );
 
   return (
     <Stack direction="row" align="start" justify="start" sx={styles.container}>
@@ -24,11 +30,14 @@ export const CardServiceOverview = ({ name, postsCount, serviceId }) => {
             {displayCount(postsCount, t("post"), t("posts"), t("ofPosts"))}
           </Text>
         </Stack>
-        <BookmarkButton
-          type="services"
-          typeId={serviceId}
-          onBookmarksCount={null}
-        />
+        {!loading && (
+          <BookmarkButton
+            type="services"
+            typeId={serviceId}
+            status={data.status}
+            onBookmarksCount={null}
+          />
+        )}
       </Stack>
     </Stack>
   );

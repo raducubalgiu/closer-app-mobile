@@ -13,13 +13,12 @@ import theme from "../../../assets/styles/theme";
 
 const { black } = theme.lightColors;
 
-export const BookmarkButton = ({ type, typeId, onBookmarksCount }) => {
+export const BookmarkButton = ({ type, typeId, status, onBookmarksCount }) => {
   const { user } = useAuth();
-  const [bookmarked, setBookmarked] = useState(false);
+  const [bookmarked, setBookmarked] = useState(status);
   const { t } = useTranslation();
   const endoints = `/users/${user?._id}/${type}/${typeId}/bookmarks`;
 
-  useHttpGet(endoints, (data) => setBookmarked(data.status));
   const { makePost } = useHttpPost(endoints);
   const { makeDelete } = useHttpDelete(endoints);
 

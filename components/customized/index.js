@@ -59,6 +59,7 @@ export { HeaderEdit } from "../customized/Layout/Headers/HeaderEdit";
 export { MessageItem } from "../customized/ListItems/MessageItem";
 export { HashtagListItem } from "../customized/ListItems/HashtagListItem";
 export { UserListItem } from "../customized/ListItems/UserListItem";
+export { UserListItemSimple } from "../customized/ListItems/UserListItemSimple";
 export { CommentListItem } from "../customized/ListItems/CommentListItem";
 export { RelatedCommentsList } from "../customized/ListItems/RelatedCommentsList";
 export { RecentSearchListItem } from "../customized/ListItems/RecentSearchListItem";

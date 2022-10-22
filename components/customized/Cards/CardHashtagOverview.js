@@ -6,6 +6,7 @@ import { BookmarkButton } from "../Buttons/BookmarkButton";
 import theme from "../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 import { displayCount } from "../../../utils";
+import { useAuth, useHttpGet } from "../../../hooks";
 
 const { black, grey0 } = theme.lightColors;
 
@@ -14,8 +15,13 @@ export const CardHashtagOverview = ({
   postsCount,
   bookmarksCount,
 }) => {
+  const { user } = useAuth();
   const [countBookmarks, setCountBookmarks] = useState(bookmarksCount);
   const { t } = useTranslation();
+
+  const { data, loading } = useHttpGet(
+    `/users/${user?._id}/hashtags/${bookmarkId}/bookmarks`
+  );
 
   return (
     <Stack
@@ -47,13 +53,16 @@ export const CardHashtagOverview = ({
             </Text>
           </Stack>
         </Stack>
-        <BookmarkButton
-          type="hashtags"
-          typeId={bookmarkId}
-          onBookmarksCount={(action) =>
-            setCountBookmarks(countBookmarks + action)
-          }
-        />
+        {!loading && (
+          <BookmarkButton
+            type="hashtags"
+            typeId={bookmarkId}
+            status={data.status}
+            onBookmarksCount={(action) =>
+              setCountBookmarks(countBookmarks + action)
+            }
+          />
+        )}
       </Stack>
     </Stack>
   );
