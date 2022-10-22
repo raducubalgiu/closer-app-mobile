@@ -51,6 +51,7 @@ export { CardSlotDetails } from "./Cards/CardSlotDetails";
 export { CardPostImage } from "./Cards/CardPostImage";
 export { CardScheduleOverview } from "./Cards/CardScheduleOverview";
 export { CardHashtagOverview } from "./Cards/CardHashtagOverview";
+export { CardServiceOverview } from "./Cards/CardServiceOverview";
 
 export { HeaderServices } from "../customized/Layout/Headers/HeaderServices";
 export { HeaderEdit } from "../customized/Layout/Headers/HeaderEdit";
@@ -61,6 +62,7 @@ export { UserListItem } from "../customized/ListItems/UserListItem";
 export { CommentListItem } from "../customized/ListItems/CommentListItem";
 export { RelatedCommentsList } from "../customized/ListItems/RelatedCommentsList";
 export { RecentSearchListItem } from "../customized/ListItems/RecentSearchListItem";
+export { ServiceListItem } from "../customized/ListItems/ServiceListItem";
 
 export { ServicesList } from "./Lists/ServicesList";
 export { ProfileMenuList } from "./Lists/ProfileMenuList";

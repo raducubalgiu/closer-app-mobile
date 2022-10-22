@@ -68,12 +68,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   hashtagImg: { fontSize: 60, color: black, fontWeight: "300" },
-  hashtag: {
-    fontWeight: "700",
-    fontSize: 16,
-    marginBottom: 10,
-    color: black,
-  },
   counter: {
     color: grey0,
     fontSize: 14.5,
