@@ -7,6 +7,7 @@ import {
   Stack,
   IconStar,
   IconButton,
+  Checkmark,
 } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
@@ -18,6 +19,7 @@ export const CardSuggestedPeople = ({
   avatar,
   username,
   profession,
+  checkmark,
   noFollowers,
   onPress,
   followeeId,
@@ -42,7 +44,10 @@ export const CardSuggestedPeople = ({
         <Stack>
           <CustomAvatar avatar={avatar} size={75} iconSize={35} />
         </Stack>
-        <Text style={styles.username}>@{username}</Text>
+        <Stack direction="row" jsutify="start">
+          <Text style={styles.username}>{username}</Text>
+          {checkmark && <Checkmark sx={{ marginLeft: 5 }} />}
+        </Stack>
         <Stack direction="row" sx={{ marginTop: 2.5 }}>
           <Text style={styles.business}>{trimFunc(profession, 12)}</Text>
           <Stack direction="row" sx={{ marginLeft: 2.5 }}>
@@ -57,6 +62,7 @@ export const CardSuggestedPeople = ({
           sxBtn={styles.followBtn}
           sxBtnText={styles.followBtnText}
           followeeId={followeeId}
+          fullWidth
         />
       </Stack>
     </Button>
@@ -70,10 +76,11 @@ const styles = StyleSheet.create({
     borderColor: "#eee",
     marginRight: 15,
     borderRadius: 5,
-    minWidth: 200,
+    minWidth: 220,
     paddingVertical: 10,
   },
   content: {
+    width: "100%",
     paddingHorizontal: 25,
   },
   name: {
@@ -85,18 +92,20 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 1,
     fontWeight: "600",
+    fontSize: 14.5,
   },
   followers: {
     color: grey0,
-    fontSize: 13,
+    fontSize: 14,
     marginTop: 20,
+    fontWeight: "500",
   },
   business: {
     color: primary,
     textTransform: "capitalize",
-    fontWeight: "600",
+    fontWeight: "700",
   },
-  followBtn: { width: "100%", marginTop: 10 },
+  followBtn: { marginTop: 10 },
   followBtnText: { textAlign: "center" },
   ratingsAverage: { marginLeft: 2.5, fontWeight: "600" },
 });

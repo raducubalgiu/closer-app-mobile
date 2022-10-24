@@ -10,6 +10,7 @@ import {
   SearchPopularTab,
   TopTabContainer,
   SearchBookablesTab,
+  SearchServicesTab,
 } from "../components/customized";
 import { useAuth, useHttpPost } from "../hooks";
 import { Icon } from "@rneui/themed";
@@ -37,6 +38,10 @@ const SearchAllScreen = ({ route }) => {
   );
   const SearchUsers = useCallback(
     () => <SearchUsersTab search={search} />,
+    [search]
+  );
+  const SearchServices = useCallback(
+    () => <SearchServicesTab search={search} />,
     [search]
   );
   const SearchHashtags = useCallback(
@@ -108,6 +113,11 @@ const SearchAllScreen = ({ route }) => {
           name="SearchUsers"
           component={SearchUsers}
           options={{ tabBarLabel: t("users") }}
+        />
+        <Tab.Screen
+          name="SearchServices"
+          component={SearchServices}
+          options={{ tabBarLabel: t("services") }}
         />
         <Tab.Screen
           name="SearchHashtags"

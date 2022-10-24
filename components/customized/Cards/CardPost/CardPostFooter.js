@@ -39,7 +39,7 @@ const CardPostFooter = ({
   return (
     <>
       <Stack align="start" sx={{ paddingHorizontal: 15, paddingTop: 10 }}>
-        {description && <DisplayText text={description} maxWords={10} />}
+        <DisplayText text={description} maxWords={10} />
       </Stack>
       {comments > 0 && (
         <Button

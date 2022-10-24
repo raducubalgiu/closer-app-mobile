@@ -44,10 +44,13 @@ const SearchServicesScreen = ({ route }) => {
       setSearch(search);
       if (search) {
         axios
-          .get(`${process.env.BASE_ENDPOINT}/services/?name=${search}`, {
-            signal: controller.signal,
-            headers: { Authorization: `Bearer ${user?.token}` },
-          })
+          .get(
+            `${process.env.BASE_ENDPOINT}/services/search?search=${search}`,
+            {
+              signal: controller.signal,
+              headers: { Authorization: `Bearer ${user?.token}` },
+            }
+          )
           .then((res) => setServices(res.data))
           .catch((err) => console.log(err));
       } else {

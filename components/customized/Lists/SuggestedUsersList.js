@@ -19,13 +19,15 @@ export const SuggestedUsersList = ({ suggested, userId }) => {
   );
 
   const renderSuggested = useCallback(({ item }) => {
-    const { avatar, name, profession, counter, username, _id } = item;
+    const { avatar, name, profession, counter, username, checkmark, _id } =
+      item;
 
     return (
       <CardSuggestedPeople
         avatar={avatar}
         title={name}
         profession={profession?.name}
+        checkmark={checkmark}
         noFollowers={counter?.followersCount}
         ratingsAverage={counter?.ratingsAverage?.toFixed(1)}
         username={username}

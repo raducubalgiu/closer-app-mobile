@@ -15,7 +15,7 @@ export const UserListItemSimple = ({
   return (
     <Stack align="start" sx={styles.owner}>
       <Stack direction="row">
-        <CustomAvatar avatar={avatar} size={40} iconSize={17.5} />
+        <CustomAvatar avatar={avatar} size={50} iconSize={17.5} />
         <Button onPress={onGoToUser}>
           <Stack align="start" justify="start" sx={{ marginLeft: 10 }}>
             <Stack direction="row">
