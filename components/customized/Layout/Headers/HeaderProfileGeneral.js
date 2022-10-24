@@ -1,4 +1,4 @@
-import { StyleSheet, Text } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { Icon } from "@rneui/themed";
 import { IconBackButton, IconButton, Stack, Checkmark } from "../../../core";
@@ -13,35 +13,42 @@ export const HeaderProfileGeneral = ({
   checkmark,
 }) => {
   return (
-    <Stack direction="row" sx={styles.container}>
-      <Stack direction="row">
-        <IconBackButton sx={{ marginRight: 15 }} />
-        <Icon name="bells" type="antdesign" color="white" />
-      </Stack>
-      <Stack direction="row">
-        <Text style={styles.name}>@{username}</Text>
-        {checkmark && <Checkmark sx={{ marginLeft: 5 }} />}
-      </Stack>
-      <Stack direction="row">
-        <IconButton
-          onPress={onOpenNotifications}
-          iconName="bell"
-          iconType="feather"
-          color={black}
-        />
-        <IconButton
-          onPress={onOpenSettings}
-          iconName="more-horizontal"
-          iconType="feather"
-          color={black}
-          sx={{ marginLeft: 15 }}
-        />
-      </Stack>
-    </Stack>
+    <View style={{ backgroundColor: "white", zIndex: 1000 }}>
+      <SafeAreaView>
+        <Stack direction="row" sx={styles.container}>
+          <Stack direction="row">
+            <IconBackButton sx={{ marginRight: 15 }} />
+            <Icon name="bells" type="antdesign" color="white" />
+          </Stack>
+          <Stack direction="row">
+            <Text style={styles.name}>@{username}</Text>
+            {checkmark && <Checkmark sx={{ marginLeft: 5 }} />}
+          </Stack>
+          <Stack direction="row">
+            <IconButton
+              onPress={onOpenNotifications}
+              iconName="bell"
+              iconType="feather"
+              color={black}
+            />
+            <IconButton
+              onPress={onOpenSettings}
+              iconName="more-horizontal"
+              iconType="feather"
+              color={black}
+              sx={{ marginLeft: 15 }}
+            />
+          </Stack>
+        </Stack>
+      </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { marginHorizontal: 15, marginVertical: 10 },
+  container: {
+    marginHorizontal: 15,
+    marginVertical: 10,
+  },
   name: { fontSize: 15, color: black, fontWeight: "600" },
 });

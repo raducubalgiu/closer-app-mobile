@@ -11,6 +11,7 @@ import {
   FollowUserSheet,
   TopTabProfile,
 } from "../../../components/customized";
+import { useNavigation } from "@react-navigation/native";
 
 const { black } = theme.lightColors;
 
@@ -21,6 +22,7 @@ const ProfileGeneralScreen = ({ route }) => {
   const [suggested, setSuggested] = useState([]);
   const [userDetails, setUserDetails] = useState([]);
   const { t } = useTranslation();
+  const navigation = useNavigation();
 
   const { makePost } = useHttpPost(`/searches`);
   const { makeGet: fetchUser } = useHttpGetFunc(`/users/${username}`, (data) =>
@@ -94,7 +96,11 @@ const ProfileGeneralScreen = ({ route }) => {
             color={black}
             iconType="feather"
             iconName="map-pin"
-            onPress={handleSuggested}
+            onPress={() =>
+              navigation.navigate("Map", {
+                profession: userDetails?.profession,
+              })
+            }
             loading={loading}
           />
           <IconButton

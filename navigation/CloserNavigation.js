@@ -67,6 +67,7 @@ import ScheduleCancelScreen from "../screens/ScheduleCancelScreen";
 import AllBookmarksScreens from "../screens/User/Profile/AllBookmarksScreens";
 import HashtagScreen from "../screens/HashtagScreen";
 import ServiceScreen from "../screens/ServiceScreen";
+import TestScreen from "../screens/TestScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -260,6 +261,7 @@ const CloserNavigation = () => {
             />
             <Stack.Screen name="Schedule" component={ScheduleScreen} />
             <Stack.Screen name="AddSchedule" component={AddScheduleScreen} />
+            <Stack.Screen name="Test" component={TestScreen} />
           </RootStack.Navigator>
         </PortalProvider>
       )}
