@@ -24,13 +24,13 @@ export const useHttpGet = (route, callback) => {
         })
         .then((res) => {
           setData(res.data);
+          setLoading(false);
           if (callback) callback(res.data);
         })
         .catch(() => {
           setFeedback({ visible: true, message: t("somethingWentWrong") });
-        })
-        .finally(() => setLoading(false));
-
+          setLoading(false);
+        });
       return () => controller.abort();
     }, [route])
   );
@@ -145,12 +145,14 @@ export const useHttpGetFunc = (route, callback) => {
         signal: controller.signal,
         headers: { Authorization: `Bearer ${user.token}` },
       })
-      .then((res) => callback(res.data))
+      .then((res) => {
+        callback(res.data);
+        setLoading(false);
+      })
       .catch(() => {
         setFeedback({ visible: true, message: t("somethingWentWrong") });
         setLoading(false);
-      })
-      .finally(() => setLoading(false));
+      });
 
     return () => controller.abort();
   }, [route, callback, user, BASE_ENDPOINT]);

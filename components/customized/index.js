@@ -37,6 +37,7 @@ export { DashboardJobsTab } from "./Tabs/DashboardTabs/DashboardJobsTab";
 export { ServiceTab } from "./Tabs/ServiceTab/ServiceTab";
 export { TabBadge } from "./Tabs/TabBadge/TabBadge";
 export { SearchBookablesTab } from "./Tabs/SearchTabs/SearchBookablesTab";
+export { ProfileCollapsableTabs } from "./Tabs/ProfileCollapsibleTabs/ProfileCollapsableTabs";
 
 export { CardPost } from "./Cards/CardPost/CardPost";
 export { CardPostGrid } from "./Cards/CardPostGrid/CardPostGrid";

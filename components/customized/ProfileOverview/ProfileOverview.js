@@ -76,26 +76,6 @@ export const ProfileOverview = ({ name, username, avatar, children, user }) => {
             </Text>
           </Protected>
         </Stack>
-        {/* <Stack direction="row" sx={{ marginTop: 10 }}>
-          <Button onPress={() => navigation.navigate("About")}>
-            <Stack direction="row">
-              <Icon name="keyboard-arrow-down" size={15} color="white" />
-              <Icon name="clock" type="feather" color={grey0} size={17.5} />
-              <Text style={styles.text}>{available}</Text>
-            </Stack>
-          </Button>
-          <Button
-            onPress={() => navigation.navigate("Map", { location, profession })}
-          >
-            <Stack direction="row" sx={{ marginLeft: 10 }}>
-              <IconLocation color={grey0} size={17.5} />
-              <Text style={styles.text}>
-                {t("at")} {distance?.toFixed(0)} km
-              </Text>
-              <Icon name="keyboard-arrow-down" size={15} color={black} />
-            </Stack>
-          </Button>
-        </Stack> */}
       </Stack>
       <Stack direction="row" justify="between" sx={styles.statsContainer}>
         <StatsButton

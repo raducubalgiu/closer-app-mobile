@@ -1,89 +1,24 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Animated,
-  Dimensions,
-  Platform,
-  FlatList,
-  Image,
-} from "react-native";
-import React, { useRef, useEffect, useCallback } from "react";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, { Callout, PROVIDER_GOOGLE } from "react-native-maps";
 import {
   Button,
   CustomAvatar,
   IconBackButton,
-  IconStar,
+  IconButton,
   Stack,
 } from "../components/core";
-import { useHttpGet } from "../hooks";
 import theme from "../assets/styles/theme";
+import { Avatar } from "@rneui/themed";
+import { useHttpGet } from "../hooks";
+import { Icon } from "@rneui/themed";
 
 const { grey0, black, primary } = theme.lightColors;
-const { width, height } = Dimensions.get("window");
-const CARD_HEIGHT = 250;
-const CARD_WIDTH = width * 0.8;
-const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
 
 const MapScreen = ({ route }) => {
+  const { _id } = route.params.profession;
   const navigation = useNavigation();
-  const { location, business } = route.params;
-  const maxDistance = 50;
-  const _map = useRef(null);
-  const _scrollView = useRef(null);
-  let mapIndex = 0;
-  let mapAnimation = new Animated.Value(0);
-
-  const { data: locations } = useHttpGet(
-    `/users/get-locations-map?latlng=26.100195,44.428286&business=${business?._id}&maxDistance=${maxDistance}`
-  );
-
-  useEffect(() => {
-    mapAnimation.addListener(({ value }) => {
-      let index = Math.floor(value / CARD_WIDTH + 0.3); // animate 30% away from landing on the next item
-      if (index >= locations?.length) {
-        index = locations?.length - 1;
-      }
-      if (index <= 0) {
-        index = 0;
-      }
-
-      clearTimeout(regionTimeout);
-
-      const regionTimeout = setTimeout(() => {
-        if (mapIndex !== index) {
-          mapIndex = index;
-          _map.current.animateToRegion(
-            {
-              latitude: locations[index].location.coordinates[0],
-              longitude: locations[index].location.coordinates[1],
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
-            },
-            350
-          );
-        }
-      }, 10);
-    });
-  });
-
-  const interpolations = locations?.map((marker, index) => {
-    const inputRange = [
-      (index - 1) * CARD_WIDTH,
-      index * CARD_WIDTH,
-      (index + 1) * CARD_WIDTH,
-    ];
-
-    const scale = mapAnimation.interpolate({
-      inputRange,
-      outputRange: [1, 1.2, 1],
-      extrapolate: "clamp",
-    });
-
-    return { scale };
-  });
 
   const goToLocation = (_id, username, name, avatar) =>
     navigation.push("ProfileGeneral", {
@@ -93,228 +28,143 @@ const MapScreen = ({ route }) => {
       avatar,
     });
 
-  const renderItem = useCallback(({ item }) => {
-    return (
-      <Button
-        onPress={() =>
-          goToLocation(item._id, item.username, item.name, item.avatar)
-        }
-        sx={styles.card}
-      >
-        <Image
-          source={{ uri: item?.images[0]?.url }}
-          containerStyle={styles.image}
-          resizeMode="cover"
-        />
-        <View
-          style={{
-            position: "absolute",
-            left: 10,
-            top: 10,
-          }}
-        >
-          <CustomAvatar
-            avatar={item.avatar}
-            size={35}
-            iconSize={17}
-            sx={styles.avatar}
-          />
-        </View>
-        <View style={{ paddingVertical: 15, paddingHorizontal: 10 }}>
-          <Stack direction="row" justify="start">
-            <Text numberOfLines={1} style={styles.name}>
-              {item.name}
-            </Text>
-            <IconStar />
-            <Text
-              style={{
-                marginLeft: 5,
-                fontSize: 15,
-              }}
-            >
-              {item.counter.ratingsAverage.toFixed(1)}
-            </Text>
-            <Text
-              style={{
-                color: theme.lightColors.grey0,
-                marginLeft: 5,
-              }}
-            >
-              ({item.counter.ratingsQuantity})
-            </Text>
-          </Stack>
-          <Text style={styles.username}>@{item.username}</Text>
-          <FlatList
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            bounces={false}
-            data={item.services}
-            keyExtractor={(item) => item._id}
-            renderItem={({ item }) => (
-              <Text style={styles.service}>{item.name}</Text>
-            )}
-          />
-        </View>
-      </Button>
-    );
-  }, []);
+  const mapStyle = [
+    {
+      featureType: "administrative.land_parcel",
+      elementType: "labels",
+      stylers: [
+        {
+          visibility: "off",
+        },
+      ],
+    },
+    {
+      featureType: "poi",
+      elementType: "labels.text",
+      stylers: [
+        {
+          visibility: "off",
+        },
+      ],
+    },
+    {
+      featureType: "poi.business",
+      stylers: [
+        {
+          visibility: "off",
+        },
+      ],
+    },
+    {
+      featureType: "road",
+      elementType: "labels.icon",
+      stylers: [
+        {
+          visibility: "off",
+        },
+      ],
+    },
+    {
+      featureType: "road.local",
+      elementType: "labels",
+      stylers: [
+        {
+          visibility: "off",
+        },
+      ],
+    },
+    {
+      featureType: "transit",
+      stylers: [
+        {
+          visibility: "off",
+        },
+      ],
+    },
+  ];
 
-  const getItemLayout = useCallback(
-    (data, index) => ({
-      length: width,
-      offset: height * index,
-      index,
-    }),
-    []
+  const { data: locations } = useHttpGet(
+    `/locations/get-locations-map?latlng=26.100195,44.428286&profession=${_id}`
   );
 
   return (
-    <View>
-      <IconBackButton sx={styles.backBtn} size={20} />
+    <>
       <MapView
-        ref={_map}
         style={{ height: "100%" }}
         initialRegion={{
-          latitude: location.coordinates[0],
-          longitude: location.coordinates[1],
+          latitude: 44.425625,
+          longitude: 26.102312,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
         provider={PROVIDER_GOOGLE}
+        customMapStyle={mapStyle}
       >
-        {locations?.map((loc, i) => {
-          const scaleStyle = {
-            transform: [
-              {
-                scale: interpolations[i].scale,
-              },
-            ],
-          };
-
-          return (
-            <MapView.Marker
-              key={i}
-              coordinate={{
-                latitude: loc.location.coordinates[0],
-                longitude: loc.location.coordinates[1],
+        {locations?.map((loc, i) => (
+          <MapView.Marker
+            key={i}
+            coordinate={{
+              latitude: loc.address.coordinates[0],
+              longitude: loc.address.coordinates[1],
+            }}
+          >
+            <CustomAvatar
+              avatar={loc.owner?.avatar}
+              sx={{
+                borderWidth: 2.5,
+                borderColor: "white",
+                shadowColor: "#171717",
+                shadowOffset: { width: -2, height: 4 },
+                shadowOpacity: 0.2,
+                shadowRadius: 3,
               }}
-            >
-              <Animated.View>
-                <Animated.Image
-                  style={[{ width: 35, height: 35 }, scaleStyle]}
-                  source={require("../assets/images/map_marker.png")}
-                  resizeMode="cover"
-                />
-              </Animated.View>
-            </MapView.Marker>
-          );
-        })}
+              size={50}
+            />
+          </MapView.Marker>
+        ))}
       </MapView>
-      <Animated.FlatList
-        data={locations}
-        ref={_scrollView}
-        getItemLayout={getItemLayout}
-        initialScrollIndex={3}
-        horizontal
-        pagingEnabled
-        scrollEventThrottle={1}
-        showsHorizontalScrollIndicator={false}
-        style={styles.flatlist}
-        contentInset={styles.contentInset}
-        contentContainerStyle={{
-          paddingHorizontal:
-            Platform.OS === "android" ? SPACING_FOR_CARD_INSET : 0,
+      <Stack
+        direction="row"
+        justify="between"
+        sx={{
+          position: "absolute",
+          top: 40,
+          width: "100%",
+          padding: 15,
         }}
-        onScroll={Animated.event(
-          [
-            {
-              nativeEvent: {
-                contentOffset: {
-                  x: mapAnimation,
-                },
-              },
-            },
-          ],
-          { useNativeDriver: true }
-        )}
-        keyExtractor={(loc) => loc._id}
-        renderItem={renderItem}
-      />
-    </View>
+      >
+        <IconButton
+          sx={styles.btn}
+          iconName="chevron-back"
+          iconType="ionicon"
+          onPress={() => navigation.goBack()}
+        />
+        <Stack
+          sx={{ ...styles.btn, paddingHorizontal: 20, paddingVertical: 12.5 }}
+        >
+          <Text style={styles.status}>Inchide la ora 18</Text>
+        </Stack>
+        <IconButton sx={styles.btn} iconName="navigation" iconType="feather" />
+      </Stack>
+    </>
   );
 };
 
 export default MapScreen;
 
 const styles = StyleSheet.create({
-  backBtn: {
-    position: "absolute",
-    top: 50,
-    left: 20,
-    zIndex: 10000,
+  btn: {
     backgroundColor: "white",
-    paddingVertical: 10,
-    paddingLeft: 14,
-    paddingRight: 7.5,
     borderRadius: 50,
+    padding: 12.5,
+    borderColor: "white",
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
   },
-  flatlist: {
-    position: "absolute",
-    bottom: 20,
-    left: 0,
-    right: 0,
-    paddingVertical: 10,
-  },
-  contentInset: {
-    top: 0,
-    left: SPACING_FOR_CARD_INSET,
-    bottom: 0,
-    right: SPACING_FOR_CARD_INSET,
-  },
-  card: {
-    elevation: 2,
-    backgroundColor: "#FFF",
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
-    marginHorizontal: 10,
-    shadowColor: "#000",
-    shadowRadius: 5,
-    shadowOpacity: 0.3,
-    shadowOffset: { x: 2, y: -2 },
-    height: CARD_HEIGHT,
-    width: CARD_WIDTH,
-    overflow: "hidden",
-  },
-  image: {
-    flex: 3,
-    width: "100%",
-    height: "100%",
-    alignSelf: "center",
-  },
-  name: {
-    fontSize: 16,
-    color: black,
-    marginRight: 7.5,
-  },
-  username: {
-    color: grey0,
+  status: {
+    fontWeight: "500",
     fontSize: 14.5,
-  },
-  avatar: {
-    borderWidth: 2,
-    borderColor: primary,
-    borderRadius: 50,
-    marginRight: 5,
-  },
-  service: {
-    marginTop: 10,
-    borderWidth: 1,
-    borderColor: "#ddd",
-    paddingVertical: 5,
-    paddingHorizontal: 15,
-    borderRadius: 15,
-    fontSize: 13,
-    color: black,
-    marginRight: 5,
   },
 });
