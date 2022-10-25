@@ -1,10 +1,33 @@
-import { StyleSheet, Text, SafeAreaView } from "react-native";
-import React from "react";
+import { StyleSheet, SafeAreaView } from "react-native";
+import React, { useCallback } from "react";
 import { Header } from "../components/core";
-import { CardServiceOverview } from "../components/customized";
+import { CardServiceOverview, TopTabContainer } from "../components/customized";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import {
+  ServicePostsPopularTab,
+  ServicePostsLastMinuteTab,
+  ServicePostsRecentTab,
+} from "../components/customized";
+import { useTranslation } from "react-i18next";
 
 const ServiceScreen = ({ route }) => {
-  const { _id, name, postsCount } = route.params.service;
+  const { service } = route.params;
+  const { _id, name, postsCount } = service;
+  const Tab = createMaterialTopTabNavigator();
+  const { t } = useTranslation();
+
+  const ServicePostsPopular = useCallback(
+    () => <ServicePostsPopularTab serviceId={_id} />,
+    [_id]
+  );
+  const ServicePostsLastMinute = useCallback(
+    () => <ServicePostsLastMinuteTab serviceId={_id} />,
+    [_id]
+  );
+  const ServicePostsRecent = useCallback(
+    () => <ServicePostsRecentTab serviceId={_id} />,
+    [_id]
+  );
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -14,7 +37,23 @@ const ServiceScreen = ({ route }) => {
         postsCount={postsCount}
         name={name}
       />
-      <Text>ServiceScreen</Text>
+      <TopTabContainer initialRouteName="ServicePostsPopular">
+        <Tab.Screen
+          name="ServicePostsPopular"
+          component={ServicePostsPopular}
+          options={{ tabBarLabel: t("popular") }}
+        />
+        <Tab.Screen
+          name="ServicePostsLastMinute"
+          component={ServicePostsLastMinute}
+          options={{ tabBarLabel: t("lastMinute") }}
+        />
+        <Tab.Screen
+          name="ServicePostsRecent"
+          component={ServicePostsRecent}
+          options={{ tabBarLabel: t("recent") }}
+        />
+      </TopTabContainer>
     </SafeAreaView>
   );
 };

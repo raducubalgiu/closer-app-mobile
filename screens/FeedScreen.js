@@ -190,7 +190,7 @@ const FeedScreen = () => {
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
               }}
               isActive={postsState.activeLastMinute}
-              text={t("lastMinute")}
+              text={t("lastMinuteOffers")}
             />
           </Stack>
         </ScrollView>

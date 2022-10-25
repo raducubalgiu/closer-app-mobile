@@ -5,16 +5,22 @@ import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { ServiceListItem } from "../../ListItems/ServiceListItem";
 import { useTranslation } from "react-i18next";
 import { useHttpGet } from "../../../../hooks";
+import { useNavigation } from "@react-navigation/native";
 
 export const SearchServicesTab = ({ search }) => {
   const { t } = useTranslation();
+  const navigation = useNavigation();
   const { data: services, loading } = useHttpGet(
     `/services/search?search=${search}`
   );
 
   const renderService = useCallback(
     ({ item }) => (
-      <ServiceListItem name={item.name} postsCount={item.postsCount} />
+      <ServiceListItem
+        name={item.name}
+        postsCount={item.postsCount}
+        onPress={() => navigation.navigate("Service", { service: item })}
+      />
     ),
     []
   );

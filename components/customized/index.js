@@ -38,9 +38,12 @@ export { ServiceTab } from "./Tabs/ServiceTab/ServiceTab";
 export { TabBadge } from "./Tabs/TabBadge/TabBadge";
 export { SearchBookablesTab } from "./Tabs/SearchTabs/SearchBookablesTab";
 export { ProfileCollapsableTabs } from "./Tabs/ProfileCollapsibleTabs/ProfileCollapsableTabs";
-export { HashtagPostsPopularTab } from "./Tabs/HashtagTabs/HashtagPostsPopularTab";
-export { HashtagPostsRecentTab } from "./Tabs/HashtagTabs/HashtagPostsRecentTab";
-export { HashtagPostsBookableTab } from "./Tabs/HashtagTabs/HashtagPostsBookableTab";
+export { HashtagPostsPopularTab } from "./Tabs/HashtagPostsTabs/HashtagPostsPopularTab";
+export { HashtagPostsRecentTab } from "./Tabs/HashtagPostsTabs/HashtagPostsRecentTab";
+export { HashtagPostsBookableTab } from "./Tabs/HashtagPostsTabs/HashtagPostsBookableTab";
+export { ServicePostsPopularTab } from "./Tabs/ServicePostsTabs/ServicePostsPopularTab";
+export { ServicePostsLastMinuteTab } from "./Tabs/ServicePostsTabs/ServicePostsLastMinuteTab";
+export { ServicePostsRecentTab } from "./Tabs/ServicePostsTabs/ServicePostsRecentTab";
 
 export { CardPost } from "./Cards/CardPost/CardPost";
 export { CardPostGrid } from "./Cards/CardPostGrid/CardPostGrid";
