@@ -32,12 +32,11 @@ export const SheetService = ({ results, list, loading, ...props }) => {
       index={1}
     >
       <View style={{ flex: 1 }}>
-        <View style={{ height: 50 }}>
+        <View style={{ height: 40 }}>
           <Text style={styles.sheetHeading}>
             {results} {results > 19 ? "de rezultate" : "rezultate"}
           </Text>
         </View>
-        <Divider width={2} color="#f1f1f1" style={styles.divider} />
         {!loading && list}
         {loading && <Spinner />}
       </View>

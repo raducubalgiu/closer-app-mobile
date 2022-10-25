@@ -78,6 +78,7 @@ const LocationsScreen = ({ route }) => {
         data={locations}
         keyExtractor={(item) => item._id}
         renderItem={renderLocation}
+        bounces={false}
       />
     </View>
   );

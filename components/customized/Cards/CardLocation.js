@@ -4,7 +4,14 @@ import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";
 import { trimFunc, AddressFormat } from "../../../utils";
-import { Button, IconLocation, IconStar, IconVideo, Stack } from "../../core";
+import {
+  Button,
+  CustomAvatar,
+  IconLocation,
+  IconStar,
+  IconVideo,
+  Stack,
+} from "../../core";
 
 const { width } = Dimensions.get("window");
 const { black, grey0 } = theme.lightColors;
@@ -14,9 +21,6 @@ export const CardLocation = ({ location, service, option }) => {
   const { name, username, avatar, checkmark } = owner;
   const navigation = useNavigation();
   const { t } = useTranslation();
-
-  console.log("SERVICE!!", service);
-  console.log("OPTION!!!", option);
 
   const goToUser = () =>
     navigation.push("ProfileGeneral", {
@@ -40,7 +44,12 @@ export const CardLocation = ({ location, service, option }) => {
               uri: images[0]?.url,
             }}
           />
-          <IconVideo sx={styles.iconVideo} />
+          <CustomAvatar
+            avatar={avatar}
+            size={25}
+            iconSize={15}
+            sx={styles.avatar}
+          />
         </Stack>
         <View style={styles.content}>
           <Stack align="start">
@@ -147,10 +156,12 @@ const styles = StyleSheet.create({
     color: black,
     fontWeight: "500",
   },
-  iconVideo: {
+  avatar: {
     position: "absolute",
     bottom: 5,
-    left: 10,
+    left: -55,
     zIndex: 1000,
+    borderWidth: 1.5,
+    borderColor: "white",
   },
 });
