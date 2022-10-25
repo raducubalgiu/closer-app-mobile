@@ -1,71 +1,66 @@
-import { StyleSheet, FlatList, SafeAreaView } from "react-native";
+import { StyleSheet, SafeAreaView } from "react-native";
 import React, { useCallback } from "react";
-import { Header, Spinner } from "../components/core";
-import {
-  CardHashtagOverview,
-  CardPostImage,
-  NoFoundMessage,
-} from "../components/customized";
+import { Header } from "../components/core";
+import { CardHashtagOverview, TopTabContainer } from "../components/customized";
 import { useHttpGet } from "../hooks";
 import { useTranslation } from "react-i18next";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import {
+  HashtagPostsPopularTab,
+  HashtagPostsRecentTab,
+  HashtagPostsBookableTab,
+} from "../components/customized";
 
 const HashtagScreen = ({ route }) => {
   const { name } = route.params;
   const { t } = useTranslation();
+  const Tab = createMaterialTopTabNavigator();
 
   const {
     data: { postsCount, bookmarksCount, _id },
     loading: loadHashtag,
   } = useHttpGet(`/hashtags/${name}`);
 
-  const { data: posts, loading: loadPosts } = useHttpGet(
-    `/hashtags/${name}/posts`
+  const HashtagPostsBookable = useCallback(
+    () => <HashtagPostsBookableTab name={name} />,
+    [name]
   );
-
-  const noFoundMessage = (
-    <NoFoundMessage title={t("posts")} description={t("noFoundPosts")} />
+  const HashtagPostsPopular = useCallback(
+    () => <HashtagPostsPopularTab name={name} />,
+    [name]
   );
-
-  const renderPosts = useCallback(({ item, index }) => {
-    const { images, bookable, postType } = item;
-
-    return (
-      <CardPostImage
-        onPress={() => {}}
-        index={index}
-        image={images[0]?.url}
-        bookable={bookable}
-        fixed={null}
-        postType={postType}
-      />
-    );
-  }, []);
-
-  const header = useCallback(
-    () => (
-      <CardHashtagOverview
-        bookmarkId={_id}
-        postsCount={postsCount}
-        bookmarksCount={bookmarksCount}
-      />
-    ),
-    [_id, postsCount, bookmarksCount]
+  const HashtagPostsRecent = useCallback(
+    () => <HashtagPostsRecentTab name={name} />,
+    [name]
   );
 
   return (
     <SafeAreaView style={styles.screen}>
       <Header title={`#${name}`} />
-      <FlatList
-        ListHeaderComponent={!loadHashtag && header}
-        data={posts}
-        numColumns={3}
-        keyExtractor={(item) => item?._id}
-        renderItem={!loadHashtag && renderPosts}
-        ListFooterComponent={
-          !loadHashtag && !loadPosts && !posts.length && noFoundMessage
-        }
-      />
-      {loadHashtag || (loadPosts && <Spinner />)}
+      {!loadHashtag && (
+        <CardHashtagOverview
+          bookmarkId={_id}
+          postsCount={postsCount}
+          bookmarksCount={bookmarksCount}
+        />
+      )}
+      <TopTabContainer initialRouteName="HashtagPostsBookable">
+        <Tab.Screen
+          name="HashtagPostsBookable"
+          component={HashtagPostsBookable}
+          options={{ tabBarLabel: t("bookable") }}
+        />
+        <Tab.Screen
+          name="HashtagPostsPopular"
+          component={HashtagPostsPopular}
+          options={{ tabBarLabel: t("populars") }}
+        />
+        <Tab.Screen
+          name="HashtagPostsRecent"
+          component={HashtagPostsRecent}
+          options={{ tabBarLabel: t("recent") }}
+        />
+      </TopTabContainer>
     </SafeAreaView>
   );
 };

@@ -50,12 +50,10 @@ export const CardProduct = ({
           <Stack direction="row" sx={{ width: "100%" }} align="start">
             <Stack align="start" sx={styles.descriptionCont}>
               <Text style={styles.name}>{name} </Text>
-              {option && (
-                <Stack direction="row">
-                  <Text style={styles.option}>{option?.name}</Text>
-                  <Text style={styles.duration}>{currDuration}</Text>
-                </Stack>
-              )}
+              <Stack direction="row">
+                {option && <Text style={styles.option}>{option?.name}</Text>}
+                <Text style={styles.duration}>{currDuration}</Text>
+              </Stack>
               {description && (
                 <Text style={styles.description}>
                   {trimFunc(description, 50)}
@@ -130,10 +128,10 @@ const styles = StyleSheet.create({
     color: primary,
     fontSize: 14,
     fontWeight: "600",
+    marginRight: 10,
   },
   duration: {
     color: theme.lightColors.black,
-    marginLeft: 10,
     fontWeight: "500",
   },
   descriptionCont: { marginRight: 5, flex: 1 },

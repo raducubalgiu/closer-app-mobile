@@ -12,9 +12,11 @@ export const ServiceTab = ({ userId, service, option }) => {
     `/users/${userId}/services/${service?._id}/products`
   );
 
-  const filteredProducts = products.filter(
-    (prod) => prod.option._id === option?._id
-  );
+  let filteredProducts;
+  if (option)
+    filteredProducts = products.filter(
+      (prod) => prod?.option._id === option?._id
+    );
   const results = option ? filteredProducts : products;
 
   const noFoundProducts = (
