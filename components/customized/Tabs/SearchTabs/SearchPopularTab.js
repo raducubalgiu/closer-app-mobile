@@ -1,7 +1,6 @@
 import { StyleSheet, View, FlatList, Dimensions } from "react-native";
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { Image } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useHttpGet } from "../../../../hooks";
 import { HashtagListItem } from "../../ListItems/HashtagListItem";
@@ -22,32 +21,24 @@ export const SearchPopularTab = ({ search }) => {
   const { data: hashtags, loading: loadHashtags } = useHttpGet(
     `/hashtags/search?search=${search}&page=1&limit=3`
   );
-  const { data: bookablePosts, loading: loadBookable } = useHttpGet(
-    `/posts/get-bookable-posts?search=${search}&latlng=26.100195,44.428286`
-  );
   const { data: popularPosts, loading: loadPosts } = useHttpGet(
     `/posts/get-all-posts?search=${search}&page=1&limit=20`
   );
 
   const headerUsers = useCallback(
     () => (
-      <SearchPopularHeading heading={t("users")} seeAll collection={users} />
-    ),
-    [users]
-  );
-  const headerBookable = useCallback(
-    () => (
       <SearchPopularHeading
-        heading={t("bookables")}
+        heading={t("users")}
         seeAll
-        collection={bookablePosts}
+        collection={users}
         onSeeAll={() =>
-          navigation.navigate("SearchAll", { screen: "SearchBookable", search })
+          navigation.navigate("SearchAll", { screen: "SearchUsers", search })
         }
       />
     ),
-    [bookablePosts]
+    [users]
   );
+
   const headerHashtags = useCallback(
     () => (
       <SearchPopularHeading
@@ -83,21 +74,6 @@ export const SearchPopularTab = ({ search }) => {
     []
   );
 
-  const renderBookables = useCallback(({ item, index }) => {
-    const { posts } = item;
-    const { images, bookable, postType } = posts;
-
-    return (
-      <CardPostImage
-        index={index}
-        image={images[0]?.url}
-        bookable={bookable}
-        postType={postType}
-        col={2}
-      />
-    );
-  }, []);
-
   const renderHashtags = useCallback(
     ({ item }) => (
       <HashtagListItem
@@ -111,13 +87,16 @@ export const SearchPopularTab = ({ search }) => {
   );
 
   const renderPopularPosts = useCallback(
-    ({ item }) => (
-      <View style={styles.boxImage}>
-        <Image
-          source={{ uri: `${item?.images[0]?.url}` }}
-          containerStyle={styles.image}
-        />
-      </View>
+    ({ item, index }) => (
+      <CardPostImage
+        onPress={() => {}}
+        index={index}
+        image={item?.images[0]?.url}
+        bookable={item.bookable}
+        fixed={null}
+        postType={item.postType}
+        col={3}
+      />
     ),
     []
   );
@@ -126,7 +105,7 @@ export const SearchPopularTab = ({ search }) => {
     () => (
       <FlatList
         ListHeaderComponent={headerPopularPosts}
-        numColumns={2}
+        numColumns={3}
         data={popularPosts}
         keyExtractor={(item) => item._id}
         renderItem={renderPopularPosts}
@@ -148,33 +127,19 @@ export const SearchPopularTab = ({ search }) => {
     [headerHashtags, hashtags, popularPostsList]
   );
 
-  const bookableList = useCallback(
-    () => (
-      <FlatList
-        ListHeaderComponent={headerBookable}
-        numColumns={2}
-        data={bookablePosts}
-        keyExtractor={(item) => item.posts._id}
-        renderItem={renderBookables}
-        ListFooterComponent={hashtagsList}
-      />
-    ),
-    [headerBookable, bookablePosts, renderBookables, hashtagsList]
-  );
-
   return (
     <View style={{ flex: 1 }}>
-      {!loadUsers && !loadBookable && !loadHashtags && !loadPosts && (
+      {!loadUsers && !loadHashtags && !loadPosts && (
         <FlatList
           ListHeaderComponent={headerUsers}
           data={users}
           keyExtractor={(item) => item._id}
           showsVerticalScrollIndicator={false}
           renderItem={renderUsers}
-          ListFooterComponent={bookableList}
+          ListFooterComponent={hashtagsList}
         />
       )}
-      {loadUsers && loadBookable && loadHashtags && loadPosts && <Spinner />}
+      {loadUsers && loadHashtags && loadPosts && <Spinner />}
     </View>
   );
 };

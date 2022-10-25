@@ -12,7 +12,10 @@ import {
   IconButton,
 } from "../components/core";
 import { IconBackButton, SearchBarInput, Stack } from "../components/core";
-import { RecentSearchListItem } from "../components/customized";
+import {
+  HashtagListItem,
+  RecentSearchListItem,
+} from "../components/customized";
 import theme from "../assets/styles/theme";
 import { useAuth, useHttpDelete, useHttpGet } from "../hooks";
 import { trimFunc } from "../utils";
@@ -22,12 +25,14 @@ const { grey0, primary, black } = theme.lightColors;
 const SearchPostsScreen = () => {
   const { user } = useAuth();
   const [search, setSearch] = useState("");
-  const [users, setUsers] = useState([]);
+  const [results, setResults] = useState([]);
   const [words, setWords] = useState([]);
   const [searchedUsers, setSearchedUsers] = useState([]);
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const navigation = useNavigation();
   const { t } = useTranslation();
+  const usersSEnpoint = `${process.env.BASE_ENDPOINT}/users/search?search=${search}&page=1&limit=10`;
+  const hashtagsSEnpoint = `${process.env.BASE_ENDPOINT}/hashtags/search?search=${search}&page=1&limit=10`;
 
   useHttpGet(`/users/${user?._id}/searches/searched-word`, (data) =>
     setWords(data)
@@ -50,21 +55,26 @@ const SearchPostsScreen = () => {
       const controller = new AbortController();
       setSearch(search);
 
+      let endpoint = "";
+      if (search.startsWith("#")) {
+        const hash = search.split("#")[1];
+        endpoint = `${process.env.BASE_ENDPOINT}/hashtags/search?search=${hash}&page=1&limit=5`;
+      } else {
+        endpoint = `${process.env.BASE_ENDPOINT}/users/search?search=${search}&page=1&limit=5`;
+      }
+
       if (search) {
         axios
-          .get(
-            `${process.env.BASE_ENDPOINT}/users/search?search=${search}&page=1&limit=10`,
-            {
-              signal: controller.signal,
-              headers: { Authorization: `Bearer ${user.token}` },
-            }
-          )
-          .then((res) => setUsers(res.data))
-          .catch(() =>
-            setFeedback({ visible: true, message: t("somethingWentWrong") })
-          );
+          .get(endpoint, {
+            signal: controller.signal,
+            headers: { Authorization: `Bearer ${user.token}` },
+          })
+          .then((res) => {
+            setResults(res.data);
+          })
+          .catch(() => {});
       } else {
-        setUsers([]);
+        setResults([]);
       }
 
       return () => {
@@ -111,27 +121,46 @@ const SearchPostsScreen = () => {
     });
   };
 
-  const renderUsers = useCallback(
-    ({ item }) => (
-      <Button onPress={() => goToUser(item)}>
-        <Stack direction="row" justify="start" sx={styles.searchItem}>
-          <CustomAvatar avatar={item?.avatar} />
-          <Stack align="start" sx={{ marginLeft: 10 }}>
-            <Stack direction="row">
-              <Text style={styles.username}>{item.username}</Text>
-              {item.checkmark && <Checkmark />}
+  const renderResults = useCallback(
+    ({ item }) => {
+      if (search.startsWith("#")) {
+        return (
+          <HashtagListItem
+            name={item.name}
+            postsCount={item.postsCount}
+            onPress={() =>
+              navigation.navigate("Hashtag", {
+                name: item.name,
+                postsCount: item.postsCount,
+              })
+            }
+          />
+        );
+      } else {
+        return (
+          <Button onPress={() => goToUser(item)}>
+            <Stack direction="row" justify="start" sx={styles.searchItem}>
+              <CustomAvatar avatar={item?.avatar} />
+              <Stack align="start" sx={{ marginLeft: 10 }}>
+                <Stack direction="row">
+                  <Text style={styles.username}>{item.username}</Text>
+                  {item.checkmark && <Checkmark />}
+                </Stack>
+                <Text style={styles.name}>{item.name}</Text>
+              </Stack>
             </Stack>
-            <Text style={styles.name}>{item.name}</Text>
-          </Stack>
-        </Stack>
-      </Button>
-    ),
-    []
+          </Button>
+        );
+      }
+    },
+    [search]
   );
 
   const goToSearchAll = useCallback(() => {
     if (search.length === 0) return;
-    navigation.navigate("SearchAll", { search });
+    navigation.navigate("SearchAll", {
+      search: search.startsWith("#") ? search.split("#")[1] : search,
+    });
   }, [search]);
 
   const footer = useCallback(
@@ -207,18 +236,18 @@ const SearchPostsScreen = () => {
         </Button>
       </Stack>
       <Feedback feedback={feedback} setFeedback={setFeedback} />
-      {users.length > 0 && (
+      {results.length > 0 && (
         <FlatList
-          data={users}
+          data={results}
           keyExtractor={(item) => item._id}
-          renderItem={renderUsers}
-          ListFooterComponent={users.length && footer}
+          renderItem={renderResults}
+          ListFooterComponent={results.length && footer}
           keyboardShouldPersistTaps={"handled"}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingHorizontal: 15 }}
         />
       )}
-      {!users.length && !search && (
+      {!results.length && !search && (
         <FlatList
           ListHeaderComponent={header}
           data={words}

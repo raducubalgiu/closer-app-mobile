@@ -11,7 +11,7 @@ export const SearchHashtagsTab = ({ search }) => {
   const [page, setPage] = useState(1);
 
   const { data: hashtags, loading } = useHttpGet(
-    `/hashtags?page=${page}&limit=10`
+    `/hashtags/search?search=${search}&page=1&limit=25`
   );
   const { t } = useTranslation();
   const navigation = useNavigation();
