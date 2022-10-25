@@ -4,7 +4,9 @@ import { useHttpGet } from "../../../../hooks";
 import { CardPostImage } from "../../Cards/CardPostImage";
 
 export const ServicePostsLastMinuteTab = ({ serviceId }) => {
-  const { data: posts } = useHttpGet(`/services/${serviceId}/posts/popular`);
+  const { data: posts } = useHttpGet(
+    `/services/${serviceId}/posts/last-minute`
+  );
 
   const renderPost = useCallback(({ item, index }) => {
     const { images, bookable, postType } = item;
