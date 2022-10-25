@@ -15,6 +15,7 @@ export const CardPost = ({ post, onShowDetails }) => {
     description,
     createdAt,
     user,
+    product,
   } = post || {};
   const { name, username, avatar, checkmark, profession } = user || {};
 
@@ -41,6 +42,7 @@ export const CardPost = ({ post, onShowDetails }) => {
       </View>
       <CardPostButtons
         bookable={bookable}
+        product={product}
         postId={_id}
         likesCount={likesCount}
       />
