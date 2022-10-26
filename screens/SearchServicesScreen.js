@@ -30,6 +30,8 @@ const SUGGESTED_SERVICES = [
   },
 ];
 
+const { black, grey0 } = theme.lightColors;
+
 const SearchServicesScreen = ({ route }) => {
   const { user } = useAuth();
   const [search, setSearch] = useState("");
@@ -81,8 +83,10 @@ const SearchServicesScreen = ({ route }) => {
   const renderServices = useCallback(
     ({ item }) => (
       <Button onPress={() => goToFilters(item)} sx={styles.item}>
-        <Text style={styles.serviceItem}>{item.name}</Text>
-        <Text style={styles.categoryItem}>{item.categoryName}</Text>
+        <Text style={styles.service}>{item.name}</Text>
+        <Text style={styles.locationsCount}>
+          {item.locationsCount} {t("locations")}
+        </Text>
       </Button>
     ),
     []
@@ -129,16 +133,20 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     paddingTop: 15,
     paddingBottom: 10,
+    fontWeight: "600",
+    fontSize: 15.5,
   },
   item: {
-    paddingVertical: 17,
+    paddingVertical: 15,
   },
-  serviceItem: {
+  service: {
     textTransform: "uppercase",
-    fontSize: 13,
-    color: theme.lightColors.black,
+    color: black,
+    fontWeight: "600",
+    fontSize: 15.5,
   },
-  categoryItem: {
-    color: theme.lightColors.grey0,
+  locationsCount: {
+    color: grey0,
+    fontSize: 14.5,
   },
 });
