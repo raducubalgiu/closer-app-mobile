@@ -14,6 +14,7 @@ export const FiltersContainer = ({
   headerDescription,
   footerExtraBtns,
   footerJustify,
+  btnTitle,
 }) => {
   const { t } = useTranslation();
 
@@ -34,7 +35,7 @@ export const FiltersContainer = ({
         justify={footerJustify ? footerJustify : "between"}
       >
         {footerExtraBtns}
-        <MainButton size="lg" onPress={onNext} title={t("next")} />
+        <MainButton size="lg" onPress={onNext} title={btnTitle} />
       </Stack>
     </>
   );

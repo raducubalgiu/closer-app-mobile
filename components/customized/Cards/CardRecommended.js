@@ -28,7 +28,6 @@ export const CardRecommended = ({ location }) => {
       <Stack direction="row" sx={styles.item}>
         <Stack>
           <Image style={styles.image} source={{ uri: `${images[0]?.url}` }} />
-          <IconVideo sx={styles.iconVideo} />
         </Stack>
         <Stack align="start" sx={styles.info}>
           <Stack direction="row">
@@ -72,7 +71,7 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    borderRadius: 5,
+    borderRadius: 10,
     resizeMode: "cover",
     width: width / 3,
   },
@@ -121,11 +120,5 @@ const styles = StyleSheet.create({
     fontSize: 13,
     padding: 2,
     color: grey0,
-  },
-  iconVideo: {
-    position: "absolute",
-    bottom: 5,
-    left: 10,
-    zIndex: 1000,
   },
 });

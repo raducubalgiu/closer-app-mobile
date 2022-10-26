@@ -4,14 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";
 import { trimFunc, AddressFormat } from "../../../utils";
-import {
-  Button,
-  CustomAvatar,
-  IconLocation,
-  IconStar,
-  IconVideo,
-  Stack,
-} from "../../core";
+import { Button, IconLocation, IconStar, Stack } from "../../core";
 
 const { width } = Dimensions.get("window");
 const { black, grey0 } = theme.lightColors;
@@ -44,12 +37,6 @@ export const CardLocation = ({ location, service, option }) => {
               uri: images[0]?.url,
             }}
           />
-          <CustomAvatar
-            avatar={avatar}
-            size={25}
-            iconSize={15}
-            sx={styles.avatar}
-          />
         </Stack>
         <View style={styles.content}>
           <Stack align="start">
@@ -62,6 +49,9 @@ export const CardLocation = ({ location, service, option }) => {
               <Text style={styles.ratingsAverage}>4.5</Text>
               <Text style={styles.ratingsQuantity}>100 {t("reviews")}</Text>
             </Stack>
+          </Stack>
+          <Stack align="start">
+            <Text style={styles.option}>{option?.name}</Text>
           </Stack>
           <Stack align="end">
             <Stack direction="row" align="end">
@@ -125,6 +115,14 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: grey0,
   },
+  option: {
+    fontWeight: "700",
+    marginVertical: 2.5,
+    backgroundColor: "#f1f1f1",
+    paddingHorizontal: 2.5,
+    paddingVertical: 5,
+    fontSize: 13,
+  },
   serviceContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -155,13 +153,5 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: black,
     fontWeight: "500",
-  },
-  avatar: {
-    position: "absolute",
-    bottom: 5,
-    left: -55,
-    zIndex: 1000,
-    borderWidth: 1.5,
-    borderColor: "white",
   },
 });

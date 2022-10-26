@@ -108,11 +108,11 @@ const styles = StyleSheet.create({
   likes: { color: black, fontWeight: "bold", textTransform: "lowercase" },
   productName: {
     fontWeight: "600",
-    fontSize: 15,
+    fontSize: 14.5,
   },
   price: {
     fontWeight: "700",
     marginRight: 10,
-    fontSize: 16,
+    fontSize: 14,
   },
 });

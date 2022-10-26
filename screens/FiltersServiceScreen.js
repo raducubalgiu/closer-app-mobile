@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Button } from "../components/core";
 import { FiltersContainer, SheetHeader } from "../components/customized";
 import theme from "../assets/styles/theme";
+import { useTranslation } from "react-i18next";
 
 const { black, primary } = theme.lightColors;
 
@@ -12,6 +13,7 @@ const FiltersServiceScreen = ({ route }) => {
   const { service, period } = route.params;
   const { filters } = service;
   const [option, setOption] = useState("");
+  const { t } = useTranslation();
 
   const activeBtn = {
     ...styles.button,
@@ -23,7 +25,7 @@ const FiltersServiceScreen = ({ route }) => {
     fontWeight: "600",
   };
 
-  const goToServices = () =>
+  const goToLocations = () =>
     navigation.navigate("Locations", {
       service,
       option,
@@ -51,11 +53,12 @@ const FiltersServiceScreen = ({ route }) => {
       headerTitle={"Filtreaza"}
       headerDescription={"serviciile"}
       footerJustify="end"
-      onNext={goToServices}
+      onNext={goToLocations}
+      btnTitle={t("search")}
     >
       <SheetHeader
-        title={`Filtru - ${filters[0]?.name}`}
-        description={"Radu"}
+        title={service?.name}
+        description={option ? option?.name : "-"}
       />
       <FlatList
         bounces={false}

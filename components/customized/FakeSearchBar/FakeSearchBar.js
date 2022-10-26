@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     paddingHorizontal: 15,
     marginHorizontal: 10,
-    borderRadius: 10,
+    borderRadius: 2.5,
   },
   fakeInput: {
     flexDirection: "row",
@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
   },
   fakeInputText: {
     marginLeft: 7.5,
-    fontSize: 15,
     color: grey0,
   },
   datePicker: {

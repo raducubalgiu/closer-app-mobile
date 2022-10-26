@@ -87,6 +87,7 @@ const FiltersDateScreen = ({ route }) => {
         headerDescription={t("selectPeriod").split(" ")[1]}
         onNext={goNext}
         footerExtraBtns={footerBtns}
+        btnTitle={t("next")}
       >
         <SheetHeader
           title={service?.name}

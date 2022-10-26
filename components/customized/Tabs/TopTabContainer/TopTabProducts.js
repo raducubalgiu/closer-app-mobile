@@ -16,7 +16,7 @@ export const TopTabProducts = ({ userId, services, initialRoute, option }) => {
     tabBarLabelStyle: styles.tabLabel,
     tabBarIndicatorStyle: styles.tabIndicator,
     tabBarScrollEnabled: true,
-    tabBarItemStyle: { width: 90 },
+    tabBarItemStyle: { width: 130 },
     tabBarContentContainerStyle: { height: 35 },
   };
 

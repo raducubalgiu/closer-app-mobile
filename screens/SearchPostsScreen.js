@@ -31,8 +31,6 @@ const SearchPostsScreen = () => {
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const navigation = useNavigation();
   const { t } = useTranslation();
-  const usersSEnpoint = `${process.env.BASE_ENDPOINT}/users/search?search=${search}&page=1&limit=10`;
-  const hashtagsSEnpoint = `${process.env.BASE_ENDPOINT}/hashtags/search?search=${search}&page=1&limit=10`;
 
   useHttpGet(`/users/${user?._id}/searches/searched-word`, (data) =>
     setWords(data)
@@ -163,18 +161,32 @@ const SearchPostsScreen = () => {
     });
   }, [search]);
 
-  const footer = useCallback(
-    () => (
-      <Button sx={{ marginTop: 30 }}>
-        <Stack direction="row" align="center" justify="center">
-          <Icon name="search" type="feather" color={primary} />
-          <Button onPress={goToSearchAll}>
-            <Text style={styles.searchAll}>{t("seeAllResults")}</Text>
-          </Button>
-        </Stack>
-      </Button>
-    ),
-    [search]
+  const footer = (
+    <Button sx={{ marginTop: 30 }}>
+      <Stack direction="row" align="center" justify="center">
+        <Icon name="search" type="feather" color={primary} />
+        <Button onPress={goToSearchAll}>
+          <Text style={styles.searchAll}>{t("seeAllResults")}</Text>
+        </Button>
+      </Stack>
+    </Button>
+  );
+
+  const word = (
+    <Stack direction="row" justify="start" sx={{ margin: 15 }}>
+      <Icon
+        name="search"
+        type="feather"
+        size={25}
+        style={{
+          borderWidth: 1,
+          borderColor: "#ccc",
+          padding: 15,
+          borderRadius: 50,
+        }}
+      />
+      <Text style={{ marginLeft: 10 }}>{search}</Text>
+    </Stack>
   );
 
   const renderSearchedUsers = useCallback(({ item }) => {
@@ -220,43 +232,46 @@ const SearchPostsScreen = () => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Stack direction="row" justify="start" sx={{ paddingHorizontal: 15 }}>
-        <IconBackButton sx={{ marginRight: 10 }} />
-        <SearchBarInput
-          autoFocus={true}
-          placeholder={t("search")}
-          value={search}
-          onChangeText={updateSearch}
-          showCancel={false}
-          onCancel={goToSearchAll}
-          height={60}
-        />
-        <Button onPress={goToSearchAll} sx={{ marginLeft: 10 }}>
-          <Text style={styles.cancelBtnText}>{t("search")}</Text>
-        </Button>
-      </Stack>
-      <Feedback feedback={feedback} setFeedback={setFeedback} />
-      {results.length > 0 && (
-        <FlatList
-          data={results}
-          keyExtractor={(item) => item._id}
-          renderItem={renderResults}
-          ListFooterComponent={results.length && footer}
-          keyboardShouldPersistTaps={"handled"}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingHorizontal: 15 }}
-        />
-      )}
-      {!results.length && !search && (
-        <FlatList
-          ListHeaderComponent={header}
-          data={words}
-          keyExtractor={(item) => item._id}
-          renderItem={renderRecent}
-          keyboardShouldPersistTaps={"handled"}
-          showsVerticalScrollIndicator={false}
-        />
-      )}
+      <View>
+        <Stack direction="row" justify="start" sx={{ paddingHorizontal: 15 }}>
+          <IconBackButton sx={{ marginRight: 10 }} />
+          <SearchBarInput
+            autoFocus={true}
+            placeholder={t("search")}
+            value={search}
+            onChangeText={updateSearch}
+            showCancel={false}
+            onCancel={goToSearchAll}
+            height={60}
+          />
+          <Button onPress={goToSearchAll} sx={{ marginLeft: 10 }}>
+            <Text style={styles.cancelBtnText}>{t("search")}</Text>
+          </Button>
+        </Stack>
+        <Feedback feedback={feedback} setFeedback={setFeedback} />
+        {results.length > 0 && (
+          <FlatList
+            data={results}
+            keyExtractor={(item) => item._id}
+            renderItem={renderResults}
+            keyboardShouldPersistTaps={"handled"}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingHorizontal: 15 }}
+          />
+        )}
+        {results.length === 0 && !search && (
+          <FlatList
+            ListHeaderComponent={header}
+            data={words}
+            keyExtractor={(item) => item._id}
+            renderItem={renderRecent}
+            keyboardShouldPersistTaps={"handled"}
+            showsVerticalScrollIndicator={false}
+          />
+        )}
+        {results.length === 0 && search.length > 0 && word}
+        {search.length > 0 && footer}
+      </View>
     </SafeAreaView>
   );
 };
@@ -265,12 +280,11 @@ export default SearchPostsScreen;
 
 const styles = StyleSheet.create({
   screen: {
-    flex: 1,
     backgroundColor: "white",
+    flex: 1,
   },
   container: {
     flex: 1,
-    paddingHorizontal: 15,
   },
   heading: {
     textTransform: "uppercase",

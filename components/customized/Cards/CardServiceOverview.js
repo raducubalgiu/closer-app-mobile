@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 40,
     borderWidth: 1,
     borderColor: "#ddd",
-    borderRadius: 10,
+    borderRadius: 2.5,
   },
   counter: {
     color: grey0,
