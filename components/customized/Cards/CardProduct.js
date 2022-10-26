@@ -99,7 +99,7 @@ export const CardProduct = ({
               <BookmarkButton
                 status={data.status}
                 type="products"
-                typeId={product._id}
+                typeId={product?._id}
               />
             </Stack>
           </Protected>

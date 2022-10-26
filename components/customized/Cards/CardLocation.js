@@ -9,8 +9,8 @@ import { Button, IconLocation, IconStar, Stack } from "../../core";
 const { width } = Dimensions.get("window");
 const { black, grey0 } = theme.lightColors;
 
-export const CardLocation = ({ location, service, option }) => {
-  const { images, minPrice, distance, owner, address } = location;
+export const CardLocation = ({ location, service, option, moreProducts }) => {
+  const { images, minPrice, distance, owner, address, counter } = location;
   const { name, username, avatar, checkmark } = owner;
   const navigation = useNavigation();
   const { t } = useTranslation();
@@ -46,8 +46,12 @@ export const CardLocation = ({ location, service, option }) => {
             </Text>
             <Stack direction="row" sx={styles.ratings}>
               <IconStar />
-              <Text style={styles.ratingsAverage}>4.5</Text>
-              <Text style={styles.ratingsQuantity}>100 {t("reviews")}</Text>
+              <Text style={styles.ratingsAverage}>
+                {counter?.ratingsAverage}
+              </Text>
+              <Text style={styles.ratingsQuantity}>
+                {counter?.ratingsQuantity} {t("reviews")}
+              </Text>
             </Stack>
           </Stack>
           <Stack align="start">
@@ -55,7 +59,7 @@ export const CardLocation = ({ location, service, option }) => {
           </Stack>
           <Stack align="end">
             <Stack direction="row" align="end">
-              <Text style={styles.from}>de la</Text>
+              {moreProducts && <Text style={styles.from}>de la</Text>}
               <Text style={styles.price}>{minPrice} Lei</Text>
             </Stack>
             <Stack direction="row" sx={styles.distanceC}>
@@ -77,7 +81,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginHorizontal: 15,
-    marginVertical: 15,
+    marginBottom: 30,
   },
   imageC: {
     width: width / 3,
@@ -134,9 +138,9 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   price: {
-    fontSize: 15,
+    fontSize: 15.5,
     marginLeft: 5,
-    fontWeight: "600",
+    fontWeight: "700",
   },
   from: {
     fontSize: 12,

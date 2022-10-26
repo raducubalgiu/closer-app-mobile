@@ -1,15 +1,10 @@
 import { useRef, useMemo, useCallback } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { Divider } from "@rneui/themed";
+import { StyleSheet } from "react-native";
 import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
-import theme from "../../../assets/styles/theme";
-import { Spinner } from "../../core";
 
-const { black } = theme.lightColors;
-
-export const SheetService = ({ results, list, loading, ...props }) => {
+export const SheetService = ({ children }) => {
   const sheetRef = useRef(null);
-  const snapPoints = useMemo(() => [80, "60%", "90%"], []);
+  const snapPoints = useMemo(() => [75, "60%", "90%"], []);
 
   const renderBackdrop = useCallback(
     (props) => (
@@ -31,30 +26,15 @@ export const SheetService = ({ results, list, loading, ...props }) => {
       backdropComponent={renderBackdrop}
       index={1}
     >
-      <View style={{ flex: 1 }}>
-        <View style={{ height: 40 }}>
-          <Text style={styles.sheetHeading}>
-            {results} {results > 19 ? "de rezultate" : "rezultate"}
-          </Text>
-        </View>
-        {!loading && list}
-        {loading && <Spinner />}
-      </View>
+      {children}
     </BottomSheet>
   );
 };
 
 const styles = StyleSheet.create({
-  sheetHeading: {
-    color: black,
-    fontSize: 15,
-    textAlign: "center",
-    fontWeight: "600",
-  },
   indicatorStyle: {
     backgroundColor: "#ddd",
     width: 45,
     height: 5,
   },
-  divider: { paddingBottom: 5, marginBottom: 5 },
 });

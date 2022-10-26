@@ -55,6 +55,7 @@ const FiltersServiceScreen = ({ route }) => {
       footerJustify="end"
       onNext={goToLocations}
       btnTitle={t("search")}
+      disabled={!option}
     >
       <SheetHeader
         title={service?.name}

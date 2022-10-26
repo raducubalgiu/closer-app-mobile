@@ -1,6 +1,7 @@
 import { SafeAreaView, StyleSheet, View, FlatList, Text } from "react-native";
 import React, { useState, useCallback } from "react";
-import moment from "moment";
+import { useTranslation } from "react-i18next";
+import { Spinner } from "../components/core";
 import {
   HeaderServices,
   CardLocation,
@@ -9,77 +10,66 @@ import {
   FilterPriceModal,
   FilterDistanceModal,
   FilterRatingModal,
+  NoFoundMessage,
 } from "../components/customized";
 import { useHttpGet } from "../hooks";
+import theme from "../assets/styles/theme";
+
+const { black } = theme.lightColors;
 
 const LocationsScreen = ({ route }) => {
   const { service, option, period } = route.params;
-  const { startDate, endDate } = period;
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000);
   const [minDistance, setMinDistance] = useState(0);
   const [maxDistance, setMaxDistance] = useState(50000);
   const latlng = "26.100195,44.428286";
-  //const [results, setResults] = useState(0);
   const [checked, setChecked] = useState(true);
   const [visible, setVisible] = useState({
     price: false,
     distance: false,
     rating: false,
   });
-  const NOW = moment.utc();
-
-  let customPeriod;
-  switch (period.code) {
-    case 0:
-      customPeriod = { ...period };
-      break;
-    case 1:
-      customPeriod = {
-        ...period,
-        startDate: moment().utc(NOW),
-        endDate: moment().utc(NOW).add(3, "hours"),
-      };
-      break;
-    case 2:
-      customPeriod = {
-        ...period,
-        startDate: moment.utc(startDate),
-        endDate: moment.utc(endDate),
-      };
-      break;
-    default:
-      customPeriod = { ...period };
-  }
+  const { t } = useTranslation();
 
   const { data: locations, loading } = useHttpGet(
     `/locations?latlng=${latlng}&serviceId=${service?._id}&option=${option?._id}&minprice=${minPrice}&maxprice=${maxPrice}&mindistance=${minDistance}&maxdistance=${maxDistance}`
   );
 
-  const renderLocation = useCallback(
-    ({ item }) => (
+  const renderLocation = useCallback(({ item }) => {
+    return (
       <CardLocation
         location={item}
         service={service}
         option={option}
         distance={item.distance}
+        moreProducts={item.products.length > 1}
       />
-    ),
-    []
+    );
+  }, []);
+
+  const keyExtractor = useCallback((item) => item._id, []);
+  const toggleSwitch = useCallback(() => setChecked(!checked), [checked]);
+
+  const noFoundLocations = (
+    <NoFoundMessage title={service.name} description={t("noFoundLocations")} />
   );
-  const toggleSwitch = useCallback(() => {
-    setChecked(!checked);
-  }, [checked]);
 
   const list = (
     <View style={{ flex: 1 }}>
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        data={locations}
-        keyExtractor={(item) => item._id}
-        renderItem={renderLocation}
-        bounces={false}
-      />
+      {!loading && (
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={locations}
+          keyExtractor={keyExtractor}
+          renderItem={renderLocation}
+          bounces={false}
+          ListFooterComponent={
+            !loading && !locations.length && noFoundLocations
+          }
+        />
+      )}
+      {loading && <Spinner />}
     </View>
   );
 
@@ -106,18 +96,20 @@ const LocationsScreen = ({ route }) => {
         onDisplayDistance={() => setVisible({ ...visible, distance: true })}
         onDisplayRating={() => setVisible({ ...visible, rating: true })}
       />
-      {!checked && list}
       {checked && (
         <>
           <Map locations={locations} serviceName={service?.name} />
-          <SheetService
-            list={list}
-            results={locations?.length === 0 ? 0 : locations.length}
-            serviceName={service?.name}
-            loading={loading}
-          />
+          <SheetService>
+            <View style={{ height: 50 }}>
+              <Text style={styles.sheetHeading}>
+                {locations.length} rezultate
+              </Text>
+            </View>
+            {list}
+          </SheetService>
         </>
       )}
+      {!checked && list}
     </SafeAreaView>
   );
 };
@@ -128,5 +120,11 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: "white",
+  },
+  sheetHeading: {
+    color: black,
+    fontSize: 15,
+    textAlign: "center",
+    fontWeight: "600",
   },
 });

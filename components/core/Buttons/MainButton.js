@@ -1,5 +1,9 @@
-import { StyleSheet, ActivityIndicator } from "react-native";
-import { Button } from "@rneui/themed";
+import {
+  StyleSheet,
+  ActivityIndicator,
+  TouchableOpacity,
+  Text,
+} from "react-native";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 
@@ -61,19 +65,18 @@ export const MainButton = ({
   }
 
   const styles = StyleSheet.create({
-    buttonStyle: {
+    button: {
       backgroundColor,
       borderRadius: radius ? radius : 5,
       borderWidth,
       borderColor,
       ...padding,
       ...sx,
-    },
-    containerStyle: {
       width: fullWidth && "100%",
       marginVertical: 10,
     },
-    titleStyle: {
+    text: {
+      textAlign: "center",
       fontWeight: "600",
       fontSize,
       color,
@@ -82,13 +85,12 @@ export const MainButton = ({
   });
 
   return (
-    <Button
-      {...props}
-      activeOpacity={1}
-      title={loading ? <ActivityIndicator color="white" /> : title}
-      buttonStyle={styles.buttonStyle}
-      containerStyle={styles.containerStyle}
-      titleStyle={styles.titleStyle}
-    />
+    <TouchableOpacity {...props} activeOpacity={1} style={styles.button}>
+      {loading ? (
+        <ActivityIndicator color="white" />
+      ) : (
+        <Text style={styles.text}>{title}</Text>
+      )}
+    </TouchableOpacity>
   );
 };
