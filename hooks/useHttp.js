@@ -24,13 +24,14 @@ export const useHttpGet = (route, callback) => {
         })
         .then((res) => {
           setData(res.data);
-          setLoading(false);
           if (callback) callback(res.data);
+          setLoading(false);
         })
         .catch(() => {
           setFeedback({ visible: true, message: t("somethingWentWrong") });
           setLoading(false);
-        });
+        })
+        .finally(() => setLoading(false));
       return () => controller.abort();
     }, [route])
   );
