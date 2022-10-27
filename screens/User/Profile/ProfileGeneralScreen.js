@@ -87,7 +87,9 @@ const ProfileGeneralScreen = ({ route }) => {
             color={black}
             iconType="feather"
             iconName="message-circle"
-            onPress={handleSuggested}
+            onPress={() =>
+              navigation.navigate("MessageItem", { name, username, avatar })
+            }
             loading={loading}
           />
           <IconButton
