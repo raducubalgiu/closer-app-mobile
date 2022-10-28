@@ -39,7 +39,7 @@ const CardPostHeader = ({
         </Stack>
       </Button>
       <Button onPress={onShowDetails}>
-        <Icon name="ellipsis1" type="antdesign" />
+        <Icon name="more-horizontal" type="feather" size={20} />
       </Button>
     </Stack>
   );

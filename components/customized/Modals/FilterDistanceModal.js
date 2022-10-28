@@ -2,13 +2,20 @@ import { StyleSheet, Text } from "react-native";
 import { CModal, MainButton } from "../../core";
 import React from "react";
 
-export const FilterDistanceModal = ({ visible, onClose }) => {
+export const FilterDistanceModal = ({ visible, onClose, onHandleDistance }) => {
   return (
     <CModal
       visible={visible}
       size="sm"
       headerTitle="Filtreaza distanta"
-      footer={<MainButton size="lg" radius={15} title="Filtreaza" />}
+      footer={
+        <MainButton
+          onPress={onHandleDistance}
+          size="lg"
+          radius={15}
+          title="Filtreaza"
+        />
+      }
       onCloseModal={onClose}
     >
       <Text>Hello World</Text>
