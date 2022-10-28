@@ -3,18 +3,20 @@ import axios from "axios";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "./auth";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 const BASE_ENDPOINT = `${process.env.BASE_ENDPOINT}`;
 
 export const useHttpGet = (route, callback) => {
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const { user } = useAuth();
   const { t } = useTranslation();
 
   useFocusEffect(
     useCallback(() => {
+      setLoading(true);
       const controller = new AbortController();
 
       axios
@@ -23,7 +25,7 @@ export const useHttpGet = (route, callback) => {
           headers: { Authorization: `Bearer ${user.token}` },
         })
         .then((res) => {
-          setData(res.data);
+          setData((data) => data.concat(res.data));
           if (callback) callback(res.data);
           setLoading(false);
         })
@@ -163,5 +165,32 @@ export const useHttpGetFunc = (route, callback) => {
     feedback,
     setFeedback,
     makeGet,
+  };
+};
+
+export const useGet = (route) => {
+  const fetchData = async ({ pageParam = 1 }) => {
+    const { data } = await axios.get(
+      `${process.env.BASE_ENDPOINT}/posts/${postId}/get-likes?page=${pageParam}&limit=25`
+    );
+    return data;
+  };
+
+  const { data, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteQuery(["model"], fetchData, {
+      cacheTime: 0,
+      getNextPageParam: (lastPage) => {
+        if (lastPage.next !== null) {
+          return lastPage.next;
+        }
+      },
+    });
+
+  return {
+    data,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    isLoading,
   };
 };

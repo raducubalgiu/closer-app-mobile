@@ -24,7 +24,7 @@ export const ProfileOverview = ({ name, username, avatar, children, user }) => {
   const { t } = useTranslation();
 
   const goToFollowers = () =>
-    navigation.navigate("ProfileStats", {
+    navigation.push("ProfileStats", {
       screen: "Followers",
       userId: user?._id,
       username: username,
@@ -33,7 +33,7 @@ export const ProfileOverview = ({ name, username, avatar, children, user }) => {
       counter,
     });
   const goToReviews = () =>
-    navigation.navigate("ProfileStats", {
+    navigation.push("ProfileStats", {
       screen: "Reviews",
       userId: user?._id,
       username: username,
@@ -42,7 +42,7 @@ export const ProfileOverview = ({ name, username, avatar, children, user }) => {
       counter,
     });
   const goToFollowings = () =>
-    navigation.navigate("ProfileStats", {
+    navigation.push("ProfileStats", {
       screen: "Following",
       userId: user?._id,
       username: username,
