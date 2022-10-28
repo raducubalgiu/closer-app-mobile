@@ -20,9 +20,9 @@ const { black } = theme.lightColors;
 const LocationsScreen = ({ route }) => {
   const { service, option, period } = route.params;
   const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(1000);
+  const [maxPrice, setMaxPrice] = useState(10000);
   const [minDistance, setMinDistance] = useState(0);
-  const [maxDistance, setMaxDistance] = useState(50000);
+  const [maxDistance, setMaxDistance] = useState(10000);
   const latlng = "26.100195,44.428286";
   const [checked, setChecked] = useState(true);
   const [visible, setVisible] = useState({
@@ -82,6 +82,10 @@ const LocationsScreen = ({ route }) => {
       <FilterDistanceModal
         visible={visible.distance}
         onClose={() => setVisible({ ...visible, distance: false })}
+        onHandleDistance={() => {
+          setMaxDistance(50000);
+          setVisible({ ...visible, distance: false });
+        }}
       />
       <FilterRatingModal
         visible={visible.rating}
