@@ -12,23 +12,26 @@ const LikesScreen = ({ route }) => {
   const { postId } = route.params;
   const { t } = useTranslation();
 
-  const fetchAllLikes = async ({ pageParam = 1 }) => {
+  const fetchAllLikes = async (page, postId) => {
     const { data } = await axios.get(
-      `${process.env.BASE_ENDPOINT}/posts/${postId}/get-likes?page=${pageParam}&limit=25`,
+      `${process.env.BASE_ENDPOINT}/posts/${postId}/get-likes?page=${page}&limit=25`,
       { headers: { Authorization: `Bearer ${user?.token}` } }
     );
     return data;
   };
 
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteQuery(["likes"], fetchAllLikes, {
-      cacheTime: 0,
-      getNextPageParam: (lastPage) => {
-        if (lastPage.next !== null) {
-          return lastPage.next;
-        }
-      },
-    });
+    useInfiniteQuery(
+      ["likes", postId],
+      ({ pageParam = 1 }) => fetchAllLikes(pageParam, postId),
+      {
+        getNextPageParam: (lastPage) => {
+          if (lastPage.next !== null) {
+            return lastPage.next;
+          }
+        },
+      }
+    );
 
   const renderPerson = useCallback(({ item }) => {
     const { _id, username, name, avatar } = item?.user || {};
