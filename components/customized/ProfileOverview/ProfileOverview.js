@@ -19,7 +19,14 @@ const { black, primary } = theme.lightColors;
 
 export const ProfileOverview = ({ name, username, avatar, children, user }) => {
   const { user: userContext } = useAuth();
-  const { counter, role, profession } = user || {};
+  const { role, profession } = user || {};
+  const {
+    ratingsQuantity,
+    postsCount,
+    followersCount,
+    followingsCount,
+    ratingsAverage,
+  } = user || {};
   const navigation = useNavigation();
   const { t } = useTranslation();
 
@@ -30,7 +37,9 @@ export const ProfileOverview = ({ name, username, avatar, children, user }) => {
       username: username,
       initialRoute: "Followers",
       role,
-      counter,
+      ratingsQuantity,
+      followersCount,
+      followingsCount,
     });
   const goToReviews = () =>
     navigation.push("ProfileStats", {
@@ -39,7 +48,9 @@ export const ProfileOverview = ({ name, username, avatar, children, user }) => {
       username: username,
       initialRoute: "Reviews",
       role,
-      counter,
+      ratingsQuantity,
+      followersCount,
+      followingsCount,
     });
   const goToFollowings = () =>
     navigation.push("ProfileStats", {
@@ -48,7 +59,9 @@ export const ProfileOverview = ({ name, username, avatar, children, user }) => {
       username: username,
       initialRoute: "Following",
       role,
-      counter,
+      ratingsQuantity,
+      followersCount,
+      followingsCount,
     });
 
   const withBadge = userContext?._id === user?._id && user?.role === THIRD_ROLE;
@@ -72,7 +85,7 @@ export const ProfileOverview = ({ name, username, avatar, children, user }) => {
           <Protected userRole={role} roles={[MAIN_ROLE, SECOND_ROLE]}>
             <IconStar sx={styles.star} />
             <Text style={styles.ratingsAverage}>
-              {counter?.ratingsAverage?.toFixed(1)}
+              {ratingsAverage?.toFixed(1)}
             </Text>
           </Protected>
         </Stack>
@@ -82,18 +95,18 @@ export const ProfileOverview = ({ name, username, avatar, children, user }) => {
           onPress={role !== THIRD_ROLE ? goToReviews : null}
           labelStats={role !== THIRD_ROLE ? t("reviews") : t("posts")}
           statsNo={displayDash(
-            role !== THIRD_ROLE ? counter?.ratingsQuantity : counter?.postsCount
+            role !== THIRD_ROLE ? ratingsQuantity : postsCount
           )}
         />
         <StatsButton
           onPress={goToFollowers}
           labelStats={t("followers")}
-          statsNo={displayDash(counter?.followersCount)}
+          statsNo={displayDash(followersCount)}
         />
         <StatsButton
           onPress={goToFollowings}
           labelStats={t("following")}
-          statsNo={displayDash(counter?.followingCount)}
+          statsNo={displayDash(followingsCount)}
         />
       </Stack>
       <Stack direction="row" justify="center" sx={styles.buttonsContainer}>

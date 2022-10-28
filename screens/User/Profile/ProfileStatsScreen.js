@@ -14,7 +14,7 @@ import { Header } from "../../../components/core";
 
 const ProfileStatsScreen = ({ route }) => {
   const { initialRoute, username, userId, role, counter } = route.params;
-  const { ratingsQuantity, followersCount, followingCount } = counter;
+  const { ratingsQuantity, followersCount, followingCount } = route.params;
   const Tab = createMaterialTopTabNavigator();
   const { t } = useTranslation();
 
