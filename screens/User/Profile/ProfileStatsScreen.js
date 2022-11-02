@@ -13,8 +13,8 @@ import theme from "../../../assets/styles/theme";
 import { Header } from "../../../components/core";
 
 const ProfileStatsScreen = ({ route }) => {
-  const { initialRoute, username, userId, role, counter } = route.params;
-  const { ratingsQuantity, followersCount, followingCount } = route.params;
+  const { initialRoute, username, userId, role } = route.params;
+  const { ratingsQuantity, followersCount, followingsCount } = route.params;
   const Tab = createMaterialTopTabNavigator();
   const { t } = useTranslation();
 
@@ -49,7 +49,7 @@ const ProfileStatsScreen = ({ route }) => {
         <Tab.Screen
           name="Following"
           component={Followings}
-          options={{ tabBarLabel: `${followingCount} ${t("followings")}` }}
+          options={{ tabBarLabel: `${followingsCount} ${t("followings")}` }}
         />
       </TopTabContainer>
     </View>

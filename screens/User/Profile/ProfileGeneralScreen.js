@@ -5,9 +5,9 @@ import theme from "../../../assets/styles/theme";
 import {
   useSheet,
   useAuth,
-  useHttpGetFunc,
   usePost,
-  useGetSimple,
+  useGet,
+  useGetMutate,
 } from "../../../hooks";
 import {
   ProfileOverview,
@@ -28,17 +28,15 @@ const ProfileGeneralScreen = ({ route }) => {
   const [suggested, setSuggested] = useState([]);
   const navigation = useNavigation();
 
-  const { data: userDetails } = useGetSimple({
+  const { data: userDetails } = useGet({
     model: "fetchUser",
     uri: `/users/${username}`,
   });
-
   const { mutate: makePost } = usePost({ uri: `/searches` });
-
-  const { makeGet: handleSuggested, loading } = useHttpGetFunc(
-    `/users/${userId}/get-suggested`,
-    (data) => setSuggested(data)
-  );
+  const { mutate: handleSuggested, isLoading } = useGetMutate({
+    uri: `/users/${userId}/get-suggested`,
+    onSuccess: (res) => setSuggested(res.data),
+  });
 
   useEffect(() => {
     if (searchedUser) {
@@ -92,7 +90,6 @@ const ProfileGeneralScreen = ({ route }) => {
             onPress={() =>
               navigation.navigate("MessageItem", { name, username, avatar })
             }
-            loading={loading}
           />
           <IconButton
             sx={styles.iconBtn}
@@ -105,7 +102,6 @@ const ProfileGeneralScreen = ({ route }) => {
                 profession: userDetails?.profession,
               })
             }
-            loading={loading}
           />
           <IconButton
             sx={styles.iconBtn}
@@ -114,7 +110,7 @@ const ProfileGeneralScreen = ({ route }) => {
             iconType="antdesign"
             iconName="adduser"
             onPress={handleSuggested}
-            loading={loading}
+            loading={isLoading}
           />
         </ProfileOverview>
         {suggested?.length > 0 && (

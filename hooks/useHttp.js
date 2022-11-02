@@ -235,20 +235,23 @@ export const useGet = ({ model, uri, onSuccess }) => {
 
   return {
     ...response,
+    data: response?.data?.data,
   };
 };
 
-export const useGetSimple = ({ model, uri }) => {
+export const useGetMutate = ({ uri, onSuccess }) => {
   const { user } = useAuth();
 
-  const response = useQuery([model, uri], async () => {
-    const { data } = await axios.get(`${process.env.BASE_ENDPOINT}${uri}`, {
-      headers: { Authorization: `Bearer ${user.token}` },
-    });
-    return data;
-  });
+  const mutations = useMutation(
+    () =>
+      axios.get(`${BASE_ENDPOINT}${uri}`, {
+        headers: { Authorization: `Bearer ${user.token}` },
+      }),
+    {
+      onSuccess,
+      onError: (err) => console.log(err),
+    }
+  );
 
-  return {
-    ...response,
-  };
+  return mutations;
 };
