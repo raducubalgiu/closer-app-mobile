@@ -6,7 +6,6 @@ export { ButtonFilter } from "./Buttons/ButtonFilter";
 export { MainButton } from "./Buttons/MainButton";
 export { ButtonProvider } from "./Buttons/ButtonProvider";
 export { CardButton } from "./Buttons/CardButton";
-export { FollowButton } from "./Buttons/FollowButton";
 export { ShareIButton } from "./Buttons/ShareIButton";
 export { StatsButton } from "./Buttons/StatsButton";
 export { FeedLabelButton } from "./Buttons/FeedLabelButton";
