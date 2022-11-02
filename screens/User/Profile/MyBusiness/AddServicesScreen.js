@@ -1,5 +1,5 @@
-import { SafeAreaView, StyleSheet, Text, View, ScrollView } from "react-native";
-import React, { useState } from "react";
+import { SafeAreaView, StyleSheet, Text, View, FlatList } from "react-native";
+import React, { useCallback, useState } from "react";
 import { Icon } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
 import {
@@ -10,8 +10,10 @@ import {
   IconButtonDelete,
 } from "../../../../components/core";
 import theme from "../../../../assets/styles/theme";
-import { useAuth, useHttpGet, useHttpPatch } from "../../../../hooks";
+import { useAuth, useHttpGet, usePatch } from "../../../../hooks";
 import { ConfirmModal } from "../../../../components/customized/Modals/ConfirmModal";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 const { primary } = theme.lightColors;
 
@@ -22,7 +24,10 @@ const AddServicesScreen = () => {
   const [service, setService] = useState(null);
   const { t } = useTranslation();
 
-  const { data: allServices } = useHttpGet(`/services`);
+  const { data: allServices } = useQuery(["allServices"], async () => {
+    const { data } = await axios.get(`${process.env.BASE_ENDPOINT}/services`);
+    return data;
+  });
 
   useHttpGet(
     `/users/${user?._id}/locations/${user?.location}/services`,
@@ -34,25 +39,36 @@ const AddServicesScreen = () => {
     setService(null);
   };
 
-  const handleAfterAdd = (res) => {
-    setServices((services) => services.concat(res));
-    setService(null);
-  };
+  const { mutate: addService } = usePatch({
+    uri: `/locations/${user?.location}/add-service`,
+    onSuccess: (res) => {
+      setServices((services) => services.concat(res.data));
+      setService(null);
+    },
+  });
 
-  const handleAfterRemove = (res) => {
-    setServices((services) => services.filter((serv) => serv._id !== res._id));
-    closeModal();
-  };
+  const { mutate: removeService } = usePatch({
+    uri: `/locations/${user?.location}/remove-service`,
+    onSuccess: (res) => {
+      setServices((services) =>
+        services.filter((serv) => serv._id !== res.data._id)
+      );
+      closeModal();
+    },
+  });
 
-  const { makePatch: makePatchAdd } = useHttpPatch(
-    `/locations/${user?.location}/add-service`,
-    handleAfterAdd
-  );
-
-  const { makePatch: makePatchRemove } = useHttpPatch(
-    `/locations/${user?.location}/remove-service`,
-    handleAfterRemove
-  );
+  const renderService = useCallback(({ item }) => (
+    <Stack direction="row" sx={styles.service}>
+      <Text style={styles.name}>{item?.name}</Text>
+      <IconButtonDelete
+        onPress={() => {
+          setVisible(true);
+          setService(item);
+        }}
+      />
+    </Stack>
+  ));
+  const keyExtractor = useCallback((item) => item._id, []);
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -71,7 +87,7 @@ const AddServicesScreen = () => {
           </View>
           <Button
             sx={!service ? styles.disabledBtn : styles.addIcon}
-            onPress={() => makePatchAdd({ serviceId: service })}
+            onPress={() => addService({ serviceId: service })}
             disabled={!service}
           >
             <Icon
@@ -83,25 +99,16 @@ const AddServicesScreen = () => {
           </Button>
         </Stack>
       </Stack>
-      <ScrollView
-        style={{ marginHorizontal: 15 }}
+      <FlatList
+        data={services}
+        renderItem={renderService}
+        keyExtractor={keyExtractor}
+        contentContainerStyle={{ marginHorizontal: 15 }}
         bounces={false}
         showsVerticalScrollIndicator={false}
-      >
-        {services?.map((service, i) => (
-          <Stack direction="row" sx={styles.service} key={i}>
-            <Text style={styles.name}>{service?.name}</Text>
-            <IconButtonDelete
-              onPress={() => {
-                setVisible(true);
-                setService(service);
-              }}
-            />
-          </Stack>
-        ))}
-      </ScrollView>
+      />
       <ConfirmModal
-        onDelete={() => makePatchRemove({ serviceId: service?._id })}
+        onDelete={() => removeService({ serviceId: service?._id })}
         visible={visible}
         onCloseModal={closeModal}
         title={t("deleteService")}
