@@ -37,7 +37,7 @@ const LoginScreen = () => {
           }
         );
         setLoading(false);
-        setUser(userResult);
+        setUser(userResult.data);
       }
     } catch (err) {
       setLoading(false);
