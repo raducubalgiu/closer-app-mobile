@@ -2,36 +2,19 @@ import { FlatList } from "react-native";
 import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Spinner } from "../../../core";
-import { useAuth } from "../../../../hooks";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { UserListItem } from "../../ListItems/UserListItem";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { useGetPaginate } from "../../../../hooks";
 
 export const FollowersTab = ({ userId }) => {
-  const { user } = useAuth();
   const { t } = useTranslation();
 
-  const fetchAllFollowers = async (page, userId) => {
-    const { data } = await axios.get(
-      `${process.env.BASE_ENDPOINT}/users/${userId}/followers?page=${page}&limit=20`,
-      { headers: { Authorization: `Bearer ${user?.token}` } }
-    );
-    return data;
-  };
-
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteQuery(
-      ["followers", userId],
-      ({ pageParam = 1 }) => fetchAllFollowers(pageParam, userId),
-      {
-        getNextPageParam: (lastPage) => {
-          if (lastPage.next !== null) {
-            return lastPage.next;
-          }
-        },
-      }
-    );
+    useGetPaginate({
+      model: "followers",
+      uri: `/users/${userId}/followers`,
+      limit: "20",
+    });
 
   const renderPerson = useCallback(({ item }) => {
     const { avatar, username, name, _id } = item?.user || {};

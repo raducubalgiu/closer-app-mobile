@@ -3,36 +3,19 @@ import { useCallback } from "react";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { CardRatings } from "../../Cards/CardRatings";
-import { useAuth } from "../../../../hooks";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { Spinner } from "../../../core";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { useGetPaginate } from "../../../../hooks";
 
 export const RatingsTab = ({ userId }) => {
-  const { user } = useAuth();
   const { t } = useTranslation();
 
-  const fetchAllRatings = async (page, userId) => {
-    const { data } = await axios.get(
-      `${process.env.BASE_ENDPOINT}/users/${userId}/reviews?page=${page}&limit=20`,
-      { headers: { Authorization: `Bearer ${user?.token}` } }
-    );
-    return data;
-  };
-
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteQuery(
-      ["ratings", userId],
-      ({ pageParam = 1 }) => fetchAllRatings(pageParam, userId),
-      {
-        getNextPageParam: (lastPage) => {
-          if (lastPage.next !== null) {
-            return lastPage.next;
-          }
-        },
-      }
-    );
+    useGetPaginate({
+      model: "ratings",
+      uri: `/users/${userId}/reviews`,
+      limit: "20",
+    });
 
   const renderRatings = useCallback(({ item }) => {
     const { reviewer, rating, review, createdAt } = item || {};

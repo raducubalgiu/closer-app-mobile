@@ -4,34 +4,17 @@ import { useTranslation } from "react-i18next";
 import { Spinner } from "../../../core";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { UserListItem } from "../../ListItems/UserListItem";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { useAuth } from "../../../../hooks";
+import { useGetPaginate } from "../../../../hooks";
 
 export const FollowingsTab = ({ userId }) => {
-  const { user } = useAuth();
   const { t } = useTranslation();
 
-  const fetchAllFollowings = async (page, userId) => {
-    const { data } = await axios.get(
-      `${process.env.BASE_ENDPOINT}/users/${userId}/followings?page=${page}&limit=20`,
-      { headers: { Authorization: `Bearer ${user?.token}` } }
-    );
-    return data;
-  };
-
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteQuery(
-      ["followings", userId],
-      ({ pageParam = 1 }) => fetchAllFollowings(pageParam, userId),
-      {
-        getNextPageParam: (lastPage) => {
-          if (lastPage.next !== null) {
-            return lastPage.next;
-          }
-        },
-      }
-    );
+    useGetPaginate({
+      model: "followings",
+      uri: `/users/${userId}/followings`,
+      limit: "20",
+    });
 
   const renderPerson = useCallback(({ item }) => {
     const { avatar, username, name, _id } = item?.followeeId || {};
