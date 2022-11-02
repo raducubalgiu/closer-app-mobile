@@ -35,7 +35,7 @@ export const RatingsTab = ({ userId }) => {
     );
 
   const renderRatings = useCallback(({ item }) => {
-    const { reviewer, rating, review, createdAt } = item;
+    const { reviewer, rating, review, createdAt } = item || {};
 
     return (
       <CardRatings
@@ -56,11 +56,8 @@ export const RatingsTab = ({ userId }) => {
   );
 
   const loadMore = () => {
-    if (hasNextPage) {
-      fetchNextPage();
-    }
+    if (hasNextPage) fetchNextPage();
   };
-
   const showSpinner = () => {
     if (isFetchingNextPage) {
       return <Spinner />;
@@ -68,15 +65,20 @@ export const RatingsTab = ({ userId }) => {
       return null;
     }
   };
-
   const { pages } = data || {};
 
   return (
     <FlatList
+      ListHeaderComponent={
+        !isLoading &&
+        !isFetchingNextPage &&
+        pages[0]?.results?.length === 0 &&
+        noFoundMessage
+      }
       contentContainerStyle={{ padding: 15 }}
       data={pages?.map((page) => page.results).flat()}
       keyExtractor={keyExtractor}
-      renderItem={renderPerson}
+      renderItem={renderRatings}
       ListFooterComponent={showSpinner}
       onEndReached={loadMore}
       onEndReachedThreshold={0.3}

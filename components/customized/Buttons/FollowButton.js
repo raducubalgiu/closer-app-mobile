@@ -27,7 +27,7 @@ export const FollowButton = ({
     const { data } = await axios.get(
       `${process.env.BASE_ENDPOINT}${FOLLOW_ENDPOINT}`,
       {
-        headers: { Authorization: `Bearer ${user.token}` },
+        headers: { Authorization: `Bearer ${user?.token}` },
       }
     );
     setFollow(data.status);

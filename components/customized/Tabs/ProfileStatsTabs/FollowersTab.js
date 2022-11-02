@@ -1,4 +1,4 @@
-import { StyleSheet, FlatList } from "react-native";
+import { FlatList } from "react-native";
 import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Spinner } from "../../../core";
@@ -34,7 +34,7 @@ export const FollowersTab = ({ userId }) => {
     );
 
   const renderPerson = useCallback(({ item }) => {
-    const { avatar, username, name, _id } = item.user;
+    const { avatar, username, name, _id } = item?.user || {};
 
     return (
       <UserListItem
@@ -56,11 +56,8 @@ export const FollowersTab = ({ userId }) => {
   );
 
   const loadMore = () => {
-    if (hasNextPage) {
-      fetchNextPage();
-    }
+    if (hasNextPage) fetchNextPage();
   };
-
   const showSpinner = () => {
     if (isFetchingNextPage) {
       return <Spinner />;
@@ -68,11 +65,16 @@ export const FollowersTab = ({ userId }) => {
       return null;
     }
   };
-
   const { pages } = data || {};
 
   return (
     <FlatList
+      ListHeaderComponent={
+        !isLoading &&
+        !isFetchingNextPage &&
+        pages[0]?.results?.length === 0 &&
+        noFoundMessage
+      }
       contentContainerStyle={{ padding: 15 }}
       data={pages?.map((page) => page.results).flat()}
       keyExtractor={keyExtractor}
@@ -83,11 +85,3 @@ export const FollowersTab = ({ userId }) => {
     />
   );
 };
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: "white",
-    paddingHorizontal: 15,
-  },
-});
