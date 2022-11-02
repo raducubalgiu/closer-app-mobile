@@ -18,4 +18,7 @@ export {
   useHttpPost,
   useHttpPatch,
   useHttpDelete,
+  usePatch,
+  useDelete,
+  usePost,
 } from "./useHttp";

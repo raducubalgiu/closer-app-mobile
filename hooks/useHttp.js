@@ -3,7 +3,7 @@ import axios from "axios";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "./auth";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 const BASE_ENDPOINT = `${process.env.BASE_ENDPOINT}`;
 
@@ -34,6 +34,7 @@ export const useHttpGet = (route, callback) => {
           setLoading(false);
         })
         .finally(() => setLoading(false));
+
       return () => controller.abort();
     }, [route])
   );
@@ -168,29 +169,53 @@ export const useHttpGetFunc = (route, callback) => {
   };
 };
 
-export const useGet = (route) => {
-  const fetchData = async ({ pageParam = 1 }) => {
-    const { data } = await axios.get(
-      `${process.env.BASE_ENDPOINT}/posts/${postId}/get-likes?page=${pageParam}&limit=25`
-    );
-    return data;
-  };
+export const usePatch = ({ uri, onSuccess }) => {
+  const { user } = useAuth();
 
-  const { data, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteQuery(["model"], fetchData, {
-      cacheTime: 0,
-      getNextPageParam: (lastPage) => {
-        if (lastPage.next !== null) {
-          return lastPage.next;
-        }
-      },
-    });
+  const mutations = useMutation(
+    (body) =>
+      axios.patch(`${BASE_ENDPOINT}${uri}`, body, {
+        headers: { Authorization: `Bearer ${user?.token}` },
+      }),
+    {
+      onSuccess,
+      onError: () => {},
+    }
+  );
 
-  return {
-    data,
-    hasNextPage,
-    fetchNextPage,
-    isFetchingNextPage,
-    isLoading,
-  };
+  return mutations;
+};
+
+export const usePost = ({ uri, onSuccess }) => {
+  const { user } = useAuth();
+
+  const mutations = useMutation(
+    (body) =>
+      axios.post(`${BASE_ENDPOINT}${uri}`, body, {
+        headers: { Authorization: `Bearer ${user?.token}` },
+      }),
+    {
+      onSuccess,
+      onError: () => {},
+    }
+  );
+
+  return mutations;
+};
+
+export const useDelete = ({ uri, onSuccess }) => {
+  const { user } = useAuth();
+
+  const mutations = useMutation(
+    () =>
+      axios.delete(`${BASE_ENDPOINT}${uri}`, {
+        headers: { Authorization: `Bearer ${user.token}` },
+      }),
+    {
+      onSuccess,
+      onError: () => {},
+    }
+  );
+
+  return mutations;
 };
