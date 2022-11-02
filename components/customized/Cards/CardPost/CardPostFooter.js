@@ -2,12 +2,13 @@ import { StyleSheet, Text } from "react-native";
 import React, { useState } from "react";
 import { Icon } from "@rneui/themed";
 import { Button, Stack, CustomAvatar } from "../../../core";
-import { trimFunc } from "../../../../utils";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import theme from "../../../../assets/styles/theme";
 import { useAuth } from "../../../../hooks";
 import DisplayText from "../../DisplayText/DisplayText";
+
+const { grey0, black } = theme.lightColors;
 
 const CardPostFooter = ({
   postId,
@@ -36,10 +37,15 @@ const CardPostFooter = ({
       focus,
     });
 
+  let displayText;
+  if (description) {
+    displayText = <DisplayText text={description} maxWords={10} />;
+  }
+
   return (
     <>
       <Stack align="start" sx={{ paddingHorizontal: 15, paddingTop: 10 }}>
-        <DisplayText text={description} maxWords={10} />
+        {displayText}
       </Stack>
       {comments > 0 && (
         <Button
@@ -57,7 +63,7 @@ const CardPostFooter = ({
               type="antdesign"
               size={14}
               style={{ marginLeft: 5 }}
-              color={theme.lightColors.grey0}
+              color={grey0}
             />
           </Stack>
         </Button>
@@ -75,9 +81,7 @@ const CardPostFooter = ({
           <Text style={styles.addCommText}>{t("addComment")}</Text>
         </Stack>
       </Button>
-      <Stack direction="row" sx={{ marginTop: 7.5, marginHorizontal: 15 }}>
-        <Text style={styles.date}>{date}</Text>
-      </Stack>
+      <Text style={styles.date}>{date}</Text>
     </>
   );
 };
@@ -88,16 +92,18 @@ const styles = StyleSheet.create({
   description: {
     flex: 1,
     paddingHorizontal: 10,
-    color: theme.lightColors.black,
+    color: black,
   },
   commentsContainer: { paddingHorizontal: 15, marginTop: 5 },
-  comments: { color: theme.lightColors.grey0, fontSize: 13 },
+  comments: { color: grey0, fontSize: 13 },
   date: {
-    color: theme.lightColors.grey0,
+    color: grey0,
     fontSize: 13,
+    marginTop: 7.5,
+    marginHorizontal: 15,
   },
   addCommText: {
-    color: theme.lightColors.grey0,
+    color: grey0,
     marginLeft: 5,
     borderWidth: 0.5,
     borderColor: "#ddd",
@@ -111,6 +117,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: "bold",
     marginLeft: 5,
-    color: theme.lightColors.black,
+    color: black,
   },
 });
