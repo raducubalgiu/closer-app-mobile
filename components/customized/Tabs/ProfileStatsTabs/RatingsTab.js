@@ -1,16 +1,38 @@
-import { FlatList, View, StyleSheet } from "react-native";
+import { FlatList } from "react-native";
 import { useCallback } from "react";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { CardRatings } from "../../Cards/CardRatings";
-import { useHttpGet } from "../../../../hooks";
+import { useAuth } from "../../../../hooks";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { Spinner } from "../../../core";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 export const RatingsTab = ({ userId }) => {
+  const { user } = useAuth();
   const { t } = useTranslation();
 
-  const { data: reviews, loading } = useHttpGet(`/users/${userId}/reviews`);
+  const fetchAllRatings = async (page, userId) => {
+    const { data } = await axios.get(
+      `${process.env.BASE_ENDPOINT}/users/${userId}/reviews?page=${page}&limit=20`,
+      { headers: { Authorization: `Bearer ${user?.token}` } }
+    );
+    return data;
+  };
+
+  const { data, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteQuery(
+      ["ratings", userId],
+      ({ pageParam = 1 }) => fetchAllRatings(pageParam, userId),
+      {
+        getNextPageParam: (lastPage) => {
+          if (lastPage.next !== null) {
+            return lastPage.next;
+          }
+        },
+      }
+    );
 
   const renderRatings = useCallback(({ item }) => {
     const { reviewer, rating, review, createdAt } = item;
@@ -33,26 +55,31 @@ export const RatingsTab = ({ userId }) => {
     <NoFoundMessage title={t("reviews")} description={t("noFoundReviews")} />
   );
 
+  const loadMore = () => {
+    if (hasNextPage) {
+      fetchNextPage();
+    }
+  };
+
+  const showSpinner = () => {
+    if (isFetchingNextPage) {
+      return <Spinner />;
+    } else {
+      return null;
+    }
+  };
+
+  const { pages } = data || {};
+
   return (
-    <View style={styles.screen}>
-      {!loading && (
-        <FlatList
-          data={reviews}
-          keyExtractor={keyExtractor}
-          renderItem={renderRatings}
-          showsVerticalScrollIndicator={false}
-          ListFooterComponent={!loading && !reviews?.length && noFoundMessage}
-        />
-      )}
-      {loading && <Spinner />}
-    </View>
+    <FlatList
+      contentContainerStyle={{ padding: 15 }}
+      data={pages?.map((page) => page.results).flat()}
+      keyExtractor={keyExtractor}
+      renderItem={renderPerson}
+      ListFooterComponent={showSpinner}
+      onEndReached={loadMore}
+      onEndReachedThreshold={0.3}
+    />
   );
 };
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: "white",
-    paddingHorizontal: 15,
-  },
-});

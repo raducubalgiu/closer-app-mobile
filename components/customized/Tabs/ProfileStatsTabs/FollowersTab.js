@@ -1,20 +1,40 @@
-import { StyleSheet, View, FlatList } from "react-native";
+import { StyleSheet, FlatList } from "react-native";
 import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Spinner } from "../../../core";
-import { useHttpGet } from "../../../../hooks";
+import { useAuth } from "../../../../hooks";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { UserListItem } from "../../ListItems/UserListItem";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 export const FollowersTab = ({ userId }) => {
+  const { user } = useAuth();
   const { t } = useTranslation();
 
-  const { data: followers, loading } = useHttpGet(
-    `/users/${userId}/follows/followers`
-  );
+  const fetchAllFollowers = async (page, userId) => {
+    const { data } = await axios.get(
+      `${process.env.BASE_ENDPOINT}/users/${userId}/followers?page=${page}&limit=20`,
+      { headers: { Authorization: `Bearer ${user?.token}` } }
+    );
+    return data;
+  };
+
+  const { data, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteQuery(
+      ["followers", userId],
+      ({ pageParam = 1 }) => fetchAllFollowers(pageParam, userId),
+      {
+        getNextPageParam: (lastPage) => {
+          if (lastPage.next !== null) {
+            return lastPage.next;
+          }
+        },
+      }
+    );
 
   const renderPerson = useCallback(({ item }) => {
-    const { avatar, username, name, _id } = item.userId;
+    const { avatar, username, name, _id } = item.user;
 
     return (
       <UserListItem
@@ -35,20 +55,32 @@ export const FollowersTab = ({ userId }) => {
     />
   );
 
+  const loadMore = () => {
+    if (hasNextPage) {
+      fetchNextPage();
+    }
+  };
+
+  const showSpinner = () => {
+    if (isFetchingNextPage) {
+      return <Spinner />;
+    } else {
+      return null;
+    }
+  };
+
+  const { pages } = data || {};
+
   return (
-    <View style={styles.screen}>
-      {!loading && (
-        <FlatList
-          data={followers}
-          keyExtractor={keyExtractor}
-          renderItem={renderPerson}
-          showsVerticalScrollIndicator={false}
-          ListFooterComponent={!loading & !followers?.length && noFoundMessage}
-          contentContainerStyle={{ paddingVertical: 15 }}
-        />
-      )}
-      {loading && <Spinner />}
-    </View>
+    <FlatList
+      contentContainerStyle={{ padding: 15 }}
+      data={pages?.map((page) => page.results).flat()}
+      keyExtractor={keyExtractor}
+      renderItem={renderPerson}
+      ListFooterComponent={showSpinner}
+      onEndReached={loadMore}
+      onEndReachedThreshold={0.3}
+    />
   );
 };
 
