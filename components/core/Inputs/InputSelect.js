@@ -20,12 +20,16 @@ export const InputSelect = ({ value, onValueChange, items, ...props }) => {
       style={{ ...styles }}
       doneText="Gata"
       value={value}
-      items={items?.map((item) => {
-        return {
-          label: item?.name,
-          value: item?._id,
-        };
-      })}
+      items={
+        items
+          ? items?.map((item) => {
+              return {
+                label: item?.name,
+                value: item?._id,
+              };
+            })
+          : []
+      }
     />
   );
 };

@@ -76,14 +76,12 @@ const AddServicesScreen = () => {
       <Stack align="start" sx={{ margin: 15 }}>
         <Stack direction="row" sx={{ width: "100%" }}>
           <View style={{ flex: 1 }}>
-            {allServices && (
-              <InputSelect
-                value={service}
-                placeholder={t("selectService")}
-                onValueChange={(value) => setService(value)}
-                items={allServices}
-              />
-            )}
+            <InputSelect
+              value={service}
+              placeholder={t("selectService")}
+              onValueChange={(value) => setService(value)}
+              items={allServices}
+            />
           </View>
           <Button
             sx={!service ? styles.disabledBtn : styles.addIcon}
