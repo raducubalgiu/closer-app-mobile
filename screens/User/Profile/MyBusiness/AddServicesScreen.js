@@ -11,7 +11,7 @@ import {
   Spinner,
 } from "../../../../components/core";
 import theme from "../../../../assets/styles/theme";
-import { useAuth, usePatch } from "../../../../hooks";
+import { useAuth, usePatch, useGet } from "../../../../hooks";
 import { ConfirmModal } from "../../../../components/customized/Modals/ConfirmModal";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -32,14 +32,12 @@ const AddServicesScreen = () => {
     return data;
   });
 
-  let servicesEndpoint = `${process.env.BASE_ENDPOINT}/users/${user?._id}/locations/${user?.location}/services`;
+  let servicesEndpoint = `/users/${user?._id}/locations/${user?.location}/services`;
 
-  useQuery(["services", servicesEndpoint], async () => {
-    const { data } = await axios.get(servicesEndpoint, {
-      headers: { Authorization: `Bearer ${user.token}` },
-    });
-    setServices(data);
-    return data;
+  useGet({
+    model: "services",
+    uri: servicesEndpoint,
+    onSuccess: (res) => setServices(res.data),
   });
 
   const closeModal = () => {

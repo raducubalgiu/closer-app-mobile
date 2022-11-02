@@ -12,7 +12,7 @@ import {
 import { NoFoundMessage } from "../../../../components/customized";
 import { useAuth } from "../../../../hooks/auth";
 import { TopTabProducts } from "../../../../components/customized/Tabs/TopTabContainer/TopTabProducts";
-import { useHttpGet } from "../../../../hooks";
+import { useGet } from "../../../../hooks";
 
 const MyProductsScreen = () => {
   const { user } = useAuth();
@@ -26,9 +26,9 @@ const MyProductsScreen = () => {
     <IconButtonAdd onPress={goToAddProduct} disabled={services?.length > 0} />
   );
 
-  const { data: services } = useHttpGet(
-    `/locations/${user?.location}/services`
-  );
+  const { data: services } = useGet({
+    uri: `/locations/${user?.location}/services`,
+  });
 
   const noServices = (
     <>
@@ -54,7 +54,6 @@ const MyProductsScreen = () => {
       {services?.length > 0 && (
         <TopTabProducts userId={user?._id} services={services} />
       )}
-      {!services?.length && noServices}
     </View>
   );
 };

@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { useAuth, useHttpGet, useHttpPost } from "../../../../hooks";
+import { useAuth, useHttpGet, useHttpPost, usePost } from "../../../../hooks";
 import { required, maxField, minField } from "../../../../constants/validation";
 import { MainButton, FormInput, Stack } from "../../../../components/core";
 import { Header, Feedback, FormInputSelect } from "../../../../components/core";
@@ -17,7 +17,7 @@ const defaultValues = {
   name: "",
   description: "",
   price: "",
-  discount: 0,
+  discount: "",
   duration: "",
 };
 
@@ -48,7 +48,10 @@ const AddProductsScreen = () => {
       merge: true,
     });
 
-  const { makePost, loading: loadingSubmit } = useHttpPost(`/products`, goBack);
+  const { mutate: makePost, isLoading: loadingSubmit } = usePost({
+    uri: `/products`,
+    onSuccess: () => goBack(),
+  });
 
   const handleCreate = (data) => {
     makePost({

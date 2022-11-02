@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import theme from "../../../../assets/styles/theme";
 import { ServiceTab } from "../ServiceTab/ServiceTab";
-import { useHttpGet } from "../../../../hooks";
+import { useGet } from "../../../../hooks";
 
 const { black } = theme.lightColors;
 const { width } = Dimensions.get("window");
@@ -20,7 +20,7 @@ export const TopTabProducts = ({ userId, services, initialRoute, option }) => {
     tabBarContentContainerStyle: { height: 35 },
   };
 
-  const { data: products } = useHttpGet(`/users/${userId}/products/all`);
+  const { data: products } = useGet({ uri: `/users/${userId}/products/all` });
 
   return (
     <Tab.Navigator
@@ -46,7 +46,7 @@ export const TopTabProducts = ({ userId, services, initialRoute, option }) => {
             component={Service}
             options={{
               tabBarLabel: `${service?.name} ${
-                products.filter((prod) => prod.service === service?._id).length
+                products?.filter((prod) => prod.service === service?._id).length
               }`,
             }}
           />
