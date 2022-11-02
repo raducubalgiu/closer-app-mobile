@@ -8,14 +8,17 @@ import {
 import { useCallback } from "react";
 import { Header } from "../components/core";
 import { CardPost } from "../components/customized";
-import { useHttpGet } from "../hooks";
+import { useGet } from "../hooks";
 import { useTranslation } from "react-i18next";
 
 const { width, height } = Dimensions.get("window");
 
 const PostScreen = ({ route }) => {
   const { userId } = route.params;
-  const { data: posts } = useHttpGet(`/users/${userId}/posts`);
+  const { data: posts } = useGet({
+    model: "posts",
+    uri: `/users/${userId}/posts`,
+  });
   const { t } = useTranslation();
 
   const renderUserPosts = useCallback(

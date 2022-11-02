@@ -48,7 +48,6 @@ import MyCalendarScreen from "../screens/User/Profile/MyBusiness/MyCalendarScree
 import MyLocationScreen from "../screens/User/Profile/MyBusiness/MyLocationScreen";
 import MyProductsScreen from "../screens/User/Profile/MyBusiness/MyProductsScreen";
 import AddBusinessTypeScreen from "../screens/User/Profile/MyBusiness/AddBusinessTypeScreen";
-import AllServicesScreen from "../screens/AllServicesScreen";
 import ProfileStatsScreen from "../screens/User/Profile/ProfileStatsScreen";
 import NotificationsScreen from "../screens/NotificationsScreen";
 import EditProductScreen from "../screens/User/Profile/MyBusiness/EditProductScreen";
@@ -176,7 +175,6 @@ const CloserNavigation = () => {
               name="FiltersService"
               component={FiltersServiceScreen}
             />
-            <Stack.Screen name="AllServices" component={AllServicesScreen} />
             <Stack.Screen name="Locations" component={LocationsScreen} />
             <RootStack.Screen
               name="AddLocation"

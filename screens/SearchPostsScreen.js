@@ -17,7 +17,13 @@ import {
   RecentSearchListItem,
 } from "../components/customized";
 import theme from "../assets/styles/theme";
-import { useAuth, useHttpDelete, useHttpGet } from "../hooks";
+import {
+  useAuth,
+  useDelete,
+  useGet,
+  useHttpDelete,
+  useHttpGet,
+} from "../hooks";
 import { trimFunc } from "../utils";
 
 const { grey0, primary, black } = theme.lightColors;
@@ -32,21 +38,25 @@ const SearchPostsScreen = () => {
   const navigation = useNavigation();
   const { t } = useTranslation();
 
-  useHttpGet(`/users/${user?._id}/searches/searched-word`, (data) =>
-    setWords(data)
-  );
-  useHttpGet(`/users/${user?._id}/searches/searched-user`, (data) => {
-    setSearchedUsers(data);
+  useGet({
+    model: "search-word",
+    uri: `/users/${user?._id}/searches/searched-word`,
+    onSuccess: (res) => setWords(res.data),
   });
 
-  const deleteHistory = () => {
-    setWords([]);
-    setSearchedUsers([]);
-  };
-  const { makeDelete } = useHttpDelete(
-    `/users/${user?._id}/searches`,
-    deleteHistory
-  );
+  useGet({
+    model: "search-user",
+    uri: `/users/${user?._id}/searches/searched-user`,
+    onSuccess: (res) => setSearchedUsers(res.data),
+  });
+
+  const { mutate: makeDelete } = useDelete({
+    uri: `/users/${user?._id}/searches`,
+    onSuccess: () => {
+      setWords([]);
+      setSearchedUsers([]);
+    },
+  });
 
   const updateSearch = useCallback(
     (search) => {

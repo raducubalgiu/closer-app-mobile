@@ -2,7 +2,7 @@ import { StyleSheet, SafeAreaView } from "react-native";
 import React, { useCallback } from "react";
 import { Header } from "../components/core";
 import { CardHashtagOverview, TopTabContainer } from "../components/customized";
-import { useHttpGet } from "../hooks";
+import { useGet } from "../hooks";
 import { useTranslation } from "react-i18next";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import {
@@ -16,10 +16,7 @@ const HashtagScreen = ({ route }) => {
   const { t } = useTranslation();
   const Tab = createMaterialTopTabNavigator();
 
-  const {
-    data: { postsCount, bookmarksCount, _id },
-    loading: loadHashtag,
-  } = useHttpGet(`/hashtags/${name}`);
+  const { data, isLoading: loadHashtag } = useGet({ uri: `/hashtags/${name}` });
 
   const HashtagPostsBookable = useCallback(
     () => <HashtagPostsBookableTab name={name} />,
@@ -39,9 +36,9 @@ const HashtagScreen = ({ route }) => {
       <Header title={`#${name}`} />
       {!loadHashtag && (
         <CardHashtagOverview
-          bookmarkId={_id}
-          postsCount={postsCount}
-          bookmarksCount={bookmarksCount}
+          bookmarkId={data?._id}
+          postsCount={data?.postsCount}
+          bookmarksCount={data?.bookmarksCount}
         />
       )}
       <TopTabContainer initialRouteName="HashtagPostsBookable">
