@@ -22,4 +22,5 @@ export {
   useDelete,
   usePost,
   useGet,
+  useGetSimple,
 } from "./useHttp";

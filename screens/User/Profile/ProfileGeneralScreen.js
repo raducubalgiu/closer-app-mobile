@@ -1,15 +1,21 @@
 import { SafeAreaView, StyleSheet, View, ScrollView } from "react-native";
 import React, { useState, useEffect } from "react";
-import { useTranslation } from "react-i18next";
-import { FollowButton, IconButton, MainButton } from "../../../components/core";
+import { IconButton } from "../../../components/core";
 import theme from "../../../assets/styles/theme";
-import { useSheet, useAuth, useHttpPost, useHttpGetFunc } from "../../../hooks";
+import {
+  useSheet,
+  useAuth,
+  useHttpGetFunc,
+  usePost,
+  useGetSimple,
+} from "../../../hooks";
 import {
   ProfileOverview,
   HeaderProfileGeneral,
   SuggestedUsersList,
   FollowUserSheet,
   TopTabProfile,
+  FollowButton,
 } from "../../../components/customized";
 import { useNavigation } from "@react-navigation/native";
 
@@ -20,23 +26,19 @@ const ProfileGeneralScreen = ({ route }) => {
   const { userId, username, avatar, name, checkmark } = route.params;
   const { searchedUser, service, option } = route.params;
   const [suggested, setSuggested] = useState([]);
-  const [userDetails, setUserDetails] = useState([]);
-  const { t } = useTranslation();
   const navigation = useNavigation();
 
-  const { makePost } = useHttpPost(`/searches`);
-  const { makeGet: fetchUser } = useHttpGetFunc(`/users/${username}`, (data) =>
-    setUserDetails(data)
-  );
+  const { data: userDetails } = useGetSimple({
+    model: "fetchUser",
+    uri: `/users/${username}`,
+  });
+
+  const { mutate: makePost } = usePost({ uri: `/searches` });
 
   const { makeGet: handleSuggested, loading } = useHttpGetFunc(
     `/users/${userId}/get-suggested`,
     (data) => setSuggested(data)
   );
-
-  useEffect(() => {
-    fetchUser();
-  }, []);
 
   useEffect(() => {
     if (searchedUser) {
@@ -50,7 +52,7 @@ const ProfileGeneralScreen = ({ route }) => {
       userId={userId}
       avatar={avatar}
       handleSuggested={handleSuggested}
-      fetchUser={fetchUser}
+      fetchUser={() => {}}
     />
   );
   const { BOTTOM_SHEET, SHOW_BS } = useSheet(
@@ -79,7 +81,7 @@ const ProfileGeneralScreen = ({ route }) => {
             size="md"
             followeeId={userId}
             fetchSuggested={handleSuggested}
-            fetchUser={fetchUser}
+            fetchUser={() => {}}
           />
           <IconButton
             sx={styles.iconBtn}

@@ -237,3 +237,18 @@ export const useGet = ({ model, uri, onSuccess }) => {
     ...response,
   };
 };
+
+export const useGetSimple = ({ model, uri }) => {
+  const { user } = useAuth();
+
+  const response = useQuery([model, uri], async () => {
+    const { data } = await axios.get(`${process.env.BASE_ENDPOINT}${uri}`, {
+      headers: { Authorization: `Bearer ${user.token}` },
+    });
+    return data;
+  });
+
+  return {
+    ...response,
+  };
+};
