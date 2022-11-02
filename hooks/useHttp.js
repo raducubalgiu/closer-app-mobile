@@ -3,7 +3,7 @@ import axios from "axios";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "./auth";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useInfiniteQuery } from "@tanstack/react-query";
 
 const BASE_ENDPOINT = `${process.env.BASE_ENDPOINT}`;
 
@@ -254,4 +254,30 @@ export const useGetMutate = ({ uri, onSuccess }) => {
   );
 
   return mutations;
+};
+
+export const useGetPaginate = ({ model, uri, limit }) => {
+  const { user } = useAuth();
+
+  const fetchData = async (page, uri, limit) => {
+    const { data } = await axios.get(
+      `${process.env.BASE_ENDPOINT}${uri}?page=${page}&limit=${limit}`,
+      { headers: { Authorization: `Bearer ${user?.token}` } }
+    );
+    return data;
+  };
+
+  const response = useInfiniteQuery(
+    [model, uri, limit],
+    ({ pageParam = 1 }) => fetchData(pageParam, uri, limit),
+    {
+      getNextPageParam: (lastPage) => {
+        if (lastPage.next !== null) {
+          return lastPage.next;
+        }
+      },
+    }
+  );
+
+  return { ...response };
 };

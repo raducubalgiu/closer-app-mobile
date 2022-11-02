@@ -23,4 +23,5 @@ export {
   usePost,
   useGet,
   useGetMutate,
+  useGetPaginate,
 } from "./useHttp";

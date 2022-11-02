@@ -4,34 +4,19 @@ import { useTranslation } from "react-i18next";
 import { Header, Spinner } from "../components/core";
 import { NoFoundMessage, UserListItem } from "../components/customized";
 import { useAuth } from "../hooks";
-import axios from "axios";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useGetPaginate } from "../hooks";
 
 const LikesScreen = ({ route }) => {
   const { user } = useAuth();
   const { postId } = route.params;
   const { t } = useTranslation();
 
-  const fetchAllLikes = async (page, postId) => {
-    const { data } = await axios.get(
-      `${process.env.BASE_ENDPOINT}/posts/${postId}/get-likes?page=${page}&limit=25`,
-      { headers: { Authorization: `Bearer ${user?.token}` } }
-    );
-    return data;
-  };
-
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteQuery(
-      ["likes", postId],
-      ({ pageParam = 1 }) => fetchAllLikes(pageParam, postId),
-      {
-        getNextPageParam: (lastPage) => {
-          if (lastPage.next !== null) {
-            return lastPage.next;
-          }
-        },
-      }
-    );
+    useGetPaginate({
+      model: "likes",
+      uri: `/posts/${postId}/get-likes`,
+      limit: "25",
+    });
 
   const renderPerson = useCallback(({ item }) => {
     const { _id, username, name, avatar } = item?.user || {};
@@ -49,7 +34,7 @@ const LikesScreen = ({ route }) => {
 
   const keyExtractor = useCallback((item) => item?._id, []);
 
-  const noFoundLikes = (
+  const noFoundMessage = (
     <NoFoundMessage title={t("likes")} description={t("noFoundLikes")} />
   );
 
@@ -74,6 +59,12 @@ const LikesScreen = ({ route }) => {
       <Header title={t("likes")} divider={true} />
       {!isLoading && !pages[0]?.results.length && noFoundLikes}
       <FlatList
+        ListHeaderComponent={
+          !isLoading &&
+          !isFetchingNextPage &&
+          pages[0]?.results?.length === 0 &&
+          noFoundMessage
+        }
         contentContainerStyle={{ padding: 15 }}
         data={pages?.map((page) => page.results).flat()}
         keyExtractor={keyExtractor}
