@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Icon } from "@rneui/themed";
 import { Stack } from "../../core";
-import { useAuth, useDelete, usePost } from "../../../hooks";
+import { useAuth, useDelete, usePost, useGet } from "../../../hooks";
 import theme from "../../../assets/styles/theme";
 
 const { black } = theme.lightColors;
@@ -14,6 +14,7 @@ export const BookmarkButton = ({ type, typeId, status, onBookmarksCount }) => {
   const { t } = useTranslation();
   const endoints = `/users/${user?._id}/${type}/${typeId}/bookmarks`;
 
+  useGet({ uri: endoints, onSuccess: (res) => setBookmarked(res.data.status) });
   const { mutate: makePost } = usePost({ uri: endoints });
   const { mutate: makeDelete } = useDelete({ uri: endoints });
 

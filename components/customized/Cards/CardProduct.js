@@ -6,7 +6,7 @@ import { SECOND_ROLE, THIRD_ROLE } from "@env";
 import { Stack, IconButtonEdit, MainButton, Protected } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { trimFunc } from "../../../utils";
-import { useAuth, useDuration, useHttpGet } from "../../../hooks";
+import { useAuth, useDuration, useGet, useHttpGet } from "../../../hooks";
 import { IconButtonDelete } from "../../core/IconButton/IconButtonDelete";
 import { BookmarkButton } from "../Buttons/BookmarkButton";
 import { UserListItemSimple } from "../ListItems/UserListItemSimple";
@@ -39,73 +39,52 @@ export const CardProduct = ({
     navigation.navigate("ProfileGeneral", { ...user });
   };
 
-  const { data, loading } = useHttpGet(
-    `/users/${userContext?._id}/products/${product?._id}/bookmarks`
-  );
-
   return (
-    <>
-      {!loading && (
-        <Stack sx={styles.card}>
-          <Stack direction="row" sx={{ width: "100%" }} align="start">
-            <Stack align="start" sx={styles.descriptionCont}>
-              <Text style={styles.name}>{name} </Text>
-              <Stack direction="row">
-                {option && <Text style={styles.option}>{option?.name}</Text>}
-                <Text style={styles.duration}>{currDuration}</Text>
-              </Stack>
-              {description && (
-                <Text style={styles.description}>
-                  {trimFunc(description, 50)}
-                </Text>
-              )}
-              <Text style={styles.price}>
-                {price} {t("ron")}
-              </Text>
-            </Stack>
-            <Stack>
-              <Protected
-                roles={[SECOND_ROLE, THIRD_ROLE]}
-                userRole={userContext.role}
-              >
-                <MainButton
-                  size="md"
-                  title={t("book")}
-                  onPress={goToCalendar}
-                />
-              </Protected>
-              {/* <Stack direction="row">
+    <Stack sx={styles.card}>
+      <Stack direction="row" sx={{ width: "100%" }} align="start">
+        <Stack align="start" sx={styles.descriptionCont}>
+          <Text style={styles.name}>{name} </Text>
+          <Stack direction="row">
+            {option && <Text style={styles.option}>{option?.name}</Text>}
+            <Text style={styles.duration}>{currDuration}</Text>
+          </Stack>
+          {description && (
+            <Text style={styles.description}>{trimFunc(description, 50)}</Text>
+          )}
+          <Text style={styles.price}>
+            {price} {t("ron")}
+          </Text>
+        </Stack>
+        <Stack>
+          <Protected
+            roles={[SECOND_ROLE, THIRD_ROLE]}
+            userRole={userContext.role}
+          >
+            <MainButton size="md" title={t("book")} onPress={goToCalendar} />
+          </Protected>
+          {/* <Stack direction="row">
                 <IconButtonEdit onPress={onEditProduct} />
                 <IconButtonDelete
                   onPress={onDeleteProduct}
                   sx={{ marginLeft: 20 }}
                 />
               </Stack> */}
-            </Stack>
-          </Stack>
-          {ownerInfo && (
-            <UserListItemSimple
-              name={user?.name}
-              profession={user?.profession.name}
-              avatar={user?.avatar}
-              onGoToUser={goToOwner}
-            />
-          )}
-          <Protected
-            roles={[SECOND_ROLE, THIRD_ROLE]}
-            userRole={userContext.role}
-          >
-            <Stack align="end" sx={styles.bookmark}>
-              <BookmarkButton
-                status={data.status}
-                type="products"
-                typeId={product?._id}
-              />
-            </Stack>
-          </Protected>
         </Stack>
+      </Stack>
+      {ownerInfo && (
+        <UserListItemSimple
+          name={user?.name}
+          profession={user?.profession.name}
+          avatar={user?.avatar}
+          onGoToUser={goToOwner}
+        />
       )}
-    </>
+      <Protected roles={[SECOND_ROLE, THIRD_ROLE]} userRole={userContext.role}>
+        <Stack align="end" sx={styles.bookmark}>
+          <BookmarkButton type="products" typeId={product?._id} />
+        </Stack>
+      </Protected>
+    </Stack>
   );
 };
 

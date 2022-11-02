@@ -1,9 +1,9 @@
-import { View, FlatList } from "react-native";
+import { FlatList } from "react-native";
 import React, { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { CardPostImage } from "../../Cards/CardPostImage";
-import { useHttpGet } from "../../../../hooks";
+import { useGetPaginate } from "../../../../hooks";
 import { Spinner } from "../../../core";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 
@@ -11,9 +11,12 @@ export const SavedPostsTab = ({ user }) => {
   const navigation = useNavigation();
   const { t } = useTranslation();
 
-  const { data: posts, loading } = useHttpGet(
-    `/users/${user?._id}/posts/bookmarks`
-  );
+  const { data, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
+    useGetPaginate({
+      model: "posts",
+      uri: `/users/${user?._id}/posts/bookmarks`,
+      limit: "25",
+    });
 
   const renderPosts = useCallback(({ item, index }) => {
     const { post } = item;
@@ -37,22 +40,43 @@ export const SavedPostsTab = ({ user }) => {
     );
   }, []);
 
-  const noFoundProducts = (
+  const keyExtractor = useCallback((item) => item._id, []);
+
+  const noFoundMessage = (
     <NoFoundMessage title={t("posts")} description={t("noFoundSavedPosts")} />
   );
 
+  const loadMore = () => {
+    if (hasNextPage) {
+      fetchNextPage();
+    }
+  };
+
+  const showSpinner = () => {
+    if (isFetchingNextPage) {
+      return <Spinner />;
+    } else {
+      return null;
+    }
+  };
+
+  const { pages } = data || {};
+
   return (
-    <>
-      {!posts?.length && !loading && noFoundProducts}
-      {!loading && (
-        <FlatList
-          data={posts}
-          numColumns={3}
-          keyExtractor={(item) => item?._id}
-          renderItem={renderPosts}
-        />
-      )}
-      {loading && <Spinner />}
-    </>
+    <FlatList
+      ListHeaderComponent={
+        !isLoading &&
+        !isFetchingNextPage &&
+        pages[0]?.results?.length === 0 &&
+        noFoundMessage
+      }
+      data={pages?.map((page) => page.results).flat()}
+      keyExtractor={keyExtractor}
+      numColumns={3}
+      renderItem={renderPosts}
+      ListFooterComponent={showSpinner}
+      onEndReached={loadMore}
+      onEndReachedThreshold={0.3}
+    />
   );
 };
