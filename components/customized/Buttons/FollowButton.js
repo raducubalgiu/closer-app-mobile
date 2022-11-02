@@ -1,12 +1,10 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React, { useState, useCallback } from "react";
-import axios from "axios";
 import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../hooks/auth";
 import { useTranslation } from "react-i18next";
 import * as Haptics from "expo-haptics";
-import { useDelete, usePost } from "../../../hooks";
-import { useQuery } from "@tanstack/react-query";
+import { useDelete, useGet, usePost } from "../../../hooks";
 
 const { primary, black } = theme.lightColors;
 
@@ -23,15 +21,10 @@ export const FollowButton = ({
   const FOLLOW_ENDPOINT = `/users/${user?._id}/followings/${followeeId}/follows`;
   const { t } = useTranslation();
 
-  useQuery(["checkFollow", FOLLOW_ENDPOINT], async () => {
-    const { data } = await axios.get(
-      `${process.env.BASE_ENDPOINT}${FOLLOW_ENDPOINT}`,
-      {
-        headers: { Authorization: `Bearer ${user?.token}` },
-      }
-    );
-    setFollow(data.status);
-    return data;
+  useGet({
+    model: "checkFollow",
+    uri: FOLLOW_ENDPOINT,
+    onSuccess: (res) => setFollow(res.data.status),
   });
 
   const { mutate: makePost } = usePost({
@@ -41,6 +34,7 @@ export const FollowButton = ({
       fetchSuggested ? fetchSuggested() : null;
     },
   });
+
   const { mutate: makeDelete } = useDelete({
     uri: FOLLOW_ENDPOINT,
     onSuccess: () => {

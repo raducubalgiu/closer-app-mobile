@@ -4,9 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "../../../hooks/auth";
 import * as Haptics from "expo-haptics";
 import theme from "../../../assets/styles/theme";
-import { useDelete, usePost } from "../../../hooks";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { useDelete, useGet, usePost } from "../../../hooks";
 
 const { error } = theme.lightColors;
 
@@ -16,13 +14,10 @@ export const LikeButton = ({ postId, onAddLike, onRemoveLike, ...props }) => {
   const endpoints = `/users/${user?._id}/posts/${postId}/likes`;
   const animatedScale = useRef(new Animated.Value(0)).current;
 
-  useQuery(["checkLike", endpoints], async () => {
-    const { data } = await axios.get(
-      `${process.env.BASE_ENDPOINT}${endpoints}`,
-      { headers: { Authorization: `Bearer ${user.token}` } }
-    );
-    setLiked(data.status);
-    return data;
+  useGet({
+    model: "checkLike",
+    uri: endpoints,
+    onSuccess: (res) => setLiked(res.data.status),
   });
 
   const { mutate: makePost } = usePost({ uri: endpoints });

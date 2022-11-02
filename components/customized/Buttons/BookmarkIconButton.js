@@ -4,7 +4,7 @@ import { Icon } from "@rneui/themed";
 import { useAuth } from "../../../hooks/auth";
 import theme from "../../../assets/styles/theme";
 import * as Haptics from "expo-haptics";
-import { useHttpGet, useHttpPost, useHttpDelete } from "../../../hooks";
+import { usePost, useDelete, useGet } from "../../../hooks";
 
 const { black } = theme.lightColors;
 
@@ -14,10 +14,13 @@ export const BookmarkIconButton = ({ sx, size, type, typeId }) => {
   const animatedScale = useRef(new Animated.Value(0)).current;
   const bookmarkEndpoints = `/users/${user._id}/${type}/${typeId}/bookmarks`;
 
-  useHttpGet(`${bookmarkEndpoints}`, (data) => setBookmarked(data.status));
-
-  const { makePost } = useHttpPost(bookmarkEndpoints);
-  const { makeDelete } = useHttpDelete(bookmarkEndpoints);
+  useGet({
+    model: "checkBookmark",
+    uri: bookmarkEndpoints,
+    onSuccess: (res) => setBookmarked(res.data.status),
+  });
+  const { mutate: makePost } = usePost({ uri: bookmarkEndpoints });
+  const { mutate: makeDelete } = useDelete({ uri: bookmarkEndpoints });
 
   const handleBookmark = useCallback(() => {
     animatedScale.setValue(0.8);

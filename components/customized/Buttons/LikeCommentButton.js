@@ -2,13 +2,7 @@ import { StyleSheet } from "react-native";
 import React, { useCallback, useState } from "react";
 import { IconButton } from "../../core";
 import theme from "../../../assets/styles/theme";
-import {
-  useHttpPost,
-  useHttpDelete,
-  useHttpGet,
-  useAuth,
-  useHttpPatch,
-} from "../../../hooks";
+import { useAuth, useGet, usePost, useDelete, usePatch } from "../../../hooks";
 
 const { grey0, error } = theme.lightColors;
 
@@ -22,13 +16,15 @@ export const LikeCommentButton = ({
   const [liked, setLiked] = useState(false);
   const likeEndpoints = `/users/${userId}/comments/${commentId}/likes`;
 
-  useHttpGet(`${likeEndpoints}/check`, (data) => {
-    if (data.status === true) setLiked(true);
+  useGet({
+    model: "checkLike",
+    uri: `${likeEndpoints}/check`,
+    onSuccess: (res) => setLiked(res.data.status),
   });
 
-  const { makePost } = useHttpPost(likeEndpoints);
-  const { makeDelete } = useHttpDelete(likeEndpoints);
-  const { makePatch } = useHttpPatch(`/comments/${commentId}`);
+  const { mutate: makePost } = usePost({ uri: likeEndpoints });
+  const { mutate: makeDelete } = useDelete({ uri: likeEndpoints });
+  const { mutate: makePatch } = usePatch({ uri: `/comments/${commentId}` });
 
   const handleLike = useCallback(() => {
     if (!liked) {

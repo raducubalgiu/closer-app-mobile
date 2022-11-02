@@ -179,7 +179,7 @@ export const usePatch = ({ uri, onSuccess }) => {
       }),
     {
       onSuccess,
-      onError: () => {},
+      onError: (err) => console.log(err),
     }
   );
 
@@ -196,7 +196,7 @@ export const usePost = ({ uri, onSuccess }) => {
       }),
     {
       onSuccess,
-      onError: () => {},
+      onError: (err) => console.log(err),
     }
   );
 
@@ -213,9 +213,27 @@ export const useDelete = ({ uri, onSuccess }) => {
       }),
     {
       onSuccess,
-      onError: () => {},
+      onError: (err) => console.log(err),
     }
   );
 
   return mutations;
+};
+
+export const useGet = ({ model, uri, onSuccess }) => {
+  const { user } = useAuth();
+
+  const response = useQuery(
+    [model, uri],
+    async () => {
+      return await axios.get(`${BASE_ENDPOINT}${uri}`, {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
+    },
+    { onSuccess, onError: (err) => console.log(err) }
+  );
+
+  return {
+    ...response,
+  };
 };

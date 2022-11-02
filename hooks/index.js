@@ -21,4 +21,5 @@ export {
   usePatch,
   useDelete,
   usePost,
+  useGet,
 } from "./useHttp";
