@@ -17,11 +17,12 @@ export const FollowersTab = ({ userId }) => {
     });
 
   const renderPerson = useCallback(({ item }) => {
-    const { avatar, username, name, _id } = item?.user || {};
+    const { avatar, username, name, _id, checkmark } = item?.user || {};
 
     return (
       <UserListItem
         avatar={avatar}
+        checkmark={checkmark}
         username={username}
         name={name}
         followeeId={_id}
