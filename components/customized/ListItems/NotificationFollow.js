@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 import { Checkmark, Stack, CustomAvatar } from "../../core";
 import theme from "../../../assets/styles/theme";
-import FollowButton from "../../core/Buttons/FollowButton";
+import FollowButton from "../Buttons/FollowButton";
 
 const NotificationFollow = (props) => {
   return (

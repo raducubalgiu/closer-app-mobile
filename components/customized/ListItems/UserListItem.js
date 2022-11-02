@@ -1,7 +1,8 @@
 import { StyleSheet, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Stack, CustomAvatar, Button } from "../../core";
-import { FollowButton, Checkmark } from "../../core";
+import { Checkmark } from "../../core";
+import { FollowButton } from "../Buttons/FollowButton";
 import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../hooks/auth";
 

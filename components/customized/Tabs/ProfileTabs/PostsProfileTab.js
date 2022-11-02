@@ -27,7 +27,7 @@ export const PostsProfileTab = ({ userId }) => {
 
   return (
     <>
-      {!loading && (
+      {/* {!loading && (
         <View style={styles.container}>
           {posts?.map((item, i) => (
             <CardPostImage
@@ -42,7 +42,7 @@ export const PostsProfileTab = ({ userId }) => {
           ))}
         </View>
       )}
-      {!loading && !posts?.length && noFoundMessage}
+      {!loading && !posts?.length && noFoundMessage} */}
     </>
   );
 };
