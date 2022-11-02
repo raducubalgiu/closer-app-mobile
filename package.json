@@ -22,7 +22,7 @@
     "@rneui/base": "^4.0.0-rc.1",
     "@rneui/themed": "^4.0.0-rc.1",
     "@svanboxel/visibility-sensor-react-native": "^1.0.2",
-    "@tanstack/react-query": "^4.13.0",
+    "@tanstack/react-query": "^4.13.4",
     "axios": "^0.25.0",
     "expo": "~44.0.0",
     "expo-app-loading": "^1.3.0",
