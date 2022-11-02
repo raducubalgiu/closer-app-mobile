@@ -8,9 +8,10 @@ import {
   Header,
   Button,
   IconButtonDelete,
+  Spinner,
 } from "../../../../components/core";
 import theme from "../../../../assets/styles/theme";
-import { useAuth, useHttpGet, usePatch } from "../../../../hooks";
+import { useAuth, usePatch } from "../../../../hooks";
 import { ConfirmModal } from "../../../../components/customized/Modals/ConfirmModal";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -25,14 +26,21 @@ const AddServicesScreen = () => {
   const { t } = useTranslation();
 
   const { data: allServices } = useQuery(["allServices"], async () => {
-    const { data } = await axios.get(`${process.env.BASE_ENDPOINT}/services`);
+    const { data } = await axios.get(`${process.env.BASE_ENDPOINT}/services`, {
+      headers: { Authorization: `Bearer ${user.token}` },
+    });
     return data;
   });
 
-  useHttpGet(
-    `/users/${user?._id}/locations/${user?.location}/services`,
-    (res) => setServices(res)
-  );
+  let servicesEndpoint = `${process.env.BASE_ENDPOINT}/users/${user?._id}/locations/${user?.location}/services`;
+
+  useQuery(["services", servicesEndpoint], async () => {
+    const { data } = await axios.get(servicesEndpoint, {
+      headers: { Authorization: `Bearer ${user.token}` },
+    });
+    setServices(data);
+    return data;
+  });
 
   const closeModal = () => {
     setVisible(false);

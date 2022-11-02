@@ -5,7 +5,7 @@ import {
   View,
   FlatList,
 } from "react-native";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { useNavigation, useScrollToTop } from "@react-navigation/native";
 import axios from "axios";
 import { Divider, Badge } from "@rneui/themed";
@@ -21,6 +21,7 @@ import { CardPost, PostInfoSheet } from "../components/customized";
 import { useTranslation } from "react-i18next";
 import * as Haptics from "expo-haptics";
 import { ConfirmModal } from "../components/customized/Modals/ConfirmModal";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 const { grey0, black } = theme.lightColors;
 
@@ -29,7 +30,6 @@ const FeedScreen = () => {
   const [posts, setPosts] = useState([]);
   const [postId, setPostId] = useState(null);
   const [visible, setVisible] = useState(false);
-  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const { postsState, dispatchPosts } = usePosts();
   const navigation = useNavigation();
@@ -37,60 +37,26 @@ const FeedScreen = () => {
   useScrollToTop(ref);
   const { t } = useTranslation();
 
-  const fetchAllPosts = useCallback(() => {
-    const controller = new AbortController();
-    setLoading(true);
+  const fetchAllPosts = async (page) => {
+    const { data } = await axios.get(
+      `${process.env.BASE_ENDPOINT}/posts/get-all-posts?page=${page}&limit=10`,
+      { headers: { Authorization: `Bearer ${user?.token}` } }
+    );
+    return data;
+  };
 
-    axios
-      .get(
-        `${process.env.BASE_ENDPOINT}/posts/get-all-posts?page=${page}&limit=20`,
-        {
-          signal: controller.signal,
-          headers: { Authorization: `Bearer ${user.token}` },
-        }
-      )
-      .then((res) => {
-        setPosts(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
-
-    return () => {
-      controller.abort();
-    };
-  }, [user, page]);
-
-  useEffect(() => {
-    fetchAllPosts();
-  }, [fetchAllPosts]);
-
-  const fetchFollowings = useCallback(() => {
-    const controller = new AbortController();
-    setLoading(true);
-
-    axios
-      .get(
-        `${process.env.BASE_ENDPOINT}/users/${user._id}/posts/get-followings-posts?page${page}&limit=20`,
-        {
-          signal: controller.signal,
-          headers: { Authorization: `Bearer ${user.token}` },
-        }
-      )
-      .then((res) => {
-        setPosts(res.data);
-        setLoading(false);
-      })
-      .catch(() => {
-        setLoading(false);
-      });
-
-    return () => {
-      controller.abort();
-    };
-  }, [user]);
+  const { data, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteQuery(
+      ["likes"],
+      ({ pageParam = 1 }) => fetchAllPosts(pageParam),
+      {
+        getNextPageParam: (lastPage) => {
+          if (lastPage.next !== null) {
+            return lastPage.next;
+          }
+        },
+      }
+    );
 
   const showConfirm = useCallback(() => {
     CLOSE_BS();
@@ -120,6 +86,7 @@ const FeedScreen = () => {
   const renderAllPosts = useCallback(({ item }) => {
     return <CardPost post={item} onShowDetails={() => showDetails(item)} />;
   }, []);
+
   const keyExtractor = useCallback((item) => item?._id, []);
 
   const handleDelete = useCallback(() => {
@@ -138,6 +105,22 @@ const FeedScreen = () => {
       })
       .catch(() => setLoading(false));
   }, [user, postId]);
+
+  const loadMore = () => {
+    if (hasNextPage) {
+      fetchNextPage();
+    }
+  };
+
+  const showSpinner = () => {
+    if (isFetchingNextPage) {
+      return <Spinner />;
+    } else {
+      return null;
+    }
+  };
+
+  const { pages } = data || {};
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -178,7 +161,7 @@ const FeedScreen = () => {
               onPress={() => {
                 dispatchPosts({ type: "FETCH_FOLLOWINGS" });
                 setPosts([]);
-                fetchFollowings();
+                //fetchFollowings();
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
               }}
               isActive={postsState.activeFollowings}
@@ -198,9 +181,7 @@ const FeedScreen = () => {
       <Divider color="#ddd" />
       <FlatList
         ref={ref}
-        data={posts}
-        // onEndReached={onEndReached}
-        // onEndReachedThreshold={0.5}
+        data={pages?.map((page) => page.results).flat()}
         removeClippedSubviews={true}
         nestedScrollEnabled={true}
         keyExtractor={keyExtractor}
@@ -208,7 +189,9 @@ const FeedScreen = () => {
         maxToRenderPerBatch={5}
         initialNumToRender={5}
         renderItem={renderAllPosts}
-        ListFooterComponent={loading && <Spinner sx={{ marginVertical: 5 }} />}
+        ListFooterComponent={showSpinner}
+        onEndReached={loadMore}
+        onEndReachedThreshold={0.3}
       />
       {BOTTOM_SHEET}
       <ConfirmModal
