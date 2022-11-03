@@ -19,13 +19,14 @@ const LikesScreen = ({ route }) => {
     });
 
   const renderPerson = useCallback(({ item }) => {
-    const { _id, username, name, avatar } = item?.user || {};
+    const { _id, username, name, avatar, checkmark } = item?.user || {};
 
     return (
       <UserListItem
         avatar={avatar}
         username={username}
         name={name}
+        checkmark={checkmark}
         followeeId={_id}
         userId={user?._id}
       />

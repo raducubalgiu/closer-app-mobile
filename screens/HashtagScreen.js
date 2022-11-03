@@ -41,7 +41,7 @@ const HashtagScreen = ({ route }) => {
           bookmarksCount={data?.bookmarksCount}
         />
       )}
-      <TopTabContainer initialRouteName="HashtagPostsBookable">
+      <TopTabContainer initialRouteName="HashtagPostsPopular">
         <Tab.Screen
           name="HashtagPostsPopular"
           component={HashtagPostsPopular}

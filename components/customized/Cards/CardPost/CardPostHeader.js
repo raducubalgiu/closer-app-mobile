@@ -33,7 +33,10 @@ const CardPostHeader = ({
         <Stack direction="row" sx={styles.avatarContainer}>
           <CustomAvatar avatar={avatar} size={35} iconSize={15} />
           <Stack align="start">
-            <Text style={styles.name}>{username}</Text>
+            <Stack direction="row">
+              <Text style={styles.name}>{username}</Text>
+              {checkmark && <Checkmark sx={{ marginLeft: 5 }} size={8} />}
+            </Stack>
             <Text style={styles.profession}>{profession?.name}</Text>
           </Stack>
         </Stack>

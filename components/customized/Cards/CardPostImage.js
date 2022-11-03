@@ -19,7 +19,7 @@ export const CardPostImage = ({
   const columns = col ? col : 3;
 
   if (index % columns !== 0) {
-    borderBox = { paddingLeft: 2 };
+    borderBox = { paddingLeft: 1.25 };
   } else {
     borderBox = { paddingLeft: 0 };
   }
@@ -28,7 +28,7 @@ export const CardPostImage = ({
     box: {
       width: width / columns,
       height: width / columns,
-      marginBottom: 2,
+      marginBottom: 1.25,
     },
   });
 

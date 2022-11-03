@@ -36,7 +36,7 @@ export const UserListItem = ({
         <Stack align="start" sx={{ marginLeft: 10 }}>
           <Stack direction="row">
             <Text style={styles.username}>{username}</Text>
-            {checkmark && <Checkmark sx={{ marginLeft: 10 }} />}
+            {checkmark && <Checkmark sx={{ marginLeft: 5 }} size={8} />}
           </Stack>
           <Text style={styles.name}>{name}</Text>
         </Stack>

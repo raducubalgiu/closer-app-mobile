@@ -27,7 +27,7 @@ export const SearchPopularTab = ({ search }) => {
 
   const fetchData = async (page, search) => {
     const { data } = await axios.get(
-      `${process.env.BASE_ENDPOINT}/posts/get-all-posts?search=${search}&page=${page}&limit=10`,
+      `${process.env.BASE_ENDPOINT}/posts/get-all-posts?search=${search}&page=${page}&limit=12`,
       { headers: { Authorization: `Bearer ${user?.token}` } }
     );
     return data;

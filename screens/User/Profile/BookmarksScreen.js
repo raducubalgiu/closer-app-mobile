@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import { useCallback } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { useTranslation } from "react-i18next";
@@ -24,8 +24,10 @@ const BookmarksScreen = () => {
   const SavedHashtags = useCallback(() => <SavedHashtagsTab user={user} />, []);
 
   return (
-    <SafeAreaView style={styles.screen}>
-      <Header title={t("saved")} />
+    <View style={styles.screen}>
+      <SafeAreaView>
+        <Header title={t("saved")} />
+      </SafeAreaView>
       <TopTabContainer
         initialRouteName="SavedAll"
         tabBarScrollEnabled={true}
@@ -52,7 +54,7 @@ const BookmarksScreen = () => {
           options={{ tabBarLabel: t("hashtag") }}
         />
       </TopTabContainer>
-    </SafeAreaView>
+    </View>
   );
 };
 

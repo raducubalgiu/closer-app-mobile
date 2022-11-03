@@ -10,7 +10,7 @@ import { useHttpGet } from "../../../../hooks";
 
 export const TopTabProfile = ({ userId, username, service, option, user }) => {
   const Tab = createMaterialTopTabNavigator();
-  const { description, website, location, role, counter } = user || {};
+  const { description, website, location, role } = user || {};
 
   const { data: services } = useHttpGet(
     `/locations/${user?.location}/services`
@@ -54,7 +54,7 @@ export const TopTabProfile = ({ userId, username, service, option, user }) => {
         name="Products"
         component={ProductsProfile}
         options={{
-          tabBarIcon: () => <TabBadge value={counter?.productsCount} />,
+          tabBarIcon: () => <TabBadge value={0} />,
         }}
       />
       <Tab.Screen name="Jobs" component={JobsProfile} />
