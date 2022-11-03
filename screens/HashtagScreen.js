@@ -43,14 +43,14 @@ const HashtagScreen = ({ route }) => {
       )}
       <TopTabContainer initialRouteName="HashtagPostsBookable">
         <Tab.Screen
-          name="HashtagPostsBookable"
-          component={HashtagPostsBookable}
-          options={{ tabBarLabel: t("bookable") }}
-        />
-        <Tab.Screen
           name="HashtagPostsPopular"
           component={HashtagPostsPopular}
           options={{ tabBarLabel: t("populars") }}
+        />
+        <Tab.Screen
+          name="HashtagPostsBookable"
+          component={HashtagPostsBookable}
+          options={{ tabBarLabel: t("bookable") }}
         />
         <Tab.Screen
           name="HashtagPostsRecent"

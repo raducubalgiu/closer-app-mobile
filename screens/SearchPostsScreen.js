@@ -78,7 +78,7 @@ const SearchPostsScreen = () => {
             headers: { Authorization: `Bearer ${user.token}` },
           })
           .then((res) => {
-            setResults(res.data);
+            setResults(res.data.results);
           })
           .catch(() => {});
       } else {

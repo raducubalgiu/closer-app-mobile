@@ -1,63 +1,80 @@
-import { StyleSheet, View, FlatList, Dimensions } from "react-native";
+import { FlatList } from "react-native";
 import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
-import { useHttpGet } from "../../../../hooks";
+import { useAuth, useGet } from "../../../../hooks";
 import { HashtagListItem } from "../../ListItems/HashtagListItem";
 import { SearchPopularHeading } from "../../Headings/SearchPopularHeading";
 import { Spinner } from "../../../core";
 import { UserListItem } from "../../ListItems/UserListItem";
 import { CardPostImage } from "../../Cards/CardPostImage";
-
-const { width } = Dimensions.get("window");
+import axios from "axios";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 export const SearchPopularTab = ({ search }) => {
   const navigation = useNavigation();
   const { t } = useTranslation();
+  const { user } = useAuth();
 
-  const { data: users, loading: loadUsers } = useHttpGet(
-    `/users/search?search=${search}&page=1&limit=2`
-  );
-  const { data: hashtags, loading: loadHashtags } = useHttpGet(
-    `/hashtags/search?search=${search}&page=1&limit=3`
-  );
-  const { data: popularPosts, loading: loadPosts } = useHttpGet(
-    `/posts/get-all-posts?search=${search}&page=1&limit=20`
-  );
+  const { data: users, isLoading: loadUsers } = useGet({
+    model: "users",
+    uri: `/users/search?search=${search}&page=1&limit=2`,
+  });
+  const { data: hashtags, isLoading: loadHashtags } = useGet({
+    model: "users",
+    uri: `/hashtags/search?search=${search}&page=1&limit=3`,
+  });
 
-  const headerUsers = useCallback(
-    () => (
-      <SearchPopularHeading
-        heading={t("users")}
-        seeAll
-        collection={users}
-        onSeeAll={() =>
-          navigation.navigate("SearchAll", { screen: "SearchUsers", search })
+  const fetchData = async (page, search) => {
+    const { data } = await axios.get(
+      `${process.env.BASE_ENDPOINT}/posts/get-all-posts?search=${search}&page=${page}&limit=10`,
+      { headers: { Authorization: `Bearer ${user?.token}` } }
+    );
+    return data;
+  };
+
+  const {
+    data: popularPosts,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    isLoading: loadPosts,
+  } = useInfiniteQuery(
+    ["popularPosts", search],
+    ({ pageParam = 1 }) => fetchData(pageParam, search),
+    {
+      getNextPageParam: (lastPage) => {
+        if (lastPage.next !== null) {
+          return lastPage.next;
         }
-      />
-    ),
-    [users]
+      },
+    }
   );
 
-  const headerHashtags = useCallback(
-    () => (
-      <SearchPopularHeading
-        heading={t("hashtags")}
-        seeAll
-        collection={hashtags}
-        onSeeAll={() =>
-          navigation.navigate("SearchAll", { screen: "SearchHashtags", search })
-        }
-      />
-    ),
-    [hashtags]
-  );
-  const headerPopularPosts = useCallback(
-    () => (
-      <SearchPopularHeading heading={t("populars")} collection={popularPosts} />
-    ),
-    [popularPosts]
-  );
+  const loadMore = () => {
+    if (hasNextPage) fetchNextPage();
+  };
+
+  const showSpinner = () => {
+    if (isFetchingNextPage) {
+      return <Spinner />;
+    } else {
+      return null;
+    }
+  };
+  const { pages } = popularPosts || {};
+
+  const goToUsers = () => {
+    navigation.navigate("SearchAll", {
+      screen: "SearchUsers",
+      search,
+    });
+  };
+  const goToHashtags = () =>
+    navigation.navigate("SearchAll", {
+      screen: "SearchHashtags",
+      search,
+    });
 
   const renderUsers = useCallback(
     ({ item }) => (
@@ -66,7 +83,6 @@ export const SearchPopularTab = ({ search }) => {
         followeeId={item._id}
         username={item.username}
         name={item.name}
-        counter={item.counter}
         checkmark={item.checkmark}
         sx={{ paddingHorizontal: 15, marginBottom: 20 }}
       />
@@ -104,53 +120,59 @@ export const SearchPopularTab = ({ search }) => {
   const popularPostsList = useCallback(
     () => (
       <FlatList
-        ListHeaderComponent={headerPopularPosts}
+        ListHeaderComponent={
+          <SearchPopularHeading
+            heading={t("populars")}
+            collection={pages?.map((page) => page.results)}
+          />
+        }
         numColumns={3}
-        data={popularPosts}
-        keyExtractor={(item) => item._id}
+        data={pages?.map((page) => page.results).flat()}
+        keyExtractor={useCallback((item) => item._id, [])}
         renderItem={renderPopularPosts}
+        ListFooterComponent={showSpinner}
+        onEndReached={loadMore}
+        onEndReachedThreshold={0.3}
       />
     ),
-    [headerPopularPosts, popularPosts, renderPopularPosts]
+    [renderPopularPosts, popularPosts]
   );
 
   const hashtagsList = useCallback(
     () => (
       <FlatList
-        ListHeaderComponent={headerHashtags}
-        data={hashtags}
+        ListHeaderComponent={
+          <SearchPopularHeading
+            heading={t("hashtags")}
+            seeAll
+            collection={hashtags?.results}
+            onSeeAll={goToHashtags}
+          />
+        }
+        data={hashtags?.results}
         keyExtractor={(item) => item._id}
         renderItem={renderHashtags}
         ListFooterComponent={popularPostsList}
       />
     ),
-    [headerHashtags, hashtags, popularPostsList]
+    [hashtags, popularPostsList]
   );
 
   return (
-    <View style={{ flex: 1 }}>
-      {!loadUsers && !loadHashtags && !loadPosts && (
-        <FlatList
-          ListHeaderComponent={headerUsers}
-          data={users}
-          keyExtractor={(item) => item._id}
-          showsVerticalScrollIndicator={false}
-          renderItem={renderUsers}
-          ListFooterComponent={hashtagsList}
+    <FlatList
+      ListHeaderComponent={
+        <SearchPopularHeading
+          heading={t("users")}
+          seeAll
+          collection={users?.results}
+          onSeeAll={goToUsers}
         />
-      )}
-      {loadUsers && loadHashtags && loadPosts && <Spinner />}
-    </View>
+      }
+      data={users?.results}
+      keyExtractor={(item) => item._id}
+      showsVerticalScrollIndicator={false}
+      renderItem={renderUsers}
+      ListFooterComponent={hashtagsList}
+    />
   );
 };
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
-  boxImage: { width: width / 2, flex: 1, margin: 1 },
-  image: {
-    aspectRatio: 1,
-    flex: 1,
-  },
-});

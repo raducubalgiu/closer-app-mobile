@@ -12,7 +12,6 @@ import {
 import { Header } from "../../../components/core";
 import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../hooks";
-import { trimFunc } from "../../../utils";
 
 const BookmarksScreen = () => {
   const { user } = useAuth();

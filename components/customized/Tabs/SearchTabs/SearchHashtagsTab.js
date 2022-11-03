@@ -1,20 +1,52 @@
-import { StyleSheet, FlatList, View } from "react-native";
-import React, { useCallback, useState } from "react";
-import { useHttpGet } from "../../../../hooks";
+import { FlatList } from "react-native";
+import React, { useCallback } from "react";
+import { useAuth } from "../../../../hooks";
 import { HashtagListItem } from "../../ListItems/HashtagListItem";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { useTranslation } from "react-i18next";
 import { Spinner } from "../../../core";
 import { useNavigation } from "@react-navigation/native";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 export const SearchHashtagsTab = ({ search }) => {
-  const [page, setPage] = useState(1);
-
-  const { data: hashtags, loading } = useHttpGet(
-    `/hashtags/search?search=${search}&page=1&limit=25`
-  );
   const { t } = useTranslation();
   const navigation = useNavigation();
+  const { user } = useAuth();
+
+  const fetchData = async (page, search) => {
+    const { data } = await axios.get(
+      `${process.env.BASE_ENDPOINT}/hashtags/search?search=${search}&page=${page}&limit=25`,
+      { headers: { Authorization: `Bearer ${user?.token}` } }
+    );
+    return data;
+  };
+
+  const { data, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteQuery(
+      ["searchHashtags", search],
+      ({ pageParam = 1 }) => fetchData(pageParam, search),
+      {
+        getNextPageParam: (lastPage) => {
+          if (lastPage.next !== null) {
+            return lastPage.next;
+          }
+        },
+      }
+    );
+
+  const loadMore = () => {
+    if (hasNextPage) fetchNextPage();
+  };
+  const showSpinner = () => {
+    if (isFetchingNextPage) {
+      return <Spinner />;
+    } else {
+      return null;
+    }
+  };
+
+  const { pages } = data || {};
 
   const renderHashtags = useCallback(
     ({ item }) => (
@@ -32,24 +64,20 @@ export const SearchHashtagsTab = ({ search }) => {
   );
 
   return (
-    <View style={styles.container}>
-      {!loading && (
-        <FlatList
-          data={hashtags}
-          keyExtractor={keyExtractor}
-          renderItem={renderHashtags}
-          ListFooterComponent={!loading && !hashtags?.length && noFoundMessage}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingTop: 15, paddingHorizontal: 15 }}
-        />
-      )}
-      {loading && <Spinner />}
-    </View>
+    <FlatList
+      ListHeaderComponent={
+        !isLoading &&
+        !isFetchingNextPage &&
+        pages[0]?.results?.length === 0 &&
+        noFoundMessage
+      }
+      data={pages?.map((page) => page.results).flat()}
+      keyExtractor={keyExtractor}
+      renderItem={renderHashtags}
+      contentContainerStyle={{ padding: 15 }}
+      ListFooterComponent={showSpinner}
+      onEndReached={loadMore}
+      onEndReachedThreshold={0.3}
+    />
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});

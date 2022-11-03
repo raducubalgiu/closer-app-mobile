@@ -47,13 +47,13 @@ const SearchServicesScreen = ({ route }) => {
       if (search) {
         axios
           .get(
-            `${process.env.BASE_ENDPOINT}/services/search?search=${search}`,
+            `${process.env.BASE_ENDPOINT}/services/search?search=${search}&page=1&limit=5`,
             {
               signal: controller.signal,
               headers: { Authorization: `Bearer ${user?.token}` },
             }
           )
-          .then((res) => setServices(res.data))
+          .then((res) => setServices(res.data.results))
           .catch((err) => console.log(err));
       } else {
         setServices([]);
