@@ -13,7 +13,7 @@ export const HashtagPostsBookableTab = ({ name }) => {
     useGetPaginate({
       model: "hashtagPostsBookable",
       uri: `/hashtags/${name}/posts/bookable`,
-      limit: "20",
+      limit: "15",
     });
 
   const renderPosts = useCallback(({ item, index }) => {

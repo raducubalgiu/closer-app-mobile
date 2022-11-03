@@ -13,7 +13,7 @@ export const HashtagPostsRecentTab = ({ name }) => {
     useGetPaginate({
       model: "hashtagPostsRecent",
       uri: `/hashtags/${name}/posts/recent`,
-      limit: "20",
+      limit: "15",
     });
 
   const renderPosts = useCallback(({ item, index }) => {

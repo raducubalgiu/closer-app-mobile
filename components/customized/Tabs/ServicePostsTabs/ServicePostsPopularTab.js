@@ -13,7 +13,7 @@ export const ServicePostsPopularTab = ({ serviceId }) => {
     useGetPaginate({
       model: "servicePostsPopular",
       uri: `/services/${serviceId}/posts/popular`,
-      limit: "20",
+      limit: "15",
     });
 
   const renderPosts = useCallback(({ item, index }) => {

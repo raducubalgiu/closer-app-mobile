@@ -11,12 +11,18 @@ export const SavedPostsTab = ({ user }) => {
   const navigation = useNavigation();
   const { t } = useTranslation();
 
-  const { data, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
-    useGetPaginate({
-      model: "posts",
-      uri: `/users/${user?._id}/posts/bookmarks`,
-      limit: "25",
-    });
+  const {
+    data,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isFetching,
+  } = useGetPaginate({
+    model: "posts",
+    uri: `/users/${user?._id}/posts/bookmarks`,
+    limit: "21",
+  });
 
   const renderPosts = useCallback(({ item, index }) => {
     const { post } = item;
@@ -63,20 +69,23 @@ export const SavedPostsTab = ({ user }) => {
   const { pages } = data || {};
 
   return (
-    <FlatList
-      ListHeaderComponent={
-        !isLoading &&
-        !isFetchingNextPage &&
-        pages[0]?.results?.length === 0 &&
-        noFoundMessage
-      }
-      data={pages?.map((page) => page.results).flat()}
-      keyExtractor={keyExtractor}
-      numColumns={3}
-      renderItem={renderPosts}
-      ListFooterComponent={showSpinner}
-      onEndReached={loadMore}
-      onEndReachedThreshold={0.3}
-    />
+    <>
+      {(isFetching || isLoading) && !isFetchingNextPage && <Spinner />}
+      <FlatList
+        ListHeaderComponent={
+          !isLoading &&
+          !isFetchingNextPage &&
+          pages[0]?.results?.length === 0 &&
+          noFoundMessage
+        }
+        data={pages?.map((page) => page.results).flat()}
+        keyExtractor={keyExtractor}
+        numColumns={3}
+        renderItem={renderPosts}
+        ListFooterComponent={showSpinner}
+        onEndReached={loadMore}
+        onEndReachedThreshold={0.3}
+      />
+    </>
   );
 };

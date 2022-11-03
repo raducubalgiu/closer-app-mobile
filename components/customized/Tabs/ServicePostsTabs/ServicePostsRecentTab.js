@@ -13,7 +13,7 @@ export const ServicePostsRecentTab = ({ serviceId }) => {
     useGetPaginate({
       model: "servicePostsRecent",
       uri: `/services/${serviceId}/posts/recent`,
-      limit: "20",
+      limit: "15",
     });
 
   const renderPosts = useCallback(({ item, index }) => {

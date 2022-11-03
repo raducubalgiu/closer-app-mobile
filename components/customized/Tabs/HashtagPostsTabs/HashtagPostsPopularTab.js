@@ -13,7 +13,7 @@ export const HashtagPostsPopularTab = ({ name }) => {
     useGetPaginate({
       model: "hashtagPostsPopular",
       uri: `/hashtags/${name}/posts/popular`,
-      limit: "20",
+      limit: "15",
     });
 
   const renderPosts = useCallback(({ item, index }) => {
