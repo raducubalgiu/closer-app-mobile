@@ -6,8 +6,7 @@ import FakeSearchBar from "../components/customized/FakeSearchBar/FakeSearchBar"
 import theme from "../assets/styles/theme";
 import { useNavigation, useScrollToTop } from "@react-navigation/native";
 import { ServicesList, CardRecommended } from "../components/customized";
-import { useHttpGet } from "../hooks";
-import { Spinner } from "../components/core";
+import { useGet } from "../hooks";
 
 const { black } = theme.lightColors;
 
@@ -18,11 +17,12 @@ const HomeScreen = () => {
 
   useScrollToTop(ref);
 
-  const { data: locations, loadLocations } = useHttpGet(
-    `/locations/get-recommended?latlng=26.100195,44.428286`
-  );
+  const { data: locations } = useGet({
+    model: "recommended",
+    uri: `/locations/get-recommended?latlng=26.100195,44.428286`,
+  });
 
-  const { data: services, loading: loadServices } = useHttpGet(`/services`);
+  const { data: services } = useGet({ model: "services", uri: "/services" });
 
   const renderRecommended = useCallback(
     ({ item }) => <CardRecommended location={item} />,
@@ -64,7 +64,6 @@ const HomeScreen = () => {
           showsVerticalScrollIndicator={false}
           renderItem={renderRecommended}
         />
-        {(loadLocations || loadServices) && <Spinner />}
       </View>
     </SafeAreaView>
   );

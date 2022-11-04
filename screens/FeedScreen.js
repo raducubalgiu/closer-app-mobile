@@ -4,6 +4,7 @@ import {
   ScrollView,
   View,
   FlatList,
+  RefreshControl,
 } from "react-native";
 import React, { useCallback, useRef, useState } from "react";
 import { useNavigation, useScrollToTop } from "@react-navigation/native";
@@ -23,6 +24,10 @@ import * as Haptics from "expo-haptics";
 import { ConfirmModal } from "../components/customized/Modals/ConfirmModal";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
+const wait = (timeout) => {
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
+
 const { grey0, black } = theme.lightColors;
 
 const FeedScreen = () => {
@@ -36,6 +41,7 @@ const FeedScreen = () => {
   const ref = useRef(null);
   useScrollToTop(ref);
   const { t } = useTranslation();
+  const [refreshing, setRefreshing] = React.useState(false);
 
   const fetchAllPosts = async (page) => {
     const { data } = await axios.get(
@@ -45,18 +51,32 @@ const FeedScreen = () => {
     return data;
   };
 
-  const { data, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteQuery(
-      ["likes"],
-      ({ pageParam = 1 }) => fetchAllPosts(pageParam),
-      {
-        getNextPageParam: (lastPage) => {
-          if (lastPage.next !== null) {
-            return lastPage.next;
-          }
-        },
-      }
-    );
+  const {
+    data,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    isLoading,
+    refetch,
+  } = useInfiniteQuery(
+    ["likes"],
+    ({ pageParam = 1 }) => fetchAllPosts(pageParam),
+    {
+      getNextPageParam: (lastPage) => {
+        if (lastPage.next !== null) {
+          return lastPage.next;
+        }
+      },
+    }
+  );
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => {
+      refetch();
+      setRefreshing(false);
+    });
+  }, []);
 
   const showConfirm = useCallback(() => {
     CLOSE_BS();
@@ -181,6 +201,9 @@ const FeedScreen = () => {
       <Divider color="#ddd" />
       <FlatList
         ref={ref}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
         data={pages?.map((page) => page.results).flat()}
         removeClippedSubviews={true}
         nestedScrollEnabled={true}

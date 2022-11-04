@@ -28,6 +28,8 @@ const FiltersDateScreen = ({ route }) => {
   const methods = useForm({ defaultValues: { startHour: "", endHour: "" } });
   const { handleSubmit, watch } = methods;
 
+  console.log("SERVICE!!", service);
+
   const goNext = () => {
     if (filters.length > 0) {
       navigation.navigate("FiltersService", {

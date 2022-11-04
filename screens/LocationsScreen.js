@@ -12,7 +12,7 @@ import {
   FilterRatingModal,
   NoFoundMessage,
 } from "../components/customized";
-import { useHttpGet } from "../hooks";
+import { useGet, useHttpGet } from "../hooks";
 import theme from "../assets/styles/theme";
 
 const { black } = theme.lightColors;
@@ -22,7 +22,7 @@ const LocationsScreen = ({ route }) => {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(10000);
   const [minDistance, setMinDistance] = useState(0);
-  const [maxDistance, setMaxDistance] = useState(10000);
+  const [maxDistance, setMaxDistance] = useState(50000);
   const latlng = "26.100195,44.428286";
   const [checked, setChecked] = useState(true);
   const [visible, setVisible] = useState({
@@ -32,9 +32,10 @@ const LocationsScreen = ({ route }) => {
   });
   const { t } = useTranslation();
 
-  const { data: locations, loading } = useHttpGet(
-    `/locations?latlng=${latlng}&serviceId=${service?._id}&option=${option?._id}&minprice=${minPrice}&maxprice=${maxPrice}&mindistance=${minDistance}&maxdistance=${maxDistance}`
-  );
+  const { data: locations } = useGet({
+    model: "locations",
+    uri: `/locations?latlng=26.100195,44.428286&serviceId=${service?._id}&option=${option?._id}&minprice=${minPrice}&maxprice=${maxPrice}&mindistance=${minDistance}&maxdistance=${maxDistance}&minrating=0&maxrating=5&page=1&limit=5`,
+  });
 
   const renderLocation = useCallback(({ item }) => {
     return (
@@ -57,19 +58,14 @@ const LocationsScreen = ({ route }) => {
 
   const list = (
     <View style={{ flex: 1 }}>
-      {!loading && (
-        <FlatList
-          showsVerticalScrollIndicator={false}
-          data={locations}
-          keyExtractor={keyExtractor}
-          renderItem={renderLocation}
-          bounces={false}
-          ListFooterComponent={
-            !loading && !locations.length && noFoundLocations
-          }
-        />
-      )}
-      {loading && <Spinner />}
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        data={locations}
+        keyExtractor={keyExtractor}
+        renderItem={renderLocation}
+        bounces={false}
+        ListFooterComponent={!locations?.length && noFoundLocations}
+      />
     </View>
   );
 
@@ -106,7 +102,7 @@ const LocationsScreen = ({ route }) => {
           <SheetService>
             <View style={{ height: 50 }}>
               <Text style={styles.sheetHeading}>
-                {locations.length} rezultate
+                {locations?.length} rezultate
               </Text>
             </View>
             {list}

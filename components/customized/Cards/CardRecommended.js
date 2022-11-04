@@ -10,7 +10,7 @@ const { black, grey0 } = theme.lightColors;
 
 export const CardRecommended = ({ location }) => {
   const { images, distance, services, counter, address, owner } = location;
-  const { name, username, avatar } = owner;
+  const { name, username, avatar, ratingsAverage, ratingsQuantity } = owner;
   const navigation = useNavigation();
   const { t } = useTranslation();
 
@@ -42,18 +42,19 @@ export const CardRecommended = ({ location }) => {
             </Stack>
           </Stack>
           <Text style={styles.address}>
-            {trimFunc(AddressFormat(address), 30)}
+            {trimFunc(
+              `${address.city}, ${address.street} ${address.number}`,
+              30
+            )}
           </Text>
           <Stack direction="row">
-            <Text style={styles.service}>{services[0]?.name}</Text>
+            <Text style={styles.service}>Tuns</Text>
           </Stack>
           <Stack direction="row" align="center">
             <IconStar />
-            <Text style={styles.ratingsAvg}>
-              {counter?.ratingsAverage.toFixed(1)}
-            </Text>
+            <Text style={styles.ratingsAvg}>{ratingsAverage.toFixed(1)}</Text>
             <Text style={styles.ratingsQuant}>
-              {counter?.ratingsQuantity} {t("reviews")}
+              {ratingsQuantity} {t("reviews")}
             </Text>
           </Stack>
         </Stack>
@@ -108,6 +109,7 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     paddingHorizontal: 10,
     color: black,
+    fontWeight: "700",
   },
   ratingsAvg: {
     marginLeft: 2,
