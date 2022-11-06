@@ -1,57 +1,56 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { Icon, Divider } from "@rneui/themed";
 import theme from "../../../../assets/styles/theme";
-import React from "react";
-import { Stack, CustomAvatar, IconBackButton } from "../../../core";
-import { useNavigation } from "@react-navigation/native";
+import { Stack, CustomAvatar, IconBackButton, Checkmark } from "../../../core";
 
-const HeaderMessageItem = (props) => {
-  const navigation = useNavigation();
+const { black, grey0 } = theme.lightColors;
 
+const HeaderMessageItem = ({ avatar, name, username, checkmark }) => {
   return (
-    <>
-      <Stack direction="row" sx={styles.container}>
+    <Stack direction="row" sx={styles.container}>
+      <Stack direction="row">
+        <IconBackButton />
         <Stack direction="row">
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <IconBackButton />
-          </TouchableOpacity>
-          <Stack direction="row" sx={{ marginLeft: 15 }}>
-            <CustomAvatar size={40} avatar={props.avatar} />
-            <Stack align="start" sx={{ marginLeft: 10 }}>
-              <Text style={styles.name}>{props.name}</Text>
-              <Text style={styles.username}>{props.username}</Text>
+          <CustomAvatar size={40} avatar={avatar} />
+          <Stack align="start" sx={{ marginLeft: 10 }}>
+            <Stack direction="row">
+              <Text style={styles.name}>{name}</Text>
+              {checkmark && <Checkmark />}
             </Stack>
+            <Text style={styles.username}>@{username}</Text>
           </Stack>
         </Stack>
-        <Stack direction="row">
-          <Icon
-            name="video"
-            type="feather"
-            color={theme.lightColors.black}
-            size={25}
-          />
-          <Icon
-            name="shield"
-            type="feather"
-            color={theme.lightColors.black}
-            size={25}
-            style={{ marginLeft: 20 }}
-          />
-        </Stack>
       </Stack>
-      <Divider color="#ddd" />
-    </>
+      <Stack direction="row">
+        <Icon name="video" type="feather" color={black} size={25} />
+        <Icon
+          name="shield"
+          type="feather"
+          color={black}
+          size={25}
+          style={{ marginLeft: 20 }}
+        />
+      </Stack>
+    </Stack>
   );
 };
 
 export default HeaderMessageItem;
 
 const styles = StyleSheet.create({
-  container: { paddingVertical: 10, paddingHorizontal: 15 },
+  container: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    backgroundColor: "white",
+    zIndex: 1000,
+  },
   name: {
-    fontSize: 15,
+    fontSize: 16,
+    fontWeight: "600",
+    marginRight: 5,
   },
   username: {
-    color: theme.lightColors.grey0,
+    color: grey0,
+    fontSize: 13,
   },
 });

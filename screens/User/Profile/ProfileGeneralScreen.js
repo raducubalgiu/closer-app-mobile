@@ -88,7 +88,15 @@ const ProfileGeneralScreen = ({ route }) => {
             iconType="feather"
             iconName="message-circle"
             onPress={() =>
-              navigation.navigate("MessageItem", { name, username, avatar })
+              navigation.navigate("MessageItem", {
+                userId,
+                username,
+                avatar,
+                name,
+                checkmark,
+                followersCount: userDetails?.followersCount,
+                followingsCount: userDetails?.followingsCount,
+              })
             }
           />
           <IconButton

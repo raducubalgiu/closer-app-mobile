@@ -5,51 +5,29 @@ import {
   SafeAreaView,
   View,
 } from "react-native";
-import React, { useState, useCallback, useEffect, useRef } from "react";
+import React, { useState, useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
-import axios from "axios";
-import { io } from "socket.io-client";
-import { useAuth } from "../hooks/auth";
 import { MessageItem } from "../components/customized";
-import {
-  SearchBarInput,
-  Header,
-  SwipableItem,
-  Spinner,
-  IconButtonEdit,
-} from "../components/core";
+import { SearchBarInput, Header, IconButtonEdit } from "../components/core";
 import { useTranslation } from "react-i18next";
 
+const DUMMY_MESSAGES = [
+  {
+    _id: "1",
+    name: "Raducu Balgiu",
+    username: "raducubalgiu",
+    avatar: [],
+    checkmark: true,
+    message: "Hey dude, can i take your time to respond to my question?",
+    date: "23 ian",
+  },
+];
+
 const MessagesScreen = () => {
-  const socket = useRef();
-  const { user } = useAuth();
   const [refreshing, setRefreshing] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
   const navigation = useNavigation();
   const { t } = useTranslation();
-
-  useEffect(() => {
-    if (user) {
-      socket.current = io("http://localhost:8000");
-      socket.current.emit("add-user", user?._id);
-    }
-  }, [user]);
-
-  useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`${process.env.BASE_ENDPOINT}/users`)
-      .then((res) => {
-        setUsers(res.data.users);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
-  }, []);
 
   const updateSearch = (text) => {
     setSearch(text);
@@ -66,6 +44,35 @@ const MessagesScreen = () => {
     });
   }, []);
 
+  const renderMessages = useCallback(({ item }) => (
+    <MessageItem
+      onPress={() =>
+        navigation.navigate("MessageItem", {
+          userId: item._id,
+          name: item.name,
+          username: item.username,
+          avatar: item.avatar,
+          checkmark: item.checkmark,
+        })
+      }
+      avatar={item.avatar}
+      name={item.name}
+      checkmark={item.checkmark}
+      message={item.message}
+      date={item.date}
+    />
+  ));
+  const keyExtractor = useCallback((item) => item?._id, []);
+
+  const header = (
+    <SearchBarInput
+      showCancel={false}
+      placeholder={t("search")}
+      value={search}
+      updateValue={updateSearch}
+    />
+  );
+
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.container}>
@@ -74,26 +81,16 @@ const MessagesScreen = () => {
           actionBtn={<IconButtonEdit onPress={() => {}} />}
           hideBtnLeft={true}
         />
-        {loading && <Spinner />}
-        {/* {!loading && (
-          <FlatList
-            refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }
-            ListHeaderComponent={
-              <SearchBarInput
-                showCancel={false}
-                placeholder={t("search")}
-                value={search}
-                updateValue={updateSearch}
-              />
-            }
-            showsVerticalScrollIndicator={false}
-            data={users}
-            keyExtractor={(item) => item?._id}
-            renderItem={renderMessages}
-          />
-        )} */}
+        <FlatList
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          ListHeaderComponent={header}
+          showsVerticalScrollIndicator={false}
+          data={DUMMY_MESSAGES}
+          keyExtractor={keyExtractor}
+          renderItem={renderMessages}
+        />
       </View>
     </SafeAreaView>
   );

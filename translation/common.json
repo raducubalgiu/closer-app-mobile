@@ -275,5 +275,7 @@
   "recent": "Recente",
   "bookable": "Rezervabile",
   "whatServiceYouLookingFor": "Ce serviciu cauţi",
-  "locations": "locaţii"
+  "locations": "locaţii",
+  "send": "Trimite",
+  "sendMessage": "Trimite mesaj"
 }

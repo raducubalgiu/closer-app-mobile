@@ -9,12 +9,19 @@ import { useGetPaginate } from "../../../../hooks";
 export const FollowingsTab = ({ userId }) => {
   const { t } = useTranslation();
 
-  const { data, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
-    useGetPaginate({
-      model: "followings",
-      uri: `/users/${userId}/followings`,
-      limit: "20",
-    });
+  const {
+    data,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isFetching,
+    refetch,
+  } = useGetPaginate({
+    model: "followings",
+    uri: `/users/${userId}/followings`,
+    limit: "20",
+  });
 
   const renderPerson = useCallback(({ item }) => {
     const { avatar, username, name, _id, checkmark } = item?.followeeId || {};
@@ -51,21 +58,26 @@ export const FollowingsTab = ({ userId }) => {
   };
   const { pages } = data || {};
 
+  console.log("FOLLOWING PAGES LENGTH!!!", pages?.length);
+
   return (
-    <FlatList
-      ListHeaderComponent={
-        !isLoading &&
-        !isFetchingNextPage &&
-        pages[0]?.results?.length === 0 &&
-        noFoundMessage
-      }
-      contentContainerStyle={{ padding: 15 }}
-      data={pages?.map((page) => page.results).flat()}
-      keyExtractor={keyExtractor}
-      renderItem={renderPerson}
-      ListFooterComponent={showSpinner}
-      onEndReached={loadMore}
-      onEndReachedThreshold={0.3}
-    />
+    <>
+      {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
+      <FlatList
+        ListHeaderComponent={
+          !isLoading &&
+          !isFetchingNextPage &&
+          pages[0]?.results?.length === 0 &&
+          noFoundMessage
+        }
+        contentContainerStyle={{ padding: 15 }}
+        data={pages?.map((page) => page.results).flat()}
+        keyExtractor={keyExtractor}
+        renderItem={renderPerson}
+        ListFooterComponent={showSpinner}
+        onEndReached={loadMore}
+        onEndReachedThreshold={0.3}
+      />
+    </>
   );
 };

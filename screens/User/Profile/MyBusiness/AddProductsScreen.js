@@ -4,14 +4,14 @@ import {
   ScrollView,
   KeyboardAvoidingView,
 } from "react-native";
-import { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { useAuth, useHttpGet, useHttpPost, usePost } from "../../../../hooks";
+import { useAuth, useGet, usePost } from "../../../../hooks";
 import { required, maxField, minField } from "../../../../constants/validation";
 import { MainButton, FormInput, Stack } from "../../../../components/core";
-import { Header, Feedback, FormInputSelect } from "../../../../components/core";
+import { FormInputSelect } from "../../../../components/core";
+import { useHeaderHeight } from "@react-navigation/elements";
 
 const defaultValues = {
   name: "",
@@ -23,23 +23,23 @@ const defaultValues = {
 
 const AddProductsScreen = () => {
   const { user } = useAuth();
-  const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const navigation = useNavigation();
   const { t } = useTranslation();
   const methods = useForm({ defaultValues: { ...defaultValues, service: "" } });
   const { handleSubmit, watch } = methods;
   const selectedService = watch("service");
   const isRequired = required(t);
+  const headerHeight = useHeaderHeight();
 
-  const { data: services, loading } = useHttpGet(
-    `/locations/${user?.location}/services`
-  );
+  const { data: services, isLoading: loading } = useGet({
+    model: "services",
+    uri: `/locations/${user?.location}/services`,
+  });
 
-  const { data: filters } = useHttpGet(
-    `/services/${selectedService?._id}/filters`
-  );
-
-  const filter = filters[0];
+  const { data: filters } = useGet({
+    model: "filters",
+    uri: `/services/${selectedService?._id}/filters`,
+  });
 
   const goBack = (data) =>
     navigation.navigate({
@@ -63,11 +63,10 @@ const AddProductsScreen = () => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Header title={t("addProduct")} divider />
-      <Feedback feedback={feedback} setFeedback={setFeedback} />
       {!loading && (
         <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          behavior={Platform.OS === "ios" ? "position" : "height"}
+          keyboardVerticalOffset={headerHeight}
         >
           <ScrollView showsVerticalScrollIndicator={true}>
             <Stack align="start" sx={{ margin: 15 }}>
@@ -79,12 +78,12 @@ const AddProductsScreen = () => {
                   items={services}
                   rules={{ ...isRequired }}
                 />
-                {filter?.options && (
+                {filters && filters[0]?.options && (
                   <FormInputSelect
-                    label={filter.name}
+                    label={filters[0].name}
                     name="option"
-                    placeholder={filter.name}
-                    items={filter.options}
+                    placeholder={filters[0].name}
+                    items={filters[0].options}
                     rules={{ ...isRequired }}
                   />
                 )}

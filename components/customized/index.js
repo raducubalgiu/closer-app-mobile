@@ -4,6 +4,7 @@ export { SheetHeader } from "./Layout/Headers/SheetHeader";
 export { HeaderProfile } from "./Layout/Headers/HeaderProfile";
 export { HeaderProfileGeneral } from "./Layout/Headers/HeaderProfileGeneral";
 export { Footer } from "./Layout/Footers/Footer";
+export { FooterMessageItem } from "./Layout/Footers/FooterMessageItem";
 
 export { ProfileOverview } from "./ProfileOverview/ProfileOverview";
 

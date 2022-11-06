@@ -1,28 +1,34 @@
 import {
   SafeAreaView,
   StyleSheet,
-  Text,
   FlatList,
-  TextInput,
   KeyboardAvoidingView,
+  View,
+  TouchableWithoutFeedback,
   Keyboard,
+  Text,
+  TextInput,
+  Button,
+  ScrollView,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import HeaderMessageItem from "../components/customized/Layout/Headers/HeaderMessageItem";
 import { useAuth } from "../hooks/auth";
 import axios from "axios";
-import { Stack, Button } from "../components/core";
-import theme from "../assets/styles/theme";
 import MessReceivedItem from "../components/customized/ListItems/MessReceivedItem";
 import MessSentItem from "../components/customized/ListItems/MessSentItem";
-import { Icon } from "@rneui/base";
+import { usePost } from "../hooks";
+import { FooterMessageItem } from "../components/customized";
+import { CustomAvatar, Header, Stack } from "../components/core";
+import { Divider } from "@rneui/themed";
+import theme from "../assets/styles/theme";
 
-const MessageItemScreen = (props) => {
+const MessageItemScreen = ({ route }) => {
   const [messages, setMessages] = useState([]);
-  const [arrivalMessage, setArrivalMessage] = useState(null);
   const [message, setMessage] = useState("");
   const { user } = useAuth();
-  const { userId, name, username, avatar, socket } = props.route.params;
+  const { userId, name, username, avatar, checkmark } = route.params;
+  const { followersCount, followingsCount } = route.params;
 
   useEffect(() => {
     if (user) {
@@ -42,83 +48,102 @@ const MessageItemScreen = (props) => {
     }
   }, [user, userId]);
 
-  const handleSendMessage = () => {
-    axios
-      .post(
-        `${process.env.BASE_ENDPOINT}/messages/add-message`,
-        {
-          from: user?._id,
-          to: userId,
-          message,
-        },
-        {
-          headers: { Authorization: `Bearer ${user?.token}` },
+  const isSenderSame = (prev, current) => {
+    return prev?.fromSelf === current?.fromSelf;
+  };
+
+  const renderMessage = useCallback(
+    ({ item, index }) => {
+      if (!item.fromSelf) {
+        while (isSenderSame(item, messages[index - 1])) {
+          return (
+            <MessReceivedItem
+              avatar={avatar}
+              item={item}
+              displayAvatar={false}
+            />
+          );
         }
-      )
-      .then(() => {
-        Keyboard.dismiss();
-        socket.current.emit("send-msg", {
-          to: userId,
-          from: user?._id,
-          message,
-        });
-        setMessages((messages) => messages.concat({ fromSelf: true, message }));
-        setMessage("");
-      })
-      .catch((err) => console.log(err));
-  };
+        return (
+          <MessReceivedItem avatar={avatar} item={item} displayAvatar={true} />
+        );
+      }
 
-  useEffect(() => {
-    if (socket.current) {
-      socket.current.on("msg-receive", (msg) => {
-        setArrivalMessage({ fromSelf: false, message: msg });
-      });
-    }
-  }, []);
+      return <MessSentItem item={item} />;
+    },
+    [isSenderSame]
+  );
 
-  useEffect(() => {
-    arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
-  }, [arrivalMessage]);
+  const keyExtractor = useCallback((item) => item._id, []);
 
-  useEffect(() => {}, []);
+  const { mutate: sendMessage } = usePost({
+    uri: `/messages/add-message`,
+    onSuccess: (res) => {
+      setMessages((messages) =>
+        messages.concat({ ...res.data, fromSelf: true })
+      );
+    },
+  });
 
-  const renderItem = ({ item }) => {
-    if (item.fromSelf) {
-      return <MessSentItem message={item?.message} />;
-    } else {
-      return <MessReceivedItem avatar={avatar} message={item?.message} />;
-    }
-  };
+  const header = (
+    <Stack sx={{ marginVertical: 40 }}>
+      <CustomAvatar avatar={avatar} size={100} />
+      <Text
+        style={{
+          fontWeight: "600",
+          fontSize: 18,
+          marginTop: 10,
+          marginBottom: 2.5,
+        }}
+      >
+        {name}
+      </Text>
+      <Text style={{ color: theme.lightColors.grey0 }}>@{username}</Text>
+      <Stack direction="row">
+        <Text style={{ color: theme.lightColors.grey0, fontSize: 13 }}>
+          {followingsCount} de urmariri
+        </Text>
+        <Text> - </Text>
+        <Text style={{ color: theme.lightColors.grey0, fontSize: 13 }}>
+          {followersCount} de urmaritori
+        </Text>
+      </Stack>
+    </Stack>
+  );
 
   return (
     <SafeAreaView style={styles.screen}>
-      <HeaderMessageItem name={name} username={username} avatar={avatar} />
-      <KeyboardAvoidingView
-        style={{ justifyContent: "space-between", flex: 1 }}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-      >
+      <HeaderMessageItem
+        name={name}
+        username={username}
+        avatar={avatar}
+        checkmark={checkmark}
+      />
+      <Divider color="#ddd" />
+      <KeyboardAvoidingView behavior="padding" style={styles.screen}>
         <FlatList
-          contentContainerStyle={{ margin: 15 }}
-          //keyExtractor={() => uuidv4()}
+          ListHeaderComponent={header}
+          initialScrollIndex={messages.length - 1}
+          getItemLayout={(data, index) => {
+            return { length: 100, offset: 100 * index, index };
+          }}
           data={messages}
-          renderItem={renderItem}
+          renderItem={renderMessage}
+          keyExtractor={keyExtractor}
+          contentContainerStyle={{ paddingHorizontal: 15, paddingBottom: 20 }}
         />
-        <Stack direction="row" sx={styles.inputContainer}>
-          <Stack direction="row" justify="start" sx={{ flex: 1 }}>
-            <Button onPress={() => {}}>
-              <Icon name="camera" type="feather" />
-            </Button>
-            <TextInput
-              onChangeText={(text) => setMessage(text)}
-              value={message}
-              style={styles.input}
-              placeholder="Trimite mesaj"
-            />
-          </Stack>
-          <Button onPress={handleSendMessage}>
-            <Text style={styles.sendBtnText}>Trimite</Text>
-          </Button>
-        </Stack>
+        <FooterMessageItem
+          message={message}
+          onSendMessage={() => {
+            setMessage("");
+            sendMessage({
+              message: { text: message },
+              from: user?._id,
+              to: userId,
+            });
+          }}
+          onChangeText={(text) => setMessage(text)}
+        />
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -130,18 +155,5 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: "white",
-  },
-  inputContainer: {
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 25,
-    marginHorizontal: 10,
-    marginBottom: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 12.5,
-  },
-  input: { flex: 1, marginLeft: 10 },
-  sendBtnText: {
-    color: theme.lightColors.primary,
   },
 });
