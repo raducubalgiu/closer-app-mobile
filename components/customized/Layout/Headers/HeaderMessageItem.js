@@ -1,11 +1,11 @@
 import { StyleSheet, Text } from "react-native";
-import { Icon, Divider } from "@rneui/themed";
+import { Icon } from "@rneui/themed";
 import theme from "../../../../assets/styles/theme";
 import { Stack, CustomAvatar, IconBackButton, Checkmark } from "../../../core";
 
 const { black, grey0 } = theme.lightColors;
 
-const HeaderMessageItem = ({ avatar, name, username, checkmark }) => {
+export const HeaderMessageItem = ({ avatar, name, username, checkmark }) => {
   return (
     <Stack direction="row" sx={styles.container}>
       <Stack direction="row">
@@ -34,8 +34,6 @@ const HeaderMessageItem = ({ avatar, name, username, checkmark }) => {
     </Stack>
   );
 };
-
-export default HeaderMessageItem;
 
 const styles = StyleSheet.create({
   container: {

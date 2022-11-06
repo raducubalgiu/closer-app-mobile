@@ -8,7 +8,7 @@ import { useAuth, usePatch } from "../../../hooks";
 const width = Dimensions.get("window").width;
 const { black, error } = theme.lightColors;
 
-const MessReceivedItem = ({ avatar, item, displayAvatar }) => {
+export const MessReceivedItem = ({ avatar, item, displayAvatar }) => {
   const { message, _id, liked } = item;
   const [isLiked, setIsLiked] = useState(liked);
   const { user } = useAuth();
@@ -48,8 +48,6 @@ const MessReceivedItem = ({ avatar, item, displayAvatar }) => {
     </Stack>
   );
 };
-
-export default MessReceivedItem;
 
 const styles = StyleSheet.create({
   message: {

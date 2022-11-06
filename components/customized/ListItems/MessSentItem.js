@@ -7,7 +7,7 @@ import { Icon } from "@rneui/themed";
 const width = Dimensions.get("window").width;
 const { black, error } = theme.lightColors;
 
-const MessSentItem = ({ item }) => {
+export const MessSentItem = ({ item }) => {
   const { message, liked } = item;
 
   return (
@@ -27,8 +27,6 @@ const MessSentItem = ({ item }) => {
     </Stack>
   );
 };
-
-export default MessSentItem;
 
 const styles = StyleSheet.create({
   message: {

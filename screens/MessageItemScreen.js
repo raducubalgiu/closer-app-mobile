@@ -4,48 +4,38 @@ import {
   FlatList,
   KeyboardAvoidingView,
   View,
-  TouchableWithoutFeedback,
-  Keyboard,
-  Text,
-  TextInput,
-  Button,
-  ScrollView,
+  Dimensions,
 } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
-import HeaderMessageItem from "../components/customized/Layout/Headers/HeaderMessageItem";
-import { useAuth } from "../hooks/auth";
-import axios from "axios";
-import MessReceivedItem from "../components/customized/ListItems/MessReceivedItem";
-import MessSentItem from "../components/customized/ListItems/MessSentItem";
-import { usePost } from "../hooks";
-import { FooterMessageItem } from "../components/customized";
-import { CustomAvatar, Header, Stack } from "../components/core";
+import { usePost, useAuth } from "../hooks";
+import {
+  FooterMessageItem,
+  CardMessageUser,
+  MessReceivedItem,
+  MessSentItem,
+  HeaderMessageItem,
+} from "../components/customized";
 import { Divider } from "@rneui/themed";
-import theme from "../assets/styles/theme";
+
+const { height } = Dimensions.get("window");
 
 const MessageItemScreen = ({ route }) => {
+  const { user } = useAuth();
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
-  const { user } = useAuth();
   const { userId, name, username, avatar, checkmark } = route.params;
   const { followersCount, followingsCount } = route.params;
 
+  const { mutate, isLoading } = usePost({
+    uri: `/messages/get-messages`,
+    onSuccess: (res) => setMessages(res.data.projectMessages),
+  });
+
   useEffect(() => {
-    if (user) {
-      axios
-        .post(
-          `${process.env.BASE_ENDPOINT}/messages/get-messages`,
-          {
-            from: user?._id,
-            to: userId,
-          },
-          {
-            headers: { Authorization: `Bearer ${user?.token}` },
-          }
-        )
-        .then((res) => setMessages(res.data.projectMessages))
-        .catch((err) => console.log(err));
-    }
+    mutate({
+      from: user?._id,
+      to: userId,
+    });
   }, [user, userId]);
 
   const isSenderSame = (prev, current) => {
@@ -73,8 +63,10 @@ const MessageItemScreen = ({ route }) => {
     },
     [isSenderSame]
   );
-
   const keyExtractor = useCallback((item) => item._id, []);
+  const getItemLayout = useCallback((messages, index) => {
+    return { length: 100, offset: 100 * index, index };
+  }, []);
 
   const { mutate: sendMessage } = usePost({
     uri: `/messages/add-message`,
@@ -85,67 +77,58 @@ const MessageItemScreen = ({ route }) => {
     },
   });
 
+  const onSendMessage = () => {
+    setMessage("");
+    sendMessage({
+      message: { text: message },
+      from: user?._id,
+      to: userId,
+    });
+  };
+
   const header = (
-    <Stack sx={{ marginVertical: 40 }}>
-      <CustomAvatar avatar={avatar} size={100} />
-      <Text
-        style={{
-          fontWeight: "600",
-          fontSize: 18,
-          marginTop: 10,
-          marginBottom: 2.5,
-        }}
-      >
-        {name}
-      </Text>
-      <Text style={{ color: theme.lightColors.grey0 }}>@{username}</Text>
-      <Stack direction="row">
-        <Text style={{ color: theme.lightColors.grey0, fontSize: 13 }}>
-          {followingsCount} de urmariri
-        </Text>
-        <Text> - </Text>
-        <Text style={{ color: theme.lightColors.grey0, fontSize: 13 }}>
-          {followersCount} de urmaritori
-        </Text>
-      </Stack>
-    </Stack>
+    <CardMessageUser
+      name={name}
+      username={username}
+      avatar={avatar}
+      followersCount={followersCount}
+      followingsCount={followingsCount}
+    />
   );
 
   return (
-    <SafeAreaView style={styles.screen}>
-      <HeaderMessageItem
-        name={name}
-        username={username}
-        avatar={avatar}
-        checkmark={checkmark}
-      />
-      <Divider color="#ddd" />
-      <KeyboardAvoidingView behavior="padding" style={styles.screen}>
-        <FlatList
-          ListHeaderComponent={header}
-          initialScrollIndex={messages.length - 1}
-          getItemLayout={(data, index) => {
-            return { length: 100, offset: 100 * index, index };
-          }}
-          data={messages}
-          renderItem={renderMessage}
-          keyExtractor={keyExtractor}
-          contentContainerStyle={{ paddingHorizontal: 15, paddingBottom: 20 }}
+    <>
+      <View style={styles.statusBar}></View>
+      <SafeAreaView style={styles.screen}>
+        <HeaderMessageItem
+          name={name}
+          username={username}
+          avatar={avatar}
+          checkmark={checkmark}
         />
-        <FooterMessageItem
-          message={message}
-          onSendMessage={() => {
-            setMessage("");
-            sendMessage({
-              message: { text: message },
-              from: user?._id,
-              to: userId,
-            });
-          }}
-          onChangeText={(text) => setMessage(text)}
-        />
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+        <Divider color="#ddd" />
+        <KeyboardAvoidingView
+          behavior="position"
+          style={styles.screen}
+          keyboardVerticalOffset={50}
+        >
+          <FlatList
+            ListHeaderComponent={!isLoading && header}
+            initialScrollIndex={messages.length - 1}
+            getItemLayout={getItemLayout}
+            data={messages}
+            renderItem={renderMessage}
+            keyExtractor={keyExtractor}
+            contentContainerStyle={styles.flatList}
+          />
+          <FooterMessageItem
+            message={message}
+            onSendMessage={onSendMessage}
+            onChangeText={(text) => setMessage(text)}
+          />
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </>
   );
 };
 
@@ -155,5 +138,17 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: "white",
+    paddingBottom: 50,
+  },
+  statusBar: {
+    backgroundColor: "white",
+    alignItems: "center",
+    justifyContent: "center",
+    height: 50,
+    zIndex: 1000,
+  },
+  flatList: {
+    padding: 15,
+    minHeight: height - 200,
   },
 });

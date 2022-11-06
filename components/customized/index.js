@@ -3,6 +3,7 @@ export { AutocompleteGoogle } from "./Forms/AutocompleteGoogle";
 export { SheetHeader } from "./Layout/Headers/SheetHeader";
 export { HeaderProfile } from "./Layout/Headers/HeaderProfile";
 export { HeaderProfileGeneral } from "./Layout/Headers/HeaderProfileGeneral";
+export { HeaderMessageItem } from "./Layout/Headers/HeaderMessageItem";
 export { Footer } from "./Layout/Footers/Footer";
 export { FooterMessageItem } from "./Layout/Footers/FooterMessageItem";
 
@@ -61,6 +62,7 @@ export { CardPostImage } from "./Cards/CardPostImage";
 export { CardScheduleOverview } from "./Cards/CardScheduleOverview";
 export { CardHashtagOverview } from "./Cards/CardHashtagOverview";
 export { CardServiceOverview } from "./Cards/CardServiceOverview";
+export { CardMessageUser } from "./Cards/CardMessageUser";
 
 export { HeaderServices } from "../customized/Layout/Headers/HeaderServices";
 export { HeaderEdit } from "../customized/Layout/Headers/HeaderEdit";
@@ -73,6 +75,8 @@ export { CommentListItem } from "../customized/ListItems/CommentListItem";
 export { RelatedCommentsList } from "../customized/ListItems/RelatedCommentsList";
 export { RecentSearchListItem } from "../customized/ListItems/RecentSearchListItem";
 export { ServiceListItem } from "../customized/ListItems/ServiceListItem";
+export { MessReceivedItem } from "../customized/ListItems/MessReceivedItem";
+export { MessSentItem } from "../customized/ListItems/MessSentItem";
 
 export { ServicesList } from "./Lists/ServicesList";
 export { ProfileMenuList } from "./Lists/ProfileMenuList";
