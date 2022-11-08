@@ -6,8 +6,8 @@ import {
   View,
   Dimensions,
 } from "react-native";
-import React, { useCallback, useEffect, useState } from "react";
-import { usePost, useAuth } from "../hooks";
+import React, { useCallback, useState } from "react";
+import { usePost, useAuth, useGet } from "../hooks";
 import {
   FooterMessageItem,
   CardMessageUser,
@@ -16,6 +16,8 @@ import {
   HeaderMessageItem,
 } from "../components/customized";
 import { Divider } from "@rneui/themed";
+import moment from "moment";
+import { Spinner } from "../components/core";
 
 const { height } = Dimensions.get("window");
 
@@ -23,45 +25,52 @@ const MessageItemScreen = ({ route }) => {
   const { user } = useAuth();
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
-  const { userId, name, username, avatar, checkmark } = route.params;
-  const { followersCount, followingsCount } = route.params;
+  const { userId, name, username, avatar, checkmark } = route.params?.item;
+  const { followersCount, followingsCount } = route.params?.item;
+  const [page, setPage] = useState(1);
+  const [hasNext, setHasNext] = useState(false);
 
-  const { mutate, isLoading } = usePost({
-    uri: `/messages/get-messages`,
-    onSuccess: (res) => setMessages(res.data.projectMessages),
+  const onReceiveData = (res) => {
+    setMessages((messages) => messages.concat(res.data.messages));
+    setHasNext(res.data.hasNext);
+  };
+
+  const { isLoading, isRefetching, isFetching } = useGet({
+    model: "messages",
+    uri: `/users/${user?._id}/messages/receiver/${userId}?page=${page}&limit=25`,
+    onSuccess: onReceiveData,
   });
 
-  useEffect(() => {
-    mutate({
-      from: user?._id,
-      to: userId,
-    });
-  }, [user, userId]);
-
   const isSenderSame = (prev, current) => {
-    return prev?.fromSelf === current?.fromSelf;
+    return prev?.fromSelf !== current?.fromSelf;
+  };
+  const isDateSame = (prev, current) => {
+    return moment(prev?.createdAt).day() !== moment(current?.createdAt).day();
   };
 
   const renderMessage = useCallback(
     ({ item, index }) => {
       if (!item.fromSelf) {
-        while (isSenderSame(item, messages[index - 1])) {
-          return (
-            <MessReceivedItem
-              avatar={avatar}
-              item={item}
-              displayAvatar={false}
-            />
-          );
-        }
         return (
-          <MessReceivedItem avatar={avatar} item={item} displayAvatar={true} />
+          <MessReceivedItem
+            avatar={avatar}
+            item={item}
+            displayAvatar={isSenderSame(item, messages[index - 1])}
+            displayDate={isDateSame(item, messages[index + 1])}
+            date={moment(item.createdAt).format("LLL")}
+          />
+        );
+      } else {
+        return (
+          <MessSentItem
+            item={item}
+            displayDate={isDateSame(item, messages[index + 1])}
+            date={moment(item.createdAt).format("LLL")}
+          />
         );
       }
-
-      return <MessSentItem item={item} />;
     },
-    [isSenderSame]
+    [isSenderSame, messages]
   );
   const keyExtractor = useCallback((item) => item._id, []);
   const getItemLayout = useCallback((messages, index) => {
@@ -69,11 +78,9 @@ const MessageItemScreen = ({ route }) => {
   }, []);
 
   const { mutate: sendMessage } = usePost({
-    uri: `/messages/add-message`,
+    uri: `/users/${user?._id}/messages`,
     onSuccess: (res) => {
-      setMessages((messages) =>
-        messages.concat({ ...res.data, fromSelf: true })
-      );
+      setMessages((messages) => [{ ...res.data, fromSelf: true }, ...messages]);
     },
   });
 
@@ -81,20 +88,29 @@ const MessageItemScreen = ({ route }) => {
     setMessage("");
     sendMessage({
       message: { text: message },
-      from: user?._id,
-      to: userId,
+      receiver: userId,
     });
   };
 
   const header = (
-    <CardMessageUser
-      name={name}
-      username={username}
-      avatar={avatar}
-      followersCount={followersCount}
-      followingsCount={followingsCount}
-    />
+    <>
+      {(isLoading || isRefetching) && <Spinner sx={{ marginVertical: 25 }} />}
+      {!hasNext && !isLoading && !isFetching && (
+        <CardMessageUser
+          sx={!messages.length && { marginBottom: 400 }}
+          name={name}
+          username={username}
+          avatar={avatar}
+          followersCount={followersCount}
+          followingsCount={followingsCount}
+        />
+      )}
+    </>
   );
+
+  const onEndReach = useCallback(() => {
+    if (hasNext) setPage(page + 1);
+  }, [hasNext, page]);
 
   return (
     <>
@@ -113,13 +129,19 @@ const MessageItemScreen = ({ route }) => {
           keyboardVerticalOffset={50}
         >
           <FlatList
-            ListHeaderComponent={!isLoading && header}
-            initialScrollIndex={messages.length - 1}
+            inverted
+            ListFooterComponent={header}
+            initialScrollIndex={0}
             getItemLayout={getItemLayout}
             data={messages}
             renderItem={renderMessage}
             keyExtractor={keyExtractor}
             contentContainerStyle={styles.flatList}
+            onEndReached={onEndReach}
+            onEndReachedThreshold={0}
+            removeClippedSubviews={true}
+            maxToRenderPerBatch={15}
+            initialNumToRender={15}
           />
           <FooterMessageItem
             message={message}
