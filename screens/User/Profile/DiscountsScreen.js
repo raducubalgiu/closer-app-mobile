@@ -4,7 +4,7 @@ import { Header } from "../../../components/core";
 import { NoFoundMessage } from "../../../components/customized";
 import { useTranslation } from "react-i18next";
 
-const DiscountsScreen = () => {
+export const DiscountsScreen = () => {
   const { t } = useTranslation();
 
   return (
@@ -22,8 +22,6 @@ const DiscountsScreen = () => {
     </SafeAreaView>
   );
 };
-
-export default DiscountsScreen;
 
 const styles = StyleSheet.create({
   screen: {

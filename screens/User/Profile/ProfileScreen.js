@@ -25,7 +25,7 @@ import {
 
 const { height } = Dimensions.get("window");
 
-const ProfileScreen = () => {
+export const ProfileScreen = () => {
   const { user } = useAuth();
   const { _id, name, username, avatar, checkmark, description, role, hours } =
     user || {};
@@ -102,8 +102,6 @@ const ProfileScreen = () => {
     </SafeAreaView>
   );
 };
-
-export default ProfileScreen;
 
 const styles = StyleSheet.create({
   container: {

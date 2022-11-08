@@ -21,7 +21,7 @@ import { useNavigation } from "@react-navigation/native";
 
 const { black } = theme.lightColors;
 
-const ProfileGeneralScreen = ({ route }) => {
+export const ProfileGeneralScreen = ({ route }) => {
   const { user } = useAuth();
   const { userId, username, avatar, name, checkmark } = route.params;
   const { searchedUser, service, option } = route.params;
@@ -140,8 +140,6 @@ const ProfileGeneralScreen = ({ route }) => {
     </View>
   );
 };
-
-export default ProfileGeneralScreen;
 
 const styles = StyleSheet.create({
   container: {

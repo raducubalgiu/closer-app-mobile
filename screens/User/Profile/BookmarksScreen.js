@@ -13,7 +13,7 @@ import { Header } from "../../../components/core";
 import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../hooks";
 
-const BookmarksScreen = () => {
+export const BookmarksScreen = () => {
   const { user } = useAuth();
   const Tab = createMaterialTopTabNavigator();
   const { t } = useTranslation();
@@ -57,8 +57,6 @@ const BookmarksScreen = () => {
     </View>
   );
 };
-
-export default BookmarksScreen;
 
 const styles = StyleSheet.create({
   screen: {

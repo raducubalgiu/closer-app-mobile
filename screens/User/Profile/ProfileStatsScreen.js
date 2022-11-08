@@ -12,7 +12,7 @@ import {
 import theme from "../../../assets/styles/theme";
 import { Header } from "../../../components/core";
 
-const ProfileStatsScreen = ({ route }) => {
+export const ProfileStatsScreen = ({ route }) => {
   const { initialRoute, username, userId, role } = route.params;
   const { ratingsQuantity, followersCount, followingsCount } = route.params;
   const Tab = createMaterialTopTabNavigator();
@@ -55,8 +55,6 @@ const ProfileStatsScreen = ({ route }) => {
     </View>
   );
 };
-
-export default ProfileStatsScreen;
 
 const styles = StyleSheet.create({
   screen: {

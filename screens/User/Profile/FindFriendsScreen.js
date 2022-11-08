@@ -5,7 +5,7 @@ import theme from "../../../assets/styles/theme";
 import * as Contacts from "expo-contacts";
 import { Header, SearchBarInput } from "../../../components/core";
 
-const FindFriendsScreen = () => {
+export const FindFriendsScreen = () => {
   const [contacts, setContacts] = useState([]);
 
   useEffect(() => {
@@ -50,8 +50,6 @@ const FindFriendsScreen = () => {
     </>
   );
 };
-
-export default FindFriendsScreen;
 
 const styles = StyleSheet.create({
   screen: {

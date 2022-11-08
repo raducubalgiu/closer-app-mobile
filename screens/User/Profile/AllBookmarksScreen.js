@@ -13,7 +13,7 @@ import { CardPost } from "../../../components/customized";
 
 const { width, height } = Dimensions.get("window");
 
-const AllBookmarksScreens = () => {
+export const AllBookmarksScreen = () => {
   const { user } = useAuth();
   const { t } = useTranslation();
 
@@ -61,5 +61,3 @@ const styles = StyleSheet.create({
     height: 500,
   },
 });
-
-export default AllBookmarksScreens;
