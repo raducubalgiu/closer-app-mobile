@@ -19,7 +19,7 @@ import {
   MainButton,
 } from "../../../../components/core";
 
-const EditProductScreen = ({ route }) => {
+export const EditProductScreen = ({ route }) => {
   const { user } = useAuth();
   const { product } = route.params;
   const { option, duration, price, priceDiscount, service } = product;
@@ -134,8 +134,6 @@ const EditProductScreen = ({ route }) => {
     </SafeAreaView>
   );
 };
-
-export default EditProductScreen;
 
 const styles = StyleSheet.create({
   screen: {

@@ -14,7 +14,7 @@ import { useAuth } from "../../../../hooks/auth";
 import { TopTabProducts } from "../../../../components/customized/Tabs/TopTabContainer/TopTabProducts";
 import { useGet } from "../../../../hooks";
 
-const MyProductsScreen = () => {
+export const MyProductsScreen = () => {
   const { user } = useAuth();
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const navigation = useNavigation();
@@ -57,8 +57,6 @@ const MyProductsScreen = () => {
     </View>
   );
 };
-
-export default MyProductsScreen;
 
 const styles = StyleSheet.create({
   screen: {

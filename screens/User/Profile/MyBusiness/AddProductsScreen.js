@@ -21,7 +21,7 @@ const defaultValues = {
   duration: "",
 };
 
-const AddProductsScreen = () => {
+export const AddProductsScreen = () => {
   const { user } = useAuth();
   const navigation = useNavigation();
   const { t } = useTranslation();
@@ -140,8 +140,6 @@ const AddProductsScreen = () => {
     </SafeAreaView>
   );
 };
-
-export default AddProductsScreen;
 
 const styles = StyleSheet.create({
   screen: {

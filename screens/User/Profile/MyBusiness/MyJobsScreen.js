@@ -5,7 +5,7 @@ import { NoFoundMessage } from "../../../../components/customized";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 
-const MyJobsScreen = () => {
+export const MyJobsScreen = () => {
   const [jobs, setJobs] = useState([]);
   const { t } = useTranslation();
   const navigation = useNavigation();
@@ -26,8 +26,6 @@ const MyJobsScreen = () => {
     </SafeAreaView>
   );
 };
-
-export default MyJobsScreen;
 
 const styles = StyleSheet.create({
   screen: {

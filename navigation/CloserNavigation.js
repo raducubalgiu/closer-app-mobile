@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Icon } from "@rneui/themed";
 import { PortalProvider } from "@gorhom/portal";
 import "../i18next";
+import { useTranslation } from "react-i18next";
 import theme from "../assets/styles/theme";
 import { useAuth } from "../hooks";
 import {
@@ -16,6 +17,18 @@ import {
   EditProfessionScreen,
   EditUsernameScreen,
   EditWebsiteScreen,
+  MyBusinessScreen,
+  MyDashboardScreen,
+  MyProductsScreen,
+  MyCalendarScreen,
+  MyLocationScreen,
+  MyJobsScreen,
+  AddJobsScreen,
+  AddLocationScreen,
+  AddProductsScreen,
+  AddScheduleScreen,
+  AddServicesScreen,
+  EditProductScreen,
 } from "../screens";
 
 import HomeScreen from "../screens/HomeScreen";
@@ -40,26 +53,13 @@ import RegisterScreen from "../screens/User/Auth/RegisterScreen";
 import UsernameScreen from "../screens/User/Auth/UsernameScreen";
 import RegisterBusinessScreen from "../screens/User/Auth/RegisterBusinessScreen";
 import BookmarksScreen from "../screens/User/Profile/BookmarksScreen";
-import AddLocationScreen from "../screens/User/Profile/MyBusiness/AddLocationScreen";
-import AddServicesScreen from "../screens/User/Profile/MyBusiness/AddServicesScreen";
-import AddProductsScreen from "../screens/User/Profile/MyBusiness/AddProductsScreen";
 import LikesScreen from "../screens/LikesScreen";
 import CommentsScreen from "../screens/CommentsScreen";
-import MyBusinessScreen from "../screens/User/Profile/MyBusiness/MyBusinessScreen";
-import MyDashboardScreen from "../screens/User/Profile/MyBusiness/MyDashboardScreen";
-import MyCalendarScreen from "../screens/User/Profile/MyBusiness/MyCalendarScreen";
-import MyLocationScreen from "../screens/User/Profile/MyBusiness/MyLocationScreen";
-import MyProductsScreen from "../screens/User/Profile/MyBusiness/MyProductsScreen";
-import AddBusinessTypeScreen from "../screens/User/Profile/MyBusiness/AddBusinessTypeScreen";
 import ProfileStatsScreen from "../screens/User/Profile/ProfileStatsScreen";
 import NotificationsScreen from "../screens/NotificationsScreen";
-import EditProductScreen from "../screens/User/Profile/MyBusiness/EditProductScreen";
-import MyJobsScreen from "../screens/User/Profile/MyBusiness/MyJobsScreen";
-import AddJobsScreen from "../screens/User/Profile/MyBusiness/AddJobsScreen";
 import LocationsScreen from "../screens/LocationsScreen";
 import CalendarScreen from "../screens/CalendarScreen";
 import ScheduleScreen from "../screens/ScheduleScreen";
-import AddScheduleScreen from "../screens/User/Profile/MyBusiness/AddScheduleScreen";
 import ScheduleOverviewScreen from "../screens/ScheduleOverviewScreen";
 import ScheduleDetailsScreen from "../screens/ScheduleDetailsScreen";
 import MapScreen from "../screens/MapScreen";
@@ -70,7 +70,6 @@ import HashtagScreen from "../screens/HashtagScreen";
 import ServiceScreen from "../screens/ServiceScreen";
 import MessageNewScreen from "../screens/MessageNewScreen";
 import TestScreen from "../screens/TestScreen";
-import { useTranslation } from "react-i18next";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -203,10 +202,6 @@ const CloserNavigation = () => {
             <RootStack.Screen
               name="EditProduct"
               component={EditProductScreen}
-            />
-            <RootStack.Screen
-              name="AddBusinessType"
-              component={AddBusinessTypeScreen}
             />
             <RootStack.Screen
               name="EditProfile"

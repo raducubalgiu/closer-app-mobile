@@ -8,7 +8,6 @@ import {
   Header,
   Button,
   IconButtonDelete,
-  Spinner,
 } from "../../../../components/core";
 import theme from "../../../../assets/styles/theme";
 import { useAuth, usePatch, useGet } from "../../../../hooks";
@@ -18,7 +17,7 @@ import axios from "axios";
 
 const { primary } = theme.lightColors;
 
-const AddServicesScreen = () => {
+export const AddServicesScreen = () => {
   const { user } = useAuth();
   const [visible, setVisible] = useState(false);
   const [services, setServices] = useState([]);
@@ -121,8 +120,6 @@ const AddServicesScreen = () => {
     </SafeAreaView>
   );
 };
-
-export default AddServicesScreen;
 
 const styles = StyleSheet.create({
   screen: {

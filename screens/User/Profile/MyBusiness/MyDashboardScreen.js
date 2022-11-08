@@ -17,7 +17,7 @@ import { useTranslation } from "react-i18next";
 
 const { primary, black } = theme.lightColors;
 
-const MyDashboardScreen = () => {
+export const MyDashboardScreen = () => {
   const { t } = useTranslation();
   const [period, setPeriod] = useState({
     _id: "1",
@@ -128,8 +128,6 @@ const MyDashboardScreen = () => {
     </SafeAreaView>
   );
 };
-
-export default MyDashboardScreen;
 
 const styles = StyleSheet.create({
   screen: {

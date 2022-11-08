@@ -35,7 +35,7 @@ const defaultValues = {
   coordinates: null,
 };
 
-const AddLocationScreen = () => {
+export const AddLocationScreen = () => {
   const { user, setUser } = useAuth();
   const [location, setLocation] = useState(defaultValues);
   const [images, setImages] = useState([]);
@@ -189,8 +189,6 @@ const AddLocationScreen = () => {
     </SafeAreaView>
   );
 };
-
-export default AddLocationScreen;
 
 const styles = StyleSheet.create({
   screen: {

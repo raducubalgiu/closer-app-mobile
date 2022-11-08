@@ -19,7 +19,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 const { grey0, primary, black } = theme.lightColors;
 
-const AddScheduleScreen = () => {
+export const AddScheduleScreen = () => {
   const { user } = useAuth();
   const { t } = useTranslation();
   const { data: location } = useHttpGet(`/locations/${user?.location}`);
@@ -166,8 +166,6 @@ const AddScheduleScreen = () => {
     </SafeAreaView>
   );
 };
-
-export default AddScheduleScreen;
 
 const styles = StyleSheet.create({
   screen: {

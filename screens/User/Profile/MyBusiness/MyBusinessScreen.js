@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks";
 import { MAIN_ROLE, SECOND_ROLE, THIRD_ROLE } from "@env";
 
-const MyBusinessScreen = () => {
+export const MyBusinessScreen = () => {
   const { user } = useAuth();
   const navigation = useNavigation();
   const { t } = useTranslation();
@@ -108,8 +108,6 @@ const MyBusinessScreen = () => {
     </SafeAreaView>
   );
 };
-
-export default MyBusinessScreen;
 
 const styles = StyleSheet.create({
   screen: {

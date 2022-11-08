@@ -16,7 +16,7 @@ import { useAuth, useAgenda, useSheet } from "../../../../hooks";
 
 const { black } = theme.lightColors;
 
-const MyCalendarScreen = () => {
+export const MyCalendarScreen = () => {
   const { user } = useAuth();
   const { t } = useTranslation();
   const [schedules, setSchedules] = useState({});
@@ -112,8 +112,6 @@ const MyCalendarScreen = () => {
     </SafeAreaView>
   );
 };
-
-export default MyCalendarScreen;
 
 const styles = StyleSheet.create({
   screen: {
