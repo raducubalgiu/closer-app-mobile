@@ -1,30 +1,34 @@
 import { StyleSheet, Text, View, Dimensions } from "react-native";
-import theme from "../../../assets/styles/theme";
-import { Stack } from "../../core";
 import React from "react";
 import { Icon } from "@rneui/themed";
+import theme from "../../../assets/styles/theme";
+import { Stack } from "../../core";
+import { MessDateItem } from "./MessDateItem";
 
 const width = Dimensions.get("window").width;
 const { black, error } = theme.lightColors;
 
-export const MessSentItem = ({ item }) => {
+export const MessSentItem = ({ item, displayDate, date }) => {
   const { message, liked } = item;
 
   return (
-    <Stack
-      direction="row"
-      justify="end"
-      sx={liked ? { marginBottom: 25 } : { marginBottom: 5 }}
-    >
-      <View style={styles.message}>
-        <Text style={styles.messageText}>{message?.text}</Text>
-        {liked && (
-          <View style={styles.liked}>
-            <Icon name="heart" type="antdesign" color={error} size={12.5} />
-          </View>
-        )}
-      </View>
-    </Stack>
+    <>
+      {displayDate && <MessDateItem date={date} />}
+      <Stack
+        direction="row"
+        justify="end"
+        sx={liked ? { marginBottom: 25 } : { marginBottom: 5 }}
+      >
+        <View style={styles.message}>
+          <Text style={styles.messageText}>{message?.text}</Text>
+          {liked && (
+            <View style={styles.liked}>
+              <Icon name="heart" type="antdesign" color={error} size={12.5} />
+            </View>
+          )}
+        </View>
+      </Stack>
+    </>
   );
 };
 

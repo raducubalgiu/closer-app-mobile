@@ -1,15 +1,22 @@
 import { StyleSheet, Text, Dimensions } from "react-native";
-import { Stack, CustomAvatar, Button } from "../../core";
-import theme from "../../../assets/styles/theme";
 import React, { useState } from "react";
 import { Icon } from "@rneui/themed";
+import { Stack, CustomAvatar, Button } from "../../core";
+import theme from "../../../assets/styles/theme";
 import { useAuth, usePatch } from "../../../hooks";
+import { MessDateItem } from "./MessDateItem";
 
 const width = Dimensions.get("window").width;
 const { black, error } = theme.lightColors;
 
-export const MessReceivedItem = ({ avatar, item, displayAvatar }) => {
-  const { message, _id, liked } = item;
+export const MessReceivedItem = ({
+  avatar,
+  item,
+  displayAvatar,
+  displayDate,
+  date,
+}) => {
+  const { message, _id, liked, createdAt } = item;
   const [isLiked, setIsLiked] = useState(liked);
   const { user } = useAuth();
 
@@ -24,6 +31,7 @@ export const MessReceivedItem = ({ avatar, item, displayAvatar }) => {
 
   return (
     <Stack align="start" justify="start" sx={{ marginBottom: 5 }}>
+      {displayDate && <MessDateItem date={date} />}
       <Stack direction="row">
         <Stack direction="row" align="start" justify="start" sx={{ flex: 1 }}>
           {displayAvatar && (
