@@ -1,13 +1,13 @@
-import { Text, View, StyleSheet } from "react-native";
+import { Text, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Button, Stack, CustomAvatar, Checkmark, Spinner } from "../../core";
+import { Button, Stack, CustomAvatar, Spinner } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../hooks";
 import { useTranslation } from "react-i18next";
 import { LikeCommentButton } from "../Buttons/LikeCommentButton";
 import { RelatedCommentsList } from "./RelatedCommentsList";
 import { useState } from "react";
-import DisplayText from "../DisplayText/DisplayText";
+import { DisplayText } from "../DisplayText/DisplayText";
 
 const { black, grey0, grey1 } = theme.lightColors;
 
@@ -56,7 +56,7 @@ export const DisplayComment = ({
   return (
     <Stack align="start" direction="row" sx={styles.commentsCont}>
       <Button onPress={goToUserExtra}>
-        <CustomAvatar size={32.5} iconSize={15} avatar={avatar} />
+        <CustomAvatar size={30} iconSize={15} avatar={avatar} />
       </Button>
       <Stack direction="row" align="start" sx={{ marginLeft: 10, flex: 1 }}>
         <Stack align="start" sx={{ flex: 1 }}>
