@@ -18,7 +18,7 @@ import { useSheet, useAuth } from "../../../../hooks";
 
 const { grey0, black } = theme.lightColors;
 
-const EditProfileScreen = () => {
+export const EditProfileScreen = () => {
   const { user } = useAuth();
   const { name, username, profession, website, description } = user;
   const navigation = useNavigation();
@@ -102,8 +102,6 @@ const EditProfileScreen = () => {
     </>
   );
 };
-
-export default EditProfileScreen;
 
 const styles = StyleSheet.create({
   screen: {

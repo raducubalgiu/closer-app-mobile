@@ -6,7 +6,7 @@ import { HeaderEdit } from "../../../../components/customized";
 import { Feedback, InputEdit, Spinner } from "../../../../components/core";
 import { useHttpPatch, useAuth } from "../../../../hooks";
 
-const EditNameScreen = () => {
+export const EditNameScreen = () => {
   const { user, setUser } = useAuth();
   const [name, setName] = useState(user?.name);
   const navigation = useNavigation();
@@ -41,8 +41,6 @@ const EditNameScreen = () => {
     </SafeAreaView>
   );
 };
-
-export default EditNameScreen;
 
 const styles = StyleSheet.create({
   screen: {

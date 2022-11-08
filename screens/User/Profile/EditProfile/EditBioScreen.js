@@ -14,7 +14,7 @@ import { Feedback, Spinner } from "../../../../components/core";
 import theme from "../../../../assets/styles/theme";
 import { useHttpPatch, useAuth } from "../../../../hooks";
 
-const EditBioScreen = () => {
+export const EditBioScreen = () => {
   const { user, setUser } = useAuth();
   const [bio, setBio] = useState(user?.description);
   const navigation = useNavigation();
@@ -64,8 +64,6 @@ const EditBioScreen = () => {
     </SafeAreaView>
   );
 };
-
-export default EditBioScreen;
 
 const styles = StyleSheet.create({
   screen: {

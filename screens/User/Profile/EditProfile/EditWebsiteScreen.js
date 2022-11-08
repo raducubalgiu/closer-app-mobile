@@ -6,7 +6,7 @@ import { Feedback, InputEdit, Spinner } from "../../../../components/core";
 import { HeaderEdit } from "../../../../components/customized";
 import { useHttpPatch, useAuth } from "../../../../hooks";
 
-const EditWebsiteScreen = () => {
+export const EditWebsiteScreen = () => {
   const { user, setUser } = useAuth();
   const [website, setWebsite] = useState(user?.website);
   const navigation = useNavigation();
@@ -44,8 +44,6 @@ const EditWebsiteScreen = () => {
     </SafeAreaView>
   );
 };
-
-export default EditWebsiteScreen;
 
 const styles = StyleSheet.create({
   screen: {

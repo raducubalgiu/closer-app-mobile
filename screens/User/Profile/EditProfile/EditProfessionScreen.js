@@ -20,7 +20,7 @@ import { useAuth, useHttpGet, useHttpPatch } from "../../../../hooks";
 
 const { primary } = theme.lightColors;
 
-const EditProfessionScreen = () => {
+export const EditProfessionScreen = () => {
   const { user, setUser } = useAuth();
   const { role } = user;
   const [selected, setSelected] = useState(null);
@@ -98,8 +98,6 @@ const EditProfessionScreen = () => {
     </SafeAreaView>
   );
 };
-
-export default EditProfessionScreen;
 
 const styles = StyleSheet.create({
   screen: {

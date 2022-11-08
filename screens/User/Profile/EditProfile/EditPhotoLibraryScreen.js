@@ -4,7 +4,7 @@ import HeaderReusable from "../../../../components/customized/Layout/Headers/Hea
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../../assets/styles/theme";
 
-const EditPhotoLibraryScreen = () => {
+export const EditPhotoLibraryScreen = () => {
   const navigation = useNavigation();
 
   return (
@@ -25,8 +25,6 @@ const EditPhotoLibraryScreen = () => {
     </SafeAreaView>
   );
 };
-
-export default EditPhotoLibraryScreen;
 
 const styles = StyleSheet.create({
   screen: {

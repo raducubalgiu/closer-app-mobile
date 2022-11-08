@@ -5,19 +5,22 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Icon } from "@rneui/themed";
 import { PortalProvider } from "@gorhom/portal";
+import "../i18next";
 import theme from "../assets/styles/theme";
 import { useAuth } from "../hooks";
-import "../i18next";
+import {
+  EditProfileScreen,
+  EditBioScreen,
+  EditNameScreen,
+  EditPhotoLibraryScreen,
+  EditProfessionScreen,
+  EditUsernameScreen,
+  EditWebsiteScreen,
+} from "../screens";
 
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/User/Profile/ProfileScreen";
 import ProfileGeneralScreen from "../screens/User/Profile/ProfileGeneralScreen";
-import EditProfileScreen from "../screens/User/Profile/EditProfile/EditProfileScreen";
-import EditNameScreen from "../screens/User/Profile/EditProfile/EditNameScreen";
-import EditWebsiteScreen from "../screens/User/Profile/EditProfile/EditWebsiteScreen";
-import EditBioScreen from "../screens/User/Profile/EditProfile/EditBioScreen";
-import EditPhotoLibraryScreen from "../screens/User/Profile/EditProfile/EditPhotoLibraryScreen";
-import EditProfessionScreen from "../screens/User/Profile/EditProfile/EditProfessionScreen";
 import SettingsScreen from "../screens/User/Profile/SettingsProfileScreen";
 import SchedulesScreen from "../screens/SchedulesScreen";
 import DiscountsScreen from "../screens/User/Profile/DiscountScreen";
@@ -51,7 +54,6 @@ import AddBusinessTypeScreen from "../screens/User/Profile/MyBusiness/AddBusines
 import ProfileStatsScreen from "../screens/User/Profile/ProfileStatsScreen";
 import NotificationsScreen from "../screens/NotificationsScreen";
 import EditProductScreen from "../screens/User/Profile/MyBusiness/EditProductScreen";
-import EditUsernameScreen from "../screens/User/Profile/EditProfile/EditUsernameScreen";
 import MyJobsScreen from "../screens/User/Profile/MyBusiness/MyJobsScreen";
 import AddJobsScreen from "../screens/User/Profile/MyBusiness/AddJobsScreen";
 import LocationsScreen from "../screens/LocationsScreen";
