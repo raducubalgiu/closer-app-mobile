@@ -1,22 +1,39 @@
-import { FlatList, SafeAreaView, StyleSheet } from "react-native";
-import React, { useCallback } from "react";
+import {
+  FlatList,
+  SafeAreaView,
+  StyleSheet,
+  RefreshControl,
+} from "react-native";
+import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Header, Spinner } from "../components/core";
 import { NoFoundMessage, UserListItem } from "../components/customized";
 import { useAuth } from "../hooks";
 import { useGetPaginate } from "../hooks";
 
+const wait = (timeout) => {
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
+
 export const LikesScreen = ({ route }) => {
+  const [refreshing, setRefreshing] = useState(false);
   const { user } = useAuth();
   const { postId } = route.params;
   const { t } = useTranslation();
 
-  const { data, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
-    useGetPaginate({
-      model: "likes",
-      uri: `/posts/${postId}/get-likes`,
-      limit: "25",
-    });
+  const {
+    data,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isFetching,
+    refetch,
+  } = useGetPaginate({
+    model: "likes",
+    uri: `/posts/${postId}/get-likes`,
+    limit: "25",
+  });
 
   const renderPerson = useCallback(({ item }) => {
     const { _id, username, name, avatar, checkmark } = item?.user || {};
@@ -35,10 +52,6 @@ export const LikesScreen = ({ route }) => {
 
   const keyExtractor = useCallback((item) => item?._id, []);
 
-  const noFoundMessage = (
-    <NoFoundMessage title={t("likes")} description={t("noFoundLikes")} />
-  );
-
   const loadMore = () => {
     if (hasNextPage) {
       fetchNextPage();
@@ -55,17 +68,31 @@ export const LikesScreen = ({ route }) => {
 
   const { pages } = data || {};
 
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    wait(500).then(() => {
+      refetch();
+      setRefreshing(false);
+    });
+  }, []);
+
+  const noFoundMessage = !isLoading &&
+    !isFetchingNextPage &&
+    pages[0]?.results?.length === 0 && (
+      <NoFoundMessage title={t("likes")} description={t("noFoundLikes")} />
+    );
+
+  const refreshControl = (
+    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+  );
+
   return (
     <SafeAreaView style={styles.screen}>
       <Header title={t("likes")} divider={true} />
-      {!isLoading && !pages[0]?.results.length && noFoundLikes}
+      {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
       <FlatList
-        ListHeaderComponent={
-          !isLoading &&
-          !isFetchingNextPage &&
-          pages[0]?.results?.length === 0 &&
-          noFoundMessage
-        }
+        ListHeaderComponent={noFoundMessage}
+        refreshControl={refreshControl}
         contentContainerStyle={{ padding: 15 }}
         data={pages?.map((page) => page.results).flat()}
         keyExtractor={keyExtractor}

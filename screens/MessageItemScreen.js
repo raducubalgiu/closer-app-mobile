@@ -25,7 +25,7 @@ export const MessageItemScreen = ({ route }) => {
   const { user } = useAuth();
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
-  const { userId, name, username, avatar, checkmark } = route.params?.item;
+  const { _id, name, username, avatar, checkmark } = route.params?.item;
   const { followersCount, followingsCount } = route.params?.item;
   const [page, setPage] = useState(1);
   const [hasNext, setHasNext] = useState(false);
@@ -37,7 +37,7 @@ export const MessageItemScreen = ({ route }) => {
 
   const { isLoading, isRefetching, isFetching } = useGet({
     model: "messages",
-    uri: `/users/${user?._id}/messages/receiver/${userId}?page=${page}&limit=25`,
+    uri: `/users/${user?._id}/messages/receiver/${_id}?page=${page}&limit=25`,
     onSuccess: onReceiveData,
   });
 

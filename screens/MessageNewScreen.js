@@ -2,7 +2,7 @@ import { FlatList, SafeAreaView, StyleSheet, View } from "react-native";
 import { useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
-import { Header, SearchBarInput, Heading } from "../components/core";
+import { Header, SearchBarInput, Heading, Spinner } from "../components/core";
 import { useAuth, useGet } from "../hooks";
 import { UserListItemSimple } from "../components/customized";
 
@@ -52,15 +52,14 @@ export const MessageNewScreen = () => {
           onChangeText={updateSearch}
         />
       </View>
-      {(!isLoading || !isFetching) && (
-        <FlatList
-          ListHeaderComponent={<Heading title={t("following")} />}
-          data={data?.results}
-          renderItem={renderPerson}
-          keyExtractor={keyExtractor}
-          contentContainerStyle={{ paddingHorizontal: 15 }}
-        />
-      )}
+      {isLoading && isFetching && <Spinner />}
+      <FlatList
+        ListHeaderComponent={<Heading title={t("following")} />}
+        data={data?.results}
+        renderItem={renderPerson}
+        keyExtractor={keyExtractor}
+        contentContainerStyle={{ paddingHorizontal: 15 }}
+      />
     </View>
   );
 };

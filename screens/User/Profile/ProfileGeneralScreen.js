@@ -90,7 +90,7 @@ export const ProfileGeneralScreen = ({ route }) => {
             onPress={() =>
               navigation.navigate("MessageItem", {
                 item: {
-                  userId,
+                  _id: userId,
                   username,
                   avatar,
                   name,
