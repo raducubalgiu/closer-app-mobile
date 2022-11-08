@@ -21,7 +21,7 @@ import { useHttpGet } from "../hooks";
 
 const { black, grey0, success, error } = theme.lightColors;
 
-const ScheduleDetailsScreen = ({ route }) => {
+export const ScheduleDetailsScreen = ({ route }) => {
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const { scheduleId, location } = route.params;
   const { coordinates } = location;
@@ -162,8 +162,6 @@ const ScheduleDetailsScreen = ({ route }) => {
     </SafeAreaView>
   );
 };
-
-export default ScheduleDetailsScreen;
 
 const styles = StyleSheet.create({
   screen: {

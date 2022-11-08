@@ -17,7 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 
 const { error, black, grey0 } = theme.lightColors;
 
-const ScheduleCancelScreen = ({ route }) => {
+export const ScheduleCancelScreen = ({ route }) => {
   const { user } = useAuth();
   const { scheduleStart, scheduleId } = route.params;
   const [textarea, setTextarea] = useState(false);
@@ -137,8 +137,6 @@ const ScheduleCancelScreen = ({ route }) => {
     </SafeAreaView>
   );
 };
-
-export default ScheduleCancelScreen;
 
 const styles = StyleSheet.create({
   screen: {

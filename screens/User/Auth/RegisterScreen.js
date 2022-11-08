@@ -6,7 +6,7 @@ import { Feedback, Header } from "../../../components/core";
 import { LoginRegisterForm } from "../../../components/customized";
 import { useTranslation } from "react-i18next";
 
-const RegisterScreen = () => {
+export const RegisterScreen = () => {
   const navigation = useNavigation();
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const [loading, setLoading] = useState(false);
@@ -55,8 +55,6 @@ const RegisterScreen = () => {
     </SafeAreaView>
   );
 };
-
-export default RegisterScreen;
 
 const styles = StyleSheet.create({
   screen: {

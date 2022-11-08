@@ -7,7 +7,7 @@ import { useAuth } from "../../../hooks/auth";
 import InputCheck from "../../../components/core/Inputs/InputCheck";
 import { Feedback } from "../../../components/core";
 
-const UsernameScreen = ({ route }) => {
+export const UsernameScreen = ({ route }) => {
   const { idTokenResult, role } = route.params;
   const { displayName, photoURL } = idTokenResult;
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
@@ -63,8 +63,6 @@ const UsernameScreen = ({ route }) => {
     </SafeAreaView>
   );
 };
-
-export default UsernameScreen;
 
 const styles = StyleSheet.create({
   screen: {

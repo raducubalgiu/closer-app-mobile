@@ -7,7 +7,7 @@ import { LoginRegisterForm } from "../../../components/customized";
 import { MAIN_ROLE } from "@env";
 import { useTranslation } from "react-i18next";
 
-const RegisterBusinessScreen = () => {
+export const RegisterBusinessScreen = () => {
   const navigation = useNavigation();
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const [loading, setLoading] = useState(false);
@@ -58,8 +58,6 @@ const RegisterBusinessScreen = () => {
     </SafeAreaView>
   );
 };
-
-export default RegisterBusinessScreen;
 
 const styles = StyleSheet.create({
   screen: {

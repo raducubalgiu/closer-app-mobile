@@ -28,7 +28,7 @@ import { trimFunc } from "../utils";
 
 const { grey0, primary, black } = theme.lightColors;
 
-const SearchPostsScreen = () => {
+export const SearchPostsScreen = () => {
   const { user } = useAuth();
   const [search, setSearch] = useState("");
   const [results, setResults] = useState([]);
@@ -285,8 +285,6 @@ const SearchPostsScreen = () => {
     </SafeAreaView>
   );
 };
-
-export default SearchPostsScreen;
 
 const styles = StyleSheet.create({
   screen: {

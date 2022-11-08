@@ -16,7 +16,7 @@ import { Icon } from "@rneui/themed";
 
 const { grey0, black, primary } = theme.lightColors;
 
-const MapScreen = ({ route }) => {
+export const MapScreen = ({ route }) => {
   const { _id } = route.params.profession;
   const navigation = useNavigation();
 
@@ -149,8 +149,6 @@ const MapScreen = ({ route }) => {
     </>
   );
 };
-
-export default MapScreen;
 
 const styles = StyleSheet.create({
   btn: {

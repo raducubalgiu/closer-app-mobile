@@ -15,7 +15,7 @@ import {
 import { FiltersContainer, SheetHeader } from "../components/customized";
 import { FormProvider, useForm } from "react-hook-form";
 
-const FiltersDateScreen = ({ route }) => {
+export const FiltersDateScreen = ({ route }) => {
   const { service, period } = route.params;
   const { filters } = service;
   const navigation = useNavigation();
@@ -135,5 +135,3 @@ const FiltersDateScreen = ({ route }) => {
     </>
   );
 };
-
-export default FiltersDateScreen;

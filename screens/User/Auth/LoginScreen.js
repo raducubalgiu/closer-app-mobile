@@ -8,7 +8,7 @@ import { LoginRegisterForm } from "../../../components/customized";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 
-const LoginScreen = () => {
+export const LoginScreen = () => {
   const { setUser } = useAuth();
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const [loading, setLoading] = useState(false);
@@ -60,8 +60,6 @@ const LoginScreen = () => {
     </SafeAreaView>
   );
 };
-
-export default LoginScreen;
 
 const styles = StyleSheet.create({
   screen: {

@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 
 const { black, primary } = theme.lightColors;
 
-const FiltersServiceScreen = ({ route }) => {
+export const FiltersServiceScreen = ({ route }) => {
   const navigation = useNavigation();
   const { service, period } = route.params;
   const { filters } = service;
@@ -70,8 +70,6 @@ const FiltersServiceScreen = ({ route }) => {
     </FiltersContainer>
   );
 };
-
-export default FiltersServiceScreen;
 
 const styles = StyleSheet.create({
   screen: {

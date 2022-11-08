@@ -14,7 +14,7 @@ import { useAuth, useGet, usePost } from "../hooks";
 import { useNavigation } from "@react-navigation/native";
 import { useHeaderHeight } from "@react-navigation/elements";
 
-const CommentsScreen = ({ route }) => {
+export const CommentsScreen = ({ route }) => {
   const { user } = useAuth();
   const navigation = useNavigation();
   const { postId, description, avatar, username } = route.params;
@@ -103,8 +103,6 @@ const CommentsScreen = ({ route }) => {
     </SafeAreaView>
   );
 };
-
-export default CommentsScreen;
 
 const styles = StyleSheet.create({
   screen: {

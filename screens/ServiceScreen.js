@@ -10,7 +10,7 @@ import {
 } from "../components/customized";
 import { useTranslation } from "react-i18next";
 
-const ServiceScreen = ({ route }) => {
+export const ServiceScreen = ({ route }) => {
   const { service } = route.params;
   const { _id, name, postsCount } = service;
   const Tab = createMaterialTopTabNavigator();
@@ -57,8 +57,6 @@ const ServiceScreen = ({ route }) => {
     </SafeAreaView>
   );
 };
-
-export default ServiceScreen;
 
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: "white" },

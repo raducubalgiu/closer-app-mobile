@@ -8,7 +8,7 @@ import { Stack, Button, ListItem } from "../../../components/core";
 
 const { black, primary, grey0 } = theme.lightColors;
 
-const AuthScreen = () => {
+export const AuthScreen = () => {
   const navigation = useNavigation();
   const { t } = useTranslation();
 
@@ -73,8 +73,6 @@ const AuthScreen = () => {
     </SafeAreaView>
   );
 };
-
-export default AuthScreen;
 
 const styles = StyleSheet.create({
   screen: {

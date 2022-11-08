@@ -11,7 +11,7 @@ import {
   HashtagPostsBookableTab,
 } from "../components/customized";
 
-const HashtagScreen = ({ route }) => {
+export const HashtagScreen = ({ route }) => {
   const { name } = route.params;
   const { t } = useTranslation();
   const Tab = createMaterialTopTabNavigator();
@@ -61,8 +61,6 @@ const HashtagScreen = ({ route }) => {
     </SafeAreaView>
   );
 };
-
-export default HashtagScreen;
 
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: "white" },

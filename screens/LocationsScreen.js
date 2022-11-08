@@ -17,7 +17,7 @@ import theme from "../assets/styles/theme";
 
 const { black } = theme.lightColors;
 
-const LocationsScreen = ({ route }) => {
+export const LocationsScreen = ({ route }) => {
   const { service, option, period } = route.params;
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(10000);
@@ -113,8 +113,6 @@ const LocationsScreen = ({ route }) => {
     </SafeAreaView>
   );
 };
-
-export default LocationsScreen;
 
 const styles = StyleSheet.create({
   screen: {

@@ -21,7 +21,7 @@ import { Spinner } from "../components/core";
 
 const { height } = Dimensions.get("window");
 
-const MessageItemScreen = ({ route }) => {
+export const MessageItemScreen = ({ route }) => {
   const { user } = useAuth();
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
@@ -153,8 +153,6 @@ const MessageItemScreen = ({ route }) => {
     </>
   );
 };
-
-export default MessageItemScreen;
 
 const styles = StyleSheet.create({
   screen: {

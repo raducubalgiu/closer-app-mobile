@@ -6,7 +6,7 @@ import { NoFoundMessage, UserListItem } from "../components/customized";
 import { useAuth } from "../hooks";
 import { useGetPaginate } from "../hooks";
 
-const LikesScreen = ({ route }) => {
+export const LikesScreen = ({ route }) => {
   const { user } = useAuth();
   const { postId } = route.params;
   const { t } = useTranslation();
@@ -77,8 +77,6 @@ const LikesScreen = ({ route }) => {
     </SafeAreaView>
   );
 };
-
-export default LikesScreen;
 
 const styles = StyleSheet.create({
   screen: {

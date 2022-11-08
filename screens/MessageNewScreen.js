@@ -6,7 +6,7 @@ import { Header, SearchBarInput, Heading } from "../components/core";
 import { useAuth, useGet } from "../hooks";
 import { UserListItemSimple } from "../components/customized";
 
-const MessageNewScreen = () => {
+export const MessageNewScreen = () => {
   const { user } = useAuth();
   const { t } = useTranslation();
   const [search, setSearch] = useState("");
@@ -64,8 +64,6 @@ const MessageNewScreen = () => {
     </View>
   );
 };
-
-export default MessageNewScreen;
 
 const styles = StyleSheet.create({
   screen: {

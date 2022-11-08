@@ -59,7 +59,7 @@ const messages = [
   },
 ];
 
-const MessagesScreen = () => {
+export const MessagesScreen = () => {
   const { user } = useAuth();
   const [refreshing, setRefreshing] = useState(false);
   const [search, setSearch] = useState("");
@@ -167,8 +167,6 @@ const MessagesScreen = () => {
     </SafeAreaView>
   );
 };
-
-export default MessagesScreen;
 
 const styles = StyleSheet.create({
   screen: {

@@ -8,7 +8,7 @@ import moment from "moment";
 
 const { black, primary, grey0 } = theme.lightColors;
 
-const ScheduleOverviewScreen = ({ route }) => {
+export const ScheduleOverviewScreen = ({ route }) => {
   const { schedule } = route.params;
   const { service, scheduleStart } = schedule;
   const navigation = useNavigation();
@@ -40,8 +40,6 @@ const ScheduleOverviewScreen = ({ route }) => {
     </View>
   );
 };
-
-export default ScheduleOverviewScreen;
 
 const styles = StyleSheet.create({
   screen: {

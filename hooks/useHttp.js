@@ -225,8 +225,9 @@ export const useGet = ({ model, uri, onSuccess }) => {
 
   const response = useQuery(
     [model, uri],
-    async () => {
+    async ({ signal }) => {
       return await axios.get(`${BASE_ENDPOINT}${uri}`, {
+        signal,
         headers: { Authorization: `Bearer ${user.token}` },
       });
     },
@@ -259,17 +260,17 @@ export const useGetMutate = ({ uri, onSuccess }) => {
 export const useGetPaginate = ({ model, uri, limit }) => {
   const { user } = useAuth();
 
-  const fetchData = async (page, uri, limit) => {
+  const fetchData = async (page, uri, limit, signal) => {
     const { data } = await axios.get(
       `${process.env.BASE_ENDPOINT}${uri}?page=${page}&limit=${limit}`,
-      { headers: { Authorization: `Bearer ${user?.token}` } }
+      { signal, headers: { Authorization: `Bearer ${user?.token}` } }
     );
     return data;
   };
 
   const response = useInfiniteQuery(
     [model, uri, limit],
-    ({ pageParam = 1 }) => fetchData(pageParam, uri, limit),
+    ({ pageParam = 1, signal }) => fetchData(pageParam, uri, limit, signal),
     {
       getNextPageParam: (lastPage) => {
         if (lastPage.next !== null) {

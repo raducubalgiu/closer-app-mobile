@@ -10,7 +10,7 @@ import { useGet } from "../hooks";
 
 const { black } = theme.lightColors;
 
-const HomeScreen = () => {
+export const HomeScreen = () => {
   const { t } = useTranslation();
   const ref = useRef(null);
   const navigation = useNavigation();
@@ -101,5 +101,3 @@ const styles = StyleSheet.create({
     elevation: 11,
   },
 });
-
-export default HomeScreen;

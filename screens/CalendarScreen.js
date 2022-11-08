@@ -10,7 +10,7 @@ import moment from "moment";
 
 const { primary, black, grey0 } = theme.lightColors;
 
-const CalendarScreen = ({ route }) => {
+export const CalendarScreen = ({ route }) => {
   const { user } = useAuth();
   const { _minDate } = useDates();
   const { product, service, owner, employee, hours } = route.params || {};
@@ -108,8 +108,6 @@ const CalendarScreen = ({ route }) => {
     </SafeAreaView>
   );
 };
-
-export default CalendarScreen;
 
 const styles = StyleSheet.create({
   screen: {

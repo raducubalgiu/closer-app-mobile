@@ -4,7 +4,7 @@ import { Header, Stack } from "../components/core";
 import { Footer } from "../components/customized";
 import { useTranslation } from "react-i18next";
 
-const ScheduleScreen = () => {
+export const ScheduleScreen = () => {
   const { t } = useTranslation();
 
   return (
@@ -18,8 +18,6 @@ const ScheduleScreen = () => {
     </SafeAreaView>
   );
 };
-
-export default ScheduleScreen;
 
 const styles = StyleSheet.create({
   screen: {

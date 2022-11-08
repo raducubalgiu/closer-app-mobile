@@ -13,7 +13,7 @@ import { useTranslation } from "react-i18next";
 
 const { width, height } = Dimensions.get("window");
 
-const PostScreen = ({ route }) => {
+export const PostScreen = ({ route }) => {
   const { userId } = route.params;
   const { data: posts } = useGet({
     model: "posts",
@@ -51,8 +51,6 @@ const PostScreen = ({ route }) => {
     </View>
   );
 };
-
-export default PostScreen;
 
 const styles = StyleSheet.create({
   screen: {

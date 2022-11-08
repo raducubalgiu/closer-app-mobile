@@ -30,7 +30,7 @@ const wait = (timeout) => {
 
 const { grey0, black } = theme.lightColors;
 
-const FeedScreen = () => {
+export const FeedScreen = () => {
   const { user } = useAuth();
   const [posts, setPosts] = useState([]);
   const [postId, setPostId] = useState(null);
@@ -227,8 +227,6 @@ const FeedScreen = () => {
     </SafeAreaView>
   );
 };
-
-export default FeedScreen;
 
 const styles = StyleSheet.create({
   screen: { backgroundColor: "white", flex: 1 },

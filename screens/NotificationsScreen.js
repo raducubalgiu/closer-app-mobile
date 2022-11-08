@@ -5,7 +5,7 @@ import { Header } from "../components/core";
 import { useTranslation } from "react-i18next";
 import { Video, AVPlaybackStatus } from "expo-av";
 
-const NotificationsScreen = () => {
+export const NotificationsScreen = () => {
   const { t } = useTranslation();
   const video = React.useRef(null);
   const [status, setStatus] = React.useState({});
@@ -72,8 +72,6 @@ const NotificationsScreen = () => {
     </SafeAreaView>
   );
 };
-
-export default NotificationsScreen;
 
 const styles = StyleSheet.create({
   screen: {

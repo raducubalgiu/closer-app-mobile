@@ -16,7 +16,7 @@ import theme from "../assets/styles/theme";
 
 const { black } = theme.lightColors;
 
-const SchedulesScreen = ({ route }) => {
+export const SchedulesScreen = ({ route }) => {
   const { user } = useAuth();
   const { schedule } = route.params || {};
   const navigation = useNavigation();
@@ -97,8 +97,6 @@ const SchedulesScreen = ({ route }) => {
     </SafeAreaView>
   );
 };
-
-export default SchedulesScreen;
 
 const styles = StyleSheet.create({
   screen: {

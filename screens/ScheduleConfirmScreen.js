@@ -11,7 +11,7 @@ import { AddressFormat } from "../utils";
 
 const { black, grey0 } = theme.lightColors;
 
-const ScheduleConfirmScreen = ({ route }) => {
+export const ScheduleConfirmScreen = ({ route }) => {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
@@ -131,8 +131,6 @@ const ScheduleConfirmScreen = ({ route }) => {
     </SafeAreaView>
   );
 };
-
-export default ScheduleConfirmScreen;
 
 const styles = StyleSheet.create({
   screen: {

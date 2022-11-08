@@ -32,7 +32,7 @@ const SUGGESTED_SERVICES = [
 
 const { black, grey0 } = theme.lightColors;
 
-const SearchServicesScreen = ({ route }) => {
+export const SearchServicesScreen = ({ route }) => {
   const { user } = useAuth();
   const [search, setSearch] = useState("");
   const [services, setServices] = useState([]);
@@ -121,8 +121,6 @@ const SearchServicesScreen = ({ route }) => {
     </SafeAreaView>
   );
 };
-
-export default SearchServicesScreen;
 
 const styles = StyleSheet.create({
   screen: {

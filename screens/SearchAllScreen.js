@@ -16,7 +16,7 @@ import { useAuth, useHttpPost } from "../hooks";
 import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 
-const SearchAllScreen = ({ route }) => {
+export const SearchAllScreen = ({ route }) => {
   const { user } = useAuth();
   const { search } = route.params;
   const { t } = useTranslation();
@@ -133,8 +133,6 @@ const SearchAllScreen = ({ route }) => {
     </View>
   );
 };
-
-export default SearchAllScreen;
 
 const styles = StyleSheet.create({
   screen: {
