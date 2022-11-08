@@ -55,3 +55,5 @@ export { CSwitch } from "./CSwitch/CSwitch";
 export { CModal } from "./CModal/CModal";
 
 export { CFAB } from "./CFAB/CFAB";
+
+export { Heading } from "./Heading/Heading";
