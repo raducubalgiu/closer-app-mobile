@@ -6,7 +6,7 @@ import { trimFunc } from "../../../utils";
 
 const { black, grey0 } = theme.lightColors;
 
-export const MessageItem = ({
+export const MessageListItem = ({
   avatar,
   checkmark,
   name,
@@ -17,16 +17,16 @@ export const MessageItem = ({
   return (
     <Button onPress={onPress}>
       <Stack direction="row" justify="start" sx={styles.container}>
-        <CustomAvatar avatar={avatar} />
-        <Stack align="start" sx={{ marginLeft: 10 }}>
-          <Stack direction="row">
-            <Text style={styles.name}>{name}</Text>
-            {checkmark && <Checkmark size={8} />}
-          </Stack>
-          <Stack direction="row" justify="between">
+        <CustomAvatar avatar={avatar} size={50} />
+        <Stack direction="row" sx={{ flex: 1 }} align="start">
+          <Stack align="start" sx={{ marginLeft: 10 }}>
+            <Stack direction="row">
+              <Text style={styles.name}>{name}</Text>
+              {checkmark && <Checkmark size={8} />}
+            </Stack>
             <Text style={styles.message}>{trimFunc(message, 30)}</Text>
-            <Text style={styles.date}>{date}</Text>
           </Stack>
+          <Text style={styles.date}>{date}</Text>
         </Stack>
       </Stack>
     </Button>
@@ -35,21 +35,22 @@ export const MessageItem = ({
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 15,
+    marginBottom: 20,
     flex: 1,
   },
   name: {
     color: black,
-    fontSize: 15,
+    fontSize: 15.5,
     marginRight: 5,
-    fontWeight: "500",
+    fontWeight: "600",
   },
   message: {
     color: grey0,
-    fontSize: 13.5,
+    marginTop: 2.5,
   },
   date: {
     color: grey0,
     marginLeft: 10,
+    fontSize: 13,
   },
 });

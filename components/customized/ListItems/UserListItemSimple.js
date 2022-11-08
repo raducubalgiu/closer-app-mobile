@@ -22,7 +22,7 @@ export const UserListItemSimple = ({
               <Text style={styles.ownerName}>{name}</Text>
               {checkmark && <Checkmark />}
             </Stack>
-            <Text style={{ color: grey0 }}>{profession}</Text>
+            <Text style={styles.profession}>{profession}</Text>
           </Stack>
         </Button>
       </Stack>
@@ -31,11 +31,12 @@ export const UserListItemSimple = ({
 };
 
 const styles = StyleSheet.create({
-  owner: { width: "100%", marginTop: 20, marginBottom: 5 },
+  owner: { width: "100%", marginBottom: 20 },
   ownerName: {
     color: black,
     fontWeight: "600",
     fontSize: 15,
     marginRight: 5,
   },
+  profession: { color: grey0, marginTop: 2.5 },
 });

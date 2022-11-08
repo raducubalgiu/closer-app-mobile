@@ -47,7 +47,7 @@ export const UserListItem = ({
 };
 
 const styles = StyleSheet.create({
-  container: { marginBottom: 15 },
+  container: { marginBottom: 20 },
   username: {
     fontSize: 15,
     color: black,
