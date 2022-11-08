@@ -6,6 +6,7 @@ export { HeaderProfileGeneral } from "./Layout/Headers/HeaderProfileGeneral";
 export { HeaderMessageItem } from "./Layout/Headers/HeaderMessageItem";
 export { Footer } from "./Layout/Footers/Footer";
 export { FooterMessageItem } from "./Layout/Footers/FooterMessageItem";
+export { FooterComments } from "./Layout/Footers/FooterComments";
 
 export { ProfileOverview } from "./ProfileOverview/ProfileOverview";
 
@@ -63,11 +64,12 @@ export { CardScheduleOverview } from "./Cards/CardScheduleOverview";
 export { CardHashtagOverview } from "./Cards/CardHashtagOverview";
 export { CardServiceOverview } from "./Cards/CardServiceOverview";
 export { CardMessageUser } from "./Cards/CardMessageUser";
+export { CardPostDescription } from "./Cards/CardPostDescription";
 
 export { HeaderServices } from "../customized/Layout/Headers/HeaderServices";
 export { HeaderEdit } from "../customized/Layout/Headers/HeaderEdit";
 
-export { MessageItem } from "../customized/ListItems/MessageItem";
+export { MessageListItem } from "./ListItems/MessageListItem";
 export { HashtagListItem } from "../customized/ListItems/HashtagListItem";
 export { UserListItem } from "../customized/ListItems/UserListItem";
 export { UserListItemSimple } from "../customized/ListItems/UserListItemSimple";
@@ -77,6 +79,7 @@ export { RecentSearchListItem } from "../customized/ListItems/RecentSearchListIt
 export { ServiceListItem } from "../customized/ListItems/ServiceListItem";
 export { MessReceivedItem } from "../customized/ListItems/MessReceivedItem";
 export { MessSentItem } from "../customized/ListItems/MessSentItem";
+export { MessDateItem } from "../customized/ListItems/MessDateItem";
 
 export { ServicesList } from "./Lists/ServicesList";
 export { ProfileMenuList } from "./Lists/ProfileMenuList";
@@ -105,4 +108,4 @@ export { FollowUserSheet } from "./Sheets/FollowUserSheet";
 
 export { FiltersContainer } from "../customized/Containers/FiltersContainer";
 
-export { SearchPopularHeading } from "../customized/Headings/SearchPopularHeading";
+export { DisplayText } from "../customized/DisplayText/DisplayText";

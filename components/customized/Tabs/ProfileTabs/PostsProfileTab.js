@@ -9,7 +9,11 @@ export const PostsProfileTab = ({ userId }) => {
   const navigation = useNavigation();
   const { t } = useTranslation();
 
-  const { data: posts } = useGet({ uri: `/users/${userId}/posts` });
+  const {
+    data: posts,
+    isLoading,
+    isFetching,
+  } = useGet({ uri: `/users/${userId}/posts` });
 
   const goToPosts = (item) =>
     navigation.navigate("Post", {
@@ -28,17 +32,19 @@ export const PostsProfileTab = ({ userId }) => {
   return (
     <>
       <View style={styles.container}>
-        {posts?.map((item, i) => (
-          <CardPostImage
-            onPress={() => goToPosts(item)}
-            key={i}
-            index={i}
-            image={item?.images[0]?.url}
-            bookable={item?.bookable}
-            fixed={item?.fixed}
-            postType={item?.postType}
-          />
-        ))}
+        {!isLoading &&
+          !isFetching &&
+          posts?.map((item, i) => (
+            <CardPostImage
+              onPress={() => goToPosts(item)}
+              key={i}
+              index={i}
+              image={item?.images[0]?.url}
+              bookable={item?.bookable}
+              fixed={item?.fixed}
+              postType={item?.postType}
+            />
+          ))}
       </View>
     </>
   );

@@ -225,6 +225,7 @@
   "noFoundFollowers": "Încă nu este urmărit de nimeni",
   "noFoundFollowings": "Încă nu urmăreşte pe nimeni",
   "noFoundHashtags": "Nu au fost găsite hashtaguri",
+  "noFoundMessage": "Nu a fost găsit nici un mesaj",
   "noFoundUsers": "Nu au fost găsiţi useri",
   "noFoundServices": "Nu au fost găsite servicii",
   "noFoundLocations": "Nu au fost găsite locaţii",
@@ -277,5 +278,7 @@
   "whatServiceYouLookingFor": "Ce serviciu cauţi",
   "locations": "locaţii",
   "send": "Trimite",
-  "sendMessage": "Trimite mesaj"
+  "sendMessage": "Trimite mesaj",
+  "messages": "Mesaje",
+  "newMessage": "Mesaj nou"
 }

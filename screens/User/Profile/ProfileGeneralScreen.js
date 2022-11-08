@@ -89,13 +89,15 @@ const ProfileGeneralScreen = ({ route }) => {
             iconName="message-circle"
             onPress={() =>
               navigation.navigate("MessageItem", {
-                userId,
-                username,
-                avatar,
-                name,
-                checkmark,
-                followersCount: userDetails?.followersCount,
-                followingsCount: userDetails?.followingsCount,
+                item: {
+                  userId,
+                  username,
+                  avatar,
+                  name,
+                  checkmark,
+                  followersCount: userDetails?.followersCount,
+                  followingsCount: userDetails?.followingsCount,
+                },
               })
             }
           />

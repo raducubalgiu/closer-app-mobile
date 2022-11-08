@@ -66,18 +66,21 @@ import ScheduleCancelScreen from "../screens/ScheduleCancelScreen";
 import AllBookmarksScreens from "../screens/User/Profile/AllBookmarksScreens";
 import HashtagScreen from "../screens/HashtagScreen";
 import ServiceScreen from "../screens/ServiceScreen";
+import MessageNewScreen from "../screens/MessageNewScreen";
 import TestScreen from "../screens/TestScreen";
 import { useTranslation } from "react-i18next";
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+const RootStack = createNativeStackNavigator();
+
+const { black } = theme.lightColors;
 
 const FeedStackNavigator = () => {
   return (
     <Stack.Navigator
       initialRouteName="Feed"
-      screenOptions={{
-        headerShown: false,
-      }}
+      screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="Feed" component={FeedScreen} />
       <Stack.Screen name="Likes" component={LikesScreen} />
@@ -90,9 +93,7 @@ const AuthStackNavigator = () => {
   return (
     <Stack.Navigator
       initialRouteName="Auth"
-      screenOptions={{
-        headerShown: false,
-      }}
+      screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="Auth" component={AuthScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
@@ -105,8 +106,6 @@ const AuthStackNavigator = () => {
     </Stack.Navigator>
   );
 };
-
-const RootStack = createNativeStackNavigator();
 
 const TabsScreen = () => {
   return (
@@ -141,7 +140,7 @@ const TabsScreen = () => {
             />
           );
         },
-        tabBarActiveTintColor: theme.lightColors.black,
+        tabBarActiveTintColor: black,
         tabBarInactiveTintColor: "gray",
         headerShown: false,
         tabBarShowLabel: false,
@@ -195,7 +194,7 @@ const CloserNavigation = () => {
                 headerShown: true,
                 headerTitle: t("addProduct"),
                 headerBackTitle: "",
-                headerTintColor: theme.lightColors.black,
+                headerTintColor: black,
               }}
             />
             <RootStack.Screen name="AddJobs" component={AddJobsScreen} />
@@ -206,7 +205,6 @@ const CloserNavigation = () => {
             <RootStack.Screen
               name="AddBusinessType"
               component={AddBusinessTypeScreen}
-              options={{ headerShown: false, headerBackTitle: "" }}
             />
             <RootStack.Screen
               name="EditProfile"
@@ -265,13 +263,14 @@ const CloserNavigation = () => {
                 headerShown: true,
                 headerTitle: t("comments"),
                 headerBackTitle: "",
-                headerTintColor: theme.lightColors.black,
+                headerTintColor: black,
               }}
             />
             <RootStack.Screen
               name="MessageItem"
               component={MessageItemScreen}
             />
+            <RootStack.Screen name="MessageNew" component={MessageNewScreen} />
             <RootStack.Screen name="SearchAll" component={SearchAllScreen} />
             <RootStack.Screen name="Hashtag" component={HashtagScreen} />
             <RootStack.Screen name="Service" component={ServiceScreen} />

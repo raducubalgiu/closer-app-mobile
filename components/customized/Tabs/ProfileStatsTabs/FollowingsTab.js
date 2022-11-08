@@ -16,26 +16,24 @@ export const FollowingsTab = ({ userId }) => {
     isFetchingNextPage,
     isLoading,
     isFetching,
-    refetch,
   } = useGetPaginate({
     model: "followings",
     uri: `/users/${userId}/followings`,
     limit: "20",
   });
 
-  const renderPerson = useCallback(({ item }) => {
-    const { avatar, username, name, _id, checkmark } = item?.followeeId || {};
-
-    return (
+  const renderPerson = useCallback(
+    ({ item }) => (
       <UserListItem
-        avatar={avatar}
-        username={username}
-        checkmark={checkmark}
-        name={name}
-        followeeId={_id}
+        avatar={item.avatar}
+        username={item.username}
+        checkmark={item.checkmark}
+        name={item.name}
+        followeeId={item._id}
       />
-    );
-  }, []);
+    ),
+    []
+  );
 
   const keyExtractor = useCallback((item) => item?._id, []);
 
@@ -57,8 +55,6 @@ export const FollowingsTab = ({ userId }) => {
     }
   };
   const { pages } = data || {};
-
-  console.log("FOLLOWING PAGES LENGTH!!!", pages?.length);
 
   return (
     <>

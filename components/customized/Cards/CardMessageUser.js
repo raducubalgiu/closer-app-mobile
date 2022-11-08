@@ -10,9 +10,10 @@ export const CardMessageUser = ({
   username,
   followingsCount,
   followersCount,
+  sx,
 }) => {
   return (
-    <Stack sx={{ marginVertical: 40 }}>
+    <Stack sx={{ marginVertical: 40, ...sx }}>
       <CustomAvatar avatar={avatar} size={100} />
       <Text style={styles.name}>{name}</Text>
       <Text style={{ color: grey0 }}>@{username}</Text>
