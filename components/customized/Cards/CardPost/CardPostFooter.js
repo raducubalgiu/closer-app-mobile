@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import theme from "../../../../assets/styles/theme";
 import { useAuth } from "../../../../hooks";
-import DisplayText from "../../DisplayText/DisplayText";
+import { DisplayText } from "../../DisplayText/DisplayText";
 
 const { grey0, black } = theme.lightColors;
 

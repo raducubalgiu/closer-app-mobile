@@ -77,8 +77,6 @@ export const DisplayText = ({
   );
 };
 
-export default DisplayText;
-
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
