@@ -30,7 +30,7 @@ export const CommentsScreen = ({ route }) => {
 
   const { isLoading, isFetching } = useGet({
     model: "comments",
-    uri: `/posts/${postId}/comments`,
+    uri: `/posts/${postId}/comments?page=${page}&limit=25`,
     onSuccess: (res) => {
       setNext(res.data.next);
       setComments((comments) => comments.concat(res.data.results));
@@ -88,7 +88,7 @@ export const CommentsScreen = ({ route }) => {
 
   const onEndReached = useCallback(() => {
     if (next && !isFetching) setPage(page + 1);
-  }, [next]);
+  }, [next, isFetching]);
 
   const footer = (isLoading || isFetching) && (
     <Spinner sx={{ paddingVertical: 20 }} />
@@ -108,7 +108,7 @@ export const CommentsScreen = ({ route }) => {
           renderItem={renderComment}
           contentContainerStyle={styles.flatlist}
           onEndReached={onEndReached}
-          onEndReachedThreshold={0.3}
+          onEndReachedThreshold={0}
           ListFooterComponent={footer}
         />
         <FooterComments
