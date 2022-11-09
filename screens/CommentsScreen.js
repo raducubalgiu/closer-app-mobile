@@ -13,20 +13,28 @@ import {
 import { useAuth, useGet, usePost } from "../hooks";
 import { useNavigation } from "@react-navigation/native";
 import { useHeaderHeight } from "@react-navigation/elements";
+import { Spinner } from "../components/core";
 
 export const CommentsScreen = ({ route }) => {
   const { user } = useAuth();
   const navigation = useNavigation();
   const { postId, description, avatar, username } = route.params;
   const { name, date, focus, creatorId } = route.params;
+  const [comments, setComments] = useState([]);
+  const [next, setNext] = useState(null);
+  const [page, setPage] = useState(1);
   const [comment, setComment] = useState("");
   const [commentId, setCommentId] = useState(null);
   const [prevComment, setPrevComment] = useState(null);
   const headerHeight = useHeaderHeight();
 
-  const { data: comments } = useGet({
+  const { isLoading, isFetching } = useGet({
     model: "comments",
     uri: `/posts/${postId}/comments`,
+    onSuccess: (res) => {
+      setNext(res.data.next);
+      setComments((comments) => comments.concat(res.data.results));
+    },
   });
 
   const { mutate } = usePost({
@@ -78,6 +86,14 @@ export const CommentsScreen = ({ route }) => {
   );
   const keyExtractor = useCallback((item) => item?._id, []);
 
+  const onEndReached = useCallback(() => {
+    if (next && !isFetching) setPage(page + 1);
+  }, [next]);
+
+  const footer = (isLoading || isFetching) && (
+    <Spinner sx={{ paddingVertical: 20 }} />
+  );
+
   return (
     <SafeAreaView style={styles.screen}>
       <KeyboardAvoidingView
@@ -90,7 +106,10 @@ export const CommentsScreen = ({ route }) => {
           data={comments}
           keyExtractor={keyExtractor}
           renderItem={renderComment}
-          contentContainerStyle={{ padding: 15, minHeight: 700 }}
+          contentContainerStyle={styles.flatlist}
+          onEndReached={onEndReached}
+          onEndReachedThreshold={0.3}
+          ListFooterComponent={footer}
         />
         <FooterComments
           comment={comment}
@@ -110,4 +129,5 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   container: { flex: 1, justifyContent: "space-between", marginBottom: 50 },
+  flatlist: { padding: 15, minHeight: 700 },
 });
