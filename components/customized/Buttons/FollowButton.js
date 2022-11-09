@@ -45,18 +45,18 @@ export const FollowButton = ({
   const followHandler = useCallback(() => {
     if (!follow) {
       setFollow(true);
-      setUser({
-        ...user,
-        followingsCount: user.followingsCount + 1,
-      });
       makePost();
+      // setUser({
+      //   ...user,
+      //   followingsCount: user.followingsCount + 1,
+      // });
     }
     if (follow) {
       setFollow(false);
-      setUser({
-        ...user,
-        followingsCount: user.followingsCount - 1,
-      });
+      // setUser({
+      //   ...user,
+      //   followingsCount: user.followingsCount - 1,
+      // });
       makeDelete();
     }
   }, [follow]);
@@ -80,16 +80,14 @@ export const FollowButton = ({
   });
 
   return (
-    <>
-      <TouchableOpacity
-        activeOpacity={1}
-        style={{ ...styles.btn, ...sxBtn }}
-        onPress={followHandler}
-      >
-        <Text style={{ ...styles.btnText, ...sxBtnText }}>
-          {follow ? t("following") : t("follow")}
-        </Text>
-      </TouchableOpacity>
-    </>
+    <TouchableOpacity
+      activeOpacity={1}
+      style={{ ...styles.btn, ...sxBtn }}
+      onPress={followHandler}
+    >
+      <Text style={{ ...styles.btnText, ...sxBtnText }}>
+        {follow ? t("following") : t("follow")}
+      </Text>
+    </TouchableOpacity>
   );
 };
