@@ -34,12 +34,16 @@ export const AddProductsScreen = () => {
   const { data: services, isLoading: loading } = useGet({
     model: "services",
     uri: `/locations/${user?.location}/services`,
+    enableId: user?.location,
   });
 
   const { data: filters } = useGet({
     model: "filters",
     uri: `/services/${selectedService?._id}/filters`,
+    enableId: selectedService?._id,
   });
+
+  const filtersArr = (filters && filters[0]) || [];
 
   const goBack = (data) =>
     navigation.navigate({
@@ -78,15 +82,13 @@ export const AddProductsScreen = () => {
                   items={services}
                   rules={{ ...isRequired }}
                 />
-                {filters && filters[0]?.options && (
-                  <FormInputSelect
-                    label={filters[0].name}
-                    name="option"
-                    placeholder={filters[0].name}
-                    items={filters[0].options}
-                    rules={{ ...isRequired }}
-                  />
-                )}
+                <FormInputSelect
+                  label={t("category")}
+                  name="option"
+                  placeholder={t("category")}
+                  items={filtersArr?.options}
+                  rules={{ ...isRequired }}
+                />
                 <FormInput
                   label={t("name")}
                   name="name"

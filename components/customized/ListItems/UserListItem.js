@@ -8,16 +8,10 @@ import { useAuth } from "../../../hooks/auth";
 
 const { grey0, black } = theme.lightColors;
 
-export const UserListItem = ({
-  avatar,
-  followeeId,
-  username,
-  name,
-  checkmark,
-  sx,
-}) => {
+export const UserListItem = ({ user, isFollow, sx }) => {
   const navigation = useNavigation();
-  const { user } = useAuth();
+  const { user: userContext } = useAuth();
+  const { avatar, _id, username, name, checkmark } = user;
 
   const goToUser = (userId) => {
     navigation.push("ProfileGeneral", {
@@ -31,7 +25,7 @@ export const UserListItem = ({
 
   return (
     <Stack direction="row" sx={{ ...styles.container, ...sx }}>
-      <Button sx={styles.goToUser} onPress={() => goToUser(followeeId)}>
+      <Button sx={styles.goToUser} onPress={() => goToUser(_id)}>
         <CustomAvatar avatar={avatar} withBadge={false} />
         <Stack align="start" sx={{ marginLeft: 10 }}>
           <Stack direction="row">
@@ -41,7 +35,9 @@ export const UserListItem = ({
           <Text style={styles.name}>{name}</Text>
         </Stack>
       </Button>
-      {followeeId !== user?._id && <FollowButton followeeId={followeeId} />}
+      {_id !== userContext?._id && (
+        <FollowButton isFollow={isFollow} followeeId={_id} />
+      )}
     </Stack>
   );
 };

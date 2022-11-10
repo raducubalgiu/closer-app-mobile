@@ -186,7 +186,7 @@ export const usePatch = ({ uri, onSuccess }) => {
   return mutations;
 };
 
-export const usePost = ({ uri, onSuccess }) => {
+export const usePost = ({ uri, onSuccess, others = {} }) => {
   const { user } = useAuth();
 
   const mutations = useMutation(
@@ -197,6 +197,7 @@ export const usePost = ({ uri, onSuccess }) => {
     {
       onSuccess,
       onError: (err) => console.log(err),
+      ...others,
     }
   );
 
@@ -220,18 +221,29 @@ export const useDelete = ({ uri, onSuccess }) => {
   return mutations;
 };
 
-export const useGet = ({ model, uri, onSuccess }) => {
+export const useGet = ({
+  model,
+  uri,
+  onSuccess,
+  enableId = null,
+  others = {},
+}) => {
   const { user } = useAuth();
 
   const response = useQuery(
-    [model, uri],
+    [model, uri, enableId && enableId],
     async ({ signal }) => {
       return await axios.get(`${BASE_ENDPOINT}${uri}`, {
         signal,
         headers: { Authorization: `Bearer ${user.token}` },
       });
     },
-    { onSuccess, onError: (err) => console.log(err) }
+    {
+      onSuccess,
+      onError: (err) => console.log(err),
+      enabled: !enableId ? true : !!enableId,
+      ...others,
+    }
   );
 
   return {
