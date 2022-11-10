@@ -29,19 +29,11 @@ export const FollowersTab = ({ userId }) => {
   });
 
   const renderPerson = useCallback(
-    ({ item }) => (
-      <UserListItem
-        avatar={item.avatar}
-        checkmark={item.checkmark}
-        username={item.username}
-        name={item.name}
-        followeeId={item._id}
-      />
-    ),
+    ({ item }) => <UserListItem user={item.user} isFollow={item.isFollow} />,
     []
   );
 
-  const keyExtractor = useCallback((item) => item?._id, []);
+  const keyExtractor = useCallback((item) => item?.user._id, []);
 
   const loadMore = () => {
     if (hasNextPage) fetchNextPage();

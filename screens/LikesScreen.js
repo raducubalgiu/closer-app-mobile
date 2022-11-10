@@ -31,24 +31,14 @@ export const LikesScreen = ({ route }) => {
     refetch,
   } = useGetPaginate({
     model: "likes",
-    uri: `/posts/${postId}/get-likes`,
+    uri: `/users/${user._id}/posts/${postId}/get-likes`,
     limit: "25",
   });
 
-  const renderPerson = useCallback(({ item }) => {
-    const { _id, username, name, avatar, checkmark } = item?.user || {};
-
-    return (
-      <UserListItem
-        avatar={avatar}
-        username={username}
-        name={name}
-        checkmark={checkmark}
-        followeeId={_id}
-        userId={user?._id}
-      />
-    );
-  }, []);
+  const renderPerson = useCallback(
+    ({ item }) => <UserListItem user={item.user} isFollow={item.isFollow} />,
+    []
+  );
 
   const keyExtractor = useCallback((item) => item?._id, []);
 
