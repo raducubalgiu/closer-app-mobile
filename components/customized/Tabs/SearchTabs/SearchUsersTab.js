@@ -7,10 +7,12 @@ import { Spinner } from "../../../core";
 import { UserListItem } from "../../ListItems/UserListItem";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { useIsFocused } from "@react-navigation/native";
 
 export const SearchUsersTab = ({ search }) => {
   const { t } = useTranslation();
   const { user } = useAuth();
+  const isFocused = useIsFocused();
 
   const fetchData = async (page, search) => {
     const { data } = await axios.get(
@@ -20,18 +22,26 @@ export const SearchUsersTab = ({ search }) => {
     return data;
   };
 
-  const { data, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteQuery(
-      ["searchUsers", search],
-      ({ pageParam = 1 }) => fetchData(pageParam, search),
-      {
-        getNextPageParam: (lastPage) => {
-          if (lastPage.next !== null) {
-            return lastPage.next;
-          }
-        },
-      }
-    );
+  const {
+    data,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isPreviousData,
+    isFetching,
+  } = useInfiniteQuery(
+    ["searchUsers", search],
+    ({ pageParam = 1 }) => fetchData(pageParam, search),
+    {
+      getNextPageParam: (lastPage) => {
+        if (lastPage.next !== null) {
+          return lastPage.next;
+        }
+      },
+      enabled: !isPreviousData && isFocused,
+    }
+  );
 
   const loadMore = () => {
     if (hasNextPage) fetchNextPage();
@@ -46,38 +56,29 @@ export const SearchUsersTab = ({ search }) => {
 
   const { pages } = data || {};
 
-  const renderUsers = useCallback(
-    ({ item }) => (
-      <UserListItem
-        avatar={item.avatar}
-        followeeId={item._id}
-        username={item.username}
-        name={item.name}
-        checkmark={item.checkmark}
-      />
-    ),
-    []
-  );
+  const renderUsers = useCallback(({ item }) => {
+    return <UserListItem user={item} isFollow={false} />;
+  }, []);
 
-  const noFoundMessage = (
-    <NoFoundMessage title="Users" description={t("noFoundUsers")} />
-  );
+  const noFoundMessage = !isLoading &&
+    !isFetchingNextPage &&
+    pages[0]?.results?.length === 0 && (
+      <NoFoundMessage title="Users" description={t("noFoundUsers")} />
+    );
 
   return (
-    <FlatList
-      ListHeaderComponent={
-        !isLoading &&
-        !isFetchingNextPage &&
-        pages[0]?.results?.length === 0 &&
-        noFoundMessage
-      }
-      data={pages?.map((page) => page.results).flat()}
-      keyExtractor={useCallback((item) => item?._id)}
-      renderItem={renderUsers}
-      contentContainerStyle={{ padding: 15 }}
-      ListFooterComponent={showSpinner}
-      onEndReached={loadMore}
-      onEndReachedThreshold={0.3}
-    />
+    <>
+      {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
+      <FlatList
+        ListHeaderComponent={noFoundMessage}
+        data={pages?.map((page) => page.results).flat()}
+        keyExtractor={useCallback((item) => item?._id)}
+        renderItem={renderUsers}
+        contentContainerStyle={{ padding: 15 }}
+        ListFooterComponent={showSpinner}
+        onEndReached={loadMore}
+        onEndReachedThreshold={0.3}
+      />
+    </>
   );
 };

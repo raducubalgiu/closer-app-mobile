@@ -1,7 +1,7 @@
 import { FlatList } from "react-native";
 import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useAuth, useGet } from "../../../../hooks";
 import { HashtagListItem } from "../../ListItems/HashtagListItem";
 import { SearchPopularHeading } from "../../Headings/SearchPopularHeading";
@@ -15,6 +15,7 @@ export const SearchPopularTab = ({ search }) => {
   const navigation = useNavigation();
   const { t } = useTranslation();
   const { user } = useAuth();
+  const isFocused = useIsFocused();
 
   const { data: users, isLoading: loadUsers } = useGet({
     model: "users",
@@ -38,7 +39,9 @@ export const SearchPopularTab = ({ search }) => {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-    isLoading: loadPosts,
+    isLoading,
+    isFetching,
+    isPreviousData,
   } = useInfiniteQuery(
     ["popularPosts", search],
     ({ pageParam = 1 }) => fetchData(pageParam, search),
@@ -48,6 +51,7 @@ export const SearchPopularTab = ({ search }) => {
           return lastPage.next;
         }
       },
+      enabled: !isPreviousData && isFocused,
     }
   );
 
@@ -79,11 +83,8 @@ export const SearchPopularTab = ({ search }) => {
   const renderUsers = useCallback(
     ({ item }) => (
       <UserListItem
-        avatar={item.avatar}
-        followeeId={item._id}
-        username={item.username}
-        name={item.name}
-        checkmark={item.checkmark}
+        user={item}
+        isFollow={false}
         sx={{ paddingHorizontal: 15, marginBottom: 20 }}
       />
     ),
@@ -111,7 +112,6 @@ export const SearchPopularTab = ({ search }) => {
         bookable={item.bookable}
         fixed={null}
         postType={item.postType}
-        col={3}
       />
     ),
     []
