@@ -49,7 +49,7 @@ export const SavedHashtagsTab = ({ user }) => {
 
   const showSpinner = () => {
     if (isFetchingNextPage) {
-      return <Spinner />;
+      return <Spinner sx={{ paddingVertical: 20 }} />;
     } else {
       return null;
     }

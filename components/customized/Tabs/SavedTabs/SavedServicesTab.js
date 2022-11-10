@@ -50,7 +50,7 @@ export const SavedServicesTab = ({ user }) => {
 
   const showSpinner = () => {
     if (isFetchingNextPage) {
-      return <Spinner />;
+      return <Spinner sx={{ paddingVertical: 20 }} />;
     } else {
       return null;
     }

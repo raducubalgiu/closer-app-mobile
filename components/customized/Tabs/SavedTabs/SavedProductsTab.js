@@ -43,7 +43,7 @@ export const SavedProductsTab = ({ user }) => {
 
   const showSpinner = () => {
     if (isFetchingNextPage) {
-      return <Spinner />;
+      return <Spinner sx={{ paddingVertical: 50 }} />;
     } else {
       return null;
     }
