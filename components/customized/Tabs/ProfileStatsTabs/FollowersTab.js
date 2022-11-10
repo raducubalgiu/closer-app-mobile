@@ -1,18 +1,13 @@
 import { FlatList, RefreshControl } from "react-native";
-import React, { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Spinner } from "../../../core";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { UserListItem } from "../../ListItems/UserListItem";
-import { useGetPaginate } from "../../../../hooks";
+import { useGetPaginate, useRefreshByUser } from "../../../../hooks";
 import { useIsFocused } from "@react-navigation/native";
 
-const wait = (timeout) => {
-  return new Promise((resolve) => setTimeout(resolve, timeout));
-};
-
 export const FollowersTab = ({ userId }) => {
-  const [refreshing, setRefreshing] = useState(false);
   const { t } = useTranslation();
   const isFocused = useIsFocused();
 
@@ -42,6 +37,7 @@ export const FollowersTab = ({ userId }) => {
   const loadMore = () => {
     if (hasNextPage) fetchNextPage();
   };
+
   const showSpinner = () => {
     if (isFetchingNextPage) {
       return <Spinner />;
@@ -50,14 +46,6 @@ export const FollowersTab = ({ userId }) => {
     }
   };
   const { pages } = data || {};
-
-  const onRefresh = useCallback(() => {
-    setRefreshing(true);
-    wait(500).then(() => {
-      refetch();
-      setRefreshing(false);
-    });
-  }, []);
 
   const noFoundMessage = !isLoading &&
     !isFetchingNextPage &&
@@ -68,8 +56,10 @@ export const FollowersTab = ({ userId }) => {
       />
     );
 
+  const { refreshing, refetchByUser } = useRefreshByUser(refetch);
+
   const refreshControl = (
-    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+    <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
   );
 
   return (
