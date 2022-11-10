@@ -5,37 +5,42 @@ import { useGetPaginate } from "../../../../hooks";
 import { CardPostImage } from "../../Cards/CardPostImage";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { Spinner } from "../../../core";
+import { useIsFocused } from "@react-navigation/native";
 
 export const HashtagPostsBookableTab = ({ name }) => {
   const { t } = useTranslation();
+  const isFocused = useIsFocused();
 
-  const { data, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
-    useGetPaginate({
-      model: "hashtagPostsBookable",
-      uri: `/hashtags/${name}/posts/bookable`,
-      limit: "15",
-    });
+  const {
+    data,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isPreviousData,
+    isFetching,
+  } = useGetPaginate({
+    model: "hBookable",
+    uri: `/hashtags/${name}/posts/bookable`,
+    limit: "15",
+    enabled: !isPreviousData && isFocused,
+  });
 
-  const renderPosts = useCallback(({ item, index }) => {
-    const { images, bookable, postType } = item;
-
-    return (
+  const renderPosts = useCallback(
+    ({ item, index }) => (
       <CardPostImage
         onPress={() => {}}
         index={index}
-        image={images[0]?.url}
-        bookable={bookable}
+        image={item?.images[0]?.url}
+        bookable={item.bookable}
         fixed={null}
-        postType={postType}
+        postType={item.postType}
       />
-    );
-  }, []);
+    ),
+    []
+  );
 
   const keyExtractor = useCallback((item) => item._id, []);
-
-  const noFoundMessage = (
-    <NoFoundMessage title={t("posts")} description={t("noFoundPosts")} />
-  );
 
   const loadMore = () => {
     if (hasNextPage) {
@@ -53,21 +58,25 @@ export const HashtagPostsBookableTab = ({ name }) => {
 
   const { pages } = data || {};
 
+  const noFoundMessage = !isLoading &&
+    !isFetchingNextPage &&
+    pages[0]?.results?.length === 0 && (
+      <NoFoundMessage title={t("posts")} description={t("noFoundPosts")} />
+    );
+
   return (
-    <FlatList
-      ListHeaderComponent={
-        !isLoading &&
-        !isFetchingNextPage &&
-        pages[0]?.results?.length === 0 &&
-        noFoundMessage
-      }
-      numColumns={3}
-      data={pages?.map((page) => page.results).flat()}
-      keyExtractor={keyExtractor}
-      renderItem={renderPosts}
-      ListFooterComponent={showSpinner}
-      onEndReached={loadMore}
-      onEndReachedThreshold={0.3}
-    />
+    <>
+      {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
+      <FlatList
+        ListHeaderComponent={noFoundMessage}
+        numColumns={3}
+        data={pages?.map((page) => page.results).flat()}
+        keyExtractor={keyExtractor}
+        renderItem={renderPosts}
+        ListFooterComponent={showSpinner}
+        onEndReached={loadMore}
+        onEndReachedThreshold={0.3}
+      />
+    </>
   );
 };

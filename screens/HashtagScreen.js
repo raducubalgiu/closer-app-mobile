@@ -1,10 +1,10 @@
 import { StyleSheet, SafeAreaView } from "react-native";
-import React, { useCallback } from "react";
-import { Header } from "../components/core";
-import { CardHashtagOverview, TopTabContainer } from "../components/customized";
-import { useGet } from "../hooks";
+import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { CardHashtagOverview, TopTabContainer } from "../components/customized";
+import { Header } from "../components/core";
+import { useGet } from "../hooks";
 import {
   HashtagPostsPopularTab,
   HashtagPostsRecentTab,
@@ -16,7 +16,7 @@ export const HashtagScreen = ({ route }) => {
   const { t } = useTranslation();
   const Tab = createMaterialTopTabNavigator();
 
-  const { data, isLoading: loadHashtag } = useGet({ uri: `/hashtags/${name}` });
+  const { data } = useGet({ uri: `/hashtags/${name}` });
 
   const HashtagPostsBookable = useCallback(
     () => <HashtagPostsBookableTab name={name} />,
@@ -34,13 +34,11 @@ export const HashtagScreen = ({ route }) => {
   return (
     <SafeAreaView style={styles.screen}>
       <Header title={`#${name}`} />
-      {!loadHashtag && (
-        <CardHashtagOverview
-          bookmarkId={data?._id}
-          postsCount={data?.postsCount}
-          bookmarksCount={data?.bookmarksCount}
-        />
-      )}
+      <CardHashtagOverview
+        bookmarkId={data?._id}
+        postsCount={data?.postsCount}
+        bookmarksCount={data?.bookmarksCount}
+      />
       <TopTabContainer initialRouteName="HashtagPostsPopular">
         <Tab.Screen
           name="HashtagPostsPopular"

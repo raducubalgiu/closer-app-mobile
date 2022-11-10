@@ -1,19 +1,14 @@
 import { StyleSheet, Text } from "react-native";
 import { Stack, Checkmark, CustomAvatar, Button } from "../../core";
-import React from "react";
 import theme from "../../../assets/styles/theme";
 import { trimFunc } from "../../../utils";
 
 const { black, grey0 } = theme.lightColors;
 
-export const MessageListItem = ({
-  avatar,
-  checkmark,
-  name,
-  message,
-  date,
-  onPress,
-}) => {
+export const MessageListItem = ({ onPress, conversation }) => {
+  const { message, user } = conversation;
+  const { name, avatar, checkmark } = user;
+
   return (
     <Button onPress={onPress}>
       <Stack direction="row" justify="start" sx={styles.container}>
@@ -24,9 +19,11 @@ export const MessageListItem = ({
               <Text style={styles.name}>{name}</Text>
               {checkmark && <Checkmark size={8} />}
             </Stack>
-            <Text style={styles.message}>{trimFunc(message, 30)}</Text>
+            <Text style={styles.message}>
+              {trimFunc(message.message.text, 35)}
+            </Text>
           </Stack>
-          <Text style={styles.date}>{date}</Text>
+          <Text style={styles.date}>1z</Text>
         </Stack>
       </Stack>
     </Button>

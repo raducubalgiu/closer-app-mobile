@@ -1,12 +1,11 @@
 import { StyleSheet, Text } from "react-native";
-import React, { useState } from "react";
 import { Icon } from "@rneui/themed";
+import { useTranslation } from "react-i18next";
 import { Stack } from "../../core";
 import { BookmarkButton } from "../Buttons/BookmarkButton";
 import theme from "../../../assets/styles/theme";
-import { useTranslation } from "react-i18next";
 import { displayCount } from "../../../utils";
-import { useAuth, useHttpGet } from "../../../hooks";
+import { useAuth, useGet } from "../../../hooks";
 
 const { black, grey0 } = theme.lightColors;
 
@@ -16,20 +15,15 @@ export const CardHashtagOverview = ({
   bookmarksCount,
 }) => {
   const { user } = useAuth();
-  const [countBookmarks, setCountBookmarks] = useState(bookmarksCount);
   const { t } = useTranslation();
 
-  const { data, loading } = useHttpGet(
-    `/users/${user?._id}/hashtags/${bookmarkId}/bookmarks`
-  );
+  const { data } = useGet({
+    model: "hCheck",
+    uri: `/users/${user?._id}/hashtags/${bookmarkId}/bookmarks`,
+  });
 
   return (
-    <Stack
-      direction="row"
-      align="start"
-      justify="start"
-      sx={{ padding: 15, marginBottom: 10 }}
-    >
+    <Stack direction="row" align="start" justify="start" sx={styles.container}>
       <Stack sx={styles.hashtagCont}>
         <Text style={styles.hashtagImg}>#</Text>
       </Stack>
@@ -45,7 +39,7 @@ export const CardHashtagOverview = ({
             <Icon name="bookmark" type="feather" color={grey0} size={17.5} />
             <Text style={styles.counter}>
               {displayCount(
-                countBookmarks,
+                bookmarksCount,
                 t("user"),
                 t("users"),
                 t("ofUsers")
@@ -53,22 +47,19 @@ export const CardHashtagOverview = ({
             </Text>
           </Stack>
         </Stack>
-        {!loading && (
-          <BookmarkButton
-            type="hashtags"
-            typeId={bookmarkId}
-            status={data.status}
-            onBookmarksCount={(action) =>
-              setCountBookmarks(countBookmarks + action)
-            }
-          />
-        )}
+        <BookmarkButton
+          type="hashtags"
+          typeId={bookmarkId}
+          status={data?.status}
+          onBookmarksCount={null}
+        />
       </Stack>
     </Stack>
   );
 };
 
 const styles = StyleSheet.create({
+  container: { padding: 15, marginBottom: 10 },
   hashtagCont: {
     paddingVertical: 20,
     paddingHorizontal: 40,
