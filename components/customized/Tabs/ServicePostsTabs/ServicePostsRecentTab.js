@@ -1,5 +1,6 @@
 import { FlatList } from "react-native";
 import React, { useCallback } from "react";
+import { useIsFocused } from "@react-navigation/native";
 import { useGetPaginate } from "../../../../hooks";
 import { CardPostImage } from "../../Cards/CardPostImage";
 import { useTranslation } from "react-i18next";
@@ -8,34 +9,38 @@ import { Spinner } from "../../../core";
 
 export const ServicePostsRecentTab = ({ serviceId }) => {
   const { t } = useTranslation();
+  const isFocused = useIsFocused();
 
-  const { data, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
-    useGetPaginate({
-      model: "servicePostsRecent",
-      uri: `/services/${serviceId}/posts/recent`,
-      limit: "15",
-    });
+  const {
+    data,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isPreviousData,
+    isFetching,
+  } = useGetPaginate({
+    model: "servicePostsRecent",
+    uri: `/services/${serviceId}/posts/recent`,
+    limit: "15",
+    enabled: !isPreviousData && isFocused,
+  });
 
-  const renderPosts = useCallback(({ item, index }) => {
-    const { images, bookable, postType } = item;
-
-    return (
+  const renderPosts = useCallback(
+    ({ item, index }) => (
       <CardPostImage
         onPress={() => {}}
         index={index}
-        image={images[0]?.url}
-        bookable={bookable}
+        image={item.images[0]?.url}
+        bookable={item.bookable}
         fixed={null}
-        postType={postType}
+        postType={item.postType}
       />
-    );
-  }, []);
+    ),
+    []
+  );
 
   const keyExtractor = useCallback((item) => item._id, []);
-
-  const noFoundMessage = (
-    <NoFoundMessage title={t("posts")} description={t("noFoundPosts")} />
-  );
 
   const loadMore = () => {
     if (hasNextPage) {
@@ -45,7 +50,7 @@ export const ServicePostsRecentTab = ({ serviceId }) => {
 
   const showSpinner = () => {
     if (isFetchingNextPage) {
-      return <Spinner />;
+      return <Spinner sx={{ paddingVertical: 50 }} />;
     } else {
       return null;
     }
@@ -53,21 +58,25 @@ export const ServicePostsRecentTab = ({ serviceId }) => {
 
   const { pages } = data || {};
 
+  const noFoundMessage = !isLoading &&
+    !isFetchingNextPage &&
+    pages[0]?.results?.length === 0 && (
+      <NoFoundMessage title={t("posts")} description={t("noFoundPosts")} />
+    );
+
   return (
-    <FlatList
-      ListHeaderComponent={
-        !isLoading &&
-        !isFetchingNextPage &&
-        pages[0]?.results?.length === 0 &&
-        noFoundMessage
-      }
-      numColumns={3}
-      data={pages?.map((page) => page.results).flat()}
-      keyExtractor={keyExtractor}
-      renderItem={renderPosts}
-      ListFooterComponent={showSpinner}
-      onEndReached={loadMore}
-      onEndReachedThreshold={0.3}
-    />
+    <>
+      {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
+      <FlatList
+        ListHeaderComponent={noFoundMessage}
+        numColumns={3}
+        data={pages?.map((page) => page.results).flat()}
+        keyExtractor={keyExtractor}
+        renderItem={renderPosts}
+        ListFooterComponent={showSpinner}
+        onEndReached={loadMore}
+        onEndReachedThreshold={0.3}
+      />
+    </>
   );
 };

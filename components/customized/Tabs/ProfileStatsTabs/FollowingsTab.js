@@ -1,11 +1,11 @@
 import { FlatList, RefreshControl } from "react-native";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
+import { useIsFocused } from "@react-navigation/native";
 import { Spinner } from "../../../core";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { UserListItem } from "../../ListItems/UserListItem";
 import { useGetPaginate, useRefreshByUser } from "../../../../hooks";
-import { useIsFocused } from "@react-navigation/native";
 
 export const FollowingsTab = ({ userId }) => {
   const isFocused = useIsFocused();
