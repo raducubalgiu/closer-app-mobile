@@ -87,18 +87,13 @@ export const FormInputSelect = ({
             placeholder={inputPlaceholder}
             useNativeAndroidPickerStyle={false}
             onValueChange={onChange}
-            style={{
-              ...styles,
-            }}
+            style={styles}
             doneText="Gata"
             value={value}
             items={items?.map((item) => {
               return {
                 label: item?.name,
-                value: {
-                  _id: item?._id,
-                  name: item?.name,
-                },
+                value: item,
               };
             })}
           />

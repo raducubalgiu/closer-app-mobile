@@ -14,6 +14,8 @@ import { FormInputSelect } from "../../../../components/core";
 import { useHeaderHeight } from "@react-navigation/elements";
 
 const defaultValues = {
+  service: "",
+  option: "",
   name: "",
   description: "",
   price: "",
@@ -23,24 +25,25 @@ const defaultValues = {
 
 export const AddProductsScreen = () => {
   const { user } = useAuth();
+  const { location } = user;
   const navigation = useNavigation();
   const { t } = useTranslation();
-  const methods = useForm({ defaultValues: { ...defaultValues, service: "" } });
+  const methods = useForm({ defaultValues });
   const { handleSubmit, watch } = methods;
-  const selectedService = watch("service");
+  const service = watch("service");
   const isRequired = required(t);
   const headerHeight = useHeaderHeight();
 
   const { data: services, isLoading: loading } = useGet({
     model: "services",
-    uri: `/locations/${user?.location}/services`,
-    enableId: user?.location,
+    uri: `/locations/${location}/services`,
+    enableId: location,
   });
 
   const { data: filters } = useGet({
     model: "filters",
-    uri: `/services/${selectedService?._id}/filters`,
-    enableId: selectedService?._id,
+    uri: `/services/${service?._id}/filters`,
+    enableId: !!service && service?._id,
   });
 
   const filtersArr = (filters && filters[0]) || [];
@@ -60,6 +63,7 @@ export const AddProductsScreen = () => {
   const handleCreate = (data) => {
     makePost({
       ...data,
+      service: service?._id,
       user: user._id,
       location: user.location,
     });

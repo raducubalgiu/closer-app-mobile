@@ -225,13 +225,15 @@ export const useGet = ({
   model,
   uri,
   onSuccess,
-  enableId = null,
+  enableId = true,
   others = {},
 }) => {
   const { user } = useAuth();
 
+  const injectQuery = !!enableId && enableId.length > 1;
+
   const response = useQuery(
-    [model, uri, enableId && enableId],
+    [model, uri, injectQuery && enableId],
     async ({ signal }) => {
       return await axios.get(`${BASE_ENDPOINT}${uri}`, {
         signal,
@@ -241,7 +243,7 @@ export const useGet = ({
     {
       onSuccess,
       onError: (err) => console.log(err),
-      enabled: !enableId ? true : !!enableId,
+      enabled: !!enableId,
       ...others,
     }
   );
