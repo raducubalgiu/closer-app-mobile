@@ -9,14 +9,13 @@ import {
   RatingsTab,
   TopTabContainer,
 } from "../../../components/customized/index";
-import theme from "../../../assets/styles/theme";
 import { Header } from "../../../components/core";
 
 export const ProfileStatsScreen = ({ route }) => {
   const { initialRoute, username, userId, role } = route.params;
   const { ratingsQuantity, followersCount, followingsCount } = route.params;
-  const Tab = createMaterialTopTabNavigator();
   const { t } = useTranslation();
+  const Tab = createMaterialTopTabNavigator();
 
   const Ratings = useCallback(() => <RatingsTab userId={userId} />, [userId]);
   const Followers = useCallback(
@@ -60,9 +59,5 @@ const styles = StyleSheet.create({
   screen: {
     backgroundColor: "white",
     flex: 1,
-  },
-  heading: {
-    color: theme.lightColors.black,
-    fontSize: 16,
   },
 });
