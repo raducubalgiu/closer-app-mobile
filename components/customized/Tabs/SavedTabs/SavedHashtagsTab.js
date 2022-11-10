@@ -1,7 +1,7 @@
 import { FlatList } from "react-native";
 import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { useGetPaginate } from "../../../../hooks";
 import { Spinner } from "../../../core";
@@ -10,20 +10,22 @@ import { HashtagListItem } from "../../ListItems/HashtagListItem";
 export const SavedHashtagsTab = ({ user }) => {
   const { t } = useTranslation();
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
 
-  const { data, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
-    useGetPaginate({
-      model: "hashtags",
-      uri: `/users/${user?._id}/hashtags/bookmarks`,
-      limit: "25",
-    });
-
-  const noFoundMessage = (
-    <NoFoundMessage
-      title={t("hashtags")}
-      description={t("noFoundSavedHashtags")}
-    />
-  );
+  const {
+    data,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isPreviousData,
+    isFetching,
+  } = useGetPaginate({
+    model: "hashtags",
+    uri: `/users/${user?._id}/hashtags/bookmarks`,
+    limit: "25",
+    enabled: !isPreviousData && isFocused,
+  });
 
   const renderHashtags = useCallback(({ item }) => {
     const { name, postsCount } = item?.hashtag;
@@ -55,21 +57,28 @@ export const SavedHashtagsTab = ({ user }) => {
 
   const { pages } = data || {};
 
+  const noFoundMessage = !isLoading &&
+    !isFetchingNextPage &&
+    pages[0]?.results?.length === 0 && (
+      <NoFoundMessage
+        title={t("hashtags")}
+        description={t("noFoundSavedHashtags")}
+      />
+    );
+
   return (
-    <FlatList
-      ListHeaderComponent={
-        !isLoading &&
-        !isFetchingNextPage &&
-        pages[0]?.results?.length === 0 &&
-        noFoundMessage
-      }
-      contentContainerStyle={{ padding: 15 }}
-      data={pages?.map((page) => page.results).flat()}
-      keyExtractor={keyExtractor}
-      renderItem={renderHashtags}
-      ListFooterComponent={showSpinner}
-      onEndReached={loadMore}
-      onEndReachedThreshold={0.3}
-    />
+    <>
+      {isFetching && isLoading && !isFetchingNextPage && <Spinner />}
+      <FlatList
+        ListHeaderComponent={noFoundMessage}
+        contentContainerStyle={{ padding: 15 }}
+        data={pages?.map((page) => page.results).flat()}
+        keyExtractor={keyExtractor}
+        renderItem={renderHashtags}
+        ListFooterComponent={showSpinner}
+        onEndReached={loadMore}
+        onEndReachedThreshold={0.3}
+      />
+    </>
   );
 };

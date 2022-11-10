@@ -1,6 +1,6 @@
 import { FlatList } from "react-native";
 import React, { useCallback } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { CardPostImage } from "../../Cards/CardPostImage";
 import { useGetPaginate } from "../../../../hooks";
@@ -10,6 +10,7 @@ import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 export const SavedPostsTab = ({ user }) => {
   const navigation = useNavigation();
   const { t } = useTranslation();
+  const isFocused = useIsFocused();
 
   const {
     data,
@@ -18,10 +19,12 @@ export const SavedPostsTab = ({ user }) => {
     isFetchingNextPage,
     isLoading,
     isFetching,
+    isPreviousData,
   } = useGetPaginate({
     model: "posts",
     uri: `/users/${user?._id}/posts/bookmarks`,
     limit: "21",
+    enabled: !isPreviousData && isFocused,
   });
 
   const renderPosts = useCallback(({ item, index }) => {
@@ -48,10 +51,6 @@ export const SavedPostsTab = ({ user }) => {
 
   const keyExtractor = useCallback((item) => item._id, []);
 
-  const noFoundMessage = (
-    <NoFoundMessage title={t("posts")} description={t("noFoundSavedPosts")} />
-  );
-
   const loadMore = () => {
     if (hasNextPage) {
       fetchNextPage();
@@ -68,16 +67,17 @@ export const SavedPostsTab = ({ user }) => {
 
   const { pages } = data || {};
 
+  const noFoundMessage = !isLoading &&
+    !isFetchingNextPage &&
+    pages[0]?.results?.length === 0 && (
+      <NoFoundMessage title={t("posts")} description={t("noFoundSavedPosts")} />
+    );
+
   return (
     <>
-      {(isFetching || isLoading) && !isFetchingNextPage && <Spinner />}
+      {isFetching && isLoading && !isFetchingNextPage && <Spinner />}
       <FlatList
-        ListHeaderComponent={
-          !isLoading &&
-          !isFetchingNextPage &&
-          pages[0]?.results?.length === 0 &&
-          noFoundMessage
-        }
+        ListHeaderComponent={noFoundMessage}
         data={pages?.map((page) => page.results).flat()}
         keyExtractor={keyExtractor}
         numColumns={3}

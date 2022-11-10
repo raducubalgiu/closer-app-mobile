@@ -5,16 +5,26 @@ import { Spinner } from "../../../core";
 import { FlatList } from "react-native-gesture-handler";
 import { CardProduct } from "../../Cards/CardProduct";
 import { useGetPaginate } from "../../../../hooks";
+import { useIsFocused } from "@react-navigation/native";
 
 export const SavedProductsTab = ({ user }) => {
   const { t } = useTranslation();
+  const isFocused = useIsFocused();
 
-  const { data, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
-    useGetPaginate({
-      model: "products",
-      uri: `/users/${user?._id}/products/bookmarks`,
-      limit: "10",
-    });
+  const {
+    data,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isFetching,
+    isPreviousData,
+  } = useGetPaginate({
+    model: "products",
+    uri: `/users/${user?._id}/products/bookmarks`,
+    limit: "10",
+    enabled: !isPreviousData && isFocused,
+  });
 
   const renderProduct = useCallback(({ item }) => {
     const { product, user: owner } = item;
@@ -24,13 +34,6 @@ export const SavedProductsTab = ({ user }) => {
   }, []);
 
   const keyExtractor = useCallback((item) => item._id, []);
-
-  const noFoundMessage = (
-    <NoFoundMessage
-      title={t("products")}
-      description={t("noFoundSavedProducts")}
-    />
-  );
 
   const loadMore = () => {
     if (hasNextPage) {
@@ -48,20 +51,27 @@ export const SavedProductsTab = ({ user }) => {
 
   const { pages } = data || {};
 
+  const noFoundMessage = !isLoading &&
+    !isFetchingNextPage &&
+    pages[0]?.results?.length === 0 && (
+      <NoFoundMessage
+        title={t("products")}
+        description={t("noFoundSavedProducts")}
+      />
+    );
+
   return (
-    <FlatList
-      ListHeaderComponent={
-        !isLoading &&
-        !isFetchingNextPage &&
-        pages[0]?.results?.length === 0 &&
-        noFoundMessage
-      }
-      data={pages?.map((page) => page.results).flat()}
-      keyExtractor={keyExtractor}
-      renderItem={renderProduct}
-      ListFooterComponent={showSpinner}
-      onEndReached={loadMore}
-      onEndReachedThreshold={0.3}
-    />
+    <>
+      {isFetching && isLoading && !isFetchingNextPage && <Spinner />}
+      <FlatList
+        ListHeaderComponent={noFoundMessage}
+        data={pages?.map((page) => page.results).flat()}
+        keyExtractor={keyExtractor}
+        renderItem={renderProduct}
+        ListFooterComponent={showSpinner}
+        onEndReached={loadMore}
+        onEndReachedThreshold={0.3}
+      />
+    </>
   );
 };
