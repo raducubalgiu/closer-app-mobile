@@ -1,4 +1,4 @@
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import axios from "axios";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -271,7 +271,7 @@ export const useGetMutate = ({ uri, onSuccess }) => {
   return mutations;
 };
 
-export const useGetPaginate = ({ model, uri, limit }) => {
+export const useGetPaginate = ({ model, uri, limit, enabled = true }) => {
   const { user } = useAuth();
 
   const fetchData = async (page, uri, limit, signal) => {
@@ -291,6 +291,7 @@ export const useGetPaginate = ({ model, uri, limit }) => {
           return lastPage.next;
         }
       },
+      enabled,
     }
   );
 

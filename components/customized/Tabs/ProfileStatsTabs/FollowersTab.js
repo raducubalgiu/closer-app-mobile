@@ -5,6 +5,7 @@ import { Spinner } from "../../../core";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { UserListItem } from "../../ListItems/UserListItem";
 import { useGetPaginate } from "../../../../hooks";
+import { useIsFocused } from "@react-navigation/native";
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -13,6 +14,7 @@ const wait = (timeout) => {
 export const FollowersTab = ({ userId }) => {
   const [refreshing, setRefreshing] = useState(false);
   const { t } = useTranslation();
+  const isFocused = useIsFocused();
 
   const {
     data,
@@ -22,10 +24,12 @@ export const FollowersTab = ({ userId }) => {
     isLoading,
     isFetching,
     refetch,
+    isPreviousData,
   } = useGetPaginate({
     model: "followers",
     uri: `/users/${userId}/followers`,
     limit: "20",
+    enabled: !isPreviousData && isFocused,
   });
 
   const renderPerson = useCallback(
