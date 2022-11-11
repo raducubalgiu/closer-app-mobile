@@ -21,12 +21,14 @@ export const MessageNewScreen = () => {
 
   const renderPerson = useCallback(
     ({ item }) => {
+      const { avatar, username, checkmark, name } = item.user;
+
       return (
         <UserListItemSimple
-          avatar={item?.avatar}
-          profession={item?.username}
-          checkmark={item?.checkmark}
-          name={item?.name}
+          avatar={avatar}
+          profession={username}
+          checkmark={checkmark}
+          name={name}
           onGoToUser={() => navigation.navigate("MessageItem", { item })}
         />
       );
@@ -34,7 +36,7 @@ export const MessageNewScreen = () => {
     [search]
   );
 
-  const keyExtractor = useCallback((item) => item?._id, []);
+  const keyExtractor = useCallback((item) => item?.user._id, []);
 
   const updateSearch = (text) => {
     setSearch(text);

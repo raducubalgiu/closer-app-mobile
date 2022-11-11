@@ -77,6 +77,7 @@ export const CardProduct = ({
           profession={user?.profession.name}
           avatar={user?.avatar}
           onGoToUser={goToOwner}
+          sx={{ marginTop: 15 }}
         />
       )}
       <Protected roles={[SECOND_ROLE, THIRD_ROLE]} userRole={userContext.role}>

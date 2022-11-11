@@ -4,12 +4,13 @@ import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../hooks/auth";
 import { useTranslation } from "react-i18next";
 import * as Haptics from "expo-haptics";
-import { useDelete, useGet, usePost } from "../../../hooks";
+import { useDelete, usePost } from "../../../hooks";
 
 const { primary, black } = theme.lightColors;
 
 export const FollowButton = ({
   followeeId,
+  isFollow,
   fetchSuggested,
   fullWidth,
   size,
@@ -17,15 +18,9 @@ export const FollowButton = ({
   sxBtnText,
 }) => {
   const { user, setUser } = useAuth();
-  const [follow, setFollow] = useState(true);
+  const [follow, setFollow] = useState(isFollow);
   const FOLLOW_ENDPOINT = `/users/${user?._id}/followings/${followeeId}/follows`;
   const { t } = useTranslation();
-
-  useGet({
-    model: "checkFollow",
-    uri: FOLLOW_ENDPOINT,
-    onSuccess: (res) => setFollow(res.data.status),
-  });
 
   const { mutate: makePost } = usePost({
     uri: FOLLOW_ENDPOINT,

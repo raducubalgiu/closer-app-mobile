@@ -10,9 +10,13 @@ import React, { useState, useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { Divider } from "@rneui/themed";
-import { MessageListItem, UserListItemSimple } from "../components/customized";
+import {
+  MessageListItem,
+  UserListItem,
+  UserListItemSimple,
+} from "../components/customized";
 import theme from "../assets/styles/theme";
-import { useAuth, useGet } from "../hooks";
+import { useAuth, useGet, useGetPaginate } from "../hooks";
 import {
   SearchBarInput,
   Header,
@@ -21,43 +25,7 @@ import {
   Heading,
 } from "../components/core";
 
-const { grey0, black } = theme.lightColors;
-
-const messages = [
-  {
-    _id: "1",
-    name: "Raducu Balgiu",
-    username: "raducubalgiu",
-    avatar: [],
-    checkmark: false,
-    message: "Hey dude, can i take your time to respond to my question?",
-    date: "23 ian",
-    followersCount: 100,
-    followingsCount: 50,
-  },
-  {
-    _id: "2",
-    name: "Mihai Gindac",
-    username: "raducubalgiu",
-    avatar: [],
-    checkmark: false,
-    message: "Ce tare a fost la mare",
-    date: "23 ian",
-    followersCount: 1,
-    followingsCount: 21,
-  },
-  {
-    _id: "3",
-    name: "Oprea Laurentiu",
-    username: "raducubalgiu",
-    avatar: [],
-    checkmark: false,
-    message: "Salut Radu",
-    date: "23 ian",
-    followersCount: 10,
-    followingsCount: 25,
-  },
-];
+const { grey0 } = theme.lightColors;
 
 export const MessagesScreen = () => {
   const { user } = useAuth();
@@ -65,15 +33,6 @@ export const MessagesScreen = () => {
   const [search, setSearch] = useState("");
   const navigation = useNavigation();
   const { t } = useTranslation();
-
-  const { data: suggestedUsers } = useGet({
-    model: "users",
-    uri: `/users/${user?._id}/followings?page=1&limit=20`,
-  });
-
-  const updateSearch = (text) => {
-    setSearch(text);
-  };
 
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -86,24 +45,38 @@ export const MessagesScreen = () => {
     });
   }, []);
 
-  const renderMessages = useCallback(({ item }) => (
-    <MessageListItem
-      onPress={() => navigation.navigate("MessageItem", { item })}
-      avatar={item.avatar}
-      name={item.name}
-      checkmark={item.checkmark}
-      message={item.message}
-      date={item.date}
-    />
-  ));
+  const refreshControl = (
+    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+  );
+
+  const { data: suggestedUsers } = useGet({
+    model: "users",
+    uri: `/users/${user?._id}/followings?page=1&limit=20`,
+  });
+
+  const { data } = useGetPaginate({
+    model: "conversations",
+    uri: `/users/${user._id}/conversations`,
+    limit: "20",
+  });
+
+  const { pages } = data || {};
+
+  const renderMessages = useCallback(
+    ({ item }) => (
+      <MessageListItem
+        onPress={() => navigation.navigate("MessageItem", { item })}
+        conversation={item}
+      />
+    ),
+    []
+  );
 
   const header = (
     <>
-      {messages.length === 0 && (
-        <Stack sx={{ paddingVertical: 15 }}>
-          <Text style={{ color: grey0 }}>{t("noFoundMessage")}</Text>
-        </Stack>
-      )}
+      <Stack sx={{ paddingVertical: 15 }}>
+        <Text style={{ color: grey0 }}>{t("noFoundMessage")}</Text>
+      </Stack>
       <Divider />
       <Heading title={t("following")} />
     </>
@@ -111,13 +84,10 @@ export const MessagesScreen = () => {
 
   const renderSuggestedUser = useCallback(
     ({ item }) => (
-      <UserListItemSimple
-        avatar={item.avatar}
-        followeeId={item._id}
-        profession={item.username}
-        name={item.name}
-        checkmark={item.checkmark}
-        onGoToUser={() => navigation.navigate("MessageItem", { item })}
+      <UserListItem
+        user={item.user}
+        isFollow={false}
+        avatar={item.user.avatar}
       />
     ),
     []
@@ -128,12 +98,8 @@ export const MessagesScreen = () => {
       ListHeaderComponent={header}
       data={suggestedUsers?.results}
       renderItem={renderSuggestedUser}
-      keyExtractor={useCallback((item) => item?._id, [])}
+      keyExtractor={useCallback((item) => item?.user._id, [])}
     />
-  );
-
-  const refreshControl = (
-    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
   );
 
   return (
@@ -151,14 +117,14 @@ export const MessagesScreen = () => {
             showCancel={false}
             placeholder={t("search")}
             value={search}
-            updateValue={updateSearch}
+            updateValue={(text) => setSearch(text)}
           />
         </View>
         <FlatList
           refreshControl={refreshControl}
           ListHeaderComponent={<Heading title={t("messages")} />}
           showsVerticalScrollIndicator={false}
-          data={messages}
+          data={pages?.map((page) => page.results).flat()}
           keyExtractor={useCallback((item) => item?._id, [])}
           renderItem={renderMessages}
           ListFooterComponent={footer}

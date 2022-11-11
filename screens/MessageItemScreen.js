@@ -3,11 +3,9 @@ import {
   StyleSheet,
   FlatList,
   KeyboardAvoidingView,
-  View,
-  Dimensions,
 } from "react-native";
 import React, { useCallback, useState } from "react";
-import { usePost, useAuth, useGet } from "../hooks";
+import { usePost, useAuth, useGet, useGetPaginate } from "../hooks";
 import {
   FooterMessageItem,
   CardMessageUser,
@@ -18,8 +16,6 @@ import {
 import { Divider } from "@rneui/themed";
 import moment from "moment";
 import { Spinner } from "../components/core";
-
-const { height } = Dimensions.get("window");
 
 export const MessageItemScreen = ({ route }) => {
   const { user } = useAuth();
@@ -88,7 +84,7 @@ export const MessageItemScreen = ({ route }) => {
     setMessage("");
     sendMessage({
       message: { text: message },
-      receiver: userId,
+      receiver: _id,
     });
   };
 
@@ -97,7 +93,7 @@ export const MessageItemScreen = ({ route }) => {
       {(isLoading || isRefetching) && <Spinner sx={{ marginVertical: 25 }} />}
       {!hasNext && !isLoading && !isFetching && (
         <CardMessageUser
-          sx={!messages.length && { marginBottom: 400 }}
+          sx={!messages.length && { marginBottom: 375 }}
           name={name}
           username={username}
           avatar={avatar}
@@ -113,44 +109,41 @@ export const MessageItemScreen = ({ route }) => {
   }, [hasNext, page]);
 
   return (
-    <>
-      <View style={styles.statusBar}></View>
-      <SafeAreaView style={styles.screen}>
-        <HeaderMessageItem
-          name={name}
-          username={username}
-          avatar={avatar}
-          checkmark={checkmark}
+    <SafeAreaView style={styles.screen}>
+      <HeaderMessageItem
+        name={name}
+        username={username}
+        avatar={avatar}
+        checkmark={checkmark}
+      />
+      <Divider color="#ddd" />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.screen}
+        keyboardVerticalOffset={10}
+      >
+        <FlatList
+          inverted
+          ListFooterComponent={header}
+          initialScrollIndex={0}
+          getItemLayout={getItemLayout}
+          data={messages}
+          renderItem={renderMessage}
+          keyExtractor={keyExtractor}
+          contentContainerStyle={styles.flatList}
+          onEndReached={onEndReach}
+          onEndReachedThreshold={0}
+          removeClippedSubviews={true}
+          maxToRenderPerBatch={15}
+          initialNumToRender={15}
         />
-        <Divider color="#ddd" />
-        <KeyboardAvoidingView
-          behavior="position"
-          style={styles.screen}
-          keyboardVerticalOffset={50}
-        >
-          <FlatList
-            inverted
-            ListFooterComponent={header}
-            initialScrollIndex={0}
-            getItemLayout={getItemLayout}
-            data={messages}
-            renderItem={renderMessage}
-            keyExtractor={keyExtractor}
-            contentContainerStyle={styles.flatList}
-            onEndReached={onEndReach}
-            onEndReachedThreshold={0}
-            removeClippedSubviews={true}
-            maxToRenderPerBatch={15}
-            initialNumToRender={15}
-          />
-          <FooterMessageItem
-            message={message}
-            onSendMessage={onSendMessage}
-            onChangeText={(text) => setMessage(text)}
-          />
-        </KeyboardAvoidingView>
-      </SafeAreaView>
-    </>
+        <FooterMessageItem
+          message={message}
+          onSendMessage={onSendMessage}
+          onChangeText={(text) => setMessage(text)}
+        />
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 
@@ -158,17 +151,8 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: "white",
-    paddingBottom: 50,
-  },
-  statusBar: {
-    backgroundColor: "white",
-    alignItems: "center",
-    justifyContent: "center",
-    height: 50,
-    zIndex: 1000,
   },
   flatList: {
     padding: 15,
-    minHeight: height - 200,
   },
 });
