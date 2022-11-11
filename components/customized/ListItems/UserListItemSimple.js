@@ -11,9 +11,10 @@ export const UserListItemSimple = ({
   avatar,
   profession,
   onGoToUser,
+  sx,
 }) => {
   return (
-    <Stack align="start" sx={styles.owner}>
+    <Stack align="start" sx={{ ...styles.owner, ...sx }}>
       <Stack direction="row">
         <CustomAvatar avatar={avatar} size={50} iconSize={17.5} />
         <Button onPress={onGoToUser}>
