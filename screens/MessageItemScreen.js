@@ -5,7 +5,8 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import React, { useCallback, useState } from "react";
-import { usePost, useAuth, useGet, useGetPaginate } from "../hooks";
+import { Camera } from "expo-camera";
+import { usePost, useAuth, useGet } from "../hooks";
 import {
   FooterMessageItem,
   CardMessageUser,
@@ -16,15 +17,18 @@ import {
 import { Divider } from "@rneui/themed";
 import moment from "moment";
 import { Spinner } from "../components/core";
+import { useNavigation } from "@react-navigation/native";
 
 export const MessageItemScreen = ({ route }) => {
   const { user } = useAuth();
+  const [permission, requestPermission] = Camera.useCameraPermissions();
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
   const { _id, name, username, avatar, checkmark } = route.params?.item;
   const { followersCount, followingsCount } = route.params?.item;
   const [page, setPage] = useState(1);
   const [hasNext, setHasNext] = useState(false);
+  const navigation = useNavigation();
 
   const onReceiveData = (res) => {
     setMessages((messages) => messages.concat(res.data.messages));
@@ -108,6 +112,12 @@ export const MessageItemScreen = ({ route }) => {
     if (hasNext) setPage(page + 1);
   }, [hasNext, page]);
 
+  const handleOpenCamera = () => {
+    if (permission.granted) {
+      navigation.navigate("Camera", { name, avatar });
+    }
+  };
+
   return (
     <SafeAreaView style={styles.screen}>
       <HeaderMessageItem
@@ -139,6 +149,7 @@ export const MessageItemScreen = ({ route }) => {
         />
         <FooterMessageItem
           message={message}
+          onOpenCamera={handleOpenCamera}
           onSendMessage={onSendMessage}
           onChangeText={(text) => setMessage(text)}
         />

@@ -284,5 +284,6 @@
   "send": "Trimite",
   "sendMessage": "Trimite mesaj",
   "messages": "Mesaje",
-  "newMessage": "Mesaj nou"
+  "newMessage": "Mesaj nou",
+  "to": "Către"
 }

@@ -31,7 +31,6 @@ export const CardProduct = ({
       product,
       service,
       owner: user,
-      hours,
       employee,
     });
 

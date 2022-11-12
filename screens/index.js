@@ -55,3 +55,4 @@ export { LoginScreen } from "./User/Auth/LoginScreen";
 export { RegisterBusinessScreen } from "./User/Auth/RegisterBusinessScreen";
 export { RegisterScreen } from "./User/Auth/RegisterScreen";
 export { UsernameScreen } from "./User/Auth/UsernameScreen";
+export { CameraScreen } from "./CameraScreen";

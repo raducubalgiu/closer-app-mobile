@@ -1,19 +1,12 @@
 import { SafeAreaView, StyleSheet, View, ScrollView } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { IconButton } from "../../../components/core";
 import theme from "../../../assets/styles/theme";
-import {
-  useSheet,
-  useAuth,
-  usePost,
-  useGet,
-  useGetMutate,
-} from "../../../hooks";
+import { useAuth, useGet, useGetMutate } from "../../../hooks";
 import {
   ProfileOverview,
   HeaderProfileGeneral,
   SuggestedUsersList,
-  FollowUserSheet,
   TopTabProfile,
   FollowButton,
 } from "../../../components/customized";
@@ -24,7 +17,7 @@ const { black } = theme.lightColors;
 export const ProfileGeneralScreen = ({ route }) => {
   const { user } = useAuth();
   const { userId, username, avatar, name, checkmark } = route.params;
-  const { searchedUser, service, option } = route.params;
+  const { service, option } = route.params;
   const [suggested, setSuggested] = useState([]);
   const navigation = useNavigation();
 
@@ -32,32 +25,29 @@ export const ProfileGeneralScreen = ({ route }) => {
     model: "fetchUser",
     uri: `/users/${username}`,
   });
-  const { mutate: makePost } = usePost({ uri: `/searches` });
+
   const { mutate: handleSuggested, isLoading } = useGetMutate({
-    uri: `/users/${userId}/get-suggested`,
+    uri: `/users/${userDetails?._id}/get-suggested`,
     onSuccess: (res) => setSuggested(res.data),
   });
 
-  useEffect(() => {
-    if (searchedUser) {
-      makePost({ searchedUser, user: user?._id });
-    }
-  }, [searchedUser]);
+  const { data: follow } = useGet({
+    model: "checkFollow",
+    uri: `/users/${user._id}/followings/${userId || userDetails?._is}/follows`,
+  });
 
-  const closeSheet = () => SHOW_BS();
-  const sheetContent = (
-    <FollowUserSheet
-      userId={userId}
-      avatar={avatar}
-      handleSuggested={handleSuggested}
-      fetchUser={() => {}}
-    />
-  );
-  const { BOTTOM_SHEET, SHOW_BS } = useSheet(
-    ["1%", "45%"],
-    sheetContent,
-    closeSheet
-  );
+  const goToMessage = () =>
+    navigation.navigate("MessageItem", {
+      item: {
+        _id: userDetails?._id,
+        username,
+        avatar,
+        name,
+        checkmark,
+        followersCount: userDetails?.followersCount,
+        followingsCount: userDetails?.followingsCount,
+      },
+    });
 
   return (
     <View style={styles.container}>
@@ -65,7 +55,7 @@ export const ProfileGeneralScreen = ({ route }) => {
         <HeaderProfileGeneral
           username={username}
           checkmark={checkmark}
-          onOpenNotifications={SHOW_BS}
+          onOpenNotifications={null}
         />
       </SafeAreaView>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -77,30 +67,21 @@ export const ProfileGeneralScreen = ({ route }) => {
         >
           <FollowButton
             size="md"
-            followeeId={userId}
+            isFollow={follow?.status}
+            followeeId={userId || userDetails?._id}
             fetchSuggested={handleSuggested}
             fetchUser={() => {}}
           />
-          <IconButton
-            sx={styles.iconBtn}
-            size={20}
-            color={black}
-            iconType="feather"
-            iconName="message-circle"
-            onPress={() =>
-              navigation.navigate("MessageItem", {
-                item: {
-                  _id: userId,
-                  username,
-                  avatar,
-                  name,
-                  checkmark,
-                  followersCount: userDetails?.followersCount,
-                  followingsCount: userDetails?.followingsCount,
-                },
-              })
-            }
-          />
+          {follow?.status && (
+            <IconButton
+              sx={styles.iconBtn}
+              size={20}
+              color={black}
+              iconType="feather"
+              iconName="message-circle"
+              onPress={goToMessage}
+            />
+          )}
           <IconButton
             sx={styles.iconBtn}
             size={20}
@@ -128,15 +109,14 @@ export const ProfileGeneralScreen = ({ route }) => {
         )}
         <View style={styles.tabsCont}>
           <TopTabProfile
-            userId={userId}
+            user={userDetails}
+            userId={userId || userDetails?._id}
             username={username}
             service={service}
             option={option}
-            user={userDetails}
           />
         </View>
       </ScrollView>
-      {BOTTOM_SHEET}
     </View>
   );
 };

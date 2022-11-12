@@ -33,7 +33,7 @@ export const MessReceivedItem = ({
     <Stack align="start" justify="start" sx={{ marginBottom: 5 }}>
       {displayDate && <MessDateItem date={date} />}
       <Stack direction="row">
-        <Stack direction="row" align="start" justify="start" sx={{ flex: 1 }}>
+        <Stack direction="row" align="end" justify="start" sx={{ flex: 1 }}>
           {displayAvatar && (
             <Stack sx={{ width: 30 }}>
               <CustomAvatar avatar={avatar} size={30} iconSize={15} />

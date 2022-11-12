@@ -48,7 +48,7 @@ export const ProfileStatsScreen = ({ route }) => {
         <Tab.Screen
           name="Following"
           component={Followings}
-          options={{ tabBarLabel: `${followingsCount} ${t("followings")}` }}
+          options={{ tabBarLabel: `${followingsCount} ${t("following")}` }}
         />
       </TopTabContainer>
     </View>

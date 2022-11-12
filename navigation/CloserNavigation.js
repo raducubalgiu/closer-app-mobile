@@ -67,6 +67,7 @@ import {
   RegisterBusinessScreen,
   RegisterScreen,
   UsernameScreen,
+  CameraScreen,
 } from "../screens";
 
 import TestScreen from "../screens/TestScreen";
@@ -319,6 +320,7 @@ const CloserNavigation = () => {
                 component={AddScheduleScreen}
               />
               <RootStack.Screen name="Test" component={TestScreen} />
+              <RootStack.Screen name="Camera" component={CameraScreen} />
             </RootStack.Navigator>
           </PortalProvider>
         );

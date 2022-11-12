@@ -5,13 +5,22 @@ import { useTranslation } from "react-i18next";
 
 const { primary } = theme.lightColors;
 
-export const FooterMessageItem = ({ message, onChangeText, onSendMessage }) => {
+export const FooterMessageItem = ({
+  message,
+  onChangeText,
+  onSendMessage,
+  onOpenCamera,
+}) => {
   const { t } = useTranslation();
 
   return (
     <Stack direction="row" sx={styles.inputContainer}>
       <Stack direction="row" justify="start" sx={{ flex: 1 }}>
-        <IconButton iconName="camera" iconType="feather" />
+        <IconButton
+          iconName="camera"
+          iconType="feather"
+          onPress={onOpenCamera}
+        />
         <TextInput
           onChangeText={(text) => onChangeText(text)}
           value={message}
