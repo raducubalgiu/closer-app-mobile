@@ -1,11 +1,16 @@
-import { StyleSheet, Text, SafeAreaView, Button, Image } from "react-native";
+import { StyleSheet, Text, SafeAreaView } from "react-native";
 import { useRef, useState } from "react";
 import { Camera, CameraType, FlashMode } from "expo-camera";
-import { shareAsync } from "expo-sharing";
-import { CustomAvatar, IconButton, Stack } from "../components/core";
 import { useNavigation } from "@react-navigation/native";
-import theme from "../assets/styles/theme";
 import { useTranslation } from "react-i18next";
+import { CustomAvatar, IconButton, Stack } from "../components/core";
+import theme from "../assets/styles/theme";
+import {
+  CameraPreview,
+  CloseIconButton,
+  PhotoIconButton,
+  RevertIconButton,
+} from "../components/customized";
 
 const { black, grey0 } = theme.lightColors;
 
@@ -13,7 +18,7 @@ export const CameraScreen = ({ route }) => {
   const { name, avatar } = route.params;
   const [type, setType] = useState(CameraType.back);
   const [flash, setFlash] = useState(FlashMode.off);
-  const [photo, setPhoto] = useState();
+  const [photo, setPhoto] = useState(null);
   let cameraRef = useRef();
   const navigation = useNavigation();
   const { t } = useTranslation();
@@ -30,49 +35,27 @@ export const CameraScreen = ({ route }) => {
   };
 
   if (photo) {
-    let sharePic = () => {
-      shareAsync(photo.uri).then(() => {
-        setPhoto(undefined);
-      });
-    };
+    const handleClosePreview = () => setPhoto(null);
+    const handleDownload = () => {};
+    const handleSendPhoto = () => {};
 
     return (
-      <SafeAreaView style={styles.container}>
-        <Image
-          style={styles.preview}
-          source={{ uri: "data:image/jpg;base64," + photo.base64 }}
-        />
-        <Button title="Share" onPress={sharePic} />
-      </SafeAreaView>
+      <CameraPreview
+        uri={"data:image/jpg;base64," + photo.base64}
+        avatar={avatar}
+        onClosePreview={handleClosePreview}
+        onDownload={handleDownload}
+        onSendPhoto={handleSendPhoto}
+      />
     );
   }
 
-  const toggleCameraType = () => {
+  const handleRevertCamera = () => {
     setType((current) =>
       current === CameraType.back ? CameraType.front : CameraType.back
     );
   };
-
-  let flashName = "flash";
-
-  const handleFlash = () => {
-    switch (flash) {
-      case "off":
-        setFlash(FlashMode.on);
-        flashName = "flash";
-        break;
-      case "on":
-        setFlash(FlashMode.auto);
-        flashName = "flash-auto";
-        break;
-      case "auto":
-        setFlash(FlashMode.off);
-        flashName = "flash-off";
-        break;
-    }
-  };
-
-  const closeCamera = () => navigation.goBack();
+  const handleCloseCamera = () => navigation.goBack();
 
   return (
     <Camera style={styles.screen} ref={cameraRef} type={type}>
@@ -87,23 +70,18 @@ export const CameraScreen = ({ route }) => {
           </Stack>
           <Stack direction="row">
             <IconButton
-              iconName={flashName}
+              iconName="flash"
               iconType="ionicon"
-              size={27.5}
+              size={25}
               color="#ebebe0"
-              onPress={handleFlash}
+              onPress={() => {}}
               sx={{ marginRight: 25 }}
             />
-            <IconButton
-              iconName="close"
-              size={35}
-              color="#ebebe0"
-              onPress={closeCamera}
-            />
+            <CloseIconButton onPress={handleCloseCamera} />
           </Stack>
         </Stack>
         <Stack direction="row" sx={{ margin: 20 }}>
-          <IconButton iconName="photo-library" size={35} color="#ebebe0" />
+          <PhotoIconButton size={35} onPress={() => {}} />
           <IconButton
             iconName="camera"
             iconType="entypo"
@@ -112,13 +90,7 @@ export const CameraScreen = ({ route }) => {
             color={black}
             sx={styles.cameraBtn}
           />
-          <IconButton
-            iconName="refresh-ccw"
-            iconType="feather"
-            size={35}
-            color="#ebebe0"
-            onPress={toggleCameraType}
-          />
+          <RevertIconButton size={35} onPress={handleRevertCamera} />
         </Stack>
       </SafeAreaView>
     </Camera>
@@ -133,10 +105,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-between",
   },
-  preview: {
-    alignSelf: "stretch",
-    flex: 1,
-  },
   user: {
     backgroundColor: "#ebebe0",
     padding: 7.5,
@@ -148,7 +116,7 @@ const styles = StyleSheet.create({
   name: { color: black, fontWeight: "500", fontSize: 13.5 },
   cameraBtn: {
     backgroundColor: "#ebebe0",
-    padding: 20,
+    padding: 17.5,
     borderRadius: 50,
   },
 });

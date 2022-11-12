@@ -110,3 +110,13 @@ export { FollowUserSheet } from "./Sheets/FollowUserSheet";
 export { FiltersContainer } from "../customized/Containers/FiltersContainer";
 
 export { DisplayText } from "../customized/DisplayText/DisplayText";
+
+export { GridRow } from "../customized/Grid/GridRow";
+export { GridColumn } from "../customized/Grid/GridColumn";
+
+export { CameraPreview } from "../customized/CameraPreview/CameraPreview";
+
+export { CloseIconButton } from "../customized/IconButtons/CloseIconButton";
+export { DownloadIconButton } from "../customized/IconButtons/DownloadIconButton";
+export { PhotoIconButton } from "../customized/IconButtons/PhotoIconButton";
+export { RevertIconButton } from "../customized/IconButtons/RevertIconButton";
