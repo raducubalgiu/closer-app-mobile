@@ -1,5 +1,12 @@
 import { useCallback } from "react";
-import { StyleSheet, Text, View, ScrollView, SafeAreaView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  SafeAreaView,
+  FlatList,
+} from "react-native";
 import { Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
@@ -42,6 +49,7 @@ export const EditProfileScreen = () => {
 
   const closeModal = useCallback(() => CLOSE_BS(), []);
   const editProfileSheet = <EditProfileSheet onCloseSheet={closeModal} />;
+
   const { BOTTOM_SHEET, SHOW_BS, CLOSE_BS } = useSheet(
     ["25%", "45%"],
     editProfileSheet,

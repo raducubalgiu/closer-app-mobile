@@ -285,5 +285,14 @@
   "sendMessage": "Trimite mesaj",
   "messages": "Mesaje",
   "newMessage": "Mesaj nou",
-  "to": "Către"
+  "to": "Către",
+  "details": "Detalii",
+  "stopMessages": "Opreşte mesajele",
+  "disableNotifications": "Dezactivează notificările",
+  "block": "Blochează",
+  "deleteConversation": "Şterge conversaţia",
+  "actions": "Acţiuni",
+  "photoDontAccess": "Fotografiile nu au putut fi accesate",
+  "goToSettingsPhoto": "Mergi la setările dispozitivului tău pentru a putea permite accesul la fotografii",
+  "goToSettings": "Mergi la setări"
 }
