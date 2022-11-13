@@ -79,7 +79,7 @@ export const SavedServicesTab = ({ user }) => {
         ListFooterComponent={showSpinner}
         onEndReached={loadMore}
         onEndReachedThreshold={0.3}
-        estimatedItemSize={45}
+        estimatedItemSize={65}
       />
     </>
   );

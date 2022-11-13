@@ -79,7 +79,7 @@ export const SavedHashtagsTab = ({ user }) => {
         ListFooterComponent={showSpinner}
         onEndReached={loadMore}
         onEndReachedThreshold={0.3}
-        estimatedItemSize={42}
+        estimatedItemSize={62}
       />
     </>
   );

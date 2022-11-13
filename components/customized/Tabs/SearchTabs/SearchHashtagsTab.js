@@ -1,4 +1,4 @@
-import { FlatList } from "react-native";
+import { FlashList } from "@shopify/flash-list";
 import React, { useCallback } from "react";
 import { useAuth, useGetPaginate } from "../../../../hooks";
 import { HashtagListItem } from "../../ListItems/HashtagListItem";
@@ -75,7 +75,7 @@ export const SearchHashtagsTab = ({ search }) => {
   return (
     <>
       {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
-      <FlatList
+      <FlashList
         ListHeaderComponent={
           !isLoading &&
           !isFetchingNextPage &&
@@ -85,10 +85,11 @@ export const SearchHashtagsTab = ({ search }) => {
         data={pages?.map((page) => page.results).flat()}
         keyExtractor={keyExtractor}
         renderItem={renderHashtags}
-        contentContainerStyle={{ padding: 15 }}
+        contentContainerStyle={{ paddingVertical: 15 }}
         ListFooterComponent={showSpinner}
         onEndReached={loadMore}
         onEndReachedThreshold={0.3}
+        estimatedItemSize={62}
       />
     </>
   );
