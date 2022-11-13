@@ -1,11 +1,11 @@
-import { FlatList } from "react-native";
+import { FlashList } from "@shopify/flash-list";
+import { useIsFocused } from "@react-navigation/native";
 import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useGetPaginate } from "../../../../hooks";
 import { CardPostImage } from "../../Cards/CardPostImage";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { Spinner } from "../../../core";
-import { useIsFocused } from "@react-navigation/native";
 
 export const HashtagPostsRecentTab = ({ name }) => {
   const { t } = useTranslation();
@@ -67,7 +67,7 @@ export const HashtagPostsRecentTab = ({ name }) => {
   return (
     <>
       {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
-      <FlatList
+      <FlashList
         ListHeaderComponent={noFoundMessage}
         numColumns={3}
         data={pages?.map((page) => page.results).flat()}
@@ -76,6 +76,7 @@ export const HashtagPostsRecentTab = ({ name }) => {
         ListFooterComponent={showSpinner}
         onEndReached={loadMore}
         onEndReachedThreshold={0.3}
+        estimatedItemSize={125}
       />
     </>
   );
