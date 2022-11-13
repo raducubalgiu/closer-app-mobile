@@ -12,6 +12,7 @@ export { useSheet } from "./useSheet";
 export { useSheetView } from "./useSheetView";
 export { useRefresh } from "./useRefresh";
 export { useRefreshByUser } from "./useRefreshByUser";
+export { useRefreshOnFocus } from "./useRefreshOnFocus";
 
 export {
   useHttpGet,
