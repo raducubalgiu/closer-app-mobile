@@ -115,9 +115,6 @@ export { FiltersContainer } from "../customized/Containers/FiltersContainer";
 
 export { DisplayText } from "../customized/DisplayText/DisplayText";
 
-export { GridRow } from "../customized/Grid/GridRow";
-export { GridColumn } from "../customized/Grid/GridColumn";
-
 export { CameraPreview } from "../customized/CameraPreview/CameraPreview";
 
 export { CloseIconButton } from "../customized/IconButtons/CloseIconButton";

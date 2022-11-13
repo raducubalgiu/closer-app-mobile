@@ -1,11 +1,20 @@
+import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, Text } from "react-native";
-import { Icon } from "@rneui/themed";
 import theme from "../../../../assets/styles/theme";
 import { Stack, CustomAvatar, IconBackButton, Checkmark } from "../../../core";
+import { InfoIconButton } from "../../IconButtons/InfoIconButton";
 
-const { black, grey0 } = theme.lightColors;
+const { grey0 } = theme.lightColors;
 
-export const HeaderMessageItem = ({ avatar, name, username, checkmark }) => {
+export const HeaderMessageItem = ({
+  _id,
+  avatar,
+  name,
+  username,
+  checkmark,
+}) => {
+  const navigation = useNavigation();
+
   return (
     <Stack direction="row" sx={styles.container}>
       <Stack direction="row">
@@ -21,16 +30,17 @@ export const HeaderMessageItem = ({ avatar, name, username, checkmark }) => {
           </Stack>
         </Stack>
       </Stack>
-      <Stack direction="row">
-        <Icon name="video" type="feather" color={black} size={25} />
-        <Icon
-          name="shield"
-          type="feather"
-          color={black}
-          size={25}
-          style={{ marginLeft: 20 }}
-        />
-      </Stack>
+      <InfoIconButton
+        onPress={() =>
+          navigation.navigate("MessageSettings", {
+            _id,
+            avatar,
+            name,
+            username,
+            checkmark,
+          })
+        }
+      />
     </Stack>
   );
 };
