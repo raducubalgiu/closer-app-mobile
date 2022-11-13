@@ -1,53 +1,47 @@
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import React, { useCallback, useEffect, useState } from "react";
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  RefreshControl,
+} from "react-native";
+import React, { useCallback, useState } from "react";
 import { Button, Header, Stack } from "../components/core";
 import { NoFoundMessage } from "../components/customized";
-import { useNavigation } from "@react-navigation/native";
+import { Icon } from "@rneui/themed";
 import theme from "../assets/styles/theme";
-import { useAgenda, useAuth, useDates } from "../hooks";
-import axios from "axios";
 import moment from "moment";
+import { Agenda } from "react-native-calendars";
+import { useRefreshByUser } from "../hooks";
 
-const { primary, black, grey0 } = theme.lightColors;
+const { primary, grey0 } = theme.lightColors;
 
 export const CalendarScreen = ({ route }) => {
-  const { user } = useAuth();
-  const { _minDate } = useDates();
-  const { product, service, owner, employee, hours } = route.params || {};
-  const [selectedDay, setSelectedDay] = useState(_minDate);
-  const [loading, setLoading] = useState(true);
+  const { product, service, owner } = route.params || {};
+  const [day, setDay] = useState("2022-11-11");
   const [slots, setSlots] = useState({});
-  const navigation = useNavigation();
+  const [knob, setKnob] = useState(false);
 
-  const { getLocationStartAndEnd, getStartSeconds, NOW } = useDates();
-  const { locationStart, locationEnd } = getLocationStartAndEnd(
-    hours,
-    selectedDay
+  const showKnob = (
+    <>
+      {knob && <Icon name="keyboard-arrow-up" color={grey0} size={30} />}
+      {!knob && <Icon name="keyboard-arrow-down" color={grey0} size={30} />}
+    </>
   );
 
-  const fetchSlots = useCallback(() => {
-    setLoading(true);
-    axios
-      .post(
-        `${process.env.BASE_ENDPOINT}/users/${owner?._id}/schedules/slots?locationStart=${locationStart}&locationEnd=${locationEnd}`,
-        { selectedDay, userId: owner._id, startSeconds: getStartSeconds(NOW) },
-        { headers: { Authorization: `Bearer ${user.token}` } }
-      )
-      .then((res) => {
-        setSlots({ [selectedDay]: res.data });
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
-  }, [selectedDay, user, owner]);
+  // const goToConfirm = (slot) => {
+  //   navigation.navigate("ScheduleConfirm", {
+  //     selectedDay,
+  //     selectedHour: slot,
+  //     service,
+  //     product,
+  //     owner,
+  //     hours,
+  //     employee,
+  //   });
+  // };
 
-  useEffect(() => {
-    fetchSlots();
-  }, [fetchSlots]);
-
-  const renderSlot = (slot) => {
+  const renderSlot = ({ slot }) => {
     return (
       <Button onPress={() => goToConfirm(slot)}>
         <Stack direction="row" justify="start" sx={styles.slot}>
@@ -57,54 +51,68 @@ export const CalendarScreen = ({ route }) => {
     );
   };
 
-  const goToConfirm = (slot) => {
-    navigation.navigate("ScheduleConfirm", {
-      selectedDay,
-      selectedHour: slot,
-      service,
-      product,
-      owner,
-      hours,
-      employee,
-    });
-  };
-
   const noFoundData = (
-    <>
-      {!loading && (
-        <NoFoundMessage
-          title="Nu mai sunt locuri"
-          description="Se pare ca nu mai sunt locuri pentru ziua selectata"
-          iconName="calendar-clock"
-          iconType="material-community"
-          iconSize={60}
-        />
-      )}
-    </>
+    <NoFoundMessage
+      title="Nu mai sunt locuri"
+      description="Se pare ca nu mai sunt locuri pentru ziua selectata"
+      iconName="calendar-clock"
+      iconType="material-community"
+      iconSize={60}
+    />
   );
 
-  const handleDayPress = useCallback((day) => {
-    setSelectedDay(day.dateString);
-  }, []);
+  const handleDayPress = useCallback((day) => setDay(day.dateString), []);
 
-  const { AGENDA } = useAgenda(
-    slots,
-    renderSlot,
-    noFoundData,
-    selectedDay,
-    handleDayPress
+  const schedules = {
+    "2022-11-12": [
+      { slot: "10:30 - 11: 00" },
+      { slot: "11:00 - 11: 30" },
+      { slot: "12:00 - 12: 30" },
+      { slot: "13:00 - 13: 30" },
+      { slot: "14:00 - 14: 30" },
+      { slot: "15:00 - 15: 30" },
+      { slot: "16:00 - 16: 30" },
+      { slot: "16:30 - 17: 00" },
+    ],
+  };
+
+  const refetch = () => {};
+  const { refreshing, refetchByUser } = useRefreshByUser(refetch);
+  const refreshControl = (
+    <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
   );
 
   return (
     <SafeAreaView style={styles.screen}>
-      <View style={styles.container}>
-        <Header
-          title={product?.name}
-          description={moment(selectedDay).format("ll")}
-          divider
-        />
-        {AGENDA}
-      </View>
+      <Header
+        title={product?.name}
+        description={moment(day).format("ll")}
+        divider
+      />
+      <Agenda
+        items={schedules}
+        renderItem={renderSlot}
+        onDayPress={(day) => handleDayPress(day)}
+        renderDay={() => {}}
+        firstDay={1}
+        onCalendarToggled={(k) => setKnob(k)}
+        selected={day}
+        minDate={"2022-08-01"}
+        maxDate={"2022-12-01"}
+        pastScrollRange={3}
+        futureScrollRange={3}
+        renderEmptyDate={() => <View />}
+        renderEmptyData={() => noFoundData}
+        renderKnob={() => showKnob}
+        rowHasChanged={(r1, r2) => r1.text !== r2.text}
+        showClosingKnob={true}
+        disabledByDefault={false}
+        showOnlySelectedDayItems={true}
+        refreshing={refreshing}
+        onRefresh={refetchByUser}
+        refreshControl={refreshControl}
+        theme={styles.agenda}
+      />
     </SafeAreaView>
   );
 };
@@ -113,22 +121,6 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: "white",
-  },
-  container: {
-    flex: 1,
-    justifyContent: "space-between",
-  },
-  product: {
-    fontSize: 17,
-    color: black,
-  },
-  price: {
-    fontSize: 16.5,
-    color: primary,
-  },
-  date: {
-    color: grey0,
-    fontSize: 15,
   },
   slot: {
     marginHorizontal: 15,
@@ -141,10 +133,18 @@ const styles = StyleSheet.create({
   slotText: {
     fontSize: 13,
   },
-  active: {
-    backgroundColor: primary,
-  },
-  activeText: {
-    color: "white",
+  agenda: {
+    agendaDayTextColor: "yellow",
+    agendaDayNumColor: "green",
+    agendaTodayColor: "red",
+    agendaKnobColor: "blue",
+    selectedDayBackgroundColor: primary,
+    textDayFontSize: 14,
+    textDayFontWeight: "500",
+    agendaKnobColor: "red",
+    agendaTodayColor: "red",
+    backgroundColor: "white",
+    nowIndicatorKnob: "red",
+    todayTextColor: primary,
   },
 });

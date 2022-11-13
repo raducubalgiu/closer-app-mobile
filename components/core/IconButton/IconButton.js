@@ -15,7 +15,11 @@ export const IconButton = ({
   ...props
 }) => {
   return (
-    <TouchableOpacity {...props} activeOpacity={1} style={{ ...sx }}>
+    <TouchableOpacity
+      {...props}
+      activeOpacity={1}
+      style={{ padding: 2.5, ...sx }}
+    >
       {!loading && (
         <Icon
           type={iconType}

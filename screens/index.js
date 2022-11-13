@@ -1,10 +1,10 @@
 export { EditBioScreen } from "./User/Profile/EditProfile/EditBioScreen";
 export { EditNameScreen } from "./User/Profile/EditProfile/EditNameScreen";
-export { EditPhotoLibraryScreen } from "./User/Profile/EditProfile/EditPhotoLibraryScreen";
 export { EditProfessionScreen } from "./User/Profile/EditProfile/EditProfessionScreen";
 export { EditProfileScreen } from "./User/Profile/EditProfile/EditProfileScreen";
 export { EditUsernameScreen } from "./User/Profile/EditProfile/EditUsernameScreen";
 export { EditWebsiteScreen } from "./User/Profile/EditProfile/EditWebsiteScreen";
+export { EditAvatarScreen } from "./User/Profile/EditProfile/EditAvatarScreen";
 export { AddJobsScreen } from "./User/Profile/MyBusiness/AddJobsScreen";
 export { AddLocationScreen } from "./User/Profile/MyBusiness/AddLocationScreen";
 export { AddProductsScreen } from "./User/Profile/MyBusiness/AddProductsScreen";
@@ -56,3 +56,5 @@ export { RegisterBusinessScreen } from "./User/Auth/RegisterBusinessScreen";
 export { RegisterScreen } from "./User/Auth/RegisterScreen";
 export { UsernameScreen } from "./User/Auth/UsernameScreen";
 export { CameraScreen } from "./CameraScreen";
+export { MessageSettingsScreen } from "./MessageSettingsScreen";
+export { PhotoLibraryScreen } from "./PhotoLibraryScreen";

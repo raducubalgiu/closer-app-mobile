@@ -1,9 +1,5 @@
-import {
-  FlatList,
-  SafeAreaView,
-  StyleSheet,
-  RefreshControl,
-} from "react-native";
+import { SafeAreaView, StyleSheet, RefreshControl } from "react-native";
+import { FlashList } from "@shopify/flash-list";
 import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Header, Spinner } from "../components/core";
@@ -80,14 +76,15 @@ export const LikesScreen = ({ route }) => {
     <SafeAreaView style={styles.screen}>
       <Header title={t("likes")} divider={true} />
       {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
-      <FlatList
+      <FlashList
         ListHeaderComponent={noFoundMessage}
         refreshControl={refreshControl}
-        contentContainerStyle={{ padding: 15 }}
+        contentContainerStyle={{ paddingVertical: 15 }}
         data={pages?.map((page) => page.results).flat()}
         keyExtractor={keyExtractor}
         renderItem={renderPerson}
         ListFooterComponent={showSpinner}
+        estimatedItemSize={75}
         onEndReached={loadMore}
         onEndReachedThreshold={0.3}
       />

@@ -6,7 +6,7 @@ export const PhotoIconButton = ({ sx, size, onPress }) => {
       iconName="photo-library"
       size={size ? size : 30}
       color="#ebebe0"
-      style={{ ...sx }}
+      sx={{ ...sx }}
       onPress={onPress}
     />
   );

@@ -21,11 +21,11 @@ import { useNavigation } from "@react-navigation/native";
 
 export const MessageItemScreen = ({ route }) => {
   const { user } = useAuth();
-  const [permission, requestPermission] = Camera.useCameraPermissions();
-  const [messages, setMessages] = useState([]);
-  const [message, setMessage] = useState("");
+  const [permission] = Camera.useCameraPermissions();
   const { _id, name, username, avatar, checkmark } = route.params?.item;
   const { followersCount, followingsCount } = route.params?.item;
+  const [messages, setMessages] = useState([]);
+  const [message, setMessage] = useState("");
   const [page, setPage] = useState(1);
   const [hasNext, setHasNext] = useState(false);
   const navigation = useNavigation();
@@ -35,10 +35,17 @@ export const MessageItemScreen = ({ route }) => {
     setHasNext(res.data.hasNext);
   };
 
-  const { isLoading, isRefetching, isFetching } = useGet({
+  const { data: conversation, refetch: refetchIsConversation } = useGet({
+    model: "isConversation",
+    uri: `/users/${user?._id}/conversations/${_id}`,
+  });
+
+  const { isLoading, isRefetching } = useGet({
     model: "messages",
     uri: `/users/${user?._id}/messages/receiver/${_id}?page=${page}&limit=25`,
     onSuccess: onReceiveData,
+    enabled: !!conversation?.status,
+    enableId: conversation?.conversation?._id,
   });
 
   const isSenderSame = (prev, current) => {
@@ -82,29 +89,48 @@ export const MessageItemScreen = ({ route }) => {
     onSuccess: (res) => {
       setMessages((messages) => [{ ...res.data, fromSelf: true }, ...messages]);
     },
+    config: {
+      enabled: !!conversation?.status,
+    },
+  });
+
+  const { mutate: createConversation } = usePost({
+    uri: `/conversations`,
+    onSuccess: (res) => {
+      sendMessage({
+        message: { text: message },
+        receiver: _id,
+        conversation: res.data._id,
+      });
+      refetchIsConversation();
+    },
   });
 
   const onSendMessage = () => {
     setMessage("");
-    sendMessage({
-      message: { text: message },
-      receiver: _id,
-    });
+
+    if (!conversation?.status) {
+      createConversation({ participants: [user?._id, _id] });
+    } else {
+      sendMessage({
+        message: { text: message },
+        receiver: _id,
+        conversation: conversation?.conversation?._id,
+      });
+    }
   };
 
   const header = (
     <>
-      {(isLoading || isRefetching) && <Spinner sx={{ marginVertical: 25 }} />}
-      {!hasNext && !isLoading && !isFetching && (
-        <CardMessageUser
-          sx={!messages.length && { marginBottom: 375 }}
-          name={name}
-          username={username}
-          avatar={avatar}
-          followersCount={followersCount}
-          followingsCount={followingsCount}
-        />
-      )}
+      {isLoading && isRefetching && <Spinner sx={{ marginVertical: 25 }} />}
+      <CardMessageUser
+        sx={!messages.length && { marginBottom: 375 }}
+        name={name}
+        username={username}
+        avatar={avatar}
+        followersCount={followersCount}
+        followingsCount={followingsCount}
+      />
     </>
   );
 
@@ -121,6 +147,7 @@ export const MessageItemScreen = ({ route }) => {
   return (
     <SafeAreaView style={styles.screen}>
       <HeaderMessageItem
+        userId={_id}
         name={name}
         username={username}
         avatar={avatar}
@@ -143,9 +170,6 @@ export const MessageItemScreen = ({ route }) => {
           contentContainerStyle={styles.flatList}
           onEndReached={onEndReach}
           onEndReachedThreshold={0}
-          removeClippedSubviews={true}
-          maxToRenderPerBatch={15}
-          initialNumToRender={15}
         />
         <FooterMessageItem
           message={message}

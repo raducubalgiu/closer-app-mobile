@@ -10,13 +10,15 @@ import React, { useState, useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { Divider } from "@rneui/themed";
-import {
-  MessageListItem,
-  UserListItem,
-  UserListItemSimple,
-} from "../components/customized";
+import { MessageListItem, UserListItem } from "../components/customized";
 import theme from "../assets/styles/theme";
-import { useAuth, useGet, useGetPaginate } from "../hooks";
+import {
+  useAuth,
+  useGet,
+  useGetPaginate,
+  useRefreshByUser,
+  useRefreshOnFocus,
+} from "../hooks";
 import {
   SearchBarInput,
   Header,
@@ -29,36 +31,23 @@ const { grey0 } = theme.lightColors;
 
 export const MessagesScreen = () => {
   const { user } = useAuth();
-  const [refreshing, setRefreshing] = useState(false);
   const [search, setSearch] = useState("");
   const navigation = useNavigation();
   const { t } = useTranslation();
-
-  const wait = (timeout) => {
-    return new Promise((resolve) => setTimeout(resolve, timeout));
-  };
-
-  const onRefresh = useCallback(() => {
-    setRefreshing(true);
-    wait(1000).then(() => {
-      setRefreshing(false);
-    });
-  }, []);
-
-  const refreshControl = (
-    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-  );
 
   const { data: suggestedUsers } = useGet({
     model: "users",
     uri: `/users/${user?._id}/followings?page=1&limit=20`,
   });
 
-  const { data } = useGetPaginate({
+  const { data, refetch } = useGetPaginate({
     model: "conversations",
     uri: `/users/${user._id}/conversations`,
     limit: "20",
   });
+
+  const { refreshing, refetchByUser } = useRefreshByUser(refetch);
+  useRefreshOnFocus(refetch);
 
   const { pages } = data || {};
 
@@ -100,6 +89,9 @@ export const MessagesScreen = () => {
       renderItem={renderSuggestedUser}
       keyExtractor={useCallback((item) => item?.user._id, [])}
     />
+  );
+  const refreshControl = (
+    <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
   );
 
   return (

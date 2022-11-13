@@ -43,7 +43,7 @@ export const UserListItem = ({ user, isFollow, sx }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { marginBottom: 20 },
+  container: { marginBottom: 20, paddingHorizontal: 15 },
   username: {
     fontSize: 15,
     color: black,

@@ -50,7 +50,6 @@ export const useAgenda = (
         agendaTodayColor: "red",
         agendaKnobColor: "blue",
         selectedDayBackgroundColor: primary,
-        textDayFontFamily: "Exo-SemiBold",
         textDayFontSize: 13,
         agendaKnobColor: "red",
         agendaTodayColor: "red",

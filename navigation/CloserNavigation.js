@@ -13,10 +13,10 @@ import {
   EditProfileScreen,
   EditBioScreen,
   EditNameScreen,
-  EditPhotoLibraryScreen,
   EditProfessionScreen,
   EditUsernameScreen,
   EditWebsiteScreen,
+  EditAvatarScreen,
   MyBusinessScreen,
   MyDashboardScreen,
   MyProductsScreen,
@@ -68,6 +68,8 @@ import {
   RegisterScreen,
   UsernameScreen,
   CameraScreen,
+  MessageSettingsScreen,
+  PhotoLibraryScreen,
 } from "../screens";
 
 import TestScreen from "../screens/TestScreen";
@@ -209,6 +211,18 @@ const CloserNavigation = () => {
                 name="EditProfile"
                 component={EditProfileScreen}
               />
+              <RootStack.Group
+                screenOptions={{ presentation: "modal", gestureEnabled: false }}
+              >
+                <RootStack.Screen
+                  name="PhotoLibrary"
+                  component={PhotoLibraryScreen}
+                />
+                <RootStack.Screen
+                  name="EditAvatar"
+                  component={EditAvatarScreen}
+                />
+              </RootStack.Group>
               <RootStack.Screen name="EditName" component={EditNameScreen} />
               <RootStack.Screen
                 name="EditWebsite"
@@ -222,10 +236,6 @@ const CloserNavigation = () => {
               <RootStack.Screen
                 name="EditProfession"
                 component={EditProfessionScreen}
-              />
-              <RootStack.Screen
-                name="EditPhotoLibrary"
-                component={EditPhotoLibraryScreen}
               />
               <RootStack.Screen
                 name="Settings"
@@ -283,6 +293,10 @@ const CloserNavigation = () => {
               <RootStack.Screen
                 name="MessageItem"
                 component={MessageItemScreen}
+              />
+              <RootStack.Screen
+                name="MessageSettings"
+                component={MessageSettingsScreen}
               />
               <RootStack.Screen
                 name="MessageNew"
