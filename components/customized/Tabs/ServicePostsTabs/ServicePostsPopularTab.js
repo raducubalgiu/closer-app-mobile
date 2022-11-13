@@ -1,4 +1,4 @@
-import { FlatList } from "react-native";
+import { FlashList } from "@shopify/flash-list";
 import { useCallback } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import { useGetPaginate } from "../../../../hooks";
@@ -67,7 +67,7 @@ export const ServicePostsPopularTab = ({ serviceId }) => {
   return (
     <>
       {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
-      <FlatList
+      <FlashList
         ListHeaderComponent={
           !isLoading &&
           !isFetchingNextPage &&
@@ -81,6 +81,7 @@ export const ServicePostsPopularTab = ({ serviceId }) => {
         ListFooterComponent={showSpinner}
         onEndReached={loadMore}
         onEndReachedThreshold={0.3}
+        estimatedItemSize={125}
       />
     </>
   );
