@@ -6,6 +6,7 @@ import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { useGetPaginate } from "../../../../hooks";
 import { Spinner } from "../../../core";
 import { HashtagListItem } from "../../ListItems/HashtagListItem";
+import { FlashList } from "@shopify/flash-list";
 
 export const SavedHashtagsTab = ({ user }) => {
   const { t } = useTranslation();
@@ -69,15 +70,16 @@ export const SavedHashtagsTab = ({ user }) => {
   return (
     <>
       {isFetching && isLoading && !isFetchingNextPage && <Spinner />}
-      <FlatList
+      <FlashList
         ListHeaderComponent={noFoundMessage}
-        contentContainerStyle={{ padding: 15 }}
+        contentContainerStyle={{ paddingVertical: 15 }}
         data={pages?.map((page) => page.results).flat()}
         keyExtractor={keyExtractor}
         renderItem={renderHashtags}
         ListFooterComponent={showSpinner}
         onEndReached={loadMore}
         onEndReachedThreshold={0.3}
+        estimatedItemSize={42}
       />
     </>
   );

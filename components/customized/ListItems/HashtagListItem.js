@@ -9,8 +9,8 @@ export const HashtagListItem = ({ name, postsCount, onPress, sx }) => {
   const { t } = useTranslation();
 
   return (
-    <Button onPress={onPress} sx={sx}>
-      <Stack direction="row" sx={{ marginBottom: 20 }}>
+    <Button onPress={onPress} sx={{ ...styles.container, ...sx }}>
+      <Stack direction="row">
         <Stack direction="row">
           <Stack sx={styles.hashtagIc}>
             <Text style={styles.hashtagT}>#</Text>
@@ -28,6 +28,10 @@ export const HashtagListItem = ({ name, postsCount, onPress, sx }) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 15,
+    marginBottom: 20,
+  },
   hashtagIc: {
     paddingVertical: 10,
     paddingHorizontal: 15.5,

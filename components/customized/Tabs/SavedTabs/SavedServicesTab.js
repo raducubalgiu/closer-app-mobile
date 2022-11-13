@@ -1,4 +1,3 @@
-import { FlatList } from "react-native";
 import React, { useCallback } from "react";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
@@ -6,6 +5,7 @@ import { Spinner } from "../../../core";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { ServiceListItem } from "../../ListItems/ServiceListItem";
 import { useGetPaginate } from "../../../../hooks";
+import { FlashList } from "@shopify/flash-list";
 
 export const SavedServicesTab = ({ user }) => {
   const navigation = useNavigation();
@@ -70,15 +70,16 @@ export const SavedServicesTab = ({ user }) => {
   return (
     <>
       {isFetching && isLoading && !isFetchingNextPage && <Spinner />}
-      <FlatList
+      <FlashList
         ListHeaderComponent={noFoundMessage}
-        contentContainerStyle={{ padding: 15 }}
+        contentContainerStyle={{ paddingVertical: 15 }}
         data={pages?.map((page) => page.results).flat()}
         keyExtractor={keyExtractor}
         renderItem={renderService}
         ListFooterComponent={showSpinner}
         onEndReached={loadMore}
         onEndReachedThreshold={0.3}
+        estimatedItemSize={45}
       />
     </>
   );

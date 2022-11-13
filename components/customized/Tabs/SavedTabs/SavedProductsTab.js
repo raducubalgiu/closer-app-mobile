@@ -2,10 +2,10 @@ import React, { useCallback } from "react";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { useTranslation } from "react-i18next";
 import { Spinner } from "../../../core";
-import { FlatList } from "react-native-gesture-handler";
 import { CardProduct } from "../../Cards/CardProduct";
 import { useGetPaginate } from "../../../../hooks";
 import { useIsFocused } from "@react-navigation/native";
+import { FlashList } from "@shopify/flash-list";
 
 export const SavedProductsTab = ({ user }) => {
   const { t } = useTranslation();
@@ -63,7 +63,7 @@ export const SavedProductsTab = ({ user }) => {
   return (
     <>
       {isFetching && isLoading && !isFetchingNextPage && <Spinner />}
-      <FlatList
+      <FlashList
         ListHeaderComponent={noFoundMessage}
         data={pages?.map((page) => page.results).flat()}
         keyExtractor={keyExtractor}
@@ -71,6 +71,7 @@ export const SavedProductsTab = ({ user }) => {
         ListFooterComponent={showSpinner}
         onEndReached={loadMore}
         onEndReachedThreshold={0.3}
+        estimatedItemSize={261}
       />
     </>
   );

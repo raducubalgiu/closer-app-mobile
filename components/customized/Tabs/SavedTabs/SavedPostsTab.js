@@ -1,4 +1,3 @@
-import { FlatList } from "react-native";
 import React, { useCallback } from "react";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
@@ -6,6 +5,7 @@ import { CardPostImage } from "../../Cards/CardPostImage";
 import { useGetPaginate } from "../../../../hooks";
 import { Spinner } from "../../../core";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
+import { FlashList } from "@shopify/flash-list";
 
 export const SavedPostsTab = ({ user }) => {
   const navigation = useNavigation();
@@ -76,7 +76,7 @@ export const SavedPostsTab = ({ user }) => {
   return (
     <>
       {isFetching && isLoading && !isFetchingNextPage && <Spinner />}
-      <FlatList
+      <FlashList
         ListHeaderComponent={noFoundMessage}
         data={pages?.map((page) => page.results).flat()}
         keyExtractor={keyExtractor}
@@ -85,6 +85,7 @@ export const SavedPostsTab = ({ user }) => {
         ListFooterComponent={showSpinner}
         onEndReached={loadMore}
         onEndReachedThreshold={0.3}
+        estimatedItemSize={125}
       />
     </>
   );

@@ -11,8 +11,8 @@ export const ServiceListItem = ({ name, postsCount, onPress, sx }) => {
   const { t } = useTranslation();
 
   return (
-    <Button onPress={onPress} sx={sx}>
-      <Stack direction="row" sx={{ marginBottom: 20 }}>
+    <Button onPress={onPress} sx={{ ...styles.container, ...sx }}>
+      <Stack direction="row">
         <Stack direction="row">
           <Stack sx={styles.icon}>
             <Icon name="tag" type="feather" size={17.5} />
@@ -30,6 +30,10 @@ export const ServiceListItem = ({ name, postsCount, onPress, sx }) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 15,
+    marginBottom: 20,
+  },
   icon: {
     paddingVertical: 12.5,
     paddingHorizontal: 12.5,
