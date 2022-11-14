@@ -1,6 +1,7 @@
 import { StyleSheet, Text, TextInput } from "react-native";
 import { Stack, IconButton, Button } from "../../../core";
 import theme from "../../../../assets/styles/theme";
+import * as Haptics from "expo-haptics";
 import { useTranslation } from "react-i18next";
 
 const { primary } = theme.lightColors;
@@ -19,7 +20,10 @@ export const FooterMessageItem = ({
         <IconButton
           iconName="camera"
           iconType="feather"
-          onPress={onOpenCamera}
+          onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            onOpenCamera();
+          }}
         />
         <TextInput
           onChangeText={(text) => onChangeText(text)}

@@ -7,18 +7,14 @@ import {
 } from "react-native";
 import React, { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { useTranslation } from "react-i18next";
 import { MAIN_ROLE, SECOND_ROLE } from "@env";
 import { Protected, MainButton, CFAB } from "../../../components/core";
 import { SocialIconButton } from "../../../components/core";
 import { useSheet, useAuth } from "../../../hooks";
 import {
-  TopTabContainer,
   ProfileOverview,
   ProfileMenuList,
-  PostsProfileTab,
-  AboutProfileTab,
   HeaderProfile,
   TopTabProfile,
 } from "../../../components/customized";
@@ -27,32 +23,19 @@ const { height } = Dimensions.get("window");
 
 export const ProfileScreen = () => {
   const { user } = useAuth();
-  const { _id, name, username, avatar, checkmark, description, role, hours } =
-    user || {};
-  const { website, location } = user || {};
+  const { name, username, avatar, checkmark, role } = user || {};
   const navigation = useNavigation();
-  const Tab = createMaterialTopTabNavigator();
   const { t } = useTranslation();
-
-  const PostsProfile = useCallback(
-    () => <PostsProfileTab userId={_id} username={username} />,
-    [_id, username]
-  );
-
-  const AboutProfile = useCallback(
-    () => <AboutProfileTab biography={description} userId={user._id} />,
-    [description, website, location, role, hours]
-  );
 
   const closeSheet = useCallback(() => CLOSE_BS(), []);
   const profileMenu = <ProfileMenuList onCloseSheet={closeSheet} />;
   const { BOTTOM_SHEET, SHOW_BS, CLOSE_BS } = useSheet(
-    ["10%", "60%"],
+    [10, "60%"],
     profileMenu,
     closeSheet
   );
-  const navigateBookmarks = () => navigation.navigate("Bookmarks");
-  const navigateProfile = () => navigation.navigate("EditProfile");
+  const navigateBookmarks = () => navigation.navigate("Bookmarks", { user });
+  const navigateProfile = () => navigation.navigate("EditProfile", { user });
   const navigateInstagram = () => {};
   const navigateYoutube = () => {};
 

@@ -1,5 +1,4 @@
 import { StyleSheet, Text } from "react-native";
-import React from "react";
 import { Stack } from "../Stack/Stack";
 import { CheckBox } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
@@ -16,7 +15,7 @@ export const FormInputRadio = ({ text, checked, onPress }) => {
         checked={checked}
         onPress={onPress}
         size={27.5}
-        containerStyle={{ padding: 0 }}
+        containerStyle={{ padding: 5 }}
       />
     </Stack>
   );
@@ -25,6 +24,7 @@ export const FormInputRadio = ({ text, checked, onPress }) => {
 const styles = StyleSheet.create({
   container: {
     marginBottom: 10,
+    paddingLeft: 15,
   },
   text: {
     color: black,

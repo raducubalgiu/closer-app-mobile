@@ -40,7 +40,7 @@ export const HeaderProfile = ({
           </Stack>
           <Stack direction="row">
             <IconButton
-              onPress={() => navigation.navigate("Test")}
+              onPress={() => navigation.navigate("AddPost")}
               size={30}
               iconName="add-circle-outline"
               iconType="ionicon"

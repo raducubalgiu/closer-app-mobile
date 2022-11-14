@@ -1,4 +1,5 @@
-import { FlatList, SafeAreaView, StyleSheet, View } from "react-native";
+import { FlashList } from "@shopify/flash-list";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import { useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
@@ -55,12 +56,12 @@ export const MessageNewScreen = () => {
         />
       </View>
       {isLoading && isFetching && <Spinner />}
-      <FlatList
+      <FlashList
         ListHeaderComponent={<Heading title={t("following")} />}
         data={data?.results}
         renderItem={renderPerson}
         keyExtractor={keyExtractor}
-        contentContainerStyle={{ paddingHorizontal: 15 }}
+        estimatedItemSize={70}
       />
     </View>
   );

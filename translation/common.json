@@ -294,5 +294,7 @@
   "actions": "Acţiuni",
   "photoDontAccess": "Fotografiile nu au putut fi accesate",
   "goToSettingsPhoto": "Mergi la setările dispozitivului tău pentru a putea permite accesul la fotografii",
-  "goToSettings": "Mergi la setări"
+  "goToSettings": "Mergi la setări",
+  "newPost": "Postare nouă",
+  "back": "Înapoi"
 }

@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../hooks/auth";
 import { useTranslation } from "react-i18next";
@@ -18,9 +18,13 @@ export const FollowButton = ({
   sxBtnText,
 }) => {
   const { user, setUser } = useAuth();
-  const [follow, setFollow] = useState(isFollow);
+  const [follow, setFollow] = useState(false);
   const FOLLOW_ENDPOINT = `/users/${user?._id}/followings/${followeeId}/follows`;
   const { t } = useTranslation();
+
+  useEffect(() => {
+    setFollow(isFollow);
+  }, [isFollow]);
 
   const { mutate: makePost } = usePost({
     uri: FOLLOW_ENDPOINT,

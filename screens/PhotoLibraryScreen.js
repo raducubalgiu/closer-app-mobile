@@ -1,21 +1,60 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
-import { Button, Stack } from "../components/core";
+import { useState, useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
-import {
-  CloseIconButton,
-  LibraryAlbumsList,
-  LibraryPhotosList,
-} from "../components/customized";
+import * as MediaLibrary from "expo-media-library";
+import { useFocusEffect } from "@react-navigation/native";
+import { FlashList } from "@shopify/flash-list";
+import { Button, Stack } from "../components/core";
+import { CloseIconButton } from "../components/customized";
 import theme from "../assets/styles/theme";
 import { Icon } from "@rneui/themed";
+import { CardPostImage } from "../components/customized";
 
 const { black } = theme.lightColors;
 
-export const PhotoLibraryScreen = () => {
+export const PhotoLibraryScreen = ({ route }) => {
+  const { album, nav } = route.params || {};
   const navigation = useNavigation();
-  const [assets, setAssets] = useState(true);
-  const [selectedAlbum, setSelectedAlbum] = useState("Recents");
+  const [photos, setPhotos] = useState([]);
+
+  console.log("NAV!!!", nav);
+
+  useFocusEffect(
+    useCallback(() => {
+      let isActive = true;
+
+      const fetchPhotos = async () => {
+        const getPhotos = await MediaLibrary.getAlbumAsync(
+          album ? album : "Recents"
+        );
+        const { assets, endCursor, hasNextPage } =
+          await MediaLibrary.getAssetsAsync({
+            album: getPhotos,
+            mediaType: ["photo"],
+            first: 20,
+            after: endCursor,
+          });
+        setPhotos(assets);
+      };
+
+      fetchPhotos();
+
+      return () => {
+        isActive = false;
+      };
+    }, [album])
+  );
+
+  const renderPhoto = useCallback(({ item, index }) => {
+    return (
+      <CardPostImage
+        index={index}
+        image={item.uri}
+        col={4}
+        onPress={() => navigation.navigate(nav, { uri: item.uri })}
+      />
+    );
+  }, []);
 
   return (
     <View style={styles.screen}>
@@ -25,24 +64,21 @@ export const PhotoLibraryScreen = () => {
           color={black}
           onPress={() => navigation.goBack()}
         />
-        <Button onPress={() => setAssets((assets) => !assets)}>
+        <Button onPress={() => navigation.navigate("PhotoAlbums")}>
           <Stack direction="row">
-            <Text style={styles.title}>{selectedAlbum}</Text>
-            {assets && <Icon name="chevron-down" type="feather" size={22.5} />}
-            {!assets && <Icon name="chevron-up" type="feather" size={22.5} />}
+            <Text style={styles.title}>{album ? album : "Recents"}</Text>
+            <Icon name="chevron-down" type="feather" size={22.5} />
           </Stack>
         </Button>
         <CloseIconButton size={25} color="white" />
       </Stack>
-      {assets && <LibraryPhotosList album={selectedAlbum} />}
-      {!assets && (
-        <LibraryAlbumsList
-          onAssets={(item) => {
-            setSelectedAlbum(item);
-            setAssets(true);
-          }}
-        />
-      )}
+      <FlashList
+        data={photos}
+        keyExtractor={(item) => item.id}
+        numColumns={4}
+        renderItem={renderPhoto}
+        estimatedItemSize={95}
+      />
     </View>
   );
 };

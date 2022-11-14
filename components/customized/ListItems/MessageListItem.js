@@ -2,16 +2,22 @@ import { StyleSheet, Text } from "react-native";
 import { Stack, Checkmark, CustomAvatar, Button } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { trimFunc } from "../../../utils";
+import { useNavigation } from "@react-navigation/native";
 
 const { black, grey0 } = theme.lightColors;
 
-export const MessageListItem = ({ onPress, conversation }) => {
+export const MessageListItem = ({ conversation }) => {
   const { message, user } = conversation;
   const { name, avatar, checkmark } = user;
+  const navigation = useNavigation();
+
+  const goToMessages = () => {
+    navigation.navigate("MessageItem", { item: user });
+  };
 
   return (
-    <Button onPress={onPress}>
-      <Stack direction="row" justify="start" sx={styles.container}>
+    <Button onPress={goToMessages} sx={styles.container}>
+      <Stack direction="row" justify="start">
         <CustomAvatar avatar={avatar} size={50} />
         <Stack direction="row" sx={{ flex: 1 }} align="start">
           <Stack align="start" sx={{ marginLeft: 10 }}>
@@ -32,6 +38,7 @@ export const MessageListItem = ({ onPress, conversation }) => {
 
 const styles = StyleSheet.create({
   container: {
+    paddingHorizontal: 15,
     marginBottom: 20,
     flex: 1,
   },

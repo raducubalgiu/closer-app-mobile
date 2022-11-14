@@ -68,7 +68,7 @@ export const FollowingsTab = ({ userId }) => {
       <FlashList
         ListHeaderComponent={noFoundMessage}
         refreshControl={refreshControl}
-        contentContainerStyle={{ padding: 15 }}
+        contentContainerStyle={{ paddingVertical: 15 }}
         data={pages?.map((page) => page.results).flat()}
         keyExtractor={keyExtractor}
         renderItem={renderPerson}

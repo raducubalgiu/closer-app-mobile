@@ -9,6 +9,26 @@ import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { Spinner } from "../../../core";
 import { useGetPaginate, useRefreshByUser } from "../../../../hooks";
 
+const DUMMY_DATA = {
+  pageParams: 1,
+  pages: [
+    {
+      next: null,
+      results: [
+        {
+          _id: "1",
+          reviewer: {
+            name: "Raducu Balgiu",
+          },
+          rating: 4,
+          review:
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled",
+        },
+      ],
+    },
+  ],
+};
+
 export const RatingsTab = ({ userId }) => {
   const { t } = useTranslation();
   const isFocused = useIsFocused();
@@ -57,7 +77,9 @@ export const RatingsTab = ({ userId }) => {
       return null;
     }
   };
-  const { pages } = data || {};
+  const { pages } = DUMMY_DATA || {};
+
+  console.log("DATA!!!", data);
 
   const noFoundMessage = !isLoading &&
     !isFetchingNextPage &&
@@ -77,7 +99,7 @@ export const RatingsTab = ({ userId }) => {
       <FlashList
         ListHeaderComponent={noFoundMessage}
         refreshControl={refreshControl}
-        contentContainerStyle={{ padding: 15 }}
+        contentContainerStyle={{ paddingVertical: 15 }}
         data={pages?.map((page) => page.results).flat()}
         keyExtractor={keyExtractor}
         renderItem={renderRatings}

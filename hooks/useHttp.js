@@ -186,7 +186,7 @@ export const usePatch = ({ uri, onSuccess }) => {
   return mutations;
 };
 
-export const usePost = ({ uri, onSuccess, others = {} }) => {
+export const usePost = ({ uri, onSuccess, config = {} }) => {
   const { user } = useAuth();
 
   const mutations = useMutation(
@@ -197,7 +197,7 @@ export const usePost = ({ uri, onSuccess, others = {} }) => {
     {
       onSuccess,
       onError: (err) => console.log(err),
-      ...others,
+      ...config,
     }
   );
 
@@ -225,15 +225,14 @@ export const useGet = ({
   model,
   uri,
   onSuccess,
-  enableId = true,
+  enabled = true,
+  enableId,
   others = {},
 }) => {
   const { user } = useAuth();
 
-  const injectQuery = !!enableId && enableId.length > 1;
-
   const response = useQuery(
-    [model, uri, injectQuery && enableId],
+    [model, uri, enabled && enableId],
     async ({ signal }) => {
       return await axios.get(`${BASE_ENDPOINT}${uri}`, {
         signal,
@@ -243,7 +242,7 @@ export const useGet = ({
     {
       onSuccess,
       onError: (err) => console.log(err),
-      enabled: !!enableId,
+      enabled,
       ...others,
     }
   );

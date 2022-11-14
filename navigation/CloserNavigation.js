@@ -70,6 +70,8 @@ import {
   CameraScreen,
   MessageSettingsScreen,
   PhotoLibraryScreen,
+  PhotoAlbumsScreen,
+  AddPostScreen,
 } from "../screens";
 
 import TestScreen from "../screens/TestScreen";
@@ -212,13 +214,27 @@ const CloserNavigation = () => {
                 component={EditProfileScreen}
               />
               <RootStack.Group
-                screenOptions={{ presentation: "modal", gestureEnabled: false }}
+                screenOptions={{
+                  gestureEnabled: false,
+                }}
               >
                 <RootStack.Screen
+                  options={{ presentation: "modal" }}
                   name="PhotoLibrary"
                   component={PhotoLibraryScreen}
                 />
                 <RootStack.Screen
+                  options={{
+                    presentation: "modal",
+                    animation: "flip",
+                  }}
+                  name="PhotoAlbums"
+                  component={PhotoAlbumsScreen}
+                />
+                <RootStack.Screen
+                  options={{
+                    presentation: "fullScreenModal",
+                  }}
                   name="EditAvatar"
                   component={EditAvatarScreen}
                 />
@@ -334,7 +350,16 @@ const CloserNavigation = () => {
                 component={AddScheduleScreen}
               />
               <RootStack.Screen name="Test" component={TestScreen} />
-              <RootStack.Screen name="Camera" component={CameraScreen} />
+              <RootStack.Screen
+                name="AddPost"
+                component={AddPostScreen}
+                options={{ animation: "fade", animationDuration: 2 }}
+              />
+              <RootStack.Screen
+                name="Camera"
+                component={CameraScreen}
+                options={{ animation: "fade", animationDuration: 1 }}
+              />
             </RootStack.Navigator>
           </PortalProvider>
         );

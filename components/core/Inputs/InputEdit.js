@@ -49,12 +49,9 @@ const styles = StyleSheet.create({
   containerStyle: {
     backgroundColor: "transparent",
     padding: 0,
-    borderStyle: "dashed",
   },
   inputContainer: {
     backgroundColor: "transparent",
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
   },
   input: {
     fontSize: 15,

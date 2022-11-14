@@ -10,6 +10,6 @@ const styles = StyleSheet.create({
     color: theme.lightColors.black,
     fontWeight: "700",
     fontSize: 14,
-    marginVertical: 15,
+    margin: 15,
   },
 });

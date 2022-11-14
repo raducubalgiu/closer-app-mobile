@@ -4,10 +4,6 @@ import { CardPostImage } from "../../Cards/CardPostImage";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { useTranslation } from "react-i18next";
 import { useGet } from "../../../../hooks";
-import { Col, Row, Grid } from "react-native-easy-grid";
-import { GridRow } from "../../Grid/GridRow";
-import { GridColumn } from "../../Grid/GridColumn";
-import { contains } from "lodash";
 
 const { height, width } = Dimensions.get("window");
 
@@ -81,7 +77,7 @@ export const PostsProfileTab = ({ userId }) => {
     //   </View>
     // </>
     <>
-      <Grid>
+      {/* <Grid>
         <Row style={{ height: 250 }}>
           <Col style={{ width: width / 3 }}>
             <Row style={{ height: 250 }}>
@@ -232,11 +228,7 @@ export const PostsProfileTab = ({ userId }) => {
             </Row>
           </Col>
         </Row>
-      </Grid>
-      {/* <GridRow>
-        <GridColumn landscape />
-        <GridColumn />
-      </GridRow> */}
+      </Grid> */}
       {/* <FlatList
         data={DUMMY_POSTS}
         keyExtractor={(item) => item._id}

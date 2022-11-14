@@ -11,10 +11,9 @@ import {
 } from "../../../components/customized/index";
 import { Header } from "../../../components/core";
 import theme from "../../../assets/styles/theme";
-import { useAuth } from "../../../hooks";
 
-export const BookmarksScreen = () => {
-  const { user } = useAuth();
+export const BookmarksScreen = ({ route }) => {
+  const { user } = route.params;
   const Tab = createMaterialTopTabNavigator();
   const { t } = useTranslation();
 

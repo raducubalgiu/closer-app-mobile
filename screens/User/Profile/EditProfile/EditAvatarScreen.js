@@ -5,12 +5,29 @@ import { Button, Header, MainButton, Stack } from "../../../../components/core";
 import { useNavigation } from "@react-navigation/native";
 import { CloseIconButton } from "../../../../components/customized";
 import theme from "../../../../assets/styles/theme";
+import * as ImagePicker from "expo-image-picker";
 
 const { black } = theme.lightColors;
 
 export const EditAvatarScreen = ({ route }) => {
   const { uri } = route.params;
   const navigation = useNavigation();
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [9, 16],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -29,13 +46,13 @@ export const EditAvatarScreen = ({ route }) => {
         source={{ uri }}
         containerStyle={{ marginBottom: 50 }}
       />
-      {/* <Button
-        sx={{ alignItems: "center", marginTop: 50 }}
-        onPress={() => navigation.navigate("EditProfile")}
-      >
-        <Text>Go To Edit Profile</Text>
-      </Button> */}
-      <MainButton title="Salveaza" fullWidth size="lg" />
+      <MainButton
+        title="Salveaza"
+        fullWidth
+        size="lg"
+        sx={{ marginHorizontal: 20 }}
+        onPress={pickImage}
+      />
     </SafeAreaView>
   );
 };

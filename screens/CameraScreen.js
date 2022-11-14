@@ -1,4 +1,4 @@
-import { StyleSheet, Text, SafeAreaView } from "react-native";
+import { StyleSheet, Text, SafeAreaView, View } from "react-native";
 import { useRef, useState } from "react";
 import { Camera, CameraType, FlashMode } from "expo-camera";
 import { useNavigation } from "@react-navigation/native";
@@ -10,11 +10,15 @@ import {
   CloseIconButton,
   PhotoIconButton,
   RevertIconButton,
+  PhotoLibraryButton,
 } from "../components/customized";
+import * as MediaLibrary from "expo-media-library";
+import * as Haptics from "expo-haptics";
 
 const { black, grey0 } = theme.lightColors;
 
 export const CameraScreen = ({ route }) => {
+  const { uri } = route.params;
   const { name, avatar } = route.params;
   const [type, setType] = useState(CameraType.back);
   const [flash, setFlash] = useState(FlashMode.off);
@@ -31,12 +35,18 @@ export const CameraScreen = ({ route }) => {
     };
 
     let newPhoto = await cameraRef.current.takePictureAsync(options);
+    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     setPhoto(newPhoto);
   };
 
   if (photo) {
     const handleClosePreview = () => setPhoto(null);
-    const handleDownload = () => {};
+
+    const handleDownload = () =>
+      MediaLibrary.saveToLibraryAsync(photo.uri).then(() => {
+        setPhoto(null);
+      });
+
     const handleSendPhoto = () => {};
 
     return (
@@ -50,6 +60,10 @@ export const CameraScreen = ({ route }) => {
     );
   }
 
+  if (uri) {
+    return <CameraPreview uri={uri} avatar={avatar} />;
+  }
+
   const handleRevertCamera = () => {
     setType((current) =>
       current === CameraType.back ? CameraType.front : CameraType.back
@@ -58,8 +72,12 @@ export const CameraScreen = ({ route }) => {
   const handleCloseCamera = () => navigation.goBack();
 
   return (
-    <Camera style={styles.screen} ref={cameraRef} type={type}>
-      <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.screen}>
+      <Camera
+        ref={cameraRef}
+        type={type}
+        style={{ flex: 1, justifyContent: "space-between" }}
+      >
         <Stack direction="row" sx={{ margin: 20 }}>
           <Stack direction="row" sx={styles.user}>
             <CustomAvatar avatar={avatar} size={30} iconSize="15" />
@@ -81,7 +99,16 @@ export const CameraScreen = ({ route }) => {
           </Stack>
         </Stack>
         <Stack direction="row" sx={{ margin: 20 }}>
-          <PhotoIconButton size={35} onPress={() => {}} />
+          <PhotoLibraryButton
+            uri="https://res.cloudinary.com/closer-app/image/upload/v1667549749/marina-filimon-avatar_n6aiua.jpg"
+            onPress={() =>
+              navigation.navigate("PhotoLibrary", { nav: "Camera" })
+            }
+          />
+          {/* <PhotoIconButton
+            size={35}
+            onPress={() => navigation.navigate("PhotoLibrary")}
+          /> */}
           <IconButton
             iconName="camera"
             iconType="entypo"
@@ -92,14 +119,15 @@ export const CameraScreen = ({ route }) => {
           />
           <RevertIconButton size={35} onPress={handleRevertCamera} />
         </Stack>
-      </SafeAreaView>
-    </Camera>
+      </Camera>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+    backgroundColor: "black",
   },
   container: {
     flex: 1,

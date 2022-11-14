@@ -18,12 +18,7 @@ export const CameraPreview = ({
 
   return (
     <>
-      <Image
-        style={styles.preview}
-        source={{
-          uri,
-        }}
-      />
+      <Image style={styles.preview} source={{ uri }} />
       <View style={styles.container}>
         <SafeAreaView style={styles.safeArea}>
           <Stack direction="row" sx={{ margin: 20 }}>

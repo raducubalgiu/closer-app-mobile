@@ -16,6 +16,7 @@ export { LikeButton } from "./Buttons/LikeButton";
 export { BookmarkIconButton } from "./Buttons/BookmarkIconButton";
 export { BookmarkButton } from "./Buttons/BookmarkButton";
 export { FollowButton } from "./Buttons/FollowButton";
+export { PhotoLibraryButton } from "./Buttons/PhotoLibraryButton";
 
 export { TopTabContainer } from "./Tabs/TopTabContainer/TopTabContainer";
 export { TopTabProfile } from "./Tabs/TopTabContainer/TopTabProfile";
@@ -73,8 +74,6 @@ export { HeaderEdit } from "../customized/Layout/Headers/HeaderEdit";
 export { ServicesList } from "./Lists/ServicesList";
 export { ProfileMenuList } from "./Lists/ProfileMenuList";
 export { SuggestedUsersList } from "./Lists/SuggestedUsersList";
-export { LibraryPhotosList } from "./Lists/LibraryPhotosList";
-export { LibraryAlbumsList } from "./Lists/LibraryAlbumsList";
 
 export { MessageListItem } from "./ListItems/MessageListItem";
 export { HashtagListItem } from "../customized/ListItems/HashtagListItem";
@@ -89,6 +88,7 @@ export { MessSentItem } from "../customized/ListItems/MessSentItem";
 export { MessDateItem } from "../customized/ListItems/MessDateItem";
 export { SettingListItem } from "../customized/ListItems/SettingListItem";
 export { AlbumListItem } from "../customized/ListItems/AlbumListItem";
+export { PresetListItem } from "../customized/ListItems/PresetListItem";
 
 export { VideoItem } from "./VideoItem/VideoItem";
 

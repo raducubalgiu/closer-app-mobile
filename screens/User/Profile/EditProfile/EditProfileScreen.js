@@ -21,12 +21,12 @@ import {
 } from "../../../../components/core";
 import { EditProfileSheet } from "../../../../components/customized";
 import { trimFunc } from "../../../../utils";
-import { useSheet, useAuth } from "../../../../hooks";
+import { useSheet } from "../../../../hooks";
 
 const { grey0, black } = theme.lightColors;
 
-export const EditProfileScreen = () => {
-  const { user } = useAuth();
+export const EditProfileScreen = ({ route }) => {
+  const { user } = route.params;
   const { name, username, profession, website, description } = user;
   const navigation = useNavigation();
   const { t } = useTranslation();
@@ -51,7 +51,7 @@ export const EditProfileScreen = () => {
   const editProfileSheet = <EditProfileSheet onCloseSheet={closeModal} />;
 
   const { BOTTOM_SHEET, SHOW_BS, CLOSE_BS } = useSheet(
-    ["25%", "45%"],
+    [10, 300],
     editProfileSheet,
     closeModal
   );

@@ -14,7 +14,7 @@ export const HeaderEdit = ({ onSave, title, disabled }) => {
       <Button onPress={() => navigation.goBack()} disabled={disabled}>
         <Text style={styles.cancel}>{t("cancel")}</Text>
       </Button>
-      <Text style={styles.field}>{title}</Text>
+      <Text style={styles.title}>{title}</Text>
       <Button onPress={onSave} disabled={disabled}>
         <Text style={styles.save}>{t("save")}</Text>
       </Button>
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "500",
   },
-  field: { fontSize: 17 },
+  title: { fontSize: 17, fontWeight: "600" },
   save: {
     color: theme.lightColors.primary,
     fontSize: 16,

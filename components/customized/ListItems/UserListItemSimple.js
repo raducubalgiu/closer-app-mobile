@@ -14,10 +14,10 @@ export const UserListItemSimple = ({
   sx,
 }) => {
   return (
-    <Stack align="start" sx={{ ...styles.owner, ...sx }}>
-      <Stack direction="row">
-        <CustomAvatar avatar={avatar} size={50} iconSize={17.5} />
-        <Button onPress={onGoToUser}>
+    <Button onPress={onGoToUser} sx={{ ...styles.owner, ...sx }}>
+      <Stack align="start">
+        <Stack direction="row">
+          <CustomAvatar avatar={avatar} size={50} iconSize={17.5} />
           <Stack align="start" justify="start" sx={{ marginLeft: 10 }}>
             <Stack direction="row">
               <Text style={styles.ownerName}>{name}</Text>
@@ -25,14 +25,14 @@ export const UserListItemSimple = ({
             </Stack>
             <Text style={styles.profession}>{profession}</Text>
           </Stack>
-        </Button>
+        </Stack>
       </Stack>
-    </Stack>
+    </Button>
   );
 };
 
 const styles = StyleSheet.create({
-  owner: { width: "100%", marginBottom: 20 },
+  owner: { marginBottom: 20, paddingHorizontal: 15 },
   ownerName: {
     color: black,
     fontWeight: "600",

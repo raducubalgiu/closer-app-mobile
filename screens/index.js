@@ -58,3 +58,5 @@ export { UsernameScreen } from "./User/Auth/UsernameScreen";
 export { CameraScreen } from "./CameraScreen";
 export { MessageSettingsScreen } from "./MessageSettingsScreen";
 export { PhotoLibraryScreen } from "./PhotoLibraryScreen";
+export { PhotoAlbumsScreen } from "./PhotoAlbumsScreen";
+export { AddPostScreen } from "./AddPostScreen";

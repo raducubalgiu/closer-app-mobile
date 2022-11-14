@@ -1,48 +1,44 @@
-import {
-  SafeAreaView,
-  StyleSheet,
-  FlatList,
-  ActivityIndicator,
-} from "react-native";
-import React, { useCallback, useState } from "react";
+import { SafeAreaView, StyleSheet, ActivityIndicator } from "react-native";
+import { FlashList } from "@shopify/flash-list";
+import { useCallback, useState } from "react";
 import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import {
   Button,
-  Feedback,
   FormInputRadio,
   Header,
-  Spinner,
+  SearchBarInput,
+  Stack,
 } from "../../../../components/core";
 import theme from "../../../../assets/styles/theme";
-import { useAuth, useHttpGet, useHttpPatch } from "../../../../hooks";
+import { useAuth, useGet, usePatch } from "../../../../hooks";
 
-const { primary } = theme.lightColors;
+const { primary, grey0 } = theme.lightColors;
 
 export const EditProfessionScreen = () => {
   const { user, setUser } = useAuth();
   const { role } = user;
   const [selected, setSelected] = useState(null);
   const navigation = useNavigation();
-  const { data: businesses, loading } = useHttpGet(`/businesses`);
-  const { data: jobs } = useHttpGet("/jobs");
   const { t } = useTranslation();
 
-  const callback = (data) => {
-    setUser({ ...user, profession: data.profession });
-    navigation.goBack();
-  };
-  const {
-    makePatch,
-    loading: loadingPatch,
-    feedback,
-    setFeedback,
-  } = useHttpPatch(`/users/${user?._id}/update`, callback);
+  const { data: businesses } = useGet({
+    model: "businesses",
+    uri: `/businesses`,
+  });
+
+  const { isLoading: loadingPatch, mutate } = usePatch({
+    uri: `/users/${user?._id}/update`,
+    onSuccess: (res) => {
+      setUser({ ...user, profession: res.data.profession });
+      navigation.goBack();
+    },
+  });
 
   const handleProfession = () => {
     if (selected) {
-      makePatch({
+      mutate({
         profession: {
           _id: selected?._id,
           category: selected?.category,
@@ -63,6 +59,8 @@ export const EditProfessionScreen = () => {
     </Button>
   );
 
+  console.log(selected?.name);
+
   const renderBusiness = useCallback(
     ({ item }) => (
       <FormInputRadio
@@ -73,6 +71,7 @@ export const EditProfessionScreen = () => {
     ),
     [selected]
   );
+
   const keyExtractor = useCallback((item) => item._id, []);
 
   let data;
@@ -85,16 +84,16 @@ export const EditProfessionScreen = () => {
         divider
         actionBtn={!loadingPatch ? actionBtn : <ActivityIndicator />}
       />
-      <Feedback feedback={feedback} setFeedback={setFeedback} />
-      {!loading && (
-        <FlatList
-          data={data}
-          keyExtractor={keyExtractor}
-          renderItem={renderBusiness}
-          contentContainerStyle={{ padding: 15 }}
-        />
-      )}
-      {loading && <Spinner />}
+      <Stack sx={styles.searchbar}>
+        <SearchBarInput placeholder={t("search")} />
+      </Stack>
+      <FlashList
+        data={data}
+        keyExtractor={keyExtractor}
+        renderItem={renderBusiness}
+        contentContainerStyle={{ paddingVertical: 15 }}
+        estimatedItemSize={57}
+      />
     </SafeAreaView>
   );
 };
@@ -116,7 +115,8 @@ const styles = StyleSheet.create({
   },
   strokeLength: {
     paddingHorizontal: 10,
-    color: theme.lightColors.grey0,
+    color: grey0,
     marginTop: 10,
   },
+  searchbar: { marginHorizontal: 15, marginTop: 10, height: 50 },
 });
