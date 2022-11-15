@@ -12,8 +12,9 @@ const { black, error } = theme.lightColors;
 export const MessReceivedItem = ({
   avatar,
   item,
-  displayAvatar,
-  displayDate,
+  senderSame,
+  dateSame,
+  firstComment,
   date,
 }) => {
   const { message, _id, liked, createdAt } = item;
@@ -31,15 +32,14 @@ export const MessReceivedItem = ({
 
   return (
     <Stack align="start" justify="start" sx={{ marginBottom: 5 }}>
-      {displayDate && <MessDateItem date={date} />}
       <Stack direction="row">
         <Stack direction="row" align="end" justify="start" sx={{ flex: 1 }}>
-          {displayAvatar && (
+          {!senderSame && (
             <Stack sx={{ width: 30 }}>
               <CustomAvatar avatar={avatar} size={30} iconSize={15} />
             </Stack>
           )}
-          {!displayAvatar && <Stack sx={{ width: 30 }}></Stack>}
+          {senderSame && <Stack sx={{ width: 30 }}></Stack>}
           <Stack sx={styles.message}>
             <Text style={styles.messageText}>{message?.text}</Text>
           </Stack>
@@ -53,6 +53,7 @@ export const MessReceivedItem = ({
           />
         </Button>
       </Stack>
+      {!dateSame && <MessDateItem date={date} />}
     </Stack>
   );
 };

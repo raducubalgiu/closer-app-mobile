@@ -8,12 +8,11 @@ import { MessDateItem } from "./MessDateItem";
 const width = Dimensions.get("window").width;
 const { black, error } = theme.lightColors;
 
-export const MessSentItem = ({ item, displayDate, date }) => {
+export const MessSentItem = ({ item, dateSame, date, firstComment }) => {
   const { message, liked } = item;
 
   return (
     <>
-      {displayDate && <MessDateItem date={date} />}
       <Stack
         direction="row"
         justify="end"
@@ -28,6 +27,7 @@ export const MessSentItem = ({ item, displayDate, date }) => {
           )}
         </View>
       </Stack>
+      {!dateSame && <MessDateItem date={date} />}
     </>
   );
 };

@@ -48,11 +48,11 @@ export const MessageItemScreen = ({ route }) => {
     enableId: conversation?.conversation?._id,
   });
 
-  const isSenderSame = (prev, current) => {
-    return prev?.fromSelf !== current?.fromSelf;
+  const isSenderSame = (prev, curr) => {
+    return prev?.fromSelf === curr?.fromSelf;
   };
-  const isDateSame = (prev, current) => {
-    return moment(prev?.createdAt).day() !== moment(current?.createdAt).day();
+  const isDateSame = (prev, curr) => {
+    return moment(prev?.createdAt).day() === moment(curr?.createdAt).day();
   };
 
   const renderMessage = useCallback(
@@ -62,8 +62,9 @@ export const MessageItemScreen = ({ route }) => {
           <MessReceivedItem
             avatar={avatar}
             item={item}
-            displayAvatar={isSenderSame(item, messages[index - 1])}
-            displayDate={isDateSame(item, messages[index + 1])}
+            senderSame={isSenderSame(item, messages[index - 1])}
+            dateSame={isDateSame(messages[index + 1], item)}
+            isFirstComment={index === messages.length}
             date={moment(item.createdAt).format("LLL")}
           />
         );
@@ -71,7 +72,8 @@ export const MessageItemScreen = ({ route }) => {
         return (
           <MessSentItem
             item={item}
-            displayDate={isDateSame(item, messages[index + 1])}
+            dateSame={isDateSame(messages[index + 1], item)}
+            isFirstComment={index === messages.length}
             date={moment(item.createdAt).format("LLL")}
           />
         );
