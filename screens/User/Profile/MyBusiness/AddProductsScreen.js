@@ -37,13 +37,15 @@ export const AddProductsScreen = () => {
   const { data: services, isLoading: loading } = useGet({
     model: "services",
     uri: `/locations/${location}/services`,
+    enabled: !!location,
     enableId: location,
   });
 
   const { data: filters } = useGet({
     model: "filters",
     uri: `/services/${service?._id}/filters`,
-    enableId: !!service && service?._id,
+    enabled: !!service,
+    enableId: service?._id,
   });
 
   const filtersArr = (filters && filters[0]) || [];
