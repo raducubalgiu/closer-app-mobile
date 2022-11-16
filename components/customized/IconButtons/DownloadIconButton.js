@@ -6,9 +6,15 @@ export const DownloadIconButton = ({ sx, size, onPress }) => {
       iconName="download"
       iconType="feather"
       size={size ? size : 30}
-      color="#ebebe0"
+      color="white"
       onPress={onPress}
-      sx={{ ...sx }}
+      sx={{
+        shadowColor: "#171717",
+        shadowOffset: { width: -2, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
+        ...sx,
+      }}
     />
   );
 };

@@ -27,6 +27,8 @@ export const FollowingsTab = ({ userId }) => {
     enabled: !isPreviousData && isFocused,
   });
 
+  console.log("DATA!!!", data);
+
   const renderPerson = useCallback(
     ({ item }) => <UserListItem user={item.user} isFollow={item.isFollow} />,
     []

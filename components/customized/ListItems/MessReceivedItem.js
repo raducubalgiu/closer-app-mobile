@@ -1,4 +1,4 @@
-import { StyleSheet, Text, Dimensions } from "react-native";
+import { StyleSheet, Text, Dimensions, Image } from "react-native";
 import React, { useState } from "react";
 import { Icon } from "@rneui/themed";
 import { Stack, CustomAvatar, Button } from "../../core";
@@ -14,10 +14,9 @@ export const MessReceivedItem = ({
   item,
   senderSame,
   dateSame,
-  firstComment,
   date,
 }) => {
-  const { message, _id, liked, createdAt } = item;
+  const { message, _id, liked, createdAt } = item || {};
   const [isLiked, setIsLiked] = useState(liked);
   const { user } = useAuth();
 
@@ -40,9 +39,17 @@ export const MessReceivedItem = ({
             </Stack>
           )}
           {senderSame && <Stack sx={{ width: 30 }}></Stack>}
-          <Stack sx={styles.message}>
-            <Text style={styles.messageText}>{message?.text}</Text>
-          </Stack>
+          {!message?.url && (
+            <Stack sx={styles.message}>
+              <Text style={styles.messageText}>{message?.text}</Text>
+            </Stack>
+          )}
+          {message?.url && (
+            <Image
+              source={{ uri: message?.url }}
+              style={{ width: width / 2, height: 300, borderRadius: 10 }}
+            />
+          )}
         </Stack>
         <Button onPress={handleLike} sx={styles.like}>
           <Icon

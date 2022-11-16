@@ -1,32 +1,49 @@
-import { SafeAreaView, StyleSheet, Dimensions, Text } from "react-native";
-import React from "react";
+import { SafeAreaView, StyleSheet, View, Text } from "react-native";
 import { Avatar } from "@rneui/themed";
-import { Button, Header, MainButton, Stack } from "../../../../components/core";
+import { MainButton, Stack } from "../../../../components/core";
 import { useNavigation } from "@react-navigation/native";
 import { CloseIconButton } from "../../../../components/customized";
 import theme from "../../../../assets/styles/theme";
-import * as ImagePicker from "expo-image-picker";
+import { manipulateAsync, FlipType, SaveFormat } from "expo-image-manipulator";
+import * as MediaLibrary from "expo-media-library";
+import axios from "axios";
 
 const { black } = theme.lightColors;
 
 export const EditAvatarScreen = ({ route }) => {
-  const { uri } = route.params;
+  const { photo } = route.params;
   const navigation = useNavigation();
 
-  const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [9, 16],
-      quality: 1,
-    });
+  const handleAvatar = async () => {
+    // 1) Manipulate the photo (Crop etc)
+    // const newImage = await manipulateAsync(
+    //   photo.uri,
+    //   [{ rotate: 60 }, { flip: FlipType.Vertical }],
+    //   {
+    //     compress: 1,
+    //     format: SaveFormat.PNG,
+    //   }
+    // );
+    // 2) Save to Cloudinary
+    const photoInfo = await MediaLibrary.getAssetInfoAsync(photo);
 
-    console.log(result);
+    const formData = new FormData();
+    formData.append("avatar", { name: photoInfo.localUri });
 
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
-    }
+    const response = await axios.post(
+      `http://192.168.100.2:8000/upload-one-image`,
+      formData,
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    console.log("RESPONSE!!", response.data);
+
+    // 3) Update User Document
   };
 
   return (
@@ -38,12 +55,11 @@ export const EditAvatarScreen = ({ route }) => {
           onPress={() => navigation.goBack()}
         />
         <Text style={styles.title}>Decupeaza</Text>
-        <CloseIconButton size={25} color="white" />
+        <View style={{ width: 20 }} />
       </Stack>
       <Avatar
         size={350}
-        rounded
-        source={{ uri }}
+        source={{ uri: photo.uri }}
         containerStyle={{ marginBottom: 50 }}
       />
       <MainButton
@@ -51,7 +67,7 @@ export const EditAvatarScreen = ({ route }) => {
         fullWidth
         size="lg"
         sx={{ marginHorizontal: 20 }}
-        onPress={pickImage}
+        onPress={handleAvatar}
       />
     </SafeAreaView>
   );

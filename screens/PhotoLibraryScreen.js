@@ -17,12 +17,9 @@ export const PhotoLibraryScreen = ({ route }) => {
   const navigation = useNavigation();
   const [photos, setPhotos] = useState([]);
 
-  console.log("NAV!!!", nav);
-
   useFocusEffect(
     useCallback(() => {
       let isActive = true;
-
       const fetchPhotos = async () => {
         const getPhotos = await MediaLibrary.getAlbumAsync(
           album ? album : "Recents"
@@ -46,12 +43,17 @@ export const PhotoLibraryScreen = ({ route }) => {
   );
 
   const renderPhoto = useCallback(({ item, index }) => {
+    console.log("ITEM!!!", item);
+
     return (
       <CardPostImage
         index={index}
         image={item.uri}
         col={4}
-        onPress={() => navigation.navigate(nav, { uri: item.uri })}
+        onPress={() => {
+          navigation.goBack();
+          navigation.navigate(nav, { photo: item });
+        }}
       />
     );
   }, []);
@@ -70,7 +72,7 @@ export const PhotoLibraryScreen = ({ route }) => {
             <Icon name="chevron-down" type="feather" size={22.5} />
           </Stack>
         </Button>
-        <CloseIconButton size={25} color="white" />
+        <View style={{ width: 20 }} />
       </Stack>
       <FlashList
         data={photos}

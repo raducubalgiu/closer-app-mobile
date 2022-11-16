@@ -16,7 +16,7 @@ export const EditProfileSheet = ({ onCloseSheet }) => {
 
   const goToLibrary = () => {
     if (permissionResponse.granted) {
-      navigation.navigate("PhotoLibrary");
+      navigation.navigate("PhotoLibrary", { nav: "EditAvatar" });
       onCloseSheet();
     } else {
       setModal(true);

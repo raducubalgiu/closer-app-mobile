@@ -115,8 +115,6 @@ export { FiltersContainer } from "../customized/Containers/FiltersContainer";
 
 export { DisplayText } from "../customized/DisplayText/DisplayText";
 
-export { CameraPreview } from "../customized/CameraPreview/CameraPreview";
-
 export { CloseIconButton } from "../customized/IconButtons/CloseIconButton";
 export { DownloadIconButton } from "../customized/IconButtons/DownloadIconButton";
 export { PhotoIconButton } from "../customized/IconButtons/PhotoIconButton";

@@ -1,15 +1,31 @@
-import { StyleSheet, Text, View, Dimensions } from "react-native";
+import { StyleSheet, Text, View, Dimensions, Image } from "react-native";
 import React from "react";
 import { Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 import { Stack } from "../../core";
 import { MessDateItem } from "./MessDateItem";
 
-const width = Dimensions.get("window").width;
+const { width } = Dimensions.get("window");
 const { black, error } = theme.lightColors;
 
-export const MessSentItem = ({ item, dateSame, date, firstComment }) => {
-  const { message, liked } = item;
+const MessImage = ({ message, liked }) => {
+  return (
+    <View>
+      <Image
+        source={{ uri: message?.url }}
+        style={{ width: width / 2, height: 300, borderRadius: 10 }}
+      />
+      {liked && (
+        <View style={styles.liked}>
+          <Icon name="heart" type="antdesign" color={error} size={15} />
+        </View>
+      )}
+    </View>
+  );
+};
+
+export const MessSentItem = ({ item, dateSame, date }) => {
+  const { message, liked } = item || {};
 
   return (
     <>
@@ -18,14 +34,17 @@ export const MessSentItem = ({ item, dateSame, date, firstComment }) => {
         justify="end"
         sx={liked ? { marginBottom: 25 } : { marginBottom: 5 }}
       >
-        <View style={styles.message}>
-          <Text style={styles.messageText}>{message?.text}</Text>
-          {liked && (
-            <View style={styles.liked}>
-              <Icon name="heart" type="antdesign" color={error} size={12.5} />
-            </View>
-          )}
-        </View>
+        {!message?.url && (
+          <View style={styles.message}>
+            <Text style={styles.messageText}>{message?.text}</Text>
+            {liked && (
+              <View style={styles.liked}>
+                <Icon name="heart" type="antdesign" color={error} size={15} />
+              </View>
+            )}
+          </View>
+        )}
+        {message?.url && <MessImage message={message} liked={liked} />}
       </Stack>
       {!dateSame && <MessDateItem date={date} />}
     </>

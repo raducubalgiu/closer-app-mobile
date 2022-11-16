@@ -8,7 +8,7 @@ import {
 import React, { useState, useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { MessageListItem, UserListItem } from "../components/customized";
+import { MessageListItem } from "../components/customized";
 import theme from "../assets/styles/theme";
 import {
   useAuth,
@@ -22,6 +22,7 @@ import {
   IconButtonEdit,
   Stack,
   Heading,
+  Spinner,
 } from "../components/core";
 import { FlashList } from "@shopify/flash-list";
 
@@ -33,16 +34,19 @@ export const MessagesScreen = () => {
   const navigation = useNavigation();
   const { t } = useTranslation();
 
-  const { data, refetch } = useGetPaginate({
+  const {
+    data,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isFetching,
+    refetch,
+  } = useGetPaginate({
     model: "conversations",
     uri: `/users/${user._id}/conversations`,
-    limit: "20",
+    limit: "12",
   });
-
-  const { refreshing, refetchByUser } = useRefreshByUser(refetch);
-  useRefreshOnFocus(refetch);
-
-  const { pages } = data || {};
 
   const renderMessages = useCallback(
     ({ item }) => (
@@ -54,14 +58,31 @@ export const MessagesScreen = () => {
     []
   );
 
-  const footer = (
-    <Stack sx={{ padding: 15 }}>
-      <Text style={{ color: grey0 }}>{t("noFoundMessage")}</Text>
-    </Stack>
-  );
+  const { refreshing, refetchByUser } = useRefreshByUser(refetch);
+  useRefreshOnFocus(refetch);
 
   const refreshControl = (
     <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
+  );
+
+  const { pages } = data || {};
+
+  const loadMore = () => {
+    if (hasNextPage) fetchNextPage();
+  };
+
+  const showSpinner = () => {
+    if (isFetchingNextPage) {
+      return <Spinner />;
+    } else {
+      return null;
+    }
+  };
+
+  const noFoundMessage = (
+    <Stack sx={{ padding: 15 }}>
+      <Text style={{ color: grey0 }}>{t("noFoundMessage")}</Text>
+    </Stack>
   );
 
   return (
@@ -81,6 +102,7 @@ export const MessagesScreen = () => {
           updateValue={(text) => setSearch(text)}
         />
       </View>
+      {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
       <FlashList
         refreshControl={refreshControl}
         ListHeaderComponent={<Heading title={t("messages")} />}
@@ -89,7 +111,9 @@ export const MessagesScreen = () => {
         keyExtractor={useCallback((item) => item?._id, [])}
         renderItem={renderMessages}
         estimatedItemSize={70}
-        ListFooterComponent={footer}
+        ListFooterComponent={showSpinner}
+        onEndReached={loadMore}
+        onEndReachedThreshold={0.3}
       />
     </SafeAreaView>
   );
