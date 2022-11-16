@@ -36,7 +36,7 @@ export const ProfileScreen = () => {
   );
   const navigateBookmarks = () => navigation.navigate("Bookmarks", { user });
   const navigateProfile = () => navigation.navigate("EditProfile", { user });
-  const navigateInstagram = () => {};
+  const navigateInstagram = () => navigation.navigate("TestTwo");
   const navigateYoutube = () => {};
 
   return (

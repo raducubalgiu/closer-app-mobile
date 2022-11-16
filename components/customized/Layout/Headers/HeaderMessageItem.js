@@ -12,6 +12,7 @@ export const HeaderMessageItem = ({
   name,
   username,
   checkmark,
+  conversationId,
 }) => {
   const navigation = useNavigation();
 
@@ -38,6 +39,7 @@ export const HeaderMessageItem = ({
             name,
             username,
             checkmark,
+            conversationId,
           })
         }
       />

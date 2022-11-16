@@ -30,7 +30,11 @@ export const MessReceivedItem = ({
   };
 
   return (
-    <Stack align="start" justify="start" sx={{ marginBottom: 5 }}>
+    <Stack
+      align="start"
+      justify="start"
+      sx={{ marginBottom: 5, marginHorizontal: 15 }}
+    >
       <Stack direction="row">
         <Stack direction="row" align="end" justify="start" sx={{ flex: 1 }}>
           {!senderSame && (

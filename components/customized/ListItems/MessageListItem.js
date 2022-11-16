@@ -26,7 +26,7 @@ export const MessageListItem = ({ conversation }) => {
               {checkmark && <Checkmark size={8} />}
             </Stack>
             <Text style={styles.message}>
-              {trimFunc(message.message.text, 35)}
+              {trimFunc(message?.message?.text, 35)}
             </Text>
           </Stack>
           <Text style={styles.date}>1z</Text>

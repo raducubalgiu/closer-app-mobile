@@ -296,5 +296,8 @@
   "goToSettingsPhoto": "Mergi la setările dispozitivului tău pentru a putea permite accesul la fotografii",
   "goToSettings": "Mergi la setări",
   "newPost": "Postare nouă",
-  "back": "Înapoi"
+  "back": "Înapoi",
+  "deleteConversationQuestion": "Ştergi conversaţia?",
+  "messagesBetweenYouAnd": "Mesajele dintre tine şi",
+  "willBeDeleteAndNotRestored": "vor fi şterse şi nu vor mai putea fi restaurate"
 }

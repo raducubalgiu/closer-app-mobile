@@ -6,93 +6,64 @@ import {
   FlatList,
   RefreshControl,
 } from "react-native";
+import { FlashList } from "@shopify/flash-list";
 import React, { useCallback, useRef, useState } from "react";
 import { useNavigation, useScrollToTop } from "@react-navigation/native";
-import axios from "axios";
 import { Divider, Badge } from "@rneui/themed";
 import theme from "../assets/styles/theme";
-import { usePosts, useSheet, useAuth } from "../hooks/index";
+import {
+  usePosts,
+  useSheet,
+  useAuth,
+  useGetPaginate,
+  useRefreshByUser,
+  useDelete,
+} from "../hooks";
 import {
   IconButton,
   Stack,
   FeedLabelButton,
   Spinner,
 } from "../components/core";
-import { CardPost, PostInfoSheet } from "../components/customized";
+import { PostInfoSheet } from "../components/customized";
 import { useTranslation } from "react-i18next";
 import * as Haptics from "expo-haptics";
 import { ConfirmModal } from "../components/customized/Modals/ConfirmModal";
-import { useInfiniteQuery } from "@tanstack/react-query";
-
-const wait = (timeout) => {
-  return new Promise((resolve) => setTimeout(resolve, timeout));
-};
+import CardPost from "../components/customized/Cards/CardPost/CardPost";
 
 const { grey0, black } = theme.lightColors;
 
 export const FeedScreen = () => {
   const { user } = useAuth();
-  const [posts, setPosts] = useState([]);
   const [postId, setPostId] = useState(null);
   const [visible, setVisible] = useState(false);
-  const [loading, setLoading] = useState(true);
   const { postsState, dispatchPosts } = usePosts();
   const navigation = useNavigation();
   const ref = useRef(null);
   useScrollToTop(ref);
   const { t } = useTranslation();
-  const [refreshing, setRefreshing] = React.useState(false);
 
-  const fetchAllPosts = async (page) => {
-    const { data } = await axios.get(
-      `${process.env.BASE_ENDPOINT}/posts/get-all-posts?page=${page}&limit=10`,
-      { headers: { Authorization: `Bearer ${user?.token}` } }
-    );
-    return data;
-  };
-
-  const {
-    data,
-    hasNextPage,
-    fetchNextPage,
-    isFetchingNextPage,
-    isLoading,
-    refetch,
-  } = useInfiniteQuery(
-    ["likes"],
-    ({ pageParam = 1 }) => fetchAllPosts(pageParam),
-    {
-      getNextPageParam: (lastPage) => {
-        if (lastPage.next !== null) {
-          return lastPage.next;
-        }
-      },
-    }
-  );
-
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    wait(2000).then(() => {
-      refetch();
-      setRefreshing(false);
+  const { data, hasNextPage, fetchNextPage, isFetchingNextPage, refetch } =
+    useGetPaginate({
+      model: "allPosts",
+      uri: `/posts/get-all-posts`,
+      limit: "10",
     });
-  }, []);
+
+  const { pages } = data || {};
+  const allPosts = pages?.map((page) => page.results).flat();
 
   const showConfirm = useCallback(() => {
     CLOSE_BS();
     setVisible(true);
   }, []);
-  const updatePosts = useCallback(
-    () => setPosts((posts) => posts.filter((p) => p._id !== postId)),
-    [postId]
-  );
 
   const sheetContent = (
     <PostInfoSheet
       postId={postId}
       onCloseBS={() => CLOSE_BS()}
       onShowConfirm={showConfirm}
-      onUpdatePosts={updatePosts}
+      onUpdatePosts={null}
     />
   );
   const { BOTTOM_SHEET, SHOW_BS, CLOSE_BS } = useSheet(
@@ -103,28 +74,20 @@ export const FeedScreen = () => {
     setPostId(item._id);
     SHOW_BS();
   }, []);
+
   const renderAllPosts = useCallback(({ item }) => {
     return <CardPost post={item} onShowDetails={() => showDetails(item)} />;
   }, []);
 
   const keyExtractor = useCallback((item) => item?._id, []);
 
-  const handleDelete = useCallback(() => {
-    CLOSE_BS();
-    setLoading(true);
-
-    axios
-      .delete(
-        `${process.env.BASE_ENDPOINT}/users/${user?._id}/posts/${postId}`,
-        { headers: { Authorization: `Bearer ${user.token}` } }
-      )
-      .then(() => {
-        setPosts((posts) => posts.filter((p) => p._id !== postId));
-        setVisible(false);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, [user, postId]);
+  const { mutate: handleDelete } = useDelete({
+    uri: `/users/${user?._id}/posts/${postId}`,
+    onSuccess: () => {
+      CLOSE_BS();
+      setVisible(false);
+    },
+  });
 
   const loadMore = () => {
     if (hasNextPage) {
@@ -140,7 +103,11 @@ export const FeedScreen = () => {
     }
   };
 
-  const { pages } = data || {};
+  const { refreshing, refetchByUser } = useRefreshByUser(refetch);
+
+  const refreshControl = (
+    <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
+  );
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -199,22 +166,17 @@ export const FeedScreen = () => {
         </ScrollView>
       </Stack>
       <Divider color="#ddd" />
-      <FlatList
+      <FlashList
         ref={ref}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-        data={pages?.map((page) => page.results).flat()}
-        removeClippedSubviews={true}
-        nestedScrollEnabled={true}
+        refreshControl={refreshControl}
+        data={allPosts}
+        renderItem={renderAllPosts}
         keyExtractor={keyExtractor}
         showsVerticalScrollIndicator={false}
-        maxToRenderPerBatch={5}
-        initialNumToRender={5}
-        renderItem={renderAllPosts}
         ListFooterComponent={showSpinner}
         onEndReached={loadMore}
         onEndReachedThreshold={0.3}
+        estimatedItemSize={636}
       />
       {BOTTOM_SHEET}
       <ConfirmModal

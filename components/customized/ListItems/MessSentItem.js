@@ -28,7 +28,7 @@ export const MessSentItem = ({ item, dateSame, date }) => {
   const { message, liked } = item || {};
 
   return (
-    <>
+    <View style={{ marginRight: 15 }}>
       <Stack
         direction="row"
         justify="end"
@@ -47,7 +47,7 @@ export const MessSentItem = ({ item, dateSame, date }) => {
         {message?.url && <MessImage message={message} liked={liked} />}
       </Stack>
       {!dateSame && <MessDateItem date={date} />}
-    </>
+    </View>
   );
 };
 

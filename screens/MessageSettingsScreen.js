@@ -1,5 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { Icon } from "@rneui/themed";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import theme from "../assets/styles/theme";
@@ -12,11 +13,16 @@ import {
   Stack,
 } from "../components/core";
 import { SettingListItem } from "../components/customized";
+import { useAuth, useDelete } from "../hooks";
+import { ConfirmModal } from "../components/customized/Modals/ConfirmModal";
 
 const { grey0, black, error } = theme.lightColors;
 
 export const MessageSettingsScreen = ({ route }) => {
-  const { _id, avatar, name, username, checkmark } = route.params;
+  const [modal, setModal] = useState(false);
+  const { user } = useAuth();
+  const { _id, avatar, name, username, checkmark, conversationId } =
+    route.params;
   const navigation = useNavigation();
   const { t } = useTranslation();
 
@@ -30,8 +36,22 @@ export const MessageSettingsScreen = ({ route }) => {
     });
   };
 
+  const { mutate: deleteConversation } = useDelete({
+    uri: `/users/${user._id}/conversations/${conversationId}`,
+    onSuccess: () => navigation.navigate("Messages"),
+  });
+
   return (
     <SafeAreaView style={styles.screen}>
+      <ConfirmModal
+        title={t("deleteConversationQuestion")}
+        description={`${t("messagesBetweenYouAnd")} ${name} ${t(
+          "willBeDeleteAndNotRestored"
+        )}`}
+        visible={modal}
+        onDelete={() => deleteConversation()}
+        onCloseModal={() => setModal(false)}
+      />
       <Header title="Detalii" divider />
       <Button onPress={goToUser}>
         <Stack direction="row" sx={{ padding: 15 }}>
@@ -68,7 +88,7 @@ export const MessageSettingsScreen = ({ route }) => {
           sxTitle={{ color: error }}
           onChange={() => {}}
         />
-        <Button>
+        <Button onPress={() => setModal(true)}>
           <Text style={{ color: error, fontSize: 15 }}>
             {t("deleteConversation")}
           </Text>
