@@ -1,5 +1,5 @@
 import { StyleSheet, Text } from "react-native";
-import React from "react";
+import React, { memo } from "react";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../../assets/styles/theme";
 import { CustomAvatar, Stack, Checkmark, Button } from "../../../core";
@@ -48,7 +48,7 @@ const CardPostHeader = ({
   );
 };
 
-export default CardPostHeader;
+export default memo(CardPostHeader);
 
 const styles = StyleSheet.create({
   avatarContainer: {

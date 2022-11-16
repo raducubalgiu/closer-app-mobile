@@ -1,12 +1,12 @@
 import { StyleSheet, View } from "react-native";
 import { Image } from "@rneui/themed";
-import React from "react";
+import React, { memo } from "react";
 import CardPostHeader from "./CardPostHeader";
 import CardPostButtons from "./CardPostButtons";
 import CardPostFooter from "./CardPostFooter";
 import { dateFormat } from "../../../../utils";
 
-export const CardPost = ({ post, onShowDetails }) => {
+const CardPost = ({ post, onShowDetails }) => {
   const {
     _id,
     bookable,
@@ -60,6 +60,8 @@ export const CardPost = ({ post, onShowDetails }) => {
     </View>
   );
 };
+
+export default memo(CardPost);
 
 const styles = StyleSheet.create({
   container: {

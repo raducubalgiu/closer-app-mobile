@@ -1,5 +1,5 @@
 import { StyleSheet, Text } from "react-native";
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { Icon } from "@rneui/themed";
 import { Button, Stack, CustomAvatar } from "../../../core";
 import { useNavigation } from "@react-navigation/native";
@@ -86,7 +86,7 @@ const CardPostFooter = ({
   );
 };
 
-export default CardPostFooter;
+export default memo(CardPostFooter);
 
 const styles = StyleSheet.create({
   description: {

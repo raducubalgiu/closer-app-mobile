@@ -1,5 +1,5 @@
 import { StyleSheet, Text, Share } from "react-native";
-import { useState } from "react";
+import { useState, memo } from "react";
 import { Icon, Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
@@ -89,7 +89,7 @@ const CardPostButtons = ({ bookable, product, postId, likesCount }) => {
   );
 };
 
-export default CardPostButtons;
+export default memo(CardPostButtons);
 
 const styles = StyleSheet.create({
   bookable: {
