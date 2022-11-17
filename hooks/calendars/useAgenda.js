@@ -2,7 +2,6 @@ import { useState } from "react";
 import { View } from "react-native";
 import { Agenda } from "react-native-calendars";
 import { Icon } from "@rneui/themed";
-import { useDates } from "../useDates";
 import theme from "../../assets/styles/theme";
 
 const { primary, grey0 } = theme.lightColors;
@@ -14,7 +13,6 @@ export const useAgenda = (
   selectedDay,
   handleDayPress
 ) => {
-  const { _minDate, _maxDate } = useDates();
   const [knob, setKnob] = useState(false);
 
   const showKnob = (
@@ -32,9 +30,9 @@ export const useAgenda = (
       renderDay={() => {}}
       firstDay={1}
       onCalendarToggled={(calendarOpened) => setKnob(calendarOpened)}
-      selected={selectedDay}
-      minDate={_minDate}
-      maxDate={_maxDate}
+      selected="17-11-2022"
+      minDate="17-11-2022"
+      maxDate="17-11-2022"
       pastScrollRange={5}
       futureScrollRange={5}
       renderEmptyDate={() => <View />}

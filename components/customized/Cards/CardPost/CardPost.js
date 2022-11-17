@@ -4,7 +4,6 @@ import React, { memo } from "react";
 import CardPostHeader from "./CardPostHeader";
 import CardPostButtons from "./CardPostButtons";
 import CardPostFooter from "./CardPostFooter";
-import { dateFormat } from "../../../../utils";
 
 const CardPost = ({ post, onShowDetails }) => {
   const {
@@ -52,7 +51,7 @@ const CardPost = ({ post, onShowDetails }) => {
         description={description}
         username={username}
         name={name}
-        date={dateFormat(createdAt)}
+        date={createdAt}
         avatar={avatar}
         bookable={bookable}
         commentsCount={commentsCount}

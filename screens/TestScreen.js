@@ -29,9 +29,6 @@ const tab2ItemSize = (windowWidth - 40) / 3;
 const PullToRefreshDist = 150;
 
 const App = ({ user }) => {
-  /**
-   * stats
-   */
   const [tabIndex, setIndex] = useState(0);
   const [routes] = useState([
     { key: "tab1", title: "Tab1" },

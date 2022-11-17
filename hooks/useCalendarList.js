@@ -1,9 +1,7 @@
-import moment from "moment";
 import React, { useState, useMemo, useCallback, useEffect } from "react";
 import { CalendarList } from "react-native-calendars";
 import { LocaleConfig } from "react-native-calendars";
 import theme from "../assets/styles/theme";
-import { useDates } from "./useDates";
 
 LocaleConfig.locales["ro"] = {
   monthNames: [
@@ -53,7 +51,6 @@ const { primary, black } = theme.lightColors;
 export const useCalendarList = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const { _minDate, _maxDate } = useDates();
 
   const marked = useMemo(() => {
     return {
@@ -178,8 +175,8 @@ export const useCalendarList = () => {
         hideExtraDays={true}
         disableAllTouchEventsForDisabledDays
         firstDay={1}
-        minDate={_minDate}
-        maxDate={_maxDate}
+        minDate="17-11-2022"
+        maxDate="17-11-2022"
         pastScrollRange={0}
         futureScrollRange={3}
         markingType={"period"}

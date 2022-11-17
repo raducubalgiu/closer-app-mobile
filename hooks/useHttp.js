@@ -270,13 +270,7 @@ export const useGetMutate = ({ uri, onSuccess }) => {
   return mutations;
 };
 
-export const useGetPaginate = ({
-  model,
-  uri,
-  limit,
-  enabled = true,
-  enabledId,
-}) => {
+export const useGetPaginate = ({ model, uri, limit, enabled = true }) => {
   const { user } = useAuth();
 
   const fetchData = async (page, uri, limit, signal) => {
@@ -288,7 +282,7 @@ export const useGetPaginate = ({
   };
 
   const response = useInfiniteQuery(
-    [model, uri, limit, !enabled && enabledId],
+    [model, uri, limit],
     ({ pageParam = 1, signal }) => fetchData(pageParam, uri, limit, signal),
     {
       getNextPageParam: (lastPage) => {

@@ -11,7 +11,6 @@ import { Header, Spinner } from "../components/core";
 import { useTranslation } from "react-i18next";
 import { useAuth, useHttpGet } from "../hooks";
 import { CardScheduleOverview, NoFoundMessage } from "../components/customized";
-import moment from "moment";
 import theme from "../assets/styles/theme";
 
 const { black } = theme.lightColors;
@@ -32,11 +31,7 @@ export const SchedulesScreen = ({ route }) => {
     });
 
   const renderHeader = useCallback(
-    ({ section }) => (
-      <Text style={styles.headerList}>
-        {moment(section._id).utc().format("YYYY MMMM")}
-      </Text>
-    ),
+    ({ section }) => <Text style={styles.headerList}>{section._id}</Text>,
     []
   );
   const renderSchedules = useCallback(
@@ -67,7 +62,7 @@ export const SchedulesScreen = ({ route }) => {
     <SafeAreaView style={styles.screen}>
       <Header title={t("myOrders")} hideBtnLeft divider />
       <View style={styles.container}>
-        {schedule && !loading && (
+        {/* {schedule && !loading && (
           <View style={{ padding: 15 }}>
             <CardScheduleOverview
               onPress={goToDetails}
@@ -75,8 +70,8 @@ export const SchedulesScreen = ({ route }) => {
               newSched={true}
             />
           </View>
-        )}
-        {schedules?.length && !loading && (
+        )} */}
+        {/* {schedules?.length && !loading && (
           <SectionList
             sections={schedules}
             keyExtractor={keyExtractor}
@@ -85,13 +80,13 @@ export const SchedulesScreen = ({ route }) => {
             renderSectionHeader={renderHeader}
             contentContainerStyle={{ padding: 15 }}
           />
-        )}
-        {!schedules?.length && !loading && (
+        )} */}
+        {/* {!schedules?.length && !loading && (
           <NoFoundMessage
             title={t("bookings")}
             description={t("dontHaveBookings")}
           />
-        )}
+        )} */}
         {loading && <Spinner />}
       </View>
     </SafeAreaView>
