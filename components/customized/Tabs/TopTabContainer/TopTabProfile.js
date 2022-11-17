@@ -11,7 +11,7 @@ import { useCallback } from "react";
 
 const { black } = theme.lightColors;
 
-export const TopTabProfile = ({ userId, username, service, option, user }) => {
+export const TopTabProfile = ({ userId, service, option, user }) => {
   const Tab = createMaterialTopTabNavigator();
   const { description, website, location, role } = user || {};
 
