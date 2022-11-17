@@ -7,14 +7,14 @@ export const ProductsProfileTab = ({ userId, services, service, option }) => {
 
   return (
     <>
-      {services?.length > 0 && (
+      {/* {services?.length > 0 && (
         <TopTabProducts
           userId={userId}
           services={services}
           initialRoute={service?.name.toLowerCase()}
           option={option}
         />
-      )}
+      )} */}
     </>
   );
 };

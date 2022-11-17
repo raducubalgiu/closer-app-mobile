@@ -4,10 +4,10 @@ import { ProductsProfileTab } from "../ProfileTabs/ProductsProfileTab";
 import { JobsProfileTab } from "../ProfileTabs/JobsProfileTab";
 import { AboutProfileTab } from "../ProfileTabs/AboutProfileTab";
 import { TabBadge } from "../TabBadge/TabBadge";
-import { useGet } from "../../../../hooks";
 import theme from "../../../../assets/styles/theme";
 import { Icon } from "@rneui/themed";
 import { THIRD_ROLE } from "@env";
+import { useCallback } from "react";
 
 const { black } = theme.lightColors;
 
@@ -15,32 +15,33 @@ export const TopTabProfile = ({ userId, username, service, option, user }) => {
   const Tab = createMaterialTopTabNavigator();
   const { description, website, location, role } = user || {};
 
-  const { data: services } = useGet({
-    model: "services",
-    uri: `/locations/${user?.location}/services`,
-  });
+  const PostsProfile = useCallback(
+    () => <PostsProfileTab userId={userId} />,
+    [userId]
+  );
 
-  const PostsProfile = () => (
-    <PostsProfileTab userId={userId} username={username} />
+  const ProductsProfile = useCallback(
+    () => (
+      <ProductsProfileTab userId={userId} service={service} option={option} />
+    ),
+    [userId, service, option]
   );
-  const ProductsProfile = () => (
-    <ProductsProfileTab
-      userId={userId}
-      services={services}
-      service={service}
-      option={option}
-    />
+
+  const JobsProfile = useCallback(
+    () => <JobsProfileTab userId={userId} />,
+    [userId]
   );
-  const JobsProfile = () => (
-    <JobsProfileTab userId={userId} username={username} />
-  );
-  const AboutProfile = () => (
-    <AboutProfileTab
-      biography={description}
-      website={website}
-      location={location}
-      role={role}
-    />
+
+  const AboutProfile = useCallback(
+    () => (
+      <AboutProfileTab
+        biography={description}
+        website={website}
+        location={location}
+        role={role}
+      />
+    ),
+    []
   );
 
   return (
