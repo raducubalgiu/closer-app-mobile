@@ -13,11 +13,13 @@ import theme from "../assets/styles/theme";
 import moment from "moment";
 import { Agenda } from "react-native-calendars";
 import { useRefreshByUser } from "../hooks";
+import { useNavigation } from "@react-navigation/native";
 
 const { primary, grey0 } = theme.lightColors;
 
 export const CalendarScreen = ({ route }) => {
-  const { product, service, owner } = route.params || {};
+  const { product, service } = route.params || {};
+  const navigation = useNavigation();
   const [day, setDay] = useState("2022-11-11");
   const [slots, setSlots] = useState({});
   const [knob, setKnob] = useState(false);
@@ -29,21 +31,16 @@ export const CalendarScreen = ({ route }) => {
     </>
   );
 
-  // const goToConfirm = (slot) => {
-  //   navigation.navigate("ScheduleConfirm", {
-  //     selectedDay,
-  //     selectedHour: slot,
-  //     service,
-  //     product,
-  //     owner,
-  //     hours,
-  //     employee,
-  //   });
-  // };
+  const goToConfirm = () => {
+    navigation.navigate("ScheduleConfirm", {
+      service,
+      product,
+    });
+  };
 
   const renderSlot = ({ slot }) => {
     return (
-      <Button onPress={() => goToConfirm(slot)}>
+      <Button onPress={() => goToConfirm()}>
         <Stack direction="row" justify="start" sx={styles.slot}>
           <Text style={styles.slotText}>{slot}</Text>
         </Stack>

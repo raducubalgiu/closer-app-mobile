@@ -1,94 +1,63 @@
 import { SafeAreaView, ScrollView, StyleSheet, Text } from "react-native";
-import React, { useState } from "react";
-import axios from "axios";
+import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Icon } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
-import { Feedback, Header, MainButton, Stack } from "../components/core";
-import { useAuth, useDates } from "../hooks";
+import { Header, MainButton, Stack } from "../components/core";
+import { useAuth, usePost } from "../hooks";
 import theme from "../assets/styles/theme";
-import { AddressFormat } from "../utils";
+import { NOW, HALF_HOUR } from "../utils/date-utils";
+import dayjs from "dayjs";
 
 const { black, grey0 } = theme.lightColors;
 
 export const ScheduleConfirmScreen = ({ route }) => {
-  const { user } = useAuth();
-  const [loading, setLoading] = useState(false);
-  const [feedback, setFeedback] = useState({ visible: false, message: "" });
-  const {
-    getStartTimeByDateAndHours,
-    getEndTimeBySlot,
-    getLocationStartAndEnd,
-  } = useDates();
+  const { user: customer } = useAuth();
+  const { service, product } = route.params;
+  const { user, name, price, option, duration, description } = product;
   const navigation = useNavigation();
   const { t } = useTranslation();
-  const { selectedDay, selectedHour, owner, service } = route.params;
-  const { product, hours, employee } = route.params;
-  const { name, price, option, duration, description } = product;
 
-  const startTime = getStartTimeByDateAndHours(selectedDay, selectedHour);
-  const endTime = getEndTimeBySlot(startTime);
-  const { locationStart, locationEnd } = getLocationStartAndEnd(
-    hours,
-    selectedDay
-  );
+  const { mutate, isLoading, isSuccess } = usePost({
+    uri: "/schedules",
+    onSuccess: () => navigation.navigate("Schedules"),
+  });
 
   const handleBook = () => {
-    setLoading(true);
-    axios
-      .post(
-        `${process.env.BASE_ENDPOINT}/schedules?locationStart=${locationStart}&locationEnd=${locationEnd}`,
-        {
-          start: startTime,
-          end: endTime,
-          owner: owner._id,
-          customer: {
-            _id: user?._id,
-            name: user?.name,
-            avatar: user?.avatar,
-          },
-          service: {
-            _id: service?._id,
-            name: service?.name,
-          },
-          product: {
-            name,
-            description,
-            price,
-            option: option?.name,
-            duration,
-          },
-        },
-        { headers: { Authorization: `Bearer ${user?.token}` } }
-      )
-      .then((res) => {
-        setLoading(false);
-        navigation.navigate("Schedules", {
-          schedule: { ...res.data, owner },
-        });
-      })
-      .catch((err) => {
-        const { message } = err.response.data;
-        setLoading(false);
-        setFeedback({ visible: true, message });
-      });
+    mutate({
+      start: NOW,
+      end: dayjs(NOW).add(HALF_HOUR, "milliseconds"),
+      user,
+      customer: customer?._id,
+      service,
+      product: {
+        name,
+        description,
+        price,
+        option,
+        duration,
+      },
+    });
   };
 
   return (
     <SafeAreaView style={styles.screen}>
       <Header title={t("checkBookingDetails")} />
-      <Feedback feedback={feedback} setFeedback={setFeedback} duration="LONG" />
       <ScrollView align="start" contentContainerStyle={styles.scrollView}>
         <Stack align="start">
           <Stack align="start" direction="row" sx={{ marginBottom: 50 }}>
-            <Icon name="calendar" type="feather" size={27.5} color={grey0} />
+            <Icon
+              name="calendar"
+              type="feather"
+              size={20}
+              color={black}
+              style={styles.icon}
+            />
             <Stack align="start" sx={{ marginLeft: 15, flex: 1 }}>
-              <Text style={styles.heading}>
-                {selectedDay} - {selectedHour}
-              </Text>
-              <Text style={styles.description}>{owner.name}</Text>
+              <Text style={styles.heading}>17-11-2022 - 14:30</Text>
+              <Text style={styles.description}>Raducu Balgiu</Text>
               <Text style={styles.description}>
-                {AddressFormat(owner.location)}
+                Strada Ion Agirbiceanu, nr 35, Sector 3
               </Text>
             </Stack>
           </Stack>
@@ -96,21 +65,27 @@ export const ScheduleConfirmScreen = ({ route }) => {
             <Icon
               name="shopping-bag"
               type="feather"
-              size={27.5}
-              color={grey0}
+              size={20}
+              color={black}
+              style={styles.icon}
             />
             <Stack align="start" sx={{ marginLeft: 15, flex: 1 }}>
-              <Text style={styles.heading}>
-                {service.name} - {product.name}
+              <Text style={styles.heading}>ITP - {product.name}</Text>
+              <Text style={styles.description}>
+                Categorie: {option.name || option}
               </Text>
               <Text style={styles.description}>{description}</Text>
-              <Text style={styles.description}>
-                {option.name || option}, {duration} min
-              </Text>
+              <Text style={styles.duration}>Durata: {duration} min</Text>
             </Stack>
           </Stack>
           <Stack align="start" direction="row" sx={{ marginBottom: 50 }}>
-            <Icon name="credit-card" type="feather" size={27.5} color={grey0} />
+            <Icon
+              name="credit-card"
+              type="feather"
+              size={20}
+              color={black}
+              style={styles.icon}
+            />
             <Stack align="start" sx={{ marginLeft: 15, flex: 1 }}>
               <Text style={styles.heading}>{t("payment")}</Text>
               <Text style={styles.description}>{t("paymentDetails")}</Text>
@@ -123,10 +98,9 @@ export const ScheduleConfirmScreen = ({ route }) => {
         size="lg"
         radius={25}
         title={t("confirmBooking")}
-        loading={loading}
+        loading={isLoading && !isSuccess}
         onPress={handleBook}
-        fullWidth
-        sx={{ marginHorizontal: 20 }}
+        sx={{ marginHorizontal: 15 }}
       />
     </SafeAreaView>
   );
@@ -145,15 +119,23 @@ const styles = StyleSheet.create({
   heading: {
     color: black,
     fontSize: 16,
+    fontWeight: "600",
+  },
+  icon: {
+    backgroundColor: "#f5f5f5",
+    padding: 15,
+    borderRadius: 50,
   },
   description: {
     marginTop: 5,
     color: grey0,
     fontSize: 16,
   },
+  duration: { marginTop: 5, color: grey0, fontSize: 16 },
   price: {
     marginTop: 15,
     color: black,
-    fontSize: 25,
+    fontSize: 27.5,
+    fontWeight: "700",
   },
 });
