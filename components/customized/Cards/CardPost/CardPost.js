@@ -4,6 +4,7 @@ import React, { memo } from "react";
 import CardPostHeader from "./CardPostHeader";
 import CardPostButtons from "./CardPostButtons";
 import CardPostFooter from "./CardPostFooter";
+import { FROM_NOW } from "../../../../utils/date-utils";
 
 const CardPost = ({ post, onShowDetails }) => {
   const {
@@ -51,7 +52,7 @@ const CardPost = ({ post, onShowDetails }) => {
         description={description}
         username={username}
         name={name}
-        date={createdAt}
+        date={FROM_NOW(createdAt)}
         avatar={avatar}
         bookable={bookable}
         commentsCount={commentsCount}

@@ -1,8 +1,17 @@
 import dayjs from "dayjs";
 const utc = require("dayjs/plugin/utc");
+const relativeTime = require("dayjs/plugin/relativeTime");
+const country = require("dayjs/locale/ro");
+
 dayjs.extend(utc);
+dayjs.extend(relativeTime);
+dayjs.locale(country);
 
 export const NOW = dayjs.utc().format();
+
+export const FROM_NOW = (date) => {
+  return dayjs(date).fromNow();
+};
 
 // all values are indicated in miliseconds
 export const SECOND = 1000;
