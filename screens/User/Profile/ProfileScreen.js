@@ -47,34 +47,30 @@ export const ProfileScreen = () => {
         username={username}
         onOpenSettings={SHOW_BS}
       />
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <ProfileOverview
-          user={user}
-          name={name}
-          username={username}
-          avatar={avatar}
-        >
-          <MainButton
-            variant="outlined"
-            title={t("editProfile")}
-            radius={2.5}
-            sx={{ borderWidth: 1, borderColor: "#ddd" }}
-            onPress={navigateProfile}
-          />
-          <SocialIconButton onPress={navigateBookmarks} name="bookmark" />
-          <SocialIconButton onPress={navigateInstagram} name="instagram" />
-          <SocialIconButton onPress={navigateYoutube} name="youtube" />
-        </ProfileOverview>
-        <View style={{ height }}>
-          <TopTabProfile
-            userId={user?._id}
-            username={username}
-            service={null}
-            option={null}
-            user={user}
-          />
-        </View>
-      </ScrollView>
+      <ProfileOverview
+        user={user}
+        name={name}
+        username={username}
+        avatar={avatar}
+      >
+        <MainButton
+          variant="outlined"
+          title={t("editProfile")}
+          radius={2.5}
+          sx={{ borderWidth: 1, borderColor: "#ddd" }}
+          onPress={navigateProfile}
+        />
+        <SocialIconButton onPress={navigateBookmarks} name="bookmark" />
+        <SocialIconButton onPress={navigateInstagram} name="instagram" />
+        <SocialIconButton onPress={navigateYoutube} name="youtube" />
+      </ProfileOverview>
+      <TopTabProfile
+        userId={user?._id}
+        username={username}
+        service={null}
+        option={null}
+        user={user}
+      />
       <Protected roles={[MAIN_ROLE, SECOND_ROLE]} userRole={role}>
         <CFAB
           onPress={() => navigation.navigate("MyCalendar")}
@@ -103,7 +99,6 @@ const styles = StyleSheet.create({
     borderColor: "#ddd",
     marginLeft: 5,
   },
-  tabsCont: {},
   indicatorStyle: {
     backgroundColor: "#ddd",
     width: 45,

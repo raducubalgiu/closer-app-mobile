@@ -58,65 +58,61 @@ export const ProfileGeneralScreen = ({ route }) => {
           onOpenNotifications={null}
         />
       </SafeAreaView>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <ProfileOverview
-          user={userDetails}
-          name={name ? name : userDetails?.name}
-          username={username}
-          avatar={avatar ? avatar : userDetails?.avatar}
-        >
-          <FollowButton
-            size="md"
-            isFollow={follow?.status}
-            followeeId={userId || userDetails?._id}
-            fetchSuggested={handleSuggested}
-            fetchUser={() => {}}
-          />
-          {follow?.status && (
-            <IconButton
-              sx={styles.iconBtn}
-              size={20}
-              color={black}
-              iconType="feather"
-              iconName="message-circle"
-              onPress={goToMessage}
-            />
-          )}
+      <ProfileOverview
+        user={userDetails}
+        name={name ? name : userDetails?.name}
+        username={username}
+        avatar={avatar ? avatar : userDetails?.avatar}
+      >
+        <FollowButton
+          size="md"
+          isFollow={follow?.status}
+          followeeId={userId || userDetails?._id}
+          fetchSuggested={handleSuggested}
+          fetchUser={() => {}}
+        />
+        {follow?.status && (
           <IconButton
             sx={styles.iconBtn}
             size={20}
             color={black}
             iconType="feather"
-            iconName="map-pin"
-            onPress={() =>
-              navigation.navigate("Map", {
-                profession: userDetails?.profession,
-              })
-            }
+            iconName="message-circle"
+            onPress={goToMessage}
           />
-          <IconButton
-            sx={styles.iconBtn}
-            size={20}
-            color={black}
-            iconType="antdesign"
-            iconName="adduser"
-            onPress={handleSuggested}
-            loading={isLoading}
-          />
-        </ProfileOverview>
-        {suggested?.length > 0 && (
-          <SuggestedUsersList suggested={suggested} userId={userId} />
         )}
-        <View style={styles.tabsCont}>
-          <TopTabProfile
-            user={userDetails}
-            userId={userId || userDetails?._id}
-            username={username}
-            service={service}
-            option={option}
-          />
-        </View>
-      </ScrollView>
+        <IconButton
+          sx={styles.iconBtn}
+          size={20}
+          color={black}
+          iconType="feather"
+          iconName="map-pin"
+          onPress={() =>
+            navigation.navigate("Map", {
+              profession: userDetails?.profession,
+            })
+          }
+        />
+        <IconButton
+          sx={styles.iconBtn}
+          size={20}
+          color={black}
+          iconType="antdesign"
+          iconName="adduser"
+          onPress={handleSuggested}
+          loading={isLoading}
+        />
+      </ProfileOverview>
+      {suggested?.length > 0 && (
+        <SuggestedUsersList suggested={suggested} userId={userId} />
+      )}
+      <TopTabProfile
+        user={userDetails}
+        userId={userId || userDetails?._id}
+        username={username}
+        service={service}
+        option={option}
+      />
     </View>
   );
 };
@@ -163,7 +159,6 @@ const styles = StyleSheet.create({
     padding: 7,
     borderRadius: 5,
   },
-  tabsCont: { flex: 1, height: 1000 },
   messageBtn: { borderWidth: 1, borderColor: "#ddd", marginLeft: 5 },
   indicatorStyle: {
     backgroundColor: "#ddd",
