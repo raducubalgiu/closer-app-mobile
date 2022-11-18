@@ -1,7 +1,7 @@
-import { StyleSheet, Text, Dimensions, Image } from "react-native";
+import { StyleSheet, Text, Dimensions, Image, Pressable } from "react-native";
 import React, { useState } from "react";
 import { Icon } from "@rneui/themed";
-import { Stack, CustomAvatar, Button } from "../../core";
+import { Stack, CustomAvatar } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { useAuth, usePatch } from "../../../hooks";
 import { MessDateItem } from "./MessDateItem";
@@ -55,14 +55,14 @@ export const MessReceivedItem = ({
             />
           )}
         </Stack>
-        <Button onPress={handleLike} sx={styles.like}>
+        <Pressable onPress={handleLike} style={styles.like}>
           <Icon
             name={isLiked ? "heart" : "hearto"}
             type="antdesign"
             color={isLiked ? error : "#ddd"}
             size={20}
           />
-        </Button>
+        </Pressable>
       </Stack>
       {!dateSame && <MessDateItem date={date} />}
     </Stack>

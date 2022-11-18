@@ -1,7 +1,6 @@
 import { FlashList } from "@shopify/flash-list";
 import { RefreshControl } from "react-native";
 import { useCallback } from "react";
-import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { useIsFocused } from "@react-navigation/native";
 import { CardRatings } from "../../Cards/CardRatings";
@@ -56,7 +55,7 @@ export const RatingsTab = ({ userId }) => {
       <CardRatings
         avatar={reviewer?.avatar}
         name={reviewer?.name}
-        date={moment(createdAt).format("LL")}
+        date={createdAt}
         rating={rating}
         review={review}
         service={"Tuns"}
@@ -78,8 +77,6 @@ export const RatingsTab = ({ userId }) => {
     }
   };
   const { pages } = DUMMY_DATA || {};
-
-  console.log("DATA!!!", data);
 
   const noFoundMessage = !isLoading &&
     !isFetchingNextPage &&

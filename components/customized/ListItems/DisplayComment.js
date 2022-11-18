@@ -1,6 +1,6 @@
-import { Text, StyleSheet } from "react-native";
+import { Text, StyleSheet, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Button, Stack, CustomAvatar, Spinner } from "../../core";
+import { Stack, CustomAvatar, Spinner } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../hooks";
 import { useTranslation } from "react-i18next";
@@ -44,20 +44,20 @@ export const DisplayComment = ({
   ) {
     showMore = (
       <Stack align="center">
-        <Button onPress={onHandleRelated} sx={{ marginBottom: 15 }}>
+        <Pressable onPress={onHandleRelated} style={{ marginBottom: 15 }}>
           <Text style={styles.seeAll}>
             {t("seeReplies")} ({relatedCommentsCount})
           </Text>
-        </Button>
+        </Pressable>
       </Stack>
     );
   }
 
   return (
     <Stack align="start" direction="row" sx={styles.commentsCont}>
-      <Button onPress={goToUserExtra}>
+      <Pressable onPress={goToUserExtra}>
         <CustomAvatar size={30} iconSize={15} avatar={avatar} />
-      </Button>
+      </Pressable>
       <Stack direction="row" align="start" sx={{ marginLeft: 10, flex: 1 }}>
         <Stack align="start" sx={{ flex: 1 }}>
           <DisplayText
@@ -71,9 +71,9 @@ export const DisplayComment = ({
             <Text style={styles.likesCount}>
               {likes} {t("likes")}
             </Text>
-            <Button onPress={() => onReply(username, _id, previousComment)}>
+            <Pressable onPress={() => onReply(username, _id, previousComment)}>
               <Text style={styles.reply}>{t("reply")}</Text>
-            </Button>
+            </Pressable>
           </Stack>
           {creatorLike && (
             <Text style={styles.likeCreator}>{t("likedByCreator")}</Text>

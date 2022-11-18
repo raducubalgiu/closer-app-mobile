@@ -1,5 +1,5 @@
-import { FlatList, View } from "react-native";
-import React, { useCallback } from "react";
+import { FlatList } from "react-native";
+import { useCallback } from "react";
 import { DisplayComment } from "./DisplayComment";
 
 export const RelatedCommentsList = ({

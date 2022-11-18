@@ -1,7 +1,7 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, Pressable } from "react-native";
 import React, { memo, useState } from "react";
 import { Icon } from "@rneui/themed";
-import { Button, Stack, CustomAvatar } from "../../../core";
+import { Stack, CustomAvatar } from "../../../core";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import theme from "../../../../assets/styles/theme";
@@ -48,8 +48,8 @@ const CardPostFooter = ({
         {displayText}
       </Stack>
       {comments > 0 && (
-        <Button
-          sx={styles.commentsContainer}
+        <Pressable
+          style={styles.commentsContainer}
           onPress={() => goToComments(false)}
         >
           <Stack direction="row" justify="start">
@@ -66,10 +66,10 @@ const CardPostFooter = ({
               color={grey0}
             />
           </Stack>
-        </Button>
+        </Pressable>
       )}
-      <Button
-        sx={
+      <Pressable
+        style={
           comments > 0 || description
             ? { paddingHorizontal: 15, marginTop: 10 }
             : { paddingHorizontal: 15 }
@@ -80,7 +80,7 @@ const CardPostFooter = ({
           <CustomAvatar size={22.5} iconSize={10} avatar={user?.avatar} />
           <Text style={styles.addCommText}>{t("addComment")}</Text>
         </Stack>
-      </Button>
+      </Pressable>
       <Text style={styles.date}>{date}</Text>
     </>
   );

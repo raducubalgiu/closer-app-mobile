@@ -1,5 +1,5 @@
-import { StyleSheet, Text } from "react-native";
-import { Stack, Checkmark, CustomAvatar, Button } from "../../core";
+import { StyleSheet, Text, Pressable } from "react-native";
+import { Stack, Checkmark, CustomAvatar } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { trimFunc } from "../../../utils";
 import { useNavigation } from "@react-navigation/native";
@@ -16,7 +16,7 @@ export const MessageListItem = ({ conversation }) => {
   };
 
   return (
-    <Button onPress={goToMessages} sx={styles.container}>
+    <Pressable onPress={goToMessages} style={styles.container}>
       <Stack direction="row" justify="start">
         <CustomAvatar avatar={avatar} size={50} />
         <Stack direction="row" sx={{ flex: 1 }} align="start">
@@ -32,7 +32,7 @@ export const MessageListItem = ({ conversation }) => {
           <Text style={styles.date}>1z</Text>
         </Stack>
       </Stack>
-    </Button>
+    </Pressable>
   );
 };
 

@@ -1,8 +1,7 @@
-import { StyleSheet, Text, FlatList } from "react-native";
-import React, { useCallback } from "react";
+import { StyleSheet, Text, FlatList, Pressable } from "react-native";
+import { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";
-import { Button } from "../../core";
 
 const { grey0, black } = theme.lightColors;
 
@@ -17,9 +16,9 @@ export const ServicesList = ({ services }) => {
 
   const renderService = useCallback(
     ({ item }) => (
-      <Button sx={styles.serviceBtn} onPress={() => goToFilters(item)}>
+      <Pressable style={styles.serviceBtn} onPress={() => goToFilters(item)}>
         <Text style={styles.servicesTitle}>{item.name}</Text>
-      </Button>
+      </Pressable>
     ),
     []
   );

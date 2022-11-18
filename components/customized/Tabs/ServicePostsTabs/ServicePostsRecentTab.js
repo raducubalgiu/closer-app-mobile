@@ -1,5 +1,5 @@
 import { FlashList } from "@shopify/flash-list";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import { useGetPaginate } from "../../../../hooks";
 import { CardPostImage } from "../../Cards/CardPostImage";

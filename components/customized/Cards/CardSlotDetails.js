@@ -1,5 +1,5 @@
-import { StyleSheet, Text } from "react-native";
-import { Button, Stack, CustomAvatar } from "../../core";
+import { StyleSheet, Text, Pressable } from "react-native";
+import { Stack, CustomAvatar } from "../../core";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
@@ -28,7 +28,7 @@ export const CardSlotDetails = ({
   };
 
   return (
-    <Button>
+    <Pressable>
       <Stack
         direction="row"
         align="start"
@@ -59,7 +59,7 @@ export const CardSlotDetails = ({
           </Stack>
         </Stack>
       </Stack>
-    </Button>
+    </Pressable>
   );
 };
 

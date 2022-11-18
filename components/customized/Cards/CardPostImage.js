@@ -1,7 +1,6 @@
-import { StyleSheet, Dimensions, View, Text } from "react-native";
+import { StyleSheet, Dimensions, View, Text, Pressable } from "react-native";
 import React from "react";
 import { Image, Icon } from "@rneui/themed";
-import { Button } from "../../core";
 import theme from "../../../assets/styles/theme";
 
 const { width, height } = Dimensions.get("window");
@@ -34,7 +33,7 @@ export const CardPostImage = ({
   });
 
   return (
-    <Button sx={{ ...imageBox.box, ...borderBox }} onPress={onPress}>
+    <Pressable style={{ ...imageBox.box, ...borderBox }} onPress={onPress}>
       <Image source={{ uri: `${image}` }} containerStyle={styles.image} />
       {bookable && (
         <View style={styles.bookable}>
@@ -63,7 +62,7 @@ export const CardPostImage = ({
           />
         </View>
       )}
-    </Button>
+    </Pressable>
   );
 };
 

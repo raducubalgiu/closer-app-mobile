@@ -1,7 +1,6 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Pressable } from "react-native";
 import VisibilitySensor from "@svanboxel/visibility-sensor-react-native";
 import React, { useState, useRef, useCallback } from "react";
-import { Button } from "../../core";
 import { Video } from "expo-av";
 import { Icon } from "@rneui/themed";
 
@@ -56,14 +55,14 @@ const VideoItem = ({ videoUrl, isMuted, sx }) => {
         isMuted={isMuted}
         isLooping={true}
       />
-      <Button onPress={handleMute} sx={styles.mute}>
+      <Pressable onPress={handleMute} style={styles.mute}>
         <Icon
           name={!status.isMuted ? "unmute" : "mute"}
           type="octicon"
           color="white"
           size={14}
         />
-      </Button>
+      </Pressable>
     </VisibilitySensor>
   );
 };

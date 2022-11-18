@@ -1,19 +1,20 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import React from "react";
+import { StyleSheet, Text, View, Pressable } from "react-native";
 import { Checkmark, Stack, CustomAvatar } from "../../core";
 import theme from "../../../assets/styles/theme";
 import FollowButton from "../Buttons/FollowButton";
 
-const NotificationFollow = (props) => {
+const NotificationFollow = ({
+  name,
+  avatar,
+  checkmark,
+  notification,
+  date,
+}) => {
   return (
     <Stack direction="row" sx={styles.container}>
-      <View
-        style={{
-          flex: 1,
-        }}
-      >
-        <TouchableOpacity style={{ flexDirection: "row" }}>
-          <CustomAvatar avatar={props.avatar} />
+      <View style={{ flex: 1 }}>
+        <Pressable style={{ flexDirection: "row" }}>
+          <CustomAvatar avatar={avatar} />
           <Stack
             direction="column"
             align="start"
@@ -21,13 +22,13 @@ const NotificationFollow = (props) => {
             sx={styles.details}
           >
             <Stack direction="row">
-              <Text style={styles.name}>{props.name}</Text>
-              {props.checkmark && <Checkmark />}
+              <Text style={styles.name}>{name}</Text>
+              {checkmark && <Checkmark />}
             </Stack>
-            <Text style={styles.notification}>{props.notification}</Text>
-            <Text style={styles.notification}>{props.date}</Text>
+            <Text style={styles.notification}>{notification}</Text>
+            <Text style={styles.notification}>{date}</Text>
           </Stack>
-        </TouchableOpacity>
+        </Pressable>
       </View>
       <FollowButton followingId={props.followingId} />
     </Stack>

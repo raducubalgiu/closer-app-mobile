@@ -1,6 +1,6 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, Pressable } from "react-native";
 import { Icon } from "@rneui/themed";
-import { Stack, IconBackButton, Button } from "../../../core";
+import { Stack, IconBackButton } from "../../../core";
 import theme from "../../../../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
 
@@ -12,7 +12,7 @@ export const HeaderSearchAll = ({ search }) => {
   return (
     <Stack direction="row" justify="start" sx={styles.container}>
       <IconBackButton sx={{ marginRight: 10 }} />
-      <Button sx={styles.fakeSearchbar} onPress={() => navigation.goBack()}>
+      <Pressable sx={styles.fakeSearchbar} onPress={() => navigation.goBack()}>
         <Stack direction="row">
           <Stack direction="row">
             <Icon name="search" type="ionicon" color={black} size={20} />
@@ -20,7 +20,7 @@ export const HeaderSearchAll = ({ search }) => {
           </Stack>
           <Icon name="closecircle" type="antdesign" size={16} color="#bbb" />
         </Stack>
-      </Button>
+      </Pressable>
     </Stack>
   );
 };

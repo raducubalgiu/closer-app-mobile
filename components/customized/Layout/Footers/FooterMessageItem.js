@@ -1,5 +1,5 @@
-import { StyleSheet, Text, TextInput } from "react-native";
-import { Stack, IconButton, Button } from "../../../core";
+import { StyleSheet, Text, TextInput, Pressable } from "react-native";
+import { Stack, IconButton } from "../../../core";
 import theme from "../../../../assets/styles/theme";
 import * as Haptics from "expo-haptics";
 import { useTranslation } from "react-i18next";
@@ -32,9 +32,9 @@ export const FooterMessageItem = ({
           placeholder={`${t("message")}...`}
         />
       </Stack>
-      <Button onPress={onSendMessage} sx={styles.sendBtn}>
+      <Pressable onPress={onSendMessage} style={styles.sendBtn}>
         <Text style={styles.sendBtnText}>{t("send")}</Text>
-      </Button>
+      </Pressable>
     </Stack>
   );
 };

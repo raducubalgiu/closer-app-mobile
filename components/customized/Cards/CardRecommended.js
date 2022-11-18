@@ -1,7 +1,7 @@
-import { StyleSheet, Text, Image, Dimensions } from "react-native";
+import { StyleSheet, Text, Image, Dimensions, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { Button, IconLocation, IconStar, IconVideo, Stack } from "../../core";
+import { IconLocation, IconStar, IconVideo, Stack } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { AddressFormat, trimFunc } from "../../../utils";
 
@@ -24,7 +24,7 @@ export const CardRecommended = ({ location }) => {
   };
 
   return (
-    <Button sx={styles.button} onPress={goToUser}>
+    <Pressable style={styles.button} onPress={goToUser}>
       <Stack direction="row" sx={styles.item}>
         <Stack>
           <Image style={styles.image} source={{ uri: `${images[0]?.url}` }} />
@@ -59,7 +59,7 @@ export const CardRecommended = ({ location }) => {
           </Stack>
         </Stack>
       </Stack>
-    </Button>
+    </Pressable>
   );
 };
 

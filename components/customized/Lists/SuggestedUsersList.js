@@ -1,5 +1,5 @@
 import { StyleSheet, Text, FlatList } from "react-native";
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";
 import { Stack } from "../../core";

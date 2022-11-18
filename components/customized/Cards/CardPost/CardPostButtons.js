@@ -1,10 +1,9 @@
-import { StyleSheet, Text, Share } from "react-native";
+import { StyleSheet, Text, Share, Pressable } from "react-native";
 import { useState, memo } from "react";
 import { Icon, Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { SECOND_ROLE, THIRD_ROLE } from "@env";
-import { Stack, Button, ShareIButton, Protected } from "../../../core";
+import { Stack, ShareIButton } from "../../../core";
 import { useAuth } from "../../../../hooks";
 import theme from "../../../../assets/styles/theme";
 import { LikeButton } from "../../Buttons/LikeButton";
@@ -49,7 +48,7 @@ const CardPostButtons = ({ bookable, product, postId, likesCount }) => {
   };
 
   const bookableSection = (
-    <Button onPress={goToCalendar}>
+    <Pressable onPress={goToCalendar}>
       <Stack direction="row" sx={styles.bookable}>
         <Stack direction="row">
           {/* <Text style={styles.book}>{t("book")}</Text> */}
@@ -60,7 +59,7 @@ const CardPostButtons = ({ bookable, product, postId, likesCount }) => {
           <Icon name="keyboard-arrow-right" color={black} size={22.5} />
         </Stack>
       </Stack>
-    </Button>
+    </Pressable>
   );
 
   return (
@@ -68,11 +67,11 @@ const CardPostButtons = ({ bookable, product, postId, likesCount }) => {
       {bookable && bookableSection}
       <Divider color="#ddd" style={{ marginHorizontal: 15 }} />
       <Stack direction="row" sx={styles.buttons}>
-        <Button onPress={goToLikes}>
+        <Pressable onPress={goToLikes}>
           <Text style={styles.likes}>
             {likes} {t("likes")}
           </Text>
-        </Button>
+        </Pressable>
         <Stack direction="row">
           <LikeButton
             postId={postId}

@@ -1,6 +1,6 @@
 import { FlashList } from "@shopify/flash-list";
-import React, { useCallback } from "react";
-import { useAuth, useGetPaginate } from "../../../../hooks";
+import { useCallback } from "react";
+import { useAuth } from "../../../../hooks";
 import { HashtagListItem } from "../../ListItems/HashtagListItem";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { useTranslation } from "react-i18next";

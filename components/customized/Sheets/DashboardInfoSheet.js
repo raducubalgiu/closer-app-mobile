@@ -1,5 +1,4 @@
 import { Text, StyleSheet, FlatList } from "react-native";
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { Divider } from "@rneui/themed";
 import { Stack } from "../../core";

@@ -1,6 +1,6 @@
 import { FlashList } from "@shopify/flash-list";
 import { useIsFocused } from "@react-navigation/native";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useGetPaginate } from "../../../../hooks";
 import { CardPostImage } from "../../Cards/CardPostImage";

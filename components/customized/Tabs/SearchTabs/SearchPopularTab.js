@@ -1,5 +1,5 @@
 import { FlatList } from "react-native";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useAuth, useGet } from "../../../../hooks";

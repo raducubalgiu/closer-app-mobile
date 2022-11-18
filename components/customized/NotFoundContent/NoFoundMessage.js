@@ -1,5 +1,4 @@
 import { StyleSheet, Text } from "react-native";
-import React from "react";
 import { Stack } from "../../core";
 import { Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";

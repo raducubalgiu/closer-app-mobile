@@ -1,6 +1,5 @@
-import { StyleSheet, Text, View, Dimensions, Image } from "react-native";
+import { StyleSheet, View, Dimensions, Image, Pressable } from "react-native";
 import React from "react";
-import { Button, IconBook, IconVideo } from "../../../core";
 import { useNavigation } from "@react-navigation/native";
 import { Video, AVPlaybackStatus } from "expo-av";
 import theme from "../../../../assets/styles/theme";
@@ -34,7 +33,10 @@ export const CardPostGrid = ({ bookable, fixed, postType, image }) => {
   );
 
   return (
-    <Button sx={styles.box} onPress={() => navigation.navigate("Products")}>
+    <Pressable
+      style={styles.box}
+      onPress={() => navigation.navigate("Products")}
+    >
       <View style={styles.box}>
         {postType === "video" ? (
           <Video
@@ -70,7 +72,7 @@ export const CardPostGrid = ({ bookable, fixed, postType, image }) => {
           <IconVideo sx={{ marginLeft: 5 }} />
         </View>
       )} */}
-    </Button>
+    </Pressable>
   );
 };
 

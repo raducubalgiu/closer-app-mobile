@@ -1,6 +1,5 @@
 import { StyleSheet, Text } from "react-native";
 import { CModal, MainButton } from "../../core";
-import React from "react";
 
 export const FilterDistanceModal = ({ visible, onClose, onHandleDistance }) => {
   return (

@@ -1,6 +1,6 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, Pressable } from "react-native";
 import React from "react";
-import { Stack, Button } from "../../../core";
+import { Stack } from "../../../core";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
@@ -11,13 +11,13 @@ export const HeaderEdit = ({ onSave, title, disabled }) => {
 
   return (
     <Stack direction="row" sx={styles.headerCont}>
-      <Button onPress={() => navigation.goBack()} disabled={disabled}>
+      <Pressable onPress={() => navigation.goBack()} disabled={disabled}>
         <Text style={styles.cancel}>{t("cancel")}</Text>
-      </Button>
+      </Pressable>
       <Text style={styles.title}>{title}</Text>
-      <Button onPress={onSave} disabled={disabled}>
+      <Pressable onPress={onSave} disabled={disabled}>
         <Text style={styles.save}>{t("save")}</Text>
-      </Button>
+      </Pressable>
     </Stack>
   );
 };

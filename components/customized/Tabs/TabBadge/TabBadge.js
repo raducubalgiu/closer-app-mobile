@@ -1,5 +1,4 @@
 import { StyleSheet, View } from "react-native";
-import React from "react";
 import { Icon, Badge } from "@rneui/themed";
 import theme from "../../../../assets/styles/theme";
 

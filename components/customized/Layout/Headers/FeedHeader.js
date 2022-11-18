@@ -1,5 +1,4 @@
 import { StyleSheet, Text, TouchableOpacity, ScrollView } from "react-native";
-import React from "react";
 import FakeSearchBarSimple from "../../FakeSearchBar/FakeSearchBarSimple";
 import { Icon, Divider } from "@rneui/themed";
 import { Stack } from "../../../core";

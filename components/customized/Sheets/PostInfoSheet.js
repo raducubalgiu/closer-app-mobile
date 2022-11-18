@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet, Text } from "react-native";
+import { useTranslation } from "react-i18next";
 import { ListItem } from "../../core";
 import theme from "../../../assets/styles/theme";
-import { useTranslation } from "react-i18next";
 
 const { error, black } = theme.lightColors;
 

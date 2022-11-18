@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Pressable } from "react-native";
 import React, { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { Divider } from "@rneui/themed";
-import { FormInput, MainButton, Stack, Button } from "../../core";
+import { FormInput, MainButton, Stack } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 import { AuthProviders } from "./AuthProviders";
@@ -67,9 +67,9 @@ export const LoginRegisterForm = ({
       <Stack align="start">
         <Stack direction="row">
           <Text style={styles.statusText}>{statusText}</Text>
-          <Button onPress={statusAction}>
+          <Pressable onPress={statusAction}>
             <Text style={styles.statusBtn}>{statusBtn}</Text>
-          </Button>
+          </Pressable>
         </Stack>
       </Stack>
       <Divider style={styles.divider} />

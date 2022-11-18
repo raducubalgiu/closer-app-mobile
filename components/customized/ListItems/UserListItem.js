@@ -1,7 +1,6 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Stack, CustomAvatar, Button } from "../../core";
-import { Checkmark } from "../../core";
+import { Stack, CustomAvatar, Checkmark } from "../../core";
 import { FollowButton } from "../Buttons/FollowButton";
 import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../hooks/auth";
@@ -25,7 +24,7 @@ export const UserListItem = ({ user, isFollow, sx }) => {
 
   return (
     <Stack direction="row" sx={{ ...styles.container, ...sx }}>
-      <Button sx={styles.goToUser} onPress={() => goToUser(_id)}>
+      <Pressable style={styles.goToUser} onPress={() => goToUser(_id)}>
         <CustomAvatar avatar={avatar} withBadge={false} />
         <Stack align="start" sx={{ marginLeft: 10 }}>
           <Stack direction="row">
@@ -34,7 +33,7 @@ export const UserListItem = ({ user, isFollow, sx }) => {
           </Stack>
           <Text style={styles.name}>{name}</Text>
         </Stack>
-      </Button>
+      </Pressable>
       {_id !== userContext?._id && (
         <FollowButton isFollow={isFollow} followeeId={_id} />
       )}

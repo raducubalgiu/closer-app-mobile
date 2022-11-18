@@ -1,12 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
 import MapView, { Marker, Callout, PROVIDER_GOOGLE } from "react-native-maps";
-import React from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";
 import { IconLocation, IconStar, Stack } from "../../core";
-import { useNavigation } from "@react-navigation/native";
 
-const { grey0, black } = theme.lightColors;
+const { grey0 } = theme.lightColors;
 
 export const Map = ({ locations, serviceName }) => {
   const { t } = useTranslation();

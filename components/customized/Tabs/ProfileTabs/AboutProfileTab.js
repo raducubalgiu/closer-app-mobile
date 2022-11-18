@@ -1,15 +1,9 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Pressable } from "react-native";
 import React from "react";
 import { AddressFormat } from "../../../../utils/addressFormat";
 import theme from "../../../../assets/styles/theme";
 import { MAIN_ROLE, SECOND_ROLE } from "@env";
-import {
-  Button,
-  IconLocation,
-  Stack,
-  ListItem,
-  Protected,
-} from "../../../core";
+import { IconLocation, Stack, ListItem, Protected } from "../../../core";
 import { useTranslation } from "react-i18next";
 import { Icon } from "@rneui/themed";
 import { trimFunc, formatSeconds } from "../../../../utils";
@@ -50,20 +44,20 @@ export const AboutProfileTab = ({ biography }) => {
         <Text style={styles.heading}>{t("contact")}</Text>
         {/* <Stack direction="row" sx={styles.stack}>
           <Icon name="link" type="feather" size={20} color={grey0} />
-          <Button sx={{ marginLeft: 10 }}>
+          <Pressable style={{ marginLeft: 10 }}>
             {website && <Text style={styles.actionBtn}>{website}</Text>}
             {!website && (
               <Text >{t("notAdded")}</Text>
             )}
-          </Button>
+          </Pressable>
         </Stack> */}
         {/* <Protected userRole={role} roles={[SECOND_ROLE]}>
           <Stack direction="row" sx={styles.stack}>
             <Icon name="award" type="feather" size={20} color={grey0} />
             <Text style={styles.label}>Angajat la </Text>
-            <Button sx={{ marginLeft: 2.5 }}>
+            <Pressable style={{ marginLeft: 2.5 }}>
               <Text style={styles.actionBtn}>@trattoria</Text>
-            </Button>
+            </Pressable>
           </Stack>
         </Protected>
         <Protected userRole={role} roles={[MAIN_ROLE, SECOND_ROLE]}>

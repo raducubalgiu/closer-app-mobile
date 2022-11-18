@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Pressable } from "react-native";
 import { Icon, Divider } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";
-import { Button, Stack } from "../../core";
+import { Stack } from "../../core";
 
 const { black, grey0 } = theme.lightColors;
 
@@ -11,14 +11,14 @@ const FakeSearchBar = ({ onGoAnytime, onGoNow }) => {
 
   return (
     <View style={styles.container}>
-      <Button onPress={onGoAnytime} sx={{ flex: 1 }}>
+      <Pressable onPress={onGoAnytime} sx={{ flex: 1 }}>
         <Stack direction="row" justify="start">
           <Icon name="search" type="feather" color={black} size={20} />
           <Text style={styles.fakeInputText}>{t("searchService")}</Text>
         </Stack>
-      </Button>
+      </Pressable>
       <Divider orientation="vertical" style={{ marginRight: 15 }} />
-      <Button onPress={onGoNow} sx={styles.nowBtn}>
+      <Pressable onPress={onGoNow} sx={styles.nowBtn}>
         <Icon
           name="clock"
           type="feather"
@@ -28,7 +28,7 @@ const FakeSearchBar = ({ onGoAnytime, onGoNow }) => {
         />
         <Text style={styles.nowBtnText}>{t("now")}</Text>
         <Icon name="keyboard-arrow-down" color={black} />
-      </Button>
+      </Pressable>
     </View>
   );
 };

@@ -1,7 +1,6 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, Pressable } from "react-native";
 import React from "react";
 import {
-  Button,
   CustomAvatar,
   FollowButton,
   Stack,
@@ -29,7 +28,7 @@ export const CardSuggestedPeople = ({
   const { t } = useTranslation();
 
   return (
-    <Button sx={styles.container} onPress={onPress}>
+    <Pressable style={styles.container} onPress={onPress}>
       <Stack justify="end" align="end" sx={{ width: "100%" }}>
         <IconButton
           onPress={onRemoveCard}
@@ -65,7 +64,7 @@ export const CardSuggestedPeople = ({
           fullWidth
         />
       </Stack>
-    </Button>
+    </Pressable>
   );
 };
 

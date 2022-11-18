@@ -1,5 +1,5 @@
 import { FlashList } from "@shopify/flash-list";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { Spinner } from "../../../core";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { ServiceListItem } from "../../ListItems/ServiceListItem";

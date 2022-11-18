@@ -1,10 +1,17 @@
-import { StyleSheet, Text, View, Image, Dimensions } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Dimensions,
+  Pressable,
+} from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";
 import { trimFunc, AddressFormat } from "../../../utils";
-import { Button, IconLocation, IconStar, Stack } from "../../core";
+import { IconLocation, IconStar, Stack } from "../../core";
 
 const { width } = Dimensions.get("window");
 const { black, grey0 } = theme.lightColors;
@@ -28,7 +35,7 @@ export const CardLocation = ({ location, service, option, moreProducts }) => {
     });
 
   return (
-    <Button onPress={goToUser}>
+    <Pressable onPress={goToUser}>
       <Stack direction="row" sx={styles.container}>
         <Stack sx={styles.imageC}>
           <Image
@@ -73,7 +80,7 @@ export const CardLocation = ({ location, service, option, moreProducts }) => {
           </Stack>
         </View>
       </Stack>
-    </Button>
+    </Pressable>
   );
 };
 

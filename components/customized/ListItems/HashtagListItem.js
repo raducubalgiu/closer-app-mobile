@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
-import { StyleSheet, Text } from "react-native";
-import { Button, Stack } from "../../core";
+import { StyleSheet, Text, Pressable } from "react-native";
+import { Stack } from "../../core";
 import theme from "../../../assets/styles/theme";
 
 const { black, grey0 } = theme.lightColors;
@@ -9,7 +9,7 @@ export const HashtagListItem = ({ name, postsCount, onPress, sx }) => {
   const { t } = useTranslation();
 
   return (
-    <Button onPress={onPress} sx={{ ...styles.container, ...sx }}>
+    <Pressable onPress={onPress} style={{ ...styles.container, ...sx }}>
       <Stack direction="row">
         <Stack direction="row">
           <Stack sx={styles.hashtagIc}>
@@ -23,7 +23,7 @@ export const HashtagListItem = ({ name, postsCount, onPress, sx }) => {
           </Stack>
         </Stack>
       </Stack>
-    </Button>
+    </Pressable>
   );
 };
 

@@ -1,5 +1,4 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
 import { Tabs } from "react-native-collapsible-tab-view";
 import { PostsProfileTab } from "../ProfileTabs/PostsProfileTab";
 import { ProductsProfileTab } from "../ProfileTabs/ProductsProfileTab";

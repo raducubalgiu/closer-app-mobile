@@ -1,5 +1,5 @@
-import { StyleSheet, Text } from "react-native";
-import { Button, Stack } from "../../core";
+import { StyleSheet, Text, Pressable } from "react-native";
+import { Stack } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { Icon } from "@rneui/themed";
 
@@ -14,14 +14,14 @@ export const SearchPopularHeading = ({
   return (
     <>
       {collection?.length > 0 && (
-        <Button onPress={onSeeAll}>
+        <Pressable onPress={onSeeAll}>
           <Stack direction="row" sx={styles.container}>
             <Text style={styles.heading}>{heading}</Text>
             {seeAll && (
               <Icon name="keyboard-arrow-right" color={black} size={20} />
             )}
           </Stack>
-        </Button>
+        </Pressable>
       )}
     </>
   );

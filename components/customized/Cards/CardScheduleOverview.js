@@ -1,9 +1,9 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, Pressable } from "react-native";
 import React from "react";
 import { Divider } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";
-import { Stack, CustomAvatar, Button, Checkmark } from "../../core";
+import { Stack, CustomAvatar, Checkmark } from "../../core";
 import { useNavigation } from "@react-navigation/native";
 
 const { black, grey0, error, success, primary } = theme.lightColors;
@@ -21,7 +21,7 @@ export const CardScheduleOverview = ({ schedule, start }) => {
     status === "canceled" ? { color: error } : { color: success };
 
   return (
-    <Button onPress={goToDetails} sx={{ paddingBottom: 15 }}>
+    <Pressable onPress={goToDetails} style={{ paddingBottom: 15 }}>
       <Stack direction="row" align="start">
         <Stack direction="row">
           <Stack align="start" sx={{ marginLeft: 10 }}>
@@ -44,7 +44,7 @@ export const CardScheduleOverview = ({ schedule, start }) => {
         </Stack>
       </Stack>
       <Divider color="#ddd" style={{ paddingTop: 25 }} />
-    </Button>
+    </Pressable>
   );
 };
 

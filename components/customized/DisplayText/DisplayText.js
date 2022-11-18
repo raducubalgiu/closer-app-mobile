@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View } from "react-native";
-import { ButtonLink, Button, Checkmark } from "../../core";
+import { StyleSheet, Text, View, Pressable } from "react-native";
+import { ButtonLink, Checkmark } from "../../core";
 import React, { useCallback, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";
@@ -62,16 +62,16 @@ export const DisplayText = ({
   return (
     <View style={styles.container}>
       {username && (
-        <Button onPress={goToUserAllInfo}>
+        <Pressable onPress={goToUserAllInfo}>
           <Text style={styles.username}>{username} </Text>
-        </Button>
+        </Pressable>
       )}
       {checkmark && <Checkmark size={7.5} sx={styles.checkmark} />}
       {handleText()}
       {cutText && (
-        <Button onPress={() => setCutText((cutText) => !cutText)}>
+        <Pressable onPress={() => setCutText((cutText) => !cutText)}>
           <Text style={styles.seeMore}>...mai mult</Text>
-        </Button>
+        </Pressable>
       )}
     </View>
   );

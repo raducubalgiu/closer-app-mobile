@@ -1,6 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Icon } from "@rneui/themed";
-import React from "react";
 import theme from "../../../assets/styles/theme";
 import { Stack } from "../../core";
 

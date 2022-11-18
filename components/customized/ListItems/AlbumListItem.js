@@ -1,13 +1,12 @@
-import { StyleSheet, Text, Image } from "react-native";
-import React from "react";
-import { Button, Stack } from "../../core";
+import { StyleSheet, Text, Image, Pressable } from "react-native";
+import { Stack } from "../../core";
 import theme from "../../../assets/styles/theme";
 
 const { black, grey0 } = theme.lightColors;
 
 export const AlbumListItem = ({ uri, title, assetCount, onPress }) => {
   return (
-    <Button onPress={onPress} style={styles.container}>
+    <Pressable onPress={onPress} style={styles.container}>
       <Stack direction="row" justify="start">
         <Image
           source={{
@@ -20,7 +19,7 @@ export const AlbumListItem = ({ uri, title, assetCount, onPress }) => {
           <Text style={styles.assetCount}>{assetCount}</Text>
         </Stack>
       </Stack>
-    </Button>
+    </Pressable>
   );
 };
 

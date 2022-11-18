@@ -1,5 +1,4 @@
 import { StyleSheet, Text } from "react-native";
-import React from "react";
 import { CModal, MainButton } from "../../core";
 
 export const FilterPriceModal = ({ visible, onClose }) => {

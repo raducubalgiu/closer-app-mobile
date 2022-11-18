@@ -1,9 +1,8 @@
-import { View, Text, FlatList, StyleSheet } from "react-native";
-import React from "react";
-import theme from "../../../assets/styles/theme";
-import { Button, Stack } from "../../core";
+import { View, Text, FlatList, StyleSheet, Pressable } from "react-native";
 import { Divider } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
+import theme from "../../../assets/styles/theme";
+import { Stack } from "../../core";
 
 const { primary, black } = theme.lightColors;
 
@@ -17,21 +16,21 @@ export const DashboardCalendarSheet = () => {
   ];
 
   const renderButton = ({ item }) => (
-    <Button sx={styles.button}>
+    <Pressable style={styles.button}>
       <Text style={styles.buttonTxt}>{item.title}</Text>
-    </Button>
+    </Pressable>
   );
 
   return (
     <View style={{ padding: 15 }}>
       <Stack direction="row" sx={{ marginBottom: 15 }}>
-        <Button style={styles.cancelBtn}>
+        <Pressable style={styles.cancelBtn}>
           <Text style={styles.cancelBtnTxt}>{t("cancel")}</Text>
-        </Button>
+        </Pressable>
         <Text style={styles.period}>19 iun. - 30 iun.</Text>
-        <Button>
+        <Pressable>
           <Text style={styles.confirmBtnTxt}>{t("confirm")}</Text>
-        </Button>
+        </Pressable>
       </Stack>
       <Divider />
       <Stack direction="row" sx={{ marginVertical: 7.5 }}>

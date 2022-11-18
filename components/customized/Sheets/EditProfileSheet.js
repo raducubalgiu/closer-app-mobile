@@ -1,10 +1,9 @@
-import { Text, StyleSheet } from "react-native";
-import React, { useState } from "react";
-import { Stack, Button, CModal } from "../../core";
+import { Text, StyleSheet, Pressable } from "react-native";
 import { useTranslation } from "react-i18next";
-import theme from "../../../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
 import * as MediaLibrary from "expo-media-library";
+import { Stack, CModal } from "../../core";
+import theme from "../../../assets/styles/theme";
 
 const { black, grey0 } = theme.lightColors;
 
@@ -27,15 +26,15 @@ export const EditProfileSheet = ({ onCloseSheet }) => {
   return (
     <>
       <Stack sx={{ padding: 15 }}>
-        <Button sx={styles.title}>
+        <Pressable style={styles.title}>
           <Text style={styles.text}>Fă o fotografie</Text>
-        </Button>
-        <Button sx={styles.title} onPress={goToLibrary}>
+        </Pressable>
+        <Pressable style={styles.title} onPress={goToLibrary}>
           <Text style={styles.text}>{t("chooseFromLibrary")}</Text>
-        </Button>
-        <Button sx={styles.cancelBtn} onPress={onCloseSheet}>
+        </Pressable>
+        <Pressable style={styles.cancelBtn} onPress={onCloseSheet}>
           <Text style={styles.cancelBtnTxt}>{t("cancel")}</Text>
-        </Button>
+        </Pressable>
       </Stack>
       <CModal
         size="xs"
@@ -43,9 +42,9 @@ export const EditProfileSheet = ({ onCloseSheet }) => {
         onCloseModal={() => setModal(false)}
         header={false}
         footer={
-          <Button style={{ alignItems: "center" }}>
+          <Pressable style={{ alignItems: "center" }}>
             <Text style={styles.goToSettings}>{t("goToSettings")}</Text>
-          </Button>
+          </Pressable>
         }
       >
         <Stack sx={{ paddingHorizontal: 15 }}>

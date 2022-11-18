@@ -1,5 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { StyleSheet, Text, View, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { MAIN_ROLE, SECOND_ROLE, THIRD_ROLE } from "@env";
 import { useTranslation } from "react-i18next";
@@ -9,7 +8,6 @@ import {
   Stack,
   StatsButton,
   IconStar,
-  Button,
   Protected,
 } from "../../core";
 import { useAuth } from "../../../hooks";
@@ -70,7 +68,7 @@ export const ProfileOverview = ({ name, username, avatar, children, user }) => {
   return (
     <View style={styles.container}>
       <Stack justify="center" align="center">
-        <Button>
+        <Pressable>
           <CustomAvatar
             iconSize={37}
             size={95}
@@ -78,7 +76,7 @@ export const ProfileOverview = ({ name, username, avatar, children, user }) => {
             withBadge={withBadge}
             badgeDetails={badgeDetails}
           />
-        </Button>
+        </Pressable>
         <Text style={styles.name}>{name}</Text>
         <Stack direction="row" justify="start">
           <Text style={styles.business}>{profession?.name}</Text>

@@ -4,6 +4,7 @@ import {
   RefreshControl,
   StyleSheet,
   Dimensions,
+  Pressable,
 } from "react-native";
 import { useCallback, useEffect, useState } from "react";
 import { BarChart } from "react-native-chart-kit";
@@ -11,7 +12,7 @@ import { useTranslation } from "react-i18next";
 import { Divider } from "@rneui/themed";
 import axios from "axios";
 import theme from "../../../../assets/styles/theme";
-import { Stack, ListItem, Button, Spinner } from "../../../core";
+import { Stack, ListItem, Spinner } from "../../../core";
 import { useAuth, useRefresh } from "../../../../hooks";
 import { displayZero } from "../../../../utils";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
@@ -194,16 +195,16 @@ export const DashboardScheduleTab = ({ startPeriod, lastPeriod }) => {
               >
                 <Text style={styles.sectionTitle}>Statistici</Text>
                 <Stack direction="row">
-                  <Button sx={activeCountBtn} onPress={handleCount}>
+                  <Pressable style={activeCountBtn} onPress={handleCount}>
                     <Text style={activeCountBtnTxt}>
                       <Text>{t("schedules")}</Text>
                     </Text>
-                  </Button>
-                  <Button sx={activeSalesBtn} onPress={handleSales}>
+                  </Pressable>
+                  <Pressable style={activeSalesBtn} onPress={handleSales}>
                     <Text style={activeSalesBtnTxt}>
                       <Text>{t("sales")}</Text>
                     </Text>
-                  </Button>
+                  </Pressable>
                 </Stack>
               </Stack>
             )}

@@ -1,8 +1,8 @@
-import { StyleSheet, Text, Dimensions } from "react-native";
+import { StyleSheet, Text, Dimensions, Pressable } from "react-native";
 import React from "react";
 import { Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
-import { Button, Stack } from "../../core";
+import { Stack } from "../../core";
 
 const width = Dimensions.get("window").width;
 const { black } = theme.lightColors;
@@ -17,7 +17,7 @@ const MyBusinessCard = ({
   description,
 }) => {
   return (
-    <Button sx={{ ...styles.container, ...sx }} onPress={onPress}>
+    <Pressable style={{ ...styles.container, ...sx }} onPress={onPress}>
       <Stack
         sx={{
           width: "100%",
@@ -33,7 +33,7 @@ const MyBusinessCard = ({
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{description}</Text>
       </Stack>
-    </Button>
+    </Pressable>
   );
 };
 

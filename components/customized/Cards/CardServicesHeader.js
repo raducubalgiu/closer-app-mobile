@@ -1,12 +1,11 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, Pressable } from "react-native";
 import React from "react";
-import { Button } from "../../core";
 import theme from "../../../assets/styles/theme";
 
 export const CardServicesHeader = ({ item, activeService }) => {
   return (
-    <Button
-      sx={
+    <Pressable
+      style={
         item._id === activeService
           ? { ...styles.button, ...styles.activeBtn }
           : styles.button
@@ -22,7 +21,7 @@ export const CardServicesHeader = ({ item, activeService }) => {
       >
         {item.name}
       </Text>
-    </Button>
+    </Pressable>
   );
 };
 

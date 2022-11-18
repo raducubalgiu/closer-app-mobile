@@ -1,5 +1,4 @@
 import { StyleSheet } from "react-native";
-import React from "react";
 import { Stack, MainButton } from "../../../core";
 
 export const Footer = ({

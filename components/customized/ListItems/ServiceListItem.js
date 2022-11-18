@@ -1,8 +1,7 @@
-import { StyleSheet, Text } from "react-native";
-import React from "react";
+import { StyleSheet, Text, Pressable } from "react-native";
 import { useTranslation } from "react-i18next";
 import { Icon } from "@rneui/themed";
-import { Button, Stack } from "../../core";
+import { Stack } from "../../core";
 import theme from "../../../assets/styles/theme";
 
 const { black, grey0 } = theme.lightColors;
@@ -11,7 +10,7 @@ export const ServiceListItem = ({ name, postsCount, onPress, sx }) => {
   const { t } = useTranslation();
 
   return (
-    <Button onPress={onPress} sx={{ ...styles.container, ...sx }}>
+    <Pressable onPress={onPress} style={{ ...styles.container, ...sx }}>
       <Stack direction="row">
         <Stack direction="row">
           <Stack sx={styles.icon}>
@@ -25,7 +24,7 @@ export const ServiceListItem = ({ name, postsCount, onPress, sx }) => {
           </Stack>
         </Stack>
       </Stack>
-    </Button>
+    </Pressable>
   );
 };
 

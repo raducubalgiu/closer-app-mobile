@@ -1,8 +1,8 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, Pressable } from "react-native";
 import React, { memo } from "react";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../../assets/styles/theme";
-import { CustomAvatar, Stack, Checkmark, Button } from "../../../core";
+import { CustomAvatar, Stack, Checkmark } from "../../../core";
 import { Icon } from "@rneui/themed";
 
 const { grey0 } = theme.lightColors;
@@ -29,7 +29,7 @@ const CardPostHeader = ({
 
   return (
     <Stack direction="row" sx={{ paddingHorizontal: 10 }}>
-      <Button onPress={() => goToUser(userId)}>
+      <Pressable onPress={() => goToUser(userId)}>
         <Stack direction="row" sx={styles.avatarContainer}>
           <CustomAvatar avatar={avatar} size={35} iconSize={15} />
           <Stack align="start">
@@ -40,10 +40,10 @@ const CardPostHeader = ({
             <Text style={styles.profession}>{profession?.name}</Text>
           </Stack>
         </Stack>
-      </Button>
-      <Button onPress={onShowDetails}>
+      </Pressable>
+      <Pressable onPress={onShowDetails}>
         <Icon name="more-horizontal" type="feather" size={20} />
-      </Button>
+      </Pressable>
     </Stack>
   );
 };

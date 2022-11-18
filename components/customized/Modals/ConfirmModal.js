@@ -1,9 +1,8 @@
-import { StyleSheet, Text, Dimensions } from "react-native";
-import React from "react";
-import { Button, CModal, Stack } from "../../core";
-import theme from "../../../assets/styles/theme";
+import { StyleSheet, Text, Dimensions, Pressable } from "react-native";
 import { useTranslation } from "react-i18next";
 import { Divider } from "@rneui/base";
+import { CModal, Stack } from "../../core";
+import theme from "../../../assets/styles/theme";
 
 const { black, error, grey0 } = theme.lightColors;
 const { width, height } = Dimensions.get("window");
@@ -19,13 +18,13 @@ export const ConfirmModal = ({
 
   const footer = (
     <>
-      <Button onPress={onDelete} sx={styles.deleteBtn}>
+      <Pressable onPress={onDelete} style={styles.deleteBtn}>
         <Text style={styles.deleteTxt}>{t("delete")}</Text>
-      </Button>
+      </Pressable>
       <Divider />
-      <Button onPress={onCloseModal} sx={styles.cancelBtn}>
+      <Pressable onPress={onCloseModal} style={styles.cancelBtn}>
         <Text style={styles.cancelTxt}>{t("cancel")}</Text>
-      </Button>
+      </Pressable>
     </>
   );
 
