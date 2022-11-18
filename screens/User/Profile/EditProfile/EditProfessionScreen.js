@@ -1,11 +1,15 @@
-import { SafeAreaView, StyleSheet, ActivityIndicator } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  ActivityIndicator,
+  Pressable,
+} from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { useCallback, useState } from "react";
 import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import {
-  Button,
   FormInputRadio,
   Header,
   SearchBarInput,
@@ -49,14 +53,14 @@ export const EditProfessionScreen = () => {
   };
 
   const actionBtn = (
-    <Button disabled={!selected || loadingPatch} onPress={handleProfession}>
+    <Pressable disabled={!selected || loadingPatch} onPress={handleProfession}>
       <Icon
         name="checkcircle"
         type="antdesign"
         color={!selected ? "#ccc" : primary}
         size={25}
       />
-    </Button>
+    </Pressable>
   );
 
   console.log(selected?.name);

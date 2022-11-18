@@ -1,11 +1,17 @@
-import { SafeAreaView, StyleSheet, View, Text, FlatList } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Text,
+  FlatList,
+  Pressable,
+} from "react-native";
 import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { Icon } from "@rneui/themed";
 import {
-  Button,
   Checkmark,
   CustomAvatar,
   Feedback,
@@ -146,7 +152,7 @@ export const SearchPostsScreen = () => {
         );
       } else {
         return (
-          <Button onPress={() => goToUser(item)}>
+          <Pressable onPress={() => goToUser(item)}>
             <Stack direction="row" justify="start" sx={styles.searchItem}>
               <CustomAvatar avatar={item?.avatar} />
               <Stack align="start" sx={{ marginLeft: 10 }}>
@@ -157,7 +163,7 @@ export const SearchPostsScreen = () => {
                 <Text style={styles.name}>{item.name}</Text>
               </Stack>
             </Stack>
-          </Button>
+          </Pressable>
         );
       }
     },
@@ -172,14 +178,14 @@ export const SearchPostsScreen = () => {
   }, [search]);
 
   const footer = (
-    <Button sx={{ marginTop: 30 }}>
+    <Pressable style={{ marginTop: 30 }}>
       <Stack direction="row" align="center" justify="center">
         <Icon name="search" type="feather" color={primary} />
-        <Button onPress={goToSearchAll}>
+        <Pressable onPress={goToSearchAll}>
           <Text style={styles.searchAll}>{t("seeAllResults")}</Text>
-        </Button>
+        </Pressable>
       </Stack>
-    </Button>
+    </Pressable>
   );
 
   const word = (
@@ -203,12 +209,12 @@ export const SearchPostsScreen = () => {
     const { username, avatar } = item?.searchedUser || {};
 
     return (
-      <Button onPress={() => goToUser(item.searchedUser)}>
+      <Pressable onPress={() => goToUser(item.searchedUser)}>
         <Stack sx={{ marginRight: 10, minWidth: 80 }}>
           <CustomAvatar size={70} avatar={avatar} sx={{ marginBottom: 5 }} />
           <Text style={{ fontSize: 13 }}>{trimFunc(username, 15)}</Text>
         </Stack>
-      </Button>
+      </Pressable>
     );
   }, []);
 
@@ -254,9 +260,9 @@ export const SearchPostsScreen = () => {
             onCancel={goToSearchAll}
             height={60}
           />
-          <Button onPress={goToSearchAll} sx={{ marginLeft: 10 }}>
+          <Pressable onPress={goToSearchAll} style={{ marginLeft: 10 }}>
             <Text style={styles.cancelBtnText}>{t("search")}</Text>
-          </Button>
+          </Pressable>
         </Stack>
         <Feedback feedback={feedback} setFeedback={setFeedback} />
         {results.length > 0 && (

@@ -1,5 +1,5 @@
 import { StyleSheet, SafeAreaView } from "react-native";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { Header } from "../components/core";
 import { CardServiceOverview, TopTabContainer } from "../components/customized";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";

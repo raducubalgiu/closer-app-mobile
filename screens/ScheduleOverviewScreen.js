@@ -1,16 +1,14 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
 import { MainButton, Stack } from "../components/core";
 import { Icon } from "@rneui/themed";
 import theme from "../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
-import moment from "moment";
 
 const { black, primary, grey0 } = theme.lightColors;
 
 export const ScheduleOverviewScreen = ({ route }) => {
   const { schedule } = route.params;
-  const { service, scheduleStart } = schedule;
+  const { service, start } = schedule;
   const navigation = useNavigation();
 
   return (
@@ -21,9 +19,7 @@ export const ScheduleOverviewScreen = ({ route }) => {
         <Text style={styles.message}>
           Ai rezervat serviciul de {service.name} pentru data de:
         </Text>
-        <Text style={styles.date}>
-          {moment(scheduleStart).utc().format("LLL")}
-        </Text>
+        <Text style={styles.date}>{start}</Text>
         <Stack direction="row" sx={{ marginTop: 10 }}>
           <MainButton
             title="Vezi sumarul"

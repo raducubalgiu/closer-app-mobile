@@ -1,9 +1,9 @@
-import { SafeAreaView, StyleSheet, Text } from "react-native";
+import { SafeAreaView, StyleSheet, Text, Pressable } from "react-native";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Icon } from "@rneui/themed";
 import theme from "../../../../assets/styles/theme";
-import { Header, Button, CFAB } from "../../../../components/core";
+import { Header, CFAB } from "../../../../components/core";
 import {
   NoFoundMessage,
   CardSlotDetails,
@@ -89,9 +89,9 @@ export const MyCalendarScreen = () => {
       <Header
         title={t("myCalendar")}
         actionBtn={
-          <Button onPress={SHOW_BS}>
+          <Pressable onPress={SHOW_BS}>
             <Icon name="info" type="feather" color={black} size={27.5} />
-          </Button>
+          </Pressable>
         }
       />
       {AGENDA}

@@ -1,7 +1,6 @@
-import { StyleSheet, Text, FlatList } from "react-native";
+import { StyleSheet, Text, FlatList, Pressable } from "react-native";
 import React, { useCallback, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Button } from "../components/core";
 import { FiltersContainer, SheetHeader } from "../components/customized";
 import theme from "../assets/styles/theme";
 import { useTranslation } from "react-i18next";
@@ -34,16 +33,16 @@ export const FiltersServiceScreen = ({ route }) => {
 
   const renderOption = useCallback(
     ({ item }) => (
-      <Button
+      <Pressable
         onPress={() => setOption(item)}
-        sx={item._id !== option._id ? styles.button : activeBtn}
+        style={item._id !== option._id ? styles.button : activeBtn}
       >
         <Text
           style={item._id !== option._id ? styles.buttonText : activeBtnTxt}
         >
           {item?.name}
         </Text>
-      </Button>
+      </Pressable>
     ),
     [activeBtn, activeBtnTxt]
   );

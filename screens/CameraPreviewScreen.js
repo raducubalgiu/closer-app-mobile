@@ -1,6 +1,13 @@
 import { useTranslation } from "react-i18next";
-import { StyleSheet, Text, View, Image, SafeAreaView } from "react-native";
-import { Stack, Button, CustomAvatar } from "../components/core";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  SafeAreaView,
+  Pressable,
+} from "react-native";
+import { Stack, CustomAvatar } from "../components/core";
 import { CloseIconButton, DownloadIconButton } from "../components/customized";
 import * as MediaLibrary from "expo-media-library";
 import theme from "../assets/styles/theme";
@@ -26,12 +33,12 @@ export const CameraPreviewScreen = ({ route }) => {
             <CloseIconButton onPress={handleClosePreview} size={32.5} />
             <DownloadIconButton onPress={handleDownload} size={30} />
           </Stack>
-          <Button style={styles.sendBtn} onPress={handleSendPhoto}>
+          <Pressable style={styles.sendBtn} onPress={handleSendPhoto}>
             <Stack direction="row" sx={styles.sendCont}>
               <CustomAvatar avatar={avatar} size={30} iconSize={15} />
               <Text style={styles.sendTxt}>{t("send")}</Text>
             </Stack>
-          </Button>
+          </Pressable>
         </SafeAreaView>
       </View>
     </>

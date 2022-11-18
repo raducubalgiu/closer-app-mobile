@@ -8,7 +8,7 @@ import {
   FlatList,
 } from "react-native";
 import React, { useCallback, useState } from "react";
-import { Button, IconButton, Stack } from "../components/core";
+import { IconButton, Stack } from "../components/core";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import theme from "../assets/styles/theme";
 import * as MediaLibrary from "expo-media-library";

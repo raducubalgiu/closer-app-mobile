@@ -1,5 +1,4 @@
 import { SafeAreaView, StyleSheet } from "react-native";
-import React from "react";
 import { Header } from "../../../../components/core";
 import { AddLocationScreen } from "../MyBusiness/AddLocationScreen";
 

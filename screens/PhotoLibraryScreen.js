@@ -1,10 +1,10 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Pressable } from "react-native";
 import { useState, useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 import * as MediaLibrary from "expo-media-library";
 import { useFocusEffect } from "@react-navigation/native";
 import { FlashList } from "@shopify/flash-list";
-import { Button, Stack } from "../components/core";
+import { Stack } from "../components/core";
 import { CloseIconButton } from "../components/customized";
 import theme from "../assets/styles/theme";
 import { Icon } from "@rneui/themed";
@@ -66,12 +66,12 @@ export const PhotoLibraryScreen = ({ route }) => {
           color={black}
           onPress={() => navigation.goBack()}
         />
-        <Button onPress={() => navigation.navigate("PhotoAlbums")}>
+        <Pressable onPress={() => navigation.navigate("PhotoAlbums")}>
           <Stack direction="row">
             <Text style={styles.title}>{album ? album : "Recents"}</Text>
             <Icon name="chevron-down" type="feather" size={22.5} />
           </Stack>
-        </Button>
+        </Pressable>
         <View style={{ width: 20 }} />
       </Stack>
       <FlashList

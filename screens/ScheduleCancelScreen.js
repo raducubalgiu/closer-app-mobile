@@ -1,13 +1,13 @@
-import { SafeAreaView, ScrollView, StyleSheet, Text } from "react-native";
+import {
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  Pressable,
+} from "react-native";
 import React, { useState } from "react";
 import axios from "axios";
-import {
-  Button,
-  Feedback,
-  Header,
-  MainButton,
-  Textarea,
-} from "../components/core";
+import { Feedback, Header, MainButton, Textarea } from "../components/core";
 import { useAuth } from "../hooks";
 import { useTranslation } from "react-i18next";
 import theme from "../assets/styles/theme";
@@ -103,15 +103,15 @@ export const ScheduleCancelScreen = ({ route }) => {
         </Text>
         <Divider style={styles.divider} />
         {messages.map((item, i) => (
-          <Button
+          <Pressable
             key={i}
-            sx={item._id === active._id ? activeBtn : styles.btn}
+            style={item._id === active._id ? activeBtn : styles.btn}
             onPress={() => handleActive(item)}
           >
             <Text style={item._id === active._id ? activeTxt : styles.btnText}>
               {item.message}
             </Text>
-          </Button>
+          </Pressable>
         ))}
         {textarea && (
           <Textarea

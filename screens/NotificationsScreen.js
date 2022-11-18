@@ -1,6 +1,6 @@
-import { SafeAreaView, StyleSheet, View, Text } from "react-native";
-import React, { useState } from "react";
-import { Button, Stack } from "../components/core";
+import { SafeAreaView, StyleSheet, Text, Pressable } from "react-native";
+import { useState } from "react";
+import { Stack } from "../components/core";
 import { Header } from "../components/core";
 import { useTranslation } from "react-i18next";
 import { Video, AVPlaybackStatus } from "expo-av";
@@ -29,7 +29,7 @@ export const NotificationsScreen = () => {
   return (
     <SafeAreaView style={styles.screen}>
       <Header title={t("notifications")} />
-      <Button onPress={() => setPlay(!play)}>
+      <Pressable onPress={() => setPlay(!play)}>
         <Video
           ref={video}
           style={styles.video}
@@ -43,11 +43,11 @@ export const NotificationsScreen = () => {
           isMuted={isMuted}
           //onMagicTap={() => setPlay(!play)}
         />
-      </Button>
+      </Pressable>
       <Stack direction="row" justify="center">
-        <Button
+        <Pressable
           onPress={handlePlay}
-          sx={{
+          style={{
             marginVertical: 10,
             backgroundColor: "red",
             paddingHorizontal: 20,
@@ -56,10 +56,10 @@ export const NotificationsScreen = () => {
           }}
         >
           <Text>Play</Text>
-        </Button>
-        <Button
+        </Pressable>
+        <Pressable
           onPress={handleStop}
-          sx={{
+          style={{
             marginVertical: 10,
             backgroundColor: "red",
             paddingHorizontal: 20,
@@ -67,7 +67,7 @@ export const NotificationsScreen = () => {
           }}
         >
           <Text>Stop</Text>
-        </Button>
+        </Pressable>
       </Stack>
     </SafeAreaView>
   );

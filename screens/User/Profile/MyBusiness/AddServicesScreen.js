@@ -1,12 +1,18 @@
-import { SafeAreaView, StyleSheet, Text, View, FlatList } from "react-native";
-import React, { useCallback, useState } from "react";
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  Pressable,
+} from "react-native";
+import { useCallback, useState } from "react";
 import { Icon } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
 import {
   Stack,
   InputSelect,
   Header,
-  Button,
   IconButtonDelete,
 } from "../../../../components/core";
 import theme from "../../../../assets/styles/theme";
@@ -88,8 +94,8 @@ export const AddServicesScreen = () => {
               items={allServices}
             />
           </View>
-          <Button
-            sx={!service ? styles.disabledBtn : styles.addIcon}
+          <Pressable
+            style={!service ? styles.disabledBtn : styles.addIcon}
             onPress={() => addService({ serviceId: service })}
             disabled={!service}
           >
@@ -99,7 +105,7 @@ export const AddServicesScreen = () => {
               size={25}
               color={service && "white"}
             />
-          </Button>
+          </Pressable>
         </Stack>
       </Stack>
       <FlatList

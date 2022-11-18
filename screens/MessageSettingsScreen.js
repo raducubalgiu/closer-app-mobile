@@ -2,10 +2,9 @@ import { useNavigation } from "@react-navigation/native";
 import { Icon } from "@rneui/themed";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, StyleSheet, Text, Pressable } from "react-native";
 import theme from "../assets/styles/theme";
 import {
-  Button,
   Checkmark,
   CustomAvatar,
   Header,
@@ -53,7 +52,7 @@ export const MessageSettingsScreen = ({ route }) => {
         onCloseModal={() => setModal(false)}
       />
       <Header title="Detalii" divider />
-      <Button onPress={goToUser}>
+      <Pressable onPress={goToUser}>
         <Stack direction="row" sx={{ padding: 15 }}>
           <Stack direction="row">
             <CustomAvatar avatar={avatar} size={55} />
@@ -69,7 +68,7 @@ export const MessageSettingsScreen = ({ route }) => {
           </Stack>
           <Icon name="chevron-right" type="feather" color={grey0} />
         </Stack>
-      </Button>
+      </Pressable>
       <Stack sx={{ paddingHorizontal: 15 }} align="start">
         <Heading title={t("actions")} sx={styles.heading} />
         <SettingListItem
@@ -88,11 +87,11 @@ export const MessageSettingsScreen = ({ route }) => {
           sxTitle={{ color: error }}
           onChange={() => {}}
         />
-        <Button onPress={() => setModal(true)}>
+        <Pressable onPress={() => setModal(true)}>
           <Text style={{ color: error, fontSize: 15 }}>
             {t("deleteConversation")}
           </Text>
-        </Button>
+        </Pressable>
       </Stack>
     </SafeAreaView>
   );

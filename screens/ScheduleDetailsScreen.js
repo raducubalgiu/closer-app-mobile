@@ -1,11 +1,17 @@
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+} from "react-native";
 import {
   CustomAvatar,
   Header,
   MainButton,
   Stack,
   IconLocation,
-  Button,
   IconStar,
 } from "../components/core";
 import { useTranslation } from "react-i18next";
@@ -190,7 +196,7 @@ export const ScheduleDetailsScreen = ({ route }) => {
               </Stack>
             </View>
           )}
-          <Button onPress={goToOwner} sx={styles.userCont}>
+          <Pressable onPress={goToOwner} style={styles.userCont}>
             <Stack direction="row" justify="start">
               <CustomAvatar avatar={user?.avatar} size={40} iconSize={20} />
               <Stack align="start" sx={{ marginLeft: 10 }}>
@@ -201,7 +207,7 @@ export const ScheduleDetailsScreen = ({ route }) => {
                 </Stack>
               </Stack>
             </Stack>
-          </Button>
+          </Pressable>
           <Divider style={styles.divider} />
           <Stack direction="row" justify="start" sx={{ marginHorizontal: 15 }}>
             <IconLocation size={22} color={black} />

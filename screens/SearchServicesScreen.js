@@ -1,15 +1,16 @@
-import { SafeAreaView, StyleSheet, Text, FlatList } from "react-native";
-import React, { useCallback, useState } from "react";
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  FlatList,
+  Pressable,
+} from "react-native";
+import { useCallback, useState } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../assets/styles/theme";
-import {
-  Button,
-  IconBackButton,
-  SearchBarInput,
-  Stack,
-} from "../components/core";
+import { IconBackButton, SearchBarInput, Stack } from "../components/core";
 import { useAuth } from "../hooks";
 
 const SUGGESTED_SERVICES = [
@@ -74,20 +75,20 @@ export const SearchServicesScreen = ({ route }) => {
   };
 
   const renderSuggested = useCallback(({ item }) => {
-    <Button onPress={() => goToFilters(item)} sx={styles.item}>
+    <Pressable onPress={() => goToFilters(item)} style={styles.item}>
       <Text style={styles.serviceItem}>{item.name}</Text>
       <Text style={styles.categoryItem}>{item.category.name}</Text>
-    </Button>;
+    </Pressable>;
   }, []);
 
   const renderServices = useCallback(
     ({ item }) => (
-      <Button onPress={() => goToFilters(item)} sx={styles.item}>
+      <Pressable onPress={() => goToFilters(item)} style={styles.item}>
         <Text style={styles.service}>{item.name}</Text>
         <Text style={styles.locationsCount}>
           {item.locationsCount} {t("locations")}
         </Text>
-      </Button>
+      </Pressable>
     ),
     []
   );

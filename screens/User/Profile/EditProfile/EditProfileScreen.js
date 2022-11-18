@@ -5,7 +5,7 @@ import {
   View,
   ScrollView,
   SafeAreaView,
-  FlatList,
+  Pressable,
 } from "react-native";
 import { Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
@@ -16,7 +16,6 @@ import {
   Stack,
   Header,
   CustomAvatar,
-  Button,
   ListItem,
 } from "../../../../components/core";
 import { EditProfileSheet } from "../../../../components/customized";
@@ -62,10 +61,10 @@ export const EditProfileScreen = ({ route }) => {
         <Header title={user?.name} />
         <ScrollView>
           <Stack sx={{ marginVertical: 20 }}>
-            <Button sx={{ alignItems: "center" }} onPress={SHOW_BS}>
+            <Pressable style={{ alignItems: "center" }} onPress={SHOW_BS}>
               <CustomAvatar avatar={user?.avatar} size={95} iconSize={35} />
               <Text style={styles.text}>{t("changePhoto")}</Text>
-            </Button>
+            </Pressable>
           </Stack>
           <View style={styles.sectionContainer}>
             <Text style={styles.sectionHeading}>{t("aboutYou")}</Text>

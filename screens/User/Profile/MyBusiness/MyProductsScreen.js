@@ -1,5 +1,4 @@
 import { StyleSheet, View } from "react-native";
-import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { IconButtonAdd, MainButton, Stack } from "../../../../components/core";

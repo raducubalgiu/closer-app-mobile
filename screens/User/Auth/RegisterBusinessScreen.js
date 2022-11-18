@@ -1,5 +1,5 @@
 import { SafeAreaView, StyleSheet } from "react-native";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { AuthService } from "../../../services/AuthService";
 import { Header, Feedback } from "../../../components/core";

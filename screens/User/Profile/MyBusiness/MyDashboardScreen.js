@@ -1,10 +1,16 @@
-import { SafeAreaView, StyleSheet, Text, FlatList } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  FlatList,
+  Pressable,
+} from "react-native";
 import { useCallback, useState } from "react";
 import { Divider, Icon } from "@rneui/themed";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import theme from "../../../../assets/styles/theme";
 import moment from "moment";
-import { Header, Stack, Button } from "../../../../components/core";
+import { Header, Stack } from "../../../../components/core";
 import {
   DashboardInfoSheet,
   TopTabContainer,
@@ -74,14 +80,14 @@ export const MyDashboardScreen = () => {
 
   const renderButton = useCallback(
     ({ item }) => (
-      <Button
+      <Pressable
         onPress={() => setPeriod(item)}
-        sx={item._id === period._id ? btnActive : styles.btn}
+        style={item._id === period._id ? btnActive : styles.btn}
       >
         <Text style={item._id === period._id ? btnTxtActive : styles.btnTxt}>
           {item.title}
         </Text>
-      </Button>
+      </Pressable>
     ),
     [period]
   );
@@ -92,9 +98,9 @@ export const MyDashboardScreen = () => {
         title="Dashboard"
         divider
         actionBtn={
-          <Button onPress={() => SHOW_BS_INFO()}>
+          <Pressable onPress={() => SHOW_BS_INFO()}>
             <Icon name="alert-circle" type="feather" />
-          </Button>
+          </Pressable>
         }
       />
       <Stack direction="row" sx={{ paddingVertical: 10 }}>

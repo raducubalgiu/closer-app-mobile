@@ -1,5 +1,5 @@
 import { SafeAreaView, StyleSheet } from "react-native";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Header, IconButtonAdd, Stack } from "../../../../components/core";
 import { NoFoundMessage } from "../../../../components/customized";
 import { useTranslation } from "react-i18next";

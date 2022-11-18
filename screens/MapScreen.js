@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import MapView, { Callout, PROVIDER_GOOGLE } from "react-native-maps";
 import {
-  Button,
   CustomAvatar,
   IconBackButton,
   IconButton,

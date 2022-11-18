@@ -4,9 +4,10 @@ import {
   Text,
   View,
   RefreshControl,
+  Pressable,
 } from "react-native";
 import React, { useCallback, useState } from "react";
-import { Button, Header, Stack } from "../components/core";
+import { Header, Stack } from "../components/core";
 import { NoFoundMessage } from "../components/customized";
 import { Icon } from "@rneui/themed";
 import theme from "../assets/styles/theme";
@@ -40,11 +41,11 @@ export const CalendarScreen = ({ route }) => {
 
   const renderSlot = ({ slot }) => {
     return (
-      <Button onPress={() => goToConfirm()}>
+      <Pressable onPress={() => goToConfirm()}>
         <Stack direction="row" justify="start" sx={styles.slot}>
           <Text style={styles.slotText}>{slot}</Text>
         </Stack>
-      </Button>
+      </Pressable>
     );
   };
 

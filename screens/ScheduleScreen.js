@@ -1,6 +1,5 @@
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import React from "react";
-import { Header, Stack } from "../components/core";
+import { Header } from "../components/core";
 import { Footer } from "../components/customized";
 import { useTranslation } from "react-i18next";
 

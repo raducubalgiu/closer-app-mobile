@@ -1,10 +1,9 @@
-import React from "react";
-import { StyleSheet, View, Text, SafeAreaView } from "react-native";
-import theme from "../../../assets/styles/theme";
+import { StyleSheet, View, Text, SafeAreaView, Pressable } from "react-native";
 import { Divider, Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { Stack, Button, ListItem } from "../../../components/core";
+import theme from "../../../assets/styles/theme";
+import { Stack, ListItem } from "../../../components/core";
 
 const { black, primary, grey0 } = theme.lightColors;
 
@@ -18,26 +17,29 @@ export const AuthScreen = () => {
         <Text style={styles.mainHeading}>{t("yourProfile")}</Text>
         <Text style={styles.secondHeading}>{t("connectIntoAccountTitle")}</Text>
       </Stack>
-      <Button onPress={() => navigation.navigate("Login")} sx={styles.mainBtn}>
+      <Pressable
+        onPress={() => navigation.navigate("Login")}
+        style={styles.mainBtn}
+      >
         <Text style={styles.mainBtnText}>{t("connect")}</Text>
-      </Button>
+      </Pressable>
       <Stack direction="row" justify="start" sx={styles.registerText}>
         <Text style={styles.textAction}>{t("dontHaveAccount")}</Text>
-        <Button
-          sx={{ marginLeft: 5 }}
+        <Pressable
+          style={{ marginLeft: 5 }}
           onPress={() => navigation.navigate("Register")}
         >
           <Text style={styles.btnAction}>{t("signUp")}</Text>
-        </Button>
+        </Pressable>
       </Stack>
       <Divider />
       <Stack direction="row" sx={styles.businessContainer}>
         <Icon name="wallet" type="antdesign" size={35} color={black} />
         <Stack align="start" sx={{ marginLeft: 20, flex: 1 }}>
           <Text style={styles.businessText}>{t("haveAccountBusiness")}</Text>
-          <Button onPress={() => navigation.navigate("RegisterBusiness")}>
+          <Pressable onPress={() => navigation.navigate("RegisterBusiness")}>
             <Text style={styles.registerBtnText}>{t("register")}</Text>
-          </Button>
+          </Pressable>
         </Stack>
       </Stack>
       <Divider />
