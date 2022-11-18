@@ -1,5 +1,4 @@
-import { TouchableOpacity, StyleSheet } from "react-native";
-import React from "react";
+import { Pressable, StyleSheet } from "react-native";
 import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";
@@ -16,7 +15,7 @@ export const IconBackButton = ({
   const navigation = useNavigation();
 
   return (
-    <TouchableOpacity
+    <Pressable
       onPress={onPress ? onPress : () => navigation.goBack()}
       style={{ ...styles.btn, sx }}
     >
@@ -26,7 +25,7 @@ export const IconBackButton = ({
         color={color ? color : black}
         containerStyle={withBackground && styles.containerStyle}
       />
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

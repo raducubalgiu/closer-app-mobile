@@ -1,6 +1,5 @@
 import { ActivityIndicator, TouchableOpacity } from "react-native";
 import { Icon } from "@rneui/themed";
-import React from "react";
 import theme from "../../../assets/styles/theme";
 
 const { black } = theme.lightColors;

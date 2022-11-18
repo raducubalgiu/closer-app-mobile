@@ -1,5 +1,5 @@
 import { Animated, Pressable } from "react-native";
-import React, { useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 

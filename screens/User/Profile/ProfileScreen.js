@@ -1,25 +1,21 @@
-import {
-  StyleSheet,
-  SafeAreaView,
-  View,
-  ScrollView,
-  Dimensions,
-} from "react-native";
-import React, { useCallback } from "react";
+import { StyleSheet, SafeAreaView } from "react-native";
+import { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { MAIN_ROLE, SECOND_ROLE } from "@env";
-import { Protected, MainButton, CFAB } from "../../../components/core";
-import { SocialIconButton } from "../../../components/core";
-import { useSheet, useAuth } from "../../../hooks";
+import {
+  Protected,
+  MainButton,
+  CFAB,
+  SocialIconButton,
+} from "../../../components/core";
 import {
   ProfileOverview,
   ProfileMenuList,
   HeaderProfile,
   TopTabProfile,
 } from "../../../components/customized";
-
-const { height } = Dimensions.get("window");
+import { useSheet, useAuth } from "../../../hooks";
 
 export const ProfileScreen = () => {
   const { user } = useAuth();

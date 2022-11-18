@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Switch } from "@rneui/themed";
 
 export const CSwitch = ({ defaultValue, color, onChange }) => {
