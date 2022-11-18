@@ -1,5 +1,3 @@
-export { Accordion } from "./Accordion/Accordion";
-
 export { ButtonLink } from "./Buttons/ButtonLink";
 export { ButtonFilter } from "./Buttons/ButtonFilter";
 export { MainButton } from "./Buttons/MainButton";
