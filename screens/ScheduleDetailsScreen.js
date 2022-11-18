@@ -1,61 +1,60 @@
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
 import {
   CustomAvatar,
   Header,
   MainButton,
   Stack,
   IconLocation,
-  Feedback,
   Button,
+  IconStar,
 } from "../components/core";
 import { useTranslation } from "react-i18next";
 import { Icon } from "@rneui/base";
 import theme from "../assets/styles/theme";
-import moment from "moment";
 import { Divider } from "@rneui/themed";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { AddressFormat } from "../utils";
 import { useNavigation } from "@react-navigation/native";
-import { useHttpGet } from "../hooks";
+import dayjs from "dayjs";
+import { useGet } from "../hooks";
 
 const { black, grey0, success, error } = theme.lightColors;
 
 export const ScheduleDetailsScreen = ({ route }) => {
-  const [feedback, setFeedback] = useState({ visible: false, message: "" });
-  const { scheduleId, location } = route.params;
-  const { coordinates } = location;
-  const formatScheduleStart = moment(scheduleStart).utc().format("lll");
+  const { user, product, start, service, status, _id, location } =
+    route.params.schedule;
+  const { name, username } = user;
   const { t } = useTranslation();
   const navigation = useNavigation();
 
-  const { data: schedule } = useHttpGet(`/schedules/${scheduleId}`);
-  const { owner, product, scheduleStart, service, status, _id, employee } =
-    schedule || {};
+  const { data } = useGet({
+    model: "location",
+    uri: `/users/${user._id}/locations/${location}`,
+  });
+
+  const { address } = data || {};
 
   const goToOwner = () =>
     navigation.push("ProfileGeneral", {
-      userId: owner?._id,
-      username: owner?.username,
-      name: owner?.name,
+      userId: user._id,
+      username: username,
+      name: name,
     });
   const goToCancel = () =>
     navigation.navigate("ScheduleCancel", {
-      scheduleStart,
+      start,
       scheduleId: _id,
     });
   const goToBookAgain = () =>
     navigation.navigate("CalendarBig", {
       product,
       service,
-      owner,
-      employee,
-      opening_hours: owner.opening_hours,
+      user,
     });
 
   let actionButton;
 
-  if (moment(scheduleStart).isAfter(moment().utc()) && status === "accepted") {
+  if (dayjs(start).isAfter(dayjs().utc()) && status === "accepted") {
     actionButton = (
       <MainButton
         onPress={goToCancel}
@@ -82,26 +81,50 @@ export const ScheduleDetailsScreen = ({ route }) => {
     );
   }
 
-  const initialRegion = {
-    latitude: 44.425625,
-    longitude: 26.102312,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
-  };
-
   let statusColor =
     status === "canceled" ? { color: "#F72A50" } : { color: success };
 
+  const mapStyle = [
+    {
+      featureType: "road.arterial",
+      elementType: "labels",
+      stylers: [
+        {
+          visibility: "off",
+        },
+      ],
+    },
+    {
+      featureType: "road.highway",
+      elementType: "labels",
+      stylers: [
+        {
+          visibility: "off",
+        },
+      ],
+    },
+    {
+      featureType: "road.local",
+      stylers: [
+        {
+          visibility: "off",
+        },
+      ],
+    },
+  ];
   return (
-    <SafeAreaView style={styles.screen}>
-      <Header actionBtn={<Icon name="send" type="feather" color={black} />} />
-      <Feedback feedback={feedback} setFeedback={setFeedback} />
+    <View style={styles.screen}>
+      <SafeAreaView>
+        <Header actionBtn={<Icon name="send" type="feather" color={black} />} />
+      </SafeAreaView>
       <ScrollView style={styles.container}>
         <View>
           <View style={{ padding: 15 }}>
             <Text style={{ ...styles.status, ...statusColor }}>{status}</Text>
             <Stack direction="row" justify="start">
-              <Text style={styles.date}>{formatScheduleStart}</Text>
+              <Text style={styles.date}>
+                {dayjs(start).format("DD MMMM YY, HH:MM")}
+              </Text>
               <Text style={styles.service}>{service?.name}</Text>
             </Stack>
             <Divider color="#ddd" style={styles.divider} />
@@ -121,45 +144,72 @@ export const ScheduleDetailsScreen = ({ route }) => {
             </Stack>
           </View>
           {actionButton}
-          <MapView
-            style={styles.map}
-            initialRegion={initialRegion}
-            provider={PROVIDER_GOOGLE}
-          >
-            <Marker
-              coordinate={{
-                latitude: coordinates[0],
-                longitude: coordinates[1],
-              }}
-              image={require("../assets/images/map_marker.png")}
-            ></Marker>
-          </MapView>
-          <Button onPress={goToOwner}>
-            <Stack
-              direction="row"
-              justify="start"
-              sx={{ paddingHorizontal: 15 }}
-            >
-              <CustomAvatar avatar={owner?.avatar} size={30} iconSize={15} />
-              <Text style={styles.owner}>{owner?.name}</Text>
+          {address && (
+            <View>
+              <MapView
+                customMapStyle={mapStyle}
+                style={styles.map}
+                initialRegion={{
+                  latitude: address?.coordinates[0],
+                  longitude: address?.coordinates[1],
+                  latitudeDelta: 0.0922,
+                  longitudeDelta: 0.0421,
+                }}
+                provider={PROVIDER_GOOGLE}
+                zoomEnabled={false}
+                pitchEnabled={false}
+                scrollEnabled={false}
+                minZoomLevel={13}
+              >
+                <Marker
+                  coordinate={{
+                    latitude: address?.coordinates[0],
+                    longitude: address?.coordinates[1],
+                  }}
+                  image={require("../assets/images/map_marker.png")}
+                ></Marker>
+              </MapView>
+              <Stack
+                align="start"
+                sx={{ position: "absolute", bottom: 30, right: 15 }}
+              >
+                <MainButton
+                  title={<Text style={styles.navigate}>{t("navigate")}</Text>}
+                  bgColor="white"
+                  radius={25}
+                  sx={{
+                    marginTop: 20,
+                    shadowColor: "#171717",
+                    shadowOffset: { width: -2, height: 2 },
+                    shadowOpacity: 0.2,
+                    shadowRadius: 3,
+                    elevation: 20,
+                    shadowColor: "#52006A",
+                  }}
+                />
+              </Stack>
+            </View>
+          )}
+          <Button onPress={goToOwner} sx={styles.userCont}>
+            <Stack direction="row" justify="start">
+              <CustomAvatar avatar={user?.avatar} size={40} iconSize={20} />
+              <Stack align="start" sx={{ marginLeft: 10 }}>
+                <Text style={styles.name}>{user?.name}</Text>
+                <Stack direction="row" align="start">
+                  <IconStar />
+                  <Text style={styles.rating}>4.5</Text>
+                </Stack>
+              </Stack>
             </Stack>
           </Button>
           <Divider style={styles.divider} />
           <Stack direction="row" justify="start" sx={{ marginHorizontal: 15 }}>
             <IconLocation size={22} color={black} />
-            <Text style={styles.address}>{AddressFormat(owner?.location)}</Text>
-          </Stack>
-          <Stack align="start" sx={{ marginLeft: 15 }}>
-            <MainButton
-              title={<Text style={styles.navigate}>{t("navigate")}</Text>}
-              bgColor="#f5f5f5"
-              radius={25}
-              sx={{ marginTop: 10 }}
-            />
+            <Text style={styles.address}>{AddressFormat(address)}</Text>
           </Stack>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -195,28 +245,32 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginBottom: 5,
   },
-  product: { color: black, fontSize: 17 },
+  product: { color: black, fontSize: 17, fontWeight: "500" },
   price: {
     color: black,
-    fontSize: 15,
+    fontSize: 16,
     flex: 1,
+    fontWeight: "600",
   },
   duration: {
     color: grey0,
     fontSize: 14.5,
     marginLeft: 5,
   },
-  owner: {
+  userCont: { paddingHorizontal: 15, paddingVertical: 10 },
+  name: {
     fontSize: 16,
     color: black,
-    marginLeft: 10,
+    fontWeight: "600",
+    marginBottom: 2.5,
   },
+  rating: { fontWeight: "600", marginLeft: 2.5 },
   address: {
     color: grey0,
     fontSize: 14.5,
     marginLeft: 10,
   },
-  map: { height: 200, width: "100%", marginVertical: 20 },
+  map: { height: 250, width: "100%", marginVertical: 20 },
   navigate: {
     marginLeft: 10,
     color: black,

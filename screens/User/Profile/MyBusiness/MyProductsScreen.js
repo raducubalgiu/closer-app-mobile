@@ -1,22 +1,14 @@
-import { SafeAreaView, StyleSheet, View } from "react-native";
-import React, { useState } from "react";
+import { StyleSheet, View } from "react-native";
+import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import {
-  Header,
-  IconButtonAdd,
-  Feedback,
-  MainButton,
-  Stack,
-} from "../../../../components/core";
+import { IconButtonAdd, MainButton, Stack } from "../../../../components/core";
 import { NoFoundMessage } from "../../../../components/customized";
 import { useAuth } from "../../../../hooks/auth";
-import { TopTabProducts } from "../../../../components/customized/Tabs/TopTabContainer/TopTabProducts";
 import { useGet } from "../../../../hooks";
 
 export const MyProductsScreen = () => {
   const { user } = useAuth();
-  const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const navigation = useNavigation();
   const { t } = useTranslation();
 
@@ -47,13 +39,13 @@ export const MyProductsScreen = () => {
 
   return (
     <View style={styles.screen}>
-      <SafeAreaView>
+      {/* <SafeAreaView>
         <Header title={t("myProducts")} actionBtn={addBtn} divider />
         <Feedback feedback={feedback} setFeedback={setFeedback} />
       </SafeAreaView>
       {services?.length > 0 && (
         <TopTabProducts userId={user?._id} services={services} />
-      )}
+      )} */}
     </View>
   );
 };

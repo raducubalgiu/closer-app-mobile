@@ -29,6 +29,7 @@ export const CardPostImage = ({
       width: width / columns,
       height: width / columns,
       marginBottom: 1.25,
+      backgroundColor: "#f1f1f1",
     },
   });
 

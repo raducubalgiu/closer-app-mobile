@@ -1,5 +1,4 @@
-import React from "react";
-import { Button } from "../Buttons/Button";
+import { Pressable } from "react-native";
 import { Stack } from "../Stack/Stack";
 
 export const ListItem = ({
@@ -24,7 +23,7 @@ export const ListItem = ({
   }
 
   return (
-    <Button onPress={onPress} sx={{ width: "100%" }}>
+    <Pressable onPress={onPress} style={{ width: "100%" }}>
       <Stack
         sx={{ marginTop: mt ? mt : 10, ...sx }}
         direction="row"
@@ -33,6 +32,6 @@ export const ListItem = ({
       >
         {children}
       </Stack>
-    </Button>
+    </Pressable>
   );
 };

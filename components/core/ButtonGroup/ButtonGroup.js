@@ -1,8 +1,7 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Pressable } from "react-native";
 import React, { useCallback, useState } from "react";
 import theme from "../../../assets/styles/theme";
 import { Stack } from "../Stack/Stack";
-import { Button } from "../Buttons/Button";
 
 const { black } = theme.lightColors;
 
@@ -44,15 +43,15 @@ export const ButtonGroup = ({ activeButton, size, onPress, buttons, sx }) => {
       <Stack>
         <View style={styles.buttonsContainer}>
           {buttons.map((button, index) => (
-            <Button
+            <Pressable
               key={index}
               onPress={() => handleButton(index)}
-              sx={index === activeBtn ? activeBtnStyle : styles.button}
+              style={index === activeBtn ? activeBtnStyle : styles.button}
             >
               <Text style={index === activeBtn ? activeBtnTxt : styles.btnTxt}>
                 {button.title}
               </Text>
-            </Button>
+            </Pressable>
           ))}
         </View>
       </Stack>

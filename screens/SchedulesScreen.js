@@ -5,89 +5,58 @@ import {
   View,
   Text,
 } from "react-native";
-import React, { useCallback, useEffect } from "react";
-import { useNavigation } from "@react-navigation/native";
-import { Header, Spinner } from "../components/core";
+import { useCallback } from "react";
+import { Header } from "../components/core";
 import { useTranslation } from "react-i18next";
-import { useAuth, useHttpGet } from "../hooks";
+import { useAuth, useGet } from "../hooks";
 import { CardScheduleOverview, NoFoundMessage } from "../components/customized";
 import theme from "../assets/styles/theme";
+import { dayMonthTime, yearMonthFormat } from "../utils/date-utils";
 
 const { black } = theme.lightColors;
 
-export const SchedulesScreen = ({ route }) => {
+export const SchedulesScreen = () => {
   const { user } = useAuth();
-  const { schedule } = route.params || {};
-  const navigation = useNavigation();
   const { t } = useTranslation();
 
-  const { data: schedules, loading } = useHttpGet(
-    `/users/${user?._id}/schedules`
-  );
+  const { data: schedules } = useGet({
+    model: "schedules",
+    uri: `/users/${user?._id}/schedules`,
+  });
 
-  const goToDetails = () =>
-    navigation.navigate("ScheduleDetails", {
-      scheduleId: schedule._id,
-    });
+  const renderHeader = useCallback(({ section }) => {
+    const { year, month } = section?._id || {};
 
-  const renderHeader = useCallback(
-    ({ section }) => <Text style={styles.headerList}>{section._id}</Text>,
-    []
-  );
+    return (
+      <Text style={styles.headerList}>{yearMonthFormat(year, month)}</Text>
+    );
+  }, []);
+
   const renderSchedules = useCallback(
     ({ item }) => (
-      <CardScheduleOverview
-        onPress={() =>
-          navigation.navigate("ScheduleDetails", {
-            scheduleId: item._id,
-            location: item.owner.location,
-          })
-        }
-        schedule={item}
-        newSched={false}
-      />
+      <CardScheduleOverview schedule={item} start={dayMonthTime(item.start)} />
     ),
     []
   );
 
-  useEffect(() => {
-    if (schedule && schedules) {
-      schedules.filter((sched) => sched._id !== schedule._id);
-    }
-  }, [schedule]);
-
   const keyExtractor = useCallback((item, index) => item + index, []);
+
+  const noFoundMessage = (
+    <NoFoundMessage title={t("bookings")} description={t("dontHaveBookings")} />
+  );
 
   return (
     <SafeAreaView style={styles.screen}>
       <Header title={t("myOrders")} hideBtnLeft divider />
       <View style={styles.container}>
-        {/* {schedule && !loading && (
-          <View style={{ padding: 15 }}>
-            <CardScheduleOverview
-              onPress={goToDetails}
-              schedule={schedule}
-              newSched={true}
-            />
-          </View>
-        )} */}
-        {/* {schedules?.length && !loading && (
-          <SectionList
-            sections={schedules}
-            keyExtractor={keyExtractor}
-            stickySectionHeadersEnabled={false}
-            renderItem={renderSchedules}
-            renderSectionHeader={renderHeader}
-            contentContainerStyle={{ padding: 15 }}
-          />
-        )} */}
-        {/* {!schedules?.length && !loading && (
-          <NoFoundMessage
-            title={t("bookings")}
-            description={t("dontHaveBookings")}
-          />
-        )} */}
-        {loading && <Spinner />}
+        <SectionList
+          sections={schedules ? schedules : []}
+          keyExtractor={keyExtractor}
+          stickySectionHeadersEnabled={false}
+          renderItem={renderSchedules}
+          renderSectionHeader={renderHeader}
+          contentContainerStyle={{ padding: 15 }}
+        />
       </View>
     </SafeAreaView>
   );
@@ -113,8 +82,9 @@ const styles = StyleSheet.create({
   headerList: {
     padding: 10,
     textTransform: "capitalize",
-    fontSize: 15.5,
+    fontSize: 16.5,
     color: black,
-    marginBottom: 20,
+    marginBottom: 15,
+    fontWeight: "700",
   },
 });

@@ -6,10 +6,10 @@ import {
   StyleSheet,
   Text,
   SafeAreaView,
+  Pressable,
 } from "react-native";
 import Modal from "react-native-modal";
 import { Stack } from "../Stack/Stack";
-import { Button } from "../Buttons/Button";
 import theme from "../../../assets/styles/theme";
 
 const { width, height } = Dimensions.get("window");
@@ -76,9 +76,9 @@ export const CModal = ({
             <Stack direction="row" sx={styles.header}>
               <Icon name="close" color="white" />
               <Text style={styles.headerTitle}>{headerTitle}</Text>
-              <Button onPress={onCloseModal}>
+              <Pressable onPress={onCloseModal}>
                 <Icon name="close" />
-              </Button>
+              </Pressable>
             </Stack>
             <Divider />
           </>

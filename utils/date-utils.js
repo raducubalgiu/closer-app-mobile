@@ -9,9 +9,16 @@ dayjs.locale(country);
 
 export const NOW = dayjs.utc().format();
 
-export const FROM_NOW = (date) => {
-  return dayjs(date).fromNow();
+export const FROM_NOW = (date) => dayjs(date).fromNow();
+
+export const yearMonthFormat = (year, month) => {
+  return dayjs()
+    .year(year)
+    .month(month - 1)
+    .format("MMMM YYYY");
 };
+
+export const dayMonthTime = (date) => dayjs(date).format("D MMM, HH:mm");
 
 // all values are indicated in miliseconds
 export const SECOND = 1000;
