@@ -19,14 +19,6 @@ const CardPostButtons = ({ bookable, product, postId, likesCount }) => {
   const { t } = useTranslation();
 
   const goToLikes = () => navigation.navigate("Likes", { postId: postId });
-  const goToCalendar = () =>
-    navigation.navigate("CalendarBig", {
-      product,
-      service,
-      owner: user,
-      hours,
-      employee,
-    });
 
   const onShare = async () => {
     try {
@@ -48,7 +40,7 @@ const CardPostButtons = ({ bookable, product, postId, likesCount }) => {
   };
 
   const bookableSection = (
-    <Pressable onPress={goToCalendar}>
+    <Pressable onPress={() => {}}>
       <Stack direction="row" sx={styles.bookable}>
         <Stack direction="row">
           {/* <Text style={styles.book}>{t("book")}</Text> */}

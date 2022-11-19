@@ -2,7 +2,6 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import {
   CustomAvatar,
-  FollowButton,
   Stack,
   IconStar,
   IconButton,
@@ -11,6 +10,7 @@ import {
 import theme from "../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 import { trimFunc } from "../../../utils";
+import { FollowButton } from "../Buttons/FollowButton";
 
 const { grey0, black, primary } = theme.lightColors;
 
@@ -42,7 +42,7 @@ export const CardSuggestedPeople = ({
         <Stack>
           <CustomAvatar avatar={avatar} size={75} iconSize={35} />
         </Stack>
-        <Stack direction="row" jsutify="start">
+        <Stack direction="row" justify="start">
           <Text style={styles.username}>{username}</Text>
           {checkmark && <Checkmark sx={{ marginLeft: 5 }} />}
         </Stack>

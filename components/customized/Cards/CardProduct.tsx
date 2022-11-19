@@ -79,7 +79,11 @@ export const CardProduct = ({
       )}
       <Protected roles={[SECOND_ROLE, THIRD_ROLE]} userRole={userContext.role}>
         <Stack align="end" sx={styles.bookmark}>
-          <BookmarkButton type="products" typeId={product?._id} />
+          <BookmarkButton
+            type="products"
+            typeId={product?._id}
+            onBookmarksCount={() => {}}
+          />
         </Stack>
       </Protected>
     </Stack>

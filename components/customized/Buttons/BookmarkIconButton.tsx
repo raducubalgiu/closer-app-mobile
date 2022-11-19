@@ -8,7 +8,7 @@ import { usePost, useDelete, useGet } from "../../../hooks";
 
 const { black } = theme.lightColors;
 
-export const BookmarkIconButton = ({ sx, size, type, typeId }) => {
+export const BookmarkIconButton = ({ sx = {}, size = 24, type, typeId }) => {
   const { user } = useAuth();
   const [bookmarked, setBookmarked] = useState(false);
   const animatedScale = useRef(new Animated.Value(0)).current;
@@ -56,7 +56,7 @@ export const BookmarkIconButton = ({ sx, size, type, typeId }) => {
         <Icon
           type="feather"
           name={bookmarked ? "check-square" : "bookmark"}
-          size={size ? size : 24}
+          size={size}
           color={bookmarked ? "#333333" : black}
         />
       </Animated.View>

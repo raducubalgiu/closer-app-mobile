@@ -25,7 +25,7 @@ const CardPostFooter = ({
   const { t } = useTranslation();
   const { user } = useAuth();
 
-  const goToComments = (focus) =>
+  const goToComments = (focus: boolean) =>
     navigation.navigate("Comments", {
       postId,
       creatorId,
@@ -39,7 +39,13 @@ const CardPostFooter = ({
 
   let displayText;
   if (description) {
-    displayText = <DisplayText text={description} maxWords={10} />;
+    displayText = (
+      <DisplayText
+        text={description}
+        maxWords={10}
+        goToUserAllInfo={() => {}}
+      />
+    );
   }
 
   return (

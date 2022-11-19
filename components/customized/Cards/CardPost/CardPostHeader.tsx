@@ -18,7 +18,7 @@ const CardPostHeader = ({
 }) => {
   const navigation = useNavigation();
 
-  const goToUser = (userId) => {
+  const goToUser = (userId: string) => {
     navigation.push("ProfileGeneral", {
       userId,
       avatar,

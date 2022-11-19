@@ -8,7 +8,12 @@ import theme from "../../../assets/styles/theme";
 
 const { black } = theme.lightColors;
 
-export const BookmarkButton = ({ type, typeId, status, onBookmarksCount }) => {
+export const BookmarkButton = ({
+  type,
+  typeId,
+  status = false,
+  onBookmarksCount,
+}) => {
   const { user } = useAuth();
   const [bookmarked, setBookmarked] = useState(status);
   const { t } = useTranslation();

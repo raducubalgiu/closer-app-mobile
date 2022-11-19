@@ -12,7 +12,7 @@ export const CardPostGrid = ({ bookable, fixed, postType, image }) => {
   const navigation = useNavigation();
 
   const renderImage = (
-    <Image containerStyle={styles.image} source={{ uri: `${image}` }} />
+    <Image style={styles.image} source={{ uri: `${image}` }} />
   );
 
   const renderVideo = (
@@ -23,7 +23,6 @@ export const CardPostGrid = ({ bookable, fixed, postType, image }) => {
         uri: `${image}`,
       }}
       useNativeControls={false}
-      resizeMode="cover"
       isLooping
       onPlaybackStatusUpdate={(status) => setStatus(() => status)}
       shouldPlay={true}
@@ -46,7 +45,6 @@ export const CardPostGrid = ({ bookable, fixed, postType, image }) => {
               uri: `${image}`,
             }}
             useNativeControls={false}
-            resizeMode="cover"
             isLooping
             onPlaybackStatusUpdate={(status) => setStatus(() => status)}
             shouldPlay={true}
@@ -54,7 +52,7 @@ export const CardPostGrid = ({ bookable, fixed, postType, image }) => {
             isMuted={false}
           />
         ) : (
-          <Image containerStyle={styles.image} source={{ uri: `${image}` }} />
+          <Image style={styles.image} source={{ uri: `${image}` }} />
         )}
       </View>
       {/* {bookable && (

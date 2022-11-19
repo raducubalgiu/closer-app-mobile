@@ -5,7 +5,7 @@ import theme from "../../../assets/styles/theme";
 const { grey0, black } = theme.lightColors;
 
 export const UserListItemSimple = ({
-  checkmark,
+  checkmark = false,
   name,
   avatar,
   profession,

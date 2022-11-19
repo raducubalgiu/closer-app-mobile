@@ -10,7 +10,7 @@ export const CardServicesHeader = ({ item, activeService }) => {
           ? { ...styles.button, ...styles.activeBtn }
           : styles.button
       }
-      onPress={() => onHandleChangeService(item?._id)}
+      onPress={() => {}}
     >
       <Text
         style={

@@ -54,7 +54,6 @@ const CardPost = ({ post, onShowDetails }) => {
         name={name}
         date={FROM_NOW(createdAt)}
         avatar={avatar}
-        bookable={bookable}
         commentsCount={commentsCount}
       />
     </View>

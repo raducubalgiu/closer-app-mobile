@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import theme from "../../../assets/styles/theme";
-import { CustomAvatar, OutlinedButton } from "../../core";
+import { CustomAvatar } from "../../core";
 
 const CardUserRecommend = (props) => {
   return (
@@ -12,9 +12,7 @@ const CardUserRecommend = (props) => {
         {props.followersCount} urmaritori
       </Text>
       <Text style={styles.job}>{props.job}</Text>
-      <View style={{ marginTop: 25 }}>
-        <OutlinedButton title="Urmareste" />
-      </View>
+      <View style={{ marginTop: 25 }}></View>
     </TouchableOpacity>
   );
 };

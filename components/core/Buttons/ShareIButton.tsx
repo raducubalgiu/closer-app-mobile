@@ -5,10 +5,10 @@ import theme from "../../../assets/styles/theme";
 
 const { black } = theme.lightColors;
 
-export const ShareIButton = ({ onPress, sx, size }) => {
+export const ShareIButton = ({ onPress, sx = {}, size = 24 }) => {
   return (
     <TouchableOpacity activeOpacity={1} onPress={onPress} style={{ ...sx }}>
-      <Icon type="feather" name="send" size={size ? size : 24} color={black} />
+      <Icon type="feather" name="send" size={size} color={black} />
     </TouchableOpacity>
   );
 };
