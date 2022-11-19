@@ -7,7 +7,7 @@ import {
 } from "@gorhom/bottom-sheet";
 import { Portal } from "@gorhom/portal";
 
-export const useSheet = (intervals, sheetContent, closeSheet = null) => {
+export const useSheet = (intervals: [], sheetContent: any) => {
   const bottomSheetModalRef = useRef(null);
   const snapPoints = useMemo(() => [...intervals], []);
 

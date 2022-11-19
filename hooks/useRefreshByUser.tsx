@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-export const useRefreshByUser = (refetch) => {
-  const [refreshing, setRefreshing] = useState(false);
+export const useRefreshByUser = (refetch: () => void) => {
+  const [refreshing, setRefreshing] = useState<boolean>(false);
 
   async function refetchByUser() {
     setRefreshing(true);

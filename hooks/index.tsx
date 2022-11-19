@@ -9,7 +9,6 @@ export { useCalendar } from "./calendars/useCalendar";
 export { useAgenda } from "./calendars/useAgenda";
 export { useSheet } from "./useSheet";
 export { useSheetView } from "./useSheetView";
-export { useRefresh } from "./useRefresh";
 export { useRefreshByUser } from "./useRefreshByUser";
 export { useRefreshOnFocus } from "./useRefreshOnFocus";
 
