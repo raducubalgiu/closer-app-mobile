@@ -4,10 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Icon } from "@rneui/themed";
 import theme from "../../../../assets/styles/theme";
 import { Header, CFAB } from "../../../../components/core";
-import {
-  NoFoundMessage,
-  BusinessScheduleModal,
-} from "../../../../components/customized";
+import { NoFoundMessage } from "../../../../components/customized";
 import { useAuth, useSheet } from "../../../../hooks";
 
 const { black } = theme.lightColors;
@@ -16,7 +13,6 @@ export const MyCalendarScreen = () => {
   const { user } = useAuth();
   const { t } = useTranslation();
   const [schedules, setSchedules] = useState({});
-  const [visible, setVisible] = useState(false);
 
   const sheetContent = <Text>Hello World</Text>;
   const { BOTTOM_SHEET, SHOW_BS } = useSheet(["25%", "60%"], sheetContent);
@@ -43,13 +39,8 @@ export const MyCalendarScreen = () => {
       />
 
       <CFAB
-        onPress={() => setVisible(true)}
+        onPress={() => {}}
         icon={{ name: "post-add", type: "material", color: "white" }}
-      />
-      <BusinessScheduleModal
-        visible={visible}
-        onCloseModal={() => setVisible(false)}
-        onUpdateSchedules={() => {}}
       />
       {BOTTOM_SHEET}
     </SafeAreaView>

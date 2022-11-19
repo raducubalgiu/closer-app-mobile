@@ -51,7 +51,6 @@ export { ServicePostsPopularTab } from "./Tabs/ServicePostsTabs/ServicePostsPopu
 export { ServicePostsLastMinuteTab } from "./Tabs/ServicePostsTabs/ServicePostsLastMinuteTab";
 export { ServicePostsRecentTab } from "./Tabs/ServicePostsTabs/ServicePostsRecentTab";
 
-export { CardPost } from "./Cards/CardPost/CardPost";
 export { CardPostGrid } from "./Cards/CardPostGrid/CardPostGrid";
 export { CardRatings } from "./Cards/CardRatings";
 export { CardProduct } from "./Cards/CardProduct";
@@ -90,8 +89,6 @@ export { SettingListItem } from "./ListItems/SettingListItem";
 export { AlbumListItem } from "./ListItems/AlbumListItem";
 export { PresetListItem } from "./ListItems/PresetListItem";
 
-export { VideoItem } from "./VideoItem/VideoItem";
-
 export { NoFoundMessage } from "./NotFoundContent/NoFoundMessage";
 
 export { Map } from "./Map/Map";
@@ -100,7 +97,6 @@ export { MapStatic } from "./Map/MapStatic";
 export { LoginRegisterForm } from "./Forms/LoginRegisterForm";
 export { AuthProviders } from "./Forms/AuthProviders";
 
-export { BusinessScheduleModal } from "./Modals/BusinessScheduleModal";
 export { FilterPriceModal } from "./Modals/FilterPriceModal";
 export { FilterDistanceModal } from "./Modals/FilterDistanceModal";
 export { FilterRatingModal } from "./Modals/FilterRatingModal";

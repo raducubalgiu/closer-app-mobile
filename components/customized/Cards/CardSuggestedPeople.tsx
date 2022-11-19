@@ -56,12 +56,12 @@ export const CardSuggestedPeople = ({
         <Text style={styles.followers}>
           {noFollowers} {t("followers")}
         </Text>
-        <FollowButton
+        {/* <FollowButton
           sxBtn={styles.followBtn}
           sxBtnText={styles.followBtnText}
           followeeId={followeeId}
           fullWidth
-        />
+        /> */}
       </Stack>
     </View>
   );
