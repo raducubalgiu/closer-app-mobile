@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { useAuth, useHttpGet } from "../../../hooks";
+import { useAuth, useGet } from "../../../hooks";
 import { Header } from "../../../components/core";
 import { CardPost } from "../../../components/customized";
 
@@ -17,7 +17,10 @@ export const AllBookmarksScreen = () => {
   const { user } = useAuth();
   const { t } = useTranslation();
 
-  const { data: bookmarks } = useHttpGet(`/users/${user?._id}/bookmarks/posts`);
+  const { data: bookmarks } = useGet({
+    model: "allBookmarks",
+    uri: `/users/${user?._id}/bookmarks/posts`,
+  });
 
   const renderUserBookmarks = useCallback(
     ({ item }) => <CardPost post={item?.post} />,

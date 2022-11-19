@@ -12,6 +12,8 @@ import {
 import { Header } from "../../../components/core";
 import theme from "../../../assets/styles/theme";
 
+const { black } = theme.lightColors;
+
 export const BookmarksScreen = ({ route }) => {
   const { user } = route.params;
   const Tab = createMaterialTopTabNavigator();
@@ -64,13 +66,13 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 16,
-    color: theme.lightColors.black,
+    color: black,
   },
   labelStyle: {
     textTransform: "capitalize",
     fontSize: 14,
   },
   indicatorStyle: {
-    backgroundColor: theme.lightColors.black,
+    backgroundColor: black,
   },
 });

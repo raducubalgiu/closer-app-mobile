@@ -8,7 +8,7 @@ import {
 } from "firebase/auth";
 
 export const AuthService = {
-  registerWithPassword: async (email, password) => {
+  registerWithPassword: async (email: string, password: string) => {
     try {
       const { user } = await createUserWithEmailAndPassword(
         getAuth(),
@@ -26,7 +26,7 @@ export const AuthService = {
     }
   },
 
-  loginWithPassword: async (email, password) => {
+  loginWithPassword: async (email: string, password: string) => {
     try {
       const { user } = await signInWithEmailAndPassword(
         getAuth(),
@@ -44,7 +44,7 @@ export const AuthService = {
     }
   },
 
-  passwordResetEmail: async (auth, email) => {
+  passwordResetEmail: async (auth: any, email: string) => {
     try {
       const response = await sendPasswordResetEmail(auth, email);
 

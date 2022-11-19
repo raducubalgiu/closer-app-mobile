@@ -10,7 +10,7 @@ export const InputEdit = ({
   fieldLength,
   placeholder,
   updateValue,
-  withDetails,
+  withDetails = false,
 }) => {
   return (
     <>

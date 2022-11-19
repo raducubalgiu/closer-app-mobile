@@ -88,14 +88,14 @@ export const EditProfileScreen = ({ route }) => {
           <Divider color="#ddd" />
           <View style={styles.sectionContainer}>
             <Text style={styles.sectionHeading}>Social</Text>
-            <ListItem between sx={styles.listItem}>
+            <ListItem between sx={styles.listItem} onPress={() => {}}>
               <Text style={styles.label}>Instagram</Text>
               <Stack direction="row">
                 <Text style={styles.buttonText}>raducu__balgiu</Text>
                 <Icon name="keyboard-arrow-right" size={17} color={grey0} />
               </Stack>
             </ListItem>
-            <ListItem between sx={styles.listItem}>
+            <ListItem between sx={styles.listItem} onPress={() => {}}>
               <Text style={styles.label}>Youtube</Text>
               <Stack direction="row">
                 <Text style={styles.buttonText}>{t("addYoutubeAccount")}</Text>

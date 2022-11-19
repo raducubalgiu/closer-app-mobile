@@ -25,12 +25,7 @@ export const FindFriendsScreen = () => {
   }, []);
 
   const renderPerson = ({ item }) => (
-    <UserListItem
-      username={item?.name}
-      name={"Din contactele tale"}
-      sxBtn={styles.btnFollow}
-      sxBtnText={{ color: "white" }}
-    />
+    <UserListItem user={item} isFollow={false} />
   );
 
   return (

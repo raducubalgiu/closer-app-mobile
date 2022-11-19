@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, View, ScrollView } from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import React, { useState } from "react";
 import { IconButton } from "../../../components/core";
 import theme from "../../../assets/styles/theme";
@@ -56,6 +56,7 @@ export const ProfileGeneralScreen = ({ route }) => {
           username={username}
           checkmark={checkmark}
           onOpenNotifications={null}
+          onOpenSettings={() => {}}
         />
       </SafeAreaView>
       <ProfileOverview
@@ -109,7 +110,6 @@ export const ProfileGeneralScreen = ({ route }) => {
       <TopTabProfile
         user={userDetails}
         userId={userId || userDetails?._id}
-        username={username}
         service={service}
         option={option}
       />
@@ -126,7 +126,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 0,
     paddingVertical: 10,
-    borderRadius: 2.5,
   },
   followBtn: {
     backgroundColor: "white",
@@ -143,7 +142,6 @@ const styles = StyleSheet.create({
     borderColor: "#ddd",
     borderRadius: 0,
     paddingVertical: 10,
-    borderRadius: 2.5,
   },
   iconBtn: {
     borderWidth: 1,

@@ -62,7 +62,6 @@ export const ProfileScreen = () => {
       </ProfileOverview>
       <TopTabProfile
         userId={user?._id}
-        username={username}
         service={null}
         option={null}
         user={user}

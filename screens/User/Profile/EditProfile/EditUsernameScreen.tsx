@@ -7,7 +7,7 @@ import { Feedback, InputEdit, Spinner } from "../../../../components/core";
 import { useAuth, useHttpPatch } from "../../../../hooks";
 
 export const EditUsernameScreen = () => {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   const [username, setUsername] = useState(user?.username);
   const { t } = useTranslation();
   const navigation = useNavigation();
