@@ -552,7 +552,12 @@ const App = ({ user }) => {
 
   return (
     <>
-      <HeaderProfile username="Raducu Balgiu" checkmark={true} />
+      <HeaderProfile
+        username="Raducu Balgiu"
+        checkmark={true}
+        onGoToFindFriends={() => {}}
+        onOpenSettings={() => {}}
+      />
       <View style={styles.container}>
         {renderTabView()}
         {renderHeader()}
