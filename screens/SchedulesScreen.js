@@ -8,10 +8,11 @@ import {
 import { useCallback } from "react";
 import { Header } from "../components/core";
 import { useTranslation } from "react-i18next";
-import { useAuth, useGet } from "../hooks";
+import { useAuth, useGet, useRefreshOnFocus } from "../hooks";
 import { CardScheduleOverview, NoFoundMessage } from "../components/customized";
 import theme from "../assets/styles/theme";
 import { dayMonthTime, yearMonthFormat } from "../utils/date-utils";
+import { Divider } from "@rneui/themed";
 
 const { black } = theme.lightColors;
 
@@ -19,10 +20,12 @@ export const SchedulesScreen = () => {
   const { user } = useAuth();
   const { t } = useTranslation();
 
-  const { data: schedules } = useGet({
+  const { data: schedules, refetch } = useGet({
     model: "schedules",
     uri: `/users/${user?._id}/schedules`,
   });
+
+  useRefreshOnFocus(refetch);
 
   const renderHeader = useCallback(({ section }) => {
     const { year, month } = section?._id || {};
@@ -56,6 +59,7 @@ export const SchedulesScreen = () => {
           renderItem={renderSchedules}
           renderSectionHeader={renderHeader}
           contentContainerStyle={{ padding: 15 }}
+          ItemSeparatorComponent={() => <Divider color="#ddd" />}
         />
       </View>
     </SafeAreaView>
@@ -84,7 +88,6 @@ const styles = StyleSheet.create({
     textTransform: "capitalize",
     fontSize: 16.5,
     color: black,
-    marginBottom: 15,
     fontWeight: "700",
   },
 });

@@ -1,20 +1,24 @@
 import { StyleSheet, Text } from "react-native";
-import { CSwitch, Stack } from "../../core";
+import { useState } from "react";
+import { Switch } from "@rneui/themed";
+import { Stack } from "../../core";
 import theme from "../../../assets/styles/theme";
 
 const { black } = theme.lightColors;
 
-export const SettingListItem = ({
-  title,
-  defaultValue,
-  onChange,
-  sx,
-  sxTitle,
-}) => {
+export const SettingListItem = ({ title, defaultValue, onValueChange }) => {
+  const [checked, setChecked] = useState(defaultValue);
+
   return (
-    <Stack direction="row" sx={{ ...styles.container, ...sx }}>
-      <Text style={{ ...styles.title, ...sxTitle }}>{title}</Text>
-      <CSwitch value={defaultValue} onChange={onChange} />
+    <Stack direction="row" sx={styles.container}>
+      <Text style={styles.title}>{title}</Text>
+      <Switch
+        value={checked}
+        onChange={() => {
+          setChecked((checked) => !checked);
+          onValueChange();
+        }}
+      />
     </Stack>
   );
 };

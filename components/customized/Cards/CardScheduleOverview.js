@@ -21,17 +21,20 @@ export const CardScheduleOverview = ({ schedule, start }) => {
     status === "canceled" ? { color: error } : { color: success };
 
   return (
-    <Pressable onPress={goToDetails} style={{ paddingBottom: 15 }}>
+    <Pressable onPress={goToDetails} style={{ paddingVertical: 15 }}>
       <Stack direction="row" align="start">
         <Stack direction="row">
           <Stack align="start" sx={{ marginLeft: 10 }}>
             <Text style={styles.service}>{service?.name}</Text>
             <Text style={styles.date}>{start}</Text>
-            <Stack direction="row" sx={{ marginTop: 10 }}>
-              <CustomAvatar avatar={avatar} size={30} iconSize={15} />
-              <Stack direction="row" sx={{ marginLeft: 10 }}>
-                <Text style={styles.name}>{name}</Text>
-                {checkmark && <Checkmark sx={{ marginLeft: 5 }} size={7.5} />}
+            <Stack direction="row" sx={{ marginTop: 15 }}>
+              <CustomAvatar avatar={avatar} size={32.5} iconSize={15} />
+              <Stack align="start" sx={{ marginLeft: 10 }}>
+                <Stack direction="row">
+                  <Text style={styles.name}>{name}</Text>
+                  {checkmark && <Checkmark sx={{ marginLeft: 5 }} size={7.5} />}
+                </Stack>
+                <Text style={styles.profession}>Frizerie</Text>
               </Stack>
             </Stack>
           </Stack>
@@ -43,7 +46,6 @@ export const CardScheduleOverview = ({ schedule, start }) => {
           </Text>
         </Stack>
       </Stack>
-      <Divider color="#ddd" style={{ paddingTop: 25 }} />
     </Pressable>
   );
 };
@@ -52,13 +54,18 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 14.5,
     color: black,
-    fontWeight: "500",
+    fontWeight: "600",
+  },
+  profession: {
+    color: grey0,
+    marginTop: 2.5,
+    fontSize: 13,
   },
   service: {
     color: black,
-    fontSize: 15,
+    fontSize: 14.5,
     textTransform: "uppercase",
-    fontWeight: "700",
+    fontWeight: "600",
   },
   product: { fontSize: 15, fontWeight: "400", color: black },
   date: {

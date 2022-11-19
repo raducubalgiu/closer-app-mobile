@@ -11,14 +11,14 @@ const FakeSearchBar = ({ onGoAnytime, onGoNow }) => {
 
   return (
     <View style={styles.container}>
-      <Pressable onPress={onGoAnytime} sx={{ flex: 1 }}>
+      <Pressable onPress={onGoAnytime} style={{ flex: 1 }}>
         <Stack direction="row" justify="start">
           <Icon name="search" type="feather" color={black} size={20} />
           <Text style={styles.fakeInputText}>{t("searchService")}</Text>
         </Stack>
       </Pressable>
       <Divider orientation="vertical" style={{ marginRight: 15 }} />
-      <Pressable onPress={onGoNow} sx={styles.nowBtn}>
+      <Pressable onPress={onGoNow} style={styles.nowBtn}>
         <Icon
           name="clock"
           type="feather"

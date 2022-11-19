@@ -5,15 +5,17 @@ import { useTranslation } from "react-i18next";
 import { Header, MainButton, Stack } from "../components/core";
 import { useAuth, usePost } from "../hooks";
 import theme from "../assets/styles/theme";
-import { NOW, HALF_HOUR } from "../utils/date-utils";
+
 import dayjs from "dayjs";
 
 const { black, grey0 } = theme.lightColors;
 
 export const ScheduleConfirmScreen = ({ route }) => {
   const { user: customer } = useAuth();
-  const { service, product } = route.params;
-  const { user, name, price, option, duration, description } = product;
+  const { service, product, slot } = route.params;
+  const { start, end, hour } = slot;
+  const { user, name, price, option, duration, description, location } =
+    product;
   const navigation = useNavigation();
   const { t } = useTranslation();
 
@@ -24,11 +26,12 @@ export const ScheduleConfirmScreen = ({ route }) => {
 
   const handleBook = () => {
     mutate({
-      start: NOW,
-      end: dayjs(NOW).add(HALF_HOUR, "milliseconds"),
+      start,
+      end,
       user,
       customer: customer?._id,
       service,
+      location,
       product: {
         name,
         description,
@@ -53,11 +56,10 @@ export const ScheduleConfirmScreen = ({ route }) => {
               style={styles.icon}
             />
             <Stack align="start" sx={{ marginLeft: 15, flex: 1 }}>
-              <Text style={styles.heading}>17-11-2022 - 14:30</Text>
-              <Text style={styles.description}>Raducu Balgiu</Text>
-              <Text style={styles.description}>
-                Strada Ion Agirbiceanu, nr 35, Sector 3
+              <Text style={styles.heading}>
+                {dayjs(start).format("DD-MM-YYYY")} - {hour}
               </Text>
+              <Text style={styles.description}>{user.name}</Text>
             </Stack>
           </Stack>
           <Stack align="start" direction="row" sx={{ marginBottom: 50 }}>
@@ -69,12 +71,12 @@ export const ScheduleConfirmScreen = ({ route }) => {
               style={styles.icon}
             />
             <Stack align="start" sx={{ marginLeft: 15, flex: 1 }}>
-              <Text style={styles.heading}>ITP - {product.name}</Text>
+              <Text style={styles.heading}>{product.name}</Text>
               <Text style={styles.description}>
                 Categorie: {option.name || option}
               </Text>
-              <Text style={styles.description}>{description}</Text>
               <Text style={styles.duration}>Durata: {duration} min</Text>
+              <Text style={styles.description}>{description}</Text>
             </Stack>
           </Stack>
           <Stack align="start" direction="row" sx={{ marginBottom: 50 }}>

@@ -1,9 +1,10 @@
 import { useCallback } from "react";
+import { RefreshControl } from "react-native";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { useTranslation } from "react-i18next";
 import { Spinner } from "../../../core";
 import { CardProduct } from "../../Cards/CardProduct";
-import { useGetPaginate } from "../../../../hooks";
+import { useGetPaginate, useRefreshByUser } from "../../../../hooks";
 import { useIsFocused } from "@react-navigation/native";
 import { FlashList } from "@shopify/flash-list";
 
@@ -17,6 +18,7 @@ export const SavedProductsTab = ({ user }) => {
     fetchNextPage,
     isFetchingNextPage,
     isLoading,
+    refetch,
     isFetching,
     isPreviousData,
   } = useGetPaginate({
@@ -50,6 +52,7 @@ export const SavedProductsTab = ({ user }) => {
   };
 
   const { pages } = data || {};
+  const products = pages?.map((page) => page.results).flat();
 
   const noFoundMessage = !isLoading &&
     !isFetchingNextPage &&
@@ -60,12 +63,19 @@ export const SavedProductsTab = ({ user }) => {
       />
     );
 
+  const { refreshing, refetchByUser } = useRefreshByUser(refetch);
+
+  const refreshControl = (
+    <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
+  );
+
   return (
     <>
       {isFetching && isLoading && !isFetchingNextPage && <Spinner />}
       <FlashList
         ListHeaderComponent={noFoundMessage}
-        data={pages?.map((page) => page.results).flat()}
+        data={products}
+        refreshControl={refreshControl}
         keyExtractor={keyExtractor}
         renderItem={renderProduct}
         ListFooterComponent={showSpinner}

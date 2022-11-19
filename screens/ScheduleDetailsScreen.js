@@ -18,11 +18,11 @@ import { useTranslation } from "react-i18next";
 import { Icon } from "@rneui/base";
 import theme from "../assets/styles/theme";
 import { Divider } from "@rneui/themed";
-import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { AddressFormat } from "../utils";
 import { useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
 import { useGet } from "../hooks";
+import { MapStatic } from "../components/customized";
 
 const { black, grey0, success, error } = theme.lightColors;
 
@@ -52,11 +52,7 @@ export const ScheduleDetailsScreen = ({ route }) => {
       scheduleId: _id,
     });
   const goToBookAgain = () =>
-    navigation.navigate("CalendarBig", {
-      product,
-      service,
-      user,
-    });
+    navigation.navigate("CalendarBig", { product, service });
 
   let actionButton;
 
@@ -90,34 +86,6 @@ export const ScheduleDetailsScreen = ({ route }) => {
   let statusColor =
     status === "canceled" ? { color: "#F72A50" } : { color: success };
 
-  const mapStyle = [
-    {
-      featureType: "road.arterial",
-      elementType: "labels",
-      stylers: [
-        {
-          visibility: "off",
-        },
-      ],
-    },
-    {
-      featureType: "road.highway",
-      elementType: "labels",
-      stylers: [
-        {
-          visibility: "off",
-        },
-      ],
-    },
-    {
-      featureType: "road.local",
-      stylers: [
-        {
-          visibility: "off",
-        },
-      ],
-    },
-  ];
   return (
     <View style={styles.screen}>
       <SafeAreaView>
@@ -152,29 +120,11 @@ export const ScheduleDetailsScreen = ({ route }) => {
           {actionButton}
           {address && (
             <View>
-              <MapView
-                customMapStyle={mapStyle}
-                style={styles.map}
-                initialRegion={{
-                  latitude: address?.coordinates[0],
-                  longitude: address?.coordinates[1],
-                  latitudeDelta: 0.0922,
-                  longitudeDelta: 0.0421,
-                }}
-                provider={PROVIDER_GOOGLE}
-                zoomEnabled={false}
-                pitchEnabled={false}
-                scrollEnabled={false}
-                minZoomLevel={13}
-              >
-                <Marker
-                  coordinate={{
-                    latitude: address?.coordinates[0],
-                    longitude: address?.coordinates[1],
-                  }}
-                  image={require("../assets/images/map_marker.png")}
-                ></Marker>
-              </MapView>
+              <MapStatic
+                latitude={address.coordinates[0]}
+                longitude={address.coordinates[1]}
+                sx={{ marginVertical: 20 }}
+              />
               <Stack
                 align="start"
                 sx={{ position: "absolute", bottom: 30, right: 15 }}
@@ -231,6 +181,7 @@ const styles = StyleSheet.create({
   date: {
     fontSize: 15.5,
     color: black,
+    fontWeight: "500",
   },
   service: {
     color: grey0,
@@ -256,7 +207,7 @@ const styles = StyleSheet.create({
     color: black,
     fontSize: 16,
     flex: 1,
-    fontWeight: "600",
+    fontWeight: "700",
   },
   duration: {
     color: grey0,
@@ -276,7 +227,6 @@ const styles = StyleSheet.create({
     fontSize: 14.5,
     marginLeft: 10,
   },
-  map: { height: 250, width: "100%", marginVertical: 20 },
   navigate: {
     marginLeft: 10,
     color: black,

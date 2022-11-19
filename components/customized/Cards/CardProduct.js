@@ -22,7 +22,7 @@ export const CardProduct = ({
   const { user: userContext } = useAuth();
   const { t } = useTranslation();
   const { name, duration, description, price } = product || {};
-  const { option, service, user, employee } = product || {};
+  const { option, service, user } = product || {};
   const currDuration = duration ? useDuration(duration) : "";
   const navigation = useNavigation();
 
@@ -30,8 +30,6 @@ export const CardProduct = ({
     navigation.navigate("CalendarBig", {
       product,
       service,
-      owner: user,
-      employee,
     });
 
   const goToOwner = () => {
@@ -39,7 +37,7 @@ export const CardProduct = ({
   };
 
   return (
-    <Stack sx={styles.card}>
+    <Stack sx={styles.card} align="start">
       <Stack direction="row" sx={{ width: "100%" }} align="start">
         <Stack align="start" sx={styles.descriptionCont}>
           <Text style={styles.name}>{name} </Text>

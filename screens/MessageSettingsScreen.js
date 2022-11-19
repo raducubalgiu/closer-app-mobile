@@ -74,18 +74,18 @@ export const MessageSettingsScreen = ({ route }) => {
         <SettingListItem
           defaultValue={false}
           title={t("stopMessages")}
-          onChange={() => {}}
+          onValueChange={() => {}}
         />
         <SettingListItem
           defaultValue={false}
           title={t("disableNotifications")}
-          onChange={() => {}}
+          onValueChange={() => {}}
         />
         <SettingListItem
           defaultValue={false}
           title={t("block")}
           sxTitle={{ color: error }}
-          onChange={() => {}}
+          onValueChange={() => {}}
         />
         <Pressable onPress={() => setModal(true)}>
           <Text style={{ color: error, fontSize: 15 }}>

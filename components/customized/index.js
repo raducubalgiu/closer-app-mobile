@@ -95,6 +95,7 @@ export { VideoItem } from "./VideoItem/VideoItem";
 export { NoFoundMessage } from "./NotFoundContent/NoFoundMessage";
 
 export { Map } from "../customized/Map/Map";
+export { MapStatic } from "../customized/Map/MapStatic";
 
 export { LoginRegisterForm } from "../customized/Forms/LoginRegisterForm";
 export { AuthProviders } from "../customized/Forms/AuthProviders";

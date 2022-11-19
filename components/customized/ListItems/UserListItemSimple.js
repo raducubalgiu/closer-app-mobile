@@ -13,7 +13,7 @@ export const UserListItemSimple = ({
   sx,
 }) => {
   return (
-    <Pressable onPress={onGoToUser} style={{ ...styles.owner, ...sx }}>
+    <Pressable onPress={onGoToUser} style={sx}>
       <Stack align="start">
         <Stack direction="row">
           <CustomAvatar avatar={avatar} size={50} iconSize={17.5} />
@@ -31,7 +31,6 @@ export const UserListItemSimple = ({
 };
 
 const styles = StyleSheet.create({
-  owner: { marginBottom: 20, paddingHorizontal: 15 },
   ownerName: {
     color: black,
     fontWeight: "600",

@@ -1,5 +1,5 @@
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Header,
   Stack,
@@ -10,19 +10,17 @@ import {
 import { useTranslation } from "react-i18next";
 import { useForm, FormProvider } from "react-hook-form";
 import theme from "../../../../assets/styles/theme";
-import {
-  useAuth,
-  useHttpGet,
-  useHttpPatch,
-  useSeconds,
-} from "../../../../hooks";
+import { useAuth, useGet, usePatch, useSeconds } from "../../../../hooks";
 import { useNavigation } from "@react-navigation/native";
-const { grey0, primary, black } = theme.lightColors;
+const { black } = theme.lightColors;
 
 export const AddScheduleScreen = () => {
   const { user } = useAuth();
   const { t } = useTranslation();
-  const { data: location } = useHttpGet(`/locations/${user?.location}`);
+  const { data: location } = useGet({
+    model: "location",
+    uri: `/locations/${user?.location}`,
+  });
   const { mon, tue, wed, thu, fri, sat, sun } = location?.hours || {};
 
   const getStart = (day, def) => {
@@ -62,10 +60,10 @@ export const AddScheduleScreen = () => {
   const { seconds } = useSeconds();
   const navigation = useNavigation();
 
-  const { makePatch, loading } = useHttpPatch(
-    `/locations/${user?.location}`,
-    () => navigation.goBack()
-  );
+  const { mutate: makePatch, isLoading } = usePatch({
+    uri: `/locations/${user?.location}`,
+    onSuccess: () => navigation.goBack(),
+  });
 
   const onSubmit = (data) => {
     makePatch({
@@ -131,7 +129,6 @@ export const AddScheduleScreen = () => {
                       );
                     }}
                     defaultValue={getValues(`start${second?.day}`) !== -1}
-                    color={primary}
                   />
                   <Stack sx={styles.startDay}>
                     <FormInputSelect
@@ -157,7 +154,7 @@ export const AddScheduleScreen = () => {
               radius={10}
               fullWidth
               title={t("save")}
-              loading={loading}
+              loading={isLoading}
               onPress={handleSubmit(onSubmit)}
             />
           </View>
