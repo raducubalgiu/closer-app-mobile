@@ -5,7 +5,7 @@ import theme from "../../../assets/styles/theme";
 
 const { primary } = theme.lightColors;
 
-export const IconButtonAdd = ({ onPress, sx, disabled }) => {
+export const IconButtonAdd = ({ onPress, sx = {}, disabled = false }) => {
   const animatedScale = useRef(new Animated.Value(0)).current;
 
   const handlePress = () => {

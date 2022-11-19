@@ -68,17 +68,20 @@ export const AddServicesScreen = () => {
     },
   });
 
-  const renderService = useCallback(({ item }) => (
-    <Stack direction="row" sx={styles.service}>
-      <Text style={styles.name}>{item?.name}</Text>
-      <IconButtonDelete
-        onPress={() => {
-          setVisible(true);
-          setService(item);
-        }}
-      />
-    </Stack>
-  ));
+  const renderService = useCallback(
+    ({ item }) => (
+      <Stack direction="row" sx={styles.service}>
+        <Text style={styles.name}>{item?.name}</Text>
+        <IconButtonDelete
+          onPress={() => {
+            setVisible(true);
+            setService(item);
+          }}
+        />
+      </Stack>
+    ),
+    []
+  );
   const keyExtractor = useCallback((item) => item._id, []);
 
   return (

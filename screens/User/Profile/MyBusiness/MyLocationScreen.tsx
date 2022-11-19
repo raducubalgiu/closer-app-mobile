@@ -1,6 +1,6 @@
 import { SafeAreaView, StyleSheet } from "react-native";
 import { Header } from "../../../../components/core";
-import { AddLocationScreen } from "../MyBusiness/AddLocationScreen";
+import { AddLocationScreen } from "./AddLocationScreen";
 
 export const MyLocationScreen = () => {
   return (

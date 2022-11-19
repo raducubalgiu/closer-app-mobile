@@ -3,6 +3,7 @@ import {
   StyleSheet,
   ScrollView,
   KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { useForm, FormProvider } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
@@ -59,7 +60,7 @@ export const AddProductsScreen = () => {
 
   const { mutate: makePost, isLoading: loadingSubmit } = usePost({
     uri: `/products`,
-    onSuccess: () => goBack(),
+    onSuccess: () => navigation.goBack(),
   });
 
   const handleCreate = (data) => {

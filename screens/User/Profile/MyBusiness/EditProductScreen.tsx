@@ -3,6 +3,7 @@ import {
   ScrollView,
   StyleSheet,
   KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { useTranslation } from "react-i18next";
 import { useForm, FormProvider } from "react-hook-form";

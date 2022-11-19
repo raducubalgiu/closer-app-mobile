@@ -17,6 +17,7 @@ const { black } = theme.lightColors;
 export const AddScheduleScreen = () => {
   const { user } = useAuth();
   const { t } = useTranslation();
+
   const { data: location } = useGet({
     model: "location",
     uri: `/locations/${user?.location}`,

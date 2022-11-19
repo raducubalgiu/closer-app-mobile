@@ -5,7 +5,7 @@ import theme from "../../../assets/styles/theme";
 
 const { black } = theme.lightColors;
 
-export const IconButtonDelete = ({ onPress, sx }) => {
+export const IconButtonDelete = ({ onPress, sx = {} }) => {
   const animatedScale = useRef(new Animated.Value(0)).current;
 
   const handlePress = () => {

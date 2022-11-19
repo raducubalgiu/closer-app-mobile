@@ -18,6 +18,7 @@ export const MyProductsScreen = () => {
   );
 
   const { data: services } = useGet({
+    model: "services",
     uri: `/locations/${user?.location}/services`,
   });
 

@@ -8,11 +8,11 @@ const width = Dimensions.get("window").width;
 const { black } = theme.lightColors;
 
 const MyBusinessCard = ({
-  sx,
+  sx = {},
   onPress,
   iconName,
   iconType,
-  size,
+  size = 30,
   title,
   description,
 }) => {
@@ -24,12 +24,7 @@ const MyBusinessCard = ({
           maxWidth: width / 2,
         }}
       >
-        <Icon
-          name={iconName}
-          type={iconType}
-          size={size ? size : 30}
-          color={black}
-        />
+        <Icon name={iconName} type={iconType} size={size} color={black} />
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{description}</Text>
       </Stack>

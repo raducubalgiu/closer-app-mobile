@@ -9,19 +9,13 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import theme from "../../../../assets/styles/theme";
-import TooltipTitle from "../../../../components/customized/ListItems/TooltipItem";
 import { AutocompleteGoogle } from "../../../../components/customized";
-import {
-  Stack,
-  Header,
-  MainButton,
-  Feedback,
-} from "../../../../components/core";
+import { Stack, Header, MainButton } from "../../../../components/core";
 import { Icon, Avatar, Badge } from "@rneui/themed";
 import { useAuth } from "../../../../hooks/auth";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { useHttpPost } from "../../../../hooks";
+import { usePost } from "../../../../hooks";
 
 const { primary, black } = theme.lightColors;
 
@@ -45,14 +39,14 @@ export const AddLocationScreen = () => {
 
   const handleSetLocation = (location) => setLocation(location);
 
-  const handleAfterAdd = (res) => {
-    setUser({ ...user, location: res._id });
-    navigation.navigate("Profile");
-  };
-  const { makePost, loading, feedback, setFeedback } = useHttpPost(
-    `/users/${user?._id}/locations`,
-    handleAfterAdd
-  );
+  const { mutate: makePost, isLoading: loading } = usePost({
+    uri: `/users/${user?._id}/locations`,
+    onSuccess: (res) => {
+      setUser({ ...user, location: res._id });
+      navigation.navigate("Profile");
+    },
+  });
+
   const onSubmit = () => {
     makePost({
       address: { ...location, blockApartment },
@@ -62,15 +56,8 @@ export const AddLocationScreen = () => {
   return (
     <SafeAreaView style={styles.screen}>
       <Header title="Adauga locatia" divider />
-      <Feedback feedback={feedback} setFeedback={setFeedback} />
       <AutocompleteGoogle onSetLocation={handleSetLocation} />
       <ScrollView style={{ padding: 15 }} bounces={false}>
-        <TooltipTitle
-          title="Adauga adresa afacerii"
-          tooltipText="Campurile bloc, scara etc se vor introduce manual (daca e cazul)"
-          tooltipDimensions={{ width: 250, height: 60 }}
-          sx={{ marginBottom: 20 }}
-        />
         <Stack direction="row">
           <View style={{ flex: 1, marginRight: 5 }}>
             <TextInput
@@ -129,11 +116,6 @@ export const AddLocationScreen = () => {
           />
         </View>
         <Stack direction="row" sx={{ marginVertical: 15 }}>
-          <TooltipTitle
-            title="Adauga imagini"
-            tooltipText="Adauga minim 3 imagini (maxim 5)"
-            tooltipDimensions={{ width: 250, height: 50 }}
-          />
           <TouchableOpacity>
             <Icon
               name="plussquare"
