@@ -1,87 +1,84 @@
 import { StyleSheet, View } from "react-native";
 import React from "react";
 
-export const Stack = (props) => {
-  let justify;
-  let align;
-  let direction;
+export const Stack = ({
+  children,
+  direction = "column",
+  align = "center",
+  justify = "between",
+  sx = {},
+}) => {
+  let justifyContent;
+  let alignItems;
+  let flexDirection;
 
-  switch (props.justify) {
+  switch (justify) {
     case "center":
-      justify = "center";
+      justifyContent = "center";
       break;
     case "start":
-      justify = "flex-start";
+      justifyContent = "flex-start";
       break;
     case "end":
-      justify = "flex-end";
+      justifyContent = "flex-end";
       break;
     case "evenly":
-      justify = "space-evenly";
+      justifyContent = "space-evenly";
       break;
     case "around":
-      justify = "space-around";
+      justifyContent = "space-around";
       break;
     case "between":
-      justify = "space-between";
+      justifyContent = "space-between";
       break;
     default:
-      justify = "space-between";
+      justifyContent = "space-between";
   }
 
-  switch (props.align) {
+  switch (align) {
     case "start":
-      align = "flex-start";
+      alignItems = "flex-start";
       break;
     case "end":
-      align = "flex-end";
+      alignItems = "flex-end";
       break;
     case "stretch":
-      align = "stretch";
+      alignItems = "stretch";
       break;
     case "center":
-      align = "center";
+      alignItems = "center";
       break;
     case "baseline":
-      align = "baseline";
+      alignItems = "baseline";
       break;
     default:
-      align = "center";
+      alignItems = "center";
   }
 
-  switch (props.direction) {
+  switch (direction) {
     case "row":
-      direction = "row";
+      flexDirection = "row";
       break;
     case "row-reverse":
-      direction = "row-reverse";
+      flexDirection = "row-reverse";
       break;
     case "column":
-      direction = "column";
+      flexDirection = "column";
       break;
     case "column-reverse":
-      direction = "column-reverse";
+      flexDirection = "column-reverse";
       break;
     default:
-      direction = "column";
+      flexDirection = "column";
   }
 
   const styles = StyleSheet.create({
     container: {
-      flexDirection: direction,
-      alignItems: align,
-      justifyContent: justify,
+      flexDirection,
+      alignItems,
+      justifyContent,
     },
   });
 
-  return (
-    <View
-      justify={props.justify}
-      align={props.align}
-      direction={props.direction}
-      style={{ ...styles.container, ...props.sx }}
-    >
-      {props.children}
-    </View>
-  );
+  return <View style={{ ...styles.container, ...sx }}>{children}</View>;
 };
