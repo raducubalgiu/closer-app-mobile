@@ -91,7 +91,7 @@ export const CalendarScreen = ({ route }) => {
         items={slots}
         renderItem={renderSlot}
         onDayPress={(day) => handleDayPress(day)}
-        renderDay={() => {}}
+        //renderDay={() => {}}
         firstDay={1}
         onCalendarToggled={(k) => setKnob(k)}
         selected={day}
@@ -102,7 +102,7 @@ export const CalendarScreen = ({ route }) => {
         renderEmptyDate={() => <View />}
         renderEmptyData={() => noFoundData}
         renderKnob={() => showKnob}
-        rowHasChanged={(r1, r2) => r1.text !== r2.text}
+        rowHasChanged={(r1, r2) => r1.name !== r2.name}
         showClosingKnob={true}
         disabledByDefault={false}
         showOnlySelectedDayItems={true}

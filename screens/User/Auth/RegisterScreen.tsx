@@ -1,8 +1,8 @@
 import { SafeAreaView, StyleSheet } from "react-native";
-import React, { useState } from "react";
+import { useState } from "react";
 import { AuthService } from "../../../services/AuthService";
 import { useNavigation } from "@react-navigation/native";
-import { Feedback, Header } from "../../../components/core";
+import { Feedback, IconBackButton } from "../../../components/core";
 import { LoginRegisterForm } from "../../../components/customized";
 import { useTranslation } from "react-i18next";
 
@@ -43,7 +43,7 @@ export const RegisterScreen = () => {
   return (
     <SafeAreaView style={styles.screen}>
       <Feedback feedback={feedback} setFeedback={setFeedback} />
-      <Header />
+      <IconBackButton />
       <LoginRegisterForm
         loading={loading}
         onSubmit={onSubmit}

@@ -1,41 +1,43 @@
 import { SafeAreaView, StyleSheet } from "react-native";
 import { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 import { AuthService } from "../../../services/AuthService";
-import { Header, Feedback } from "../../../components/core";
+import { Feedback, IconBackButton } from "../../../components/core";
+import { useAuth } from "../../../hooks/auth";
 import { LoginRegisterForm } from "../../../components/customized";
-import { MAIN_ROLE } from "@env";
 import { useTranslation } from "react-i18next";
+import { useNavigation } from "@react-navigation/native";
 
-export const RegisterBusinessScreen = () => {
-  const navigation = useNavigation();
+export const LoginScreen = () => {
+  const { setUser } = useAuth();
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
+  const navigation = useNavigation();
 
   const onSubmit = async (data) => {
     setLoading(true);
     try {
-      const { email, password } = data;
-      const { user, error } = await AuthService.registerWithPassword(
-        email,
-        password
+      const { user, err } = await AuthService.loginWithPassword(
+        data.email,
+        data.password
       );
-
-      if (error && error.code === "auth/email-already-in-use") {
+      if (err) {
         setLoading(false);
-        setFeedback({ visible: true, message: t("emailAlreadyInUse") });
         return;
-      }
-
-      if (user && !error) {
-        const idTokenResult = await user.getIdTokenResult();
+      } else {
+        const idTokenResult = await user?.getIdTokenResult();
+        const userResult = await axios.post(
+          `${process.env.BASE_ENDPOINT}/users/login`,
+          {},
+          {
+            headers: {
+              Authorization: "Bearer " + idTokenResult?.token,
+            },
+          }
+        );
         setLoading(false);
-
-        navigation.navigate("Username", {
-          role: MAIN_ROLE,
-          idTokenResult,
-        });
+        setUser(userResult.data);
       }
     } catch (err) {
       setLoading(false);
@@ -46,14 +48,14 @@ export const RegisterBusinessScreen = () => {
   return (
     <SafeAreaView style={styles.screen}>
       <Feedback feedback={feedback} setFeedback={setFeedback} />
-      <Header />
+      <IconBackButton />
       <LoginRegisterForm
         loading={loading}
         onSubmit={onSubmit}
-        heading={t("register")}
-        statusText={t("haveAccount")}
-        statusBtn={t("login")}
-        statusAction={() => navigation.push("Login")}
+        heading={t("login")}
+        statusText={t("dontHaveAccount")}
+        statusBtn={t("register")}
+        statusAction={() => navigation.replace("Register")}
       />
     </SafeAreaView>
   );

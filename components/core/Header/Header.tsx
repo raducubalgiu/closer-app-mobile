@@ -8,14 +8,12 @@ import { IconBackButton } from "../IconButton/IconBackButton";
 const { black, grey0 } = theme.lightColors;
 
 export const Header = ({
-  hideBtnLeft,
-  title,
-  actionBtn,
-  divider,
-  description,
+  hideBtnLeft = false,
+  title = "",
+  actionBtn = null,
+  divider = false,
 }) => {
   const navigation = useNavigation();
-
   const handleBack = () => navigation.goBack();
 
   return (
@@ -24,10 +22,7 @@ export const Header = ({
         <TouchableOpacity onPress={!hideBtnLeft ? () => handleBack : null}>
           <IconBackButton color={!hideBtnLeft ? black : "white"} />
         </TouchableOpacity>
-        <Stack>
-          <Text style={styles.title}>{title}</Text>
-          {description && <Text style={styles.description}>{description}</Text>}
-        </Stack>
+        <Text style={styles.title}>{title}</Text>
         {actionBtn && actionBtn}
         {!actionBtn && <Icon name="arrow-back-ios" color="white" />}
       </Stack>

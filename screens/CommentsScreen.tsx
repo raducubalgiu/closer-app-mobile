@@ -3,6 +3,7 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   FlatList,
+  Platform,
 } from "react-native";
 import React, { useCallback, useState } from "react";
 import {

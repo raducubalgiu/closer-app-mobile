@@ -44,7 +44,7 @@ export const AuthScreen = () => {
       </Stack>
       <Divider />
       <View style={{ marginTop: 20, marginHorizontal: 20 }}>
-        <ListItem sx={styles.listItem}>
+        <ListItem sx={styles.listItem} onPress={() => {}}>
           <Icon
             name="settings-outline"
             type="ionicon"
@@ -53,7 +53,7 @@ export const AuthScreen = () => {
           />
           <Text style={styles.text}>{t("settings")}</Text>
         </ListItem>
-        <ListItem sx={styles.listItem}>
+        <ListItem sx={styles.listItem} onPress={() => {}}>
           <Icon
             name="exclamationcircleo"
             type="antdesign"
@@ -62,7 +62,7 @@ export const AuthScreen = () => {
           />
           <Text style={styles.text}>{t("reportAProblem")}</Text>
         </ListItem>
-        <ListItem sx={styles.listItem}>
+        <ListItem sx={styles.listItem} onPress={() => {}}>
           <Icon
             name="questioncircleo"
             type="antdesign"

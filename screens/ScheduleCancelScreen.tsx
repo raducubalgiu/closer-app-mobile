@@ -118,8 +118,7 @@ export const ScheduleCancelScreen = ({ route }) => {
             value={textareaVal}
             lines={5}
             maxLength={200}
-            radius={15}
-            onSetValue={(value) => setTextareaVal(value)}
+            onSetValue={(value: string) => setTextareaVal(value)}
           />
         )}
       </ScrollView>

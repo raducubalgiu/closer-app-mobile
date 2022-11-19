@@ -1,7 +1,7 @@
 import { IconButton } from "../../core";
 
 export const CloseIconButton = ({
-  sx,
+  sx = {},
   size = 30,
   color = "white",
   onPress,

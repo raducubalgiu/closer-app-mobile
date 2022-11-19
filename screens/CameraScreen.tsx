@@ -7,12 +7,8 @@ import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { CustomAvatar, IconButton, Stack } from "../components/core";
 import theme from "../assets/styles/theme";
-import {
-  CloseIconButton,
-  RevertIconButton,
-  PhotoLibraryButton,
-} from "../components/customized";
-import axios from "axios";
+import { CloseIconButton, RevertIconButton } from "../components/customized";
+import { PhotoLibraryButton } from "../components/customized/Buttons/PhotoLibraryButton";
 const { black, grey0 } = theme.lightColors;
 
 export const CameraScreen = ({ route }) => {
@@ -20,7 +16,7 @@ export const CameraScreen = ({ route }) => {
   const [galleryUrl, setGalleryUrl] = useState(null);
   const [type, setType] = useState(CameraType.back);
   const [flash, setFlash] = useState(FlashMode.off);
-  let cameraRef = useRef();
+  let cameraRef = useRef<any>();
   const navigation = useNavigation();
   const { t } = useTranslation();
 
@@ -74,7 +70,7 @@ export const CameraScreen = ({ route }) => {
       <Camera ref={cameraRef} type={type} style={styles.container}>
         <Stack direction="row" sx={{ margin: 20 }}>
           <Stack direction="row" sx={styles.user}>
-            <CustomAvatar avatar={avatar} size={30} iconSize="15" />
+            <CustomAvatar avatar={avatar} size={30} iconSize={15} />
             <Stack align="start" sx={{ marginLeft: 10 }}>
               <Text style={styles.to}>{t("to")}</Text>
               <Text style={styles.name}>{name}</Text>

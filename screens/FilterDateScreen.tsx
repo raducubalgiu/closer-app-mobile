@@ -1,10 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useCallback, useState } from "react";
-import axios from "axios";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { useTranslation } from "react-i18next";
 import { Divider } from "@rneui/themed";
-import { useCalendarList, useDates } from "../hooks";
+import { useCalendarList } from "../hooks";
 import {
   ButtonGroup,
   CModal,
@@ -23,7 +22,6 @@ export const FiltersDateScreen = ({ route }) => {
   const [activeBtn, setActiveBtn] = useState(period.code);
   const [activeHours, setActiveHours] = useState(0);
   const [visible, setVisible] = useState(false);
-  const { SHORT_DATE } = useDates();
   const { t } = useTranslation();
   const methods = useForm({ defaultValues: { startHour: "", endHour: "" } });
   const { handleSubmit, watch } = methods;
@@ -91,10 +89,7 @@ export const FiltersDateScreen = ({ route }) => {
         footerExtraBtns={footerBtns}
         btnTitle={t("next")}
       >
-        <SheetHeader
-          title={service?.name}
-          description={`${SHORT_DATE(startDate)} - ${SHORT_DATE(endDate)}`}
-        />
+        <SheetHeader title={service?.name} description="Date" />
         <ButtonGroup
           onPress={handleDateBtns}
           buttons={dateButtons}

@@ -1,11 +1,11 @@
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import axios from "axios";
 import React, { useState } from "react";
-import { t } from "i18next";
 import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../hooks/auth";
 import InputCheck from "../../../components/core/Inputs/InputCheck";
 import { Feedback } from "../../../components/core";
+import { useTranslation } from "react-i18next";
 
 export const UsernameScreen = ({ route }) => {
   const { idTokenResult, role } = route.params;
@@ -13,6 +13,7 @@ export const UsernameScreen = ({ route }) => {
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const [loading, setLoading] = useState(false);
   const { setUser } = useAuth();
+  const { t } = useTranslation();
 
   const handleSubmit = async (data) => {
     try {

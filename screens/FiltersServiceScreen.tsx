@@ -51,7 +51,6 @@ export const FiltersServiceScreen = ({ route }) => {
     <FiltersContainer
       headerTitle={"Filtreaza"}
       headerDescription={"serviciile"}
-      footerJustify="end"
       onNext={goToLocations}
       btnTitle={t("search")}
       disabled={!option}

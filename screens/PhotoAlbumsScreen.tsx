@@ -80,7 +80,7 @@ export const PhotoAlbumsScreen = () => {
           onPress={() => navigation.goBack()}
         />
         <Text style={styles.title}>Albume</Text>
-        <CloseIconButton size={25} color="white" />
+        <CloseIconButton size={25} color="white" onPress={() => {}} />
       </Stack>
       <FlashList
         data={albums}

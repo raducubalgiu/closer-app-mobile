@@ -10,7 +10,7 @@ export const UserListItemSimple = ({
   avatar,
   profession,
   onGoToUser,
-  sx,
+  sx = {},
 }) => {
   return (
     <Pressable onPress={onGoToUser} style={sx}>

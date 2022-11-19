@@ -140,7 +140,6 @@ export const ScheduleDetailsScreen = ({ route }) => {
                     shadowOpacity: 0.2,
                     shadowRadius: 3,
                     elevation: 20,
-                    shadowColor: "#52006A",
                   }}
                 />
               </Stack>

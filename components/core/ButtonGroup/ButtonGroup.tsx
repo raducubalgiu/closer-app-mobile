@@ -5,7 +5,13 @@ import { Stack } from "../Stack/Stack";
 
 const { black } = theme.lightColors;
 
-export const ButtonGroup = ({ activeButton, size, onPress, buttons, sx }) => {
+export const ButtonGroup = ({
+  activeButton,
+  size = "small",
+  onPress,
+  buttons,
+  sx = {},
+}) => {
   const [activeBtn, setActiveBtn] = useState(activeButton);
 
   const styles = StyleSheet.create({

@@ -12,8 +12,7 @@ export const FiltersContainer = ({
   onNext,
   headerTitle,
   headerDescription,
-  footerExtraBtns,
-  footerJustify,
+  footerExtraBtns = false,
   btnTitle,
   disabled = false,
 }) => {
@@ -30,11 +29,7 @@ export const FiltersContainer = ({
           <View style={styles.body}>{children}</View>
         </View>
       </SafeAreaView>
-      <Stack
-        direction="row"
-        sx={styles.footer}
-        justify={footerJustify ? footerJustify : "between"}
-      >
+      <Stack direction="row" sx={styles.footer}>
         {footerExtraBtns}
         <MainButton
           size="lg"

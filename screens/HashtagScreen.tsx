@@ -16,7 +16,7 @@ export const HashtagScreen = ({ route }) => {
   const { t } = useTranslation();
   const Tab = createMaterialTopTabNavigator();
 
-  const { data } = useGet({ uri: `/hashtags/${name}` });
+  const { data } = useGet({ model: "hashtag", uri: `/hashtags/${name}` });
 
   const HashtagPostsBookable = useCallback(
     () => <HashtagPostsBookableTab name={name} />,

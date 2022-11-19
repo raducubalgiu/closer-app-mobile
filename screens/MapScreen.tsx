@@ -1,31 +1,12 @@
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import { StyleSheet, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import MapView, { Callout, PROVIDER_GOOGLE } from "react-native-maps";
-import {
-  CustomAvatar,
-  IconBackButton,
-  IconButton,
-  Stack,
-} from "../components/core";
-import theme from "../assets/styles/theme";
-import { Avatar } from "@rneui/themed";
-import { useHttpGet } from "../hooks";
-import { Icon } from "@rneui/themed";
-
-const { grey0, black, primary } = theme.lightColors;
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import { CustomAvatar, IconButton, Stack } from "../components/core";
+import { useGet } from "../hooks";
 
 export const MapScreen = ({ route }) => {
   const { _id } = route.params.profession;
   const navigation = useNavigation();
-
-  const goToLocation = (_id, username, name, avatar) =>
-    navigation.push("ProfileGeneral", {
-      userId: _id,
-      username,
-      name,
-      avatar,
-    });
 
   const mapStyle = [
     {
@@ -82,9 +63,10 @@ export const MapScreen = ({ route }) => {
     },
   ];
 
-  const { data: locations } = useHttpGet(
-    `/locations/get-locations-map?latlng=26.100195,44.428286&profession=${_id}`
-  );
+  const { data: locations } = useGet({
+    model: "locations",
+    uri: `/locations/get-locations-map?latlng=26.100195,44.428286&profession=${_id}`,
+  });
 
   return (
     <>

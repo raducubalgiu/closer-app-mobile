@@ -1,10 +1,10 @@
 import { StyleSheet, Image, Pressable } from "react-native";
 
-export const PhotoLibraryButton = ({ onPress, uri, size }) => {
+export const PhotoLibraryButton = ({ onPress, uri, size = 40 }) => {
   const styles = StyleSheet.create({
     image: {
-      width: size ? size : 40,
-      height: size ? size : 40,
+      width: size,
+      height: size,
       borderRadius: 10,
       borderWidth: 2,
       borderColor: "white",

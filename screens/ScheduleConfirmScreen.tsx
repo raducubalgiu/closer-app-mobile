@@ -45,7 +45,7 @@ export const ScheduleConfirmScreen = ({ route }) => {
   return (
     <SafeAreaView style={styles.screen}>
       <Header title={t("checkBookingDetails")} />
-      <ScrollView align="start" contentContainerStyle={styles.scrollView}>
+      <ScrollView contentContainerStyle={styles.scrollView}>
         <Stack align="start">
           <Stack align="start" direction="row" sx={{ marginBottom: 50 }}>
             <Icon

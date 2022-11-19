@@ -1,4 +1,9 @@
-import { SafeAreaView, StyleSheet, KeyboardAvoidingView } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import React, { useCallback, useState } from "react";
 import { Camera } from "expo-camera";
@@ -31,7 +36,6 @@ export const MessageItemScreen = ({ route }) => {
       uri: `/users/${user?._id}/messages/receiver/${_id}`,
       limit: "20",
       enabled: !!conversation?._id,
-      enabledId: conversation?._id,
     });
 
   const { pages } = data || {};
@@ -143,7 +147,7 @@ export const MessageItemScreen = ({ route }) => {
           message={message}
           onOpenCamera={handleOpenCamera}
           onSendMessage={onSendMessage}
-          onChangeText={(text) => setMessage(text)}
+          onChangeText={(text: string) => setMessage(text)}
         />
       </KeyboardAvoidingView>
     </SafeAreaView>

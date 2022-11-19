@@ -3,7 +3,6 @@ import {
   StyleSheet,
   ScrollView,
   View,
-  FlatList,
   RefreshControl,
 } from "react-native";
 import { FlashList } from "@shopify/flash-list";
@@ -58,14 +57,7 @@ export const FeedScreen = () => {
     setVisible(true);
   }, []);
 
-  const sheetContent = (
-    <PostInfoSheet
-      postId={postId}
-      onCloseBS={() => CLOSE_BS()}
-      onShowConfirm={showConfirm}
-      onUpdatePosts={null}
-    />
-  );
+  const sheetContent = <PostInfoSheet onShowConfirm={showConfirm} />;
   const { BOTTOM_SHEET, SHOW_BS, CLOSE_BS } = useSheet(
     ["10%", "30%"],
     sheetContent
@@ -137,8 +129,6 @@ export const FeedScreen = () => {
             <FeedLabelButton
               onPress={() => {
                 dispatchPosts({ type: "FETCH_ALL" });
-                setPosts([]);
-                fetchAllPosts();
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
               }}
               isActive={postsState.activeAll}
@@ -147,8 +137,6 @@ export const FeedScreen = () => {
             <FeedLabelButton
               onPress={() => {
                 dispatchPosts({ type: "FETCH_FOLLOWINGS" });
-                setPosts([]);
-                //fetchFollowings();
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
               }}
               isActive={postsState.activeFollowings}

@@ -49,12 +49,7 @@ export const MessagesScreen = () => {
   });
 
   const renderMessages = useCallback(
-    ({ item }) => (
-      <MessageListItem
-        onPress={() => navigation.navigate("MessageItem", { item })}
-        conversation={item}
-      />
-    ),
+    ({ item }) => <MessageListItem conversation={item} />,
     []
   );
 

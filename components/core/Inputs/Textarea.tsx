@@ -7,13 +7,13 @@ const { grey0 } = theme.lightColors;
 export const Textarea = ({
   value,
   onSetValue,
-  placeholder,
+  placeholder = "",
   lines,
   maxLength,
   showLength = true,
-  autoFocus,
-  sx,
-  label,
+  autoFocus = false,
+  sx = {},
+  label = "",
 }) => {
   return (
     <View style={{ ...styles.container, ...sx }}>

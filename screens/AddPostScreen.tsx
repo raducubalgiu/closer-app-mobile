@@ -13,7 +13,8 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import theme from "../assets/styles/theme";
 import * as MediaLibrary from "expo-media-library";
 import { useTranslation } from "react-i18next";
-import { PhotoLibraryButton, PresetListItem } from "../components/customized";
+import { PresetListItem } from "../components/customized";
+import { PhotoLibraryButton } from "../components/customized/Buttons/PhotoLibraryButton";
 
 const { height, width } = Dimensions.get("window");
 const { primary } = theme.lightColors;

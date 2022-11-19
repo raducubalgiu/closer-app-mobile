@@ -4,7 +4,6 @@ import {
   TouchableOpacity,
   Text,
 } from "react-native";
-import React from "react";
 import theme from "../../../assets/styles/theme";
 
 const { black, primary } = theme.lightColors;
@@ -16,9 +15,9 @@ export const MainButton = ({
   variant,
   fullWidth,
   radius,
-  sx,
+  sx = {},
   btnText,
-  bgColor,
+  bgColor = "white",
   txtColor,
   ...props
 }) => {

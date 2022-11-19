@@ -7,7 +7,7 @@ import { InfoIconButton } from "../../IconButtons/InfoIconButton";
 const { grey0 } = theme.lightColors;
 
 export const HeaderMessageItem = ({
-  _id,
+  userId,
   avatar,
   name,
   username,
@@ -34,7 +34,7 @@ export const HeaderMessageItem = ({
       <InfoIconButton
         onPress={() =>
           navigation.navigate("MessageSettings", {
-            _id,
+            _id: userId,
             avatar,
             name,
             username,

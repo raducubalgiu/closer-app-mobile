@@ -76,8 +76,8 @@ export const SearchServicesScreen = ({ route }) => {
 
   const renderSuggested = useCallback(({ item }) => {
     <Pressable onPress={() => goToFilters(item)} style={styles.item}>
-      <Text style={styles.serviceItem}>{item.name}</Text>
-      <Text style={styles.categoryItem}>{item.category.name}</Text>
+      <Text>{item.name}</Text>
+      <Text>{item.category.name}</Text>
     </Pressable>;
   }, []);
 

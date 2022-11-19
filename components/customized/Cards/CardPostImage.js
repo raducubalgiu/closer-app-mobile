@@ -6,16 +6,17 @@ import theme from "../../../assets/styles/theme";
 const { width, height } = Dimensions.get("window");
 
 export const CardPostImage = ({
-  index,
+  index = 0,
   image,
-  bookable,
-  fixed,
-  postType,
+  bookable = false,
+  fixed = false,
+  postType = "photo",
   onPress,
+  col = 3,
 }) => {
   let borderBox;
 
-  if (index % 3 !== 0) {
+  if (index % col !== 0) {
     borderBox = { paddingLeft: 1.25 };
   } else {
     borderBox = { paddingLeft: 0 };
@@ -23,8 +24,8 @@ export const CardPostImage = ({
 
   const imageBox = StyleSheet.create({
     box: {
-      width: width / 3,
-      height: width / 3,
+      width: width / col,
+      height: width / col,
       marginBottom: 1.25,
       backgroundColor: "#f1f1f1",
     },

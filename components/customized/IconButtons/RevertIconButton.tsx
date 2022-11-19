@@ -1,6 +1,6 @@
 import { IconButton } from "../../core";
 
-export const RevertIconButton = ({ size = 30, sx, onPress }) => {
+export const RevertIconButton = ({ size = 30, sx = {}, onPress }) => {
   return (
     <IconButton
       iconName="refresh-ccw"

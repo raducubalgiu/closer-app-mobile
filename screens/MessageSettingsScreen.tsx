@@ -84,7 +84,6 @@ export const MessageSettingsScreen = ({ route }) => {
         <SettingListItem
           defaultValue={false}
           title={t("block")}
-          sxTitle={{ color: error }}
           onValueChange={() => {}}
         />
         <Pressable onPress={() => setModal(true)}>

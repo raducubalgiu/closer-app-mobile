@@ -6,9 +6,9 @@ import theme from "../../../assets/styles/theme";
 const { grey0, black } = theme.lightColors;
 
 export const SearchBarInput = ({
-  cancelButtonTitle,
-  height,
-  showCancel,
+  cancelButtonTitle = "",
+  height = 65,
+  showCancel = true,
   ...props
 }) => {
   let cancel = !showCancel
@@ -27,7 +27,7 @@ export const SearchBarInput = ({
       platform={Platform.OS === "ios" ? "ios" : "android"}
       containerStyle={{
         ...styles.containerStyle,
-        height: height ? height : 65,
+        height,
       }}
       inputContainerStyle={styles.inputContainerStyle}
       inputStyle={styles.inputStyle}

@@ -29,7 +29,7 @@ export const PhotoLibraryScreen = ({ route }) => {
             album: getPhotos,
             mediaType: ["photo"],
             first: 20,
-            after: endCursor,
+            //after: endCursor,
           });
         setPhotos(assets);
       };
@@ -42,10 +42,8 @@ export const PhotoLibraryScreen = ({ route }) => {
     }, [album])
   );
 
-  const renderPhoto = useCallback(({ item, index }) => {
-    console.log("ITEM!!!", item);
-
-    return (
+  const renderPhoto = useCallback(
+    ({ item, index }) => (
       <CardPostImage
         index={index}
         image={item.uri}
@@ -55,8 +53,9 @@ export const PhotoLibraryScreen = ({ route }) => {
           navigation.navigate(nav, { photo: item });
         }}
       />
-    );
-  }, []);
+    ),
+    []
+  );
 
   return (
     <View style={styles.screen}>

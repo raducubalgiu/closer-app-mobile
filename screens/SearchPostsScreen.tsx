@@ -65,7 +65,7 @@ export const SearchPostsScreen = () => {
   });
 
   const updateSearch = useCallback(
-    (search) => {
+    (search: string) => {
       const controller = new AbortController();
       setSearch(search);
 
@@ -114,7 +114,6 @@ export const SearchPostsScreen = () => {
   const renderRecent = useCallback(
     ({ item }) => (
       <RecentSearchListItem
-        onDelete={() => deleteSearch(item._id)}
         onPress={() => navigation.navigate("SearchAll", { search: item.word })}
         word={item?.word}
       />

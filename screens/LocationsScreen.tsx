@@ -1,7 +1,6 @@
 import { SafeAreaView, StyleSheet, View, FlatList, Text } from "react-native";
 import React, { useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { Spinner } from "../components/core";
 import {
   HeaderServices,
   CardLocation,
@@ -12,7 +11,7 @@ import {
   FilterRatingModal,
   NoFoundMessage,
 } from "../components/customized";
-import { useGet, useHttpGet } from "../hooks";
+import { useGet } from "../hooks";
 import theme from "../assets/styles/theme";
 
 const { black } = theme.lightColors;
@@ -43,7 +42,6 @@ export const LocationsScreen = ({ route }) => {
         location={item}
         service={service}
         option={option}
-        distance={item.distance}
         moreProducts={item.products.length > 1}
       />
     );

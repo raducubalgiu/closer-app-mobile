@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect } from "react";
 import theme from "../../../assets/styles/theme";
 
-export const Feedback = ({ feedback, setFeedback, duration }) => {
+export const Feedback = ({ feedback, setFeedback, duration = "SHORT" }) => {
   const msgDuration = duration === "LONG" ? 3000 : 1500;
 
   useEffect(() => {
