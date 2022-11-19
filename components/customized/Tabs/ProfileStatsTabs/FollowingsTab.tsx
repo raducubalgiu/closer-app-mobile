@@ -19,15 +19,12 @@ export const FollowingsTab = ({ userId }) => {
     isLoading,
     isFetching,
     refetch,
-    isPreviousData,
   } = useGetPaginate({
     model: "followings",
     uri: `/users/${userId}/followings`,
     limit: "20",
-    enabled: !isPreviousData && isFocused,
+    enabled: isFocused,
   });
-
-  console.log("DATA!!!", data);
 
   const renderPerson = useCallback(
     ({ item }) => <UserListItem user={item.user} isFollow={item.isFollow} />,

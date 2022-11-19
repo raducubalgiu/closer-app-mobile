@@ -11,20 +11,13 @@ export const PostsProfileTab = ({ userId }) => {
   const isFocused = useIsFocused();
   const { t } = useTranslation();
 
-  const {
-    data,
-    hasNextPage,
-    fetchNextPage,
-    isFetchingNextPage,
-    isLoading,
-    isPreviousData,
-    isFetching,
-  } = useGetPaginate({
-    model: "posts",
-    uri: `/users/${userId}/posts`,
-    limit: "12",
-    enabled: !isPreviousData && isFocused,
-  });
+  const { data, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
+    useGetPaginate({
+      model: "posts",
+      uri: `/users/${userId}/posts`,
+      limit: "12",
+      enabled: isFocused,
+    });
 
   const { pages } = data || {};
   const posts = pages?.map((page) => page.results).flat() || [];

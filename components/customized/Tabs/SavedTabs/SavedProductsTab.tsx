@@ -7,6 +7,7 @@ import { CardProduct } from "../../Cards/CardProduct";
 import { useGetPaginate, useRefreshByUser } from "../../../../hooks";
 import { useIsFocused } from "@react-navigation/native";
 import { FlashList } from "@shopify/flash-list";
+import { Product } from "../../../../models/product";
 
 export const SavedProductsTab = ({ user }) => {
   const { t } = useTranslation();
@@ -20,20 +21,26 @@ export const SavedProductsTab = ({ user }) => {
     isLoading,
     refetch,
     isFetching,
-    isPreviousData,
   } = useGetPaginate({
     model: "products",
     uri: `/users/${user?._id}/products/bookmarks`,
     limit: "10",
-    enabled: !isPreviousData && isFocused,
+    enabled: isFocused,
   });
 
   const renderProduct = useCallback(({ item }) => {
     const { product } = item;
-    return <CardProduct product={product} canBook={false} ownerInfo />;
+    return (
+      <CardProduct
+        product={product}
+        ownerInfo
+        onDeleteProduct={() => {}}
+        onEditProduct={() => {}}
+      />
+    );
   }, []);
 
-  const keyExtractor = useCallback((item) => item._id, []);
+  const keyExtractor = useCallback((item: Product) => item._id, []);
 
   const loadMore = () => {
     if (hasNextPage) {

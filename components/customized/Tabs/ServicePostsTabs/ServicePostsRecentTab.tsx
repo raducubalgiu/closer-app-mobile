@@ -17,13 +17,12 @@ export const ServicePostsRecentTab = ({ serviceId }) => {
     fetchNextPage,
     isFetchingNextPage,
     isLoading,
-    isPreviousData,
     isFetching,
   } = useGetPaginate({
     model: "servicePostsRecent",
     uri: `/services/${serviceId}/posts/recent`,
     limit: "15",
-    enabled: !isPreviousData && isFocused,
+    enabled: isFocused,
   });
 
   const renderPosts = useCallback(

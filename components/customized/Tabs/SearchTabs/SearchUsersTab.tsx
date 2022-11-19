@@ -15,7 +15,7 @@ export const SearchUsersTab = ({ search }) => {
   const { user } = useAuth();
   const isFocused = useIsFocused();
 
-  const fetchData = async (page, search) => {
+  const fetchData = async (page: number, search: string) => {
     const { data } = await axios.get(
       `${process.env.BASE_ENDPOINT}/users/search?search=${search}&page=${page}&limit=10`,
       { headers: { Authorization: `Bearer ${user?.token}` } }
@@ -29,7 +29,6 @@ export const SearchUsersTab = ({ search }) => {
     fetchNextPage,
     isFetchingNextPage,
     isLoading,
-    isPreviousData,
     isFetching,
   } = useInfiniteQuery(
     ["searchUsers", search],
@@ -40,7 +39,7 @@ export const SearchUsersTab = ({ search }) => {
           return lastPage.next;
         }
       },
-      enabled: !isPreviousData && isFocused,
+      enabled: isFocused,
     }
   );
 

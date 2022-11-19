@@ -26,7 +26,7 @@ export const SearchPopularTab = ({ search }) => {
     uri: `/hashtags/search?search=${search}&page=1&limit=3`,
   });
 
-  const fetchData = async (page, search) => {
+  const fetchData = async (page: number, search: string) => {
     const { data } = await axios.get(
       `${process.env.BASE_ENDPOINT}/posts/get-all-posts?search=${search}&page=${page}&limit=12`,
       { headers: { Authorization: `Bearer ${user?.token}` } }
@@ -39,9 +39,6 @@ export const SearchPopularTab = ({ search }) => {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-    isLoading,
-    isFetching,
-    isPreviousData,
   } = useInfiniteQuery(
     ["popularPosts", search],
     ({ pageParam = 1 }) => fetchData(pageParam, search),
@@ -51,7 +48,7 @@ export const SearchPopularTab = ({ search }) => {
           return lastPage.next;
         }
       },
-      enabled: !isPreviousData && isFocused,
+      enabled: isFocused,
     }
   );
 

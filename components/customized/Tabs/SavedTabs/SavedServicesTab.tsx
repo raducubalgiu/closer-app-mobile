@@ -6,6 +6,7 @@ import { Spinner } from "../../../core";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { ServiceListItem } from "../../ListItems/ServiceListItem";
 import { useGetPaginate } from "../../../../hooks";
+import { Service } from "../../../../models/service";
 
 export const SavedServicesTab = ({ user }) => {
   const navigation = useNavigation();
@@ -19,12 +20,11 @@ export const SavedServicesTab = ({ user }) => {
     isFetchingNextPage,
     isLoading,
     isFetching,
-    isPreviousData,
   } = useGetPaginate({
     model: "services",
     uri: `/users/${user?._id}/services/bookmarks`,
     limit: "25",
-    enabled: !isPreviousData && isFocused,
+    enabled: isFocused,
   });
 
   const renderService = useCallback(({ item }) => {
@@ -40,7 +40,7 @@ export const SavedServicesTab = ({ user }) => {
     );
   }, []);
 
-  const keyExtractor = useCallback((item) => item?._id, []);
+  const keyExtractor = useCallback((item: Service) => item?._id, []);
 
   const loadMore = () => {
     if (hasNextPage) {

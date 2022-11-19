@@ -18,13 +18,12 @@ export const ServicePostsPopularTab = ({ serviceId }) => {
     fetchNextPage,
     isFetchingNextPage,
     isLoading,
-    isPreviousData,
     isFetching,
   } = useGetPaginate({
     model: "servicePostsPopular",
     uri: `/services/${serviceId}/posts/popular`,
     limit: "15",
-    enabled: !isPreviousData && isFocused,
+    enabled: isFocused,
   });
 
   const renderPosts = useCallback(

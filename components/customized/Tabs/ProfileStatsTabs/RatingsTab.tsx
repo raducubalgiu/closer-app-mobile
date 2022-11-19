@@ -38,14 +38,13 @@ export const RatingsTab = ({ userId }) => {
     fetchNextPage,
     isFetchingNextPage,
     isLoading,
-    isPreviousData,
     isFetching,
     refetch,
   } = useGetPaginate({
     model: "ratings",
     uri: `/users/${userId}/reviews`,
     limit: "20",
-    enabled: !isPreviousData && isFocused,
+    enabled: isFocused,
   });
 
   const renderRatings = useCallback(({ item }) => {

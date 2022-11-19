@@ -6,6 +6,7 @@ import { useGetPaginate } from "../../../../hooks";
 import { Spinner } from "../../../core";
 import { HashtagListItem } from "../../ListItems/HashtagListItem";
 import { FlashList } from "@shopify/flash-list";
+import { Hashtag } from "../../../../models/hashtag";
 
 export const SavedHashtagsTab = ({ user }) => {
   const { t } = useTranslation();
@@ -18,13 +19,12 @@ export const SavedHashtagsTab = ({ user }) => {
     fetchNextPage,
     isFetchingNextPage,
     isLoading,
-    isPreviousData,
     isFetching,
   } = useGetPaginate({
     model: "hashtags",
     uri: `/users/${user?._id}/hashtags/bookmarks`,
     limit: "25",
-    enabled: !isPreviousData && isFocused,
+    enabled: isFocused,
   });
 
   const renderHashtags = useCallback(({ item }) => {
@@ -34,12 +34,12 @@ export const SavedHashtagsTab = ({ user }) => {
       <HashtagListItem
         name={name}
         postsCount={postsCount}
-        onPress={() => navigation.navigate("Hashtag", { name: name })}
+        onPress={() => navigation.navigate("Hashtag", { name })}
       />
     );
   }, []);
 
-  const keyExtractor = useCallback((item) => item?._id, []);
+  const keyExtractor = useCallback((item: Hashtag) => item?._id, []);
 
   const loadMore = () => {
     if (hasNextPage) {

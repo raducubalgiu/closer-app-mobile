@@ -30,7 +30,6 @@ export const SearchHashtagsTab = ({ search }) => {
     fetchNextPage,
     isFetchingNextPage,
     isLoading,
-    isPreviousData,
     isFetching,
   } = useInfiniteQuery(
     ["searchHashtags", search],
@@ -41,7 +40,7 @@ export const SearchHashtagsTab = ({ search }) => {
           return lastPage.next;
         }
       },
-      enabled: !isPreviousData && isFocused,
+      enabled: isFocused,
     }
   );
 

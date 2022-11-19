@@ -11,7 +11,6 @@ import { useNavigation, useScrollToTop } from "@react-navigation/native";
 import { Divider, Badge } from "@rneui/themed";
 import theme from "../assets/styles/theme";
 import {
-  usePosts,
   useSheet,
   useAuth,
   useGetPaginate,
@@ -36,7 +35,6 @@ export const FeedScreen = () => {
   const { user } = useAuth();
   const [postId, setPostId] = useState(null);
   const [visible, setVisible] = useState(false);
-  const { postsState, dispatchPosts } = usePosts();
   const navigation = useNavigation();
   const ref = useRef(null);
   useScrollToTop(ref);
@@ -128,26 +126,23 @@ export const FeedScreen = () => {
             <Divider orientation="vertical" style={{ marginHorizontal: 15 }} />
             <FeedLabelButton
               onPress={() => {
-                dispatchPosts({ type: "FETCH_ALL" });
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
               }}
-              isActive={postsState.activeAll}
+              isActive={true}
               text={t("explore")}
             />
             <FeedLabelButton
               onPress={() => {
-                dispatchPosts({ type: "FETCH_FOLLOWINGS" });
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
               }}
-              isActive={postsState.activeFollowings}
+              isActive={false}
               text={t("following")}
             />
             <FeedLabelButton
               onPress={() => {
-                dispatchPosts({ type: "FETCH_LAST_MINUTE" });
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
               }}
-              isActive={postsState.activeLastMinute}
+              isActive={false}
               text={t("lastMinuteOffers")}
             />
           </Stack>

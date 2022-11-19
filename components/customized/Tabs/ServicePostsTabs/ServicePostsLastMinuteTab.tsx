@@ -18,13 +18,12 @@ export const ServicePostsLastMinuteTab = ({ serviceId }) => {
     fetchNextPage,
     isFetchingNextPage,
     isLoading,
-    isPreviousData,
     isFetching,
   } = useGetPaginate({
     model: "servicePostsLastMinute",
     uri: `/services/${serviceId}/posts/last-minute`,
     limit: "15",
-    enabled: !isPreviousData && isFocused,
+    enabled: isFocused,
   });
 
   const renderPosts = useCallback(

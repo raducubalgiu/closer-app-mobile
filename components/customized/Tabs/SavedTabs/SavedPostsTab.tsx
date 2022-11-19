@@ -6,6 +6,7 @@ import { useGetPaginate } from "../../../../hooks";
 import { Spinner } from "../../../core";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { FlashList } from "@shopify/flash-list";
+import { Post } from "../../../../models/post";
 
 export const SavedPostsTab = ({ user }) => {
   const navigation = useNavigation();
@@ -19,12 +20,11 @@ export const SavedPostsTab = ({ user }) => {
     isFetchingNextPage,
     isLoading,
     isFetching,
-    isPreviousData,
   } = useGetPaginate({
     model: "posts",
     uri: `/users/${user?._id}/posts/bookmarks`,
     limit: "21",
-    enabled: !isPreviousData && isFocused,
+    enabled: isFocused,
   });
 
   const renderPosts = useCallback(({ item, index }) => {
@@ -49,7 +49,7 @@ export const SavedPostsTab = ({ user }) => {
     );
   }, []);
 
-  const keyExtractor = useCallback((item) => item._id, []);
+  const keyExtractor = useCallback((item: Post) => item._id, []);
 
   const loadMore = () => {
     if (hasNextPage) {

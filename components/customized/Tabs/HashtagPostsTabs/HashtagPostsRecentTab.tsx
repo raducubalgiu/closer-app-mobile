@@ -19,12 +19,11 @@ export const HashtagPostsRecentTab = ({ name }) => {
     isFetchingNextPage,
     isLoading,
     isFetching,
-    isPreviousData,
   } = useGetPaginate({
     model: "hRecent",
     uri: `/hashtags/${name}/posts/recent`,
     limit: "15",
-    enabled: !isPreviousData && isFocused,
+    enabled: isFocused,
   });
 
   const renderPosts = useCallback(

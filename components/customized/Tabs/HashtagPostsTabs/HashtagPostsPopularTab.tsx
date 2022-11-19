@@ -19,12 +19,11 @@ export const HashtagPostsPopularTab = ({ name }) => {
     isFetchingNextPage,
     isLoading,
     isFetching,
-    isPreviousData,
   } = useGetPaginate({
     model: "hPopular",
     uri: `/hashtags/${name}/posts/popular`,
     limit: "15",
-    enabled: !isPreviousData && isFocused,
+    enabled: isFocused,
   });
 
   const renderPosts = useCallback(

@@ -18,13 +18,12 @@ export const HashtagPostsBookableTab = ({ name }) => {
     fetchNextPage,
     isFetchingNextPage,
     isLoading,
-    isPreviousData,
     isFetching,
   } = useGetPaginate({
     model: "hBookable",
     uri: `/hashtags/${name}/posts/bookable`,
     limit: "15",
-    enabled: !isPreviousData && isFocused,
+    enabled: isFocused,
   });
 
   const renderPosts = useCallback(
