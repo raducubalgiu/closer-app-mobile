@@ -1,4 +1,4 @@
-export const displayZero = (number) => {
+export const displayZero = (number: number) => {
   if (!number) {
     return 0;
   } else {
