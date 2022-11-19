@@ -1,0 +1,24 @@
+import { StyleSheet, Text, Pressable } from "react-native";
+import theme from "../../../assets/styles/theme";
+
+const { grey3 } = theme.lightColors;
+
+export const StatsButton = ({ onPress, statsNo = 0, label }) => {
+  return (
+    <Pressable style={styles.container} onPress={onPress}>
+      <Text style={styles.statsNumber}>{statsNo}</Text>
+      <Text style={styles.statsText}>{label}</Text>
+    </Pressable>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: { alignItems: "center", minWidth: 75 },
+  statsText: {
+    color: grey3,
+    fontSize: 13,
+    marginTop: 5,
+    fontWeight: "500",
+  },
+  statsNumber: { fontSize: 16, fontWeight: "700" },
+});

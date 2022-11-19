@@ -3,13 +3,8 @@ import { useNavigation } from "@react-navigation/native";
 import { MAIN_ROLE, SECOND_ROLE, THIRD_ROLE } from "@env";
 import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";
-import {
-  CustomAvatar,
-  Stack,
-  StatsButton,
-  IconStar,
-  Protected,
-} from "../../core";
+import { CustomAvatar, Stack, IconStar, Protected } from "../../core";
+import { StatsButton } from "../Buttons/StatsButton";
 import { useAuth } from "../../../hooks";
 import { displayDash } from "../../../utils";
 
@@ -91,19 +86,19 @@ export const ProfileOverview = ({ name, username, avatar, children, user }) => {
       <Stack direction="row" justify="between" sx={styles.statsContainer}>
         <StatsButton
           onPress={role !== THIRD_ROLE ? goToReviews : null}
-          labelStats={role !== THIRD_ROLE ? t("reviews") : t("posts")}
+          label={role !== THIRD_ROLE ? t("reviews") : t("posts")}
           statsNo={displayDash(
             role !== THIRD_ROLE ? ratingsQuantity : postsCount
           )}
         />
         <StatsButton
           onPress={goToFollowers}
-          labelStats={t("followers")}
+          label={t("followers")}
           statsNo={displayDash(followersCount)}
         />
         <StatsButton
           onPress={goToFollowings}
-          labelStats={t("following")}
+          label={t("following")}
           statsNo={displayDash(followingsCount)}
         />
       </Stack>
