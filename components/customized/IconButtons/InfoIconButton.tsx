@@ -3,15 +3,20 @@ import theme from "../../../assets/styles/theme";
 
 const { black } = theme.lightColors;
 
-export const InfoIconButton = ({ size, color, sx, onPress }) => {
+export const InfoIconButton = ({
+  size = 25,
+  color = black,
+  sx = {},
+  onPress,
+}) => {
   return (
     <IconButton
       iconName="info"
       iconType="feather"
-      size={size ? size : 25}
-      color={color ? color : black}
+      size={size}
+      color={color}
       onPress={onPress}
-      sx={{ ...sx }}
+      sx={sx}
     />
   );
 };

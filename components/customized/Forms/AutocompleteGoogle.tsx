@@ -14,7 +14,7 @@ export const AutocompleteGoogle = ({ onSetLocation }) => {
           color: "#1faadb",
         },
         listView: {
-          borderBottomColor: 1,
+          borderBottomWidth: 1,
           borderBottomColor: "#ddd",
         },
       }}
@@ -22,10 +22,9 @@ export const AutocompleteGoogle = ({ onSetLocation }) => {
       placeholder="Cauta-ti afacerea sau adresa"
       nearbyPlacesAPI="GooglePlacesSearch"
       debounce={400}
-      returnKeyType={"search"}
+      returnKeyType="search"
       enablePoweredByContainer={false}
       onPress={(data, details = null) => {
-        console.log(details);
         onSetLocation({
           street: details?.address_components[1]?.long_name,
           number: details?.address_components[0]?.long_name,

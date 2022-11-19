@@ -186,11 +186,11 @@ export const usePatch = ({ uri, onSuccess }) => {
   return mutations;
 };
 
-export const usePost = ({ uri, onSuccess, config = {} }) => {
+export function usePost<T>({ uri, onSuccess = undefined, config = {} }) {
   const { user } = useAuth();
 
   const mutations = useMutation(
-    (body) =>
+    (body: T) =>
       axios.post(`${BASE_ENDPOINT}${uri}`, body, {
         headers: { Authorization: `Bearer ${user?.token}` },
       }),
@@ -202,9 +202,9 @@ export const usePost = ({ uri, onSuccess, config = {} }) => {
   );
 
   return mutations;
-};
+}
 
-export const useDelete = ({ uri, onSuccess }) => {
+export const useDelete = ({ uri, onSuccess = undefined }) => {
   const { user } = useAuth();
 
   const mutations = useMutation(
@@ -224,9 +224,9 @@ export const useDelete = ({ uri, onSuccess }) => {
 export const useGet = ({
   model,
   uri,
-  onSuccess,
+  onSuccess = undefined,
   enabled = true,
-  enableId,
+  enableId = "",
   others = {},
 }) => {
   const { user } = useAuth();

@@ -12,7 +12,10 @@ export const HeaderSearchAll = ({ search }) => {
   return (
     <Stack direction="row" justify="start" sx={styles.container}>
       <IconBackButton sx={{ marginRight: 10 }} />
-      <Pressable sx={styles.fakeSearchbar} onPress={() => navigation.goBack()}>
+      <Pressable
+        style={styles.fakeSearchbar}
+        onPress={() => navigation.goBack()}
+      >
         <Stack direction="row">
           <Stack direction="row">
             <Icon name="search" type="ionicon" color={black} size={20} />

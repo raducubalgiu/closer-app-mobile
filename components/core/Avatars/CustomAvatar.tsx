@@ -6,14 +6,14 @@ import theme from "../../../assets/styles/theme";
 const { primary } = theme.lightColors;
 
 export const CustomAvatar = ({
-  avatar,
-  size,
-  iconSize,
-  withBadge,
-  badgeContainer,
-  badgeDetails,
-  sx,
-  badgeSx,
+  avatar = [],
+  size = 55,
+  iconSize = 30,
+  withBadge = false,
+  badgeContainer = {},
+  badgeDetails = {},
+  sx = {},
+  badgeSx = {},
 }) => {
   const hasAvatar = (av) => {
     if (av === undefined || av.length === 0) {
@@ -27,7 +27,7 @@ export const CustomAvatar = ({
   if (hasAvatar(avatar)) {
     showAvatar = (
       <Avatar
-        size={size ? size : 55}
+        size={size}
         rounded
         source={avatar && { uri: `${avatar[0]?.url}` }}
         containerStyle={{ ...sx }}
@@ -36,12 +36,12 @@ export const CustomAvatar = ({
   } else {
     showAvatar = (
       <Avatar
-        size={size ? size : 55}
+        size={size}
         rounded
         icon={{
           name: "user",
           type: "font-awesome",
-          size: iconSize ? iconSize : 30,
+          size: iconSize,
         }}
         containerStyle={{
           backgroundColor: "#ccc",
@@ -58,7 +58,7 @@ export const CustomAvatar = ({
         <Badge
           containerStyle={{ ...styles.badgeContainer, ...badgeContainer }}
           badgeStyle={{ ...styles.badge, ...badgeSx }}
-          value={<Icon {...badgeDetails} color="white" />}
+          value={<Icon name={""} {...badgeDetails} color="white" />}
         />
       )}
     </View>

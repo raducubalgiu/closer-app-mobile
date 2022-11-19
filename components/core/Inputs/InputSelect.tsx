@@ -5,7 +5,7 @@ import theme from "../../../assets/styles/theme";
 
 const { black } = theme.lightColors;
 
-export const InputSelect = ({ value, onValueChange, items, ...props }) => {
+export const InputSelect = ({ value, onValueChange, items = [], ...props }) => {
   const placeholder = {
     label: props.placeholder,
     value: null,
@@ -20,16 +20,12 @@ export const InputSelect = ({ value, onValueChange, items, ...props }) => {
       style={{ ...styles }}
       doneText="Gata"
       value={value}
-      items={
-        items
-          ? items?.map((item) => {
-              return {
-                label: item?.name,
-                value: item?._id,
-              };
-            })
-          : []
-      }
+      items={items?.map((item) => {
+        return {
+          label: item?.name,
+          value: item?._id,
+        };
+      })}
     />
   );
 };

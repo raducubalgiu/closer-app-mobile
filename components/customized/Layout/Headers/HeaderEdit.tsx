@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import theme from "../../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 
-export const HeaderEdit = ({ onSave, title, disabled }) => {
+export const HeaderEdit = ({ onSave, title, disabled = false }) => {
   const navigation = useNavigation();
   const { t } = useTranslation();
 

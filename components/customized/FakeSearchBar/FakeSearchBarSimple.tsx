@@ -3,12 +3,9 @@ import { Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 import { Stack } from "../../core";
 
-const FakeSearchBarSimple = (props) => {
+const FakeSearchBarSimple = ({ onPress, sx = {} }) => {
   return (
-    <TouchableOpacity
-      style={{ ...styles.container, ...props.sx }}
-      onPress={props.onPress}
-    >
+    <TouchableOpacity style={{ ...styles.container, ...sx }} onPress={onPress}>
       <Stack direction="row">
         <Stack direction="row">
           <Icon

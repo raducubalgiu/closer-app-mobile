@@ -19,7 +19,7 @@ export const ImageSlider = ({
   withBack,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const flatListRef = useRef();
+  const ref = useRef<any>();
 
   const onViewRef = useRef(({ changed }) => {
     if (changed[0].isViewable) {
@@ -29,10 +29,7 @@ export const ImageSlider = ({
 
   const renderImages = ({ item }) => (
     <TouchableWithoutFeedback>
-      <Image
-        source={{ uri: item.url }}
-        containerStyle={{ height, width, resizeMode: "cover" }}
-      />
+      <Image source={{ uri: item.url }} containerStyle={{ height, width }} />
     </TouchableWithoutFeedback>
   );
 
@@ -46,15 +43,11 @@ export const ImageSlider = ({
         showsHorizontalScrollIndicator={false}
         pagingEnabled={true}
         bounces={false}
-        ref={(ref) => {
-          flatListRef.current = ref;
-        }}
+        ref={(rf) => (ref.current = rf)}
         viewabilityConfig={viewConfigRef}
         onViewableItemsChanged={onViewRef.current}
       />
-      {withBack && (
-        <IconBackButton sx={styles.backBtn} withBackground size={18} />
-      )}
+      {withBack && <IconBackButton sx={styles.backBtn} />}
       {withCounter && (
         <View style={styles.dotsView}>
           <Text style={styles.counter}>

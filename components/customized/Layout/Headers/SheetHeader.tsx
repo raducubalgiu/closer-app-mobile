@@ -1,12 +1,11 @@
 import { StyleSheet, Text } from "react-native";
-import React from "react";
 import { Icon } from "@rneui/themed";
 import { IconBackButton, Stack } from "../../../core";
 import theme from "../../../../assets/styles/theme";
 
 const { grey0 } = theme.lightColors;
 
-export const SheetHeader = ({ title, description, sx }) => {
+export const SheetHeader = ({ title, description, sx = {} }) => {
   return (
     <Stack direction="row" sx={{ ...styles.sheetOverview, ...sx }}>
       <IconBackButton size={20} />

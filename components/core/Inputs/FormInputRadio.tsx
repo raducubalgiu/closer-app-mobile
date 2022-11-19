@@ -1,6 +1,6 @@
 import { StyleSheet, Text } from "react-native";
-import { Stack } from "../Stack/Stack";
 import { CheckBox } from "@rneui/themed";
+import { Stack } from "../Stack/Stack";
 import theme from "../../../assets/styles/theme";
 
 const { black } = theme.lightColors;

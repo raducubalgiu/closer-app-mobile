@@ -16,7 +16,6 @@ export { LikeButton } from "./Buttons/LikeButton";
 export { BookmarkIconButton } from "./Buttons/BookmarkIconButton";
 export { BookmarkButton } from "./Buttons/BookmarkButton";
 export { FollowButton } from "./Buttons/FollowButton";
-export { PhotoLibraryButton } from "./Buttons/PhotoLibraryButton";
 export { StatsButton } from "./Buttons/StatsButton";
 
 export { TopTabContainer } from "./Tabs/TopTabContainer/TopTabContainer";
@@ -69,56 +68,56 @@ export { CardServiceOverview } from "./Cards/CardServiceOverview";
 export { CardMessageUser } from "./Cards/CardMessageUser";
 export { CardPostDescription } from "./Cards/CardPostDescription";
 
-export { HeaderServices } from "../customized/Layout/Headers/HeaderServices";
-export { HeaderEdit } from "../customized/Layout/Headers/HeaderEdit";
+export { HeaderServices } from "./Layout/Headers/HeaderServices";
+export { HeaderEdit } from "./Layout/Headers/HeaderEdit";
 
 export { ServicesList } from "./Lists/ServicesList";
 export { ProfileMenuList } from "./Lists/ProfileMenuList";
 export { SuggestedUsersList } from "./Lists/SuggestedUsersList";
 
 export { MessageListItem } from "./ListItems/MessageListItem";
-export { HashtagListItem } from "../customized/ListItems/HashtagListItem";
-export { UserListItem } from "../customized/ListItems/UserListItem";
-export { UserListItemSimple } from "../customized/ListItems/UserListItemSimple";
-export { CommentListItem } from "../customized/ListItems/CommentListItem";
-export { RelatedCommentsList } from "../customized/ListItems/RelatedCommentsList";
-export { RecentSearchListItem } from "../customized/ListItems/RecentSearchListItem";
-export { ServiceListItem } from "../customized/ListItems/ServiceListItem";
-export { MessReceivedItem } from "../customized/ListItems/MessReceivedItem";
-export { MessSentItem } from "../customized/ListItems/MessSentItem";
-export { MessDateItem } from "../customized/ListItems/MessDateItem";
-export { SettingListItem } from "../customized/ListItems/SettingListItem";
-export { AlbumListItem } from "../customized/ListItems/AlbumListItem";
-export { PresetListItem } from "../customized/ListItems/PresetListItem";
+export { HashtagListItem } from "./ListItems/HashtagListItem";
+export { UserListItem } from "./ListItems/UserListItem";
+export { UserListItemSimple } from "./ListItems/UserListItemSimple";
+export { CommentListItem } from "./ListItems/CommentListItem";
+export { RelatedCommentsList } from "./ListItems/RelatedCommentsList";
+export { RecentSearchListItem } from "./ListItems/RecentSearchListItem";
+export { ServiceListItem } from "./ListItems/ServiceListItem";
+export { MessReceivedItem } from "./ListItems/MessReceivedItem";
+export { MessSentItem } from "./ListItems/MessSentItem";
+export { MessDateItem } from "./ListItems/MessDateItem";
+export { SettingListItem } from "./ListItems/SettingListItem";
+export { AlbumListItem } from "./ListItems/AlbumListItem";
+export { PresetListItem } from "./ListItems/PresetListItem";
 
 export { VideoItem } from "./VideoItem/VideoItem";
 
 export { NoFoundMessage } from "./NotFoundContent/NoFoundMessage";
 
-export { Map } from "../customized/Map/Map";
-export { MapStatic } from "../customized/Map/MapStatic";
+export { Map } from "./Map/Map";
+export { MapStatic } from "./Map/MapStatic";
 
-export { LoginRegisterForm } from "../customized/Forms/LoginRegisterForm";
-export { AuthProviders } from "../customized/Forms/AuthProviders";
+export { LoginRegisterForm } from "./Forms/LoginRegisterForm";
+export { AuthProviders } from "./Forms/AuthProviders";
 
-export { BusinessScheduleModal } from "../customized/Modals/BusinessScheduleModal";
-export { FilterPriceModal } from "../customized/Modals/FilterPriceModal";
-export { FilterDistanceModal } from "../customized/Modals/FilterDistanceModal";
-export { FilterRatingModal } from "../customized/Modals/FilterRatingModal";
+export { BusinessScheduleModal } from "./Modals/BusinessScheduleModal";
+export { FilterPriceModal } from "./Modals/FilterPriceModal";
+export { FilterDistanceModal } from "./Modals/FilterDistanceModal";
+export { FilterRatingModal } from "./Modals/FilterRatingModal";
 
-export { EditProfileSheet } from "../customized/Sheets/EditProfileSheet";
-export { DashboardInfoSheet } from "../customized/Sheets/DashboardInfoSheet";
-export { DashboardCalendarSheet } from "../customized/Sheets/DashboardCalendarSheet";
-export { PostInfoSheet } from "../customized/Sheets/PostInfoSheet";
+export { EditProfileSheet } from "./Sheets/EditProfileSheet";
+export { DashboardInfoSheet } from "./Sheets/DashboardInfoSheet";
+export { DashboardCalendarSheet } from "./Sheets/DashboardCalendarSheet";
+export { PostInfoSheet } from "./Sheets/PostInfoSheet";
 export { SheetService } from "./Sheets/SheetService";
 export { FollowUserSheet } from "./Sheets/FollowUserSheet";
 
-export { FiltersContainer } from "../customized/Containers/FiltersContainer";
+export { FiltersContainer } from "./Containers/FiltersContainer";
 
-export { DisplayText } from "../customized/DisplayText/DisplayText";
+export { DisplayText } from "./DisplayText/DisplayText";
 
-export { CloseIconButton } from "../customized/IconButtons/CloseIconButton";
-export { DownloadIconButton } from "../customized/IconButtons/DownloadIconButton";
-export { PhotoIconButton } from "../customized/IconButtons/PhotoIconButton";
-export { RevertIconButton } from "../customized/IconButtons/RevertIconButton";
-export { InfoIconButton } from "../customized/IconButtons/InfoIconButton";
+export { CloseIconButton } from "./IconButtons/CloseIconButton";
+export { DownloadIconButton } from "./IconButtons/DownloadIconButton";
+export { PhotoIconButton } from "./IconButtons/PhotoIconButton";
+export { RevertIconButton } from "./IconButtons/RevertIconButton";
+export { InfoIconButton } from "./IconButtons/InfoIconButton";

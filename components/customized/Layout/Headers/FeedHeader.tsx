@@ -3,7 +3,7 @@ import FakeSearchBarSimple from "../../FakeSearchBar/FakeSearchBarSimple";
 import { Icon, Divider } from "@rneui/themed";
 import { Stack } from "../../../core";
 import theme from "../../../../assets/styles/theme";
-import FeedLabelButton from "../../../core/Buttons/FeedLabelButton";
+import { FeedLabelButton } from "../../../core";
 import { useNavigation } from "@react-navigation/native";
 
 const FeedHeader = (props) => {
@@ -11,12 +11,7 @@ const FeedHeader = (props) => {
 
   return (
     <>
-      <Stack
-        direction="row"
-        sx={{
-          marginHorizontal: 15,
-        }}
-      >
+      <Stack direction="row" sx={{ marginHorizontal: 15 }}>
         <FakeSearchBarSimple onPress={() => {}} />
         <TouchableOpacity style={styles.bookmark}>
           <Icon

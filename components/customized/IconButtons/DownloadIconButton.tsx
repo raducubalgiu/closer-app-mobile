@@ -1,12 +1,12 @@
 import { IconButton } from "../../core";
 
-export const CloseIconButton = ({ sx, size, color, onPress }) => {
+export const DownloadIconButton = ({ sx = {}, size = 30, onPress }) => {
   return (
     <IconButton
-      iconName="x"
+      iconName="download"
       iconType="feather"
-      size={size ? size : 30}
-      color={color ? color : "white"}
+      size={size}
+      color="white"
       onPress={onPress}
       sx={{
         shadowColor: "#171717",

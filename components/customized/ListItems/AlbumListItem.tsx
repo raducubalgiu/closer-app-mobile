@@ -8,12 +8,7 @@ export const AlbumListItem = ({ uri, title, assetCount, onPress }) => {
   return (
     <Pressable onPress={onPress} style={styles.container}>
       <Stack direction="row" justify="start">
-        <Image
-          source={{
-            uri,
-          }}
-          style={{ width: 80, height: 80 }}
-        />
+        <Image source={{ uri }} style={{ width: 80, height: 80 }} />
         <Stack align="start" sx={styles.details}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.assetCount}>{assetCount}</Text>

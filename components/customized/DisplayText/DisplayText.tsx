@@ -8,7 +8,7 @@ const { grey0, black } = theme.lightColors;
 
 export const DisplayText = ({
   text = "",
-  maxWords,
+  maxWords = 200,
   username = null,
   checkmark = false,
   goToUserAllInfo,

@@ -3,9 +3,7 @@ import React from "react";
 import theme from "../../../../assets/styles/theme";
 import { Stack, ButtonFilter, IconBackButton } from "../../../core";
 import { Icon, Switch } from "@rneui/themed";
-import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { useDates } from "../../../../hooks";
 
 const { grey0, black } = theme.lightColors;
 
@@ -18,35 +16,18 @@ export const HeaderServices = ({
   onDisplayDistance,
   onDisplayRating,
 }) => {
-  const navigation = useNavigation();
   const { t } = useTranslation();
-  const { SHORT_DATE } = useDates();
-
-  const displayPeriod = (period) => {
-    switch (period.code) {
-      case 0:
-        return t("anytime");
-      case 1:
-        return t("now");
-      case 2:
-        return `${SHORT_DATE(period.startDate)} - ${SHORT_DATE(
-          period.endDate
-        )}`;
-      default:
-        return "-";
-    }
-  };
 
   const toggleSwitch = () => onToggleSwitch();
 
   return (
     <Stack>
       <Stack direction="row" sx={styles.header}>
-        <IconBackButton onPress={() => navigation.goBack()} />
+        <IconBackButton />
         <TouchableOpacity style={styles.search}>
           <Icon name="search" size={18} color={grey0} />
           <Text style={styles.service}>{serviceName},</Text>
-          <Text style={styles.searchText}>{displayPeriod(period)}</Text>
+          <Text style={styles.searchText}>Period</Text>
         </TouchableOpacity>
       </Stack>
       <ScrollView

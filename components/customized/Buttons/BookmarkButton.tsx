@@ -14,7 +14,11 @@ export const BookmarkButton = ({ type, typeId, status, onBookmarksCount }) => {
   const { t } = useTranslation();
   const endoints = `/users/${user?._id}/${type}/${typeId}/bookmarks`;
 
-  useGet({ uri: endoints, onSuccess: (res) => setBookmarked(res.data.status) });
+  useGet({
+    model: "checkBookmark",
+    uri: endoints,
+    onSuccess: (res) => setBookmarked(res.data.status),
+  });
   const { mutate: makePost } = usePost({ uri: endoints });
   const { mutate: makeDelete } = useDelete({ uri: endoints });
 

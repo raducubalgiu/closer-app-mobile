@@ -14,8 +14,8 @@ export const FormInputSelect = ({
   placeholder,
   rules = {},
   items = [],
-  disabled,
-  label,
+  disabled = false,
+  label = "",
 }) => {
   const { formState, control } = useFormContext();
   const { errors } = formState;

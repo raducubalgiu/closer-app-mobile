@@ -12,8 +12,8 @@ export const FormInput = ({
   name,
   placeholder,
   rules = {},
-  sx,
-  label,
+  sx = {},
+  label = "",
   ...props
 }) => {
   const { formState, control } = useFormContext();
@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
     width: "100%",
     marginBottom: 10,
     borderRadius: 10,
-    borderRadius: 5,
   },
   label: {
     textTransform: "uppercase",

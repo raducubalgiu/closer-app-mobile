@@ -1,10 +1,10 @@
 import { IconButton } from "../../core";
 
-export const PhotoIconButton = ({ sx, size, onPress }) => {
+export const PhotoIconButton = ({ sx, size = 30, onPress }) => {
   return (
     <IconButton
       iconName="photo-library"
-      size={size ? size : 30}
+      size={size}
       color="#ebebe0"
       sx={{ ...sx }}
       onPress={onPress}

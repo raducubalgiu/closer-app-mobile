@@ -14,7 +14,7 @@ const FakeSearchBar = ({ onGoAnytime, onGoNow }) => {
       <Pressable onPress={onGoAnytime} style={{ flex: 1 }}>
         <Stack direction="row" justify="start">
           <Icon name="search" type="feather" color={black} size={20} />
-          <Text style={styles.fakeInputText}>{t("searchService")}</Text>
+          <Text style={styles.fakeInput}>{t("searchService")}</Text>
         </Stack>
       </Pressable>
       <Divider orientation="vertical" style={{ marginRight: 15 }} />
@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "white",
     marginVertical: 10,
     backgroundColor: "#f1f1f1",
     paddingVertical: 6,
@@ -49,44 +48,8 @@ const styles = StyleSheet.create({
     borderRadius: 2.5,
   },
   fakeInput: {
-    flexDirection: "row",
-    alignItems: "center",
-    flex: 1,
-    paddingVertical: 2,
-    paddingHorizontal: 15,
-    backgroundColor: "#f1f1f1",
-    borderWidth: 2,
-    borderColor: "#f1f1f1",
-  },
-  fakeInputText: {
     marginLeft: 7.5,
     color: grey0,
-  },
-  datePicker: {
-    textAlign: "center",
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-  },
-  datePickerDetails: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "white",
-    paddingHorizontal: 5,
-    paddingVertical: 7,
-    backgroundColor: "#f1f1f1",
-    borderRadius: 10,
-  },
-  datePickerTitle: {
-    textAlign: "center",
-    marginLeft: 3,
-    marginRight: 10,
-    fontSize: 13,
-    color: black,
-  },
-  iconSearch: {
-    backgroundColor: "white",
-    padding: 7,
-    borderRadius: 100,
   },
   nowBtn: {
     flexDirection: "row",

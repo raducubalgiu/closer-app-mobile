@@ -31,7 +31,7 @@ export const SearchBarInput = ({
       }}
       inputContainerStyle={styles.inputContainerStyle}
       inputStyle={styles.inputStyle}
-      placeholderTextColor={styles.placeholderColor}
+      placeholderTextColor={grey0}
       searchIcon={styles.searchIcon}
       clearIcon={{ color: theme.lightColors.divider }}
     />
@@ -60,5 +60,4 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   searchIcon: { color: black },
-  placeholderColor: { color: grey0 },
 });
