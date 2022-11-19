@@ -5,12 +5,12 @@ import theme from "../../../assets/styles/theme";
 
 const { secondary } = theme.lightColors;
 
-export const Checkmark = ({ size, sx }) => {
+export const Checkmark = ({ size = 10, sx = {} }) => {
   return (
     <Icon
       name="check"
       type="entypo"
-      size={size ? size : 10}
+      size={size}
       color="white"
       style={{ ...styles.checkmark, ...sx }}
     />
