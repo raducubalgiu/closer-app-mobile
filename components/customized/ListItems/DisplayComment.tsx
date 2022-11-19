@@ -15,9 +15,9 @@ export const DisplayComment = ({
   item,
   creatorId,
   onReply,
-  onHandleRelated,
-  relatedComments,
-  loadingRelated,
+  onHandleRelated = undefined,
+  relatedComments = undefined,
+  loadingRelated = false,
 }) => {
   const { user: userContext } = useAuth();
   const navigation = useNavigation();

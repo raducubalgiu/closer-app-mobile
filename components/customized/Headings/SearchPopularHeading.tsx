@@ -7,9 +7,9 @@ const { black, grey0 } = theme.lightColors;
 
 export const SearchPopularHeading = ({
   heading,
-  onSeeAll,
+  onSeeAll = undefined,
   collection,
-  seeAll,
+  seeAll = false,
 }) => {
   return (
     <>

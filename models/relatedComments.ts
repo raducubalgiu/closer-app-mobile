@@ -5,6 +5,6 @@ export interface RelatedComments {
   previousComment: null;
   relatedCommentsCount: number;
   likesCount: number;
-  likedByCreator: Boolean;
+  likedByCreator: boolean;
   user: string;
 }

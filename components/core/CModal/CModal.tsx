@@ -20,10 +20,10 @@ export const CModal = ({
   size,
   onCloseModal,
   visible,
-  headerTitle,
+  headerTitle = false,
   footer,
   header = true,
-  sx,
+  sx = {},
 }) => {
   const backdrop = (
     <TouchableWithoutFeedback onPress={onCloseModal}>

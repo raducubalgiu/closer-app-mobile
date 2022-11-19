@@ -1,4 +1,4 @@
-import { StyleSheet, Text, Pressable } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import {
   CustomAvatar,
@@ -20,7 +20,6 @@ export const CardSuggestedPeople = ({
   profession,
   checkmark,
   noFollowers,
-  onPress,
   followeeId,
   ratingsAverage,
   onRemoveCard,
@@ -28,7 +27,7 @@ export const CardSuggestedPeople = ({
   const { t } = useTranslation();
 
   return (
-    <Pressable style={styles.container} onPress={onPress}>
+    <View style={styles.container}>
       <Stack justify="end" align="end" sx={{ width: "100%" }}>
         <IconButton
           onPress={onRemoveCard}
@@ -64,7 +63,7 @@ export const CardSuggestedPeople = ({
           fullWidth
         />
       </Stack>
-    </Pressable>
+    </View>
   );
 };
 

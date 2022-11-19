@@ -12,12 +12,10 @@ export const CardPostImage = ({
   fixed,
   postType,
   onPress,
-  col,
 }) => {
   let borderBox;
-  const columns = col ? col : 3;
 
-  if (index % columns !== 0) {
+  if (index % 3 !== 0) {
     borderBox = { paddingLeft: 1.25 };
   } else {
     borderBox = { paddingLeft: 0 };
@@ -25,8 +23,8 @@ export const CardPostImage = ({
 
   const imageBox = StyleSheet.create({
     box: {
-      width: width / columns,
-      height: width / columns,
+      width: width / 3,
+      height: width / 3,
       marginBottom: 1.25,
       backgroundColor: "#f1f1f1",
     },

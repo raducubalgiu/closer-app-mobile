@@ -169,11 +169,11 @@ export const useHttpGetFunc = (route, callback) => {
   };
 };
 
-export const usePatch = ({ uri, onSuccess }) => {
+export function usePatch<T>({ uri, onSuccess = undefined }) {
   const { user } = useAuth();
 
   const mutations = useMutation(
-    (body) =>
+    (body: T) =>
       axios.patch(`${BASE_ENDPOINT}${uri}`, body, {
         headers: { Authorization: `Bearer ${user?.token}` },
       }),
@@ -184,7 +184,7 @@ export const usePatch = ({ uri, onSuccess }) => {
   );
 
   return mutations;
-};
+}
 
 export function usePost<T>({ uri, onSuccess = undefined, config = {} }) {
   const { user } = useAuth();

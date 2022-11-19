@@ -2,33 +2,33 @@ import { Pressable } from "react-native";
 import { Stack } from "../Stack/Stack";
 
 export const ListItem = ({
-  between,
-  around,
-  center,
-  mt,
-  sx,
+  between = false,
+  around = false,
+  center = false,
+  mt = 10,
+  sx = {},
   onPress,
   children,
 }) => {
-  let justify;
+  let justifyContent;
 
   if (between) {
-    justify = "between";
+    justifyContent = "between";
   } else if (around) {
-    justify = "around";
+    justifyContent = "around";
   } else if (center) {
-    justify = "center";
+    justifyContent = "center";
   } else {
-    justify = "start";
+    justifyContent = "start";
   }
 
   return (
     <Pressable onPress={onPress} style={{ width: "100%" }}>
       <Stack
-        sx={{ marginTop: mt ? mt : 10, ...sx }}
+        sx={{ marginTop: mt, ...sx }}
         direction="row"
         align="center"
-        justify={justify}
+        justify={justifyContent}
       >
         {children}
       </Stack>
