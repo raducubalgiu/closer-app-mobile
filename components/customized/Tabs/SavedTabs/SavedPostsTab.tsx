@@ -7,9 +7,12 @@ import { Spinner } from "../../../core";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { FlashList } from "@shopify/flash-list";
 import { Post } from "../../../../models/post";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 
 export const SavedPostsTab = ({ user }) => {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
   const isFocused = useIsFocused();
 

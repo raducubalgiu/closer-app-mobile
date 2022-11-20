@@ -8,17 +8,19 @@ import { useAuth } from "../../../../hooks";
 import theme from "../../../../assets/styles/theme";
 import { LikeButton } from "../../Buttons/LikeButton";
 import { BookmarkIconButton } from "../../Buttons/BookmarkIconButton";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 
 const { black } = theme.lightColors;
 
 const CardPostButtons = ({ bookable, product, postId, likesCount }) => {
-  const { user } = useAuth();
   const { name, price } = product || {};
   const [likes, setLikes] = useState(likesCount);
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
 
-  const goToLikes = () => navigation.navigate("Likes", { postId: postId });
+  const goToLikes = () => navigation.navigate("Likes", { postId });
 
   const onShare = async () => {
     try {

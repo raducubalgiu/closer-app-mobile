@@ -3,7 +3,7 @@ import theme from "../../../assets/styles/theme";
 
 const { grey3 } = theme.lightColors;
 
-export const StatsButton = ({ onPress, statsNo = 0, label }) => {
+export const StatsButton = ({ onPress, statsNo, label }) => {
   return (
     <Pressable style={styles.container} onPress={onPress}>
       <Text style={styles.statsNumber}>{statsNo}</Text>

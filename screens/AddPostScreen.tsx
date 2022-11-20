@@ -15,6 +15,8 @@ import * as MediaLibrary from "expo-media-library";
 import { useTranslation } from "react-i18next";
 import { PresetListItem } from "../components/customized";
 import { PhotoLibraryButton } from "../components/customized/Buttons/PhotoLibraryButton";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../models/navigation/rootStackParams";
 
 const { height, width } = Dimensions.get("window");
 const { primary } = theme.lightColors;
@@ -37,7 +39,8 @@ const DUMMY_PRESETS = [
 export const AddPostScreen = ({ route }) => {
   const [initialUri, setInitialUri] = useState(null);
   const { uri } = route.params || {};
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
 
   useFocusEffect(

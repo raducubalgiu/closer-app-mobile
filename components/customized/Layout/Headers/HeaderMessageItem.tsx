@@ -3,6 +3,8 @@ import { StyleSheet, Text } from "react-native";
 import theme from "../../../../assets/styles/theme";
 import { Stack, CustomAvatar, IconBackButton, Checkmark } from "../../../core";
 import { InfoIconButton } from "../../IconButtons/InfoIconButton";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 
 const { grey0 } = theme.lightColors;
 
@@ -14,7 +16,8 @@ export const HeaderMessageItem = ({
   checkmark,
   conversationId,
 }) => {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   return (
     <Stack direction="row" sx={styles.container}>

@@ -4,6 +4,8 @@ import { Icon } from "@rneui/themed";
 import { Stack, IconButton, Checkmark } from "../../../core";
 import theme from "../../../../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 
 const { black } = theme.lightColors;
 
@@ -13,7 +15,8 @@ export const HeaderProfile = ({
   onGoToFindFriends,
   onOpenSettings,
 }) => {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   return (
     <View style={{ backgroundColor: "white", zIndex: 1000 }}>

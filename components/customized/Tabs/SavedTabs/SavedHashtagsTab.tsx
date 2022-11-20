@@ -7,10 +7,13 @@ import { Spinner } from "../../../core";
 import { HashtagListItem } from "../../ListItems/HashtagListItem";
 import { FlashList } from "@shopify/flash-list";
 import { Hashtag } from "../../../../models/hashtag";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 
 export const SavedHashtagsTab = ({ user }) => {
   const { t } = useTranslation();
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const isFocused = useIsFocused();
 
   const {

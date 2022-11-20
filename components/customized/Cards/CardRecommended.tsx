@@ -3,23 +3,30 @@ import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { IconLocation, IconStar, IconVideo, Stack } from "../../core";
 import theme from "../../../assets/styles/theme";
-import { AddressFormat, trimFunc } from "../../../utils";
+import { trimFunc } from "../../../utils";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../models/navigation/rootStackParams";
 
 const { width } = Dimensions.get("window");
 const { black, grey0 } = theme.lightColors;
 
 export const CardRecommended = ({ location }) => {
-  const { images, distance, services, counter, address, owner } = location;
-  const { name, username, avatar, ratingsAverage, ratingsQuantity } = owner;
-  const navigation = useNavigation();
+  const { images, distance, address, user } = location;
+  const { name, username, avatar, checkmark, ratingsAverage, ratingsQuantity } =
+    user;
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
 
   const goToUser = () => {
     navigation.push("ProfileGeneral", {
-      userId: owner?._id,
+      userId: user?._id,
       avatar,
       username,
       name,
+      checkmark: false,
+      service: null,
+      option: null,
     });
   };
 
@@ -94,7 +101,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   address: {
-    fontSize: 12,
     marginTop: 2,
     color: grey0,
     fontSize: 13,

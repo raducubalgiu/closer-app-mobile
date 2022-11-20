@@ -9,10 +9,13 @@ import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Service } from "../../../../models/service";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 
 export const SearchServicesTab = ({ search }) => {
   const { t } = useTranslation();
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { user } = useAuth();
   const isFocused = useIsFocused();
 

@@ -13,7 +13,7 @@ import { Divider } from "@rneui/themed";
 import axios from "axios";
 import theme from "../../../../assets/styles/theme";
 import { Stack, ListItem, Spinner } from "../../../core";
-import { useAuth, useRefresh } from "../../../../hooks";
+import { useAuth } from "../../../../hooks";
 import { displayZero } from "../../../../utils";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { scheduleChannel } from "../../../../constants/constants";
@@ -28,9 +28,6 @@ export const DashboardScheduleTab = ({ startPeriod, lastPeriod }) => {
   const { CLOSER, OWNER } = scheduleChannel;
   const { user } = useAuth();
   const { t } = useTranslation();
-
-  const handleRefresh = () => fetchStats();
-  const { refreshing, onRefresh } = useRefresh(handleRefresh);
 
   const getData = (channel, action) => {
     const statsObj = stats.find((stat) => stat._id === channel);
@@ -57,24 +54,7 @@ export const DashboardScheduleTab = ({ startPeriod, lastPeriod }) => {
     ],
   };
 
-  const fetchStats = useCallback(() => {
-    setLoading(true);
-    axios
-      .get(
-        `${process.env.BASE_ENDPOINT}/users/${user._id}/schedules/get-stats?startPeriod=${startPeriod}&lastPeriod=${lastPeriod}`,
-        {
-          headers: { Authorization: `Bearer ${user.token}` },
-        }
-      )
-      .then((res) => {
-        setStats(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
-  }, [startPeriod, lastPeriod, user]);
+  const fetchStats = useCallback(() => {}, []);
 
   useEffect(() => {
     fetchStats();
@@ -154,9 +134,6 @@ export const DashboardScheduleTab = ({ startPeriod, lastPeriod }) => {
       {!loading && (
         <ScrollView
           showsVerticalScrollIndicator={false}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
           contentContainerStyle={{ paddingHorizontal: 15 }}
         >
           {/* {paymentMessage} */}

@@ -4,6 +4,8 @@ import { useNavigation } from "@react-navigation/native";
 import theme from "../../../../assets/styles/theme";
 import { CustomAvatar, Stack, Checkmark } from "../../../core";
 import { Icon } from "@rneui/themed";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 
 const { grey0 } = theme.lightColors;
 
@@ -16,7 +18,8 @@ const CardPostHeader = ({
   name,
   onShowDetails,
 }) => {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const goToUser = (userId: string) => {
     navigation.push("ProfileGeneral", {
@@ -24,6 +27,9 @@ const CardPostHeader = ({
       avatar,
       username,
       name,
+      checkmark,
+      service: null,
+      option: null,
     });
   };
 

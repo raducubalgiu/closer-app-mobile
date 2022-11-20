@@ -34,7 +34,7 @@ export const CardPostGrid = ({ bookable, fixed, postType, image }) => {
   return (
     <Pressable
       style={styles.box}
-      onPress={() => navigation.navigate("Products")}
+      //onPress={() => navigation.navigate("Products")}
     >
       <View style={styles.box}>
         {postType === "video" ? (

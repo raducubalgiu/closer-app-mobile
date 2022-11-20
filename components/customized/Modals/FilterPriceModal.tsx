@@ -7,7 +7,14 @@ export const FilterPriceModal = ({ visible, onClose }) => {
       visible={visible}
       size="sm"
       headerTitle="Filtreaza pretul"
-      footer={<MainButton size="lg" radius={15} title="Filtreaza" />}
+      footer={
+        <MainButton
+          size="lg"
+          radius={15}
+          title="Filtreaza"
+          onPress={() => {}}
+        />
+      }
       onCloseModal={onClose}
     >
       <Text>Hello World</Text>

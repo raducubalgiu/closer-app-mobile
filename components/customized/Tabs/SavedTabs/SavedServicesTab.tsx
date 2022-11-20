@@ -7,9 +7,12 @@ import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { ServiceListItem } from "../../ListItems/ServiceListItem";
 import { useGetPaginate } from "../../../../hooks";
 import { Service } from "../../../../models/service";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 
 export const SavedServicesTab = ({ user }) => {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
   const isFocused = useIsFocused();
 

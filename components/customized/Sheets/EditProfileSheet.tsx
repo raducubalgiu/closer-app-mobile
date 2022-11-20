@@ -5,6 +5,8 @@ import { useNavigation } from "@react-navigation/native";
 import * as MediaLibrary from "expo-media-library";
 import { Stack, CModal } from "../../core";
 import theme from "../../../assets/styles/theme";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../models/navigation/rootStackParams";
 
 const { black, grey0 } = theme.lightColors;
 
@@ -12,7 +14,8 @@ export const EditProfileSheet = ({ onCloseSheet }) => {
   const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
   const [modal, setModal] = useState<boolean>(false);
   const { t } = useTranslation();
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const goToLibrary = () => {
     if (permissionResponse.granted) {

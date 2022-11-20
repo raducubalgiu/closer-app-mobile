@@ -8,6 +8,8 @@ import { LikeCommentButton } from "../Buttons/LikeCommentButton";
 import { RelatedCommentsList } from "./RelatedCommentsList";
 import { useState } from "react";
 import { DisplayText } from "../DisplayText/DisplayText";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../models/navigation/rootStackParams";
 
 const { black, grey0, grey1 } = theme.lightColors;
 
@@ -20,7 +22,8 @@ export const DisplayComment = ({
   loadingRelated = false,
 }) => {
   const { user: userContext } = useAuth();
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
   const { user, comment, _id, relatedCommentsCount } = item;
   const { likesCount, previousComment, likedByCreator } = item;
@@ -34,6 +37,9 @@ export const DisplayComment = ({
       avatar,
       username,
       name,
+      checkmark,
+      service: null,
+      option: null,
     });
 
   let showMore;

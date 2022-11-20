@@ -3,13 +3,16 @@ import { Stack, Checkmark, CustomAvatar } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { trimFunc } from "../../../utils";
 import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../models/navigation/rootStackParams";
 
 const { black, grey0 } = theme.lightColors;
 
 export const MessageListItem = ({ conversation }) => {
   const { message, user } = conversation;
   const { name, avatar, checkmark } = user;
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const goToMessages = () => {
     navigation.navigate("MessageItem", { item: user });

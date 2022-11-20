@@ -4,21 +4,26 @@ import { Stack, CustomAvatar, Checkmark } from "../../core";
 import { FollowButton } from "../Buttons/FollowButton";
 import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../hooks/auth";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../models/navigation/rootStackParams";
 
 const { grey0, black } = theme.lightColors;
 
 export const UserListItem = ({ user, isFollow, sx = {} }) => {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { user: userContext } = useAuth();
   const { avatar, _id, username, name, checkmark } = user;
 
-  const goToUser = (userId) => {
+  const goToUser = (userId: string) => {
     navigation.push("ProfileGeneral", {
       userId,
       username,
       avatar,
       name,
       checkmark,
+      service: null,
+      option: null,
     });
   };
 

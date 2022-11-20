@@ -20,7 +20,7 @@ export const CModal = ({
   size,
   onCloseModal,
   visible,
-  headerTitle = false,
+  headerTitle = "",
   footer,
   header = true,
   sx = {},

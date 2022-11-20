@@ -2,11 +2,14 @@ import { StyleSheet, Text, FlatList, Pressable } from "react-native";
 import { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../models/navigation/rootStackParams";
 
 const { grey0, black } = theme.lightColors;
 
 export const ServicesList = ({ services }) => {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const goToFilters = (item) =>
     navigation.navigate("FiltersDate", {

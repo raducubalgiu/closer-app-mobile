@@ -17,6 +17,11 @@ import { useNavigation } from "@react-navigation/native";
 
 const { error, black, grey0 } = theme.lightColors;
 
+interface Message {
+  _id: string;
+  message: string;
+}
+
 export const ScheduleCancelScreen = ({ route }) => {
   const { user } = useAuth();
   const { scheduleStart, scheduleId } = route.params;
@@ -24,7 +29,7 @@ export const ScheduleCancelScreen = ({ route }) => {
   const [textareaVal, setTextareaVal] = useState("");
   const [loading, setLoading] = useState(false);
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
-  const [active, setActive] = useState({});
+  const [active, setActive] = useState<Message>({});
   const [disabled, setDisabled] = useState(true);
   const { t } = useTranslation();
   const navigation = useNavigation();
@@ -36,50 +41,48 @@ export const ScheduleCancelScreen = ({ route }) => {
   ];
 
   const cancelAppoinment = () => {
-    if (moment(scheduleStart).isAfter(moment())) {
-      setLoading(true);
-      setDisabled(true);
-
-      let message;
-      if (textareaVal !== "") {
-        message = textareaVal;
-      } else {
-        message = active.message;
-      }
-
-      axios
-        .patch(
-          `${process.env.BASE_ENDPOINT}/users/${user?._id}/schedules/${scheduleId}`,
-          { status: "canceled", cancelMessage: message },
-          {
-            headers: { Authorization: `Bearer ${user?.token}` },
-          }
-        )
-        .then((res) => {
-          setLoading(false);
-          setDisabled(false);
-          navigation.navigate({
-            name: "ScheduleDetails",
-            params: { schedule: res.data },
-            merge: true,
-          });
-        })
-        .catch(() => {
-          setLoading(false);
-          setDisabled(false);
-          setFeedback({ visible: true, message: t("somethingWentWrong") });
-        });
-    } else {
-      setLoading(false);
-      setDisabled(false);
-      setFeedback({
-        visible: true,
-        message: "You cannot cancel the appoinment anymore",
-      });
-    }
+    // if (moment(scheduleStart).isAfter(moment())) {
+    //   setLoading(true);
+    //   setDisabled(true);
+    //   let message;
+    //   if (textareaVal !== "") {
+    //     message = textareaVal;
+    //   } else {
+    //     message = active.message;
+    //   }
+    //   axios
+    //     .patch(
+    //       `${process.env.BASE_ENDPOINT}/users/${user?._id}/schedules/${scheduleId}`,
+    //       { status: "canceled", cancelMessage: message },
+    //       {
+    //         headers: { Authorization: `Bearer ${user?.token}` },
+    //       }
+    //     )
+    //     .then((res) => {
+    //       setLoading(false);
+    //       setDisabled(false);
+    //       navigation.navigate({
+    //         name: "ScheduleDetails",
+    //         params: { schedule: res.data },
+    //         merge: true,
+    //       });
+    //     })
+    //     .catch(() => {
+    //       setLoading(false);
+    //       setDisabled(false);
+    //       setFeedback({ visible: true, message: t("somethingWentWrong") });
+    //     });
+    // } else {
+    //   setLoading(false);
+    //   setDisabled(false);
+    //   setFeedback({
+    //     visible: true,
+    //     message: "You cannot cancel the appoinment anymore",
+    //   });
+    // }
   };
 
-  const handleActive = (item) => {
+  const handleActive = (item: Message) => {
     setActive({ _id: item._id, message: item.message });
     if (item._id === "3") {
       setTextarea(true);
@@ -102,7 +105,7 @@ export const ScheduleCancelScreen = ({ route }) => {
           {t("helpUsProvingCancelMotivation")}
         </Text>
         <Divider style={styles.divider} />
-        {messages.map((item, i) => (
+        {messages.map((item: Message, i: number) => (
           <Pressable
             key={i}
             style={item._id === active._id ? activeBtn : styles.btn}

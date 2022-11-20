@@ -1,6 +1,7 @@
-import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { Product } from "../product";
+import { Service } from "../service";
 
-export type RootStackParamList = {
+export type RootStackParams = {
   App: any;
   SearchServices: any;
   FiltersDate: any;
@@ -39,17 +40,42 @@ export type RootStackParamList = {
   Discounts: any;
   FindFriends: any;
   Bookmarks: any;
-  AllBookmarks: any;
+  AllBookmarks: {
+    postId: string;
+    userId: string;
+  };
   Comments: any;
   SearchAll: any;
-  Hashtag: any;
+  Hashtag: {
+    name: string;
+  };
   Service: any;
   Notifications: any;
   Post: any;
-  ProfileGeneral: any;
+  ProfileGeneral: {
+    userId: string | null;
+    username: string;
+    avatar: any | null;
+    name: string | null;
+    checkmark: boolean | null;
+    service: string | null;
+    option: string | null;
+  };
   Map: any;
-  ProfileStats: any;
-  CalendarBig: any;
+  ProfileStats: {
+    screen: string;
+    userId: string;
+    username: string;
+    initialRoute: string;
+    role: string;
+    ratingsQuantity: number;
+    followersCount: number;
+    followingsCount: number;
+  };
+  CalendarBig: {
+    product: Product;
+    service: Service;
+  };
   ScheduleConfirm: any;
   ScheduleOverview: any;
   Schedule: any;
@@ -62,4 +88,8 @@ export type RootStackParamList = {
   CameraPreview: any;
   Test: any;
   AuthStack: any;
+  Feed: any;
+  Likes: { postId: string };
+  SearchPosts: any;
+  LocationItem: { locationId: string };
 };

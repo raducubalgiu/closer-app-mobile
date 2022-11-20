@@ -7,6 +7,8 @@ import { CustomAvatar, Stack, IconStar, Protected } from "../../core";
 import { StatsButton } from "../Buttons/StatsButton";
 import { useAuth } from "../../../hooks";
 import { displayDash } from "../../../utils";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../models/navigation/rootStackParams";
 
 const { black, primary } = theme.lightColors;
 
@@ -20,7 +22,8 @@ export const ProfileOverview = ({ name, username, avatar, children, user }) => {
     followingsCount,
     ratingsAverage,
   } = user || {};
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
 
   const goToFollowers = () =>

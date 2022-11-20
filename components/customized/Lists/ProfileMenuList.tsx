@@ -9,9 +9,12 @@ import theme from "../../../assets/styles/theme";
 import { MAIN_ROLE, SECOND_ROLE, THIRD_ROLE } from "@env";
 import { Protected, ListItem } from "../../core";
 import { useTranslation } from "react-i18next";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../models/navigation/rootStackParams";
 
 export const ProfileMenuList = ({ onCloseSheet }) => {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { user, setUser } = useAuth();
   const auth = getAuth();
   const { t } = useTranslation();

@@ -9,14 +9,17 @@ import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Hashtag } from "../../../../models/hashtag";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 
 export const SearchHashtagsTab = ({ search }) => {
   const { user } = useAuth();
   const isFocused = useIsFocused();
   const { t } = useTranslation();
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
-  const fetchData = async (page, search) => {
+  const fetchData = async (page: number, search: string) => {
     const { data } = await axios.get(
       `${process.env.BASE_ENDPOINT}/hashtags/search?search=${search}&page=${page}&limit=25`,
       { headers: { Authorization: `Bearer ${user?.token}` } }

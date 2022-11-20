@@ -10,9 +10,12 @@ import { UserListItem } from "../../ListItems/UserListItem";
 import { CardPostImage } from "../../Cards/CardPostImage";
 import axios from "axios";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 
 export const SearchPopularTab = ({ search }) => {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
   const { user } = useAuth();
   const isFocused = useIsFocused();

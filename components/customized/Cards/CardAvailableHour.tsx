@@ -18,7 +18,7 @@ export const CardAvailableHour = ({ date, hour }) => {
           <Text style={styles.description}>{hour}</Text>
         </Stack>
       </Stack>
-      <MainButton variant="outlined" title={t("book")} />
+      <MainButton variant="outlined" title={t("book")} onPress={() => {}} />
     </Stack>
   );
 };

@@ -3,13 +3,14 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import { SECOND_ROLE, THIRD_ROLE } from "@env";
-import { Stack, IconButtonEdit, MainButton, Protected } from "../../core";
+import { Stack, MainButton, Protected } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { trimFunc } from "../../../utils";
-import { useAuth, useDuration, useGet, useHttpGet } from "../../../hooks";
-import { IconButtonDelete } from "../../core/IconButton/IconButtonDelete";
+import { useAuth, useDuration } from "../../../hooks";
 import { BookmarkButton } from "../Buttons/BookmarkButton";
 import { UserListItemSimple } from "../ListItems/UserListItemSimple";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../models/navigation/rootStackParams";
 
 const { black, grey0, primary } = theme.lightColors;
 
@@ -24,7 +25,8 @@ export const CardProduct = ({
   const { name, duration, description, price } = product || {};
   const { option, service, user } = product || {};
   const currDuration = duration ? useDuration(duration) : "";
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const goToCalendar = () =>
     navigation.navigate("CalendarBig", {

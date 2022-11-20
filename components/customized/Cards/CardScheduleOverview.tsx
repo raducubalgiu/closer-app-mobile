@@ -1,10 +1,11 @@
 import { StyleSheet, Text, Pressable } from "react-native";
 import React from "react";
-import { Divider } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";
 import { Stack, CustomAvatar, Checkmark } from "../../core";
 import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../models/navigation/rootStackParams";
 
 const { black, grey0, error, success, primary } = theme.lightColors;
 
@@ -12,7 +13,8 @@ export const CardScheduleOverview = ({ schedule, start }) => {
   const { user, status, service, product } = schedule;
   const { name, avatar, checkmark } = user || {};
   const { t } = useTranslation();
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const goToDetails = () =>
     navigation.navigate("ScheduleDetails", { schedule });

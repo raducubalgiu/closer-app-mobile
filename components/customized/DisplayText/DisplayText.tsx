@@ -3,6 +3,8 @@ import { ButtonLink, Checkmark } from "../../core";
 import React, { useCallback, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../models/navigation/rootStackParams";
 
 const { grey0, black } = theme.lightColors;
 
@@ -13,17 +15,26 @@ export const DisplayText = ({
   checkmark = false,
   goToUserAllInfo,
 }) => {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   let wordsArr = text.split(" ");
   const [cutText, setCutText] = useState(wordsArr.length > maxWords);
 
   const slicedArr = cutText ? wordsArr.slice(0, maxWords) : wordsArr;
 
-  const goToUser = (uName) => {
-    navigation.push("ProfileGeneral", { username: uName });
+  const goToUser = (uName: string) => {
+    navigation.push("ProfileGeneral", {
+      userId: null,
+      username: uName,
+      avatar: null,
+      name: null,
+      checkmark: null,
+      service: null,
+      option: null,
+    });
   };
 
-  const goToHashtag = (hashtag) =>
+  const goToHashtag = (hashtag: string) =>
     navigation.push("Hashtag", { name: hashtag });
 
   const handleText = useCallback(() => {

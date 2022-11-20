@@ -9,7 +9,7 @@ import "../i18next";
 import { useTranslation } from "react-i18next";
 import theme from "../assets/styles/theme";
 import { useAuth } from "../hooks";
-import { RootStackParamList } from "../models/navigation";
+import { RootStackParams } from "../models/navigation/rootStackParams";
 import {
   EditProfileScreen,
   EditBioScreen,
@@ -80,7 +80,7 @@ import TestScreen from "../screens/TestScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
-const RootStack = createNativeStackNavigator<RootStackParamList>();
+const RootStack = createNativeStackNavigator<RootStackParams>();
 
 const { black } = theme.lightColors;
 

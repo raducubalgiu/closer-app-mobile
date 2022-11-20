@@ -1,25 +1,21 @@
-import {
-  StyleSheet,
-  ActivityIndicator,
-  TouchableOpacity,
-  Text,
-} from "react-native";
+import { StyleSheet, ActivityIndicator, Text, Pressable } from "react-native";
 import theme from "../../../assets/styles/theme";
 
 const { black, primary } = theme.lightColors;
 
 export const MainButton = ({
-  title,
-  loading,
-  size,
-  variant,
-  fullWidth,
-  radius,
+  title = "",
+  loading = false,
+  size = "sm",
+  variant = "contain",
+  fullWidth = false,
+  radius = 5,
   sx = {},
-  btnText,
+  btnText = {},
+  disabled = false,
   bgColor = "white",
-  txtColor,
-  ...props
+  txtColor = "white",
+  onPress,
 }) => {
   let padding;
   let backgroundColor;
@@ -66,7 +62,7 @@ export const MainButton = ({
   const styles = StyleSheet.create({
     button: {
       backgroundColor,
-      borderRadius: radius ? radius : 5,
+      borderRadius: radius,
       borderWidth,
       borderColor,
       ...padding,
@@ -79,17 +75,17 @@ export const MainButton = ({
       fontWeight: "600",
       fontSize,
       color,
-      ...btnText,
+      btnText,
     },
   });
 
   return (
-    <TouchableOpacity {...props} activeOpacity={1} style={styles.button}>
+    <Pressable style={styles.button} onPress={onPress} disabled={disabled}>
       {loading ? (
         <ActivityIndicator color="white" />
       ) : (
         <Text style={styles.text}>{title}</Text>
       )}
-    </TouchableOpacity>
+    </Pressable>
   );
 };
