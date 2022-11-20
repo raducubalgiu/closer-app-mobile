@@ -36,8 +36,6 @@ export type RootStackParams = {
   };
   MessageNew: any;
   Settings: any;
-  ScheduleDetails: any;
-  ScheduleCancel: any;
   Discounts: any;
   FindFriends: any;
   Bookmarks: any;
@@ -82,6 +80,8 @@ export type RootStackParams = {
   Schedules: any;
   ScheduleConfirm: any;
   ScheduleOverview: any;
+  ScheduleDetails: any;
+  ScheduleCancel: { scheduleId: string };
   Schedule: any;
   AddSchedule: any;
   AddPost: any;

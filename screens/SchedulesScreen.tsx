@@ -20,7 +20,12 @@ export const SchedulesScreen = () => {
   const { user } = useAuth();
   const { t } = useTranslation();
 
-  const { data: schedules, refetch } = useGet({
+  const {
+    data: schedules,
+    refetch,
+    isLoading,
+    isFetching,
+  } = useGet({
     model: "schedules",
     uri: `/users/${user?._id}/schedules`,
   });
@@ -42,7 +47,10 @@ export const SchedulesScreen = () => {
     []
   );
 
-  const keyExtractor = useCallback((item, index) => item + index, []);
+  const keyExtractor = useCallback(
+    (item: any, index: number) => item + index,
+    []
+  );
 
   const noFoundMessage = (
     <NoFoundMessage title={t("bookings")} description={t("dontHaveBookings")} />
@@ -52,6 +60,7 @@ export const SchedulesScreen = () => {
     <SafeAreaView style={styles.screen}>
       <Header title={t("myOrders")} hideBtnLeft divider />
       <View style={styles.container}>
+        {!isFetching && !isLoading && !schedules.length && noFoundMessage}
         <SectionList
           sections={schedules ? schedules : []}
           keyExtractor={keyExtractor}
@@ -60,6 +69,7 @@ export const SchedulesScreen = () => {
           renderSectionHeader={renderHeader}
           contentContainerStyle={{ padding: 15 }}
           ItemSeparatorComponent={() => <Divider color="#ddd" />}
+          renderSectionFooter={() => <View style={{ marginBottom: 20 }} />}
         />
       </View>
     </SafeAreaView>
@@ -84,11 +94,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   headerList: {
-    padding: 10,
-    textTransform: "capitalize",
-    fontSize: 16.5,
+    paddingHorizontal: 10,
+    marginTop: 10,
+    marginBottom: 5,
+    fontSize: 17,
     color: black,
     fontWeight: "700",
-    backgroundColor: "red",
   },
 });

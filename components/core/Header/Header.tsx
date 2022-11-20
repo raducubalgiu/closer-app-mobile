@@ -32,7 +32,7 @@ export const Header = ({
 };
 
 const styles = StyleSheet.create({
-  container: { paddingVertical: 10, paddingHorizontal: 15 },
+  container: { paddingVertical: 10, paddingHorizontal: 15, zIndex: 10000 },
   title: {
     fontSize: 16,
     color: black,

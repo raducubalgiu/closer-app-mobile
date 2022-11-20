@@ -64,8 +64,8 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   service: {
+    fontSize: 13.5,
     color: black,
-    fontSize: 14.5,
     textTransform: "uppercase",
     fontWeight: "600",
   },

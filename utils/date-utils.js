@@ -15,7 +15,7 @@ export const yearMonthFormat = (year, month) => {
   return dayjs()
     .year(year)
     .month(month - 1)
-    .format("MMMM YYYY");
+    .format("MMM YYYY");
 };
 
 export const dayMonthTime = (date) => dayjs(date).format("D MMM, HH:mm");
