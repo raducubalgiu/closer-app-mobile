@@ -52,6 +52,7 @@ export type RootStackParams = {
   Service: any;
   Notifications: any;
   Post: any;
+  Profile: any;
   ProfileGeneral: {
     userId: string | null;
     username: string;
@@ -92,4 +93,8 @@ export type RootStackParams = {
   Likes: { postId: string };
   SearchPosts: any;
   LocationItem: { locationId: string };
+  Login: any;
+  Register: any;
+  RegisterBusiness: any;
+  Username: any;
 };

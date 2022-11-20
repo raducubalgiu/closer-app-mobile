@@ -7,13 +7,16 @@ import { useAuth } from "../../../hooks/auth";
 import { LoginRegisterForm } from "../../../components/customized";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../models/navigation/rootStackParams";
 
 export const LoginScreen = () => {
   const { setUser } = useAuth();
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const onSubmit = async (data) => {
     setLoading(true);

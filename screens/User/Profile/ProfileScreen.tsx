@@ -16,11 +16,14 @@ import {
   TopTabProfile,
 } from "../../../components/customized";
 import { useSheet, useAuth } from "../../../hooks";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../models/navigation/rootStackParams";
 
 export const ProfileScreen = () => {
   const { user } = useAuth();
   const { name, username, avatar, checkmark, role } = user || {};
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
 
   const closeSheet = useCallback(() => CLOSE_BS(), []);

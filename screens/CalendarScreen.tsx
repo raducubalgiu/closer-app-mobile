@@ -15,13 +15,16 @@ import { Icon } from "@rneui/themed";
 import theme from "../assets/styles/theme";
 import { Agenda } from "react-native-calendars";
 import { useGet, useRefreshByUser } from "../hooks";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../models/navigation/rootStackParams";
 
 const { primary, grey0 } = theme.lightColors;
 
 export const CalendarScreen = ({ route }) => {
   const { product, service } = route.params;
   const { user } = product;
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const now = dayjs().format("YYYY-MM-DD");
   const [day, setDay] = useState(now);
   const [knob, setKnob] = useState(false);

@@ -16,6 +16,8 @@ import { useAuth } from "../../../../hooks/auth";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { usePost } from "../../../../hooks";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 
 const { primary, black } = theme.lightColors;
 
@@ -34,7 +36,8 @@ export const AddLocationScreen = () => {
   const [location, setLocation] = useState(defaultValues);
   const [images, setImages] = useState([]);
   const [blockApartment, setBlockApartment] = useState("");
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
 
   const handleSetLocation = (location) => setLocation(location);

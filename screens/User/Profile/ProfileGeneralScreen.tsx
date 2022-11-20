@@ -11,6 +11,8 @@ import {
   FollowButton,
 } from "../../../components/customized";
 import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../models/navigation/rootStackParams";
 
 const { black } = theme.lightColors;
 
@@ -19,7 +21,8 @@ export const ProfileGeneralScreen = ({ route }) => {
   const { userId, username, avatar, name, checkmark } = route.params;
   const { service, option } = route.params;
   const [suggested, setSuggested] = useState([]);
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const { data: userDetails } = useGet({
     model: "fetchUser",

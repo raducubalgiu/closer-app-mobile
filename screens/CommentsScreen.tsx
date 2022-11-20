@@ -15,10 +15,13 @@ import { useAuth, useGet, usePost } from "../hooks";
 import { useNavigation } from "@react-navigation/native";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { Spinner } from "../components/core";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../models/navigation/rootStackParams";
 
 export const CommentsScreen = ({ route }) => {
   const { user } = useAuth();
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { postId, description, avatar, username } = route.params;
   const { name, date, focus, creatorId } = route.params;
   const [comments, setComments] = useState([]);
@@ -57,6 +60,9 @@ export const CommentsScreen = ({ route }) => {
       avatar,
       username,
       name,
+      checkmark: null,
+      service: null,
+      option: null,
     });
 
   const renderHeader = (

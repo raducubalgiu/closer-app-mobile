@@ -3,7 +3,6 @@ import React, { useCallback, useState } from "react";
 import { View } from "react-native";
 import { useTranslation } from "react-i18next";
 import { Divider } from "@rneui/themed";
-import { useCalendarList } from "../hooks";
 import {
   ButtonGroup,
   CModal,
@@ -18,7 +17,6 @@ export const FiltersDateScreen = ({ route }) => {
   const { service, period } = route.params;
   const { filters } = service;
   const navigation = useNavigation();
-  const { calendar, startDate, endDate } = useCalendarList();
   const [activeBtn, setActiveBtn] = useState(period.code);
   const [activeHours, setActiveHours] = useState(0);
   const [visible, setVisible] = useState(false);
@@ -26,20 +24,18 @@ export const FiltersDateScreen = ({ route }) => {
   const methods = useForm({ defaultValues: { startHour: "", endHour: "" } });
   const { handleSubmit, watch } = methods;
 
-  console.log("SERVICE!!", service);
-
   const goNext = () => {
-    if (filters.length > 0) {
-      navigation.navigate("FiltersService", {
-        service,
-        period: { ...period, code: activeBtn, startDate, endDate },
-      });
-    } else {
-      navigation.navigate("Locations", {
-        service,
-        period: { ...period, code: activeBtn, startDate, endDate },
-      });
-    }
+    // if (filters.length > 0) {
+    //   navigation.navigate("FiltersService", {
+    //     service,
+    //     period: { ...period, code: activeBtn, startDate, endDate },
+    //   });
+    // } else {
+    //   navigation.navigate("Locations", {
+    //     service,
+    //     period: { ...period, code: activeBtn, startDate, endDate },
+    //   });
+    // }
   };
 
   const dateButtons = [
@@ -86,7 +82,7 @@ export const FiltersDateScreen = ({ route }) => {
         headerTitle={t("selectPeriod").split(" ")[0]}
         headerDescription={t("selectPeriod").split(" ")[1]}
         onNext={goNext}
-        footerExtraBtns={footerBtns}
+        //footerExtraBtns={footerBtns}
         btnTitle={t("next")}
       >
         <SheetHeader title={service?.name} description="Date" />
@@ -98,7 +94,7 @@ export const FiltersDateScreen = ({ route }) => {
           sx={{ marginBottom: 15 }}
         />
         <Divider />
-        <View style={{ flex: 1 }}>{activeBtn === 2 && calendar}</View>
+        {/* <View style={{ flex: 1 }}>{activeBtn === 2 && calendar}</View> */}
       </FiltersContainer>
       <CModal
         size="sm"

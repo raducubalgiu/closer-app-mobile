@@ -4,11 +4,14 @@ import { Header, IconButtonAdd, Stack } from "../../../../components/core";
 import { NoFoundMessage } from "../../../../components/customized";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 
 export const MyJobsScreen = () => {
   const [jobs, setJobs] = useState([]);
   const { t } = useTranslation();
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const goToAddJob = () => navigation.navigate("AddJobs");
 

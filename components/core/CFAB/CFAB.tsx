@@ -3,7 +3,7 @@ import theme from "../../../assets/styles/theme";
 
 const { primary } = theme.lightColors;
 
-export const CFAB = ({ icon, onPress, sx }) => {
+export const CFAB = ({ icon, onPress, sx = {} }) => {
   return (
     <FAB
       activeOpacity={1}

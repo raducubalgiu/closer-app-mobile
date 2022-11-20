@@ -9,6 +9,9 @@ import { CustomAvatar, IconButton, Stack } from "../components/core";
 import theme from "../assets/styles/theme";
 import { CloseIconButton, RevertIconButton } from "../components/customized";
 import { PhotoLibraryButton } from "../components/customized/Buttons/PhotoLibraryButton";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../models/navigation/rootStackParams";
+
 const { black, grey0 } = theme.lightColors;
 
 export const CameraScreen = ({ route }) => {
@@ -17,7 +20,8 @@ export const CameraScreen = ({ route }) => {
   const [type, setType] = useState(CameraType.back);
   const [flash, setFlash] = useState(FlashMode.off);
   let cameraRef = useRef<any>();
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
 
   useFocusEffect(

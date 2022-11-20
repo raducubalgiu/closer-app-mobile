@@ -9,7 +9,7 @@ import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useAuth, useGet } from "../../../hooks";
 import { Header } from "../../../components/core";
-import { CardPost } from "../../../components/customized";
+import CardPost from "../../../components/customized/Cards/CardPost/CardPost";
 
 const { width, height } = Dimensions.get("window");
 
@@ -23,7 +23,7 @@ export const AllBookmarksScreen = () => {
   });
 
   const renderUserBookmarks = useCallback(
-    ({ item }) => <CardPost post={item?.post} />,
+    ({ item }) => <CardPost post={item?.post} onShowDetails={() => {}} />,
     []
   );
   const getItemLayout = useCallback(

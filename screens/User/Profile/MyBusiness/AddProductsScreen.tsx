@@ -13,6 +13,8 @@ import { required, maxField, minField } from "../../../../constants/validation";
 import { MainButton, FormInput, Stack } from "../../../../components/core";
 import { FormInputSelect } from "../../../../components/core";
 import { useHeaderHeight } from "@react-navigation/elements";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 
 const defaultValues = {
   service: "",
@@ -27,7 +29,8 @@ const defaultValues = {
 export const AddProductsScreen = () => {
   const { user } = useAuth();
   const { location } = user;
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
   const methods = useForm({ defaultValues });
   const { handleSubmit, watch } = methods;

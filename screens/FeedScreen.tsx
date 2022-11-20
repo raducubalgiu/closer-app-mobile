@@ -28,6 +28,8 @@ import { useTranslation } from "react-i18next";
 import * as Haptics from "expo-haptics";
 import { ConfirmModal } from "../components/customized/Modals/ConfirmModal";
 import CardPost from "../components/customized/Cards/CardPost/CardPost";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../models/navigation/rootStackParams";
 
 const { grey0, black } = theme.lightColors;
 
@@ -35,7 +37,8 @@ export const FeedScreen = () => {
   const { user } = useAuth();
   const [postId, setPostId] = useState(null);
   const [visible, setVisible] = useState(false);
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const ref = useRef(null);
   useScrollToTop(ref);
   const { t } = useTranslation();

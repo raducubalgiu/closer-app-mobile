@@ -19,6 +19,8 @@ import {
   FormInputSelect,
   MainButton,
 } from "../../../../components/core";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 
 export const EditProductScreen = ({ route }) => {
   const { user } = useAuth();
@@ -39,7 +41,8 @@ export const EditProductScreen = ({ route }) => {
   const { handleSubmit, watch } = methods;
   const selectedService = watch("service");
   const { t } = useTranslation();
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const isRequired = required(t);
 
   useHttpGet(`/services/${selectedService}`, (data) =>

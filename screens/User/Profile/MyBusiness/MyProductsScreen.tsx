@@ -5,22 +5,25 @@ import { IconButtonAdd, MainButton, Stack } from "../../../../components/core";
 import { NoFoundMessage } from "../../../../components/customized";
 import { useAuth } from "../../../../hooks/auth";
 import { useGet } from "../../../../hooks";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 
 export const MyProductsScreen = () => {
   const { user } = useAuth();
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
 
   const goToAddProduct = () => navigation.navigate("AddProducts");
-
-  const addBtn = (
-    <IconButtonAdd onPress={goToAddProduct} disabled={services?.length > 0} />
-  );
 
   const { data: services } = useGet({
     model: "services",
     uri: `/locations/${user?.location}/services`,
   });
+
+  const addBtn = (
+    <IconButtonAdd onPress={goToAddProduct} disabled={services?.length > 0} />
+  );
 
   const noServices = (
     <>

@@ -6,9 +6,12 @@ import { Feedback, IconBackButton } from "../../../components/core";
 import { LoginRegisterForm } from "../../../components/customized";
 import { MAIN_ROLE } from "@env";
 import { useTranslation } from "react-i18next";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../models/navigation/rootStackParams";
 
 export const RegisterBusinessScreen = () => {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();

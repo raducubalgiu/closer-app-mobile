@@ -21,13 +21,16 @@ import {
 import { EditProfileSheet } from "../../../../components/customized";
 import { trimFunc } from "../../../../utils";
 import { useSheet } from "../../../../hooks";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 
 const { grey0, black } = theme.lightColors;
 
 export const EditProfileScreen = ({ route }) => {
   const { user } = route.params;
   const { name, username, profession, website, description } = user;
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
 
   const list = [
