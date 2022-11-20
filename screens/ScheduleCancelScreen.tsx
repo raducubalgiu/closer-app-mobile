@@ -6,12 +6,10 @@ import {
   Pressable,
 } from "react-native";
 import React, { useState } from "react";
-import axios from "axios";
 import { Feedback, Header, MainButton, Textarea } from "../components/core";
 import { useAuth } from "../hooks";
 import { useTranslation } from "react-i18next";
 import theme from "../assets/styles/theme";
-import moment from "moment";
 import { Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 
@@ -127,7 +125,6 @@ export const ScheduleCancelScreen = ({ route }) => {
       </ScrollView>
       <MainButton
         title={t("cancelAppoinment")}
-        fullwidth
         size="lg"
         radius={25}
         bgColor={error}

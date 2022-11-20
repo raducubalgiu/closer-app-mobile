@@ -14,6 +14,8 @@ import {
 import { SettingListItem } from "../components/customized";
 import { useAuth, useDelete } from "../hooks";
 import { ConfirmModal } from "../components/customized/Modals/ConfirmModal";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../models/navigation/rootStackParams";
 
 const { grey0, black, error } = theme.lightColors;
 
@@ -22,7 +24,8 @@ export const MessageSettingsScreen = ({ route }) => {
   const { user } = useAuth();
   const { _id, avatar, name, username, checkmark, conversationId } =
     route.params;
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
 
   const goToUser = () => {
@@ -32,6 +35,8 @@ export const MessageSettingsScreen = ({ route }) => {
       name,
       username,
       checkmark,
+      service: null,
+      option: null,
     });
   };
 

@@ -4,18 +4,17 @@ import theme from "../../../assets/styles/theme";
 const { black, primary } = theme.lightColors;
 
 export const MainButton = ({
-  title = "",
+  title,
+  onPress,
   loading = false,
   size = "sm",
   variant = "contain",
-  fullWidth = false,
   radius = 5,
   sx = {},
   btnText = {},
   disabled = false,
-  bgColor = "white",
-  txtColor = "white",
-  onPress,
+  bgColor = "",
+  txtColor = "",
 }) => {
   let padding;
   let backgroundColor;
@@ -67,7 +66,6 @@ export const MainButton = ({
       borderColor,
       ...padding,
       ...sx,
-      width: fullWidth && "100%",
       marginVertical: 10,
     },
     text: {

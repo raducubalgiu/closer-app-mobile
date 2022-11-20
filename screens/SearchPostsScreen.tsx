@@ -23,14 +23,10 @@ import {
   RecentSearchListItem,
 } from "../components/customized";
 import theme from "../assets/styles/theme";
-import {
-  useAuth,
-  useDelete,
-  useGet,
-  useHttpDelete,
-  useHttpGet,
-} from "../hooks";
+import { useAuth, useDelete, useGet } from "../hooks";
 import { trimFunc } from "../utils";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../models/navigation/rootStackParams";
 
 const { grey0, primary, black } = theme.lightColors;
 
@@ -41,7 +37,8 @@ export const SearchPostsScreen = () => {
   const [words, setWords] = useState([]);
   const [searchedUsers, setSearchedUsers] = useState([]);
   const [feedback, setFeedback] = useState({ visible: false, message: "" });
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
 
   useGet({
@@ -98,7 +95,7 @@ export const SearchPostsScreen = () => {
     [search]
   );
 
-  const deleteSearch = (searchId) => {
+  const deleteSearch = (searchId: string) => {
     axios
       .delete(`${process.env.BASE_ENDPOINT}/searches/${searchId}`, {
         headers: { Authorization: `Bearer ${user.token}` },
@@ -130,7 +127,8 @@ export const SearchPostsScreen = () => {
       avatar,
       name,
       checkmark,
-      searchedUser: { _id, name, username, avatar },
+      service: null,
+      option: null,
     });
   };
 

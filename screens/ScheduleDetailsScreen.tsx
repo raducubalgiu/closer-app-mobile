@@ -23,15 +23,18 @@ import { useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
 import { useGet } from "../hooks";
 import { MapStatic } from "../components/customized";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../models/navigation/rootStackParams";
 
 const { black, grey0, success, error } = theme.lightColors;
 
 export const ScheduleDetailsScreen = ({ route }) => {
   const { user, product, start, service, status, _id, location } =
     route.params.schedule;
-  const { name, username } = user;
+  const { name, username, avatar, checkmark } = user;
   const { t } = useTranslation();
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const { data } = useGet({
     model: "location",
@@ -43,8 +46,12 @@ export const ScheduleDetailsScreen = ({ route }) => {
   const goToOwner = () =>
     navigation.push("ProfileGeneral", {
       userId: user._id,
-      username: username,
-      name: name,
+      username,
+      name,
+      avatar,
+      checkmark,
+      service: null,
+      option: null,
     });
   const goToCancel = () =>
     navigation.navigate("ScheduleCancel", {
@@ -61,7 +68,6 @@ export const ScheduleDetailsScreen = ({ route }) => {
       <MainButton
         onPress={goToCancel}
         title={t("cancelAppoinment")}
-        fullwidth
         size="lg"
         radius={25}
         bgColor={error}
@@ -73,7 +79,6 @@ export const ScheduleDetailsScreen = ({ route }) => {
       <MainButton
         onPress={goToBookAgain}
         title={t("bookAgain")}
-        fullwidth
         size="lg"
         radius={25}
         bgColor={"#eee"}
@@ -130,6 +135,7 @@ export const ScheduleDetailsScreen = ({ route }) => {
                 sx={{ position: "absolute", bottom: 30, right: 15 }}
               >
                 <MainButton
+                  onPress={() => {}}
                   title={<Text style={styles.navigate}>{t("navigate")}</Text>}
                   bgColor="white"
                   radius={25}

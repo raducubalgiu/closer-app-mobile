@@ -1,18 +1,13 @@
 import { SafeAreaView, StyleSheet, RefreshControl } from "react-native";
 import { FlashList } from "@shopify/flash-list";
-import React, { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Header, Spinner } from "../components/core";
 import { NoFoundMessage, UserListItem } from "../components/customized";
-import { useAuth } from "../hooks";
+import { useAuth, useRefreshByUser } from "../hooks";
 import { useGetPaginate } from "../hooks";
 
-const wait = (timeout) => {
-  return new Promise((resolve) => setTimeout(resolve, timeout));
-};
-
 export const LikesScreen = ({ route }) => {
-  const [refreshing, setRefreshing] = useState(false);
   const { user } = useAuth();
   const { postId } = route.params;
   const { t } = useTranslation();
@@ -54,22 +49,15 @@ export const LikesScreen = ({ route }) => {
 
   const { pages } = data || {};
 
-  const onRefresh = useCallback(() => {
-    setRefreshing(true);
-    wait(500).then(() => {
-      refetch();
-      setRefreshing(false);
-    });
-  }, []);
-
   const noFoundMessage = !isLoading &&
     !isFetchingNextPage &&
     pages[0]?.results?.length === 0 && (
       <NoFoundMessage title={t("likes")} description={t("noFoundLikes")} />
     );
 
+  const { refreshing, refetchByUser } = useRefreshByUser(refetch);
   const refreshControl = (
-    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+    <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
   );
 
   return (

@@ -3,8 +3,8 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
+  FlatList,
 } from "react-native";
-import { FlashList } from "@shopify/flash-list";
 import React, { useCallback, useState } from "react";
 import { Camera } from "expo-camera";
 import { usePost, useAuth, useGet, useGetPaginate } from "../hooks";
@@ -17,13 +17,16 @@ import {
 import { Divider } from "@rneui/themed";
 import { Spinner } from "../components/core";
 import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../models/navigation/rootStackParams";
 
 export const MessageItemScreen = ({ route }) => {
   const { user } = useAuth();
   const [permission] = Camera.useCameraPermissions();
   const { _id, name, username, avatar, checkmark } = route.params?.item;
   const [message, setMessage] = useState("");
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const { data: conversation, refetch: refetchConversation } = useGet({
     model: "isConversation",
@@ -98,7 +101,7 @@ export const MessageItemScreen = ({ route }) => {
   }, []);
 
   const keyExtractor = useCallback((item) => item?._id, []);
-  const getItemLayout = useCallback((messages, index) => {
+  const getItemLayout = useCallback((_, index) => {
     return { length: 100, offset: 100 * index, index };
   }, []);
 
@@ -130,7 +133,7 @@ export const MessageItemScreen = ({ route }) => {
         style={styles.screen}
         keyboardVerticalOffset={10}
       >
-        <FlashList
+        <FlatList
           inverted
           ListFooterComponent={showSpinner}
           initialScrollIndex={0}
@@ -141,7 +144,6 @@ export const MessageItemScreen = ({ route }) => {
           contentContainerStyle={styles.flatList}
           onEndReached={loadMore}
           onEndReachedThreshold={0.3}
-          estimatedItemSize={70}
         />
         <FooterMessageItem
           message={message}

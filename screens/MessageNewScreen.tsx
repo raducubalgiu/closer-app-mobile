@@ -6,12 +6,15 @@ import { useNavigation } from "@react-navigation/native";
 import { Header, SearchBarInput, Heading, Spinner } from "../components/core";
 import { useAuth, useGet } from "../hooks";
 import { UserListItemSimple } from "../components/customized";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../models/navigation/rootStackParams";
 
 export const MessageNewScreen = () => {
   const { user } = useAuth();
   const { t } = useTranslation();
   const [search, setSearch] = useState("");
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const followingsEndpoint = `/users/${user?._id}/followings?page=1&limit=20`;
   const searchEndpoint = `/users/${user?._id}/followings/search?search=${search}`;
 

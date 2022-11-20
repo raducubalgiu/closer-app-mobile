@@ -9,12 +9,15 @@ import { CloseIconButton } from "../components/customized";
 import theme from "../assets/styles/theme";
 import { Icon } from "@rneui/themed";
 import { CardPostImage } from "../components/customized";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../models/navigation/rootStackParams";
 
 const { black } = theme.lightColors;
 
 export const PhotoLibraryScreen = ({ route }) => {
   const { album, nav } = route.params || {};
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const [photos, setPhotos] = useState([]);
 
   useFocusEffect(

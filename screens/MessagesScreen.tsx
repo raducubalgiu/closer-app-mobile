@@ -25,13 +25,16 @@ import {
   Spinner,
 } from "../components/core";
 import { FlashList } from "@shopify/flash-list";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../models/navigation/rootStackParams";
 
 const { grey0 } = theme.lightColors;
 
 export const MessagesScreen = () => {
   const { user } = useAuth();
   const [search, setSearch] = useState("");
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
 
   const {

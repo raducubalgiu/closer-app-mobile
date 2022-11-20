@@ -3,13 +3,16 @@ import { MainButton, Stack } from "../components/core";
 import { Icon } from "@rneui/themed";
 import theme from "../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../models/navigation/rootStackParams";
 
 const { black, primary, grey0 } = theme.lightColors;
 
 export const ScheduleOverviewScreen = ({ route }) => {
   const { schedule } = route.params;
   const { service, start } = schedule;
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   return (
     <View style={styles.screen}>

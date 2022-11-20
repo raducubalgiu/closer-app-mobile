@@ -1,5 +1,5 @@
 import { SafeAreaView, StyleSheet, Text, Pressable } from "react-native";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Stack } from "../components/core";
 import { Header } from "../components/core";
 import { useTranslation } from "react-i18next";
@@ -7,8 +7,8 @@ import { Video, AVPlaybackStatus } from "expo-av";
 
 export const NotificationsScreen = () => {
   const { t } = useTranslation();
-  const video = React.useRef(null);
-  const [status, setStatus] = React.useState({});
+  const video = useRef(null);
+  const [status, setStatus] = useState({});
   const [play, setPlay] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
 
@@ -37,7 +37,6 @@ export const NotificationsScreen = () => {
             uri: "https://res.cloudinary.com/closer-app/video/upload/v1652475925/fashion-1_vkcrms.mp4",
           }}
           useNativeControls={false}
-          resizeMode="cover"
           onPlaybackStatusUpdate={(status) => setStatus(() => status)}
           shouldPlay={play}
           isMuted={isMuted}

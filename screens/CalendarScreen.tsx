@@ -9,16 +9,16 @@ import {
 import { useCallback, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
-import { Header, Stack } from "../components/core";
+import { Header, Spinner, Stack } from "../components/core";
 import { NoFoundMessage } from "../components/customized";
 import { Icon } from "@rneui/themed";
 import theme from "../assets/styles/theme";
 import { Agenda } from "react-native-calendars";
-import { useGet, useRefreshByUser } from "../hooks";
+import { useGet, useGetPaginate, useRefreshByUser } from "../hooks";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../models/navigation/rootStackParams";
 
-const { primary, grey0 } = theme.lightColors;
+const { primary, grey0, black } = theme.lightColors;
 
 export const CalendarScreen = ({ route }) => {
   const { product, service } = route.params;
@@ -29,7 +29,12 @@ export const CalendarScreen = ({ route }) => {
   const [day, setDay] = useState(now);
   const [knob, setKnob] = useState(false);
 
-  const { data: slots, refetch } = useGet({
+  const {
+    data: slots,
+    refetch,
+    isFetching,
+    isLoading,
+  } = useGet({
     model: "slots",
     uri: `/users/${user?._id}/schedules/slots?day=${day}`,
   });
@@ -42,7 +47,7 @@ export const CalendarScreen = ({ route }) => {
     });
   };
 
-  const renderSlot = (slot) => {
+  const renderSlot = useCallback((slot: any) => {
     return (
       <Pressable onPress={() => goToConfirm(slot)}>
         <Stack direction="row" justify="start" sx={styles.slot}>
@@ -50,10 +55,10 @@ export const CalendarScreen = ({ route }) => {
         </Stack>
       </Pressable>
     );
-  };
+  }, []);
 
   const handleDayPress = useCallback(
-    (day) => {
+    (day: any) => {
       setDay(day.dateString);
       refetch();
     },
@@ -83,18 +88,22 @@ export const CalendarScreen = ({ route }) => {
     </>
   );
 
+  const renderEmptyData = () => {
+    if (isFetching || isLoading) {
+      return <Spinner />;
+    } else {
+      return noFoundData;
+    }
+  };
+
   return (
     <SafeAreaView style={styles.screen}>
-      <Header
-        title={product?.name}
-        description={dayjs(day).format("D MMMM")}
-        divider
-      />
+      <Header title={product?.name} divider />
       <Agenda
         items={slots}
         renderItem={renderSlot}
         onDayPress={(day) => handleDayPress(day)}
-        //renderDay={() => {}}
+        renderDay={() => <View />}
         firstDay={1}
         onCalendarToggled={(k) => setKnob(k)}
         selected={day}
@@ -103,16 +112,24 @@ export const CalendarScreen = ({ route }) => {
         pastScrollRange={3}
         futureScrollRange={3}
         renderEmptyDate={() => <View />}
-        renderEmptyData={() => noFoundData}
+        renderEmptyData={renderEmptyData}
         renderKnob={() => showKnob}
         rowHasChanged={(r1, r2) => r1.name !== r2.name}
         showClosingKnob={true}
-        disabledByDefault={false}
         showOnlySelectedDayItems={true}
         refreshing={refreshing}
         onRefresh={refetchByUser}
         refreshControl={refreshControl}
-        theme={styles.agenda}
+        theme={{
+          agendaDayTextColor: "yellow",
+          agendaDayNumColor: "green",
+          agendaTodayColor: "red",
+          agendaKnobColor: "blue",
+          selectedDayBackgroundColor: primary,
+          textDayFontSize: 14,
+          textDayFontWeight: "500",
+          todayTextColor: primary,
+        }}
       />
     </SafeAreaView>
   );
@@ -133,19 +150,7 @@ const styles = StyleSheet.create({
   },
   slotText: {
     fontSize: 13,
-  },
-  agenda: {
-    agendaDayTextColor: "yellow",
-    agendaDayNumColor: "green",
-    agendaTodayColor: "red",
-    agendaKnobColor: "blue",
-    selectedDayBackgroundColor: primary,
-    textDayFontSize: 14,
-    textDayFontWeight: "500",
-    agendaKnobColor: "red",
-    agendaTodayColor: "red",
-    backgroundColor: "white",
-    nowIndicatorKnob: "red",
-    todayTextColor: primary,
+    fontWeight: "600",
+    color: black,
   },
 });

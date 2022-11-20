@@ -3,10 +3,13 @@ import { useNavigation } from "@react-navigation/native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { CustomAvatar, IconButton, Stack } from "../components/core";
 import { useGet } from "../hooks";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../models/navigation/rootStackParams";
 
 export const MapScreen = ({ route }) => {
   const { _id } = route.params.profession;
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const mapStyle = [
     {

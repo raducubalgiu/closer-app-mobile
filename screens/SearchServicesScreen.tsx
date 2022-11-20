@@ -12,6 +12,8 @@ import { useNavigation } from "@react-navigation/native";
 import theme from "../assets/styles/theme";
 import { IconBackButton, SearchBarInput, Stack } from "../components/core";
 import { useAuth } from "../hooks";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../models/navigation/rootStackParams";
 
 const SUGGESTED_SERVICES = [
   {
@@ -38,7 +40,8 @@ export const SearchServicesScreen = ({ route }) => {
   const [search, setSearch] = useState("");
   const [services, setServices] = useState([]);
   const { t } = useTranslation();
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { period } = route.params || {};
 
   const updateSearch = useCallback(
@@ -108,7 +111,7 @@ export const SearchServicesScreen = ({ route }) => {
       <FlatList
         data={services.length > 0 ? services : SUGGESTED_SERVICES}
         keyExtractor={(item) => item._id}
-        renderItem={services.length > 0 ? renderServices : renderSuggested}
+        renderItem={renderServices}
         ListFooterComponent={
           <>
             {services.length === 0 && (

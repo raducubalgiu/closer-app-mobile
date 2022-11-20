@@ -10,9 +10,9 @@ export const ScheduleScreen = () => {
     <SafeAreaView style={styles.screen}>
       <View style={styles.container}>
         <Header title={t("scheduleSummary")} />
-        <Footer btnTitle={t("book")}>
+        {/* <Footer btnTitle={t("book")}>
           <Text>Hello World</Text>
-        </Footer>
+        </Footer> */}
       </View>
     </SafeAreaView>
   );

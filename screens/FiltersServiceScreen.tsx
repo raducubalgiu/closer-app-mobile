@@ -4,14 +4,18 @@ import { useNavigation } from "@react-navigation/native";
 import { FiltersContainer, SheetHeader } from "../components/customized";
 import theme from "../assets/styles/theme";
 import { useTranslation } from "react-i18next";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../models/navigation/rootStackParams";
+import { Option } from "../models/option";
 
 const { black, primary } = theme.lightColors;
 
 export const FiltersServiceScreen = ({ route }) => {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { service, period } = route.params;
   const { filters } = service;
-  const [option, setOption] = useState("");
+  const [option, setOption] = useState<Option>(null);
   const { t } = useTranslation();
 
   const activeBtn = {

@@ -7,13 +7,16 @@ import theme from "../assets/styles/theme";
 import { useNavigation, useScrollToTop } from "@react-navigation/native";
 import { ServicesList, CardRecommended } from "../components/customized";
 import { useGet } from "../hooks";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../models/navigation/rootStackParams";
 
 const { black } = theme.lightColors;
 
 export const HomeScreen = () => {
   const { t } = useTranslation();
   const ref = useRef(null);
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   useScrollToTop(ref);
 

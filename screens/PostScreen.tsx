@@ -7,9 +7,10 @@ import {
 } from "react-native";
 import { useCallback } from "react";
 import { Header } from "../components/core";
-import { CardPost } from "../components/customized";
+import CardPost from "../components/customized/Cards/CardPost/CardPost";
 import { useGet } from "../hooks";
 import { useTranslation } from "react-i18next";
+import { Post } from "../models/post";
 
 const { width, height } = Dimensions.get("window");
 
@@ -22,11 +23,11 @@ export const PostScreen = ({ route }) => {
   const { t } = useTranslation();
 
   const renderUserPosts = useCallback(
-    ({ item }) => <CardPost post={item} />,
+    ({ item }) => <CardPost post={item} onShowDetails={() => {}} />,
     []
   );
   const getItemLayout = useCallback(
-    (data, index) => ({
+    (posts: Post[], index: number) => ({
       length: width,
       offset: height * index,
       index,

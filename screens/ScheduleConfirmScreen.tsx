@@ -5,8 +5,10 @@ import { useTranslation } from "react-i18next";
 import { Header, MainButton, Stack } from "../components/core";
 import { useAuth, usePost } from "../hooks";
 import theme from "../assets/styles/theme";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import dayjs from "dayjs";
+import { RootStackParams } from "../models/navigation/rootStackParams";
 
 const { black, grey0 } = theme.lightColors;
 
@@ -16,7 +18,8 @@ export const ScheduleConfirmScreen = ({ route }) => {
   const { start, end, hour } = slot;
   const { user, name, price, option, duration, description, location } =
     product;
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
 
   const { mutate, isLoading, isSuccess } = usePost({

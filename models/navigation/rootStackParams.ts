@@ -24,6 +24,7 @@ export type RootStackParams = {
   AddProducts: any;
   AddJobs: any;
   EditProduct: any;
+  Messages: any;
   MessageItem: any;
   MessageSettings: {
     _id: string;
@@ -48,6 +49,7 @@ export type RootStackParams = {
   SearchAll: any;
   Hashtag: {
     name: string;
+    postsCount: number;
   };
   Service: any;
   Notifications: any;
@@ -77,6 +79,7 @@ export type RootStackParams = {
     product: Product;
     service: Service;
   };
+  Schedules: any;
   ScheduleConfirm: any;
   ScheduleOverview: any;
   Schedule: any;

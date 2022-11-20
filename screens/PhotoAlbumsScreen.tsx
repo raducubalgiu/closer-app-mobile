@@ -7,12 +7,15 @@ import { AlbumListItem } from "../components/customized/ListItems/AlbumListItem"
 import { Stack } from "../components/core";
 import { CloseIconButton } from "../components/customized/IconButtons/CloseIconButton";
 import theme from "../assets/styles/theme";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../models/navigation/rootStackParams";
 
 const { black } = theme.lightColors;
 
 export const PhotoAlbumsScreen = () => {
   const [albums, setAlbums] = useState([]);
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   useFocusEffect(
     useCallback(() => {
