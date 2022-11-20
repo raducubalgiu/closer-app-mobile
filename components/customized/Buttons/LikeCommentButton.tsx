@@ -31,7 +31,7 @@ export const LikeCommentButton = ({
       setLiked(true);
       if (creatorId === user?._id) makePatch({ likedByCreator: true });
       onLikes(1);
-      makePost();
+      makePost({});
     } else {
       setLiked(false);
       if (creatorId === user?._id) makePatch({ likedByCreator: false });

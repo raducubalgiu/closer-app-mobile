@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, Pressable } from "react-native";
 import React, { useState, useCallback, useEffect } from "react";
 import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../hooks/auth";
@@ -11,13 +11,13 @@ const { primary, black } = theme.lightColors;
 export const FollowButton = ({
   followeeId,
   isFollow,
-  fetchSuggested,
-  fullWidth,
+  fetchSuggested = undefined,
+  fullWidth = false,
   size,
   sxBtn,
   sxBtnText,
 }) => {
-  const { user, setUser } = useAuth();
+  const { user } = useAuth();
   const [follow, setFollow] = useState(false);
   const FOLLOW_ENDPOINT = `/users/${user?._id}/followings/${followeeId}/follows`;
   const { t } = useTranslation();
@@ -44,7 +44,7 @@ export const FollowButton = ({
   const followHandler = useCallback(() => {
     if (!follow) {
       setFollow(true);
-      makePost();
+      makePost({});
       // setUser({
       //   ...user,
       //   followingsCount: user.followingsCount + 1,
@@ -79,14 +79,10 @@ export const FollowButton = ({
   });
 
   return (
-    <TouchableOpacity
-      activeOpacity={1}
-      style={{ ...styles.btn, ...sxBtn }}
-      onPress={followHandler}
-    >
+    <Pressable style={{ ...styles.btn, ...sxBtn }} onPress={followHandler}>
       <Text style={{ ...styles.btnText, ...sxBtnText }}>
         {follow ? t("following") : t("follow")}
       </Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 };

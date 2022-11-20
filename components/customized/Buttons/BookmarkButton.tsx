@@ -31,7 +31,7 @@ export const BookmarkButton = ({
     if (!bookmarked) {
       setBookmarked(true);
       onBookmarksCount && onBookmarksCount(1);
-      makePost();
+      makePost({});
     } else {
       setBookmarked(false);
       onBookmarksCount && onBookmarksCount(-1);

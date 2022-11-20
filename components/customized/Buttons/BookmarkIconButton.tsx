@@ -34,7 +34,7 @@ export const BookmarkIconButton = ({ sx = {}, size = 24, type, typeId }) => {
     if (!bookmarked) {
       setBookmarked(true);
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-      makePost();
+      makePost({});
     } else {
       setBookmarked(false);
       makeDelete();

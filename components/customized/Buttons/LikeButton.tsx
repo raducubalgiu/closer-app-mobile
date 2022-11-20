@@ -36,7 +36,7 @@ export const LikeButton = ({ postId, onAddLike, onRemoveLike, ...props }) => {
       setLiked(true);
       onAddLike();
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-      makePost();
+      makePost({});
     } else {
       setLiked(false);
       onRemoveLike();
