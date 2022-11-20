@@ -23,7 +23,7 @@ import { RootStackParams } from "../models/navigation/rootStackParams";
 export const MessageItemScreen = ({ route }) => {
   const { user } = useAuth();
   const [permission] = Camera.useCameraPermissions();
-  const { _id, name, username, avatar, checkmark } = route.params?.item;
+  const { _id, name, username, avatar, checkmark } = route.params?.user;
   const [message, setMessage] = useState("");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();

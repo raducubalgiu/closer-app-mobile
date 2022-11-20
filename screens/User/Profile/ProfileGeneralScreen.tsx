@@ -41,14 +41,12 @@ export const ProfileGeneralScreen = ({ route }) => {
 
   const goToMessage = () =>
     navigation.navigate("MessageItem", {
-      item: {
+      user: {
         _id: userDetails?._id,
         username,
         avatar,
         name,
         checkmark,
-        followersCount: userDetails?.followersCount,
-        followingsCount: userDetails?.followingsCount,
       },
     });
 

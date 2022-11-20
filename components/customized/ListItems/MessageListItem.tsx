@@ -15,7 +15,7 @@ export const MessageListItem = ({ conversation }) => {
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const goToMessages = () => {
-    navigation.navigate("MessageItem", { item: user });
+    navigation.navigate("MessageItem", { user });
   };
 
   return (

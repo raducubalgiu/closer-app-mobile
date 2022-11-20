@@ -54,11 +54,9 @@ import {
   NotificationsScreen,
   PostScreen,
   SchedulesScreen,
-  ScheduleScreen,
   ScheduleCancelScreen,
   ScheduleConfirmScreen,
   ScheduleDetailsScreen,
-  ScheduleOverviewScreen,
   SearchAllScreen,
   SearchPostsScreen,
   SearchServicesScreen,
@@ -327,11 +325,6 @@ const CloserNavigation = () => {
                 name="ScheduleConfirm"
                 component={ScheduleConfirmScreen}
               />
-              <RootStack.Screen
-                name="ScheduleOverview"
-                component={ScheduleOverviewScreen}
-              />
-              <RootStack.Screen name="Schedule" component={ScheduleScreen} />
               <RootStack.Screen
                 name="AddSchedule"
                 component={AddScheduleScreen}

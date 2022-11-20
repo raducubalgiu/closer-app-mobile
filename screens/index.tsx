@@ -43,8 +43,6 @@ export { PostScreen } from "./PostScreen";
 export { ScheduleCancelScreen } from "./ScheduleCancelScreen";
 export { ScheduleConfirmScreen } from "./ScheduleConfirmScreen";
 export { ScheduleDetailsScreen } from "./ScheduleDetailsScreen";
-export { ScheduleOverviewScreen } from "./ScheduleOverviewScreen";
-export { ScheduleScreen } from "./ScheduleScreen";
 export { SchedulesScreen } from "./SchedulesScreen";
 export { SearchAllScreen } from "./SearchAllScreen";
 export { SearchPostsScreen } from "./SearchPostsScreen";

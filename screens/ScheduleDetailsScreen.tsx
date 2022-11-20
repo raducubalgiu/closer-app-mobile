@@ -53,11 +53,10 @@ export const ScheduleDetailsScreen = ({ route }) => {
       service: null,
       option: null,
     });
+
   const goToCancel = () =>
-    navigation.navigate("ScheduleCancel", {
-      start,
-      scheduleId: _id,
-    });
+    navigation.navigate("ScheduleCancel", { scheduleId: _id });
+
   const goToBookAgain = () =>
     navigation.navigate("CalendarBig", { product, service });
 

@@ -1,31 +1,90 @@
+import { Option } from "../option";
 import { Product } from "../product";
+import { Schedule } from "../schedule";
 import { Service } from "../service";
+import { Slot } from "../slot";
 
 export type RootStackParams = {
   App: any;
-  SearchServices: any;
-  FiltersDate: any;
-  FiltersService: any;
-  Locations: any;
-  EditProfile: any;
+  AuthStack: any;
+  AllBookmarks: {
+    postId: string;
+    userId: string;
+  };
+  AddLocation: any;
+  AddServices: any;
+  AddProducts: any;
+  AddJobs: any;
+  AddSchedule: any;
+  AddPost: any;
+  Bookmarks: {
+    user: any;
+  };
+  Comments: {
+    postId: string;
+    description: string;
+    avatar: any;
+    username: string;
+  };
+  CalendarBig: {
+    product: Product;
+    service: Service;
+  };
+  Camera: {
+    name: string;
+    avatar: any;
+  };
+  CameraPreview: {
+    photo: string;
+    avatar: any;
+  };
+  Discounts: any;
+  EditProfile: {
+    user: any;
+  };
   EditBio: any;
   EditName: any;
   EditWebsite: any;
   EditUsername: any;
   EditProfession: any;
+  EditAvatar: {
+    photo: string;
+  };
+  EditProduct: {
+    product: any;
+  };
+  SearchServices: any;
+  FindFriends: any;
+  FiltersDate: any;
+  FiltersService: any;
+  Feed: any;
+  Hashtag: {
+    name: string;
+    postsCount: number;
+  };
+  Login: any;
+  Locations: {
+    service: Service;
+    option: Option;
+  };
+  LocationItem: { locationId: string };
+  Likes: { postId: string };
   MyBusiness: any;
   MyDashboard: any;
   MyCalendar: any;
   MyLocation: any;
   MyProducts: any;
   MyJobs: any;
-  AddLocation: any;
-  AddServices: any;
-  AddProducts: any;
-  AddJobs: any;
-  EditProduct: any;
   Messages: any;
-  MessageItem: any;
+  MessageItem: {
+    user: {
+      _id: string;
+      name: string;
+      username: string;
+      avatar: string;
+      checkmark: boolean;
+    };
+  };
   MessageSettings: {
     _id: string;
     avatar: any;
@@ -35,23 +94,14 @@ export type RootStackParams = {
     conversationId: string;
   };
   MessageNew: any;
-  Settings: any;
-  Discounts: any;
-  FindFriends: any;
-  Bookmarks: any;
-  AllBookmarks: {
-    postId: string;
-    userId: string;
-  };
-  Comments: any;
-  SearchAll: any;
-  Hashtag: {
-    name: string;
-    postsCount: number;
-  };
-  Service: any;
   Notifications: any;
-  Post: any;
+  Map: {
+    profession: {
+      _id: string;
+      name: string;
+    };
+  };
+  Post: { userId: string };
   Profile: any;
   ProfileGeneral: {
     userId: string | null;
@@ -62,7 +112,6 @@ export type RootStackParams = {
     service: string | null;
     option: string | null;
   };
-  Map: any;
   ProfileStats: {
     screen: string;
     userId: string;
@@ -73,31 +122,22 @@ export type RootStackParams = {
     followersCount: number;
     followingsCount: number;
   };
-  CalendarBig: {
-    product: Product;
-    service: Service;
-  };
-  Schedules: any;
-  ScheduleConfirm: any;
-  ScheduleOverview: any;
-  ScheduleDetails: any;
-  ScheduleCancel: { scheduleId: string };
-  Schedule: any;
-  AddSchedule: any;
-  AddPost: any;
   PhotoLibrary: any;
   PhotoAlbums: any;
-  EditAvatar: any;
-  Camera: any;
-  CameraPreview: any;
-  Test: any;
-  AuthStack: any;
-  Feed: any;
-  Likes: { postId: string };
-  SearchPosts: any;
-  LocationItem: { locationId: string };
-  Login: any;
   Register: any;
   RegisterBusiness: any;
-  Username: any;
+  Settings: any;
+  SearchAll: { search: string };
+  Schedules: any;
+  ScheduleConfirm: {
+    service: Service;
+    product: Product;
+    slot: Slot;
+  };
+  ScheduleDetails: { schedule: Schedule };
+  ScheduleCancel: { scheduleId: string };
+  SearchPosts: { search: string };
+  Service: { service: Service };
+  Test: any;
+  Username: { isTokenResult: string; role: string };
 };
