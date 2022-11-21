@@ -3,17 +3,13 @@ import { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { MAIN_ROLE, SECOND_ROLE } from "@env";
-import {
-  Protected,
-  MainButton,
-  CFAB,
-  SocialIconButton,
-} from "../../../components/core";
+import { Protected, CFAB, Button } from "../../../components/core";
 import {
   ProfileOverview,
   ProfileMenuList,
   HeaderProfile,
   TopTabProfile,
+  ProfileIconButton,
 } from "../../../components/customized";
 import { useSheet, useAuth } from "../../../hooks";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -52,16 +48,15 @@ export const ProfileScreen = () => {
         username={username}
         avatar={avatar}
       >
-        <MainButton
-          variant="outlined"
+        <Button
           title={t("editProfile")}
-          radius={2.5}
-          sx={{ borderWidth: 1, borderColor: "#ddd" }}
           onPress={navigateProfile}
+          variant="outlined"
+          sxBtn={{ width: 150 }}
         />
-        <SocialIconButton onPress={navigateBookmarks} name="bookmark" />
-        <SocialIconButton onPress={navigateInstagram} name="instagram" />
-        <SocialIconButton onPress={navigateYoutube} name="youtube" />
+        <ProfileIconButton name="bookmark" onPress={navigateBookmarks} />
+        <ProfileIconButton name="instagram" onPress={navigateInstagram} />
+        <ProfileIconButton name="youtube" onPress={navigateYoutube} />
       </ProfileOverview>
       <TopTabProfile
         userId={user?._id}
@@ -84,22 +79,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
-  },
-  editBtn: {
-    borderColor: "#ddd",
-    borderWidth: 1,
-    paddingVertical: 10,
-    borderRadius: 0,
-  },
-  savedBtn: {
-    padding: 10,
-    borderWidth: 1,
-    borderColor: "#ddd",
-    marginLeft: 5,
-  },
-  indicatorStyle: {
-    backgroundColor: "#ddd",
-    width: 45,
-    height: 5,
   },
 });

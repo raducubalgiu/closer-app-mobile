@@ -7,6 +7,7 @@ import { ThemeProvider } from "@rneui/themed";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import theme from "./assets/styles/theme";
 import "./firebase/firebase.config";
+import { RootSiblingParent } from "react-native-root-siblings";
 
 enableScreens();
 const queryClient = new QueryClient();
@@ -15,11 +16,13 @@ const App = () => {
   return (
     <AuthProvider>
       <SafeAreaProvider>
-        <QueryClientProvider client={queryClient}>
-          <ThemeProvider theme={theme}>
-            <CloserNavigation />
-          </ThemeProvider>
-        </QueryClientProvider>
+        <RootSiblingParent>
+          <QueryClientProvider client={queryClient}>
+            <ThemeProvider theme={theme}>
+              <CloserNavigation />
+            </ThemeProvider>
+          </QueryClientProvider>
+        </RootSiblingParent>
       </SafeAreaProvider>
     </AuthProvider>
   );
