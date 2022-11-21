@@ -1,4 +1,5 @@
 import React from "react";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { enableScreens } from "react-native-screens";
 import CloserNavigation from "./navigation/CloserNavigation";
 import { AuthProvider } from "./hooks/auth";
@@ -13,11 +14,13 @@ const queryClient = new QueryClient();
 const App = () => {
   return (
     <AuthProvider>
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={theme}>
-          <CloserNavigation />
-        </ThemeProvider>
-      </QueryClientProvider>
+      <SafeAreaProvider>
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider theme={theme}>
+            <CloserNavigation />
+          </ThemeProvider>
+        </QueryClientProvider>
+      </SafeAreaProvider>
     </AuthProvider>
   );
 };

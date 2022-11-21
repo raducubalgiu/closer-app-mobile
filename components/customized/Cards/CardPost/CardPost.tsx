@@ -1,10 +1,12 @@
 import { StyleSheet, View } from "react-native";
 import { Image } from "@rneui/themed";
+import Animated from "react-native-reanimated";
 import React, { memo } from "react";
 import CardPostHeader from "./CardPostHeader";
 import CardPostButtons from "./CardPostButtons";
 import CardPostFooter from "./CardPostFooter";
 import { FROM_NOW } from "../../../../utils/date-utils";
+import { SharedElement } from "react-navigation-shared-element";
 
 const CardPost = ({ post, onShowDetails }) => {
   const {
@@ -31,14 +33,12 @@ const CardPost = ({ post, onShowDetails }) => {
         onShowDetails={onShowDetails}
       />
       <View>
-        <Image
-          source={{
-            uri: `${post?.images[0]?.url}`,
-          }}
-          style={
-            !bookable ? { ...styles.image, height: 450 } : { ...styles.image }
-          }
-        />
+        <SharedElement id={_id}>
+          <Animated.Image
+            source={{ uri: `${post?.images[0]?.url}` }}
+            style={[{ width: "100%", height: 400 }]}
+          />
+        </SharedElement>
       </View>
       <CardPostButtons
         bookable={bookable}
@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
   container: {
     marginBottom: 15,
     borderRadius: 20,
+    height: 600,
   },
   image: {
     aspectRatio: 1,

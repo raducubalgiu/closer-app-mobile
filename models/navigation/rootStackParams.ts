@@ -140,4 +140,7 @@ export type RootStackParams = {
   Service: { service: Service };
   Test: any;
   Username: { isTokenResult: string; role: string };
+  SharedList: any;
+  SharedDetail: any;
+  Shared: any;
 };

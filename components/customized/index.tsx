@@ -17,6 +17,7 @@ export { BookmarkIconButton } from "./Buttons/BookmarkIconButton";
 export { BookmarkButton } from "./Buttons/BookmarkButton";
 export { FollowButton } from "./Buttons/FollowButton";
 export { StatsButton } from "./Buttons/StatsButton";
+export { BookButton } from "./Buttons/BookButton";
 
 export { TopTabContainer } from "./Tabs/TopTabContainer/TopTabContainer";
 export { TopTabProfile } from "./Tabs/TopTabContainer/TopTabProfile";

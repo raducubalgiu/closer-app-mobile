@@ -3,11 +3,12 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import { SECOND_ROLE, THIRD_ROLE } from "@env";
-import { Stack, MainButton, Protected } from "../../core";
+import { Stack, Protected } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { trimFunc } from "../../../utils";
 import { useAuth, useDuration } from "../../../hooks";
 import { BookmarkButton } from "../Buttons/BookmarkButton";
+import { BookButton } from "../Buttons/BookButton";
 import { UserListItemSimple } from "../ListItems/UserListItemSimple";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../models/navigation/rootStackParams";
@@ -40,34 +41,26 @@ export const CardProduct = ({
 
   return (
     <Stack sx={styles.card} align="start">
-      <Stack direction="row" sx={{ width: "100%" }} align="start">
+      <Stack direction="row" align="start">
         <Stack align="start" sx={styles.descriptionCont}>
-          <Text style={styles.name}>{name} </Text>
-          <Stack direction="row">
-            {option && <Text style={styles.option}>{option?.name}</Text>}
-            <Text style={styles.duration}>{currDuration}</Text>
+          <Stack direction="row" align="start" sx={{ width: "100%" }}>
+            <Stack align="start" sx={{ flex: 1 }}>
+              <Text style={styles.name}>{name} </Text>
+              <Text style={styles.option}>{option?.name}</Text>
+            </Stack>
+            <Protected
+              roles={[SECOND_ROLE, THIRD_ROLE]}
+              userRole={userContext.role}
+            >
+              <BookButton onPress={goToCalendar} />
+            </Protected>
           </Stack>
-          {description && (
-            <Text style={styles.description}>{trimFunc(description, 50)}</Text>
-          )}
+          <Stack sx={{ marginVertical: 5 }}>
+            <Text style={styles.description}>{trimFunc(description, 80)}</Text>
+          </Stack>
           <Text style={styles.price}>
             {price} {t("ron")}
           </Text>
-        </Stack>
-        <Stack>
-          <Protected
-            roles={[SECOND_ROLE, THIRD_ROLE]}
-            userRole={userContext.role}
-          >
-            <MainButton size="md" title={t("book")} onPress={goToCalendar} />
-          </Protected>
-          {/* <Stack direction="row">
-                <IconButtonEdit onPress={onEditProduct} />
-                <IconButtonDelete
-                  onPress={onDeleteProduct}
-                  sx={{ marginLeft: 20 }}
-                />
-              </Stack> */}
         </Stack>
       </Stack>
       {ownerInfo && (
@@ -102,31 +95,28 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   name: {
-    fontSize: 16,
-    marginBottom: 5,
+    fontSize: 17,
     color: black,
     fontWeight: "600",
+    marginBottom: 2.5,
   },
   option: {
     color: primary,
-    fontSize: 14,
-    fontWeight: "600",
+    fontSize: 15,
+    fontWeight: "700",
     marginRight: 10,
-  },
-  duration: {
-    color: theme.lightColors.black,
-    fontWeight: "500",
   },
   descriptionCont: { marginRight: 5, flex: 1 },
   description: {
     color: grey0,
     marginTop: 5,
+    fontSize: 14,
   },
   price: {
-    marginTop: 10,
-    fontSize: 15,
+    fontSize: 16,
     color: black,
     fontWeight: "700",
+    marginTop: 5,
   },
   button: {
     backgroundColor: "white",

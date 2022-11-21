@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next";
 import theme from "../assets/styles/theme";
 import { useAuth } from "../hooks";
 import { RootStackParams } from "../models/navigation/rootStackParams";
+import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 import {
   EditProfileScreen,
   EditBioScreen,
@@ -76,11 +77,41 @@ import {
 
 import TestScreen from "../screens/TestScreen";
 
+const SharedStack = createSharedElementStackNavigator();
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const RootStack = createNativeStackNavigator<RootStackParams>();
 
 const { black } = theme.lightColors;
+
+import { SharedList } from "../screens/SharedList";
+import { SharedDetails } from "../screens/SharedDetails";
+import { PanGestureHandler } from "react-native-gesture-handler";
+
+const Shared = () => {
+  return (
+    <SharedStack.Navigator
+      initialRouteName="SharedList"
+      screenOptions={{
+        headerShown: false,
+        gestureEnabled: false,
+        cardOverlayEnabled: true,
+        presentation: "transparentModal",
+      }}
+    >
+      <SharedStack.Screen name="SharedList" component={SharedList} />
+      <SharedStack.Screen
+        name="SharedDetail"
+        component={SharedDetails}
+        sharedElements={(route, otherRoute, showing) => {
+          const { item } = route.params;
+          return [{ id: item._id, animation: "move" }];
+        }}
+      />
+    </SharedStack.Navigator>
+  );
+};
 
 const FeedStackNavigator = () => {
   return (
@@ -134,6 +165,9 @@ const TabsScreen = () => {
             iconType = "feather";
             iconName = focused ? "calendar" : "calendar";
           } else if (route.name === "Profile") {
+            iconType = "feather";
+            iconName = focused ? "user" : "user";
+          } else if (route.name === "SharedStack") {
             iconType = "feather";
             iconName = focused ? "user" : "user";
           }
@@ -366,6 +400,7 @@ const CloserNavigation = () => {
                   component={CameraPreviewScreen}
                 />
               </RootStack.Group>
+              <RootStack.Screen name="SharedList" component={Shared} />
               <RootStack.Screen name="Test" component={TestScreen} />
             </RootStack.Navigator>
           </PortalProvider>
