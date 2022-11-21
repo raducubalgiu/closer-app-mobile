@@ -7,7 +7,7 @@ import {
   ButtonGroup,
   CModal,
   FormInputSelect,
-  MainButton,
+  Button,
   Stack,
 } from "../components/core";
 import { FiltersContainer, SheetHeader } from "../components/customized";
@@ -63,7 +63,7 @@ export const FiltersDateScreen = ({ route }) => {
 
   const handleHours = (data) => console.log(data);
   const modalFooter = (
-    <MainButton
+    <Button
       onPress={handleSubmit(handleHours)}
       title="Adauga"
       disabled={true}

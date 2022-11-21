@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Pressable } from "react-native";
 import React, { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { Divider } from "@rneui/themed";
-import { FormInput, MainButton, Stack } from "../../core";
+import { Button, FormInput, Stack } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 import { AuthProviders } from "./AuthProviders";
@@ -54,9 +54,10 @@ export const LoginRegisterForm = ({
           name="password"
           secureTextEntry={true}
         />
-        <MainButton
+        <Button
           size="lg"
-          radius={10}
+          fullWidth
+          radius={7.5}
           title={heading}
           loading={loading}
           onPress={handleSubmit(onSubmit)}

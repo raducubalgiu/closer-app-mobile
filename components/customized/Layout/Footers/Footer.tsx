@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { Stack, MainButton } from "../../../core";
+import { Stack, Button } from "../../../core";
 
 export const Footer = ({
   children,
@@ -12,7 +12,7 @@ export const Footer = ({
   return (
     <Stack direction="row" sx={{ ...styles.footer, ...sx }}>
       <Stack align="start">{children}</Stack>
-      <MainButton
+      <Button
         disabled={disabled}
         size="lg"
         loading={loading}

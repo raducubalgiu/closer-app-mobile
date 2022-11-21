@@ -1,5 +1,5 @@
 import { StyleSheet, Text } from "react-native";
-import { CModal, MainButton } from "../../core";
+import { CModal, Button } from "../../core";
 
 export const FilterPriceModal = ({ visible, onClose }) => {
   return (
@@ -8,12 +8,7 @@ export const FilterPriceModal = ({ visible, onClose }) => {
       size="sm"
       headerTitle="Filtreaza pretul"
       footer={
-        <MainButton
-          size="lg"
-          radius={15}
-          title="Filtreaza"
-          onPress={() => {}}
-        />
+        <Button size="lg" radius={15} title="Filtreaza" onPress={() => {}} />
       }
       onCloseModal={onClose}
     >

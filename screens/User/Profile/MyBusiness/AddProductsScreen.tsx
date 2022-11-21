@@ -10,7 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { useAuth, useGet, usePost } from "../../../../hooks";
 import { required, maxField, minField } from "../../../../constants/validation";
-import { MainButton, FormInput, Stack } from "../../../../components/core";
+import { Button, FormInput, Stack } from "../../../../components/core";
 import { FormInputSelect } from "../../../../components/core";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -138,7 +138,7 @@ export const AddProductsScreen = () => {
             </Stack>
           </ScrollView>
           <Stack sx={styles.btnContainer}>
-            <MainButton
+            <Button
               size="lg"
               radius={10}
               fullWidth

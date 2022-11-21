@@ -1,5 +1,5 @@
 import { StyleSheet, SafeAreaView, FlatList } from "react-native";
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 import { Header, Protected } from "../../../../components/core";
 import MyBusinessCard from "../../../../components/customized/Cards/MyBusinessCard";
 import { useNavigation } from "@react-navigation/native";

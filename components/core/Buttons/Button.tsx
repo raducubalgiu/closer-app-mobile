@@ -12,6 +12,8 @@ export const Button = ({
   sxBtn = {},
   sxText = {},
   radius = null,
+  bgColor = null,
+  color = null,
   title,
   onPress,
 }) => {
@@ -21,10 +23,10 @@ export const Button = ({
 
   if (variant === "contained" && !loading) {
     styleBtn = {
-      backgroundColor: primary,
-      borderColor: primary,
+      backgroundColor: bgColor ? bgColor : primary,
+      borderColor: bgColor ? bgColor : primary,
     };
-    styleBtnTxt = { color: "white" };
+    styleBtnTxt = { color: color ? color : "white" };
   } else if ((variant = "outlined") && !loading) {
     styleBtn = {
       backgroundColor: "white",
@@ -52,13 +54,14 @@ export const Button = ({
     case "lg":
       sizes = {
         width: !fullWidth ? 150 : "100%",
-        height: 55,
+        height: 47.5,
       };
       break;
   }
 
   const styles = StyleSheet.create({
     container: {
+      marginVertical: 10,
       borderWidth: 1,
       justifyContent: "center",
       alignItems: "center",

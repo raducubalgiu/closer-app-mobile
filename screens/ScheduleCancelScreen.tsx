@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next";
 import { Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { Header, MainButton, Textarea } from "../components/core";
+import { Header, Button, Textarea } from "../components/core";
 import theme from "../assets/styles/theme";
 import { usePatch } from "../hooks";
 import { RootStackParams } from "../models/navigation/rootStackParams";
@@ -109,13 +109,13 @@ export const ScheduleCancelScreen = ({ route }) => {
           contentContainerStyle={{ padding: 15 }}
           ListFooterComponent={footer}
         />
-        <MainButton
+        <Button
           title={t("cancelAppoinment")}
           size="lg"
           radius={25}
           bgColor={error}
           onPress={cancelAppoinment}
-          sx={{ marginHorizontal: 20 }}
+          sxBtn={{ marginHorizontal: 20 }}
           loading={isLoading}
         />
       </KeyboardAvoidingView>

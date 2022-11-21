@@ -1,11 +1,9 @@
 export { ButtonLink } from "./Buttons/ButtonLink";
 export { ButtonFilter } from "./Buttons/ButtonFilter";
-export { MainButton } from "./Buttons/MainButton";
 export { ButtonProvider } from "./Buttons/ButtonProvider";
 export { CardButton } from "./Buttons/CardButton";
 export { ShareIButton } from "./Buttons/ShareIButton";
 export { FeedLabelButton } from "./Buttons/FeedLabelButton";
-export { SocialIconButton } from "./Buttons/SocialIconButton";
 export { Button } from "./Buttons/Button";
 
 export { ButtonGroup } from "./ButtonGroup/ButtonGroup";

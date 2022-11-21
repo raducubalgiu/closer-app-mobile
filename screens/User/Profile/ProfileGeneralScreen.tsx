@@ -11,13 +11,13 @@ import {
   useDelete,
 } from "../../../hooks";
 import {
-  ProfileOverview,
   HeaderProfileGeneral,
   SuggestedUsersList,
   TopTabProfile,
   ProfileIconButton,
   FollowProfileButton,
 } from "../../../components/customized";
+import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
 import { RootStackParams } from "../../../models/navigation/rootStackParams";
 
 export const ProfileGeneralScreen = ({ route }) => {

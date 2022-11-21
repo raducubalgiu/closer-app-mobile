@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
 import axios from "axios";
 import { useForm, FormProvider } from "react-hook-form";
-import { MainButton } from "../Buttons/MainButton";
+import { Button } from "../Buttons/Button";
 import React, { useEffect, useState } from "react";
 import theme from "../../../assets/styles/theme";
 import { Icon } from "@rneui/themed";
@@ -72,7 +72,7 @@ const InputCheck = ({ inputName, endpoint, onSubmit, loadingBtn }) => {
             <View style={{ padding: 10 }}>{showStatus}</View>
           </Stack>
         </View>
-        <MainButton
+        <Button
           onPress={handleSubmit(onHandleSubmit)}
           title="Continuare"
           disabled={!input ? true : false}

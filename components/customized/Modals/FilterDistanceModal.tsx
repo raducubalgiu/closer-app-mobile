@@ -1,5 +1,5 @@
 import { StyleSheet, Text } from "react-native";
-import { CModal, MainButton } from "../../core";
+import { CModal, Button } from "../../core";
 
 export const FilterDistanceModal = ({ visible, onClose, onHandleDistance }) => {
   return (
@@ -8,7 +8,7 @@ export const FilterDistanceModal = ({ visible, onClose, onHandleDistance }) => {
       size="sm"
       headerTitle="Filtreaza distanta"
       footer={
-        <MainButton
+        <Button
           onPress={onHandleDistance}
           size="lg"
           radius={15}

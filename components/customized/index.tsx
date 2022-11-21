@@ -9,8 +9,6 @@ export { Footer } from "./Layout/Footers/Footer";
 export { FooterMessageItem } from "./Layout/Footers/FooterMessageItem";
 export { FooterComments } from "./Layout/Footers/FooterComments";
 
-export { ProfileOverview } from "./ProfileOverview/ProfileOverview";
-
 export { LikeCommentButton } from "./Buttons/LikeCommentButton";
 export { LikeButton } from "./Buttons/LikeButton";
 export { BookmarkIconButton } from "./Buttons/BookmarkIconButton";

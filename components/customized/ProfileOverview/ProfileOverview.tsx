@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { MAIN_ROLE, SECOND_ROLE, THIRD_ROLE } from "@env";
@@ -12,7 +13,7 @@ import { RootStackParams } from "../../../models/navigation/rootStackParams";
 
 const { black, primary } = theme.lightColors;
 
-export const ProfileOverview = ({ name, username, avatar, children, user }) => {
+const ProfileOverview = ({ name, username, avatar, children, user }) => {
   const { user: userContext } = useAuth();
   const { role, profession } = user || {};
   const {
@@ -111,6 +112,8 @@ export const ProfileOverview = ({ name, username, avatar, children, user }) => {
     </View>
   );
 };
+
+export default memo(ProfileOverview);
 
 const styles = StyleSheet.create({
   container: {

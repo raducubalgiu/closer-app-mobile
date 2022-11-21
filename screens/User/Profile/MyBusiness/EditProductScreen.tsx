@@ -17,7 +17,7 @@ import {
   Stack,
   FormInput,
   FormInputSelect,
-  MainButton,
+  Button,
 } from "../../../../components/core";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../models/navigation/rootStackParams";
@@ -125,7 +125,7 @@ export const EditProductScreen = ({ route }) => {
           </Stack>
         </ScrollView>
         <Stack sx={styles.btnContainer}>
-          <MainButton
+          <Button
             size="lg"
             radius={10}
             fullWidth

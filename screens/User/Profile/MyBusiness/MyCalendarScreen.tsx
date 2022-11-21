@@ -1,5 +1,5 @@
 import { SafeAreaView, StyleSheet, Text, Pressable } from "react-native";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Icon } from "@rneui/themed";
 import theme from "../../../../assets/styles/theme";

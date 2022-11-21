@@ -2,7 +2,7 @@ import { SafeAreaView, ScrollView, StyleSheet, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Icon } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
-import { Header, MainButton, Stack } from "../components/core";
+import { Header, Button, Stack } from "../components/core";
 import { useAuth, usePost } from "../hooks";
 import theme from "../assets/styles/theme";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -62,7 +62,7 @@ export const ScheduleConfirmScreen = ({ route }) => {
               <Text style={styles.heading}>
                 {dayjs(start).format("DD-MM-YYYY")} - {hour}
               </Text>
-              <Text style={styles.description}>{user.name}</Text>
+              <Text style={styles.description}>{user?.name}</Text>
             </Stack>
           </Stack>
           <Stack align="start" direction="row" sx={{ marginBottom: 50 }}>
@@ -98,13 +98,13 @@ export const ScheduleConfirmScreen = ({ route }) => {
           </Stack>
         </Stack>
       </ScrollView>
-      <MainButton
+      <Button
         size="lg"
         radius={25}
+        fullWidth
         title={t("confirmBooking")}
         loading={isLoading && !isSuccess}
         onPress={handleBook}
-        sx={{ marginHorizontal: 15 }}
       />
     </SafeAreaView>
   );

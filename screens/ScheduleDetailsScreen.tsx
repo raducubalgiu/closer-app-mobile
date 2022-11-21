@@ -9,10 +9,10 @@ import {
 import {
   CustomAvatar,
   Header,
-  MainButton,
   Stack,
   IconLocation,
   IconStar,
+  Button,
 } from "../components/core";
 import { useTranslation } from "react-i18next";
 import { Icon } from "@rneui/base";
@@ -64,25 +64,24 @@ export const ScheduleDetailsScreen = ({ route }) => {
 
   if (dayjs(start).isAfter(dayjs().utc()) && status === "accepted") {
     actionButton = (
-      <MainButton
+      <Button
         onPress={goToCancel}
         title={t("cancelAppoinment")}
         size="lg"
         radius={25}
         bgColor={error}
-        sx={styles.btn}
       />
     );
   } else {
     actionButton = (
-      <MainButton
+      <Button
         onPress={goToBookAgain}
         title={t("bookAgain")}
+        fullWidth
         size="lg"
         radius={25}
         bgColor={"#eee"}
-        txtColor={black}
-        sx={styles.btn}
+        color={black}
       />
     );
   }
@@ -133,12 +132,12 @@ export const ScheduleDetailsScreen = ({ route }) => {
                 align="start"
                 sx={{ position: "absolute", bottom: 30, right: 15 }}
               >
-                <MainButton
+                <Button
                   onPress={() => {}}
                   title={<Text style={styles.navigate}>{t("navigate")}</Text>}
                   bgColor="white"
                   radius={25}
-                  sx={{
+                  sxBtn={{
                     marginTop: 20,
                     shadowColor: "#171717",
                     shadowOffset: { width: -2, height: 2 },
@@ -196,9 +195,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 10,
     marginLeft: 10,
-  },
-  btn: {
-    marginHorizontal: 15,
   },
   divider: { marginTop: 20, marginBottom: 10 },
   status: {

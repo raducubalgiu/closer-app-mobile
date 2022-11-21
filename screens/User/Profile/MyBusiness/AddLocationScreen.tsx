@@ -10,7 +10,7 @@ import {
 import React, { useState } from "react";
 import theme from "../../../../assets/styles/theme";
 import { AutocompleteGoogle } from "../../../../components/customized";
-import { Stack, Header, MainButton } from "../../../../components/core";
+import { Stack, Header, Button } from "../../../../components/core";
 import { Icon, Avatar, Badge } from "@rneui/themed";
 import { useAuth } from "../../../../hooks/auth";
 import { useNavigation } from "@react-navigation/native";
@@ -163,7 +163,7 @@ export const AddLocationScreen = () => {
         />
       </ScrollView>
       <View style={styles.actionButtons}>
-        <MainButton
+        <Button
           size="lg"
           fullWidth
           title={t("save")}

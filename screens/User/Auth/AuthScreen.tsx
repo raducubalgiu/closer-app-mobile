@@ -3,7 +3,7 @@ import { Divider, Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";
-import { Stack, ListItem } from "../../../components/core";
+import { Stack, ListItem, Button } from "../../../components/core";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../models/navigation/rootStackParams";
 
@@ -20,12 +20,15 @@ export const AuthScreen = () => {
         <Text style={styles.mainHeading}>{t("yourProfile")}</Text>
         <Text style={styles.secondHeading}>{t("connectIntoAccountTitle")}</Text>
       </Stack>
-      <Pressable
-        onPress={() => navigation.navigate("Login")}
-        style={styles.mainBtn}
-      >
-        <Text style={styles.mainBtnText}>{t("connect")}</Text>
-      </Pressable>
+      <Stack sx={{ margin: 15 }}>
+        <Button
+          title={t("connect")}
+          onPress={() => navigation.navigate("Login")}
+          fullWidth
+          radius={7.5}
+          size="lg"
+        />
+      </Stack>
       <Stack direction="row" justify="start" sx={styles.registerText}>
         <Text style={styles.textAction}>{t("dontHaveAccount")}</Text>
         <Pressable

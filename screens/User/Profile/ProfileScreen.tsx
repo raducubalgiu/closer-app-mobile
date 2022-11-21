@@ -5,12 +5,12 @@ import { useTranslation } from "react-i18next";
 import { MAIN_ROLE, SECOND_ROLE } from "@env";
 import { Protected, CFAB, Button } from "../../../components/core";
 import {
-  ProfileOverview,
   ProfileMenuList,
   HeaderProfile,
   TopTabProfile,
   ProfileIconButton,
 } from "../../../components/customized";
+import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
 import { useSheet, useAuth } from "../../../hooks";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../models/navigation/rootStackParams";
@@ -26,8 +26,7 @@ export const ProfileScreen = () => {
   const profileMenu = <ProfileMenuList onCloseSheet={closeSheet} />;
   const { BOTTOM_SHEET, SHOW_BS, CLOSE_BS } = useSheet(
     [10, "60%"],
-    profileMenu,
-    closeSheet
+    profileMenu
   );
   const navigateBookmarks = () => navigation.navigate("Bookmarks", { user });
   const navigateProfile = () => navigation.navigate("EditProfile", { user });
