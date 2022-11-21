@@ -67,6 +67,7 @@ export const ScheduleDetailsScreen = ({ route }) => {
       <Button
         onPress={goToCancel}
         title={t("cancelAppoinment")}
+        fullWidth
         size="lg"
         radius={25}
         bgColor={error}

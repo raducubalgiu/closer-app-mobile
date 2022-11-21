@@ -41,19 +41,19 @@ export const Button = ({
   switch (size) {
     case "sm":
       sizes = {
-        width: !fullWidth ? 100 : "100%",
+        width: 100,
         height: 35,
       };
       break;
     case "md":
       sizes = {
-        width: !fullWidth ? 120 : "100%",
+        width: 120,
         height: 45,
       };
       break;
     case "lg":
       sizes = {
-        width: !fullWidth ? 150 : "100%",
+        width: 150,
         height: 47.5,
       };
       break;

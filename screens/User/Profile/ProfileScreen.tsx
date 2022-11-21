@@ -3,7 +3,8 @@ import { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { MAIN_ROLE, SECOND_ROLE } from "@env";
-import { Protected, CFAB, Button } from "../../../components/core";
+import theme from "../../../assets/styles/theme";
+import { Protected, Button } from "../../../components/core";
 import {
   ProfileMenuList,
   HeaderProfile,
@@ -14,6 +15,7 @@ import ProfileOverview from "../../../components/customized/ProfileOverview/Prof
 import { useSheet, useAuth } from "../../../hooks";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../models/navigation/rootStackParams";
+import { FAB } from "@rneui/themed";
 
 export const ProfileScreen = () => {
   const { user } = useAuth();
@@ -64,9 +66,11 @@ export const ProfileScreen = () => {
         user={user}
       />
       <Protected roles={[MAIN_ROLE, SECOND_ROLE]} userRole={role}>
-        <CFAB
-          onPress={() => navigation.navigate("MyCalendar")}
+        <FAB
+          color={theme.lightColors.primary}
           icon={{ name: "calendar", type: "feather", color: "white" }}
+          placement="right"
+          onPress={() => navigation.navigate("MyCalendar")}
         />
       </Protected>
       {BOTTOM_SHEET}

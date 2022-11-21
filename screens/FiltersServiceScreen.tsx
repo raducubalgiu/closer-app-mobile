@@ -32,7 +32,6 @@ export const FiltersServiceScreen = ({ route }) => {
     navigation.navigate("Locations", {
       service,
       option,
-      period,
     });
 
   const renderOption = useCallback(
