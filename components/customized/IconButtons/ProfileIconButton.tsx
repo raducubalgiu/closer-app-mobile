@@ -16,7 +16,7 @@ export const ProfileIconButton = ({
       {loading ? (
         <ActivityIndicator />
       ) : (
-        <Icon name={name} type={type} size={25} color={black} />
+        <Icon name={name} type={type} size={20} color={black} />
       )}
     </Pressable>
   );

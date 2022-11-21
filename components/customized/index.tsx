@@ -17,6 +17,9 @@ export { FollowButton } from "./Buttons/FollowButton";
 export { StatsButton } from "./Buttons/StatsButton";
 export { BookButton } from "./Buttons/BookButton";
 export { FollowProfileButton } from "./Buttons/FollowProfileButton";
+export { ButtonFilter } from "./Buttons/ButtonFilter";
+export { ButtonProvider } from "./Buttons/ButtonProvider";
+export { FeedLabelButton } from "./Buttons/FeedLabelButton";
 
 export { TopTabContainer } from "./Tabs/TopTabContainer/TopTabContainer";
 export { TopTabProfile } from "./Tabs/TopTabContainer/TopTabProfile";

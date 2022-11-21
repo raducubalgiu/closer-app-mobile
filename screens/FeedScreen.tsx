@@ -17,13 +17,8 @@ import {
   useRefreshByUser,
   useDelete,
 } from "../hooks";
-import {
-  IconButton,
-  Stack,
-  FeedLabelButton,
-  Spinner,
-} from "../components/core";
-import { PostInfoSheet } from "../components/customized";
+import { IconButton, Stack, Spinner } from "../components/core";
+import { PostInfoSheet, FeedLabelButton } from "../components/customized";
 import { useTranslation } from "react-i18next";
 import * as Haptics from "expo-haptics";
 import { ConfirmModal } from "../components/customized/Modals/ConfirmModal";

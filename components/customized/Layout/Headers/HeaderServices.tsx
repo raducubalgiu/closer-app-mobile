@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity } from "react-native";
-import React from "react";
 import theme from "../../../../assets/styles/theme";
-import { Stack, ButtonFilter, IconBackButton } from "../../../core";
+import { Stack, IconBackButton } from "../../../core";
+import { ButtonFilter } from "../../Buttons/ButtonFilter";
 import { Icon, Switch } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
 

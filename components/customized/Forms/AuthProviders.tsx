@@ -1,5 +1,4 @@
-import React from "react";
-import { ButtonProvider } from "../../core";
+import { ButtonProvider } from "../Buttons/ButtonProvider";
 import theme from "../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 
