@@ -1,15 +1,33 @@
-import { StyleSheet, SafeAreaView, FlatList } from "react-native";
+import {
+  StyleSheet,
+  SafeAreaView,
+  FlatList,
+  ListRenderItemInfo,
+} from "react-native";
 import { useCallback } from "react";
 import { Header, Protected } from "../../../../components/core";
 import MyBusinessCard from "../../../../components/customized/Cards/MyBusinessCard";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks";
-import { MAIN_ROLE, SECOND_ROLE, THIRD_ROLE } from "@env";
+import { MAIN_ROLE, SECOND_ROLE } from "@env";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../../models/navigation/rootStackParams";
+
+interface Screen {
+  _id: string;
+  title: string;
+  iconName: string;
+  iconType: string;
+  description: string;
+  navigation: string;
+  roles: [string];
+}
 
 export const MyBusinessScreen = () => {
   const { user } = useAuth();
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
 
   const SCREENS = [
@@ -47,7 +65,7 @@ export const MyBusinessScreen = () => {
       iconType: "feather",
       description: t("informationLocationSchedule"),
       navigation: "AddSchedule",
-      roles: [MAIN_ROLE],
+      roles: [MAIN_ROLE, SECOND_ROLE],
     },
     {
       _id: "5",
@@ -78,22 +96,24 @@ export const MyBusinessScreen = () => {
     },
   ];
 
+  const goToScreen = (screenName: string) => navigation.navigate(screenName);
+
   const renderCard = useCallback(
-    ({ item }) => (
+    ({ item }: ListRenderItemInfo<Screen>) => (
       <Protected userRole={user?.role} roles={item?.roles}>
         <MyBusinessCard
           title={item.title}
           iconName={item?.iconName}
           iconType={item?.iconType}
           description={item?.description}
-          onPress={() => navigation.navigate(`${item?.navigation}`)}
+          onPress={goToScreen(item?.navigation)}
         />
       </Protected>
     ),
     []
   );
 
-  const keyExtractor = useCallback((item) => item?._id, []);
+  const keyExtractor = useCallback((item: Screen) => item?._id, []);
 
   return (
     <SafeAreaView style={styles.screen}>
