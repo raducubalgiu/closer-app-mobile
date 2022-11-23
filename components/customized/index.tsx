@@ -8,6 +8,7 @@ export { HeaderSearchAll } from "./Layout/Headers/HeaderSearchAll";
 export { Footer } from "./Layout/Footers/Footer";
 export { FooterMessageItem } from "./Layout/Footers/FooterMessageItem";
 export { FooterComments } from "./Layout/Footers/FooterComments";
+export { HeaderFeed } from "./Layout/Headers/HeaderFeed";
 
 export { LikeCommentButton } from "./Buttons/LikeCommentButton";
 export { LikeButton } from "./Buttons/LikeButton";

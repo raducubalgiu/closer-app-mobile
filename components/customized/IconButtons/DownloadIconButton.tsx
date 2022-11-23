@@ -3,8 +3,7 @@ import { IconButton } from "../../core";
 export const DownloadIconButton = ({ sx = {}, size = 30, onPress }) => {
   return (
     <IconButton
-      iconName="download"
-      iconType="feather"
+      name="download"
       size={size}
       color="white"
       onPress={onPress}

@@ -11,8 +11,7 @@ export const InfoIconButton = ({
 }) => {
   return (
     <IconButton
-      iconName="info"
-      iconType="feather"
+      name="info"
       size={size}
       color={color}
       onPress={onPress}

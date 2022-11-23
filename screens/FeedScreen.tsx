@@ -1,15 +1,8 @@
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  RefreshControl,
-} from "react-native";
+import { SafeAreaView, StyleSheet, RefreshControl } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import React, { useCallback, useRef, useState } from "react";
-import { useNavigation, useScrollToTop } from "@react-navigation/native";
-import { Divider, Badge } from "@rneui/themed";
-import theme from "../assets/styles/theme";
+import { useScrollToTop } from "@react-navigation/native";
+import { Divider } from "@rneui/themed";
 import {
   useSheet,
   useAuth,
@@ -17,23 +10,16 @@ import {
   useRefreshByUser,
   useDelete,
 } from "../hooks";
-import { IconButton, Stack, Spinner } from "../components/core";
-import { PostInfoSheet, FeedLabelButton } from "../components/customized";
+import { Spinner } from "../components/core";
+import { PostInfoSheet, HeaderFeed } from "../components/customized";
 import { useTranslation } from "react-i18next";
-import * as Haptics from "expo-haptics";
 import { ConfirmModal } from "../components/customized/Modals/ConfirmModal";
 import CardPost from "../components/customized/Cards/CardPost/CardPost";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../models/navigation/rootStackParams";
-
-const { grey0, black } = theme.lightColors;
 
 export const FeedScreen = () => {
   const { user } = useAuth();
   const [postId, setPostId] = useState(null);
   const [visible, setVisible] = useState(false);
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const ref = useRef(null);
   useScrollToTop(ref);
   const { t } = useTranslation();
@@ -92,60 +78,15 @@ export const FeedScreen = () => {
   };
 
   const { refreshing, refetchByUser } = useRefreshByUser(refetch);
-
   const refreshControl = (
     <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
   );
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Stack justify="start">
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <Stack direction="row" sx={styles.listHoriz}>
-            <IconButton
-              iconName="search"
-              iconType="feather"
-              sx={{ marginRight: 24 }}
-              onPress={() => navigation.navigate("SearchPosts")}
-            />
-            <View>
-              <IconButton
-                iconName="bell"
-                iconType="feather"
-                onPress={() => navigation.navigate("Notifications")}
-              />
-              <Badge
-                badgeStyle={{
-                  backgroundColor: "#F72A50",
-                }}
-                containerStyle={styles.badgeContainer}
-              />
-            </View>
-            <Divider orientation="vertical" style={{ marginHorizontal: 15 }} />
-            <FeedLabelButton
-              onPress={() => {
-                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-              }}
-              isActive={true}
-              text={t("explore")}
-            />
-            <FeedLabelButton
-              onPress={() => {
-                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-              }}
-              isActive={false}
-              text={t("following")}
-            />
-            <FeedLabelButton
-              onPress={() => {
-                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-              }}
-              isActive={false}
-              text={t("lastMinuteOffers")}
-            />
-          </Stack>
-        </ScrollView>
-      </Stack>
+      <HeaderFeed
+        onFetchPosts={(index: number) => console.log("INDEX!!", index)}
+      />
       <Divider color="#ddd" />
       <FlashList
         ref={ref}
@@ -173,36 +114,4 @@ export const FeedScreen = () => {
 
 const styles = StyleSheet.create({
   screen: { backgroundColor: "white", flex: 1 },
-  exploreText: {
-    color: black,
-    marginLeft: 5,
-  },
-  contentContainerStyle: { marginTop: 50 },
-  welcome: {
-    fontSize: 21,
-    marginBottom: 2.5,
-  },
-  bookmark: { padding: 5, marginLeft: 10 },
-  description: {
-    color: grey0,
-    fontSize: 15,
-    textAlign: "center",
-    paddingHorizontal: 30,
-  },
-  title: {
-    fontSize: 18,
-    color: black,
-    paddingLeft: 10,
-    marginTop: 30,
-  },
-  spinner: { paddingVertical: 10 },
-  listHoriz: {
-    marginVertical: 7.5,
-    paddingHorizontal: 12.5,
-  },
-  badgeContainer: {
-    position: "absolute",
-    top: -5,
-    right: -5,
-  },
 });

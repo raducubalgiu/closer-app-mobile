@@ -3,8 +3,7 @@ import { IconButton } from "../../core";
 export const RevertIconButton = ({ size = 30, sx = {}, onPress }) => {
   return (
     <IconButton
-      iconName="refresh-ccw"
-      iconType="feather"
+      name="refresh-ccw"
       size={size}
       color="#ebebe0"
       sx={{

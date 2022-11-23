@@ -1,24 +1,30 @@
-import { ActivityIndicator, Pressable } from "react-native";
+import { ActivityIndicator, Pressable, StyleSheet } from "react-native";
 import { Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 
 const { black } = theme.lightColors;
 
 export const IconButton = ({
-  iconName,
-  iconType = "material",
+  name,
+  type = "feather",
   size = 24,
   color = black,
   loading = false,
   sx = {},
-  ...props
+  onPress,
 }) => {
   return (
-    <Pressable {...props} style={{ padding: 2.5, ...sx }}>
-      {!loading && (
-        <Icon type={iconType} name={iconName} size={size} color={black} />
-      )}
+    <Pressable onPress={onPress} style={[styles.container, sx]}>
+      {!loading && <Icon type={type} name={name} size={size} color={color} />}
       {loading && <ActivityIndicator />}
     </Pressable>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 2.5,
+  },
+});

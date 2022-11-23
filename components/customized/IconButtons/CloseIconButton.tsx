@@ -8,8 +8,7 @@ export const CloseIconButton = ({
 }) => {
   return (
     <IconButton
-      iconName="x"
-      iconType="feather"
+      name="x"
       size={size}
       color={color}
       onPress={onPress}

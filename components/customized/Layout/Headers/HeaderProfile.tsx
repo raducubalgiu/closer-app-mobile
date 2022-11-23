@@ -24,8 +24,8 @@ export const HeaderProfile = ({
         <Stack direction="row">
           <IconButton
             onPress={onGoToFindFriends}
-            iconName="adduser"
-            iconType="antdesign"
+            name="adduser"
+            type="antdesign"
             size={27}
           />
           <Icon
@@ -44,15 +44,15 @@ export const HeaderProfile = ({
           <IconButton
             onPress={() => navigation.navigate("AddPost")}
             size={30}
-            iconName="add-circle-outline"
-            iconType="ionicon"
+            name="add-circle-outline"
+            type="ionicon"
             color={black}
           />
           <IconButton
             onPress={onOpenSettings}
             size={30}
-            iconName="menu-outline"
-            iconType="ionicon"
+            name="menu-outline"
+            type="ionicon"
             color={black}
             sx={{ marginLeft: 15 }}
           />

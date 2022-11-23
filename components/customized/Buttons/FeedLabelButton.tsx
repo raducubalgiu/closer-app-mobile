@@ -1,27 +1,22 @@
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { Pressable, StyleSheet, Text } from "react-native";
 import theme from "../../../assets/styles/theme";
 
 const { black } = theme.lightColors;
 
 export const FeedLabelButton = ({ isActive, text, onPress }) => {
   return (
-    <TouchableOpacity
+    <Pressable
       onPress={onPress}
-      activeOpacity={1}
-      style={
-        isActive ? { ...styles.btnList, ...styles.activeBtn } : styles.btnList
-      }
+      style={isActive ? [styles.btnList, styles.activeBtn] : styles.btnList}
     >
       <Text
         style={
-          isActive
-            ? { ...styles.btnText, ...styles.activeBtnText }
-            : styles.btnText
+          isActive ? [styles.btnText, styles.activeBtnText] : styles.btnText
         }
       >
         {text}
       </Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 
@@ -29,10 +24,12 @@ const styles = StyleSheet.create({
   btnList: {
     borderWidth: 1,
     borderColor: "#ddd",
-    marginRight: 7.5,
     borderRadius: 20,
-    paddingVertical: 6.5,
-    paddingHorizontal: 15,
+    marginLeft: 7.5,
+    width: 100,
+    height: 30,
+    justifyContent: "center",
+    alignItems: "center",
   },
   btnText: {
     color: black,

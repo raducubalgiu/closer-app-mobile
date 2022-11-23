@@ -13,7 +13,7 @@ const { black, grey0 } = theme.lightColors;
 export const CardRecommended = ({ location }) => {
   const { images, distance, address, user } = location;
   const { name, username, avatar, checkmark, ratingsAverage, ratingsQuantity } =
-    user;
+    user || {};
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
@@ -59,7 +59,7 @@ export const CardRecommended = ({ location }) => {
           </Stack>
           <Stack direction="row" align="center">
             <IconStar />
-            <Text style={styles.ratingsAvg}>{ratingsAverage.toFixed(1)}</Text>
+            <Text style={styles.ratingsAvg}>{ratingsAverage}</Text>
             <Text style={styles.ratingsQuant}>
               {ratingsQuantity} {t("reviews")}
             </Text>
