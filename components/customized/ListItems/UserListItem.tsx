@@ -1,5 +1,5 @@
 import { StyleSheet, Text, Pressable } from "react-native";
-import { useCallback, useState } from "react";
+import { useCallback, useState, memo } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Stack, CustomAvatar, Checkmark } from "../../core";
 import FollowButton from "../Buttons/FollowButton";
@@ -12,7 +12,7 @@ import { usePost, useDelete, useGet } from "../../../hooks";
 
 const { grey0, black } = theme.lightColors;
 
-export const UserListItem = ({ user, sx = {} }) => {
+const UserListItem = ({ user, sx = {} }) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { user: userContext } = useAuth();
@@ -81,6 +81,8 @@ export const UserListItem = ({ user, sx = {} }) => {
     </Stack>
   );
 };
+
+export default memo(UserListItem);
 
 const styles = StyleSheet.create({
   container: { marginBottom: 20, paddingHorizontal: 15 },

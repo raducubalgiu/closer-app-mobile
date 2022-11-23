@@ -6,7 +6,7 @@ import { useAuth, useGet } from "../../../../hooks";
 import { HashtagListItem } from "../../ListItems/HashtagListItem";
 import { SearchPopularHeading } from "../../Headings/SearchPopularHeading";
 import { Spinner } from "../../../core";
-import { UserListItem } from "../../ListItems/UserListItem";
+import UserListItem from "../../ListItems/UserListItem";
 import { CardPostImage } from "../../Cards/CardPostImage";
 import axios from "axios";
 import { useInfiniteQuery } from "@tanstack/react-query";
@@ -20,11 +20,11 @@ export const SearchPopularTab = ({ search }) => {
   const { user } = useAuth();
   const isFocused = useIsFocused();
 
-  const { data: users, isLoading: loadUsers } = useGet({
+  const { data: users } = useGet({
     model: "users",
     uri: `/users/search?search=${search}&page=1&limit=2`,
   });
-  const { data: hashtags, isLoading: loadHashtags } = useGet({
+  const { data: hashtags } = useGet({
     model: "users",
     uri: `/hashtags/search?search=${search}&page=1&limit=3`,
   });
@@ -84,7 +84,6 @@ export const SearchPopularTab = ({ search }) => {
     ({ item }) => (
       <UserListItem
         user={item}
-        isFollow={false}
         sx={{ paddingHorizontal: 15, marginBottom: 20 }}
       />
     ),

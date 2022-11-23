@@ -79,7 +79,6 @@ export { SuggestedUsersList } from "./Lists/SuggestedUsersList";
 
 export { MessageListItem } from "./ListItems/MessageListItem";
 export { HashtagListItem } from "./ListItems/HashtagListItem";
-export { UserListItem } from "./ListItems/UserListItem";
 export { UserListItemSimple } from "./ListItems/UserListItemSimple";
 export { CommentListItem } from "./ListItems/CommentListItem";
 export { RelatedCommentsList } from "./ListItems/RelatedCommentsList";

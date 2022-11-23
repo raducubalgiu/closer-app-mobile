@@ -19,7 +19,8 @@ export const HeaderFeed = ({ onFetchPosts }) => {
   const LABELS = [
     { _id: "1", title: t("explore"), isActive: true },
     { _id: "2", title: t("following"), isActive: false },
-    { _id: "3", title: t("lastMinute"), isActive: false },
+    { _id: "3", title: t("book"), isActive: false },
+    { _id: "4", title: t("lastMinute"), isActive: false },
   ];
 
   const getItemLayout = useCallback((_, index) => {

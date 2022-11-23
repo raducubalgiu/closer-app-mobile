@@ -7,66 +7,40 @@ import { Slot } from "../slot";
 export type RootStackParams = {
   App: any;
   AuthStack: any;
-  AllBookmarks: {
-    postId: string;
-    userId: string;
-  };
+  AllBookmarks: { postId: string; userId: string };
   AddLocation: any;
   AddServices: any;
   AddProducts: any;
   AddJobs: any;
   AddSchedule: any;
   AddPost: any;
-  Bookmarks: {
-    user: any;
-  };
+  Bookmarks: { user: any };
   Comments: {
     postId: string;
     description: string;
     avatar: any;
     username: string;
   };
-  CalendarBig: {
-    product: Product;
-    service: Service;
-  };
-  Camera: {
-    name: string;
-    avatar: any;
-  };
-  CameraPreview: {
-    photo: string;
-    avatar: any;
-  };
+  CalendarBig: { product: Product; service: Service };
+  Camera: { name: string; avatar: any };
+  CameraPreview: { photo: string; avatar: any };
   Discounts: any;
-  EditProfile: {
-    user: any;
-  };
+  EditProfile: { user: any };
   EditBio: any;
   EditName: any;
   EditWebsite: any;
   EditUsername: any;
   EditProfession: any;
-  EditAvatar: {
-    photo: string;
-  };
-  EditProduct: {
-    product: any;
-  };
+  EditAvatar: { photo: string };
+  EditProduct: { product: any };
   SearchServices: any;
   FindFriends: any;
   FiltersDate: any;
   FiltersService: any;
   Feed: any;
-  Hashtag: {
-    name: string;
-    postsCount: number;
-  };
+  Hashtag: { name: string };
   Login: any;
-  Locations: {
-    service: Service;
-    option: Option;
-  };
+  Locations: { service: Service; option: Option };
   LocationItem: { locationId: string };
   Likes: { postId: string };
   MyBusiness: any;
@@ -127,7 +101,7 @@ export type RootStackParams = {
   Register: any;
   RegisterBusiness: any;
   Settings: any;
-  SearchAll: { search: string };
+  SearchAll: { screen: string; search: string };
   Schedules: any;
   ScheduleConfirm: {
     service: Service;

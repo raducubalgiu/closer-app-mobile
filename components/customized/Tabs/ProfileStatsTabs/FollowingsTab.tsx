@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useIsFocused } from "@react-navigation/native";
 import { Spinner } from "../../../core";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
-import { UserListItem } from "../../ListItems/UserListItem";
+import UserListItem from "../../ListItems/UserListItem";
 import { useGetPaginate, useRefreshByUser } from "../../../../hooks";
 
 export const FollowingsTab = ({ userId }) => {
@@ -27,10 +27,10 @@ export const FollowingsTab = ({ userId }) => {
   });
 
   const renderPerson = useCallback(
-    ({ item }) => <UserListItem user={item.user} isFollow={item.isFollow} />,
+    ({ item }) => <UserListItem user={item.followeeId} />,
     []
   );
-  const keyExtractor = useCallback((item) => item?.user._id, []);
+  const keyExtractor = useCallback((item) => item?._id, []);
 
   const loadMore = () => {
     if (hasNextPage) fetchNextPage();

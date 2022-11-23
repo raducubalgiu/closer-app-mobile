@@ -4,7 +4,7 @@ import { useAuth } from "../../../../hooks";
 import { useTranslation } from "react-i18next";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { Spinner } from "../../../core";
-import { UserListItem } from "../../ListItems/UserListItem";
+import UserListItem from "../../ListItems/UserListItem";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useIsFocused } from "@react-navigation/native";
@@ -58,7 +58,7 @@ export const SearchUsersTab = ({ search }) => {
   const users = pages?.map((page) => page.results).flat();
 
   const renderUsers = useCallback(({ item }) => {
-    return <UserListItem user={item} isFollow={false} />;
+    return <UserListItem user={item} />;
   }, []);
 
   const noFoundMessage = !isLoading &&
