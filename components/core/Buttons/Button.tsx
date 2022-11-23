@@ -20,6 +20,7 @@ export const Button = ({
   sxText = {},
   radius = null,
   bgColor = null,
+  color = null,
   title,
   onPress,
 }) => {
@@ -33,21 +34,21 @@ export const Button = ({
         backgroundColor: bgColor ? bgColor : primary,
         borderColor: bgColor ? bgColor : primary,
       };
-      styleBtnTxt = { color: "white" };
+      styleBtnTxt = { color: color ? color : "white" };
       break;
     case "outlined":
       styleBtn = {
         backgroundColor: "white",
         borderColor: "#ddd",
       };
-      styleBtnTxt = { color: black };
+      styleBtnTxt = { color: color ? color : black };
       break;
     default:
       styleBtn = {
         backgroundColor: bgColor ? bgColor : primary,
         borderColor: bgColor ? bgColor : primary,
       };
-      styleBtnTxt = { color: "white" };
+      styleBtnTxt = { color: color ? color : "white" };
   }
 
   switch (size) {

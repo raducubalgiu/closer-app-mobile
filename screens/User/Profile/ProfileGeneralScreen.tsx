@@ -19,6 +19,8 @@ import {
 } from "../../../components/customized";
 import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
 import { RootStackParams } from "../../../models/navigation/rootStackParams";
+import { Protected } from "../../../components/core";
+import { MAIN_ROLE, SECOND_ROLE } from "@env";
 
 export const ProfileGeneralScreen = ({ route }) => {
   const { user } = useAuth();
@@ -98,7 +100,12 @@ export const ProfileGeneralScreen = ({ route }) => {
         {isFollow && (
           <ProfileIconButton name="message-circle" onPress={goToMessage} />
         )}
-        {isFollow && <ProfileIconButton name="map-pin" onPress={goToMap} />}
+        <Protected
+          roles={[MAIN_ROLE, SECOND_ROLE]}
+          userRole={userDetails?.role}
+        >
+          <ProfileIconButton name="map-pin" onPress={goToMap} />
+        </Protected>
         <ProfileIconButton
           name="adduser"
           type="antdesign"

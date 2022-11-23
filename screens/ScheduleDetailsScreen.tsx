@@ -67,10 +67,10 @@ export const ScheduleDetailsScreen = ({ route }) => {
       <Button
         onPress={goToCancel}
         title={t("cancelAppoinment")}
-        fullWidth
         size="lg"
         radius={25}
         bgColor={error}
+        sxBtn={{ margin: 15 }}
       />
     );
   } else {
@@ -78,11 +78,11 @@ export const ScheduleDetailsScreen = ({ route }) => {
       <Button
         onPress={goToBookAgain}
         title={t("bookAgain")}
-        fullWidth
         size="lg"
         radius={25}
         bgColor={"#eee"}
         color={black}
+        sxBtn={{ margin: 15 }}
       />
     );
   }
@@ -137,15 +137,9 @@ export const ScheduleDetailsScreen = ({ route }) => {
                   onPress={() => {}}
                   title={<Text style={styles.navigate}>{t("navigate")}</Text>}
                   bgColor="white"
+                  size="md"
                   radius={25}
-                  sxBtn={{
-                    marginTop: 20,
-                    shadowColor: "#171717",
-                    shadowOffset: { width: -2, height: 2 },
-                    shadowOpacity: 0.2,
-                    shadowRadius: 3,
-                    elevation: 20,
-                  }}
+                  sxBtn={styles.navigateBtn}
                 />
               </Stack>
             </View>
@@ -163,7 +157,12 @@ export const ScheduleDetailsScreen = ({ route }) => {
             </Stack>
           </Pressable>
           <Divider style={styles.divider} />
-          <Stack direction="row" justify="start" sx={{ marginHorizontal: 15 }}>
+          <Stack
+            direction="row"
+            justify="start"
+            align="start"
+            sx={{ marginHorizontal: 15 }}
+          >
             <IconLocation size={22} color={black} />
             <Text style={styles.address}>{AddressFormat(address)}</Text>
           </Stack>
@@ -227,10 +226,20 @@ const styles = StyleSheet.create({
     color: grey0,
     fontSize: 14.5,
     marginLeft: 10,
+    flex: 1,
   },
   navigate: {
     marginLeft: 10,
     color: black,
     fontSize: 15,
+  },
+  navigateBtn: {
+    marginTop: 20,
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 20,
+    paddingHorizontal: 12.5,
   },
 });
