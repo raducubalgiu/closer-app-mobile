@@ -34,12 +34,14 @@ export const Button = ({
         borderColor: bgColor ? bgColor : primary,
       };
       styleBtnTxt = { color: "white" };
+      break;
     case "outlined":
       styleBtn = {
         backgroundColor: "white",
         borderColor: "#ddd",
       };
       styleBtnTxt = { color: black };
+      break;
     default:
       styleBtn = {
         backgroundColor: bgColor ? bgColor : primary,
