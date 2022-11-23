@@ -6,7 +6,7 @@ import {
   Pressable,
   View,
 } from "react-native";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
 import { Header, Spinner, Stack } from "../components/core";
@@ -14,7 +14,12 @@ import { NoFoundMessage } from "../components/customized";
 import { Icon } from "@rneui/themed";
 import theme from "../assets/styles/theme";
 import { Agenda } from "react-native-calendars";
-import { useGet, useGetPaginate, useRefreshByUser } from "../hooks";
+import {
+  useGet,
+  useGetPaginate,
+  useRefreshByUser,
+  useRefreshOnFocus,
+} from "../hooks";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../models/navigation/rootStackParams";
 
@@ -39,6 +44,8 @@ export const CalendarScreen = ({ route }) => {
     uri: `/users/${user?._id}/schedules/slots?day=${day}`,
   });
 
+  useRefreshOnFocus(refetch);
+
   const goToConfirm = (slot) => {
     navigation.navigate("ScheduleConfirm", {
       service,
@@ -47,7 +54,7 @@ export const CalendarScreen = ({ route }) => {
     });
   };
 
-  const renderSlot = useCallback((slot: any) => {
+  const renderSlot = (slot: any) => {
     return (
       <Pressable onPress={() => goToConfirm(slot)}>
         <Stack direction="row" justify="start" sx={styles.slot}>
@@ -55,15 +62,12 @@ export const CalendarScreen = ({ route }) => {
         </Stack>
       </Pressable>
     );
-  }, []);
+  };
 
-  const handleDayPress = useCallback(
-    (day: any) => {
-      setDay(day.dateString);
-      refetch();
-    },
-    [refetch]
-  );
+  const handleDayPress = (day: any) => {
+    setDay(day.dateString);
+    refetch();
+  };
 
   const { refreshing, refetchByUser } = useRefreshByUser(refetch);
 

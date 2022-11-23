@@ -98,7 +98,7 @@ export const ProfileGeneralScreen = ({ route }) => {
         {isFollow && (
           <ProfileIconButton name="message-circle" onPress={goToMessage} />
         )}
-        <ProfileIconButton name="map-pin" onPress={goToMap} />
+        {isFollow && <ProfileIconButton name="map-pin" onPress={goToMap} />}
         <ProfileIconButton
           name="adduser"
           type="antdesign"

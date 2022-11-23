@@ -1,61 +1,62 @@
 import { ActivityIndicator, Pressable, StyleSheet, Text } from "react-native";
 import theme from "../../../assets/styles/theme";
 
-const { primary, black } = theme.lightColors;
+const { primary, black, grey0 } = theme.lightColors;
+
+interface StyleBtn {
+  backgroundColor: string;
+  borderColor: string;
+}
+interface StyleBtnText {
+  color: string;
+}
 
 export const Button = ({
   variant = "contained",
   size = "md",
-  fullWidth = false,
   loading = false,
   disabled = false,
   sxBtn = {},
   sxText = {},
   radius = null,
   bgColor = null,
-  color = null,
   title,
   onPress,
 }) => {
-  let styleBtn = {};
-  let styleBtnTxt = {};
+  let styleBtn: StyleBtn;
+  let styleBtnTxt: StyleBtnText;
   let sizes = {};
 
-  if (variant === "contained" && !loading) {
-    styleBtn = {
-      backgroundColor: bgColor ? bgColor : primary,
-      borderColor: bgColor ? bgColor : primary,
-    };
-    styleBtnTxt = { color: color ? color : "white" };
-  } else if ((variant = "outlined") && !loading) {
-    styleBtn = {
-      backgroundColor: "white",
-      borderColor: "#ddd",
-    };
-    styleBtnTxt = { color: black };
-  } else {
-    styleBtn;
-    styleBtnTxt;
+  switch (variant) {
+    case "contained":
+      styleBtn = {
+        backgroundColor: bgColor ? bgColor : primary,
+        borderColor: bgColor ? bgColor : primary,
+      };
+      styleBtnTxt = { color: "white" };
+    case "outlined":
+      styleBtn = {
+        backgroundColor: "white",
+        borderColor: "#ddd",
+      };
+      styleBtnTxt = { color: black };
+    default:
+      styleBtn = {
+        backgroundColor: bgColor ? bgColor : primary,
+        borderColor: bgColor ? bgColor : primary,
+      };
+      styleBtnTxt = { color: "white" };
   }
 
   switch (size) {
     case "sm":
-      sizes = {
-        width: 100,
-        height: 35,
-      };
+      sizes = { height: 35 };
       break;
     case "md":
-      sizes = {
-        width: 120,
-        height: 45,
-      };
+      sizes = { height: 45 };
       break;
     case "lg":
-      sizes = {
-        width: 150,
-        height: 47.5,
-      };
+      sizes = { height: 47.5 };
       break;
   }
 
@@ -69,12 +70,15 @@ export const Button = ({
       ...sizes,
       ...styleBtn,
       ...sxBtn,
+      backgroundColor: disabled ? "#eee" : styleBtn.backgroundColor,
+      borderColor: disabled ? "#eee" : styleBtn.borderColor,
     },
     text: {
       fontWeight: "600",
       textAlign: "center",
       ...styleBtnTxt,
       ...sxText,
+      color: disabled ? grey0 : styleBtnTxt.color,
     },
   });
 
@@ -85,7 +89,7 @@ export const Button = ({
       disabled={loading || disabled ? true : false}
     >
       {loading ? (
-        <ActivityIndicator />
+        <ActivityIndicator color="white" />
       ) : (
         <Text style={styles.text}>{title}</Text>
       )}

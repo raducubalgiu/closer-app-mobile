@@ -19,48 +19,46 @@ export const HeaderProfile = ({
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   return (
-    <View style={{ backgroundColor: "white", zIndex: 1000 }}>
-      <SafeAreaView>
-        <Stack direction="row" sx={styles.container}>
-          <Stack direction="row">
-            <IconButton
-              onPress={onGoToFindFriends}
-              iconName="adduser"
-              iconType="antdesign"
-              size={27}
-            />
-            <Icon
-              style={{ marginLeft: 15 }}
-              size={30}
-              type="ionicon"
-              name="add-circle-outline"
-              color="white"
-            />
-          </Stack>
-          <Stack direction="row">
-            <Text style={styles.name}>@{username}</Text>
-            {checkmark && <Checkmark sx={{ marginLeft: 5 }} />}
-          </Stack>
-          <Stack direction="row">
-            <IconButton
-              onPress={() => navigation.navigate("AddPost")}
-              size={30}
-              iconName="add-circle-outline"
-              iconType="ionicon"
-              color={black}
-            />
-            <IconButton
-              onPress={onOpenSettings}
-              size={30}
-              iconName="menu-outline"
-              iconType="ionicon"
-              color={black}
-              sx={{ marginLeft: 15 }}
-            />
-          </Stack>
+    <SafeAreaView style={{ backgroundColor: "white", zIndex: 1000 }}>
+      <Stack direction="row" sx={styles.container}>
+        <Stack direction="row">
+          <IconButton
+            onPress={onGoToFindFriends}
+            iconName="adduser"
+            iconType="antdesign"
+            size={27}
+          />
+          <Icon
+            style={{ marginLeft: 15 }}
+            size={30}
+            type="ionicon"
+            name="add-circle-outline"
+            color="white"
+          />
         </Stack>
-      </SafeAreaView>
-    </View>
+        <Stack direction="row">
+          <Text style={styles.name}>@{username}</Text>
+          {checkmark && <Checkmark sx={{ marginLeft: 5 }} />}
+        </Stack>
+        <Stack direction="row">
+          <IconButton
+            onPress={() => navigation.navigate("AddPost")}
+            size={30}
+            iconName="add-circle-outline"
+            iconType="ionicon"
+            color={black}
+          />
+          <IconButton
+            onPress={onOpenSettings}
+            size={30}
+            iconName="menu-outline"
+            iconType="ionicon"
+            color={black}
+            sx={{ marginLeft: 15 }}
+          />
+        </Stack>
+      </Stack>
+    </SafeAreaView>
   );
 };
 

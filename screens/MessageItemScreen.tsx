@@ -64,7 +64,7 @@ export const MessageItemScreen = ({ route }) => {
   const onSendMessage = () => {
     setMessage("");
 
-    if (!conversation?.status) {
+    if (!conversation) {
       createConversation({ participants: [user?._id, _id] });
     } else {
       sendMessage({

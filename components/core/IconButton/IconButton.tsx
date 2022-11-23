@@ -16,7 +16,7 @@ export const IconButton = ({
   return (
     <Pressable {...props} style={{ padding: 2.5, ...sx }}>
       {!loading && (
-        <Icon type={iconType} name={iconName} size={24} color={black} />
+        <Icon type={iconType} name={iconName} size={size} color={black} />
       )}
       {loading && <ActivityIndicator />}
     </Pressable>

@@ -56,12 +56,11 @@ export const LoginRegisterForm = ({
         />
         <Button
           size="lg"
-          fullWidth
           radius={7.5}
           title={heading}
           loading={loading}
           onPress={handleSubmit(onSubmit)}
-          disabled={disabled}
+          disabled={loading || disabled}
         />
       </FormProvider>
 

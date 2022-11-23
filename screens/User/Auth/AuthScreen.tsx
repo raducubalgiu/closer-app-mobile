@@ -20,15 +20,13 @@ export const AuthScreen = () => {
         <Text style={styles.mainHeading}>{t("yourProfile")}</Text>
         <Text style={styles.secondHeading}>{t("connectIntoAccountTitle")}</Text>
       </Stack>
-      <Stack sx={{ margin: 15 }}>
-        <Button
-          title={t("connect")}
-          onPress={() => navigation.navigate("Login")}
-          fullWidth
-          radius={7.5}
-          size="lg"
-        />
-      </Stack>
+      <Button
+        title={t("connect")}
+        onPress={() => navigation.navigate("Login")}
+        radius={7.5}
+        size="lg"
+        sxBtn={{ margin: 15 }}
+      />
       <Stack direction="row" justify="start" sx={styles.registerText}>
         <Text style={styles.textAction}>{t("dontHaveAccount")}</Text>
         <Pressable

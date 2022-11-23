@@ -13,35 +13,33 @@ export const HeaderProfileGeneral = ({
   checkmark,
 }) => {
   return (
-    <View style={{ backgroundColor: "white", zIndex: 1000 }}>
-      <SafeAreaView>
-        <Stack direction="row" sx={styles.container}>
-          <Stack direction="row">
-            <IconBackButton sx={{ marginRight: 15 }} />
-            <Icon name="bells" type="antdesign" color="white" />
-          </Stack>
-          <Stack direction="row">
-            <Text style={styles.name}>@{username}</Text>
-            {checkmark && <Checkmark sx={{ marginLeft: 5 }} />}
-          </Stack>
-          <Stack direction="row">
-            <IconButton
-              onPress={onOpenNotifications}
-              iconName="bell"
-              iconType="feather"
-              color={black}
-            />
-            <IconButton
-              onPress={onOpenSettings}
-              iconName="more-horizontal"
-              iconType="feather"
-              color={black}
-              sx={{ marginLeft: 15 }}
-            />
-          </Stack>
+    <SafeAreaView style={{ backgroundColor: "white", zIndex: 1000 }}>
+      <Stack direction="row" sx={styles.container}>
+        <Stack direction="row">
+          <IconBackButton sx={{ marginRight: 15 }} />
+          <Icon name="bells" type="antdesign" color="white" />
         </Stack>
-      </SafeAreaView>
-    </View>
+        <Stack direction="row">
+          <Text style={styles.name}>@{username}</Text>
+          {checkmark && <Checkmark sx={{ marginLeft: 5 }} />}
+        </Stack>
+        <Stack direction="row">
+          <IconButton
+            onPress={onOpenNotifications}
+            iconName="bell"
+            iconType="feather"
+            color={black}
+          />
+          <IconButton
+            onPress={onOpenSettings}
+            iconName="more-horizontal"
+            iconType="feather"
+            color={black}
+            sx={{ marginLeft: 15 }}
+          />
+        </Stack>
+      </Stack>
+    </SafeAreaView>
   );
 };
 

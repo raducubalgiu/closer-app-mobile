@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useAuth } from "./auth";
 import { useMutation, useQuery, useInfiniteQuery } from "@tanstack/react-query";
+import Toast from "react-native-root-toast";
+import { useTranslation } from "react-i18next";
 
 const BASE_ENDPOINT = `${process.env.BASE_ENDPOINT}`;
 
@@ -23,6 +25,7 @@ export function usePatch<T>({ uri, onSuccess = undefined }) {
 
 export function usePost<T>({ uri, onSuccess = undefined, config = {} }) {
   const { user } = useAuth();
+  const { t } = useTranslation();
 
   const mutations = useMutation(
     (body: T) =>
@@ -31,7 +34,16 @@ export function usePost<T>({ uri, onSuccess = undefined, config = {} }) {
       }),
     {
       onSuccess,
-      onError: (err) => console.log(err),
+      onError: () => {
+        Toast.show(t("somethingWentWrong"), {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.BOTTOM,
+          shadow: true,
+          animation: true,
+          hideOnPress: true,
+          delay: 0,
+        });
+      },
       ...config,
     }
   );
