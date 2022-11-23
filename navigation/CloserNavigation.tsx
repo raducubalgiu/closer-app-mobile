@@ -77,9 +77,8 @@ import {
 
 import TestScreen from "../screens/TestScreen";
 
-const SharedStack = createSharedElementStackNavigator();
-
 const Stack = createNativeStackNavigator();
+const SharedStack = createSharedElementStackNavigator();
 const Tab = createBottomTabNavigator();
 const RootStack = createNativeStackNavigator<RootStackParams>();
 

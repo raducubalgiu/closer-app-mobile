@@ -14,7 +14,6 @@ export { LikeCommentButton } from "./Buttons/LikeCommentButton";
 export { LikeButton } from "./Buttons/LikeButton";
 export { BookmarkIconButton } from "./Buttons/BookmarkIconButton";
 export { BookmarkButton } from "./Buttons/BookmarkButton";
-export { FollowButton } from "./Buttons/FollowButton";
 export { StatsButton } from "./Buttons/StatsButton";
 export { BookButton } from "./Buttons/BookButton";
 export { FollowProfileButton } from "./Buttons/FollowProfileButton";

@@ -74,6 +74,10 @@ const styles = StyleSheet.create({
     zIndex: 10000,
     top: 5,
     right: 5,
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
   },
   fixed: {
     position: "absolute",
@@ -83,6 +87,10 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     opacity: 0.8,
     paddingHorizontal: 10,
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
   },
   fixedText: {
     fontSize: 12,
@@ -93,5 +101,9 @@ const styles = StyleSheet.create({
     zIndex: 10000,
     bottom: 5,
     left: 5,
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
   },
 });

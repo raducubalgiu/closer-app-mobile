@@ -24,16 +24,10 @@ export const HeaderProfileGeneral = ({
           {checkmark && <Checkmark sx={{ marginLeft: 5 }} />}
         </Stack>
         <Stack direction="row">
-          <IconButton
-            onPress={onOpenNotifications}
-            iconName="bell"
-            iconType="feather"
-            color={black}
-          />
+          <IconButton onPress={onOpenNotifications} name="bell" color={black} />
           <IconButton
             onPress={onOpenSettings}
-            iconName="more-horizontal"
-            iconType="feather"
+            name="more-horizontal"
             color={black}
             sx={{ marginLeft: 15 }}
           />

@@ -1,19 +1,24 @@
 import { StyleSheet, Text, Pressable } from "react-native";
+import { useCallback, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Stack, CustomAvatar, Checkmark } from "../../core";
-import { FollowButton } from "../Buttons/FollowButton";
+import FollowButton from "../Buttons/FollowButton";
 import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../hooks/auth";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../models/navigation/rootStackParams";
+import * as Haptics from "expo-haptics";
+import { usePost, useDelete, useGet } from "../../../hooks";
 
 const { grey0, black } = theme.lightColors;
 
-export const UserListItem = ({ user, isFollow, sx = {} }) => {
+export const UserListItem = ({ user, sx = {} }) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { user: userContext } = useAuth();
   const { avatar, _id, username, name, checkmark } = user;
+  const [follow, setFollow] = useState(true);
+  const FOLLOW_ENDPOINT = `/users/${userContext?._id}/followings/${_id}/follows`;
 
   const goToUser = (userId: string) => {
     navigation.push("ProfileGeneral", {
@@ -27,6 +32,37 @@ export const UserListItem = ({ user, isFollow, sx = {} }) => {
     });
   };
 
+  const { isLoading, isFetching } = useGet({
+    model: "checkFollow",
+    uri: FOLLOW_ENDPOINT,
+    onSuccess: (res) => setFollow(res.data.status),
+  });
+
+  const { mutate: makePost } = usePost({
+    uri: FOLLOW_ENDPOINT,
+    onSuccess: () => {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    },
+  });
+
+  const { mutate: makeDelete } = useDelete({
+    uri: FOLLOW_ENDPOINT,
+    onSuccess: () => {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    },
+  });
+
+  const followHandler = useCallback(() => {
+    if (!follow) {
+      setFollow(true);
+      makePost({});
+    }
+    if (follow) {
+      setFollow(false);
+      makeDelete();
+    }
+  }, [follow]);
+
   return (
     <Stack direction="row" sx={{ ...styles.container, ...sx }}>
       <Pressable style={styles.goToUser} onPress={() => goToUser(_id)}>
@@ -39,8 +75,8 @@ export const UserListItem = ({ user, isFollow, sx = {} }) => {
           <Text style={styles.name}>{name}</Text>
         </Stack>
       </Pressable>
-      {_id !== userContext?._id && (
-        <FollowButton isFollow={isFollow} followeeId={_id} />
+      {(!isLoading || !isFetching) && (
+        <FollowButton isFollow={follow} onPress={followHandler} />
       )}
     </Stack>
   );
