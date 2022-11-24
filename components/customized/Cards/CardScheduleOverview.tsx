@@ -2,7 +2,8 @@ import { StyleSheet, Text, Pressable } from "react-native";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";
-import { Stack, CustomAvatar, Checkmark } from "../../core";
+import { Stack, Checkmark } from "../../core";
+import CustomAvatar from "../../core/Avatars/CustomAvatar";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../models/navigation/rootStackParams";
@@ -30,7 +31,7 @@ export const CardScheduleOverview = ({ schedule, start }) => {
             <Text style={styles.service}>{service?.name}</Text>
             <Text style={styles.date}>{start}</Text>
             <Stack direction="row" sx={{ marginTop: 15 }}>
-              <CustomAvatar avatar={avatar} size={32.5} iconSize={15} />
+              <CustomAvatar avatar={avatar} size={32.5} />
               <Stack align="start" sx={{ marginLeft: 10 }}>
                 <Stack direction="row">
                   <Text style={styles.name}>{name}</Text>

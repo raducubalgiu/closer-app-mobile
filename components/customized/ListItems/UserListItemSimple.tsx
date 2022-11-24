@@ -1,5 +1,6 @@
 import { StyleSheet, Text, Pressable } from "react-native";
-import { Stack, CustomAvatar, Checkmark } from "../../core";
+import { Stack, Checkmark } from "../../core";
+import CustomAvatar from "../../core/Avatars/CustomAvatar";
 import theme from "../../../assets/styles/theme";
 
 const { grey0, black } = theme.lightColors;
@@ -16,7 +17,7 @@ export const UserListItemSimple = ({
     <Pressable onPress={onGoToUser} style={sx}>
       <Stack align="start">
         <Stack direction="row">
-          <CustomAvatar avatar={avatar} size={50} iconSize={17.5} />
+          <CustomAvatar avatar={avatar} size={50} />
           <Stack align="start" justify="start" sx={{ marginLeft: 10 }}>
             <Stack direction="row">
               <Text style={styles.ownerName}>{name}</Text>

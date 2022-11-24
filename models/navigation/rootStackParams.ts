@@ -101,7 +101,7 @@ export type RootStackParams = {
   Register: any;
   RegisterBusiness: any;
   Settings: any;
-  SearchAll: { screen: string; search: string };
+  SearchAll: { screen: string | null; search: string };
   Schedules: any;
   ScheduleConfirm: {
     service: Service;

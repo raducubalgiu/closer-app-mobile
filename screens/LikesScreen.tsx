@@ -3,7 +3,8 @@ import { FlashList } from "@shopify/flash-list";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Header, Spinner } from "../components/core";
-import { NoFoundMessage, UserListItem } from "../components/customized";
+import { NoFoundMessage } from "../components/customized";
+import UserListItem from "../components/customized/ListItems/UserListItem";
 import { useAuth, useRefreshByUser } from "../hooks";
 import { useGetPaginate } from "../hooks";
 
@@ -27,7 +28,7 @@ export const LikesScreen = ({ route }) => {
   });
 
   const renderPerson = useCallback(
-    ({ item }) => <UserListItem user={item.user} isFollow={item.isFollow} />,
+    ({ item }) => <UserListItem user={item.user} />,
     []
   );
 

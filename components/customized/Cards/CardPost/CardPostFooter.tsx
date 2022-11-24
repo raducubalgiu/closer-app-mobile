@@ -1,7 +1,8 @@
 import { StyleSheet, Text, Pressable } from "react-native";
 import React, { memo, useState } from "react";
 import { Icon } from "@rneui/themed";
-import { Stack, CustomAvatar } from "../../../core";
+import { Stack } from "../../../core";
+import CustomAvatar from "../../../core/Avatars/CustomAvatar";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import theme from "../../../../assets/styles/theme";
@@ -86,7 +87,7 @@ const CardPostFooter = ({
         onPress={() => goToComments(true)}
       >
         <Stack direction="row" justify="start">
-          <CustomAvatar size={22.5} iconSize={10} avatar={user?.avatar} />
+          <CustomAvatar size={22.5} avatar={user?.avatar} />
           <Text style={styles.addCommText}>{t("addComment")}</Text>
         </Stack>
       </Pressable>

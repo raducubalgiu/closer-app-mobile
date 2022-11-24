@@ -101,10 +101,10 @@ export const ScheduleConfirmScreen = ({ route }) => {
       <Button
         size="lg"
         radius={25}
-        fullWidth
         title={t("confirmBooking")}
         loading={isLoading && !isSuccess}
         onPress={handleBook}
+        sxBtn={{ marginHorizontal: 15 }}
       />
     </SafeAreaView>
   );

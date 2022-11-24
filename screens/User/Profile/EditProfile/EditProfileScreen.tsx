@@ -12,13 +12,9 @@ import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import theme from "../../../../assets/styles/theme";
 import { Icon } from "@rneui/themed";
-import {
-  Stack,
-  Header,
-  CustomAvatar,
-  ListItem,
-} from "../../../../components/core";
+import { Stack, Header, ListItem } from "../../../../components/core";
 import { EditProfileSheet } from "../../../../components/customized";
+import CustomAvatar from "../../../../components/core/Avatars/CustomAvatar";
 import { trimFunc } from "../../../../utils";
 import { useSheet } from "../../../../hooks";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -54,8 +50,7 @@ export const EditProfileScreen = ({ route }) => {
 
   const { BOTTOM_SHEET, SHOW_BS, CLOSE_BS } = useSheet(
     [10, 300],
-    editProfileSheet,
-    closeModal
+    editProfileSheet
   );
 
   return (
@@ -65,7 +60,7 @@ export const EditProfileScreen = ({ route }) => {
         <ScrollView>
           <Stack sx={{ marginVertical: 20 }}>
             <Pressable style={{ alignItems: "center" }} onPress={SHOW_BS}>
-              <CustomAvatar avatar={user?.avatar} size={95} iconSize={35} />
+              <CustomAvatar avatar={user?.avatar} size={95} />
               <Text style={styles.text}>{t("changePhoto")}</Text>
             </Pressable>
           </Stack>

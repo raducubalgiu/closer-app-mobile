@@ -1,6 +1,6 @@
 import { SafeAreaView, StyleSheet, View, Text } from "react-native";
 import { Avatar } from "@rneui/themed";
-import { MainButton, Stack } from "../../../../components/core";
+import { Button, Stack } from "../../../../components/core";
 import { useNavigation } from "@react-navigation/native";
 import { CloseIconButton } from "../../../../components/customized";
 import theme from "../../../../assets/styles/theme";
@@ -29,11 +29,10 @@ export const EditAvatarScreen = ({ route }) => {
         source={{ uri: photo.uri }}
         containerStyle={{ marginBottom: 50 }}
       />
-      <MainButton
+      <Button
         title="Salveaza"
-        fullWidth
         size="lg"
-        sx={{ marginHorizontal: 20 }}
+        sxBtn={{ marginHorizontal: 20 }}
         onPress={handleAvatar}
       />
     </SafeAreaView>

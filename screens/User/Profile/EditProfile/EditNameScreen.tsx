@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { HeaderEdit } from "../../../../components/customized";
-import { Feedback, InputEdit, Spinner } from "../../../../components/core";
-import { useHttpPatch, useAuth } from "../../../../hooks";
+import { InputEdit, Spinner } from "../../../../components/core";
+import { usePatch, useAuth } from "../../../../hooks";
 
 export const EditNameScreen = () => {
   const { user, setUser } = useAuth();
@@ -16,20 +16,19 @@ export const EditNameScreen = () => {
     setUser({ ...user, name: data.name });
     navigation.goBack();
   };
-  const { makePatch, loading, feedback, setFeedback } = useHttpPatch(
-    `/users/update`,
-    updateUser
-  );
+  const { mutate, isLoading } = usePatch({
+    uri: "users/update",
+    onSuccess: (res) => updateUser(res),
+  });
 
   const updateName = () => {
     Keyboard.dismiss();
-    makePatch({ name });
+    mutate({ name });
   };
 
   return (
     <SafeAreaView style={styles.screen}>
-      <HeaderEdit title={t("name")} onSave={updateName} disabled={loading} />
-      <Feedback feedback={feedback} setFeedback={setFeedback} />
+      <HeaderEdit title={t("name")} onSave={updateName} disabled={isLoading} />
       <InputEdit
         placeholder={t("addName")}
         value={name}

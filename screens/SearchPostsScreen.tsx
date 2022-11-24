@@ -11,13 +11,9 @@ import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { Icon } from "@rneui/themed";
-import {
-  Checkmark,
-  CustomAvatar,
-  Feedback,
-  IconButton,
-} from "../components/core";
+import { Checkmark, Feedback, IconButton } from "../components/core";
 import { IconBackButton, SearchBarInput, Stack } from "../components/core";
+import CustomAvatar from "../components/core/Avatars/CustomAvatar";
 import {
   HashtagListItem,
   RecentSearchListItem,
@@ -111,7 +107,9 @@ export const SearchPostsScreen = () => {
   const renderRecent = useCallback(
     ({ item }) => (
       <RecentSearchListItem
-        onPress={() => navigation.navigate("SearchAll", { search: item.word })}
+        onPress={() =>
+          navigation.navigate("SearchAll", { search: item.word, screen: null })
+        }
         word={item?.word}
       />
     ),
@@ -139,12 +137,7 @@ export const SearchPostsScreen = () => {
           <HashtagListItem
             name={item.name}
             postsCount={item.postsCount}
-            onPress={() =>
-              navigation.navigate("Hashtag", {
-                name: item.name,
-                postsCount: item.postsCount,
-              })
-            }
+            onPress={() => navigation.navigate("Hashtag", { name: item.name })}
           />
         );
       } else {
@@ -171,6 +164,7 @@ export const SearchPostsScreen = () => {
     if (search.length === 0) return;
     navigation.navigate("SearchAll", {
       search: search.startsWith("#") ? search.split("#")[1] : search,
+      screen: null,
     });
   }, [search]);
 
@@ -222,7 +216,8 @@ export const SearchPostsScreen = () => {
           {t("recentSearch")}
         </Text>
         <IconButton
-          iconName="close"
+          name="close"
+          type="material"
           color="white"
           size={17}
           sx={{ backgroundColor: "#ddd", borderRadius: 50, padding: 3 }}

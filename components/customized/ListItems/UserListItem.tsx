@@ -1,10 +1,11 @@
 import { StyleSheet, Text, Pressable } from "react-native";
 import { useCallback, useState, memo } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Stack, CustomAvatar, Checkmark } from "../../core";
+import { Stack, Checkmark } from "../../core";
 import FollowButton from "../Buttons/FollowButton";
 import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../hooks/auth";
+import CustomAvatar from "../../core/Avatars/CustomAvatar";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../models/navigation/rootStackParams";
 import * as Haptics from "expo-haptics";
@@ -66,7 +67,7 @@ const UserListItem = ({ user, sx = {} }) => {
   return (
     <Stack direction="row" sx={{ ...styles.container, ...sx }}>
       <Pressable style={styles.goToUser} onPress={() => goToUser(_id)}>
-        <CustomAvatar avatar={avatar} withBadge={false} />
+        <CustomAvatar avatar={avatar} size={50} />
         <Stack align="start" sx={{ marginLeft: 10 }}>
           <Stack direction="row">
             <Text style={styles.username}>{username}</Text>

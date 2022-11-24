@@ -4,7 +4,6 @@ import { Icon, Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { Stack, ShareIButton } from "../../../core";
-import { useAuth } from "../../../../hooks";
 import theme from "../../../../assets/styles/theme";
 import { LikeButton } from "../../Buttons/LikeButton";
 import { BookmarkIconButton } from "../../Buttons/BookmarkIconButton";

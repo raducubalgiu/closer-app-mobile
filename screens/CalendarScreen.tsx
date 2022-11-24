@@ -14,12 +14,7 @@ import { NoFoundMessage } from "../components/customized";
 import { Icon } from "@rneui/themed";
 import theme from "../assets/styles/theme";
 import { Agenda } from "react-native-calendars";
-import {
-  useGet,
-  useGetPaginate,
-  useRefreshByUser,
-  useRefreshOnFocus,
-} from "../hooks";
+import { useGet, useRefreshByUser, useRefreshOnFocus } from "../hooks";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../models/navigation/rootStackParams";
 
@@ -39,10 +34,13 @@ export const CalendarScreen = ({ route }) => {
     refetch,
     isFetching,
     isLoading,
+    isError,
   } = useGet({
     model: "slots",
     uri: `/users/${user?._id}/schedules/slots?day=${day}`,
   });
+
+  console.log("IS ERROR!!", isError);
 
   useRefreshOnFocus(refetch);
 

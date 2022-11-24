@@ -7,13 +7,13 @@ import {
   Pressable,
 } from "react-native";
 import {
-  CustomAvatar,
   Header,
   Stack,
   IconLocation,
   IconStar,
   Button,
 } from "../components/core";
+import CustomAvatar from "../components/core/Avatars/CustomAvatar";
 import { useTranslation } from "react-i18next";
 import { Icon } from "@rneui/base";
 import theme from "../assets/styles/theme";
@@ -146,7 +146,7 @@ export const ScheduleDetailsScreen = ({ route }) => {
           )}
           <Pressable onPress={goToOwner} style={styles.userCont}>
             <Stack direction="row" justify="start">
-              <CustomAvatar avatar={user?.avatar} size={40} iconSize={20} />
+              <CustomAvatar avatar={user?.avatar} size={40} />
               <Stack align="start" sx={{ marginLeft: 10 }}>
                 <Text style={styles.name}>{user?.name}</Text>
                 <Stack direction="row" align="start">

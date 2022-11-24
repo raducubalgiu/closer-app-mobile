@@ -1,5 +1,4 @@
 import { StyleSheet, View } from "react-native";
-import { Image } from "@rneui/themed";
 import Animated from "react-native-reanimated";
 import React, { memo } from "react";
 import CardPostHeader from "./CardPostHeader";
