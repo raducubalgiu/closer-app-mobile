@@ -9,7 +9,7 @@ const CustomAvatar = ({ avatar = [], size = 55, sx = {} }) => {
       size={size}
       rounded
       source={{ uri }}
-      containerStyle={{ ...sx }}
+      containerStyle={{ backgroundColor: "#ddd", ...sx }}
       title="JS"
     />
   );

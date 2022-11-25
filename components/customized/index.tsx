@@ -57,7 +57,6 @@ export { ServicePostsRecentTab } from "./Tabs/ServicePostsTabs/ServicePostsRecen
 export { CardPostGrid } from "./Cards/CardPostGrid/CardPostGrid";
 export { CardRatings } from "./Cards/CardRatings";
 export { CardProduct } from "./Cards/CardProduct";
-export { CardSuggestedPeople } from "./Cards/CardSuggestedPeople";
 export { CardLocation } from "./Cards/CardLocation";
 export { CardRecommended } from "./Cards/CardRecommended";
 export { CardAvailableHour } from "./Cards/CardAvailableHour";
@@ -72,10 +71,10 @@ export { CardPostDescription } from "./Cards/CardPostDescription";
 
 export { HeaderServices } from "./Layout/Headers/HeaderServices";
 export { HeaderEdit } from "./Layout/Headers/HeaderEdit";
+export { HeaderMap } from "./Layout/Headers/HeaderMap";
 
 export { ServicesList } from "./Lists/ServicesList";
 export { ProfileMenuList } from "./Lists/ProfileMenuList";
-export { SuggestedUsersList } from "./Lists/SuggestedUsersList";
 
 export { MessageListItem } from "./ListItems/MessageListItem";
 export { HashtagListItem } from "./ListItems/HashtagListItem";

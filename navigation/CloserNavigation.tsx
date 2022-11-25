@@ -87,6 +87,7 @@ const { black } = theme.lightColors;
 import { SharedList } from "../screens/SharedList";
 import { SharedDetails } from "../screens/SharedDetails";
 import { PanGestureHandler } from "react-native-gesture-handler";
+import { User } from "firebase/auth";
 
 const Shared = () => {
   return (
@@ -199,221 +200,215 @@ const CloserNavigation = () => {
   const { user } = useAuth();
   const { t } = useTranslation();
 
-  const getScreens = useCallback(
-    (user) => {
-      if (user) {
-        return (
-          <PortalProvider>
-            <RootStack.Navigator screenOptions={{ headerShown: false }}>
-              <RootStack.Screen name="App" component={TabsScreen} />
-              <RootStack.Group>
-                <RootStack.Screen
-                  name="SearchServices"
-                  component={SearchServicesScreen}
-                />
-                <RootStack.Screen
-                  name="FiltersDate"
-                  component={FiltersDateScreen}
-                />
-                <RootStack.Screen
-                  name="FiltersService"
-                  component={FiltersServiceScreen}
-                />
-                <RootStack.Screen
-                  name="Locations"
-                  component={LocationsScreen}
-                />
-              </RootStack.Group>
-              <RootStack.Group>
-                <RootStack.Screen
-                  name="EditProfile"
-                  component={EditProfileScreen}
-                />
-                <RootStack.Screen name="EditName" component={EditNameScreen} />
-                <RootStack.Screen
-                  name="EditWebsite"
-                  component={EditWebsiteScreen}
-                />
-                <RootStack.Screen name="EditBio" component={EditBioScreen} />
-                <RootStack.Screen
-                  name="EditUsername"
-                  component={EditUsernameScreen}
-                />
-                <RootStack.Screen
-                  name="EditProfession"
-                  component={EditProfessionScreen}
-                />
-              </RootStack.Group>
-              <RootStack.Group>
-                <RootStack.Screen
-                  name="MyBusiness"
-                  component={MyBusinessScreen}
-                />
-                <RootStack.Screen
-                  name="MyDashboard"
-                  component={MyDashboardScreen}
-                />
-                <RootStack.Screen
-                  name="MyCalendar"
-                  component={MyCalendarScreen}
-                />
-                <RootStack.Screen
-                  name="MyLocation"
-                  component={MyLocationScreen}
-                />
-                <RootStack.Screen
-                  name="MyProducts"
-                  component={MyProductsScreen}
-                />
-                <RootStack.Screen name="MyJobs" component={MyJobsScreen} />
-                <RootStack.Screen
-                  name="AddLocation"
-                  component={AddLocationScreen}
-                />
-                <RootStack.Screen
-                  name="AddServices"
-                  component={AddServicesScreen}
-                />
-                <RootStack.Screen
-                  name="AddProducts"
-                  component={AddProductsScreen}
-                  options={{
-                    headerShown: true,
-                    headerTitle: t("addProduct"),
-                    headerBackTitle: "",
-                    headerTintColor: black,
-                  }}
-                />
-                <RootStack.Screen name="AddJobs" component={AddJobsScreen} />
-                <RootStack.Screen
-                  name="EditProduct"
-                  component={EditProductScreen}
-                />
-              </RootStack.Group>
-              <RootStack.Group>
-                <RootStack.Screen
-                  name="MessageItem"
-                  component={MessageItemScreen}
-                />
-                <RootStack.Screen
-                  name="MessageSettings"
-                  component={MessageSettingsScreen}
-                />
-                <RootStack.Screen
-                  name="MessageNew"
-                  component={MessageNewScreen}
-                />
-              </RootStack.Group>
+  const getScreens = (user: User) => {
+    if (user) {
+      return (
+        <PortalProvider>
+          <RootStack.Navigator screenOptions={{ headerShown: false }}>
+            <RootStack.Screen name="App" component={TabsScreen} />
+            <RootStack.Group>
               <RootStack.Screen
-                name="Settings"
-                component={SettingsProfileScreen}
+                name="SearchServices"
+                component={SearchServicesScreen}
               />
               <RootStack.Screen
-                name="ScheduleDetails"
-                component={ScheduleDetailsScreen}
+                name="FiltersDate"
+                component={FiltersDateScreen}
               />
               <RootStack.Screen
-                name="ScheduleCancel"
-                component={ScheduleCancelScreen}
+                name="FiltersService"
+                component={FiltersServiceScreen}
               />
-              <RootStack.Screen name="Discounts" component={DiscountsScreen} />
+              <RootStack.Screen name="Locations" component={LocationsScreen} />
+            </RootStack.Group>
+            <RootStack.Group>
               <RootStack.Screen
-                name="FindFriends"
-                component={FindFriendsScreen}
+                name="EditProfile"
+                component={EditProfileScreen}
               />
-              <RootStack.Screen name="Bookmarks" component={BookmarksScreen} />
+              <RootStack.Screen name="EditName" component={EditNameScreen} />
               <RootStack.Screen
-                name="AllBookmarks"
-                component={AllBookmarksScreen}
+                name="EditWebsite"
+                component={EditWebsiteScreen}
+              />
+              <RootStack.Screen name="EditBio" component={EditBioScreen} />
+              <RootStack.Screen
+                name="EditUsername"
+                component={EditUsernameScreen}
               />
               <RootStack.Screen
-                name="Comments"
-                component={CommentsScreen}
+                name="EditProfession"
+                component={EditProfessionScreen}
+              />
+            </RootStack.Group>
+            <RootStack.Group>
+              <RootStack.Screen
+                name="MyBusiness"
+                component={MyBusinessScreen}
+              />
+              <RootStack.Screen
+                name="MyDashboard"
+                component={MyDashboardScreen}
+              />
+              <RootStack.Screen
+                name="MyCalendar"
+                component={MyCalendarScreen}
+              />
+              <RootStack.Screen
+                name="MyLocation"
+                component={MyLocationScreen}
+              />
+              <RootStack.Screen
+                name="MyProducts"
+                component={MyProductsScreen}
+              />
+              <RootStack.Screen name="MyJobs" component={MyJobsScreen} />
+              <RootStack.Screen
+                name="AddLocation"
+                component={AddLocationScreen}
+              />
+              <RootStack.Screen
+                name="AddServices"
+                component={AddServicesScreen}
+              />
+              <RootStack.Screen
+                name="AddProducts"
+                component={AddProductsScreen}
                 options={{
                   headerShown: true,
-                  headerTitle: t("comments"),
+                  headerTitle: t("addProduct"),
                   headerBackTitle: "",
                   headerTintColor: black,
                 }}
               />
-              <RootStack.Screen name="SearchAll" component={SearchAllScreen} />
-              <RootStack.Screen name="Hashtag" component={HashtagScreen} />
-              <RootStack.Screen name="Service" component={ServiceScreen} />
+              <RootStack.Screen name="AddJobs" component={AddJobsScreen} />
               <RootStack.Screen
-                name="Notifications"
-                component={NotificationsScreen}
+                name="EditProduct"
+                component={EditProductScreen}
               />
-              <RootStack.Screen name="Post" component={PostScreen} />
+            </RootStack.Group>
+            <RootStack.Group>
               <RootStack.Screen
-                name="ProfileGeneral"
-                component={ProfileGeneralScreen}
-              />
-              <RootStack.Screen name="Map" component={MapScreen} />
-              <RootStack.Screen
-                name="ProfileStats"
-                component={ProfileStatsScreen}
-              />
-              <RootStack.Screen name="CalendarBig" component={CalendarScreen} />
-              <RootStack.Screen
-                name="ScheduleConfirm"
-                component={ScheduleConfirmScreen}
+                name="MessageItem"
+                component={MessageItemScreen}
               />
               <RootStack.Screen
-                name="AddSchedule"
-                component={AddScheduleScreen}
+                name="MessageSettings"
+                component={MessageSettingsScreen}
               />
               <RootStack.Screen
-                name="AddPost"
-                component={AddPostScreen}
-                options={{ animation: "fade", animationDuration: 2 }}
+                name="MessageNew"
+                component={MessageNewScreen}
               />
-              <RootStack.Group screenOptions={{ gestureEnabled: false }}>
-                <RootStack.Screen
-                  options={{ presentation: "modal" }}
-                  name="PhotoLibrary"
-                  component={PhotoLibraryScreen}
-                />
-                <RootStack.Screen
-                  options={{
-                    presentation: "modal",
-                    animation: "flip",
-                  }}
-                  name="PhotoAlbums"
-                  component={PhotoAlbumsScreen}
-                />
-                <RootStack.Screen
-                  options={{ presentation: "fullScreenModal" }}
-                  name="EditAvatar"
-                  component={EditAvatarScreen}
-                />
-              </RootStack.Group>
-              <RootStack.Group
-                screenOptions={{
-                  animation: "fade",
-                  animationDuration: 1,
+            </RootStack.Group>
+            <RootStack.Screen
+              name="Settings"
+              component={SettingsProfileScreen}
+            />
+            <RootStack.Screen
+              name="ScheduleDetails"
+              component={ScheduleDetailsScreen}
+            />
+            <RootStack.Screen
+              name="ScheduleCancel"
+              component={ScheduleCancelScreen}
+            />
+            <RootStack.Screen name="Discounts" component={DiscountsScreen} />
+            <RootStack.Screen
+              name="FindFriends"
+              component={FindFriendsScreen}
+            />
+            <RootStack.Screen name="Bookmarks" component={BookmarksScreen} />
+            <RootStack.Screen
+              name="AllBookmarks"
+              component={AllBookmarksScreen}
+            />
+            <RootStack.Screen
+              name="Comments"
+              component={CommentsScreen}
+              options={{
+                headerShown: true,
+                headerTitle: t("comments"),
+                headerBackTitle: "",
+                headerTintColor: black,
+              }}
+            />
+            <RootStack.Screen name="SearchAll" component={SearchAllScreen} />
+            <RootStack.Screen name="Hashtag" component={HashtagScreen} />
+            <RootStack.Screen name="Service" component={ServiceScreen} />
+            <RootStack.Screen
+              name="Notifications"
+              component={NotificationsScreen}
+            />
+            <RootStack.Screen name="Post" component={PostScreen} />
+            <RootStack.Screen
+              name="ProfileGeneral"
+              component={ProfileGeneralScreen}
+            />
+            <RootStack.Screen name="Map" component={MapScreen} />
+            <RootStack.Screen
+              name="ProfileStats"
+              component={ProfileStatsScreen}
+            />
+            <RootStack.Screen name="CalendarBig" component={CalendarScreen} />
+            <RootStack.Screen
+              name="ScheduleConfirm"
+              component={ScheduleConfirmScreen}
+            />
+            <RootStack.Screen
+              name="AddSchedule"
+              component={AddScheduleScreen}
+            />
+            <RootStack.Screen
+              name="AddPost"
+              component={AddPostScreen}
+              options={{ animation: "fade", animationDuration: 2 }}
+            />
+            <RootStack.Group screenOptions={{ gestureEnabled: false }}>
+              <RootStack.Screen
+                options={{ presentation: "modal" }}
+                name="PhotoLibrary"
+                component={PhotoLibraryScreen}
+              />
+              <RootStack.Screen
+                options={{
+                  presentation: "modal",
+                  animation: "flip",
                 }}
-              >
-                <RootStack.Screen name="Camera" component={CameraScreen} />
-                <RootStack.Screen
-                  name="CameraPreview"
-                  component={CameraPreviewScreen}
-                />
-              </RootStack.Group>
-              <RootStack.Screen name="SharedList" component={Shared} />
-              <RootStack.Screen name="Test" component={TestScreen} />
-            </RootStack.Navigator>
-          </PortalProvider>
-        );
-      } else {
-        return (
-          <RootStack.Navigator screenOptions={{ headerShown: false }}>
-            <RootStack.Screen name="AuthStack" component={AuthStackNavigator} />
+                name="PhotoAlbums"
+                component={PhotoAlbumsScreen}
+              />
+              <RootStack.Screen
+                options={{ presentation: "fullScreenModal" }}
+                name="EditAvatar"
+                component={EditAvatarScreen}
+              />
+            </RootStack.Group>
+            <RootStack.Group
+              screenOptions={{
+                animation: "fade",
+                animationDuration: 1,
+              }}
+            >
+              <RootStack.Screen name="Camera" component={CameraScreen} />
+              <RootStack.Screen
+                name="CameraPreview"
+                component={CameraPreviewScreen}
+              />
+            </RootStack.Group>
+            <RootStack.Screen name="SharedList" component={Shared} />
+            <RootStack.Screen name="Test" component={TestScreen} />
           </RootStack.Navigator>
-        );
-      }
-    },
-    [user]
-  );
+        </PortalProvider>
+      );
+    } else {
+      return (
+        <RootStack.Navigator screenOptions={{ headerShown: false }}>
+          <RootStack.Screen name="AuthStack" component={AuthStackNavigator} />
+        </RootStack.Navigator>
+      );
+    }
+  };
 
   return <NavigationContainer>{getScreens(user)}</NavigationContainer>;
 };

@@ -10,9 +10,9 @@ import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { HeaderEdit } from "../../../../components/customized";
-import { Feedback, Spinner } from "../../../../components/core";
+import { Spinner } from "../../../../components/core";
 import theme from "../../../../assets/styles/theme";
-import { useHttpPatch, useAuth } from "../../../../hooks";
+import { useAuth, usePatch } from "../../../../hooks";
 
 export const EditBioScreen = () => {
   const { user, setUser } = useAuth();
@@ -20,23 +20,21 @@ export const EditBioScreen = () => {
   const navigation = useNavigation();
   const { t } = useTranslation();
 
-  const updateUser = (data) => {
-    setUser({ ...user, description: data.description });
-    navigation.goBack();
-  };
-  const { makePatch, loading, feedback, setFeedback } = useHttpPatch(
-    `/users/${user?._id}/update`,
-    updateUser
-  );
+  const { mutate, isLoading } = usePatch({
+    uri: `/users/${user?._id}/update`,
+    onSuccess: (res) => {
+      setUser({ ...user, description: res.data.description });
+      navigation.goBack();
+    },
+  });
   const updateBio = () => {
     Keyboard.dismiss();
-    makePatch({ description: bio });
+    mutate({ description: bio });
   };
 
   return (
     <SafeAreaView style={styles.screen}>
-      <HeaderEdit title={t("name")} onSave={updateBio} disabled={loading} />
-      <Feedback feedback={feedback} setFeedback={setFeedback} />
+      <HeaderEdit title={t("name")} onSave={updateBio} disabled={isLoading} />
       <View style={styles.textAreaContainer}>
         <TextInput
           value={bio}
@@ -60,7 +58,7 @@ export const EditBioScreen = () => {
       >
         {bio?.length ? bio?.length : 0} / 200
       </Text>
-      {loading && <Spinner />}
+      {isLoading && <Spinner />}
     </SafeAreaView>
   );
 };

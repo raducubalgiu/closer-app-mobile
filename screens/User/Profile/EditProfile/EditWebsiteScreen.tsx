@@ -1,10 +1,10 @@
 import { SafeAreaView, StyleSheet, Keyboard } from "react-native";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { Feedback, InputEdit, Spinner } from "../../../../components/core";
+import { InputEdit, Spinner } from "../../../../components/core";
 import { HeaderEdit } from "../../../../components/customized";
-import { useHttpPatch, useAuth } from "../../../../hooks";
+import { usePatch, useAuth } from "../../../../hooks";
 
 export const EditWebsiteScreen = () => {
   const { user, setUser } = useAuth();
@@ -12,17 +12,16 @@ export const EditWebsiteScreen = () => {
   const navigation = useNavigation();
   const { t } = useTranslation();
 
-  const updateUser = (data) => {
-    setUser({ ...user, website: data.website });
-    navigation.goBack();
-  };
-  const { makePatch, loading, feedback, setFeedback } = useHttpPatch(
-    `/users/${user?._id}/update`,
-    updateUser
-  );
+  const { mutate, isLoading } = usePatch({
+    uri: `/users/${user?._id}/update`,
+    onSuccess: (res) => {
+      setUser({ ...user, website: res.data.website });
+      navigation.goBack();
+    },
+  });
   const updateWebsite = () => {
     Keyboard.dismiss();
-    makePatch({ website });
+    mutate({ website });
   };
 
   return (
@@ -30,17 +29,16 @@ export const EditWebsiteScreen = () => {
       <HeaderEdit
         title={t("website")}
         onSave={updateWebsite}
-        disabled={loading}
+        disabled={isLoading}
       />
-      <Feedback feedback={feedback} setFeedback={setFeedback} />
       <InputEdit
         placeholder={t("addWebsite")}
         value={website}
         fieldLength={40}
-        updateValue={(website) => setWebsite(website)}
+        updateValue={(website: string) => setWebsite(website)}
         withDetails
       />
-      {loading && <Spinner />}
+      {isLoading && <Spinner />}
     </SafeAreaView>
   );
 };

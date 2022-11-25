@@ -71,7 +71,7 @@ export const EditProfileScreen = ({ route }) => {
                 key={i}
                 between
                 sx={styles.listItem}
-                onPress={() => navigation.navigate(item.nav)}
+                onPress={() => navigation.navigate<any>(item.nav)}
               >
                 <Text style={styles.label}>{t(item.label)}</Text>
                 <Stack direction="row">

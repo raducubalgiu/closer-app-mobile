@@ -1,38 +1,35 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
-import {
-  CustomAvatar,
-  Stack,
-  IconStar,
-  IconButton,
-  Checkmark,
-} from "../../core";
+import { memo, useState } from "react";
+import { Stack, IconStar, IconButton, Checkmark, Protected } from "../../core";
+import CustomAvatar from "../../core/Avatars/CustomAvatar";
 import theme from "../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 import { trimFunc } from "../../../utils";
-import { FollowButton } from "../Buttons/FollowButton";
+import FollowButton from "../Buttons/FollowButton";
+import { MAIN_ROLE, SECOND_ROLE } from "@env";
 
 const { grey0, black, primary } = theme.lightColors;
 
-export const CardSuggestedPeople = ({
-  avatar,
-  username,
-  profession,
-  checkmark,
-  noFollowers,
-  followeeId,
-  ratingsAverage,
-  onRemoveCard,
-}) => {
+const CardSuggestedPeople = ({ item, onRemoveCard }) => {
+  const {
+    username,
+    avatar,
+    followersCount,
+    ratingsAverage,
+    profession,
+    checkmark,
+    role,
+  } = item;
   const { t } = useTranslation();
+  const [isFollow, setIsFollow] = useState(false);
 
   return (
     <View style={styles.container}>
       <Stack justify="end" align="end" sx={{ width: "100%" }}>
         <IconButton
           onPress={onRemoveCard}
-          iconName="close"
-          iconType="antdesign"
+          name="close"
+          type="antdesign"
           size={15}
           color={grey0}
           sx={{ marginRight: 10 }}
@@ -40,41 +37,44 @@ export const CardSuggestedPeople = ({
       </Stack>
       <Stack sx={styles.content}>
         <Stack>
-          <CustomAvatar avatar={avatar} size={75} iconSize={35} />
+          <CustomAvatar avatar={avatar} size={75} />
         </Stack>
-        <Stack direction="row" justify="start">
+        <Stack
+          direction="row"
+          justify="start"
+          sx={{ marginTop: 5, marginBottom: 2 }}
+        >
           <Text style={styles.username}>{username}</Text>
           {checkmark && <Checkmark sx={{ marginLeft: 5 }} />}
         </Stack>
         <Stack direction="row" sx={{ marginTop: 2.5 }}>
-          <Text style={styles.business}>{trimFunc(profession, 12)}</Text>
-          <Stack direction="row" sx={{ marginLeft: 2.5 }}>
-            <IconStar />
-            <Text style={styles.ratingsAverage}>{ratingsAverage}</Text>
-          </Stack>
+          <Text style={styles.business}>{trimFunc(profession?.name, 12)}</Text>
+          <Protected roles={[MAIN_ROLE, SECOND_ROLE]} userRole={role}>
+            <Stack direction="row" sx={{ marginLeft: 2.5 }}>
+              <IconStar />
+              <Text style={styles.ratingsAverage}>{ratingsAverage}</Text>
+            </Stack>
+          </Protected>
         </Stack>
         <Text style={styles.followers}>
-          {noFollowers} {t("followers")}
+          {followersCount} {t("followers")}
         </Text>
-        {/* <FollowButton
-          sxBtn={styles.followBtn}
-          sxBtnText={styles.followBtnText}
-          followeeId={followeeId}
-          fullWidth
-        /> */}
+        <FollowButton isFollow={isFollow} onPress={() => {}} fullWidth />
       </Stack>
     </View>
   );
 };
+
+export default memo(CardSuggestedPeople);
 
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     borderWidth: 1,
     borderColor: "#eee",
-    marginRight: 15,
+    marginHorizontal: 7.5,
     borderRadius: 5,
-    minWidth: 220,
+    width: 220,
     paddingVertical: 10,
   },
   content: {
@@ -87,16 +87,15 @@ const styles = StyleSheet.create({
   },
   username: {
     color: black,
-    marginTop: 5,
-    marginBottom: 1,
     fontWeight: "600",
     fontSize: 14.5,
   },
   followers: {
     color: grey0,
-    fontSize: 14,
+    fontSize: 13.5,
     marginTop: 20,
-    fontWeight: "500",
+    marginBottom: 10,
+    fontWeight: "400",
   },
   business: {
     color: primary,

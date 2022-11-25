@@ -12,11 +12,11 @@ import {
 } from "../../../hooks";
 import {
   HeaderProfileGeneral,
-  SuggestedUsersList,
   TopTabProfile,
   ProfileIconButton,
   FollowProfileButton,
 } from "../../../components/customized";
+import SuggestedUsersList from "../../../components/customized/Lists/SuggestedUsersList";
 import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
 import { RootStackParams } from "../../../models/navigation/rootStackParams";
 import { Protected } from "../../../components/core";
@@ -26,7 +26,6 @@ export const ProfileGeneralScreen = ({ route }) => {
   const { user } = useAuth();
   const { userId, username, avatar, name, checkmark } = route.params;
   const { service, option } = route.params;
-  const [suggested, setSuggested] = useState([]);
   const [isFollow, setIsFollow] = useState(false);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -36,10 +35,11 @@ export const ProfileGeneralScreen = ({ route }) => {
     uri: `/users/${username}`,
   });
 
-  const { mutate: handleSuggested, isLoading } = useGetMutate({
-    uri: `/users/${userDetails?._id}/get-suggested`,
-    onSuccess: (res: any) => setSuggested(res.data),
-  });
+  const {
+    data: suggested,
+    mutate: handleSuggested,
+    isLoading,
+  } = useGetMutate({ uri: `/users/suggested` });
 
   useGet({
     model: "checkFollow",
@@ -77,7 +77,10 @@ export const ProfileGeneralScreen = ({ route }) => {
       },
     });
   const goToMap = () => {
-    navigation.navigate("Map", { profession: userDetails?.profession });
+    navigation.push("Map", {
+      profession: userDetails?.profession?._id,
+      userId: userDetails?._id,
+    });
   };
 
   return (
@@ -113,8 +116,8 @@ export const ProfileGeneralScreen = ({ route }) => {
           loading={isLoading}
         />
       </ProfileOverview>
-      {suggested?.length > 0 && (
-        <SuggestedUsersList suggested={suggested} userId={userId} />
+      {suggested && (
+        <SuggestedUsersList suggested={suggested?.data} userId={userId} />
       )}
       <TopTabProfile
         user={userDetails}

@@ -5,7 +5,13 @@ import theme from "../../../assets/styles/theme";
 
 const { primary, black } = theme.lightColors;
 
-const FollowButton = ({ onPress, isFollow, sxBtn = {}, sxBtnText = {} }) => {
+const FollowButton = ({
+  onPress,
+  isFollow,
+  sxBtn = {},
+  sxBtnText = {},
+  fullWidth = false,
+}) => {
   const { t } = useTranslation();
 
   const styles = StyleSheet.create({
@@ -14,7 +20,7 @@ const FollowButton = ({ onPress, isFollow, sxBtn = {}, sxBtnText = {} }) => {
       borderWidth: 1,
       borderColor: isFollow ? "#ddd" : primary,
       backgroundColor: isFollow ? "white" : primary,
-      width: 100,
+      width: fullWidth ? "100%" : 100,
       height: 30,
       justifyContent: "center",
       alignItems: "center",

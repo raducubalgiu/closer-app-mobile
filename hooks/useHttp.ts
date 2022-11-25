@@ -100,7 +100,7 @@ export const useGet = ({
   };
 };
 
-export const useGetMutate = ({ uri, onSuccess }) => {
+export const useGetMutate = ({ uri, onSuccess = undefined }) => {
   const { user } = useAuth();
 
   const mutations = useMutation(

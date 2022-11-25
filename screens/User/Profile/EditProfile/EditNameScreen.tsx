@@ -12,13 +12,12 @@ export const EditNameScreen = () => {
   const navigation = useNavigation();
   const { t } = useTranslation();
 
-  const updateUser = (data) => {
-    setUser({ ...user, name: data.name });
-    navigation.goBack();
-  };
   const { mutate, isLoading } = usePatch({
-    uri: "users/update",
-    onSuccess: (res) => updateUser(res),
+    uri: "/users/update",
+    onSuccess: (res) => {
+      setUser({ ...user, name: res.data.name });
+      navigation.goBack();
+    },
   });
 
   const updateName = () => {
@@ -33,10 +32,10 @@ export const EditNameScreen = () => {
         placeholder={t("addName")}
         value={name}
         fieldLength={30}
-        updateValue={(name) => setName(name)}
+        updateValue={(name: string) => setName(name)}
         withDetails
       />
-      {loading && <Spinner />}
+      {isLoading && <Spinner />}
     </SafeAreaView>
   );
 };

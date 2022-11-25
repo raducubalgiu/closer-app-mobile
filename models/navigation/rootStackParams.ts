@@ -70,10 +70,8 @@ export type RootStackParams = {
   MessageNew: any;
   Notifications: any;
   Map: {
-    profession: {
-      _id: string;
-      name: string;
-    };
+    profession: string;
+    userId: string;
   };
   Post: { userId: string };
   Profile: any;
