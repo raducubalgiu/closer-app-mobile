@@ -1,4 +1,4 @@
-export const required = (t) => {
+export const required = (t: any) => {
   return {
     required: {
       value: true,
@@ -7,7 +7,7 @@ export const required = (t) => {
   };
 };
 
-export const minField = (length) => {
+export const minField = (length: number) => {
   return {
     minLength: {
       value: length,
@@ -16,7 +16,7 @@ export const minField = (length) => {
   };
 };
 
-export const maxField = (length) => {
+export const maxField = (length: number) => {
   return {
     maxLength: {
       value: length,

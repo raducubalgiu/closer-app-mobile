@@ -4,12 +4,20 @@ import {
   TouchableWithoutFeedback,
   View,
   Text,
+  ListRenderItemInfo,
 } from "react-native";
 import React, { useRef, useState } from "react";
 import { Image } from "@rneui/themed";
 import { IconBackButton } from "../IconButton/IconBackButton";
 
 const viewConfigRef = { viewAreaCoveragePercentThreshold: 95 };
+type Props = {
+  images: [];
+  height: number;
+  width: number;
+  withCounter: boolean;
+  withBack: boolean;
+};
 
 export const ImageSlider = ({
   images,
@@ -17,17 +25,17 @@ export const ImageSlider = ({
   width,
   withCounter,
   withBack,
-}) => {
+}: Props) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const ref = useRef<any>();
 
-  const onViewRef = useRef(({ changed }) => {
+  const onViewRef = useRef(({ changed }: { changed: any }) => {
     if (changed[0].isViewable) {
       setCurrentIndex(changed[0].index);
     }
   });
 
-  const renderImages = ({ item }) => (
+  const renderImages = ({ item }: ListRenderItemInfo<any>) => (
     <TouchableWithoutFeedback>
       <Image source={{ uri: item.url }} containerStyle={{ height, width }} />
     </TouchableWithoutFeedback>

@@ -2,7 +2,7 @@ import { FlatList, SafeAreaView, StyleSheet, View } from "react-native";
 import { useCallback } from "react";
 import { Header, Stack, Button } from "../../../../components/core";
 import { useTranslation } from "react-i18next";
-import { useForm, FormProvider, useFormState } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import { useAuth, usePatch, useMinutes } from "../../../../hooks";
 import { useNavigation } from "@react-navigation/native";
 import UserProgramListItem from "../../../../components/customized/ListItems/UserProgramListItem";
@@ -41,16 +41,16 @@ export const AddUserProgramScreen = () => {
 
   const methods = useForm({
     defaultValues: {
-      startmon: getStart(mon, 540),
-      endmon: getEnd(mon, 1020),
-      starttue: getStart(tue, 540),
-      endtue: getEnd(tue, 1020),
-      startwed: getStart(wed, 540),
-      endwed: getEnd(wed, 1020),
-      startthu: getStart(thu, 540),
-      endthu: getEnd(thu, 1020),
-      startfri: getStart(fri, 540),
-      endfri: getEnd(fri, 1020),
+      startmon: getStart(mon, -1),
+      endmon: getEnd(mon, -1),
+      starttue: getStart(tue, -1),
+      endtue: getEnd(tue, -1),
+      startwed: getStart(wed, -1),
+      endwed: getEnd(wed, -1),
+      startthu: getStart(thu, -1),
+      endthu: getEnd(thu, -1),
+      startfri: getStart(fri, -1),
+      endfri: getEnd(fri, -1),
       startsat: getStart(sat, -1),
       endsat: getEnd(sat, -1),
       startsun: getStart(sun, -1),
@@ -118,6 +118,7 @@ export const AddUserProgramScreen = () => {
 
   const renderDay = useCallback(({ item }) => {
     const start: any = "start".concat(item.name);
+    const end: any = "end".concat(item.name);
 
     return (
       <UserProgramListItem

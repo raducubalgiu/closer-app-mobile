@@ -8,7 +8,9 @@ import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import UserListItem from "../../ListItems/UserListItem";
 import { useGetPaginate, useRefreshByUser } from "../../../../hooks";
 
-export const FollowingsTab = ({ userId }) => {
+type Props = { userId: string };
+
+export const FollowingsTab = ({ userId }: Props): JSX.Element => {
   const isFocused = useIsFocused();
   const { t } = useTranslation();
   const {

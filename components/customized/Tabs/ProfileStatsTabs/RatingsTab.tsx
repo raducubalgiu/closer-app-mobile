@@ -28,7 +28,9 @@ const DUMMY_DATA = {
   ],
 };
 
-export const RatingsTab = ({ userId }) => {
+type Props = { userId: string };
+
+export const RatingsTab = ({ userId }: Props): JSX.Element => {
   const { t } = useTranslation();
   const isFocused = useIsFocused();
 

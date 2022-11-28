@@ -1,6 +1,16 @@
 import { Pressable } from "react-native";
 import { Stack } from "../Stack/Stack";
 
+type IProps = {
+  between: boolean;
+  around: boolean;
+  center: boolean;
+  mt: number;
+  sx: {};
+  onPress: () => void;
+  children: any;
+};
+
 export const ListItem = ({
   between = false,
   around = false,
@@ -9,7 +19,7 @@ export const ListItem = ({
   sx = {},
   onPress,
   children,
-}) => {
+}: IProps) => {
   let justifyContent;
 
   if (between) {

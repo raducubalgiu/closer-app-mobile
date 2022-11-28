@@ -1,5 +1,4 @@
 import { ActivityIndicator } from "react-native";
-import React from "react";
 import { Stack } from "../Stack/Stack";
 
 export const Spinner = ({ sx = {} }) => {

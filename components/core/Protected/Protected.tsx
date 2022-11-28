@@ -1,6 +1,8 @@
 import React from "react";
 
-export const Protected = ({ roles, userRole, children }) => {
+type IProps = { roles: [string]; userRole: string; children: any };
+
+export const Protected = ({ roles, userRole, children }: IProps) => {
   let visible = false;
 
   if (roles?.includes(userRole)) {

@@ -1,8 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
 import { AirbnbRating, Divider } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
-import { Stack, CustomAvatar } from "../../core";
+import { Stack } from "../../core";
+import CustomAvatar from "../../core/Avatars/CustomAvatar";
+
+const { black, primary, grey0 } = theme.lightColors;
 
 export const CardRatings = ({
   avatar,
@@ -16,12 +18,7 @@ export const CardRatings = ({
     <View style={styles.container}>
       <Stack direction="row" align="start">
         <Stack direction="row">
-          <CustomAvatar
-            iconSize={20}
-            size={45}
-            avatar={avatar}
-            withBadge={false}
-          />
+          <CustomAvatar size={45} avatar={avatar} />
           <View style={{ marginLeft: 10 }}>
             <Text style={styles.name}>{name}</Text>
             <Text style={styles.date}>{date}</Text>
@@ -36,8 +33,8 @@ export const CardRatings = ({
           reviews={["Nesatisfacator", "Acceptabil", "Ok", "Bun", "Senzational"]}
           size={15}
           defaultRating={rating}
-          reviewColor={theme.lightColors.black}
-          selectedColor={theme.lightColors.primary}
+          reviewColor={black}
+          selectedColor={primary}
           reviewSize={15}
         />
         <Text style={styles.service}>{service}</Text>
@@ -61,11 +58,11 @@ const styles = StyleSheet.create({
     marginBottom: 2.5,
   },
   date: {
-    color: theme.lightColors.grey0,
+    color: grey0,
     fontSize: 13,
   },
   service: {
-    color: theme.lightColors.black,
+    color: black,
     borderWidth: 1,
     borderColor: "#ccc",
     paddingVertical: 5,
@@ -75,6 +72,6 @@ const styles = StyleSheet.create({
   review: {
     fontSize: 14,
     marginVertical: 10,
-    color: theme.lightColors.black,
+    color: black,
   },
 });

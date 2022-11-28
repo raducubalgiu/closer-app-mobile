@@ -5,7 +5,7 @@ import theme from "../../../assets/styles/theme";
 import { Stack } from "../Stack/Stack";
 import { IconBackButton } from "../IconButton/IconBackButton";
 
-const { black, grey0 } = theme.lightColors;
+const { black, grey0 } = theme.lightColors || {};
 
 export const Header = ({
   hideBtnLeft = false,
@@ -19,7 +19,7 @@ export const Header = ({
   return (
     <View>
       <Stack direction="row" sx={styles.container}>
-        <TouchableOpacity onPress={!hideBtnLeft ? () => handleBack : null}>
+        <TouchableOpacity onPress={handleBack}>
           <IconBackButton color={!hideBtnLeft ? black : "white"} />
         </TouchableOpacity>
         <Text style={styles.title}>{title}</Text>

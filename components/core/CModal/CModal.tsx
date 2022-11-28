@@ -13,7 +13,18 @@ import { Stack } from "../Stack/Stack";
 import theme from "../../../assets/styles/theme";
 
 const { width, height } = Dimensions.get("window");
-const { black } = theme.lightColors;
+const { black } = theme.lightColors || {};
+
+type Props = {
+  children: any;
+  size: string;
+  onCloseModal: () => void;
+  visible: boolean;
+  headerTitle: string;
+  footer: any;
+  header: boolean;
+  sx: {};
+};
 
 export const CModal = ({
   children,
@@ -24,7 +35,7 @@ export const CModal = ({
   footer,
   header = true,
   sx = {},
-}) => {
+}: Props) => {
   const backdrop = (
     <TouchableWithoutFeedback onPress={onCloseModal}>
       <View style={{ flex: 1, backgroundColor: "black" }} />

@@ -3,7 +3,7 @@ import { Icon } from "@rneui/themed";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 
-const { secondary } = theme.lightColors;
+const { secondary } = theme.lightColors || {};
 
 export const Checkmark = ({ size = 10, sx = {} }) => {
   return (

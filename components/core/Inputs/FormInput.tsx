@@ -1,12 +1,19 @@
 import { StyleSheet, TextInput, Text } from "react-native";
-import React from "react";
 import { useFormContext, Controller } from "react-hook-form";
 import { has, get } from "lodash";
-import theme from "../../../assets/styles/theme";
 import { Icon } from "@rneui/themed";
+import theme from "../../../assets/styles/theme";
 import { Stack } from "../Stack/Stack";
 
-const { error } = theme.lightColors;
+const { error, black } = theme.lightColors || {};
+
+type Props = {
+  name: string;
+  placeholder: string;
+  rules: {};
+  sx: {};
+  label: string;
+};
 
 export const FormInput = ({
   name,
@@ -15,14 +22,14 @@ export const FormInput = ({
   sx = {},
   label = "",
   ...props
-}) => {
+}: Props) => {
   const { formState, control } = useFormContext();
   const { errors } = formState;
 
   const errMsg = (
     <Stack direction="row" sx={{ marginBottom: 10 }}>
       <Icon name="alert-circle" type="feather" size={20} color={error} />
-      <Text style={styles.errMsg}>{get(errors, name)?.message}</Text>
+      <Text style={styles.errMsg}>{get<any>(errors, name)?.message}</Text>
     </Stack>
   );
 
@@ -64,7 +71,7 @@ const styles = StyleSheet.create({
   },
   label: {
     textTransform: "uppercase",
-    color: theme.lightColors.black,
+    color: black,
     marginBottom: 2.5,
     fontWeight: "600",
     fontSize: 13.5,

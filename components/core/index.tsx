@@ -13,7 +13,6 @@ export { IconButtonDelete } from "./IconButton/IconButtonDelete";
 
 export { Header } from "./Header/Header";
 
-export { CustomAvatar } from "./Avatars/CustomAvatar";
 export { AvatarComplete } from "./Avatars/AvatarComplete";
 
 export { Checkmark } from "./Icons/Checkmark";

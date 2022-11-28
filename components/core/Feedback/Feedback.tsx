@@ -2,7 +2,14 @@ import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect } from "react";
 import theme from "../../../assets/styles/theme";
 
-export const Feedback = ({ feedback, setFeedback, duration = "SHORT" }) => {
+const { grey1 } = theme.lightColors || {};
+type Props = { feedback: any; setFeedback: any; duration: string };
+
+export const Feedback = ({
+  feedback,
+  setFeedback,
+  duration = "SHORT",
+}: Props) => {
   const msgDuration = duration === "LONG" ? 3000 : 1500;
 
   useEffect(() => {
@@ -39,7 +46,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 0,
     top: 0,
-    backgroundColor: theme.lightColors.grey1,
+    backgroundColor: grey1,
     width: "100%",
     alignItems: "center",
     paddingVertical: 10,

@@ -3,7 +3,15 @@ import React, { useCallback, useState } from "react";
 import theme from "../../../assets/styles/theme";
 import { Stack } from "../Stack/Stack";
 
-const { black } = theme.lightColors;
+const black = theme.lightColors?.black;
+
+type Props = {
+  activeButton: number;
+  size: string;
+  onPress: (index: number) => void;
+  buttons: any;
+  sx: {};
+};
 
 export const ButtonGroup = ({
   activeButton,
@@ -11,7 +19,7 @@ export const ButtonGroup = ({
   onPress,
   buttons,
   sx = {},
-}) => {
+}: Props) => {
   const [activeBtn, setActiveBtn] = useState(activeButton);
 
   const styles = StyleSheet.create({
@@ -36,7 +44,7 @@ export const ButtonGroup = ({
     btnTxtActive: { fontSize: 13.5, fontWeight: "600" },
   });
 
-  const handleButton = useCallback((index) => {
+  const handleButton = useCallback((index: number) => {
     setActiveBtn(index);
     onPress(index);
   }, []);
@@ -48,7 +56,7 @@ export const ButtonGroup = ({
     <View style={sx}>
       <Stack>
         <View style={styles.buttonsContainer}>
-          {buttons.map((button, index) => (
+          {buttons.map((button: any, index: number) => (
             <Pressable
               key={index}
               onPress={() => handleButton(index)}

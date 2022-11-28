@@ -3,7 +3,7 @@ import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";
 
-const { black } = theme.lightColors;
+const { black } = theme.lightColors || {};
 
 export const IconBackButton = ({ size = 21, color = black, sx = {} }) => {
   const navigation = useNavigation();

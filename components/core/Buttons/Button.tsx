@@ -1,14 +1,28 @@
 import { ActivityIndicator, Pressable, StyleSheet, Text } from "react-native";
 import theme from "../../../assets/styles/theme";
 
-const { primary, black, grey0 } = theme.lightColors;
+const { primary, black, grey0 } = theme.lightColors || {};
+
+type Props = {
+  variant: string;
+  size: string;
+  loading: boolean;
+  disabled: boolean;
+  sxBtn: {};
+  sxText: {};
+  radius: number | undefined;
+  bgColor: string | undefined;
+  color: string | undefined;
+  title: string;
+  onPress: () => void;
+};
 
 interface StyleBtn {
-  backgroundColor: string;
-  borderColor: string;
+  backgroundColor: string | undefined;
+  borderColor: string | undefined;
 }
 interface StyleBtnText {
-  color: string;
+  color: string | undefined;
 }
 
 export const Button = ({
@@ -18,12 +32,12 @@ export const Button = ({
   disabled = false,
   sxBtn = {},
   sxText = {},
-  radius = null,
-  bgColor = null,
-  color = null,
-  title,
+  radius = undefined,
+  bgColor = undefined,
+  color = undefined,
+  title = "",
   onPress,
-}) => {
+}: Props) => {
   let styleBtn: StyleBtn;
   let styleBtnTxt: StyleBtnText;
   let sizes = {};

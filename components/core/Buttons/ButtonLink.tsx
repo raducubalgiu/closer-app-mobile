@@ -1,7 +1,8 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import React from "react";
 
-export const ButtonLink = ({ onPress, word }) => {
+type Props = { onPress: () => void; word: string };
+
+export const ButtonLink = ({ onPress, word }: Props) => {
   return (
     <TouchableOpacity activeOpacity={1} onPress={onPress}>
       <Text style={styles.link}>{word}</Text>

@@ -1,8 +1,14 @@
 import { Avatar } from "@rneui/themed";
 import { memo } from "react";
 
-const CustomAvatar = ({ avatar = [], size = 55, sx = {} }) => {
-  const uri = avatar.length ? `${avatar[0]?.url}` : null;
+type Props = {
+  avatar: any;
+  size: number;
+  sx: {};
+};
+
+const CustomAvatar = ({ avatar = [], size = 55, sx = {} }: Props) => {
+  const uri = avatar.length ? `${avatar[0]?.url}` : "";
 
   return (
     <Avatar

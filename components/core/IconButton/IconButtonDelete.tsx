@@ -3,9 +3,10 @@ import { useRef, useEffect } from "react";
 import { Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 
-const { black } = theme.lightColors;
+const { black } = theme.lightColors || {};
+type Props = { onPress: () => void; sx: {} };
 
-export const IconButtonDelete = ({ onPress, sx = {} }) => {
+export const IconButtonDelete = ({ onPress, sx = {} }: Props) => {
   const animatedScale = useRef(new Animated.Value(0)).current;
 
   const handlePress = () => {
