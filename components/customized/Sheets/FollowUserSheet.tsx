@@ -1,16 +1,24 @@
 import { StyleSheet, Text } from "react-native";
-import { Stack, CustomAvatar } from "../../core";
-import { FollowButton } from "../Buttons/FollowButton";
+import { Stack } from "../../core";
+import CustomAvatar from "../../core/Avatars/CustomAvatar";
+import FollowButton from "../Buttons/FollowButton";
 import theme from "../../../assets/styles/theme";
 
-const { black } = theme.lightColors;
+const { black } = theme.lightColors || {};
+
+type IProps = {
+  avatar: any;
+  userId: string;
+  fetchUser: () => void;
+  handleSuggested: () => void;
+};
 
 export const FollowUserSheet = ({
   avatar,
   userId,
   fetchUser,
   handleSuggested,
-}) => {
+}: IProps) => {
   return (
     <Stack sx={{ margin: 30 }}>
       <CustomAvatar avatar={avatar} size={70} />
@@ -18,13 +26,12 @@ export const FollowUserSheet = ({
         Urmareste pe fresh_salon pentru a avea acces la notificari cu privire la
         postari si promotii
       </Text>
-      <FollowButton
+      {/* <FollowButton
         fullWidth
-        size="md"
         followeeId={userId}
         fetchUser={fetchUser}
         fetchSuggested={handleSuggested}
-      />
+      /> */}
     </Stack>
   );
 };

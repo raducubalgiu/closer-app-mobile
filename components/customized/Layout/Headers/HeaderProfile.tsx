@@ -1,20 +1,26 @@
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { SafeAreaView, StyleSheet, Text } from "react-native";
 import { Icon } from "@rneui/themed";
-import { Stack, IconButton, Checkmark } from "../../../core";
-import theme from "../../../../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { Stack, IconButton, Checkmark } from "../../../core";
+import theme from "../../../../assets/styles/theme";
 import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 
-const { black } = theme.lightColors;
+const { black } = theme.lightColors || {};
+
+type IProps = {
+  username: string;
+  checkmark: boolean;
+  onGoToFindFriends: () => void;
+  onOpenSettings: () => void;
+};
 
 export const HeaderProfile = ({
   username,
   checkmark,
   onGoToFindFriends,
   onOpenSettings,
-}) => {
+}: IProps) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 

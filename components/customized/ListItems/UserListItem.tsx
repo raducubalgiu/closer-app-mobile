@@ -11,9 +11,20 @@ import { RootStackParams } from "../../../models/navigation/rootStackParams";
 import * as Haptics from "expo-haptics";
 import { usePost, useDelete, useGet } from "../../../hooks";
 
-const { grey0, black } = theme.lightColors;
+const { grey0, black } = theme.lightColors || {};
 
-const UserListItem = ({ user, sx = {} }) => {
+type IProps = {
+  user: {
+    avatar: any;
+    _id: string;
+    username: string;
+    name: string;
+    checkmark: boolean;
+  };
+  sx?: {};
+};
+
+const UserListItem = ({ user, sx = {} }: IProps) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { user: userContext } = useAuth();

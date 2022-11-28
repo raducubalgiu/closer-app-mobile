@@ -3,7 +3,11 @@ import theme from "../../../assets/styles/theme";
 
 const { grey3 } = theme.lightColors || {};
 
-type IProps = { onPress: () => void; statsNo: number; label: string };
+type IProps = {
+  onPress: () => void;
+  statsNo: number | string;
+  label: string;
+};
 
 export const StatsButton = ({ onPress, statsNo, label }: IProps) => {
   return (

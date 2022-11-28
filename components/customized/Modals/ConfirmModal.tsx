@@ -4,8 +4,16 @@ import { Divider } from "@rneui/base";
 import { CModal, Stack } from "../../core";
 import theme from "../../../assets/styles/theme";
 
-const { black, error, grey0 } = theme.lightColors;
+const { black, error, grey0 } = theme.lightColors || {};
 const { width, height } = Dimensions.get("window");
+
+type IProps = {
+  visible: boolean;
+  onCloseModal: () => void;
+  onDelete: () => void;
+  title: string;
+  description: string;
+};
 
 export const ConfirmModal = ({
   visible,
@@ -13,7 +21,7 @@ export const ConfirmModal = ({
   onDelete,
   title,
   description,
-}) => {
+}: IProps) => {
   const { t } = useTranslation();
 
   const footer = (
@@ -36,7 +44,7 @@ export const ConfirmModal = ({
       onCloseModal={onCloseModal}
       header={false}
       footer={footer}
-      sx={{ marginHorizontal: width / 7, marginVertical: height / 2.8 }}
+      sx={styles.container}
     >
       <Stack sx={styles.bodyCont}>
         <Text style={styles.title}>{title}</Text>
@@ -47,6 +55,7 @@ export const ConfirmModal = ({
 };
 
 const styles = StyleSheet.create({
+  container: { marginHorizontal: width / 7, marginVertical: height / 2.8 },
   deleteBtn: {
     alignItems: "center",
     paddingTop: 2.5,

@@ -1,31 +1,40 @@
-import { StyleSheet, Text, FlatList, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  FlatList,
+  Pressable,
+  ListRenderItemInfo,
+} from "react-native";
 import { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../models/navigation/rootStackParams";
+import { Service } from "../../../models/service";
 
-const { grey0, black } = theme.lightColors;
+const { grey0, black } = theme.lightColors || {};
 
-export const ServicesList = ({ services }) => {
+type IProps = { services: Service[] };
+
+export const ServicesList = ({ services }: IProps) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
-  const goToFilters = (item) =>
+  const goToFilters = (item: Service) =>
     navigation.navigate("FiltersDate", {
       service: item,
       period: { code: 0 },
     });
 
   const renderService = useCallback(
-    ({ item }) => (
+    ({ item }: ListRenderItemInfo<Service>) => (
       <Pressable style={styles.serviceBtn} onPress={() => goToFilters(item)}>
         <Text style={styles.servicesTitle}>{item.name}</Text>
       </Pressable>
     ),
     []
   );
-  const keyExtractor = useCallback((item) => item._id, []);
+  const keyExtractor = useCallback((item: Service) => item._id, []);
 
   return (
     <FlatList

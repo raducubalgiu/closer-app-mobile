@@ -1,10 +1,17 @@
-import { View, Text, FlatList, StyleSheet, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  Pressable,
+  ListRenderItemInfo,
+} from "react-native";
 import { Divider } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";
 import { Stack } from "../../core";
 
-const { primary, black } = theme.lightColors;
+const { primary, black } = theme.lightColors || {};
 
 export const DashboardCalendarSheet = () => {
   const { t } = useTranslation();
@@ -15,7 +22,7 @@ export const DashboardCalendarSheet = () => {
     { _id: "3", title: "Ultimele 30 de zile" },
   ];
 
-  const renderButton = ({ item }) => (
+  const renderButton = ({ item }: ListRenderItemInfo<any>) => (
     <Pressable style={styles.button}>
       <Text style={styles.buttonTxt}>{item.title}</Text>
     </Pressable>

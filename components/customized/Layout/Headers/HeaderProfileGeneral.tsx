@@ -1,17 +1,24 @@
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, StyleSheet, Text } from "react-native";
 import React from "react";
 import { Icon } from "@rneui/themed";
 import { IconBackButton, IconButton, Stack, Checkmark } from "../../../core";
 import theme from "../../../../assets/styles/theme";
 
-const { black } = theme.lightColors;
+const { black } = theme.lightColors || {};
+
+type IProps = {
+  username: string;
+  onOpenSettings: () => void;
+  onOpenNotifications: () => void;
+  checkmark: boolean;
+};
 
 export const HeaderProfileGeneral = ({
   username,
   onOpenSettings,
   onOpenNotifications,
   checkmark,
-}) => {
+}: IProps) => {
   return (
     <SafeAreaView style={{ backgroundColor: "white", zIndex: 1000 }}>
       <Stack direction="row" sx={styles.container}>

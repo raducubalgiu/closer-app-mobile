@@ -1,11 +1,21 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { Icon, Switch } from "@rneui/themed";
+import { useTranslation } from "react-i18next";
 import theme from "../../../../assets/styles/theme";
 import { Stack, IconBackButton } from "../../../core";
 import { ButtonFilter } from "../../Buttons/ButtonFilter";
-import { Icon, Switch } from "@rneui/themed";
-import { useTranslation } from "react-i18next";
 
-const { grey0, black } = theme.lightColors;
+const { grey0, black } = theme.lightColors || {};
+
+type IProps = {
+  onToggleSwitch: () => void;
+  serviceName: string;
+  checked: boolean;
+  period: string;
+  onDisplayPrice: () => void;
+  onDisplayDistance: () => void;
+  onDisplayRating: () => void;
+};
 
 export const HeaderServices = ({
   onToggleSwitch,
@@ -15,7 +25,7 @@ export const HeaderServices = ({
   onDisplayPrice,
   onDisplayDistance,
   onDisplayRating,
-}) => {
+}: IProps) => {
   const { t } = useTranslation();
 
   const toggleSwitch = () => onToggleSwitch();

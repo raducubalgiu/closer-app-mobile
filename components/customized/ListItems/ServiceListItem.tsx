@@ -4,9 +4,21 @@ import { Icon } from "@rneui/themed";
 import { Stack } from "../../core";
 import theme from "../../../assets/styles/theme";
 
-const { black, grey0 } = theme.lightColors;
+const { black, grey0 } = theme.lightColors || {};
 
-export const ServiceListItem = ({ name, postsCount, onPress, sx = {} }) => {
+type IProps = {
+  name: string;
+  postsCount: number;
+  onPress: () => void;
+  sx?: {};
+};
+
+export const ServiceListItem = ({
+  name,
+  postsCount,
+  onPress,
+  sx = {},
+}: IProps) => {
   const { t } = useTranslation();
 
   return (

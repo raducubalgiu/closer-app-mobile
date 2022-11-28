@@ -1,15 +1,21 @@
-import { FlatList } from "react-native";
+import { FlatList, ListRenderItemInfo } from "react-native";
 import { useCallback } from "react";
 import { DisplayComment } from "./DisplayComment";
+
+type IProps = {
+  relatedComments: any;
+  onReply: (a: any, b: any, c: any) => void;
+  creatorId: string;
+};
 
 export const RelatedCommentsList = ({
   relatedComments,
   onReply,
   creatorId,
-}) => {
-  const keyExtractor = useCallback((item) => item?._id, []);
+}: IProps) => {
+  const keyExtractor = useCallback((item: any) => item?._id, []);
 
-  const renderComment = useCallback(({ item }) => {
+  const renderComment = useCallback(({ item }: ListRenderItemInfo<any>) => {
     return (
       <DisplayComment
         item={item}

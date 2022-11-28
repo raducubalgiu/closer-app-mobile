@@ -3,7 +3,7 @@ import { memo } from "react";
 
 type Props = {
   avatar: any;
-  size: number;
+  size?: number;
   sx?: {};
 };
 

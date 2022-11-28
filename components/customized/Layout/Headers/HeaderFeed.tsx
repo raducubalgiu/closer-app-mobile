@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, View, FlatList } from "react-native";
+import { StyleSheet, View, FlatList, ListRenderItemInfo } from "react-native";
 import { useRef, useState, useCallback } from "react";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Badge, Divider } from "@rneui/themed";
@@ -9,9 +9,18 @@ import { Stack, IconButton } from "../../../core";
 import { FeedLabelButton } from "../../Buttons/FeedLabelButton";
 import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 
-export const HeaderFeed = ({ onFetchPosts }) => {
+type IProps = {
+  onFetchPosts: (index: number) => void;
+};
+type Label = {
+  _id: string;
+  title: string;
+  isActive: boolean;
+};
+
+export const HeaderFeed = ({ onFetchPosts }: IProps) => {
   const [indexLabel, setIndexLabel] = useState(0);
-  const ref = useRef<FlatList>();
+  const ref = useRef<FlatList>(null);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
@@ -23,19 +32,19 @@ export const HeaderFeed = ({ onFetchPosts }) => {
     { _id: "4", title: t("lastMinute"), isActive: false },
   ];
 
-  const getItemLayout = useCallback((_, index) => {
+  const getItemLayout = useCallback((_: any, index: number) => {
     return { length: 107.5, offset: 107.5 * index, index };
   }, []);
 
   const renderLabel = useCallback(
-    ({ item, index }) => {
+    ({ item, index }: ListRenderItemInfo<Label>) => {
       return (
         <FeedLabelButton
           onPress={() => {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
             if (index === indexLabel && index === LABELS.length - 1) {
               setIndexLabel(0);
-              ref.current.scrollToIndex({
+              ref.current?.scrollToIndex({
                 index: 0,
                 animated: true,
                 viewPosition: 0,
@@ -43,7 +52,7 @@ export const HeaderFeed = ({ onFetchPosts }) => {
               onFetchPosts(0);
             } else {
               setIndexLabel(index);
-              ref.current.scrollToIndex({
+              ref.current?.scrollToIndex({
                 index,
                 animated: true,
                 viewPosition: 0,
@@ -59,7 +68,7 @@ export const HeaderFeed = ({ onFetchPosts }) => {
     [indexLabel]
   );
 
-  const goToSearch = () => navigation.navigate("SearchPosts");
+  const goToSearch = () => navigation.navigate("SearchPosts", { search: "" });
   const goToNotifications = () => navigation.navigate("Notifications");
 
   return (

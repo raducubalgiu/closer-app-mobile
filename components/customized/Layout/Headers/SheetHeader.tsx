@@ -3,9 +3,15 @@ import { Icon } from "@rneui/themed";
 import { IconBackButton, Stack } from "../../../core";
 import theme from "../../../../assets/styles/theme";
 
-const { grey0 } = theme.lightColors;
+const { grey0 } = theme.lightColors || {};
 
-export const SheetHeader = ({ title, description, sx = {} }) => {
+type IProps = {
+  title: string;
+  description: string;
+  sx?: {};
+};
+
+export const SheetHeader = ({ title, description, sx = {} }: IProps) => {
   return (
     <Stack direction="row" sx={{ ...styles.sheetOverview, ...sx }}>
       <IconBackButton size={20} />

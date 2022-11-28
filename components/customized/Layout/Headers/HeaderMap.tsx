@@ -4,9 +4,15 @@ import theme from "../../../../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
 
 const { width } = Dimensions.get("window");
-const { black, grey0, success } = theme.lightColors;
+const { black, grey0, success } = theme.lightColors || {};
 
-export const HeaderMap = ({ name, status, onSetUserRegion }) => {
+type IProps = {
+  name: string;
+  status: string;
+  onSetUserRegion: () => void;
+};
+
+export const HeaderMap = ({ name, status, onSetUserRegion }: IProps) => {
   const navigation = useNavigation();
 
   return (

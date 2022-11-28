@@ -4,8 +4,10 @@ import React, { useState, useRef, useCallback } from "react";
 import { Video } from "expo-av";
 import { Icon } from "@rneui/themed";
 
-const VideoItem = ({ videoUrl, isMuted, sx }) => {
-  const video = useRef(null);
+type IProps = { videoUrl: string; isMuted: boolean; sx?: {} };
+
+const VideoItem = ({ videoUrl, isMuted, sx }: IProps) => {
+  const video = useRef<any>(null);
   const [status, setStatus] = useState({});
 
   const styles = StyleSheet.create({
@@ -23,7 +25,7 @@ const VideoItem = ({ videoUrl, isMuted, sx }) => {
     },
   });
 
-  const handleImageVisibility = (visible) => {
+  const handleImageVisibility = (visible: boolean) => {
     if (visible) {
       video.current.playAsync();
     } else {
@@ -49,7 +51,6 @@ const VideoItem = ({ videoUrl, isMuted, sx }) => {
           uri: `${videoUrl}`,
         }}
         useNativeControls={false}
-        resizeMode="cover"
         onPlaybackStatusUpdate={(status) => setStatus(() => status)}
         shouldPlay={false}
         isMuted={isMuted}

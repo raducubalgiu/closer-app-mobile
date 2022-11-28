@@ -7,7 +7,16 @@ import CustomAvatar from "../../../core/Avatars/CustomAvatar";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 
-const { grey0 } = theme.lightColors;
+const { grey0 } = theme.lightColors || {};
+
+type IProps = {
+  userId: string;
+  avatar: any;
+  name: string;
+  username: string;
+  checkmark: boolean;
+  conversationId: string;
+};
 
 export const HeaderMessageItem = ({
   userId,
@@ -16,7 +25,7 @@ export const HeaderMessageItem = ({
   username,
   checkmark,
   conversationId,
-}) => {
+}: IProps) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 

@@ -5,9 +5,9 @@ import { Stack } from "../../core";
 import { MessDateItem } from "./MessDateItem";
 
 const { width } = Dimensions.get("window");
-const { black, error } = theme.lightColors;
+const { black, error } = theme.lightColors || {};
 
-const MessImage = ({ message, liked }) => {
+const MessImage = ({ message, liked }: { message: any; liked: boolean }) => {
   return (
     <View>
       <Image
@@ -23,7 +23,15 @@ const MessImage = ({ message, liked }) => {
   );
 };
 
-export const MessSentItem = ({ item, dateSame, date }) => {
+export const MessSentItem = ({
+  item,
+  dateSame,
+  date,
+}: {
+  item: any;
+  dateSame: boolean;
+  date: string;
+}) => {
   const { message, liked } = item || {};
 
   return (

@@ -7,9 +7,11 @@ import { IconLocation, IconStar, Stack } from "../../core";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../models/navigation/rootStackParams";
 
-const { grey0 } = theme.lightColors;
+const { grey0 } = theme.lightColors || {};
 
-export const Map = ({ locations, serviceName }) => {
+type IProps = { locations: any; serviceName: string };
+
+export const Map = ({ locations, serviceName }: IProps) => {
   const { t } = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -81,7 +83,7 @@ export const Map = ({ locations, serviceName }) => {
       customMapStyle={mapStyle}
       provider={PROVIDER_GOOGLE}
     >
-      {locations?.map((loc, i) => (
+      {locations?.map((loc: any, i: number) => (
         <Marker
           key={i}
           coordinate={{

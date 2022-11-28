@@ -3,7 +3,16 @@ import { Stack, Checkmark } from "../../core";
 import CustomAvatar from "../../core/Avatars/CustomAvatar";
 import theme from "../../../assets/styles/theme";
 
-const { grey0, black } = theme.lightColors;
+const { grey0, black } = theme.lightColors || {};
+
+type IProps = {
+  checkmark: boolean;
+  name: string;
+  avatar: any;
+  profession: any;
+  sx?: {};
+  onGoToUser: () => void;
+};
 
 export const UserListItemSimple = ({
   checkmark = false,
@@ -11,8 +20,8 @@ export const UserListItemSimple = ({
   avatar,
   profession,
   onGoToUser,
-  sx = {},
-}) => {
+  sx,
+}: IProps) => {
   return (
     <Pressable onPress={onGoToUser} style={sx}>
       <Stack align="start">

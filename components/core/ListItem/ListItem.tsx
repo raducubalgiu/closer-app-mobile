@@ -2,11 +2,11 @@ import { Pressable } from "react-native";
 import { Stack } from "../Stack/Stack";
 
 type IProps = {
-  between: boolean;
-  around: boolean;
-  center: boolean;
-  mt: number;
-  sx: {};
+  between?: boolean;
+  around?: boolean;
+  center?: boolean;
+  mt?: number;
+  sx?: {};
   onPress: () => void;
   children: any;
 };

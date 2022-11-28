@@ -3,7 +3,16 @@ import { Stack } from "../../core";
 import { Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 
-const { black, grey0 } = theme.lightColors;
+const { black, grey0 } = theme.lightColors || {};
+
+type IProps = {
+  title: string;
+  description: string;
+  iconName: string;
+  iconType: string;
+  iconSize: number;
+  sx?: {};
+};
 
 export const NoFoundMessage = ({
   title,
@@ -12,7 +21,7 @@ export const NoFoundMessage = ({
   iconType = "feather",
   iconSize = 45,
   sx = {},
-}) => {
+}: IProps) => {
   return (
     <Stack align="center" justify="center" sx={{ ...styles.container, ...sx }}>
       <Icon name={iconName} type={iconType} size={iconSize} color="#ddd" />

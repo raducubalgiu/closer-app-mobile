@@ -1,7 +1,19 @@
 import { StyleSheet, Text, View, Pressable } from "react-native";
-import { Checkmark, Stack, CustomAvatar } from "../../core";
+import { Checkmark, Stack } from "../../core";
 import theme from "../../../assets/styles/theme";
-import { FollowButton } from "../Buttons/FollowButton";
+import FollowButton from "../Buttons/FollowButton";
+import CustomAvatar from "../../core/Avatars/CustomAvatar";
+
+const { black, grey0 } = theme.lightColors || {};
+
+type IProps = {
+  name: string;
+  avatar: any;
+  checkmark: boolean;
+  notification: any;
+  date: string;
+  isFollow: boolean;
+};
 
 const NotificationFollow = ({
   name,
@@ -10,7 +22,7 @@ const NotificationFollow = ({
   notification,
   date,
   isFollow,
-}) => {
+}: IProps) => {
   return (
     <Stack direction="row" sx={styles.container}>
       <View style={{ flex: 1 }}>
@@ -31,7 +43,7 @@ const NotificationFollow = ({
           </Stack>
         </Pressable>
       </View>
-      <FollowButton isFollow={isFollow} />
+      <FollowButton isFollow={isFollow} onPress={() => {}} />
     </Stack>
   );
 };
@@ -44,12 +56,12 @@ const styles = StyleSheet.create({
   },
   details: { marginLeft: 10, flex: 1 },
   name: {
-    color: theme.lightColors.black,
+    color: black,
     fontSize: 14,
     marginRight: 5,
   },
   notification: {
-    color: theme.lightColors.grey0,
+    color: grey0,
     fontSize: 13.5,
   },
   btn: {
@@ -60,7 +72,7 @@ const styles = StyleSheet.create({
     borderRadius: 2.5,
   },
   btnText: {
-    color: theme.lightColors.black,
+    color: black,
     fontSize: 13,
   },
 });

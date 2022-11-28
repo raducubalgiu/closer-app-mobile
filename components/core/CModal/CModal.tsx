@@ -20,10 +20,10 @@ type Props = {
   size: string;
   onCloseModal: () => void;
   visible: boolean;
-  headerTitle: string;
+  headerTitle?: string;
   footer: any;
-  header: boolean;
-  sx: {};
+  header?: boolean;
+  sx?: {};
 };
 
 export const CModal = ({

@@ -1,20 +1,22 @@
-import { StyleSheet, Text, FlatList } from "react-native";
+import { StyleSheet, Text, FlatList, ListRenderItemInfo } from "react-native";
 import { memo, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";
 import { Stack } from "../../core";
 import CardSuggestedPeople from "../Cards/CardSuggestedPeople";
 
-const { black } = theme.lightColors;
+const { black } = theme.lightColors || {};
 
-const SuggestedUsersList = ({ suggested, userId }) => {
+type IProps = { suggested: any; userId: string };
+
+const SuggestedUsersList = ({ suggested, userId }: IProps) => {
   const { t } = useTranslation();
 
-  const renderSuggested = useCallback(({ item }) => {
+  const renderSuggested = useCallback(({ item }: ListRenderItemInfo<any>) => {
     return <CardSuggestedPeople item={item} onRemoveCard={() => {}} />;
   }, []);
 
-  const keyExtractor = useCallback((item) => item?._id, []);
+  const keyExtractor = useCallback((item: any) => item?._id, []);
 
   return (
     <Stack align="start" justify="start">

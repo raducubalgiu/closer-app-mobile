@@ -1,5 +1,5 @@
 import { StyleSheet, Text, Dimensions, Image, Pressable } from "react-native";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Icon } from "@rneui/themed";
 import { Stack } from "../../core";
 import CustomAvatar from "../../core/Avatars/CustomAvatar";
@@ -8,7 +8,15 @@ import { useAuth, usePatch } from "../../../hooks";
 import { MessDateItem } from "./MessDateItem";
 
 const width = Dimensions.get("window").width;
-const { black, error } = theme.lightColors;
+const { black, error } = theme.lightColors || {};
+
+type IProps = {
+  avatar: any;
+  item: any;
+  senderSame: boolean;
+  dateSame: boolean;
+  date: string;
+};
 
 export const MessReceivedItem = ({
   avatar,
@@ -16,7 +24,7 @@ export const MessReceivedItem = ({
   senderSame,
   dateSame,
   date,
-}) => {
+}: IProps) => {
   const { message, _id, liked, createdAt } = item || {};
   const [isLiked, setIsLiked] = useState(liked);
   const { user } = useAuth();

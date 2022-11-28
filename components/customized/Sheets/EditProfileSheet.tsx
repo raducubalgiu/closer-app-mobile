@@ -8,9 +8,11 @@ import theme from "../../../assets/styles/theme";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../models/navigation/rootStackParams";
 
-const { black, grey0 } = theme.lightColors;
+const { black, grey0 } = theme.lightColors || {};
 
-export const EditProfileSheet = ({ onCloseSheet }) => {
+type IProps = { onCloseSheet: () => void };
+
+export const EditProfileSheet = ({ onCloseSheet }: IProps) => {
   const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
   const [modal, setModal] = useState<boolean>(false);
   const { t } = useTranslation();
@@ -18,7 +20,7 @@ export const EditProfileSheet = ({ onCloseSheet }) => {
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const goToLibrary = () => {
-    if (permissionResponse.granted) {
+    if (permissionResponse?.granted) {
       navigation.navigate("PhotoLibrary", { nav: "EditAvatar" });
       onCloseSheet();
     } else {

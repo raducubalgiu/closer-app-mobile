@@ -1,7 +1,9 @@
 import { StyleSheet, Text, Image } from "react-native";
 import { Stack } from "../../core";
 
-export const PresetListItem = ({ uri, name }) => {
+type IProps = { uri: string; name: string };
+
+export const PresetListItem = ({ uri, name }: IProps) => {
   return (
     <Stack justify="start" sx={{ marginRight: 5 }}>
       <Image source={{ uri }} style={styles.image} />

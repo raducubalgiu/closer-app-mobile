@@ -3,9 +3,11 @@ import { useTranslation } from "react-i18next";
 import { ListItem } from "../../core";
 import theme from "../../../assets/styles/theme";
 
-const { error, black } = theme.lightColors;
+const { error, black } = theme.lightColors || {};
 
-export const PostInfoSheet = ({ onShowConfirm }) => {
+type IProps = { onShowConfirm: () => void };
+
+export const PostInfoSheet = ({ onShowConfirm }: IProps) => {
   const { t } = useTranslation();
 
   return (

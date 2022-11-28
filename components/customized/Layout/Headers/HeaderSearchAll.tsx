@@ -1,12 +1,14 @@
 import { StyleSheet, Text, Pressable } from "react-native";
 import { Icon } from "@rneui/themed";
+import { useNavigation } from "@react-navigation/native";
 import { Stack, IconBackButton } from "../../../core";
 import theme from "../../../../assets/styles/theme";
-import { useNavigation } from "@react-navigation/native";
 
-const { black, grey0 } = theme.lightColors;
+const { black, grey0 } = theme.lightColors || {};
 
-export const HeaderSearchAll = ({ search }) => {
+type IProps = { search: string };
+
+export const HeaderSearchAll = ({ search }: IProps) => {
   const navigation = useNavigation();
 
   return (

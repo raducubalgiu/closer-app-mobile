@@ -4,9 +4,18 @@ import { Switch } from "@rneui/themed";
 import { Stack } from "../../core";
 import theme from "../../../assets/styles/theme";
 
-const { black } = theme.lightColors;
+const { black } = theme.lightColors || {};
+type IProps = {
+  title: string;
+  defaultValue: boolean;
+  onValueChange: () => void;
+};
 
-export const SettingListItem = ({ title, defaultValue, onValueChange }) => {
+export const SettingListItem = ({
+  title,
+  defaultValue,
+  onValueChange,
+}: IProps) => {
   const [checked, setChecked] = useState(defaultValue);
 
   return (

@@ -3,9 +3,10 @@ import { Icon } from "@rneui/themed";
 import { Stack } from "../../core";
 import theme from "../../../assets/styles/theme";
 
-const { black } = theme.lightColors;
+const { black } = theme.lightColors || {};
+type IProps = { onPress: () => void; word: string };
 
-export const RecentSearchListItem = ({ onPress, word }) => {
+export const RecentSearchListItem = ({ onPress, word }: IProps) => {
   return (
     <Pressable style={styles.item} onPress={onPress}>
       <Stack direction="row" justify="start">
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   searchItem: {
-    color: theme.lightColors.black,
+    color: black,
     marginLeft: 10,
   },
 });

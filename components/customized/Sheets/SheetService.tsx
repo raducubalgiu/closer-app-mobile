@@ -2,12 +2,14 @@ import { useRef, useMemo, useCallback } from "react";
 import { StyleSheet } from "react-native";
 import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 
-export const SheetService = ({ children }) => {
+type IProp = { children: any };
+
+export const SheetService = ({ children }: IProp) => {
   const sheetRef = useRef(null);
   const snapPoints = useMemo(() => [75, "60%", "90%"], []);
 
   const renderBackdrop = useCallback(
-    (props) => (
+    (props: any) => (
       <BottomSheetBackdrop
         {...props}
         disappearsOnIndex={1}

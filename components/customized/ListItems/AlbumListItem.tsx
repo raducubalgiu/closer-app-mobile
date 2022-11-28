@@ -2,9 +2,16 @@ import { StyleSheet, Text, Image, Pressable } from "react-native";
 import { Stack } from "../../core";
 import theme from "../../../assets/styles/theme";
 
-const { black, grey0 } = theme.lightColors;
+const { black, grey0 } = theme.lightColors || {};
 
-export const AlbumListItem = ({ uri, title, assetCount, onPress }) => {
+type IProps = {
+  uri: string;
+  title: string;
+  assetCount: number;
+  onPress: () => void;
+};
+
+export const AlbumListItem = ({ uri, title, assetCount, onPress }: IProps) => {
   return (
     <Pressable onPress={onPress} style={styles.container}>
       <Stack direction="row" justify="start">

@@ -23,7 +23,17 @@ export function usePatch<T>({ uri, onSuccess = undefined }) {
   return mutations;
 }
 
-export function usePost<T>({ uri, onSuccess = undefined, config = {} }) {
+type PostProps = {
+  uri: string;
+  onSuccess?: (res: any) => void;
+  config?: {};
+};
+
+export function usePost<T>({
+  uri,
+  onSuccess = undefined,
+  config = {},
+}: PostProps) {
   const { user } = useAuth();
   const { t } = useTranslation();
 
@@ -51,7 +61,13 @@ export function usePost<T>({ uri, onSuccess = undefined, config = {} }) {
   return mutations;
 }
 
-export const useDelete = ({ uri, onSuccess = undefined }) => {
+type DeleteProps = {
+  uri: string;
+  onSuccess?: (res: any) => void;
+  config?: {};
+};
+
+export const useDelete = ({ uri, onSuccess = undefined }: DeleteProps) => {
   const { user } = useAuth();
 
   const mutations = useMutation(
@@ -109,7 +125,15 @@ export const useGet = ({
   };
 };
 
-export const useGetMutate = ({ uri, onSuccess = undefined }) => {
+type GetMutateProps = {
+  uri: string;
+  onSuccess?: (res: any) => void;
+};
+
+export const useGetMutate = ({
+  uri,
+  onSuccess = undefined,
+}: GetMutateProps) => {
   const { user } = useAuth();
 
   const mutations = useMutation(

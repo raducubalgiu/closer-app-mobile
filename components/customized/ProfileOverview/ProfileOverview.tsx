@@ -12,9 +12,23 @@ import { displayDash } from "../../../utils";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../models/navigation/rootStackParams";
 
-const { black, primary } = theme.lightColors;
+const { black, primary } = theme.lightColors || {};
 
-const ProfileOverview = ({ name, username, avatar, children, user }) => {
+type IProps = {
+  name: string;
+  username: string;
+  avatar: any;
+  children: any;
+  user: any;
+};
+
+const ProfileOverview = ({
+  name,
+  username,
+  avatar,
+  children,
+  user,
+}: IProps) => {
   const { user: userContext } = useAuth();
   const { role, profession } = user || {};
   const {
@@ -69,13 +83,7 @@ const ProfileOverview = ({ name, username, avatar, children, user }) => {
     <View style={styles.container}>
       <Stack justify="center" align="center">
         <Pressable>
-          <CustomAvatar
-            iconSize={37}
-            size={95}
-            avatar={avatar}
-            withBadge={withBadge}
-            badgeDetails={badgeDetails}
-          />
+          <CustomAvatar size={95} avatar={avatar} />
         </Pressable>
         <Text style={styles.name}>{name}</Text>
         <Stack direction="row" justify="start">

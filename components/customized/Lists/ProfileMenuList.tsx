@@ -1,4 +1,4 @@
-import { StyleSheet, Text } from "react-native";
+import { ListRenderItemInfo, StyleSheet, Text } from "react-native";
 import { getAuth, signOut } from "firebase/auth";
 import { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import React from "react";
@@ -12,7 +12,11 @@ import { useTranslation } from "react-i18next";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../models/navigation/rootStackParams";
 
-export const ProfileMenuList = ({ onCloseSheet }) => {
+const { black } = theme.lightColors || {};
+
+type IProps = { onCloseSheet: () => void };
+
+export const ProfileMenuList = ({ onCloseSheet }: IProps) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { user, setUser } = useAuth();
@@ -78,7 +82,7 @@ export const ProfileMenuList = ({ onCloseSheet }) => {
     },
   ];
 
-  const handleNavigate = (item) => {
+  const handleNavigate = (item: any) => {
     if (item.navigation) {
       navigation.navigate(item?.navigation);
       onCloseSheet();
@@ -87,14 +91,10 @@ export const ProfileMenuList = ({ onCloseSheet }) => {
     }
   };
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item }: ListRenderItemInfo<any>) => (
     <Protected userRole={user?.role} roles={item?.roles}>
       <ListItem onPress={() => handleNavigate(item)} sx={styles.listItem}>
-        <Icon
-          name={item?.iconName}
-          type={item?.iconType}
-          color={theme.lightColors.black}
-        />
+        <Icon name={item?.iconName} type={item?.iconType} color={black} />
         <Text style={styles.text}>{item?.title}</Text>
       </ListItem>
     </Protected>
@@ -103,7 +103,7 @@ export const ProfileMenuList = ({ onCloseSheet }) => {
   return (
     <BottomSheetFlatList
       data={items}
-      contentContainerStyle={{ marginHorizontal: 20, marginTop: 10 }}
+      contentContainerStyle={styles.container}
       keyExtractor={(item) => item?._id}
       renderItem={renderItem}
       bounces={false}
@@ -112,16 +112,17 @@ export const ProfileMenuList = ({ onCloseSheet }) => {
 };
 
 const styles = StyleSheet.create({
+  container: { marginHorizontal: 20, marginTop: 10 },
   listItem: {
     paddingLeft: 0,
-    backgroundColor: theme.lightColors.white,
+    backgroundColor: "white",
     borderBottomWidth: 0.5,
     borderBottomColor: "#ddd",
     paddingTop: 5,
     paddingBottom: 12.5,
   },
   text: {
-    color: theme.lightColors.black,
+    color: black,
     fontSize: 15,
     paddingVertical: 2.5,
     marginLeft: 10,

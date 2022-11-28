@@ -1,10 +1,10 @@
-import { Text, StyleSheet, FlatList } from "react-native";
+import { Text, StyleSheet, FlatList, ListRenderItemInfo } from "react-native";
 import { useTranslation } from "react-i18next";
 import { Divider } from "@rneui/themed";
 import { Stack } from "../../core";
 import theme from "../../../assets/styles/theme";
 
-const { black, grey0 } = theme.lightColors;
+const { black, grey0 } = theme.lightColors || {};
 
 export const DashboardInfoSheet = () => {
   const { t } = useTranslation();
@@ -42,7 +42,7 @@ export const DashboardInfoSheet = () => {
     },
   ];
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item }: ListRenderItemInfo<any>) => (
     <Stack align="start" sx={{ marginBottom: 30 }}>
       <Text style={styles.title}>{item.title}</Text>
       <Text style={styles.description}>{item.message}</Text>

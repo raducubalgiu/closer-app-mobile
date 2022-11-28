@@ -1,7 +1,12 @@
 import { StyleSheet, Text } from "react-native";
 import { CModal, Button } from "../../core";
 
-export const FilterPriceModal = ({ visible, onClose }) => {
+type IProps = {
+  visible: boolean;
+  onClose: () => void;
+};
+
+export const FilterPriceModal = ({ visible, onClose }: IProps) => {
   return (
     <CModal
       visible={visible}

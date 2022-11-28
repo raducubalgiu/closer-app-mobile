@@ -5,7 +5,15 @@ import { Stack, FormInputSelect } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 
-const { black } = theme.lightColors;
+const { black } = theme.lightColors || {};
+
+type IProps = {
+  day: any;
+  defaultChecked: boolean;
+  minutes: any;
+  onSwitchChange: (checked: boolean, day: any) => void;
+  disabled: boolean;
+};
 
 const UserProgramListItem = ({
   day,
@@ -13,7 +21,7 @@ const UserProgramListItem = ({
   minutes,
   onSwitchChange,
   disabled,
-}) => {
+}: IProps) => {
   const [checked, setChecked] = useState(defaultChecked);
   const { t } = useTranslation();
 

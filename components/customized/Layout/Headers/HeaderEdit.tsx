@@ -1,11 +1,18 @@
 import { StyleSheet, Text, Pressable } from "react-native";
-import React from "react";
-import { Stack } from "../../../core";
 import { useNavigation } from "@react-navigation/native";
-import theme from "../../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
+import { Stack } from "../../../core";
+import theme from "../../../../assets/styles/theme";
 
-export const HeaderEdit = ({ onSave, title, disabled = false }) => {
+const { grey0, primary } = theme.lightColors || {};
+
+type IProps = {
+  onSave: () => void;
+  title: string;
+  disabled: boolean;
+};
+
+export const HeaderEdit = ({ onSave, title, disabled = false }: IProps) => {
   const navigation = useNavigation();
   const { t } = useTranslation();
 
@@ -28,13 +35,13 @@ const styles = StyleSheet.create({
     paddingVertical: 7.5,
   },
   cancel: {
-    color: theme.lightColors.grey0,
+    color: grey0,
     fontSize: 15,
     fontWeight: "500",
   },
   title: { fontSize: 17, fontWeight: "600" },
   save: {
-    color: theme.lightColors.primary,
+    color: primary,
     fontSize: 16,
     fontWeight: "700",
   },

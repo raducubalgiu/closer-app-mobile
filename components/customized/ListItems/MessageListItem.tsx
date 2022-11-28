@@ -7,9 +7,9 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../models/navigation/rootStackParams";
 
-const { black, grey0 } = theme.lightColors;
+const { black, grey0 } = theme.lightColors || {};
 
-export const MessageListItem = ({ conversation }) => {
+export const MessageListItem = ({ conversation }: any) => {
   const { message, user } = conversation;
   const { name, avatar, checkmark } = user;
   const navigation =

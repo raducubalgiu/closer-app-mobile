@@ -1,6 +1,13 @@
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 
-export const MapStatic = ({ height = 250, sx = {}, longitude, latitude }) => {
+type IProps = { height: number; sx?: {}; longitude: number; latitude: number };
+
+export const MapStatic = ({
+  height = 250,
+  sx = {},
+  longitude,
+  latitude,
+}: IProps) => {
   const mapStyle = [
     {
       featureType: "road.arterial",

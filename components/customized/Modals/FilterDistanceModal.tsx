@@ -1,7 +1,17 @@
 import { StyleSheet, Text } from "react-native";
 import { CModal, Button } from "../../core";
 
-export const FilterDistanceModal = ({ visible, onClose, onHandleDistance }) => {
+type IProps = {
+  visible: boolean;
+  onClose: () => void;
+  onHandleDistance: () => void;
+};
+
+export const FilterDistanceModal = ({
+  visible,
+  onClose,
+  onHandleDistance,
+}: IProps) => {
   return (
     <CModal
       visible={visible}

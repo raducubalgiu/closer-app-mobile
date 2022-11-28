@@ -2,9 +2,9 @@ import { StyleSheet, Text } from "react-native";
 import theme from "../../../assets/styles/theme";
 import { Stack } from "../../core";
 
-const { grey0 } = theme.lightColors;
+const { grey0 } = theme.lightColors || {};
 
-export const MessDateItem = ({ date }) => {
+export const MessDateItem = ({ date }: { date: string }) => {
   return (
     <Stack align="center" justify="center" sx={styles.dateCont}>
       <Text style={styles.date}>{date}</Text>

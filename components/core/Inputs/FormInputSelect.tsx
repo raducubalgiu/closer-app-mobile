@@ -11,10 +11,10 @@ const { black, error } = theme.lightColors || {};
 type IProps = {
   name: string;
   placeholder: string;
-  rules: {};
+  rules?: {};
   items: [{ name: string; _id: string | number | undefined }];
   disabled: boolean;
-  label: string;
+  label?: string;
 };
 
 export const FormInputSelect = ({

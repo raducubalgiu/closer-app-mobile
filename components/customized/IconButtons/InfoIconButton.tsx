@@ -4,8 +4,8 @@ import theme from "../../../assets/styles/theme";
 const { black } = theme.lightColors || {};
 
 type IProps = {
-  size: number;
-  color: string | undefined;
+  size?: number;
+  color?: string | undefined;
   sx?: {};
   onPress: () => void;
 };

@@ -3,21 +3,23 @@ import { memo } from "react";
 import { Marker } from "react-native-maps";
 import CustomAvatar from "../../core/Avatars/CustomAvatar";
 
+type IProps = {
+  latitude: number;
+  longitude: number;
+  avatar: any;
+  size: number;
+  onPress: () => void;
+};
+
 const MapMarkerProfile = ({
   latitude,
   longitude,
   avatar,
   size = 45,
   onPress,
-}) => {
+}: IProps) => {
   return (
-    <Marker
-      onPress={onPress}
-      coordinate={{
-        latitude,
-        longitude,
-      }}
-    >
+    <Marker onPress={onPress} coordinate={{ latitude, longitude }}>
       <CustomAvatar avatar={avatar} sx={styles.avatar} size={size} />
     </Marker>
   );
