@@ -27,12 +27,6 @@ export const FormInputSelect = ({
   };
 
   const styles = StyleSheet.create({
-    input: {
-      padding: 12.5,
-      fontFamily: "Exo-Regular",
-      width: "100%",
-      borderRadius: 5,
-    },
     inputIOS: {
       fontSize: 14,
       paddingVertical: 12.5,
@@ -81,23 +75,25 @@ export const FormInputSelect = ({
       <Controller
         control={control}
         rules={{ ...rules }}
-        render={({ field: { onChange, value } }) => (
-          <RNPickerSelect
-            disabled={disabled}
-            placeholder={inputPlaceholder}
-            useNativeAndroidPickerStyle={false}
-            onValueChange={onChange}
-            style={styles}
-            doneText="Gata"
-            value={value}
-            items={items?.map((item) => {
-              return {
-                label: item?.name,
-                value: item,
-              };
-            })}
-          />
-        )}
+        render={({ field: { onChange, value } }) => {
+          return (
+            <RNPickerSelect
+              disabled={disabled}
+              placeholder={inputPlaceholder}
+              useNativeAndroidPickerStyle={false}
+              onValueChange={onChange}
+              style={styles}
+              doneText="Gata"
+              value={value}
+              items={items?.map((item) => {
+                return {
+                  label: item?.name,
+                  value: item?._id,
+                };
+              })}
+            />
+          );
+        }}
         name={name}
       />
       {has(errors, name) && errMsg}

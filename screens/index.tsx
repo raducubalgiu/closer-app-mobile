@@ -8,7 +8,7 @@ export { EditAvatarScreen } from "./User/Profile/EditProfile/EditAvatarScreen";
 export { AddJobsScreen } from "./User/Profile/MyBusiness/AddJobsScreen";
 export { AddLocationScreen } from "./User/Profile/MyBusiness/AddLocationScreen";
 export { AddProductsScreen } from "./User/Profile/MyBusiness/AddProductsScreen";
-export { AddScheduleScreen } from "./User/Profile/MyBusiness/AddScheduleScreen";
+export { AddUserProgramScreen } from "./User/Profile/MyBusiness/AddUserProgramScreen";
 export { AddServicesScreen } from "./User/Profile/MyBusiness/AddServicesScreen";
 export { EditProductScreen } from "./User/Profile/MyBusiness/EditProductScreen";
 export { MyBusinessScreen } from "./User/Profile/MyBusiness/MyBusinessScreen";

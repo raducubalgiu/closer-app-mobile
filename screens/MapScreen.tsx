@@ -1,7 +1,13 @@
-import { StyleSheet, Dimensions, FlatList, Platform } from "react-native";
+import {
+  StyleSheet,
+  Dimensions,
+  FlatList,
+  Platform,
+  Animated,
+} from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useCallback, useEffect, useRef, useState } from "react";
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Stack } from "../components/core";
@@ -13,6 +19,10 @@ import CardLocationMap from "../components/customized/Cards/CardLocationMap";
 import MapMarkerProfile from "../components/customized/Map/MapMarkerProfile";
 import { trimFunc } from "../utils";
 import * as Location from "expo-location";
+import CustomAvatar from "../components/core/Avatars/CustomAvatar";
+import theme from "../assets/styles/theme";
+
+const { primary } = theme.lightColors;
 
 const { width, height } = Dimensions.get("window");
 
@@ -71,22 +81,22 @@ const mapStyle = [
   },
 ];
 
-const LOCATION_WIDTH = width * 0.9;
-const LOCATION_INSET = width * 0.05;
+const LOCATION_WIDTH = width * 0.92;
+const LOCATION_INSET = width * 0.04;
 
 const BUSINESS_WIDTH = width / 3 + 45;
 const BUSINESS_MR = 15;
 
 export const MapScreen = ({ route }) => {
   const [userLocation, setUserLocation] = useState(null);
-  const { userId, profession } = route.params;
+  const { userId, profession, initialCoordinates } = route.params;
   const [professionId, setProfessionId] = useState(profession);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const insets = useSafeAreaInsets();
   const businessRef = useRef<FlatList>();
   const locationsRef = useRef<FlatList>();
-  const mapRef = useRef();
+  const mapRef = useRef<any>();
 
   useEffect(() => {
     (async () => {
@@ -100,35 +110,35 @@ export const MapScreen = ({ route }) => {
     })();
   }, []);
 
-  // const { data: businesses } = useGet({
-  //   model: "businesses",
-  //   uri: "/businesses",
-  // });
+  const { data: businesses } = useGet({
+    model: "businesses",
+    uri: "/businesses",
+  });
 
-  // const changeBusiness = useCallback((item: any, index: number) => {
-  //   setProfessionId(item._id);
-  //   businessRef.current.scrollToIndex({
-  //     index,
-  //   });
-  // }, []);
+  const changeBusiness = useCallback((item: any, index: number) => {
+    setProfessionId(item._id);
+    businessRef.current.scrollToIndex({
+      index,
+    });
+  }, []);
 
-  // const getBusinessLayout = (data: any, index: number) => ({
-  //   length: BUSINESS_WIDTH,
-  //   offset: BUSINESS_WIDTH * index,
-  //   index,
-  // });
+  const getBusinessLayout = (data: any, index: number) => ({
+    length: BUSINESS_WIDTH,
+    offset: BUSINESS_WIDTH * index,
+    index,
+  });
 
-  // const renderBusiness = useCallback(
-  //   ({ item, index }) => (
-  //     <BusinessButton
-  //       name={item.name}
-  //       isActive={item._id === professionId}
-  //       sx={{ width: BUSINESS_WIDTH, marginRight: BUSINESS_MR }}
-  //       onPress={() => changeBusiness(item, index)}
-  //     />
-  //   ),
-  //   [professionId, BUSINESS_MR, BUSINESS_WIDTH]
-  // );
+  const renderBusiness = useCallback(
+    ({ item, index }) => (
+      <BusinessButton
+        name={item.name}
+        isActive={item._id === professionId}
+        sx={{ width: BUSINESS_WIDTH, marginRight: BUSINESS_MR }}
+        onPress={() => changeBusiness(item, index)}
+      />
+    ),
+    [professionId, BUSINESS_MR, BUSINESS_WIDTH]
+  );
 
   const {
     data: locations,
@@ -175,57 +185,119 @@ export const MapScreen = ({ route }) => {
   );
 
   const locationsIndex = locations?.findIndex((el) => el.owner._id === userId);
-  //const businessIndex = businesses?.findIndex((el) => el._id === profession);
+  const businessIndex = businesses?.findIndex((el) => el._id === userId);
   const findLocation = locations && locations[locationsIndex];
 
-  const [region, setRegion] = useState(null);
+  const [region, setRegion] = useState({
+    latitude: locations && locations[locationsIndex]?.address?.coordinates[0],
+    longitude: locations && locations[locationsIndex]?.address?.coordinates[1],
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  });
 
-  useFocusEffect(
-    useCallback(() => {
-      setRegion({
-        latitude:
-          locations && locations[locationsIndex]?.address?.coordinates[0],
-        longitude:
-          locations && locations[locationsIndex]?.address?.coordinates[1],
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      });
-    }, [])
-  );
+  let mapIndex = 0;
+  let mapAnimation = new Animated.Value(0);
+
+  useEffect(() => {
+    mapAnimation.addListener(({ value }) => {
+      let index = Math.floor(value / LOCATION_WIDTH + 0.3); // animate 30% away from landing on the next item
+      if (index >= locations.length) {
+        index = locations.length - 1;
+      }
+      if (index <= 0) {
+        index = 0;
+      }
+
+      if (mapIndex !== index) {
+        mapIndex = index;
+        const { address } = locations[index];
+
+        mapRef.current.animateToRegion(
+          {
+            latitude: address.coordinates[0],
+            longitude: address.coordinates[1],
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          },
+          500
+        );
+      }
+    });
+  });
+
+  const interpolations = locations?.map((marker, index) => {
+    const inputRange = [
+      (index - 1) * LOCATION_WIDTH,
+      index * LOCATION_WIDTH,
+      (index + 1) * LOCATION_WIDTH,
+    ];
+
+    const scale = mapAnimation.interpolate({
+      inputRange,
+      outputRange: [1, 1.7, 1],
+      extrapolate: "clamp",
+    });
+
+    return { scale };
+  });
+
+  const onMarkerPress = (index) => {
+    locationsRef.current.scrollToIndex({
+      index,
+      animated: true,
+    });
+  };
 
   return (
     <>
-      <MapView
-        ref={mapRef}
-        style={{ height, width }}
-        region={region}
-        provider={PROVIDER_GOOGLE}
-        customMapStyle={mapStyle}
-        minZoomLevel={10}
-        showsUserLocation={true}
-      >
-        {locations?.map((loc, index) => {
-          const { owner, address } = loc;
-          return (
-            <MapMarkerProfile
-              onPress={() => {
-                locationsRef.current.scrollToIndex({ index });
-              }}
-              key={index}
-              avatar={owner?.avatar}
-              latitude={address.coordinates[0]}
-              longitude={address.coordinates[1]}
-            />
-          );
-        })}
-      </MapView>
+      {locations && locations?.length > 0 && (
+        <MapView
+          ref={mapRef}
+          style={{ height, width }}
+          region={region}
+          provider={PROVIDER_GOOGLE}
+          customMapStyle={mapStyle}
+          minZoomLevel={10}
+          showsUserLocation={true}
+        >
+          {locations?.map((loc: any, index: number) => {
+            const { owner, address } = loc;
+            const scaleStyle = {
+              transform: [
+                {
+                  scale: interpolations[index].scale,
+                },
+              ],
+            };
+            return (
+              <Marker
+                key={index}
+                coordinate={{
+                  latitude: address.coordinates[0],
+                  longitude: address.coordinates[1],
+                }}
+                onPress={() => onMarkerPress(index)}
+              >
+                <Animated.View style={styles.markerWrap}>
+                  <Animated.Image
+                    source={{
+                      uri: owner.avatar.length > 0 ? owner.avatar[0].url : null,
+                    }}
+                    style={[styles.marker, scaleStyle]}
+                  />
+                </Animated.View>
+              </Marker>
+            );
+          })}
+        </MapView>
+      )}
       <Stack sx={{ ...styles.header, marginTop: insets.top }}>
         <HeaderMap
           onSetUserRegion={() => {}}
           name={trimFunc(findLocation?.owner?.name, 15)}
           status={`Deschis acum, ${findLocation?.distance} km`}
         />
-        {/* <FlatList
+        <FlatList
           ref={businessRef}
           horizontal
           data={businesses}
@@ -233,14 +305,14 @@ export const MapScreen = ({ route }) => {
           showsHorizontalScrollIndicator={false}
           pagingEnabled={true}
           scrollEventThrottle={1}
-          initialScrollIndex={businessIndex}
+          //initialScrollIndex={businessIndex}
           renderItem={renderBusiness}
-          contentContainerStyle={styles.businessesFlatList}
           getItemLayout={getBusinessLayout}
-        /> */}
+          contentContainerStyle={{ margin: 15 }}
+        />
       </Stack>
       <Stack sx={{ ...styles.footer, marginBottom: insets.bottom }}>
-        <FlatList
+        <Animated.FlatList
           ref={locationsRef}
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -251,6 +323,18 @@ export const MapScreen = ({ route }) => {
           scrollEventThrottle={1}
           keyExtractor={(item) => item._id}
           renderItem={renderLocation}
+          onScroll={Animated.event(
+            [
+              {
+                nativeEvent: {
+                  contentOffset: {
+                    x: mapAnimation,
+                  },
+                },
+              },
+            ],
+            { useNativeDriver: true }
+          )}
         />
       </Stack>
     </>
@@ -269,9 +353,22 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
   },
-  businessesFlatList: {
-    paddingVertical: 12.5,
-    paddingLeft: width / 2 - BUSINESS_WIDTH / 2 + 7.5,
-    paddingRight: width / 2 - BUSINESS_WIDTH / 2 + 7.5 + 15,
+  markerWrap: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 100,
+    height: 100,
+    shadowColor: "#171717",
+    shadowOffset: { width: -2.5, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+  },
+  marker: {
+    width: 45,
+    height: 45,
+    borderRadius: 50,
+    backgroundColor: "#ddd",
+    borderWidth: 2,
+    borderColor: "white",
   },
 });

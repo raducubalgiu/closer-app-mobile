@@ -28,7 +28,7 @@ import {
   AddJobsScreen,
   AddLocationScreen,
   AddProductsScreen,
-  AddScheduleScreen,
+  AddUserProgramScreen,
   AddServicesScreen,
   EditProductScreen,
   AllBookmarksScreen,
@@ -86,8 +86,6 @@ const { black } = theme.lightColors;
 
 import { SharedList } from "../screens/SharedList";
 import { SharedDetails } from "../screens/SharedDetails";
-import { PanGestureHandler } from "react-native-gesture-handler";
-import { User } from "firebase/auth";
 
 const Shared = () => {
   return (
@@ -200,7 +198,7 @@ const CloserNavigation = () => {
   const { user } = useAuth();
   const { t } = useTranslation();
 
-  const getScreens = (user: User) => {
+  const getScreens = (user) => {
     if (user) {
       return (
         <PortalProvider>
@@ -356,8 +354,8 @@ const CloserNavigation = () => {
               component={ScheduleConfirmScreen}
             />
             <RootStack.Screen
-              name="AddSchedule"
-              component={AddScheduleScreen}
+              name="AddProgram"
+              component={AddUserProgramScreen}
             />
             <RootStack.Screen
               name="AddPost"

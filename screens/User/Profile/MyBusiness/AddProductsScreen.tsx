@@ -137,16 +137,14 @@ export const AddProductsScreen = () => {
               </FormProvider>
             </Stack>
           </ScrollView>
-          <Stack sx={styles.btnContainer}>
-            <Button
-              size="lg"
-              radius={10}
-              fullWidth
-              title={t("add")}
-              onPress={handleSubmit(handleCreate)}
-              loading={loadingSubmit}
-            />
-          </Stack>
+          <Button
+            size="lg"
+            radius={10}
+            title={t("add")}
+            onPress={handleSubmit(handleCreate)}
+            loading={loadingSubmit}
+            sxBtn={{ margin: 15 }}
+          />
         </KeyboardAvoidingView>
       )}
     </SafeAreaView>
@@ -157,11 +155,5 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: "white",
-  },
-  btnContainer: {
-    marginHorizontal: 15,
-    marginBottom: 10,
-    borderTopWidth: 1,
-    borderTopColor: "#ddd",
   },
 });

@@ -1,7 +1,8 @@
 import { StyleSheet, Text, Dimensions, Image, Pressable } from "react-native";
 import React, { useState } from "react";
 import { Icon } from "@rneui/themed";
-import { Stack, CustomAvatar } from "../../core";
+import { Stack } from "../../core";
+import CustomAvatar from "../../core/Avatars/CustomAvatar";
 import theme from "../../../assets/styles/theme";
 import { useAuth, usePatch } from "../../../hooks";
 import { MessDateItem } from "./MessDateItem";
@@ -39,7 +40,7 @@ export const MessReceivedItem = ({
         <Stack direction="row" align="end" justify="start" sx={{ flex: 1 }}>
           {!senderSame && (
             <Stack sx={{ width: 30 }}>
-              <CustomAvatar avatar={avatar} size={30} iconSize={15} />
+              <CustomAvatar avatar={avatar} size={30} />
             </Stack>
           )}
           {!message?.url && (

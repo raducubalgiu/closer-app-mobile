@@ -64,7 +64,7 @@ export const MyBusinessScreen = () => {
       iconName: "clock",
       iconType: "feather",
       description: t("informationLocationSchedule"),
-      navigation: "AddSchedule",
+      navigation: "AddProgram",
       roles: [MAIN_ROLE, SECOND_ROLE],
     },
     {
@@ -106,7 +106,7 @@ export const MyBusinessScreen = () => {
           iconName={item?.iconName}
           iconType={item?.iconType}
           description={item?.description}
-          onPress={goToScreen(item?.navigation)}
+          onPress={() => goToScreen(item?.navigation)}
         />
       </Protected>
     ),

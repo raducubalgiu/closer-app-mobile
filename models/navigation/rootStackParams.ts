@@ -12,7 +12,7 @@ export type RootStackParams = {
   AddServices: any;
   AddProducts: any;
   AddJobs: any;
-  AddSchedule: any;
+  AddProgram: any;
   AddPost: any;
   Bookmarks: { user: any };
   Comments: {

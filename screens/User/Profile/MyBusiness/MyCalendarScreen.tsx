@@ -3,8 +3,8 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Icon } from "@rneui/themed";
 import theme from "../../../../assets/styles/theme";
-import { Header, CFAB } from "../../../../components/core";
 import { NoFoundMessage } from "../../../../components/customized";
+import { Header } from "../../../../components/core";
 import { useAuth, useSheet } from "../../../../hooks";
 
 const { black } = theme.lightColors;
@@ -36,11 +36,6 @@ export const MyCalendarScreen = () => {
             <Icon name="info" type="feather" color={black} size={27.5} />
           </Pressable>
         }
-      />
-
-      <CFAB
-        onPress={() => {}}
-        icon={{ name: "post-add", type: "material", color: "white" }}
       />
       {BOTTOM_SHEET}
     </SafeAreaView>

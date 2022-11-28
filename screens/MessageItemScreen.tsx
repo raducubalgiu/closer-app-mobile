@@ -19,7 +19,6 @@ import { Spinner } from "../components/core";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../models/navigation/rootStackParams";
-import Toast from "react-native-root-toast";
 
 export const MessageItemScreen = ({ route }) => {
   const { user } = useAuth();

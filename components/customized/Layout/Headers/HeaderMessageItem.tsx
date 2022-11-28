@@ -1,8 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, Text } from "react-native";
 import theme from "../../../../assets/styles/theme";
-import { Stack, CustomAvatar, IconBackButton, Checkmark } from "../../../core";
+import { Stack, IconBackButton, Checkmark } from "../../../core";
 import { InfoIconButton } from "../../IconButtons/InfoIconButton";
+import CustomAvatar from "../../../core/Avatars/CustomAvatar";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 
