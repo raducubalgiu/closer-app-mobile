@@ -4,7 +4,13 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 import React from "react";
 import theme from "../../../assets/styles/theme";
 
-export const AutocompleteGoogle = ({ onSetLocation }) => {
+const { black } = theme.lightColors || {};
+
+type IProps = {
+  onSetLocation: ({}) => void;
+};
+
+export const AutocompleteGoogle = ({ onSetLocation }: IProps) => {
   return (
     <GooglePlacesAutocomplete
       styles={{
@@ -24,7 +30,7 @@ export const AutocompleteGoogle = ({ onSetLocation }) => {
       debounce={400}
       returnKeyType="search"
       enablePoweredByContainer={false}
-      onPress={(data, details = null) => {
+      onPress={(data: any, details: any) => {
         onSetLocation({
           street: details?.address_components[1]?.long_name,
           number: details?.address_components[0]?.long_name,
@@ -50,7 +56,7 @@ export const AutocompleteGoogle = ({ onSetLocation }) => {
 const styles = StyleSheet.create({
   textInput: {
     height: 45,
-    color: theme.lightColors.black,
+    color: black,
     fontSize: 15,
     borderRadius: 20,
     borderWidth: 1,

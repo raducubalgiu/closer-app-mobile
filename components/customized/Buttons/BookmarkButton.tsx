@@ -6,14 +6,20 @@ import { Stack } from "../../core";
 import { useAuth, useDelete, usePost, useGet } from "../../../hooks";
 import theme from "../../../assets/styles/theme";
 
-const { black } = theme.lightColors;
+const { black } = theme.lightColors || {};
+type IProps = {
+  type: string;
+  typeId: string;
+  status: boolean;
+  onBookmarksCount: (no: number) => void;
+};
 
 export const BookmarkButton = ({
   type,
   typeId,
   status = false,
   onBookmarksCount,
-}) => {
+}: IProps) => {
   const { user } = useAuth();
   const [bookmarked, setBookmarked] = useState(status);
   const { t } = useTranslation();

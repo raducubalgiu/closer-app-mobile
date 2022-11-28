@@ -1,16 +1,23 @@
 import { StyleSheet, Text, Pressable } from "react-native";
+import { Icon } from "@rneui/themed";
 import { Stack } from "../../core";
 import theme from "../../../assets/styles/theme";
-import { Icon } from "@rneui/themed";
 
-const { black, grey0 } = theme.lightColors;
+const { black, grey0 } = theme.lightColors || {};
+
+type IProps = {
+  heading: string;
+  onSeeAll: () => {};
+  collection: any;
+  seeAll: boolean;
+};
 
 export const SearchPopularHeading = ({
   heading,
-  onSeeAll = undefined,
+  onSeeAll,
   collection,
   seeAll = false,
-}) => {
+}: IProps) => {
   return (
     <>
       {collection?.length > 0 && (

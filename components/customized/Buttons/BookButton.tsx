@@ -3,9 +3,10 @@ import React from "react";
 import theme from "../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 
-const { primary } = theme.lightColors;
+const { primary } = theme.lightColors || {};
+type IProps = { bookAgain: boolean; onPress: () => void };
 
-export const BookButton = ({ bookAgain = false, onPress }) => {
+export const BookButton = ({ bookAgain = false, onPress }: IProps) => {
   const { t } = useTranslation();
 
   const styles = StyleSheet.create({

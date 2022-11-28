@@ -5,11 +5,11 @@ import theme from "../../../assets/styles/theme";
 const { black } = theme.lightColors || {};
 type Props = {
   name: string;
-  type: string;
-  size: number;
-  color: string | undefined;
-  loading: boolean;
-  sx: {};
+  type?: string;
+  size?: number;
+  color?: string | undefined;
+  loading?: boolean;
+  sx?: {};
   onPress: () => void;
 };
 

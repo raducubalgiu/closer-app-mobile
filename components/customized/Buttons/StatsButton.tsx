@@ -1,9 +1,11 @@
 import { StyleSheet, Text, Pressable } from "react-native";
 import theme from "../../../assets/styles/theme";
 
-const { grey3 } = theme.lightColors;
+const { grey3 } = theme.lightColors || {};
 
-export const StatsButton = ({ onPress, statsNo, label }) => {
+type IProps = { onPress: () => void; statsNo: number; label: string };
+
+export const StatsButton = ({ onPress, statsNo, label }: IProps) => {
   return (
     <Pressable style={styles.container} onPress={onPress}>
       <Text style={styles.statsNumber}>{statsNo}</Text>

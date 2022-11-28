@@ -2,9 +2,10 @@ import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, Text } from "react-native";
 import theme from "../../../assets/styles/theme";
 
-const { black, primary } = theme.lightColors;
+const { black, primary } = theme.lightColors || {};
+type IProps = { isFollow: boolean; onPress: () => void };
 
-export const FollowProfileButton = ({ isFollow = false, onPress }) => {
+export const FollowProfileButton = ({ isFollow = false, onPress }: IProps) => {
   const { t } = useTranslation();
 
   const styles = StyleSheet.create({

@@ -8,9 +8,21 @@ import { Icon } from "@rneui/themed";
 import { Stack } from "../Stack/Stack";
 import { FormInput } from "./FormInput";
 
-const { error } = theme.lightColors;
+const { error } = theme.lightColors || {};
 
-const InputCheck = ({ inputName, endpoint, onSubmit, loadingBtn }) => {
+type IProps = {
+  inputName: string;
+  endpoint: string;
+  onSubmit: (data: any) => void;
+  loadingBtn: any;
+};
+
+const InputCheck = ({
+  inputName = "",
+  endpoint,
+  onSubmit,
+  loadingBtn,
+}: IProps) => {
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(null);
   const methods = useForm({ defaultValues: { inputName: "" } });
@@ -55,7 +67,7 @@ const InputCheck = ({ inputName, endpoint, onSubmit, loadingBtn }) => {
     showStatus = <Text></Text>;
   }
 
-  const onHandleSubmit = (data) => {
+  const onHandleSubmit = (data: any) => {
     if (status === "success") onSubmit(data);
   };
 

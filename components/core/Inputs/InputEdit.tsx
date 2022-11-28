@@ -3,7 +3,15 @@ import React from "react";
 import { SearchBar } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 
-const { grey0 } = theme.lightColors;
+const { grey0 } = theme.lightColors || {};
+
+type IProps = {
+  value: string;
+  fieldLength: number;
+  placeholder: string;
+  updateValue: (text: string) => void;
+  withDetails?: boolean;
+};
 
 export const InputEdit = ({
   value,
@@ -11,7 +19,7 @@ export const InputEdit = ({
   placeholder,
   updateValue,
   withDetails = false,
-}) => {
+}: IProps) => {
   return (
     <>
       <View style={{ marginVertical: 10 }}>
@@ -22,7 +30,7 @@ export const InputEdit = ({
           containerStyle={styles.containerStyle}
           inputContainerStyle={styles.inputContainer}
           inputStyle={styles.input}
-          searchIcon={null}
+          searchIcon={undefined}
           lightTheme={true}
           autoFocus={true}
           cancelButtonTitle=""

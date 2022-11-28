@@ -3,17 +3,15 @@ import { Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 import { Stack } from "../../core";
 
-const FakeSearchBarSimple = ({ onPress, sx = {} }) => {
+const { grey0 } = theme.lightColors || {};
+type IProps = { onPress: () => void; sx?: {} };
+
+const FakeSearchBarSimple = ({ onPress, sx = {} }: IProps) => {
   return (
     <TouchableOpacity style={{ ...styles.container, ...sx }} onPress={onPress}>
       <Stack direction="row">
         <Stack direction="row">
-          <Icon
-            type="antdesign"
-            name="search1"
-            size={18}
-            color={theme.lightColors.grey0}
-          />
+          <Icon type="antdesign" name="search1" size={18} color={grey0} />
           <Text style={styles.text}>Cauta</Text>
         </Stack>
       </Stack>
@@ -32,6 +30,6 @@ const styles = StyleSheet.create({
   },
   text: {
     marginLeft: 15,
-    color: theme.lightColors.grey0,
+    color: grey0,
   },
 });

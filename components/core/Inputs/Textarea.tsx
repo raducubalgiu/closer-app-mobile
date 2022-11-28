@@ -2,7 +2,19 @@ import { StyleSheet, TextInput, View, Text } from "react-native";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 
-const { grey0 } = theme.lightColors;
+const { grey0 } = theme.lightColors || {};
+
+type IProps = {
+  value: string;
+  onSetValue: (text: string) => void;
+  placeholder: string;
+  lines: number;
+  maxLength: number;
+  showLength: boolean;
+  autoFocus: boolean;
+  sx?: {};
+  label: string;
+};
 
 export const Textarea = ({
   value,
@@ -14,7 +26,7 @@ export const Textarea = ({
   autoFocus = false,
   sx = {},
   label = "",
-}) => {
+}: IProps) => {
   return (
     <View style={{ ...styles.container, ...sx }}>
       {label?.length > 0 && <Text style={styles.label}>{label}</Text>}

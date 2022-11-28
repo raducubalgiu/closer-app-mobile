@@ -68,14 +68,23 @@ export const useDelete = ({ uri, onSuccess = undefined }) => {
   return mutations;
 };
 
+type GetProps = {
+  model: string;
+  uri: string;
+  onSuccess?: (res: any) => void;
+  enabled?: boolean;
+  enableId?: string;
+  others?: {};
+};
+
 export const useGet = ({
-  model,
-  uri,
-  onSuccess = undefined,
+  model = "",
+  uri = "",
+  onSuccess,
   enabled = true,
   enableId = "",
   others = {},
-}) => {
+}: GetProps) => {
   const { user } = useAuth();
 
   const response = useQuery(

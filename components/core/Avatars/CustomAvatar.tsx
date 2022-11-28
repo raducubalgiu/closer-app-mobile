@@ -4,7 +4,7 @@ import { memo } from "react";
 type Props = {
   avatar: any;
   size: number;
-  sx: {};
+  sx?: {};
 };
 
 const CustomAvatar = ({ avatar = [], size = 55, sx = {} }: Props) => {

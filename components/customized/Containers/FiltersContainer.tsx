@@ -1,11 +1,19 @@
 import { StyleSheet, Text, View, Dimensions, SafeAreaView } from "react-native";
-import React from "react";
-import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";
-import { Stack, MainButton } from "../../core";
+import { Stack, Button } from "../../core";
 
 const { height } = Dimensions.get("window");
-const { primary } = theme.lightColors;
+const { primary } = theme.lightColors || {};
+
+type IProps = {
+  children: any;
+  onNext: () => void;
+  headerTitle: string;
+  headerDescription: string;
+  footerExtraBtns: boolean;
+  btnTitle: string;
+  disabled: boolean;
+};
 
 export const FiltersContainer = ({
   children,
@@ -15,9 +23,7 @@ export const FiltersContainer = ({
   footerExtraBtns = false,
   btnTitle,
   disabled = false,
-}) => {
-  const { t } = useTranslation();
-
+}: IProps) => {
   return (
     <>
       <SafeAreaView style={styles.screen}>
@@ -31,7 +37,7 @@ export const FiltersContainer = ({
       </SafeAreaView>
       <Stack direction="row" sx={styles.footer}>
         {footerExtraBtns}
-        <MainButton
+        <Button
           size="lg"
           onPress={onNext}
           title={btnTitle}

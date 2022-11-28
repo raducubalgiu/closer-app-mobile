@@ -6,9 +6,15 @@ import theme from "../../../assets/styles/theme";
 import * as Haptics from "expo-haptics";
 import { usePost, useDelete, useGet } from "../../../hooks";
 
-const { black } = theme.lightColors;
+const { black } = theme.lightColors || {};
+type IProps = { sx: {}; size: number; type: string; typeId: number };
 
-export const BookmarkIconButton = ({ sx = {}, size = 24, type, typeId }) => {
+export const BookmarkIconButton = ({
+  sx = {},
+  size = 24,
+  type,
+  typeId,
+}: IProps) => {
   const { user } = useAuth();
   const [bookmarked, setBookmarked] = useState(false);
   const animatedScale = useRef(new Animated.Value(0)).current;

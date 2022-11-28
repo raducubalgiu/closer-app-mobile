@@ -1,12 +1,20 @@
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import { ButtonLink, Checkmark } from "../../core";
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../models/navigation/rootStackParams";
 
-const { grey0, black } = theme.lightColors;
+const { grey0, black } = theme.lightColors || {};
+
+type IProps = {
+  text: string;
+  maxWords: number;
+  username: string | null;
+  checkmark: boolean;
+  goToUserAllInfo: () => void;
+};
 
 export const DisplayText = ({
   text = "",
@@ -14,7 +22,7 @@ export const DisplayText = ({
   username = null,
   checkmark = false,
   goToUserAllInfo,
-}) => {
+}: IProps) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   let wordsArr = text.split(" ");

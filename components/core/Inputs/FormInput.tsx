@@ -10,9 +10,10 @@ const { error, black } = theme.lightColors || {};
 type Props = {
   name: string;
   placeholder: string;
-  rules: {};
-  sx: {};
-  label: string;
+  rules?: {};
+  sx?: {};
+  label?: string;
+  secureTextEntry?: boolean;
 };
 
 export const FormInput = ({
@@ -21,6 +22,7 @@ export const FormInput = ({
   rules = {},
   sx = {},
   label = "",
+  secureTextEntry = false,
   ...props
 }: Props) => {
   const { formState, control } = useFormContext();
@@ -52,6 +54,7 @@ export const FormInput = ({
             onChangeText={onChange}
             value={value}
             placeholderTextColor="#9EA0A4"
+            secureTextEntry={secureTextEntry}
           />
         )}
         name={name}

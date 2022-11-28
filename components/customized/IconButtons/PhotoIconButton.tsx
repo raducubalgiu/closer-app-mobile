@@ -1,6 +1,12 @@
 import { IconButton } from "../../core";
 
-export const PhotoIconButton = ({ sx, size = 30, onPress }) => {
+type Props = {
+  sx?: {};
+  size: number;
+  onPress: () => {};
+};
+
+export const PhotoIconButton = ({ sx, size = 30, onPress }: Props) => {
   return (
     <IconButton
       name="photo-library"

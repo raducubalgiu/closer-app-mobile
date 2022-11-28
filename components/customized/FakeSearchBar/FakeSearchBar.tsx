@@ -4,9 +4,11 @@ import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";
 import { Stack } from "../../core";
 
-const { black, grey0 } = theme.lightColors;
+const { black, grey0 } = theme.lightColors || {};
 
-const FakeSearchBar = ({ onGoAnytime, onGoNow }) => {
+type IProps = { onGoAnytime: () => void; onGoNow: () => void };
+
+const FakeSearchBar = ({ onGoAnytime, onGoNow }: IProps) => {
   const { t } = useTranslation();
 
   return (

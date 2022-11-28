@@ -3,9 +3,10 @@ import { CheckBox } from "@rneui/themed";
 import { Stack } from "../Stack/Stack";
 import theme from "../../../assets/styles/theme";
 
-const { black } = theme.lightColors;
+const { black } = theme.lightColors || {};
+type IProps = { text: string; checked: boolean; onPress: () => void };
 
-export const FormInputRadio = ({ text, checked, onPress }) => {
+export const FormInputRadio = ({ text, checked, onPress }: IProps) => {
   return (
     <Stack direction="row" sx={styles.container}>
       <Text style={styles.text}>{text}</Text>

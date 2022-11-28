@@ -4,14 +4,20 @@ import { IconButton } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { useAuth, useGet, usePost, useDelete, usePatch } from "../../../hooks";
 
-const { grey0, error } = theme.lightColors;
+const { grey0, error } = theme.lightColors || {};
+type IProps = {
+  userId: string;
+  commentId: string;
+  onLikes: (no: number) => void;
+  creatorId: string;
+};
 
 export const LikeCommentButton = ({
   userId,
   commentId,
   onLikes,
   creatorId,
-}) => {
+}: IProps) => {
   const { user } = useAuth();
   const [liked, setLiked] = useState(false);
   const likeEndpoints = `/users/${userId}/comments/${commentId}/likes`;
@@ -44,8 +50,8 @@ export const LikeCommentButton = ({
     <IconButton
       onPress={handleLike}
       sx={styles.btn}
-      iconName={liked ? "heart" : "hearto"}
-      iconType="antdesign"
+      name={liked ? "heart" : "hearto"}
+      type="antdesign"
       size={12.5}
       color={liked ? error : grey0}
     />

@@ -1,9 +1,18 @@
 import { StyleSheet, TextInput } from "react-native";
-import { Stack, CustomAvatar, IconButton } from "../../../core";
-import theme from "../../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
+import { Stack, IconButton } from "../../../core";
+import CustomAvatar from "../../../core/Avatars/CustomAvatar";
+import theme from "../../../../assets/styles/theme";
 
-const { primary } = theme.lightColors;
+const { primary } = theme.lightColors || {};
+
+type IProps = {
+  comment: string;
+  focus: boolean;
+  onChangeText: (text: string) => void;
+  avatar: any;
+  onHandleComment: () => void;
+};
 
 export const FooterComments = ({
   comment,
@@ -11,12 +20,12 @@ export const FooterComments = ({
   onChangeText,
   avatar,
   onHandleComment,
-}) => {
+}: IProps) => {
   const { t } = useTranslation();
 
   return (
     <Stack direction="row" sx={styles.inputCont}>
-      <CustomAvatar size={45} iconSize={20} avatar={avatar} />
+      <CustomAvatar size={45} avatar={avatar} />
       <TextInput
         onChangeText={(text) => onChangeText(text)}
         autoCapitalize="sentences"
@@ -27,8 +36,8 @@ export const FooterComments = ({
       />
       <IconButton
         size={20}
-        iconName="arrowup"
-        iconType="antdesign"
+        name="arrowup"
+        type="antdesign"
         sx={styles.iconBtn}
         color="white"
         onPress={onHandleComment}

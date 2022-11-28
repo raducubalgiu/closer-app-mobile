@@ -2,6 +2,8 @@ import { ButtonProvider } from "../Buttons/ButtonProvider";
 import theme from "../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 
+const { black } = theme.lightColors || {};
+
 export const AuthProviders = () => {
   const { t } = useTranslation();
 
@@ -18,7 +20,7 @@ export const AuthProviders = () => {
         onPress={() => {}}
         iconName="apple1"
         iconType="antdesign"
-        color={theme.lightColors.black}
+        color={black}
         text={t("loginWithApple")}
       />
       <ButtonProvider

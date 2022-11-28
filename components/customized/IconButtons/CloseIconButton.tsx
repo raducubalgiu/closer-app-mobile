@@ -1,11 +1,18 @@
 import { IconButton } from "../../core";
 
+type IProps = {
+  sx?: {};
+  size?: number;
+  color: string;
+  onPress: () => void;
+};
+
 export const CloseIconButton = ({
   sx = {},
   size = 30,
   color = "white",
   onPress,
-}) => {
+}: IProps) => {
   return (
     <IconButton
       name="x"

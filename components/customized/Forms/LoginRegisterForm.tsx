@@ -7,6 +7,17 @@ import theme from "../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 import { AuthProviders } from "./AuthProviders";
 
+const { black } = theme.lightColors || {};
+
+type IProps = {
+  onSubmit: () => void;
+  statusAction: () => void;
+  heading: string;
+  statusText: string;
+  statusBtn: string;
+  loading: boolean;
+};
+
 const defaultValues = {
   email: "",
   password: "",
@@ -19,7 +30,7 @@ export const LoginRegisterForm = ({
   statusBtn,
   statusAction,
   loading,
-}) => {
+}: IProps) => {
   const [disabled, setDisabled] = useState(true);
   const methods = useForm({ defaultValues });
   const { handleSubmit, watch } = methods;
@@ -82,7 +93,7 @@ const styles = StyleSheet.create({
   container: { paddingHorizontal: 20 },
   heading: {
     fontSize: 25,
-    color: theme.lightColors.black,
+    color: black,
     marginTop: 30,
     marginBottom: 25,
   },

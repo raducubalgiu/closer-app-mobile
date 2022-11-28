@@ -4,15 +4,15 @@ import theme from "../../../assets/styles/theme";
 const { primary, black, grey0 } = theme.lightColors || {};
 
 type Props = {
-  variant: string;
-  size: string;
-  loading: boolean;
-  disabled: boolean;
-  sxBtn: {};
-  sxText: {};
-  radius: number | undefined;
-  bgColor: string | undefined;
-  color: string | undefined;
+  variant?: string;
+  size?: string;
+  loading?: boolean;
+  disabled?: boolean;
+  sxBtn?: {};
+  sxText?: {};
+  radius?: number | undefined;
+  bgColor?: string | undefined;
+  color?: string | undefined;
   title: string;
   onPress: () => void;
 };

@@ -1,17 +1,23 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Icon } from "@rneui/themed";
-import React from "react";
 import theme from "../../../assets/styles/theme";
 
-const { black } = theme.lightColors;
+const { black } = theme.lightColors || {};
+type IProps = {
+  onPress: () => void;
+  iconName: string;
+  iconType: string;
+  color?: string;
+  text: string;
+};
 
 export const ButtonProvider = ({
   onPress,
   iconName,
-  iconType,
+  iconType = "feather",
   color,
   text,
-}) => {
+}: IProps) => {
   return (
     <TouchableOpacity
       activeOpacity={1}

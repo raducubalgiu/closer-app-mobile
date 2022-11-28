@@ -1,25 +1,31 @@
 import { StyleSheet, Text, TextInput, Pressable } from "react-native";
-import { Stack, IconButton } from "../../../core";
-import theme from "../../../../assets/styles/theme";
 import * as Haptics from "expo-haptics";
 import { useTranslation } from "react-i18next";
+import { Stack, IconButton } from "../../../core";
+import theme from "../../../../assets/styles/theme";
 
-const { primary } = theme.lightColors;
+const { primary } = theme.lightColors || {};
+
+type IProps = {
+  message: string;
+  onChangeText: (text: string) => void;
+  onSendMessage: () => void;
+  onOpenCamera: () => void;
+};
 
 export const FooterMessageItem = ({
   message,
   onChangeText,
   onSendMessage,
   onOpenCamera,
-}) => {
+}: IProps) => {
   const { t } = useTranslation();
 
   return (
     <Stack direction="row" sx={styles.inputContainer}>
       <Stack direction="row" justify="start" sx={{ flex: 1 }}>
         <IconButton
-          iconName="camera"
-          iconType="feather"
+          name="camera"
           onPress={() => {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
             onOpenCamera();

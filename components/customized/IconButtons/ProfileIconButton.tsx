@@ -2,7 +2,15 @@ import { ActivityIndicator, Pressable, StyleSheet } from "react-native";
 import { Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 
-const { black } = theme.lightColors;
+const { black } = theme.lightColors || {};
+
+type Props = {
+  name: string;
+  type: string;
+  loading: boolean;
+  onPress: () => {};
+  sx?: {};
+};
 
 export const ProfileIconButton = ({
   name,
@@ -10,7 +18,7 @@ export const ProfileIconButton = ({
   loading = false,
   onPress,
   sx = {},
-}) => {
+}: Props) => {
   return (
     <Pressable style={[styles.container, sx]} onPress={onPress}>
       {loading ? (

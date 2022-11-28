@@ -1,9 +1,10 @@
 import { Pressable, StyleSheet, Text } from "react-native";
 import theme from "../../../assets/styles/theme";
 
-const { black } = theme.lightColors;
+const { black } = theme.lightColors || {};
+type IProps = { isActive: boolean; text: string; onPress: () => void };
 
-export const FeedLabelButton = ({ isActive, text, onPress }) => {
+export const FeedLabelButton = ({ isActive, text, onPress }: IProps) => {
   return (
     <Pressable
       onPress={onPress}

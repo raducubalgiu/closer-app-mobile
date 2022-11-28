@@ -3,7 +3,7 @@ import { SearchBar } from "@rneui/themed";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 
-const { grey0, black } = theme.lightColors;
+const { grey0, black, divider } = theme.lightColors || {};
 
 export const SearchBarInput = ({
   cancelButtonTitle = "",
@@ -33,7 +33,7 @@ export const SearchBarInput = ({
       inputStyle={styles.inputStyle}
       placeholderTextColor={grey0}
       searchIcon={styles.searchIcon}
-      clearIcon={{ color: theme.lightColors.divider }}
+      clearIcon={{ color: divider }}
     />
   );
 };

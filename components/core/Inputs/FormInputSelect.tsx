@@ -7,16 +7,24 @@ import { has, get } from "lodash";
 import { Stack } from "../Stack/Stack";
 import { Icon } from "@rneui/themed";
 
-const { black, error } = theme.lightColors;
+const { black, error } = theme.lightColors || {};
+type IProps = {
+  name: string;
+  placeholder: string;
+  rules: {};
+  items: [{ name: string; _id: string | number | undefined }];
+  disabled: boolean;
+  label: string;
+};
 
 export const FormInputSelect = ({
   name,
   placeholder,
   rules = {},
-  items = [],
+  items = [{ name: "", _id: undefined }],
   disabled = false,
   label = "",
-}) => {
+}: IProps) => {
   const { formState, control } = useFormContext();
   const { errors } = formState;
 

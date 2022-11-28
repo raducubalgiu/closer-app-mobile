@@ -2,9 +2,10 @@ import { StyleSheet, Text, Pressable } from "react-native";
 import { memo } from "react";
 import theme from "../../../assets/styles/theme";
 
-const { primary, black } = theme.lightColors;
+const { primary, black } = theme.lightColors || {};
 
-const BusinessButton = ({ name, isActive, sx = {}, onPress }) => {
+type IProps = { name: string; isActive: boolean; sx?: {}; onPress: () => void };
+const BusinessButton = ({ name, isActive, sx = {}, onPress }: IProps) => {
   return (
     <Pressable
       onPress={onPress}

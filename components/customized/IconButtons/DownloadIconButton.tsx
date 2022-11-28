@@ -1,6 +1,8 @@
 import { IconButton } from "../../core";
 
-export const DownloadIconButton = ({ sx = {}, size = 30, onPress }) => {
+type IProps = { sx?: {}; size: number; onPress: () => void };
+
+export const DownloadIconButton = ({ sx = {}, size = 30, onPress }: IProps) => {
   return (
     <IconButton
       name="download"

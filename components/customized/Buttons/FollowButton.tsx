@@ -3,7 +3,14 @@ import { memo } from "react";
 import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";
 
-const { primary, black } = theme.lightColors;
+const { primary, black } = theme.lightColors || {};
+type IProps = {
+  onPress: () => void;
+  isFollow: boolean;
+  sxBtn?: {};
+  sxBtnText?: {};
+  fullWidth?: boolean;
+};
 
 const FollowButton = ({
   onPress,
@@ -11,7 +18,7 @@ const FollowButton = ({
   sxBtn = {},
   sxBtnText = {},
   fullWidth = false,
-}) => {
+}: IProps) => {
   const { t } = useTranslation();
 
   const styles = StyleSheet.create({
