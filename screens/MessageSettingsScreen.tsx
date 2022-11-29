@@ -4,22 +4,21 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView, StyleSheet, Text, Pressable } from "react-native";
 import theme from "../assets/styles/theme";
-import {
-  Checkmark,
-  CustomAvatar,
-  Header,
-  Heading,
-  Stack,
-} from "../components/core";
+import { Checkmark, Header, Heading, Stack } from "../components/core";
+import CustomAvatar from "../components/core/Avatars/CustomAvatar";
 import { SettingListItem } from "../components/customized";
 import { useAuth, useDelete } from "../hooks";
 import { ConfirmModal } from "../components/customized/Modals/ConfirmModal";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
 import { RootStackParams } from "../models/navigation/rootStackParams";
 
-const { grey0, black, error } = theme.lightColors;
+const { grey0, black, error } = theme.lightColors || {};
+type IProps = NativeStackScreenProps<RootStackParams, "MessageSettings">;
 
-export const MessageSettingsScreen = ({ route }) => {
+export const MessageSettingsScreen = ({ route }: IProps) => {
   const [modal, setModal] = useState(false);
   const { user } = useAuth();
   const { _id, avatar, name, username, checkmark, conversationId } =
@@ -34,7 +33,7 @@ export const MessageSettingsScreen = ({ route }) => {
       avatar,
       name,
       username,
-      checkmark,
+      checkmark: false,
       service: null,
       option: null,
     });

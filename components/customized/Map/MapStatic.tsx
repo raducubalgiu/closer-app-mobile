@@ -1,6 +1,6 @@
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 
-type IProps = { height: number; sx?: {}; longitude: number; latitude: number };
+type IProps = { height?: number; sx?: {}; longitude: number; latitude: number };
 
 export const MapStatic = ({
   height = 250,

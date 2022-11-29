@@ -1,16 +1,26 @@
-import { StyleSheet, Text, FlatList, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  FlatList,
+  Pressable,
+  ListRenderItemInfo,
+} from "react-native";
 import React, { useCallback, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { FiltersContainer, SheetHeader } from "../components/customized";
 import theme from "../assets/styles/theme";
 import { useTranslation } from "react-i18next";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
 import { RootStackParams } from "../models/navigation/rootStackParams";
 import { Option } from "../models/option";
 
-const { black, primary } = theme.lightColors;
+const { black, primary } = theme.lightColors || {};
+type IProps = NativeStackScreenProps<RootStackParams, "FiltersService">;
 
-export const FiltersServiceScreen = ({ route }) => {
+export const FiltersServiceScreen = ({ route }: IProps) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { service, period } = route.params;
@@ -35,7 +45,7 @@ export const FiltersServiceScreen = ({ route }) => {
     });
 
   const renderOption = useCallback(
-    ({ item }) => (
+    ({ item }: ListRenderItemInfo<Option>) => (
       <Pressable
         onPress={() => setOption(item)}
         style={item._id !== option._id ? styles.button : activeBtn}

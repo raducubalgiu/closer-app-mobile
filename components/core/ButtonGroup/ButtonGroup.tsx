@@ -7,10 +7,10 @@ const black = theme.lightColors?.black;
 
 type Props = {
   activeButton: number;
-  size: string;
   onPress: (index: number) => void;
   buttons: any;
-  sx: {};
+  size?: string;
+  sx?: {};
 };
 
 export const ButtonGroup = ({

@@ -12,8 +12,12 @@ import {
   HeaderSearchAll,
 } from "../components/customized";
 import { useAuth, usePost } from "../hooks";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParams } from "../models/navigation/rootStackParams";
 
-export const SearchAllScreen = ({ route }) => {
+type IProps = NativeStackScreenProps<RootStackParams, "SearchAll">;
+
+export const SearchAllScreen = ({ route }: IProps) => {
   const { user } = useAuth();
   const { search } = route.params;
   const { t } = useTranslation();

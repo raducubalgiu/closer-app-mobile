@@ -5,29 +5,30 @@ import {
   Pressable,
   FlatList,
   KeyboardAvoidingView,
+  ListRenderItemInfo,
 } from "react-native";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
 import { Header, Button, Textarea } from "../components/core";
 import theme from "../assets/styles/theme";
 import { usePatch } from "../hooks";
 import { RootStackParams } from "../models/navigation/rootStackParams";
 
-const { error, black, grey0 } = theme.lightColors;
+const { error, black, grey0 } = theme.lightColors || {};
 
-interface Message {
-  _id: string;
-  message: string;
-}
+type IProps = NativeStackScreenProps<RootStackParams, "ScheduleCancel">;
 
-export const ScheduleCancelScreen = ({ route }) => {
+export const ScheduleCancelScreen = ({ route }: IProps) => {
   const { scheduleId } = route.params;
   const [textarea, setTextarea] = useState(false);
   const [textareaVal, setTextareaVal] = useState("");
-  const [active, setActive] = useState<Message>(null);
+  const [active, setActive] = useState<any>(null);
   const { t } = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -49,7 +50,7 @@ export const ScheduleCancelScreen = ({ route }) => {
       cancelMessage: active?._id === "3" ? textareaVal : active.message,
     });
 
-  const handleActive = (item: Message) => {
+  const handleActive = (item: any) => {
     setActive({ _id: item._id, message: item.message });
     item._id === "3" ? setTextarea(true) : setTextarea(false);
   };
@@ -58,7 +59,7 @@ export const ScheduleCancelScreen = ({ route }) => {
   const activeTxt = { ...styles.btnText, ...styles.activeTxt };
 
   const renderItem = useCallback(
-    ({ item }) => {
+    ({ item }: ListRenderItemInfo<any>) => {
       const isSame = item?._id === active?._id;
 
       return (
@@ -85,18 +86,21 @@ export const ScheduleCancelScreen = ({ route }) => {
     </>
   );
 
-  const footer = textarea && (
-    <Textarea
-      value={textareaVal}
-      lines={5}
-      maxLength={200}
-      onSetValue={(value: string) => setTextareaVal(value)}
-    />
-  );
+  let footer;
+  if (textarea) {
+    footer = (
+      <Textarea
+        value={textareaVal}
+        lines={5}
+        maxLength={200}
+        onSetValue={(value: string) => setTextareaVal(value)}
+      />
+    );
+  }
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Header />
+      <Header title="" />
       <KeyboardAvoidingView
         behavior="padding"
         style={{ justifyContent: "space-between", flex: 1 }}

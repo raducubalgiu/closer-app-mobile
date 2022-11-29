@@ -1,4 +1,11 @@
-import { SafeAreaView, StyleSheet, View, Text, FlatList } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Text,
+  FlatList,
+  ListRenderItemInfo,
+} from "react-native";
 import React, { useCallback, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Divider } from "@rneui/themed";
@@ -10,7 +17,7 @@ import { useGet } from "../hooks";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../models/navigation/rootStackParams";
 
-const { black } = theme.lightColors;
+const { black } = theme.lightColors || {};
 
 export const HomeScreen = () => {
   const { t } = useTranslation();
@@ -28,10 +35,10 @@ export const HomeScreen = () => {
   const { data: services } = useGet({ model: "services", uri: "/services" });
 
   const renderRecommended = useCallback(
-    ({ item }) => <CardRecommended location={item} />,
+    ({ item }: ListRenderItemInfo<any>) => <CardRecommended location={item} />,
     []
   );
-  const keyExtractor = useCallback((item) => item._id, []);
+  const keyExtractor = useCallback((item: any) => item._id, []);
 
   const goToServicesAnytime = () =>
     navigation.navigate("SearchServices", {

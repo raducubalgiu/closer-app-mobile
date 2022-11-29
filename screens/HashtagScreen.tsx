@@ -10,8 +10,12 @@ import {
   HashtagPostsRecentTab,
   HashtagPostsBookableTab,
 } from "../components/customized";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParams } from "../models/navigation/rootStackParams";
 
-export const HashtagScreen = ({ route }) => {
+type IProps = NativeStackScreenProps<RootStackParams, "Hashtag">;
+
+export const HashtagScreen = ({ route }: IProps) => {
   const { name } = route.params;
   const { t } = useTranslation();
   const Tab = createMaterialTopTabNavigator();

@@ -24,11 +24,12 @@ import {
   Heading,
   Spinner,
 } from "../components/core";
-import { FlashList } from "@shopify/flash-list";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../models/navigation/rootStackParams";
+import { Message } from "../models/message";
 
-const { grey0 } = theme.lightColors;
+const { grey0 } = theme.lightColors || {};
 
 export const MessagesScreen = () => {
   const { user } = useAuth();
@@ -52,9 +53,13 @@ export const MessagesScreen = () => {
   });
 
   const renderMessages = useCallback(
-    ({ item }) => <MessageListItem conversation={item} />,
+    ({ item }: ListRenderItemInfo<Message>) => (
+      <MessageListItem conversation={item} />
+    ),
     []
   );
+
+  const keyExtractor = useCallback((item: Message) => item?._id, []);
 
   const { refreshing, refetchByUser } = useRefreshByUser(refetch);
   useRefreshOnFocus(refetch);
@@ -64,6 +69,7 @@ export const MessagesScreen = () => {
   );
 
   const { pages } = data || {};
+  const messages = pages?.map((page) => page.results).flat();
 
   const loadMore = () => {
     if (hasNextPage) fetchNextPage();
@@ -97,7 +103,7 @@ export const MessagesScreen = () => {
           showCancel={false}
           placeholder={t("search")}
           value={search}
-          updateValue={(text) => setSearch(text)}
+          updateValue={(text: string) => setSearch(text)}
         />
       </View>
       {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
@@ -105,8 +111,8 @@ export const MessagesScreen = () => {
         refreshControl={refreshControl}
         ListHeaderComponent={<Heading title={t("messages")} />}
         showsVerticalScrollIndicator={false}
-        data={pages?.map((page) => page.results).flat()}
-        keyExtractor={useCallback((item) => item?._id, [])}
+        data={messages}
+        keyExtractor={keyExtractor}
         renderItem={renderMessages}
         estimatedItemSize={70}
         ListFooterComponent={showSpinner}

@@ -5,6 +5,7 @@ import {
   Text,
   FlatList,
   Pressable,
+  ListRenderItemInfo,
 } from "react-native";
 import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -23,8 +24,9 @@ import { useAuth, useDelete, useGet } from "../hooks";
 import { trimFunc } from "../utils";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../models/navigation/rootStackParams";
+import { User } from "firebase/auth";
 
-const { grey0, primary, black } = theme.lightColors;
+const { grey0, primary, black } = theme.lightColors || {};
 
 export const SearchPostsScreen = () => {
   const { user } = useAuth();
@@ -32,7 +34,6 @@ export const SearchPostsScreen = () => {
   const [results, setResults] = useState([]);
   const [words, setWords] = useState([]);
   const [searchedUsers, setSearchedUsers] = useState([]);
-  const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
@@ -97,15 +98,13 @@ export const SearchPostsScreen = () => {
         headers: { Authorization: `Bearer ${user.token}` },
       })
       .then(() =>
-        setWords((searches) => searches.filter((s) => s._id !== searchId))
+        setWords((searches) => searches.filter((s: any) => s._id !== searchId))
       )
-      .catch(() =>
-        setFeedback({ visible: true, message: t("somethingWentWrong") })
-      );
+      .catch(() => {});
   };
 
   const renderRecent = useCallback(
-    ({ item }) => (
+    ({ item }: ListRenderItemInfo<any>) => (
       <RecentSearchListItem
         onPress={() =>
           navigation.navigate("SearchAll", { search: item.word, screen: null })
@@ -116,7 +115,7 @@ export const SearchPostsScreen = () => {
     []
   );
 
-  const goToUser = (item) => {
+  const goToUser = (item: any) => {
     const { _id, username, avatar, name, checkmark } = item;
 
     navigation.navigate("ProfileGeneral", {
@@ -131,7 +130,7 @@ export const SearchPostsScreen = () => {
   };
 
   const renderResults = useCallback(
-    ({ item }) => {
+    ({ item }: ListRenderItemInfo<any>) => {
       if (search.startsWith("#")) {
         return (
           <HashtagListItem
@@ -196,18 +195,21 @@ export const SearchPostsScreen = () => {
     </Stack>
   );
 
-  const renderSearchedUsers = useCallback(({ item }) => {
-    const { username, avatar } = item?.searchedUser || {};
+  const renderSearchedUsers = useCallback(
+    ({ item }: ListRenderItemInfo<any>) => {
+      const { username, avatar } = item?.searchedUser || {};
 
-    return (
-      <Pressable onPress={() => goToUser(item.searchedUser)}>
-        <Stack sx={{ marginRight: 10, minWidth: 80 }}>
-          <CustomAvatar size={70} avatar={avatar} sx={{ marginBottom: 5 }} />
-          <Text style={{ fontSize: 13 }}>{trimFunc(username, 15)}</Text>
-        </Stack>
-      </Pressable>
-    );
-  }, []);
+      return (
+        <Pressable onPress={() => goToUser(item.searchedUser)}>
+          <Stack sx={{ marginRight: 10, minWidth: 80 }}>
+            <CustomAvatar size={70} avatar={avatar} sx={{ marginBottom: 5 }} />
+            <Text style={{ fontSize: 13 }}>{trimFunc(username, 15)}</Text>
+          </Stack>
+        </Pressable>
+      );
+    },
+    []
+  );
 
   const header = (
     <View>
@@ -256,7 +258,6 @@ export const SearchPostsScreen = () => {
             <Text style={styles.cancelBtnText}>{t("search")}</Text>
           </Pressable>
         </Stack>
-        <Feedback feedback={feedback} setFeedback={setFeedback} />
         {results.length > 0 && (
           <FlatList
             data={results}

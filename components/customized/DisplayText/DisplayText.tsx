@@ -10,7 +10,7 @@ const { grey0, black } = theme.lightColors || {};
 
 type IProps = {
   text: string;
-  maxWords: number;
+  maxWords?: number;
   username: string | null;
   checkmark: boolean;
   goToUserAllInfo: () => void;
@@ -32,11 +32,11 @@ export const DisplayText = ({
 
   const goToUser = (uName: string) => {
     navigation.push("ProfileGeneral", {
-      userId: null,
+      userId: "",
       username: uName,
       avatar: null,
-      name: null,
-      checkmark: null,
+      name: "",
+      checkmark: false,
       service: null,
       option: null,
     });

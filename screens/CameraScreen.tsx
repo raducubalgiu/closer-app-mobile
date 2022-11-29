@@ -5,18 +5,23 @@ import * as Haptics from "expo-haptics";
 import * as MediaLibrary from "expo-media-library";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { CustomAvatar, IconButton, Stack } from "../components/core";
+import { IconButton, Stack } from "../components/core";
+import CustomAvatar from "../components/core/Avatars/CustomAvatar";
 import theme from "../assets/styles/theme";
 import { CloseIconButton, RevertIconButton } from "../components/customized";
 import { PhotoLibraryButton } from "../components/customized/Buttons/PhotoLibraryButton";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
 import { RootStackParams } from "../models/navigation/rootStackParams";
 
-const { black, grey0 } = theme.lightColors;
+const { black, grey0 } = theme.lightColors || {};
+type IProps = NativeStackScreenProps<RootStackParams, "Camera">;
 
-export const CameraScreen = ({ route }) => {
+export const CameraScreen = ({ route }: IProps) => {
   const { name, avatar } = route.params;
-  const [galleryUrl, setGalleryUrl] = useState(null);
+  const [galleryUrl, setGalleryUrl] = useState("");
   const [type, setType] = useState(CameraType.back);
   const [flash, setFlash] = useState(FlashMode.off);
   let cameraRef = useRef<any>();
@@ -74,7 +79,7 @@ export const CameraScreen = ({ route }) => {
       <Camera ref={cameraRef} type={type} style={styles.container}>
         <Stack direction="row" sx={{ margin: 20 }}>
           <Stack direction="row" sx={styles.user}>
-            <CustomAvatar avatar={avatar} size={30} iconSize={15} />
+            <CustomAvatar avatar={avatar} size={30} />
             <Stack align="start" sx={{ marginLeft: 10 }}>
               <Text style={styles.to}>{t("to")}</Text>
               <Text style={styles.name}>{name}</Text>
@@ -82,8 +87,8 @@ export const CameraScreen = ({ route }) => {
           </Stack>
           <Stack direction="row">
             <IconButton
-              iconName="flash"
-              iconType="ionicon"
+              name="flash"
+              type="ionicon"
               size={25}
               color="white"
               onPress={() => {}}
@@ -106,8 +111,8 @@ export const CameraScreen = ({ route }) => {
             }
           />
           <IconButton
-            iconName="camera"
-            iconType="entypo"
+            name="camera"
+            type="entypo"
             onPress={handleTakePicture}
             size={32.5}
             color={black}

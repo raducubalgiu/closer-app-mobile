@@ -9,9 +9,9 @@ const { black } = theme.lightColors || {};
 type IProps = {
   index: number;
   image: string;
-  bookable: boolean;
-  fixed: boolean | null;
-  postType: string | null;
+  bookable?: boolean;
+  fixed?: boolean | null;
+  postType?: string | null;
   onPress: () => void;
   col?: number;
 };

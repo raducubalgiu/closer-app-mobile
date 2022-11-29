@@ -23,12 +23,16 @@ import { useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
 import { useGet } from "../hooks";
 import { MapStatic } from "../components/customized";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
 import { RootStackParams } from "../models/navigation/rootStackParams";
 
-const { black, grey0, success, error } = theme.lightColors;
+const { black, grey0, success, error } = theme.lightColors || {};
+type IProps = NativeStackScreenProps<RootStackParams, "ScheduleDetails">;
 
-export const ScheduleDetailsScreen = ({ route }) => {
+export const ScheduleDetailsScreen = ({ route }: IProps) => {
   const { user, product, start, service, status, _id, location } =
     route.params.schedule;
   const { name, username, avatar, checkmark } = user;
@@ -93,7 +97,10 @@ export const ScheduleDetailsScreen = ({ route }) => {
   return (
     <View style={styles.screen}>
       <SafeAreaView>
-        <Header actionBtn={<Icon name="send" type="feather" color={black} />} />
+        <Header
+          title=""
+          actionBtn={<Icon name="send" type="feather" color={black} />}
+        />
       </SafeAreaView>
       <ScrollView style={styles.container}>
         <View>
@@ -135,7 +142,7 @@ export const ScheduleDetailsScreen = ({ route }) => {
               >
                 <Button
                   onPress={() => {}}
-                  title={<Text style={styles.navigate}>{t("navigate")}</Text>}
+                  title={t("navigate")}
                   bgColor="white"
                   size="md"
                   radius={25}

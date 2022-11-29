@@ -4,4 +4,5 @@ export interface Service {
   categoryName?: string;
   locationsCount?: string;
   postsCount: number;
+  filters?: [{ _id: string; name: string }];
 }

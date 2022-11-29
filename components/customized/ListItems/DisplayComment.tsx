@@ -1,6 +1,7 @@
 import { Text, StyleSheet, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Stack, CustomAvatar, Spinner } from "../../core";
+import { Stack, Spinner } from "../../core";
+import CustomAvatar from "../../core/Avatars/CustomAvatar";
 import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../hooks";
 import { useTranslation } from "react-i18next";
@@ -10,17 +11,27 @@ import { useState } from "react";
 import { DisplayText } from "../DisplayText/DisplayText";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../models/navigation/rootStackParams";
+import { UseMutateFunction } from "@tanstack/react-query";
+import { AxiosResponse } from "axios";
 
-const { black, grey0, grey1 } = theme.lightColors;
+const { black, grey0, grey1 } = theme.lightColors || {};
+type IProps = {
+  item: any;
+  creatorId: string;
+  onReply: (text: string, commentId: string, prevComment: any) => void;
+  onHandleRelated: UseMutateFunction<AxiosResponse<any>>;
+  relatedComments: any[];
+  loadingRelated: boolean;
+};
 
 export const DisplayComment = ({
   item,
   creatorId,
   onReply,
-  onHandleRelated = undefined,
-  relatedComments = undefined,
+  onHandleRelated,
+  relatedComments,
   loadingRelated = false,
-}) => {
+}: IProps) => {
   const { user: userContext } = useAuth();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -62,7 +73,7 @@ export const DisplayComment = ({
   return (
     <Stack align="start" direction="row" sx={styles.commentsCont}>
       <Pressable onPress={goToUserExtra}>
-        <CustomAvatar size={30} iconSize={15} avatar={avatar} />
+        <CustomAvatar size={30} avatar={avatar} />
       </Pressable>
       <Stack direction="row" align="start" sx={{ marginLeft: 10, flex: 1 }}>
         <Stack align="start" sx={{ flex: 1 }}>

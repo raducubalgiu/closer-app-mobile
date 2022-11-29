@@ -1,4 +1,11 @@
-import { SafeAreaView, StyleSheet, View, FlatList, Text } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  FlatList,
+  Text,
+  ListRenderItemInfo,
+} from "react-native";
 import React, { useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -13,10 +20,13 @@ import {
 } from "../components/customized";
 import { useGet } from "../hooks";
 import theme from "../assets/styles/theme";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParams } from "../models/navigation/rootStackParams";
 
-const { black } = theme.lightColors;
+const { black } = theme.lightColors || {};
+type IProps = NativeStackScreenProps<RootStackParams, "Locations">;
 
-export const LocationsScreen = ({ route }) => {
+export const LocationsScreen = ({ route }: IProps) => {
   const { service, option, period } = route.params;
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(10000);
@@ -36,7 +46,7 @@ export const LocationsScreen = ({ route }) => {
     uri: `/locations?latlng=26.100195,44.428286&serviceId=${service?._id}&option=${option?._id}&minprice=${minPrice}&maxprice=${maxPrice}&mindistance=${minDistance}&maxdistance=${maxDistance}&minrating=0&maxrating=5&page=1&limit=5`,
   });
 
-  const renderLocation = useCallback(({ item }) => {
+  const renderLocation = useCallback(({ item }: ListRenderItemInfo<any>) => {
     return (
       <CardLocation
         location={item}
@@ -47,12 +57,18 @@ export const LocationsScreen = ({ route }) => {
     );
   }, []);
 
-  const keyExtractor = useCallback((item) => item._id, []);
+  const keyExtractor = useCallback((item: any) => item._id, []);
   const toggleSwitch = useCallback(() => setChecked(!checked), [checked]);
 
-  const noFoundLocations = (
-    <NoFoundMessage title={service.name} description={t("noFoundLocations")} />
-  );
+  let footer;
+  if (locations.length === 0) {
+    footer = (
+      <NoFoundMessage
+        title={service.name}
+        description={t("noFoundLocations")}
+      />
+    );
+  }
 
   const list = (
     <View style={{ flex: 1 }}>
@@ -62,7 +78,7 @@ export const LocationsScreen = ({ route }) => {
         keyExtractor={keyExtractor}
         renderItem={renderLocation}
         bounces={false}
-        ListFooterComponent={!locations?.length && noFoundLocations}
+        ListFooterComponent={footer}
       />
     </View>
   );

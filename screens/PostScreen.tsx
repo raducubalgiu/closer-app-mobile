@@ -4,6 +4,7 @@ import {
   FlatList,
   Dimensions,
   View,
+  ListRenderItemInfo,
 } from "react-native";
 import { useCallback } from "react";
 import { Header } from "../components/core";
@@ -11,10 +12,13 @@ import CardPost from "../components/customized/Cards/CardPost/CardPost";
 import { useGet } from "../hooks";
 import { useTranslation } from "react-i18next";
 import { Post } from "../models/post";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParams } from "../models/navigation/rootStackParams";
 
 const { width, height } = Dimensions.get("window");
+type IProps = NativeStackScreenProps<RootStackParams, "Post">;
 
-export const PostScreen = ({ route }) => {
+export const PostScreen = ({ route }: IProps) => {
   const { userId } = route.params;
   const { data: posts } = useGet({
     model: "posts",
@@ -23,18 +27,20 @@ export const PostScreen = ({ route }) => {
   const { t } = useTranslation();
 
   const renderUserPosts = useCallback(
-    ({ item }) => <CardPost post={item} onShowDetails={() => {}} />,
+    ({ item }: ListRenderItemInfo<Post>) => (
+      <CardPost post={item} onShowDetails={() => {}} />
+    ),
     []
   );
   const getItemLayout = useCallback(
-    (posts: Post[], index: number) => ({
+    (posts: any, index: number) => ({
       length: width,
       offset: height * index,
       index,
     }),
     []
   );
-  const keyExtractor = useCallback((item) => item?._id, []);
+  const keyExtractor = useCallback((item: Post) => item?._id, []);
 
   return (
     <View style={styles.screen}>

@@ -4,6 +4,7 @@ import {
   KeyboardAvoidingView,
   FlatList,
   Platform,
+  ListRenderItemInfo,
 } from "react-native";
 import React, { useCallback, useState } from "react";
 import {
@@ -15,10 +16,15 @@ import { useAuth, useGet, usePost } from "../hooks";
 import { useNavigation } from "@react-navigation/native";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { Spinner } from "../components/core";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
 import { RootStackParams } from "../models/navigation/rootStackParams";
 
-export const CommentsScreen = ({ route }) => {
+type IProps = NativeStackScreenProps<RootStackParams, "Comments">;
+
+export const CommentsScreen = ({ route }: IProps) => {
   const { user } = useAuth();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -28,7 +34,7 @@ export const CommentsScreen = ({ route }) => {
   const [next, setNext] = useState(null);
   const [page, setPage] = useState(1);
   const [comment, setComment] = useState("");
-  const [commentId, setCommentId] = useState(null);
+  const [commentId, setCommentId] = useState("");
   const [prevComment, setPrevComment] = useState(null);
   const headerHeight = useHeaderHeight();
 
@@ -60,7 +66,7 @@ export const CommentsScreen = ({ route }) => {
       avatar,
       username,
       name,
-      checkmark: null,
+      checkmark: false,
       service: null,
       option: null,
     });
@@ -75,14 +81,18 @@ export const CommentsScreen = ({ route }) => {
     />
   );
 
-  const handleReply = (text, commentId, previousComment) => {
+  const handleReply = (
+    text: string,
+    commentId: string,
+    previousComment: any
+  ) => {
     setComment(`@${text} `);
     setCommentId(commentId);
     setPrevComment(previousComment);
   };
 
   const renderComment = useCallback(
-    ({ item }) => (
+    ({ item }: ListRenderItemInfo<any>) => (
       <CommentListItem
         item={item}
         onReply={handleReply}
@@ -91,15 +101,16 @@ export const CommentsScreen = ({ route }) => {
     ),
     []
   );
-  const keyExtractor = useCallback((item) => item?._id, []);
+  const keyExtractor = useCallback((item: any) => item?._id, []);
 
   const onEndReached = useCallback(() => {
     if (next && !isFetching) setPage(page + 1);
   }, [next, isFetching]);
 
-  const footer = (isLoading || isFetching) && (
-    <Spinner sx={{ paddingVertical: 20 }} />
-  );
+  let footer;
+  if (isLoading || isFetching) {
+    footer = <Spinner sx={{ paddingVertical: 20 }} />;
+  }
 
   return (
     <SafeAreaView style={styles.screen}>

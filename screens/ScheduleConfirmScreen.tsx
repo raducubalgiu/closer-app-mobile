@@ -5,14 +5,18 @@ import { useTranslation } from "react-i18next";
 import { Header, Button, Stack } from "../components/core";
 import { useAuth, usePost } from "../hooks";
 import theme from "../assets/styles/theme";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
 
 import dayjs from "dayjs";
 import { RootStackParams } from "../models/navigation/rootStackParams";
 
-const { black, grey0 } = theme.lightColors;
+const { black, grey0 } = theme.lightColors || {};
+type IProps = NativeStackScreenProps<RootStackParams, "ScheduleConfirm">;
 
-export const ScheduleConfirmScreen = ({ route }) => {
+export const ScheduleConfirmScreen = ({ route }: IProps) => {
   const { user: customer } = useAuth();
   const { service, product, slot } = route.params;
   const { start, end, hour } = slot;
@@ -76,7 +80,7 @@ export const ScheduleConfirmScreen = ({ route }) => {
             <Stack align="start" sx={{ marginLeft: 15, flex: 1 }}>
               <Text style={styles.heading}>{product.name}</Text>
               <Text style={styles.description}>
-                Categorie: {option.name || option}
+                {`Categorie: ${option.name || option}`}
               </Text>
               <Text style={styles.duration}>Durata: {duration} min</Text>
               <Text style={styles.description}>{description}</Text>

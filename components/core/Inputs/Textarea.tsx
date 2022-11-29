@@ -7,13 +7,13 @@ const { grey0 } = theme.lightColors || {};
 type IProps = {
   value: string;
   onSetValue: (text: string) => void;
-  placeholder: string;
+  placeholder?: string;
   lines: number;
   maxLength: number;
-  showLength: boolean;
-  autoFocus: boolean;
+  showLength?: boolean;
+  autoFocus?: boolean;
   sx?: {};
-  label: string;
+  label?: string;
 };
 
 export const Textarea = ({

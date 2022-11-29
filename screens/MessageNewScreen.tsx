@@ -1,5 +1,10 @@
 import { FlashList } from "@shopify/flash-list";
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import {
+  ListRenderItemInfo,
+  SafeAreaView,
+  StyleSheet,
+  View,
+} from "react-native";
 import { useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
@@ -24,7 +29,7 @@ export const MessageNewScreen = () => {
   });
 
   const renderPerson = useCallback(
-    ({ item }) => {
+    ({ item }: ListRenderItemInfo<any>) => {
       const { avatar, username, checkmark, name } = item.user;
 
       return (

@@ -5,7 +5,7 @@ import { RelatedComments } from "../../../models/relatedComments";
 
 type IProps = {
   item: any;
-  onReply: () => void;
+  onReply: (text: string, commentId: string, prevComment: any) => void;
   creatorId: string;
 };
 

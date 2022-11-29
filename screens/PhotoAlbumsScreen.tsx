@@ -10,10 +10,10 @@ import theme from "../assets/styles/theme";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../models/navigation/rootStackParams";
 
-const { black } = theme.lightColors;
+const { black } = theme.lightColors || {};
 
 export const PhotoAlbumsScreen = () => {
-  const [albums, setAlbums] = useState([]);
+  const [albums, setAlbums] = useState<any>([]);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 

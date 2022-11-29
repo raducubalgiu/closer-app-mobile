@@ -4,6 +4,7 @@ import {
   Text,
   FlatList,
   Pressable,
+  ListRenderItemInfo,
 } from "react-native";
 import { useCallback, useState } from "react";
 import axios from "axios";
@@ -12,8 +13,12 @@ import { useNavigation } from "@react-navigation/native";
 import theme from "../assets/styles/theme";
 import { IconBackButton, SearchBarInput, Stack } from "../components/core";
 import { useAuth } from "../hooks";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
 import { RootStackParams } from "../models/navigation/rootStackParams";
+import { Service } from "../models/service";
 
 const SUGGESTED_SERVICES = [
   {
@@ -33,9 +38,11 @@ const SUGGESTED_SERVICES = [
   },
 ];
 
-const { black, grey0 } = theme.lightColors;
+const { black, grey0 } = theme.lightColors || {};
 
-export const SearchServicesScreen = ({ route }) => {
+type IProps = NativeStackScreenProps<RootStackParams, "SearchServices">;
+
+export const SearchServicesScreen = ({ route }: IProps) => {
   const { user } = useAuth();
   const [search, setSearch] = useState("");
   const [services, setServices] = useState([]);
@@ -45,7 +52,7 @@ export const SearchServicesScreen = ({ route }) => {
   const { period } = route.params || {};
 
   const updateSearch = useCallback(
-    (search) => {
+    (search: string) => {
       const controller = new AbortController();
       setSearch(search);
       if (search) {
@@ -70,14 +77,14 @@ export const SearchServicesScreen = ({ route }) => {
     [search]
   );
 
-  const goToFilters = (item) => {
+  const goToFilters = (item: any) => {
     navigation.navigate("FiltersDate", {
       service: item,
       period,
     });
   };
 
-  const renderSuggested = useCallback(({ item }) => {
+  const renderSuggested = useCallback(({ item }: ListRenderItemInfo<any>) => {
     <Pressable onPress={() => goToFilters(item)} style={styles.item}>
       <Text>{item.name}</Text>
       <Text>{item.category.name}</Text>
@@ -85,7 +92,7 @@ export const SearchServicesScreen = ({ route }) => {
   }, []);
 
   const renderServices = useCallback(
-    ({ item }) => (
+    ({ item }: ListRenderItemInfo<Service>) => (
       <Pressable onPress={() => goToFilters(item)} style={styles.item}>
         <Text style={styles.service}>{item.name}</Text>
         <Text style={styles.locationsCount}>

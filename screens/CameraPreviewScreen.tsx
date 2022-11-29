@@ -7,15 +7,19 @@ import {
   SafeAreaView,
   Pressable,
 } from "react-native";
-import { Stack, CustomAvatar } from "../components/core";
+import { Stack } from "../components/core";
+import CustomAvatar from "../components/core/Avatars/CustomAvatar";
 import { CloseIconButton, DownloadIconButton } from "../components/customized";
 import * as MediaLibrary from "expo-media-library";
 import theme from "../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParams } from "../models/navigation/rootStackParams";
 
-const { black } = theme.lightColors;
+const { black } = theme.lightColors || {};
+type IProps = NativeStackScreenProps<RootStackParams, "CameraPreview">;
 
-export const CameraPreviewScreen = ({ route }) => {
+export const CameraPreviewScreen = ({ route }: IProps) => {
   const { photo, avatar } = route.params;
   const navigation = useNavigation();
   const { t } = useTranslation();
@@ -35,7 +39,7 @@ export const CameraPreviewScreen = ({ route }) => {
           </Stack>
           <Pressable style={styles.sendBtn} onPress={handleSendPhoto}>
             <Stack direction="row" sx={styles.sendCont}>
-              <CustomAvatar avatar={avatar} size={30} iconSize={15} />
+              <CustomAvatar avatar={avatar} size={30} />
               <Text style={styles.sendTxt}>{t("send")}</Text>
             </Stack>
           </Pressable>

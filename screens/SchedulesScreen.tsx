@@ -4,6 +4,7 @@ import {
   SectionList,
   View,
   Text,
+  ListRenderItemInfo,
 } from "react-native";
 import { useCallback } from "react";
 import { Header } from "../components/core";
@@ -14,7 +15,7 @@ import theme from "../assets/styles/theme";
 import { dayMonthTime, yearMonthFormat } from "../utils/date-utils";
 import { Divider } from "@rneui/themed";
 
-const { black } = theme.lightColors;
+const { black } = theme.lightColors || {};
 
 export const SchedulesScreen = () => {
   const { user } = useAuth();
@@ -32,7 +33,7 @@ export const SchedulesScreen = () => {
 
   useRefreshOnFocus(refetch);
 
-  const renderHeader = useCallback(({ section }) => {
+  const renderHeader = useCallback(({ section }: { section: any }) => {
     const { year, month } = section?._id || {};
 
     return (
@@ -41,7 +42,7 @@ export const SchedulesScreen = () => {
   }, []);
 
   const renderSchedules = useCallback(
-    ({ item }) => (
+    ({ item }: ListRenderItemInfo<any>) => (
       <CardScheduleOverview schedule={item} start={dayMonthTime(item.start)} />
     ),
     []
@@ -84,7 +85,7 @@ const styles = StyleSheet.create({
   header: { paddingHorizontal: 15, paddingVertical: 10 },
   title: {
     fontSize: 17,
-    color: theme.lightColors.black,
+    color: black,
     marginRight: 10,
   },
   container: {

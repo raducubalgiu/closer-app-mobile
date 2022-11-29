@@ -4,12 +4,17 @@ import {
   FlatList,
   Platform,
   Animated,
+  ListRenderItem,
+  ListRenderItemInfo,
 } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useCallback, useEffect, useRef, useState } from "react";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
 import { Stack } from "../components/core";
 import { useGet, useRefreshOnFocus } from "../hooks";
 import { RootStackParams } from "../models/navigation/rootStackParams";
@@ -21,9 +26,9 @@ import { trimFunc } from "../utils";
 import * as Location from "expo-location";
 import CustomAvatar from "../components/core/Avatars/CustomAvatar";
 import theme from "../assets/styles/theme";
+import { User } from "../models/user";
 
-const { primary } = theme.lightColors;
-
+const { primary } = theme.lightColors || {};
 const { width, height } = Dimensions.get("window");
 
 const mapStyle = [
@@ -87,7 +92,9 @@ const LOCATION_INSET = width * 0.04;
 const BUSINESS_WIDTH = width / 3 + 45;
 const BUSINESS_MR = 15;
 
-export const MapScreen = ({ route }) => {
+type IProps = NativeStackScreenProps<RootStackParams, "Map">;
+
+export const MapScreen = ({ route }: IProps) => {
   const [userLocation, setUserLocation] = useState(null);
   const { userId, profession, initialCoordinates } = route.params;
   const [professionId, setProfessionId] = useState(profession);
@@ -117,7 +124,7 @@ export const MapScreen = ({ route }) => {
 
   const changeBusiness = useCallback((item: any, index: number) => {
     setProfessionId(item._id);
-    businessRef.current.scrollToIndex({
+    businessRef.current?.scrollToIndex({
       index,
     });
   }, []);
@@ -129,7 +136,7 @@ export const MapScreen = ({ route }) => {
   });
 
   const renderBusiness = useCallback(
-    ({ item, index }) => (
+    ({ item, index }: ListRenderItem<any>) => (
       <BusinessButton
         name={item.name}
         isActive={item._id === professionId}
@@ -158,7 +165,7 @@ export const MapScreen = ({ route }) => {
     index,
   });
 
-  const goToUser = (user) => {
+  const goToUser = (user: User) => {
     navigation.push("ProfileGeneral", {
       userId: user._id,
       name: user.name,
@@ -171,7 +178,7 @@ export const MapScreen = ({ route }) => {
   };
 
   const renderLocation = useCallback(
-    ({ item }) => {
+    ({ item }: ListRenderItemInfo<any>) => {
       return (
         <CardLocationMap
           item={item}
@@ -184,8 +191,10 @@ export const MapScreen = ({ route }) => {
     [isLoading, isFetching]
   );
 
-  const locationsIndex = locations?.findIndex((el) => el.owner._id === userId);
-  const businessIndex = businesses?.findIndex((el) => el._id === userId);
+  const locationsIndex = locations?.findIndex(
+    (el: any) => el.owner._id === userId
+  );
+  const businessIndex = businesses?.findIndex((el: any) => el._id === userId);
   const findLocation = locations && locations[locationsIndex];
 
   const [region, setRegion] = useState({
@@ -225,7 +234,7 @@ export const MapScreen = ({ route }) => {
     });
   });
 
-  const interpolations = locations?.map((marker, index) => {
+  const interpolations = locations?.map((marker: any, index: number) => {
     const inputRange = [
       (index - 1) * LOCATION_WIDTH,
       index * LOCATION_WIDTH,
@@ -241,8 +250,8 @@ export const MapScreen = ({ route }) => {
     return { scale };
   });
 
-  const onMarkerPress = (index) => {
-    locationsRef.current.scrollToIndex({
+  const onMarkerPress = (index: number) => {
+    locationsRef.current?.scrollToIndex({
       index,
       animated: true,
     });

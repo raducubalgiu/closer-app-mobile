@@ -9,8 +9,12 @@ import {
   ServicePostsRecentTab,
 } from "../components/customized";
 import { useTranslation } from "react-i18next";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParams } from "../models/navigation/rootStackParams";
 
-export const ServiceScreen = ({ route }) => {
+type IProps = NativeStackScreenProps<RootStackParams, "Service">;
+
+export const ServiceScreen = ({ route }: IProps) => {
   const { service } = route.params;
   const { _id, name, postsCount } = service;
   const Tab = createMaterialTopTabNavigator();
@@ -31,7 +35,7 @@ export const ServiceScreen = ({ route }) => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Header />
+      <Header title="" />
       <CardServiceOverview
         serviceId={_id}
         postsCount={postsCount}

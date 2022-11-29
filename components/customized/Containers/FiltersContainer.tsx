@@ -10,9 +10,9 @@ type IProps = {
   onNext: () => void;
   headerTitle: string;
   headerDescription: string;
-  footerExtraBtns: boolean;
+  footerExtraBtns?: boolean;
   btnTitle: string;
-  disabled: boolean;
+  disabled?: boolean;
 };
 
 export const FiltersContainer = ({

@@ -1,5 +1,5 @@
 import { SafeAreaView, StyleSheet, RefreshControl } from "react-native";
-import { FlashList } from "@shopify/flash-list";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import React, { useCallback, useRef, useState } from "react";
 import { useScrollToTop } from "@react-navigation/native";
 import { Divider } from "@rneui/themed";
@@ -15,6 +15,7 @@ import { PostInfoSheet, HeaderFeed } from "../components/customized";
 import { useTranslation } from "react-i18next";
 import { ConfirmModal } from "../components/customized/Modals/ConfirmModal";
 import CardPost from "../components/customized/Cards/CardPost/CardPost";
+import { Post } from "../models/post";
 
 export const FeedScreen = () => {
   const { user } = useAuth();
@@ -44,16 +45,16 @@ export const FeedScreen = () => {
     ["10%", "30%"],
     sheetContent
   );
-  const showDetails = useCallback((item) => {
+  const showDetails = useCallback((item: any) => {
     setPostId(item._id);
     SHOW_BS();
   }, []);
 
-  const renderAllPosts = useCallback(({ item }) => {
+  const renderAllPosts = useCallback(({ item }: ListRenderItemInfo<any>) => {
     return <CardPost post={item} onShowDetails={() => showDetails(item)} />;
   }, []);
 
-  const keyExtractor = useCallback((item) => item?._id, []);
+  const keyExtractor = useCallback((item: Post) => item?._id, []);
 
   const { mutate: handleDelete } = useDelete({
     uri: `/users/${user?._id}/posts/${postId}`,

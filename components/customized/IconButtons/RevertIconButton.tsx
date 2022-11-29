@@ -2,7 +2,7 @@ import { IconButton } from "../../core";
 
 type Props = {
   size: number;
-  sx: {};
+  sx?: {};
   onPress: () => void;
 };
 

@@ -3,22 +3,27 @@ import { useState, useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 import * as MediaLibrary from "expo-media-library";
 import { useFocusEffect } from "@react-navigation/native";
-import { FlashList } from "@shopify/flash-list";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { Stack } from "../components/core";
 import { CloseIconButton } from "../components/customized";
 import theme from "../assets/styles/theme";
 import { Icon } from "@rneui/themed";
 import { CardPostImage } from "../components/customized";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
 import { RootStackParams } from "../models/navigation/rootStackParams";
+import { Post } from "../models/post";
 
-const { black } = theme.lightColors;
+const { black } = theme.lightColors || {};
+type IProps = NativeStackScreenProps<RootStackParams, "PhotoLibrary">;
 
-export const PhotoLibraryScreen = ({ route }) => {
+export const PhotoLibraryScreen = ({ route }: IProps) => {
   const { album, nav } = route.params || {};
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const [photos, setPhotos] = useState([]);
+  const [photos, setPhotos] = useState<any>([]);
 
   useFocusEffect(
     useCallback(() => {
@@ -46,7 +51,7 @@ export const PhotoLibraryScreen = ({ route }) => {
   );
 
   const renderPhoto = useCallback(
-    ({ item, index }) => (
+    ({ item, index }: ListRenderItemInfo<any>) => (
       <CardPostImage
         index={index}
         image={item.uri}
@@ -78,7 +83,7 @@ export const PhotoLibraryScreen = ({ route }) => {
       </Stack>
       <FlashList
         data={photos}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item: any) => item.id}
         numColumns={4}
         renderItem={renderPhoto}
         estimatedItemSize={95}

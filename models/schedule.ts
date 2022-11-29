@@ -1,11 +1,14 @@
 import { Product } from "./product";
+import { Service } from "./service";
+import { User } from "./user";
 
 export interface Schedule {
+  _id: string;
   start: string;
   end: string;
-  user: string;
+  user: User;
   customer: string;
-  service: string;
+  service: Service;
   location: string;
   product: Product;
   channel: string;

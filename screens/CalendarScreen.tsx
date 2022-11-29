@@ -15,12 +15,16 @@ import { Icon } from "@rneui/themed";
 import theme from "../assets/styles/theme";
 import { Agenda } from "react-native-calendars";
 import { useGet, useRefreshByUser, useRefreshOnFocus } from "../hooks";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
 import { RootStackParams } from "../models/navigation/rootStackParams";
 
-const { primary, grey0, black } = theme.lightColors;
+const { primary, grey0, black } = theme.lightColors || {};
+type IProps = NativeStackScreenProps<RootStackParams, "CalendarBig">;
 
-export const CalendarScreen = ({ route }) => {
+export const CalendarScreen = ({ route }: IProps) => {
   const { product, service } = route.params;
   const { user } = product;
   const navigation =
@@ -40,11 +44,9 @@ export const CalendarScreen = ({ route }) => {
     uri: `/users/${user?._id}/schedules/slots?day=${day}`,
   });
 
-  console.log("IS ERROR!!", isError);
-
   useRefreshOnFocus(refetch);
 
-  const goToConfirm = (slot) => {
+  const goToConfirm = (slot: any) => {
     navigation.navigate("ScheduleConfirm", {
       service,
       product,

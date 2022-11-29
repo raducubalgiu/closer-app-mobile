@@ -4,6 +4,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   FlatList,
+  ListRenderItemInfo,
 } from "react-native";
 import React, { useCallback, useState } from "react";
 import { Camera } from "expo-camera";
@@ -17,10 +18,15 @@ import {
 import { Divider } from "@rneui/themed";
 import { Spinner } from "../components/core";
 import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
 import { RootStackParams } from "../models/navigation/rootStackParams";
 
-export const MessageItemScreen = ({ route }) => {
+type IProps = NativeStackScreenProps<RootStackParams, "MessageItem">;
+
+export const MessageItemScreen = ({ route }: IProps) => {
   const { user } = useAuth();
   const [permission] = Camera.useCameraPermissions();
   const { _id, name, username, avatar, checkmark } = route.params?.user;
@@ -75,33 +81,39 @@ export const MessageItemScreen = ({ route }) => {
   };
 
   const handleOpenCamera = () => {
-    if (permission.granted) {
+    if (permission?.granted) {
       navigation.navigate("Camera", { name, avatar });
     }
   };
 
-  const isSenderSame = (curr, prev) => {
+  const isSenderSame = (curr: any, prev: any) => {
     return curr?.fromSelf === prev?.fromSelf;
   };
 
-  const renderMessage = useCallback(({ item, index }) => {
-    if (!item?.fromSelf) {
-      return (
-        <MessReceivedItem
-          avatar={avatar}
-          item={item}
-          senderSame={isSenderSame(item, messages[index - 1])}
-          dateSame={true}
-          date={item.createdAt}
-        />
-      );
-    } else {
-      return <MessSentItem item={item} dateSame={true} date={item.createdAt} />;
-    }
-  }, []);
+  const renderMessage = useCallback(
+    ({ item, index }: ListRenderItemInfo<any>) => {
+      if (!item?.fromSelf) {
+        return (
+          <MessReceivedItem
+            avatar={avatar}
+            item={item}
+            senderSame={isSenderSame(item, messages[index - 1])}
+            dateSame={true}
+            date={item.createdAt}
+          />
+        );
+      } else {
+        return (
+          <MessSentItem item={item} dateSame={true} date={item.createdAt} />
+        );
+      }
+    },
+    []
+  );
 
-  const keyExtractor = useCallback((item) => item?._id, []);
-  const getItemLayout = useCallback((_, index) => {
+  const keyExtractor = useCallback((item: any) => item?._id, []);
+
+  const getItemLayout = useCallback((_: any, index: number) => {
     return { length: 100, offset: 100 * index, index };
   }, []);
 

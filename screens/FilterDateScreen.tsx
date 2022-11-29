@@ -12,8 +12,12 @@ import {
 } from "../components/core";
 import { FiltersContainer, SheetHeader } from "../components/customized";
 import { FormProvider, useForm } from "react-hook-form";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParams } from "../models/navigation/rootStackParams";
 
-export const FiltersDateScreen = ({ route }) => {
+type IProps = NativeStackScreenProps<RootStackParams, "FiltersDate">;
+
+export const FiltersDateScreen = ({ route }: IProps) => {
   const { service, period } = route.params;
   const { filters } = service;
   const navigation = useNavigation();
@@ -24,19 +28,7 @@ export const FiltersDateScreen = ({ route }) => {
   const methods = useForm({ defaultValues: { startHour: "", endHour: "" } });
   const { handleSubmit, watch } = methods;
 
-  const goNext = () => {
-    // if (filters.length > 0) {
-    //   navigation.navigate("FiltersService", {
-    //     service,
-    //     period: { ...period, code: activeBtn, startDate, endDate },
-    //   });
-    // } else {
-    //   navigation.navigate("Locations", {
-    //     service,
-    //     period: { ...period, code: activeBtn, startDate, endDate },
-    //   });
-    // }
-  };
+  const goNext = () => {};
 
   const dateButtons = [
     { title: t("anytime") },
@@ -44,10 +36,10 @@ export const FiltersDateScreen = ({ route }) => {
     { title: t("calendar") },
   ];
   const hoursButtons = [{ title: t("anyHour") }, { title: t("pickHour") }];
-  const handleDateBtns = useCallback((index) => {
+  const handleDateBtns = useCallback((index: number) => {
     setActiveBtn(index);
   }, []);
-  const handleHoursBtns = useCallback((index) => {
+  const handleHoursBtns = useCallback((index: number) => {
     setActiveHours(index);
     if (index === 1) setVisible(true);
     if (index === 0) setVisible(false);
@@ -82,7 +74,6 @@ export const FiltersDateScreen = ({ route }) => {
         headerTitle={t("selectPeriod").split(" ")[0]}
         headerDescription={t("selectPeriod").split(" ")[1]}
         onNext={goNext}
-        //footerExtraBtns={footerBtns}
         btnTitle={t("next")}
       >
         <SheetHeader title={service?.name} description="Date" />
