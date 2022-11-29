@@ -6,7 +6,13 @@ import { useTranslation } from "react-i18next";
 
 const BASE_ENDPOINT = `${process.env.BASE_ENDPOINT}`;
 
-export function usePatch<T>({ uri, onSuccess = undefined }) {
+type PatchProps = {
+  uri: string;
+  onSuccess?: (res: any) => void;
+  config?: {};
+};
+
+export function usePatch<T>({ uri, onSuccess, config = {} }: PatchProps) {
   const { user } = useAuth();
 
   const mutations = useMutation(
@@ -17,6 +23,7 @@ export function usePatch<T>({ uri, onSuccess = undefined }) {
     {
       onSuccess,
       onError: (err) => console.log(err),
+      ...config,
     }
   );
 

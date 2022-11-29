@@ -4,7 +4,7 @@ import { Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 
 const { primary } = theme.lightColors || {};
-type Props = { onPress: () => void; sx: {}; disabled: boolean };
+type Props = { onPress: () => void; sx?: {}; disabled: boolean };
 
 export const IconButtonAdd = ({
   onPress,

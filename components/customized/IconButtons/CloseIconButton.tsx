@@ -3,7 +3,7 @@ import { IconButton } from "../../core";
 type IProps = {
   sx?: {};
   size?: number;
-  color: string;
+  color?: string;
   onPress: () => void;
 };
 

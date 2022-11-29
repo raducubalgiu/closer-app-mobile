@@ -7,7 +7,7 @@ import { Stack, ListItem, Button } from "../../../components/core";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../models/navigation/rootStackParams";
 
-const { black, primary, grey0 } = theme.lightColors;
+const { black, primary, grey0 } = theme.lightColors || {};
 
 export const AuthScreen = () => {
   const navigation =

@@ -4,7 +4,7 @@ import {
   ActivityIndicator,
   Pressable,
 } from "react-native";
-import { FlashList } from "@shopify/flash-list";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { useCallback, useState } from "react";
 import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
@@ -17,13 +17,14 @@ import {
 } from "../../../../components/core";
 import theme from "../../../../assets/styles/theme";
 import { useAuth, useGet, usePatch } from "../../../../hooks";
+import { Profession } from "../../../../models/profession";
 
-const { primary, grey0 } = theme.lightColors;
+const { primary, grey0 } = theme.lightColors || {};
 
 export const EditProfessionScreen = () => {
   const { user, setUser } = useAuth();
   const { role } = user;
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState<Profession>();
   const navigation = useNavigation();
   const { t } = useTranslation();
 
@@ -63,10 +64,8 @@ export const EditProfessionScreen = () => {
     </Pressable>
   );
 
-  console.log(selected?.name);
-
   const renderBusiness = useCallback(
-    ({ item }) => (
+    ({ item }: ListRenderItemInfo<Profession>) => (
       <FormInputRadio
         text={item.name}
         checked={item.name === selected?.name}
@@ -76,7 +75,7 @@ export const EditProfessionScreen = () => {
     [selected]
   );
 
-  const keyExtractor = useCallback((item) => item._id, []);
+  const keyExtractor = useCallback((item: Profession) => item._id, []);
 
   let data;
   if (role === "admin") data = businesses;

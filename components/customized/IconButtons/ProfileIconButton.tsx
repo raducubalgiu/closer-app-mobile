@@ -6,9 +6,9 @@ const { black } = theme.lightColors || {};
 
 type Props = {
   name: string;
-  type: string;
-  loading: boolean;
-  onPress: () => {};
+  type?: string;
+  loading?: boolean;
+  onPress: () => void;
   sx?: {};
 };
 

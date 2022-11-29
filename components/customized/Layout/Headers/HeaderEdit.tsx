@@ -9,7 +9,7 @@ const { grey0, primary } = theme.lightColors || {};
 type IProps = {
   onSave: () => void;
   title: string;
-  disabled: boolean;
+  disabled?: boolean;
 };
 
 export const HeaderEdit = ({ onSave, title, disabled = false }: IProps) => {

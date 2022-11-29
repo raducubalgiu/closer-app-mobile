@@ -2,7 +2,7 @@ import { SafeAreaView, StyleSheet } from "react-native";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { AuthService } from "../../../services/AuthService";
-import { Feedback, IconBackButton } from "../../../components/core";
+import { IconBackButton } from "../../../components/core";
 import { LoginRegisterForm } from "../../../components/customized";
 import { MAIN_ROLE } from "@env";
 import { useTranslation } from "react-i18next";
@@ -12,26 +12,24 @@ import { RootStackParams } from "../../../models/navigation/rootStackParams";
 export const RegisterBusinessScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: any) => {
     setLoading(true);
     try {
       const { email, password } = data;
-      const { user, error } = await AuthService.registerWithPassword(
+      const { user, err } = await AuthService.registerWithPassword(
         email,
         password
       );
 
-      if (error && error.code === "auth/email-already-in-use") {
+      if (err && err.code === "auth/email-already-in-use") {
         setLoading(false);
-        setFeedback({ visible: true, message: t("emailAlreadyInUse") });
         return;
       }
 
-      if (user && !error) {
+      if (user && !err) {
         const idTokenResult = await user.getIdTokenResult();
         setLoading(false);
 
@@ -42,13 +40,11 @@ export const RegisterBusinessScreen = () => {
       }
     } catch (err) {
       setLoading(false);
-      setFeedback({ visible: true, message: t("somethingWentWrong") });
     }
   };
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Feedback feedback={feedback} setFeedback={setFeedback} />
       <IconBackButton />
       <LoginRegisterForm
         loading={loading}

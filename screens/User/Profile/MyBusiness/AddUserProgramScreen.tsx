@@ -1,4 +1,10 @@
-import { FlatList, SafeAreaView, StyleSheet, View } from "react-native";
+import {
+  FlatList,
+  ListRenderItem,
+  SafeAreaView,
+  StyleSheet,
+  View,
+} from "react-native";
 import { useCallback } from "react";
 import { Header, Stack, Button } from "../../../../components/core";
 import { useTranslation } from "react-i18next";
@@ -8,13 +14,13 @@ import { useNavigation } from "@react-navigation/native";
 import UserProgramListItem from "../../../../components/customized/ListItems/UserProgramListItem";
 
 const DAYS = [
-  { _id: 1, name: "mon" },
-  { _id: 2, name: "tue" },
-  { _id: 3, name: "wed" },
-  { _id: 4, name: "thu" },
-  { _id: 5, name: "fri" },
-  { _id: 6, name: "sat" },
-  { _id: 7, name: "sun" },
+  { _id: "1", name: "mon" },
+  { _id: "2", name: "tue" },
+  { _id: "3", name: "wed" },
+  { _id: "4", name: "thu" },
+  { _id: "5", name: "fri" },
+  { _id: "6", name: "sat" },
+  { _id: "7", name: "sun" },
 ];
 
 export const AddUserProgramScreen = () => {
@@ -118,7 +124,6 @@ export const AddUserProgramScreen = () => {
 
   const renderDay = useCallback(({ item }) => {
     const start: any = "start".concat(item.name);
-    const end: any = "end".concat(item.name);
 
     return (
       <UserProgramListItem

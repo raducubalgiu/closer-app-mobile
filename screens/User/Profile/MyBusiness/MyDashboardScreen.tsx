@@ -21,7 +21,7 @@ import {
 import { useSheet } from "../../../../hooks";
 import { useTranslation } from "react-i18next";
 
-const { primary, black } = theme.lightColors;
+const { primary, black } = theme.lightColors || {};
 
 export const MyDashboardScreen = () => {
   const { t } = useTranslation();

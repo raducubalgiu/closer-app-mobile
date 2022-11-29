@@ -1,6 +1,6 @@
 import React from "react";
 
-type IProps = { roles: [string]; userRole: string; children: any };
+type IProps = { roles: string[]; userRole: string; children: any };
 
 export const Protected = ({ roles, userRole, children }: IProps) => {
   let visible = false;

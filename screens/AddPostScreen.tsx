@@ -15,11 +15,14 @@ import * as MediaLibrary from "expo-media-library";
 import { useTranslation } from "react-i18next";
 import { PresetListItem } from "../components/customized";
 import { PhotoLibraryButton } from "../components/customized/Buttons/PhotoLibraryButton";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
 import { RootStackParams } from "../models/navigation/rootStackParams";
 
 const { height, width } = Dimensions.get("window");
-const { primary } = theme.lightColors;
+const { primary } = theme.lightColors || {};
 
 const DUMMY_PRESETS = [
   { _id: "1", name: "Normal" },
@@ -36,8 +39,10 @@ const DUMMY_PRESETS = [
   },
 ];
 
-export const AddPostScreen = ({ route }) => {
-  const [initialUri, setInitialUri] = useState(null);
+type IProps = NativeStackScreenProps<RootStackParams, "AddPost">;
+
+export const AddPostScreen = ({ route }: IProps) => {
+  const [initialUri, setInitialUri] = useState("");
   const { uri } = route.params || {};
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -70,7 +75,8 @@ export const AddPostScreen = ({ route }) => {
     <SafeAreaView style={styles.screen}>
       <Stack direction="row" sx={{ marginLeft: 15 }}>
         <IconButton
-          iconName="arrow-back-ios"
+          name="arrow-back-ios"
+          type="material"
           color="white"
           size={20}
           onPress={() => navigation.goBack()}
@@ -78,7 +84,13 @@ export const AddPostScreen = ({ route }) => {
         <Text style={{ color: "white", fontWeight: "700", fontSize: 17 }}>
           {t("newPost")}
         </Text>
-        <IconButton iconName="arrow-back-ios" color="black" size={20} />
+        <IconButton
+          name="arrow-back-ios"
+          type="material"
+          color="black"
+          size={20}
+          onPress={() => {}}
+        />
       </Stack>
       <Stack align="start" sx={{ padding: 15 }}>
         <View style={{ width: "100%", height: height / 2 }}>
@@ -90,7 +102,7 @@ export const AddPostScreen = ({ route }) => {
         </View>
         <Stack direction="row" align="start" sx={{ marginTop: 15 }}>
           <IconButton
-            iconName="camera"
+            name="camera"
             color={"white"}
             size={20}
             sx={{
@@ -100,9 +112,10 @@ export const AddPostScreen = ({ route }) => {
               opacity: 0.9,
               marginRight: 15,
             }}
+            onPress={() => {}}
           />
           <IconButton
-            iconName="crop"
+            name="crop"
             color={"white"}
             size={20}
             sx={{
@@ -112,10 +125,10 @@ export const AddPostScreen = ({ route }) => {
               opacity: 0.9,
               marginRight: 15,
             }}
+            onPress={() => {}}
           />
           <IconButton
-            iconName="camera"
-            iconType="feather"
+            name="camera"
             color={"white"}
             size={20}
             sx={{
@@ -125,6 +138,7 @@ export const AddPostScreen = ({ route }) => {
               opacity: 0.9,
               marginRight: 15,
             }}
+            onPress={() => {}}
           />
         </Stack>
       </Stack>
@@ -147,11 +161,11 @@ export const AddPostScreen = ({ route }) => {
           }
         />
         <IconButton
-          iconName="arrow-right"
-          iconType="feather"
+          name="arrow-right"
           size={30}
           color="white"
           sx={{ backgroundColor: primary, borderRadius: 50, padding: 10 }}
+          onPress={() => {}}
         />
       </Stack>
     </SafeAreaView>

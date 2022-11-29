@@ -10,8 +10,12 @@ import {
   TopTabContainer,
 } from "../../../components/customized/index";
 import { Header } from "../../../components/core";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../models/navigation/rootStackParams";
 
-export const ProfileStatsScreen = ({ route }) => {
+type IProps = NativeStackScreenProps<RootStackParams, "ProfileStats">;
+
+export const ProfileStatsScreen = ({ route }: IProps) => {
   const { initialRoute, username, userId, role } = route.params;
   const { ratingsQuantity, followersCount, followingsCount } = route.params;
   const { t } = useTranslation();

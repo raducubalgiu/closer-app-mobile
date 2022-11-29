@@ -1,7 +1,10 @@
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
 import * as Haptics from "expo-haptics";
 import {
   useAuth,
@@ -22,7 +25,9 @@ import { RootStackParams } from "../../../models/navigation/rootStackParams";
 import { Protected } from "../../../components/core";
 import { MAIN_ROLE, SECOND_ROLE } from "@env";
 
-export const ProfileGeneralScreen = ({ route }) => {
+type IProps = NativeStackScreenProps<RootStackParams, "ProfileGeneral">;
+
+export const ProfileGeneralScreen = ({ route }: IProps) => {
   const { user } = useAuth();
   const { userId, username, avatar, name, checkmark } = route.params;
   const { service, option } = route.params;
@@ -89,7 +94,7 @@ export const ProfileGeneralScreen = ({ route }) => {
         <HeaderProfileGeneral
           username={username}
           checkmark={checkmark}
-          onOpenNotifications={null}
+          onOpenNotifications={() => {}}
           onOpenSettings={() => {}}
         />
       </SafeAreaView>

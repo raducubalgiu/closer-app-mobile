@@ -2,7 +2,7 @@ import { SafeAreaView, StyleSheet } from "react-native";
 import { useState } from "react";
 import axios from "axios";
 import { AuthService } from "../../../services/AuthService";
-import { Feedback, IconBackButton } from "../../../components/core";
+import { IconBackButton } from "../../../components/core";
 import { useAuth } from "../../../hooks/auth";
 import { LoginRegisterForm } from "../../../components/customized";
 import { useTranslation } from "react-i18next";
@@ -12,13 +12,12 @@ import { RootStackParams } from "../../../models/navigation/rootStackParams";
 
 export const LoginScreen = () => {
   const { setUser } = useAuth();
-  const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: any) => {
     setLoading(true);
     try {
       const { user, err } = await AuthService.loginWithPassword(
@@ -44,13 +43,11 @@ export const LoginScreen = () => {
       }
     } catch (err) {
       setLoading(false);
-      setFeedback({ visible: true, message: t("somethingWentWrong") });
     }
   };
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Feedback feedback={feedback} setFeedback={setFeedback} />
       <IconBackButton />
       <LoginRegisterForm
         loading={loading}

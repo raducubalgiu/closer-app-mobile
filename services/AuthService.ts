@@ -19,9 +19,9 @@ export const AuthService = {
       return {
         user,
       };
-    } catch (error) {
+    } catch (err: any) {
       return {
-        err: { code: error.code, message: error.message },
+        err: { code: err.code, message: err.message },
       };
     }
   },
@@ -37,7 +37,7 @@ export const AuthService = {
       return {
         user,
       };
-    } catch (error) {
+    } catch (error: any) {
       return {
         err: { code: error.code, message: error.message },
       };
@@ -51,7 +51,7 @@ export const AuthService = {
       return {
         response,
       };
-    } catch (error) {
+    } catch (error: any) {
       return {
         error: error.message,
       };
@@ -67,7 +67,7 @@ export const AuthService = {
       return {
         user: userCred.user,
       };
-    } catch (error) {
+    } catch (error: any) {
       return {
         error: error.message,
       };

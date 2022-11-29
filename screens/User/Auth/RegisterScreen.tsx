@@ -2,7 +2,7 @@ import { SafeAreaView, StyleSheet } from "react-native";
 import { useState } from "react";
 import { AuthService } from "../../../services/AuthService";
 import { useNavigation } from "@react-navigation/native";
-import { Feedback, IconBackButton } from "../../../components/core";
+import { IconBackButton } from "../../../components/core";
 import { LoginRegisterForm } from "../../../components/customized";
 import { useTranslation } from "react-i18next";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -11,11 +11,10 @@ import { RootStackParams } from "../../../models/navigation/rootStackParams";
 export const RegisterScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: any) => {
     setLoading(true);
     try {
       const { email, password } = data;
@@ -25,7 +24,6 @@ export const RegisterScreen = () => {
       );
 
       if (err && err.code === "auth/email-already-in-use") {
-        setFeedback({ visible: true, message: t("emailAlreadyInUse") });
         setLoading(false);
         return;
       }
@@ -39,13 +37,11 @@ export const RegisterScreen = () => {
       }
     } catch (err) {
       setLoading(false);
-      setFeedback({ visible: true, message: t("somethingWentWrong") });
     }
   };
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Feedback feedback={feedback} setFeedback={setFeedback} />
       <IconBackButton />
       <LoginRegisterForm
         loading={loading}

@@ -7,8 +7,8 @@ import {
 } from "@gorhom/bottom-sheet";
 import { Portal } from "@gorhom/portal";
 
-export const useSheet = (intervals, sheetContent: any) => {
-  const bottomSheetModalRef = useRef(null);
+export const useSheet = (intervals: any, sheetContent: any) => {
+  const bottomSheetModalRef = useRef<any>(null);
   const snapPoints = useMemo(() => [...intervals], []);
 
   const handlePresentModalPress = useCallback(() => {
@@ -17,14 +17,14 @@ export const useSheet = (intervals, sheetContent: any) => {
   const handleCloseSheet = useCallback(() => {
     bottomSheetModalRef.current?.close();
   }, []);
-  const handleSheetChange = useCallback((index) => {
+  const handleSheetChange = useCallback((index: number) => {
     if (index === 0) {
       bottomSheetModalRef.current?.close();
     }
   }, []);
 
   const renderBackdrop = useCallback(
-    (props) => (
+    (props: any) => (
       <BottomSheetBackdrop
         {...props}
         appearsOnIndex={1}

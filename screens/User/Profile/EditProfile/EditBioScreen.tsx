@@ -14,6 +14,8 @@ import { Spinner } from "../../../../components/core";
 import theme from "../../../../assets/styles/theme";
 import { useAuth, usePatch } from "../../../../hooks";
 
+const { grey0 } = theme.lightColors || {};
+
 export const EditBioScreen = () => {
   const { user, setUser } = useAuth();
   const [bio, setBio] = useState(user?.description);
@@ -80,7 +82,7 @@ const styles = StyleSheet.create({
   },
   strokeLength: {
     paddingHorizontal: 10,
-    color: theme.lightColors.grey0,
+    color: grey0,
     marginTop: 10,
   },
 });

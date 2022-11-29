@@ -7,12 +7,19 @@ import { IconBackButton } from "../IconButton/IconBackButton";
 
 const { black, grey0 } = theme.lightColors || {};
 
+type IProps = {
+  hideBtnLeft?: boolean;
+  title: string;
+  actionBtn?: React.ReactElement<any>;
+  divider?: boolean;
+};
+
 export const Header = ({
   hideBtnLeft = false,
   title = "",
-  actionBtn = null,
+  actionBtn,
   divider = false,
-}) => {
+}: IProps) => {
   const navigation = useNavigation();
   const handleBack = () => navigation.goBack();
 

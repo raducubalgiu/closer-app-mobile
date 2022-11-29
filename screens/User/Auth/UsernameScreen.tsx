@@ -4,18 +4,18 @@ import React, { useState } from "react";
 import theme from "../../../assets/styles/theme";
 import { useAuth } from "../../../hooks/auth";
 import InputCheck from "../../../components/core/Inputs/InputCheck";
-import { Feedback } from "../../../components/core";
 import { useTranslation } from "react-i18next";
 
-export const UsernameScreen = ({ route }) => {
+const { grey0 } = theme.lightColors || {};
+
+export const UsernameScreen = ({ route }: any) => {
   const { idTokenResult, role } = route.params;
   const { displayName, photoURL } = idTokenResult;
-  const [feedback, setFeedback] = useState({ visible: false, message: "" });
   const [loading, setLoading] = useState(false);
   const { setUser } = useAuth();
   const { t } = useTranslation();
 
-  const handleSubmit = async (data) => {
+  const handleSubmit = async (data: any) => {
     try {
       setLoading(true);
 
@@ -42,13 +42,11 @@ export const UsernameScreen = ({ route }) => {
       setLoading(false);
     } catch (err) {
       setLoading(false);
-      setFeedback({ visible: true, message: t("somethingWentWrong") });
     }
   };
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Feedback feedback={feedback} setFeedback={setFeedback} />
       <View style={styles.container}>
         <Text style={styles.title}>{t("createAUsername")}</Text>
         <Text style={styles.description}>{t("pickAUsername")}</Text>
@@ -85,7 +83,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginVertical: 15,
     marginHorizontal: 10,
-    color: theme.lightColors.grey0,
+    color: grey0,
     fontSize: 15,
   },
   input: {

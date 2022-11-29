@@ -17,6 +17,8 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../models/navigation/rootStackParams";
 import { FAB } from "@rneui/themed";
 
+const { primary } = theme.lightColors || {};
+
 export const ProfileScreen = () => {
   const { user } = useAuth();
   const { name, username, avatar, checkmark, role } = user || {};
@@ -67,7 +69,7 @@ export const ProfileScreen = () => {
       />
       <Protected roles={[MAIN_ROLE, SECOND_ROLE]} userRole={role}>
         <FAB
-          color={theme.lightColors.primary}
+          color={primary}
           icon={{ name: "calendar", type: "feather", color: "white" }}
           placement="right"
           onPress={() => navigation.navigate("MyCalendar")}

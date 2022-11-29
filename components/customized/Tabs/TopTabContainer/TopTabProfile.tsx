@@ -13,7 +13,7 @@ import { User } from "../../../../models/user";
 
 const { black } = theme.lightColors || {};
 
-type IProps = { userId: string; service: Service; option: any; user: User };
+type IProps = { userId: string; service: any; option: any; user: User };
 
 export const TopTabProfile = ({ userId, service, option, user }: IProps) => {
   const Tab = createMaterialTopTabNavigator();

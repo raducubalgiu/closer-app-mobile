@@ -4,10 +4,13 @@ import { Button, Stack } from "../../../../components/core";
 import { useNavigation } from "@react-navigation/native";
 import { CloseIconButton } from "../../../../components/customized";
 import theme from "../../../../assets/styles/theme";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../../models/navigation/rootStackParams";
+const { black } = theme.lightColors || {};
 
-const { black } = theme.lightColors;
+type IProps = NativeStackScreenProps<RootStackParams, "EditAvatar">;
 
-export const EditAvatarScreen = ({ route }) => {
+export const EditAvatarScreen = ({ route }: IProps) => {
   const { photo } = route.params;
   const navigation = useNavigation();
 

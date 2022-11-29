@@ -4,12 +4,14 @@ import {
   Dimensions,
   SafeAreaView,
   FlatList,
+  ListRenderItemInfo,
 } from "react-native";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useAuth, useGet } from "../../../hooks";
 import { Header } from "../../../components/core";
 import CardPost from "../../../components/customized/Cards/CardPost/CardPost";
+import { Post } from "../../../models/post";
 
 const { width, height } = Dimensions.get("window");
 
@@ -23,18 +25,20 @@ export const AllBookmarksScreen = () => {
   });
 
   const renderUserBookmarks = useCallback(
-    ({ item }) => <CardPost post={item?.post} onShowDetails={() => {}} />,
+    ({ item }: ListRenderItemInfo<any>) => (
+      <CardPost post={item?.post} onShowDetails={() => {}} />
+    ),
     []
   );
   const getItemLayout = useCallback(
-    (data, index) => ({
+    (data: any, index: number) => ({
       length: width,
       offset: height * index,
       index,
     }),
     []
   );
-  const keyExtractor = useCallback((item) => item?._id, []);
+  const keyExtractor = useCallback((item: Post) => item?._id, []);
 
   return (
     <View style={styles.screen}>

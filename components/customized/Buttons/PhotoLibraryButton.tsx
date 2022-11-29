@@ -1,6 +1,6 @@
 import { StyleSheet, Image, Pressable } from "react-native";
 
-type IProps = { onPress: () => void; uri: string; size: number };
+type IProps = { onPress: () => void; uri: string; size?: number };
 
 export const PhotoLibraryButton = ({ onPress, uri, size = 40 }: IProps) => {
   const styles = StyleSheet.create({

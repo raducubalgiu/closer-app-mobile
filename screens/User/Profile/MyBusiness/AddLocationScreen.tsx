@@ -19,7 +19,7 @@ import { usePost } from "../../../../hooks";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 
-const { primary, black } = theme.lightColors;
+const { primary, black, grey0 } = theme.lightColors || {};
 
 const defaultValues = {
   street: "",
@@ -40,7 +40,7 @@ export const AddLocationScreen = () => {
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
 
-  const handleSetLocation = (location) => setLocation(location);
+  const handleSetLocation = (location: any) => setLocation(location);
 
   const { mutate: makePost, isLoading: loading } = usePost({
     uri: `/users/${user?._id}/locations`,
@@ -67,7 +67,7 @@ export const AddLocationScreen = () => {
               style={{ ...styles.input, ...styles.disabled }}
               value={location?.street}
               placeholder="Strada"
-              placeholderTextColor={theme.lightColors.grey0}
+              placeholderTextColor={grey0}
               editable={false}
             />
           </View>
@@ -76,7 +76,7 @@ export const AddLocationScreen = () => {
               style={{ ...styles.input, ...styles.disabled }}
               value={location?.number}
               placeholder="Numar"
-              placeholderTextColor={theme.lightColors.grey0}
+              placeholderTextColor={grey0}
               editable={false}
             />
           </View>
@@ -86,7 +86,7 @@ export const AddLocationScreen = () => {
             style={{ ...styles.input }}
             onChangeText={(text) => setBlockApartment(text)}
             placeholder="Bloc, scara, apartament"
-            placeholderTextColor={theme.lightColors.grey0}
+            placeholderTextColor={grey0}
           />
         </View>
         <Stack direction="row" sx={{ marginTop: 10 }}>
@@ -95,7 +95,7 @@ export const AddLocationScreen = () => {
               style={{ ...styles.input, ...styles.disabled }}
               value={location?.city}
               placeholder="Oras"
-              placeholderTextColor={theme.lightColors.grey0}
+              placeholderTextColor={grey0}
               editable={false}
             />
           </View>
@@ -104,7 +104,7 @@ export const AddLocationScreen = () => {
               style={{ ...styles.input, ...styles.disabled }}
               value={location?.county}
               placeholder="Judet"
-              placeholderTextColor={theme.lightColors.grey0}
+              placeholderTextColor={grey0}
               editable={false}
             />
           </View>
@@ -114,7 +114,7 @@ export const AddLocationScreen = () => {
             style={{ ...styles.input, ...styles.disabled }}
             value={location?.country}
             placeholder="Tara"
-            placeholderTextColor={theme.lightColors.grey0}
+            placeholderTextColor={grey0}
             editable={false}
           />
         </View>
@@ -124,7 +124,7 @@ export const AddLocationScreen = () => {
               name="plussquare"
               type="antdesign"
               size={27.5}
-              color={theme.lightColors.primary}
+              color={primary}
             />
           </TouchableOpacity>
         </Stack>
@@ -133,7 +133,7 @@ export const AddLocationScreen = () => {
           bounces={false}
           horizontal
           data={images}
-          keyExtractor={(item) => item?._id}
+          keyExtractor={(item: any) => item?._id}
           contentContainerStyle={{ paddingVertical: 20 }}
           renderItem={({ item }) => (
             <View style={{ marginRight: 20 }}>
@@ -165,7 +165,6 @@ export const AddLocationScreen = () => {
       <View style={styles.actionButtons}>
         <Button
           size="lg"
-          fullWidth
           title={t("save")}
           onPress={onSubmit}
           loading={loading}

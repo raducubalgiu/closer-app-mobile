@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 
-export const useDuration = (duration) => {
+export const useDuration = (duration: any) => {
   const { t } = useTranslation();
 
   switch (true) {

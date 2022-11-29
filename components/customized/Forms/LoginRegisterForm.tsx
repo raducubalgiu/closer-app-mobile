@@ -10,7 +10,7 @@ import { AuthProviders } from "./AuthProviders";
 const { black } = theme.lightColors || {};
 
 type IProps = {
-  onSubmit: () => void;
+  onSubmit: (data: any) => Promise<void>;
   statusAction: () => void;
   heading: string;
   statusText: string;

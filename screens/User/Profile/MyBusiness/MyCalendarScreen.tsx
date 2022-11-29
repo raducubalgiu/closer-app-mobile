@@ -7,7 +7,7 @@ import { NoFoundMessage } from "../../../../components/customized";
 import { Header } from "../../../../components/core";
 import { useAuth, useSheet } from "../../../../hooks";
 
-const { black } = theme.lightColors;
+const { black } = theme.lightColors || {};
 
 export const MyCalendarScreen = () => {
   const { user } = useAuth();

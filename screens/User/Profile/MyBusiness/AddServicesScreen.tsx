@@ -1,11 +1,5 @@
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  Pressable,
-} from "react-native";
+import { SafeAreaView, StyleSheet, Text, View, Pressable } from "react-native";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { useCallback, useState } from "react";
 import { Icon } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
@@ -20,14 +14,15 @@ import { useAuth, usePatch, useGet } from "../../../../hooks";
 import { ConfirmModal } from "../../../../components/customized/Modals/ConfirmModal";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { Service } from "../../../../models/service";
 
-const { primary } = theme.lightColors;
+const { primary } = theme.lightColors || {};
 
 export const AddServicesScreen = () => {
   const { user } = useAuth();
   const [visible, setVisible] = useState(false);
   const [services, setServices] = useState([]);
-  const [service, setService] = useState(null);
+  const [service, setService] = useState<Service | null>(null);
   const { t } = useTranslation();
 
   const { data: allServices } = useQuery(["allServices"], async () => {
@@ -69,7 +64,7 @@ export const AddServicesScreen = () => {
   });
 
   const renderService = useCallback(
-    ({ item }) => (
+    ({ item }: ListRenderItemInfo<Service>) => (
       <Stack direction="row" sx={styles.service}>
         <Text style={styles.name}>{item?.name}</Text>
         <IconButtonDelete
@@ -82,7 +77,7 @@ export const AddServicesScreen = () => {
     ),
     []
   );
-  const keyExtractor = useCallback((item) => item._id, []);
+  const keyExtractor = useCallback((item: Service) => item._id, []);
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -111,13 +106,13 @@ export const AddServicesScreen = () => {
           </Pressable>
         </Stack>
       </Stack>
-      <FlatList
+      <FlashList
         data={services}
         renderItem={renderService}
         keyExtractor={keyExtractor}
-        contentContainerStyle={{ marginHorizontal: 15 }}
         bounces={false}
         showsVerticalScrollIndicator={false}
+        estimatedItemSize={59}
       />
       <ConfirmModal
         onDelete={() => removeService({ serviceId: service?._id })}

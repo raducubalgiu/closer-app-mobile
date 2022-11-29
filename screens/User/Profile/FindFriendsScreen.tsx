@@ -1,12 +1,14 @@
 import { StyleSheet, SafeAreaView, FlatList, View } from "react-native";
 import React, { useEffect, useState } from "react";
-import { UserListItem } from "../../../components/customized";
+import UserListItem from "../../../components/customized/ListItems/UserListItem";
 import theme from "../../../assets/styles/theme";
 import * as Contacts from "expo-contacts";
 import { Header, SearchBarInput } from "../../../components/core";
 
+const { primary, black } = theme.lightColors || {};
+
 export const FindFriendsScreen = () => {
-  const [contacts, setContacts] = useState([]);
+  const [contacts, setContacts] = useState<any>([]);
 
   useEffect(() => {
     (async () => {
@@ -24,9 +26,7 @@ export const FindFriendsScreen = () => {
     })();
   }, []);
 
-  const renderPerson = ({ item }) => (
-    <UserListItem user={item} isFollow={false} />
-  );
+  const renderPerson = ({ item }: any) => <UserListItem user={item} />;
 
   return (
     <>
@@ -37,7 +37,7 @@ export const FindFriendsScreen = () => {
         <FlatList
           showsVerticalScrollIndicator={false}
           data={contacts}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item: any) => item.id}
           renderItem={renderPerson}
           ListHeaderComponent={<SearchBarInput />}
         />
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   title: {
-    color: theme.lightColors.black,
+    color: black,
     fontSize: 15,
   },
   btn: {
@@ -64,8 +64,8 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   btnFollow: {
-    backgroundColor: theme.lightColors.primary,
-    borderColor: theme.lightColors.primary,
+    backgroundColor: primary,
+    borderColor: primary,
     borderRadius: 2.5,
   },
   container: { paddingHorizontal: 15, flex: 1, backgroundColor: "white" },

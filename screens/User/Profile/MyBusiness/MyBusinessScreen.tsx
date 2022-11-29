@@ -21,7 +21,7 @@ interface Screen {
   iconType: string;
   description: string;
   navigation: string;
-  roles: [string];
+  roles: any;
 }
 
 export const MyBusinessScreen = () => {
@@ -96,8 +96,6 @@ export const MyBusinessScreen = () => {
     },
   ];
 
-  const goToScreen = (screenName: string) => navigation.navigate(screenName);
-
   const renderCard = useCallback(
     ({ item }: ListRenderItemInfo<Screen>) => (
       <Protected userRole={user?.role} roles={item?.roles}>
@@ -106,7 +104,7 @@ export const MyBusinessScreen = () => {
           iconName={item?.iconName}
           iconType={item?.iconType}
           description={item?.description}
-          onPress={() => goToScreen(item?.navigation)}
+          onPress={() => navigation.navigate(item.navigation)}
         />
       </Protected>
     ),

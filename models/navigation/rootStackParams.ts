@@ -31,7 +31,7 @@ export type RootStackParams = {
   EditWebsite: any;
   EditUsername: any;
   EditProfession: any;
-  EditAvatar: { photo: string };
+  EditAvatar: { photo: { uri: string } };
   EditProduct: { product: any };
   SearchServices: any;
   FindFriends: any;
@@ -76,11 +76,11 @@ export type RootStackParams = {
   Post: { userId: string };
   Profile: any;
   ProfileGeneral: {
-    userId: string | null;
+    userId: string;
     username: string;
     avatar: any | null;
-    name: string | null;
-    checkmark: boolean | null;
+    name: string;
+    checkmark: boolean;
     service: string | null;
     option: string | null;
   };
@@ -111,7 +111,7 @@ export type RootStackParams = {
   SearchPosts: { search: string };
   Service: { service: Service };
   Test: any;
-  Username: { isTokenResult: string; role: string };
+  Username: { idTokenResult: any; role: string };
   SharedList: any;
   SharedDetail: any;
   Shared: any;

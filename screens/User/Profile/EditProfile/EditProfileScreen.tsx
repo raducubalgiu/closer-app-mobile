@@ -17,12 +17,17 @@ import { EditProfileSheet } from "../../../../components/customized";
 import CustomAvatar from "../../../../components/core/Avatars/CustomAvatar";
 import { trimFunc } from "../../../../utils";
 import { useSheet } from "../../../../hooks";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 
-const { grey0, black } = theme.lightColors;
+const { grey0, black } = theme.lightColors || {};
 
-export const EditProfileScreen = ({ route }) => {
+type IProps = NativeStackScreenProps<RootStackParams, "EditProfile">;
+
+export const EditProfileScreen = ({ route }: IProps) => {
   const { user } = route.params;
   const { name, username, profession, website, description } = user;
   const navigation =

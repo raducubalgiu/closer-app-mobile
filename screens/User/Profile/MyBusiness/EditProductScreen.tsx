@@ -65,7 +65,6 @@ export const EditProductScreen = ({ route }) => {
   return (
     <SafeAreaView style={styles.screen}>
       <Header title={product.name} divider={true} />
-      <Feedback feedback={feedback} setFeedback={setFeedback} />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >

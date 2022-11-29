@@ -4,9 +4,10 @@ import { Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 
 const { black } = theme.lightColors || {};
-type Props = { onPress: () => void; sx: {} };
 
-export const IconButtonDelete = ({ onPress, sx = {} }: Props) => {
+type IProps = { onPress: () => void; sx?: {} };
+
+export const IconButtonDelete = ({ onPress, sx = {} }: IProps) => {
   const animatedScale = useRef(new Animated.Value(0)).current;
 
   const handlePress = () => {

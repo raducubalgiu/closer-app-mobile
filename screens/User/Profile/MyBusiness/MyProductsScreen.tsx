@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { IconButtonAdd, MainButton, Stack } from "../../../../components/core";
+import { IconButtonAdd, Button, Stack } from "../../../../components/core";
 import { NoFoundMessage } from "../../../../components/customized";
 import { useAuth } from "../../../../hooks/auth";
 import { useGet } from "../../../../hooks";
@@ -32,7 +32,7 @@ export const MyProductsScreen = () => {
         description={t("cannotAddProducts")}
       />
       <Stack sx={{ marginTop: 10 }}>
-        <MainButton
+        <Button
           title={t("goToServices")}
           onPress={() => navigation.navigate("AddServices")}
         />
