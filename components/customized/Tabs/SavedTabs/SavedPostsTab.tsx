@@ -5,12 +5,13 @@ import { CardPostImage } from "../../Cards/CardPostImage";
 import { useGetPaginate } from "../../../../hooks";
 import { Spinner } from "../../../core";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
-import { FlashList } from "@shopify/flash-list";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { Post } from "../../../../models/post";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../models/navigation/rootStackParams";
+import { User } from "../../../../models/user";
 
-export const SavedPostsTab = ({ user }) => {
+export const SavedPostsTab = ({ user }: { user: User }) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
@@ -30,27 +31,30 @@ export const SavedPostsTab = ({ user }) => {
     enabled: isFocused,
   });
 
-  const renderPosts = useCallback(({ item, index }) => {
-    const { post } = item;
-    const { bookable, postType } = post || {};
-    const { user } = item;
+  const renderPosts = useCallback(
+    ({ item, index }: ListRenderItemInfo<any>) => {
+      const { post } = item;
+      const { bookable, postType } = post || {};
+      const { user } = item;
 
-    return (
-      <CardPostImage
-        onPress={() =>
-          navigation.navigate("AllBookmarks", {
-            postId: post?._id,
-            userId: user?._id,
-          })
-        }
-        index={index}
-        image={post?.images[0]?.url}
-        bookable={bookable}
-        fixed={null}
-        postType={postType}
-      />
-    );
-  }, []);
+      return (
+        <CardPostImage
+          onPress={() =>
+            navigation.navigate("AllBookmarks", {
+              postId: post?._id,
+              userId: user?._id,
+            })
+          }
+          index={index}
+          image={post?.images[0]?.url}
+          bookable={bookable}
+          fixed={null}
+          postType={postType}
+        />
+      );
+    },
+    []
+  );
 
   const keyExtractor = useCallback((item: Post) => item._id, []);
 
@@ -69,19 +73,21 @@ export const SavedPostsTab = ({ user }) => {
   };
 
   const { pages } = data || {};
+  const posts = pages?.map((page) => page.results).flat();
 
-  const noFoundMessage = !isLoading &&
-    !isFetchingNextPage &&
-    pages[0]?.results?.length === 0 && (
+  let header;
+  if (posts?.length === 0) {
+    header = (
       <NoFoundMessage title={t("posts")} description={t("noFoundSavedPosts")} />
     );
+  }
 
   return (
     <>
       {isFetching && isLoading && !isFetchingNextPage && <Spinner />}
       <FlashList
-        ListHeaderComponent={noFoundMessage}
-        data={pages?.map((page) => page.results).flat()}
+        ListHeaderComponent={header}
+        data={posts}
         keyExtractor={keyExtractor}
         numColumns={3}
         renderItem={renderPosts}

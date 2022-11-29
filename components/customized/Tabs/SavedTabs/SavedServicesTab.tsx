@@ -1,4 +1,4 @@
-import { FlashList } from "@shopify/flash-list";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { useCallback } from "react";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
@@ -9,8 +9,9 @@ import { useGetPaginate } from "../../../../hooks";
 import { Service } from "../../../../models/service";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../models/navigation/rootStackParams";
+import { User } from "../../../../models/user";
 
-export const SavedServicesTab = ({ user }) => {
+export const SavedServicesTab = ({ user }: { user: User }) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
@@ -30,7 +31,7 @@ export const SavedServicesTab = ({ user }) => {
     enabled: isFocused,
   });
 
-  const renderService = useCallback(({ item }) => {
+  const renderService = useCallback(({ item }: ListRenderItemInfo<any>) => {
     const { _id, name, postsCount } = item.service;
     return (
       <ServiceListItem
@@ -60,23 +61,25 @@ export const SavedServicesTab = ({ user }) => {
   };
 
   const { pages } = data || {};
+  const services = pages?.map((page) => page.results).flat();
 
-  const noFoundMessage = !isLoading &&
-    !isFetchingNextPage &&
-    pages[0]?.results?.length === 0 && (
+  let header;
+  if (!isLoading && !isFetchingNextPage && services?.length === 0) {
+    header = (
       <NoFoundMessage
         title={t("services")}
         description={t("noFoundSavedServices")}
       />
     );
+  }
 
   return (
     <>
       {isFetching && isLoading && !isFetchingNextPage && <Spinner />}
       <FlashList
-        ListHeaderComponent={noFoundMessage}
+        ListHeaderComponent={header}
         contentContainerStyle={{ paddingVertical: 15 }}
-        data={pages?.map((page) => page.results).flat()}
+        data={services}
         keyExtractor={keyExtractor}
         renderItem={renderService}
         ListFooterComponent={showSpinner}

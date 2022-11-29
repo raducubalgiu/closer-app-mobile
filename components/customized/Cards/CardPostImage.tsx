@@ -4,6 +4,17 @@ import { Image, Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 
 const { width, height } = Dimensions.get("window");
+const { black } = theme.lightColors || {};
+
+type IProps = {
+  index: number;
+  image: string;
+  bookable: boolean;
+  fixed: boolean | null;
+  postType: string | null;
+  onPress: () => void;
+  col?: number;
+};
 
 export const CardPostImage = ({
   index = 0,
@@ -13,7 +24,7 @@ export const CardPostImage = ({
   postType = "photo",
   onPress,
   col = 3,
-}) => {
+}: IProps) => {
   let borderBox;
 
   if (index % col !== 0) {
@@ -94,7 +105,7 @@ const styles = StyleSheet.create({
   },
   fixedText: {
     fontSize: 12,
-    color: theme.lightColors.black,
+    color: black,
   },
   type: {
     position: "absolute",

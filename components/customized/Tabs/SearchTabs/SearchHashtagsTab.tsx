@@ -1,4 +1,4 @@
-import { FlashList } from "@shopify/flash-list";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { useCallback } from "react";
 import { useAuth } from "../../../../hooks";
 import { HashtagListItem } from "../../ListItems/HashtagListItem";
@@ -12,7 +12,7 @@ import { Hashtag } from "../../../../models/hashtag";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 
-export const SearchHashtagsTab = ({ search }) => {
+export const SearchHashtagsTab = ({ search }: { search: string }) => {
   const { user } = useAuth();
   const isFocused = useIsFocused();
   const { t } = useTranslation();
@@ -59,10 +59,10 @@ export const SearchHashtagsTab = ({ search }) => {
   };
 
   const { pages } = data || {};
-  const posts = pages?.map((page) => page.results).flat();
+  const hashtags = pages?.map((page) => page.results).flat();
 
   const renderHashtags = useCallback(
-    ({ item }) => (
+    ({ item }: ListRenderItemInfo<Hashtag>) => (
       <HashtagListItem
         name={item.name}
         postsCount={item.postsCount}
@@ -72,21 +72,23 @@ export const SearchHashtagsTab = ({ search }) => {
     []
   );
   const keyExtractor = useCallback((item: Hashtag) => item._id, []);
-  const noFoundMessage = (
-    <NoFoundMessage title={t("hashtags")} description={t("noFoundHashtags")} />
-  );
+
+  let header;
+  if (!isLoading && !isFetchingNextPage && hashtags?.length) {
+    header = (
+      <NoFoundMessage
+        title={t("hashtags")}
+        description={t("noFoundHashtags")}
+      />
+    );
+  }
 
   return (
     <>
       {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
       <FlashList
-        ListHeaderComponent={
-          !isLoading &&
-          !isFetchingNextPage &&
-          pages[0]?.results?.length === 0 &&
-          noFoundMessage
-        }
-        data={posts}
+        ListHeaderComponent={header}
+        data={hashtags}
         keyExtractor={keyExtractor}
         renderItem={renderHashtags}
         contentContainerStyle={{ paddingVertical: 15 }}

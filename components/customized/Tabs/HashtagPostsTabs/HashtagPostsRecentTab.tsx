@@ -1,4 +1,4 @@
-import { FlashList } from "@shopify/flash-list";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { useIsFocused } from "@react-navigation/native";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
@@ -8,7 +8,7 @@ import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { Spinner } from "../../../core";
 import { Post } from "../../../../models/post";
 
-export const HashtagPostsRecentTab = ({ name }) => {
+export const HashtagPostsRecentTab = ({ name }: { name: string }) => {
   const { t } = useTranslation();
   const isFocused = useIsFocused();
 
@@ -27,7 +27,7 @@ export const HashtagPostsRecentTab = ({ name }) => {
   });
 
   const renderPosts = useCallback(
-    ({ item, index }) => (
+    ({ item, index }: ListRenderItemInfo<Post>) => (
       <CardPostImage
         onPress={() => {}}
         index={index}
@@ -57,20 +57,22 @@ export const HashtagPostsRecentTab = ({ name }) => {
   };
 
   const { pages } = data || {};
+  const posts = pages?.map((page) => page.results).flat();
 
-  const noFoundMessage = !isLoading &&
-    !isFetchingNextPage &&
-    pages[0]?.results?.length === 0 && (
+  let header;
+  if (!isLoading && !isFetchingNextPage && posts?.length === 0) {
+    return (
       <NoFoundMessage title={t("posts")} description={t("noFoundPosts")} />
     );
+  }
 
   return (
     <>
       {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
       <FlashList
-        ListHeaderComponent={noFoundMessage}
+        ListHeaderComponent={header}
         numColumns={3}
-        data={pages?.map((page) => page.results).flat()}
+        data={posts}
         keyExtractor={keyExtractor}
         renderItem={renderPosts}
         ListFooterComponent={showSpinner}

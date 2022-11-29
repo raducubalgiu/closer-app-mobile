@@ -5,12 +5,13 @@ import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { useGetPaginate } from "../../../../hooks";
 import { Spinner } from "../../../core";
 import { HashtagListItem } from "../../ListItems/HashtagListItem";
-import { FlashList } from "@shopify/flash-list";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { Hashtag } from "../../../../models/hashtag";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../models/navigation/rootStackParams";
+import { User } from "../../../../models/user";
 
-export const SavedHashtagsTab = ({ user }) => {
+export const SavedHashtagsTab = ({ user }: { user: User }) => {
   const { t } = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -30,7 +31,7 @@ export const SavedHashtagsTab = ({ user }) => {
     enabled: isFocused,
   });
 
-  const renderHashtags = useCallback(({ item }) => {
+  const renderHashtags = useCallback(({ item }: ListRenderItemInfo<any>) => {
     const { name, postsCount } = item?.hashtag;
 
     return (
@@ -59,23 +60,25 @@ export const SavedHashtagsTab = ({ user }) => {
   };
 
   const { pages } = data || {};
+  const hashtags = pages?.map((page) => page.results).flat();
 
-  const noFoundMessage = !isLoading &&
-    !isFetchingNextPage &&
-    pages[0]?.results?.length === 0 && (
+  let header;
+  if (hashtags?.length === 0) {
+    return (
       <NoFoundMessage
         title={t("hashtags")}
         description={t("noFoundSavedHashtags")}
       />
     );
+  }
 
   return (
     <>
       {isFetching && isLoading && !isFetchingNextPage && <Spinner />}
       <FlashList
-        ListHeaderComponent={noFoundMessage}
+        ListHeaderComponent={header}
         contentContainerStyle={{ paddingVertical: 15 }}
-        data={pages?.map((page) => page.results).flat()}
+        data={hashtags}
         keyExtractor={keyExtractor}
         renderItem={renderHashtags}
         ListFooterComponent={showSpinner}

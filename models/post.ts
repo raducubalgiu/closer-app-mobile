@@ -6,7 +6,7 @@ import { User } from "./user";
 export interface Post {
   _id: string;
   description: string;
-  images: [];
+  images: [{ url: string }];
   hashtags: Hashtag[];
   mentions: User[];
   user: User[];

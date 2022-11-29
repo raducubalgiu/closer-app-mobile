@@ -2,7 +2,7 @@ import { useState } from "react";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { useTranslation } from "react-i18next";
 
-export const JobsProfileTab = ({ userId }) => {
+export const JobsProfileTab = ({ userId }: { userId: string }) => {
   const [jobs, setJobs] = useState([]);
   const { t } = useTranslation();
 

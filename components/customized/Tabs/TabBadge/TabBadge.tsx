@@ -2,9 +2,9 @@ import { StyleSheet, View } from "react-native";
 import { Icon, Badge } from "@rneui/themed";
 import theme from "../../../../assets/styles/theme";
 
-const { primary } = theme.lightColors;
+const { primary } = theme.lightColors || {};
 
-export const TabBadge = ({ value }) => {
+export const TabBadge = ({ value }: { value: number }) => {
   return (
     <View>
       <Icon name="shopping-bag" type="feather" size={22} />

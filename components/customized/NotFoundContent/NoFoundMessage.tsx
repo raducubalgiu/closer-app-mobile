@@ -6,11 +6,11 @@ import theme from "../../../assets/styles/theme";
 const { black, grey0 } = theme.lightColors || {};
 
 type IProps = {
-  title: string;
+  title?: string;
   description: string;
-  iconName: string;
-  iconType: string;
-  iconSize: number;
+  iconName?: string;
+  iconType?: string;
+  iconSize?: number;
   sx?: {};
 };
 

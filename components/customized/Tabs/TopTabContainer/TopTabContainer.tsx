@@ -4,21 +4,28 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import theme from "../../../../assets/styles/theme";
 
 const { width } = Dimensions.get("window");
-const { black } = theme.lightColors;
+const { black } = theme.lightColors || {};
+
+type IProps = {
+  children: any;
+  initialRouteName: string;
+  tabBarScrollEnabled?: boolean;
+  options?: {};
+};
 
 export const TopTabContainer = ({
   children,
   initialRouteName,
   tabBarScrollEnabled = false,
   options = {},
-}) => {
+}: IProps) => {
   const Tab = createMaterialTopTabNavigator();
 
   return (
     <Tab.Navigator
       initialRouteName={initialRouteName}
       screenOptions={{
-        tabBarActiveTintColor: theme.lightColors.black,
+        tabBarActiveTintColor: black,
         tabBarLabelStyle: styles.tabLabel,
         tabBarStyle: styles.tabStyle,
         tabBarIndicatorStyle: styles.tabIndicator,

@@ -1,4 +1,4 @@
-import { FlashList } from "@shopify/flash-list";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { RefreshControl } from "react-native";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
@@ -7,6 +7,7 @@ import { Spinner } from "../../../core";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import UserListItem from "../../ListItems/UserListItem";
 import { useGetPaginate, useRefreshByUser } from "../../../../hooks";
+import { User } from "../../../../models/user";
 
 type Props = { userId: string };
 
@@ -30,11 +31,11 @@ export const FollowersTab = ({ userId }: Props): JSX.Element => {
   });
 
   const renderPerson = useCallback(
-    ({ item }) => <UserListItem user={item.user} />,
+    ({ item }: any) => <UserListItem user={item.user} />,
     []
   );
 
-  const keyExtractor = useCallback((item) => item?._id, []);
+  const keyExtractor = useCallback((item: User) => item?._id, []);
 
   const loadMore = () => {
     if (hasNextPage) fetchNextPage();
@@ -50,14 +51,15 @@ export const FollowersTab = ({ userId }: Props): JSX.Element => {
   const { pages } = data || {};
   const posts = pages?.map((page) => page.results).flat();
 
-  const noFoundMessage = !isLoading &&
-    !isFetchingNextPage &&
-    pages[0]?.results?.length === 0 && (
+  let header;
+  if (!isLoading && !isFetchingNextPage && posts?.length === 0) {
+    header = (
       <NoFoundMessage
         title={t("followers")}
         description={t("noFoundFollowers")}
       />
     );
+  }
 
   const { refreshing, refetchByUser } = useRefreshByUser(refetch);
 
@@ -69,7 +71,7 @@ export const FollowersTab = ({ userId }: Props): JSX.Element => {
     <>
       {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
       <FlashList
-        ListHeaderComponent={noFoundMessage}
+        ListHeaderComponent={header}
         refreshControl={refreshControl}
         contentContainerStyle={{ paddingVertical: 15 }}
         data={posts}

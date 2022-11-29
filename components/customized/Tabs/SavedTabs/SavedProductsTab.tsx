@@ -6,10 +6,11 @@ import { Spinner } from "../../../core";
 import { CardProduct } from "../../Cards/CardProduct";
 import { useGetPaginate, useRefreshByUser } from "../../../../hooks";
 import { useIsFocused } from "@react-navigation/native";
-import { FlashList } from "@shopify/flash-list";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { Product } from "../../../../models/product";
+import { User } from "../../../../models/user";
 
-export const SavedProductsTab = ({ user }) => {
+export const SavedProductsTab = ({ user }: { user: User }) => {
   const { t } = useTranslation();
   const isFocused = useIsFocused();
 
@@ -28,8 +29,9 @@ export const SavedProductsTab = ({ user }) => {
     enabled: isFocused,
   });
 
-  const renderProduct = useCallback(({ item }) => {
+  const renderProduct = useCallback(({ item }: ListRenderItemInfo<any>) => {
     const { product } = item;
+
     return (
       <CardProduct
         product={product}
@@ -59,14 +61,15 @@ export const SavedProductsTab = ({ user }) => {
   const { pages } = data || {};
   const products = pages?.map((page) => page.results).flat();
 
-  const noFoundMessage = !isLoading &&
-    !isFetchingNextPage &&
-    pages[0]?.results?.length === 0 && (
+  let header;
+  if (!isLoading && !isFetchingNextPage && products?.length === 0) {
+    header = (
       <NoFoundMessage
         title={t("products")}
         description={t("noFoundSavedProducts")}
       />
     );
+  }
 
   const { refreshing, refetchByUser } = useRefreshByUser(refetch);
 
@@ -78,7 +81,7 @@ export const SavedProductsTab = ({ user }) => {
     <>
       {isFetching && isLoading && !isFetchingNextPage && <Spinner />}
       <FlashList
-        ListHeaderComponent={noFoundMessage}
+        ListHeaderComponent={header}
         data={products}
         refreshControl={refreshControl}
         keyExtractor={keyExtractor}

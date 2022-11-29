@@ -1,17 +1,30 @@
 import { useCallback } from "react";
 import { TopTabContainer } from "./TopTabContainer";
 import { ServiceTab } from "../ServiceTab/ServiceTab";
-import { useGet, useHttpGet } from "../../../../hooks";
+import { useGet } from "../../../../hooks";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { Service } from "../../../../models/service";
 
-export const TopTabServices = ({ userId, initialRoute, option, service }) => {
+type IProps = {
+  userId: string;
+  initialRoute: string;
+  option: any;
+  service: Service;
+};
+
+export const TopTabServices = ({
+  userId,
+  initialRoute,
+  option,
+  service,
+}: IProps) => {
   const Tab = createMaterialTopTabNavigator();
 
   const { data: services } = useGet({ model: "services", uri: "/services" });
 
   return (
     <TopTabContainer initialRouteName={initialRoute}>
-      {services?.map((service) => {
+      {services?.map((service: Service) => {
         const Service = useCallback(
           () => (
             <ServiceTab

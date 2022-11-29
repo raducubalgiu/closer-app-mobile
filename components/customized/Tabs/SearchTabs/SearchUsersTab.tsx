@@ -1,4 +1,4 @@
-import { FlashList } from "@shopify/flash-list";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { useCallback } from "react";
 import { useAuth } from "../../../../hooks";
 import { useTranslation } from "react-i18next";
@@ -10,7 +10,7 @@ import axios from "axios";
 import { useIsFocused } from "@react-navigation/native";
 import { User } from "../../../../models/user";
 
-export const SearchUsersTab = ({ search }) => {
+export const SearchUsersTab = ({ search }: { search: string }) => {
   const { t } = useTranslation();
   const { user } = useAuth();
   const isFocused = useIsFocused();
@@ -57,15 +57,14 @@ export const SearchUsersTab = ({ search }) => {
   const { pages } = data || {};
   const users = pages?.map((page) => page.results).flat();
 
-  const renderUsers = useCallback(({ item }) => {
+  const renderUsers = useCallback(({ item }: ListRenderItemInfo<User>) => {
     return <UserListItem user={item} />;
   }, []);
 
-  const noFoundMessage = !isLoading &&
-    !isFetchingNextPage &&
-    pages[0]?.results?.length === 0 && (
-      <NoFoundMessage title="Users" description={t("noFoundUsers")} />
-    );
+  let header;
+  if (!isLoading && !isFetchingNextPage && users?.length === 0) {
+    header = <NoFoundMessage title="Users" description={t("noFoundUsers")} />;
+  }
 
   const keyExtractor = useCallback((item: User) => item?._id, []);
 
@@ -73,7 +72,7 @@ export const SearchUsersTab = ({ search }) => {
     <>
       {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
       <FlashList
-        ListHeaderComponent={noFoundMessage}
+        ListHeaderComponent={header}
         data={users}
         keyExtractor={keyExtractor}
         renderItem={renderUsers}

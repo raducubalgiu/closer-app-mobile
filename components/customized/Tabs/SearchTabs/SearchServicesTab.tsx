@@ -1,4 +1,4 @@
-import { FlashList } from "@shopify/flash-list";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { useCallback } from "react";
 import { Spinner } from "../../../core";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
@@ -12,7 +12,7 @@ import { Service } from "../../../../models/service";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 
-export const SearchServicesTab = ({ search }) => {
+export const SearchServicesTab = ({ search }: { search: string }) => {
   const { t } = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -62,7 +62,7 @@ export const SearchServicesTab = ({ search }) => {
   const services = pages?.map((page) => page.results).flat();
 
   const renderService = useCallback(
-    ({ item }) => (
+    ({ item }: ListRenderItemInfo<Service>) => (
       <ServiceListItem
         name={item.name}
         postsCount={item.postsCount}
@@ -73,20 +73,18 @@ export const SearchServicesTab = ({ search }) => {
   );
   const keyExtractor = useCallback((item: Service) => item._id, []);
 
-  const noFoundMessage = (
-    <NoFoundMessage title="Services" description={t("noFoundServices")} />
-  );
+  let header;
+  if (!isLoading && !isFetchingNextPage && services?.length === 0) {
+    header = (
+      <NoFoundMessage title="Services" description={t("noFoundServices")} />
+    );
+  }
 
   return (
     <>
       {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
       <FlashList
-        ListHeaderComponent={
-          !isLoading &&
-          !isFetchingNextPage &&
-          pages[0]?.results?.length === 0 &&
-          noFoundMessage
-        }
+        ListHeaderComponent={header}
         data={services}
         keyExtractor={keyExtractor}
         renderItem={renderService}

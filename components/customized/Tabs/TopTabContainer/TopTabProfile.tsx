@@ -8,10 +8,14 @@ import theme from "../../../../assets/styles/theme";
 import { Icon } from "@rneui/themed";
 import { THIRD_ROLE } from "@env";
 import { useCallback } from "react";
+import { Service } from "../../../../models/service";
+import { User } from "../../../../models/user";
 
-const { black } = theme.lightColors;
+const { black } = theme.lightColors || {};
 
-export const TopTabProfile = ({ userId, service, option, user }) => {
+type IProps = { userId: string; service: Service; option: any; user: User };
+
+export const TopTabProfile = ({ userId, service, option, user }: IProps) => {
   const Tab = createMaterialTopTabNavigator();
   const { description, website, location, role } = user || {};
 
@@ -41,8 +45,8 @@ export const TopTabProfile = ({ userId, service, option, user }) => {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color }) => {
-          let iconName;
-          let iconType;
+          let iconName = "";
+          let iconType = "";
           let size = 22;
 
           if (route.name === "Posts") {

@@ -1,4 +1,4 @@
-import { FlatList } from "react-native";
+import { FlatList, ListRenderItemInfo } from "react-native";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
@@ -12,8 +12,11 @@ import axios from "axios";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../models/navigation/rootStackParams";
+import { User } from "../../../../models/user";
+import { Hashtag } from "../../../../models/hashtag";
+import { Post } from "../../../../models/post";
 
-export const SearchPopularTab = ({ search }) => {
+export const SearchPopularTab = ({ search }: { search: string }) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
@@ -81,7 +84,7 @@ export const SearchPopularTab = ({ search }) => {
     });
 
   const renderUsers = useCallback(
-    ({ item }) => (
+    ({ item }: ListRenderItemInfo<User>) => (
       <UserListItem
         user={item}
         sx={{ paddingHorizontal: 15, marginBottom: 20 }}
@@ -91,7 +94,7 @@ export const SearchPopularTab = ({ search }) => {
   );
 
   const renderHashtags = useCallback(
-    ({ item }) => (
+    ({ item }: ListRenderItemInfo<Hashtag>) => (
       <HashtagListItem
         sx={{ paddingHorizontal: 15 }}
         name={item.name}
@@ -103,7 +106,7 @@ export const SearchPopularTab = ({ search }) => {
   );
 
   const renderPopularPosts = useCallback(
-    ({ item, index }) => (
+    ({ item, index }: ListRenderItemInfo<Post>) => (
       <CardPostImage
         onPress={() => {}}
         index={index}
@@ -127,7 +130,7 @@ export const SearchPopularTab = ({ search }) => {
         }
         numColumns={3}
         data={pages?.map((page) => page.results).flat()}
-        keyExtractor={useCallback((item) => item._id, [])}
+        keyExtractor={useCallback((item: Post) => item._id, [])}
         renderItem={renderPopularPosts}
         ListFooterComponent={showSpinner}
         onEndReached={loadMore}

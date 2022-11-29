@@ -5,9 +5,9 @@ import { Stack } from "../../../core";
 import { useTranslation } from "react-i18next";
 import { trimFunc } from "../../../../utils";
 
-const { black, primary, grey0 } = theme.lightColors;
+const { black, primary, grey0 } = theme.lightColors || {};
 
-export const AboutProfileTab = ({ biography }) => {
+export const AboutProfileTab = ({ biography }: { biography: string }) => {
   const { t } = useTranslation();
 
   return (

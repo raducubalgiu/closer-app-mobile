@@ -18,7 +18,7 @@ import { displayZero } from "../../../../utils";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { scheduleChannel } from "../../../../constants/constants";
 
-const { black, grey0, error, success, primary } = theme.lightColors;
+const { black, grey0, error, success, primary } = theme.lightColors || {};
 const { width } = Dimensions.get("window");
 
 export const DashboardScheduleTab = ({ startPeriod, lastPeriod }) => {

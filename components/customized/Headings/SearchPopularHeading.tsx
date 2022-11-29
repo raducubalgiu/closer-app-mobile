@@ -7,9 +7,9 @@ const { black, grey0 } = theme.lightColors || {};
 
 type IProps = {
   heading: string;
-  onSeeAll: () => {};
+  onSeeAll?: () => void;
   collection: any;
-  seeAll: boolean;
+  seeAll?: boolean;
 };
 
 export const SearchPopularHeading = ({
