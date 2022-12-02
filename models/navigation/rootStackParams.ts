@@ -40,7 +40,7 @@ export type RootStackParams = {
   SearchServices: any;
   FindFriends: any;
   FiltersDate: { service: Service; period: any };
-  FiltersService: { service: Service; period: any };
+  FiltersService: { service: Service; startDate: any; endDate: any };
   Feed: any;
   Hashtag: { name: string };
   Login: any;

@@ -29,6 +29,7 @@ export default SheetHeader;
 const styles = StyleSheet.create({
   sheetOverview: {
     marginHorizontal: 15,
+    marginBottom: 15,
   },
   title: {
     textAlign: "center",

@@ -212,6 +212,7 @@ const CloserNavigation = () => {
               <RootStack.Screen
                 name="FiltersDate"
                 component={FiltersDateScreen}
+                options={{ animation: "fade_from_bottom" }}
               />
               <RootStack.Screen
                 name="FiltersService"

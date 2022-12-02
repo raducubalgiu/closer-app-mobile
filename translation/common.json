@@ -35,7 +35,6 @@
   "findService": "Caută serviciu..",
   "from": "de la",
   "suggested": "Sugerate",
-  "selectPeriod": "Selectează perioada",
   "explore": "Explorează",
   "following": "Urmăreşti",
   "follow": "Urmăreşte",
@@ -299,5 +298,12 @@
   "back": "Înapoi",
   "deleteConversationQuestion": "Ştergi conversaţia?",
   "messagesBetweenYouAnd": "Mesajele dintre tine şi",
-  "willBeDeleteAndNotRestored": "vor fi şterse şi nu vor mai putea fi restaurate"
+  "willBeDeleteAndNotRestored": "vor fi şterse şi nu vor mai putea fi restaurate",
+  "flexibleDates": "Date flexibile",
+  "selectDates": "Alege intervalul",
+  "anytimeDescription": "Îţi vom afişa toate locaţiile fără să ţinem de cont de data si ora la care pot fi rezervate",
+  "nowDescription": "Îţi vom afişa locaţiile ale căror produse sunt disponibile acum",
+  "after18Description": "Îţi vom afişa locaţiile ale căror produse sunt disponibile oricând după ora 18:00",
+  "select": "Selectează",
+  "period": "perioada"
 }

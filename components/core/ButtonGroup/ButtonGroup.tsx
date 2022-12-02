@@ -1,27 +1,22 @@
 import { StyleSheet, Text, View, Pressable } from "react-native";
-import React, { useCallback, useState } from "react";
 import theme from "../../../assets/styles/theme";
 import { Stack } from "../Stack/Stack";
 
 const black = theme.lightColors?.black;
 
 type Props = {
-  activeButton: number;
+  activeBtn: number;
   onPress: (index: number) => void;
   buttons: any;
-  size?: string;
   sx?: {};
 };
 
 export const ButtonGroup = ({
-  activeButton,
-  size = "small",
+  activeBtn,
   onPress,
   buttons,
   sx = {},
 }: Props) => {
-  const [activeBtn, setActiveBtn] = useState(activeButton);
-
   const styles = StyleSheet.create({
     buttonsContainer: {
       backgroundColor: "#f1f1f1",
@@ -31,23 +26,14 @@ export const ButtonGroup = ({
       alignItems: "center",
     },
     button: {
-      paddingVertical: size === "small" ? 5 : 7.5,
+      paddingVertical: 7.5,
       paddingHorizontal: 15,
       borderRadius: 20,
     },
     active: { backgroundColor: "white" },
-    btnTxt: {
-      color: black,
-      fontSize: 13,
-      fontWeight: "500",
-    },
-    btnTxtActive: { fontSize: 13.5, fontWeight: "600" },
+    btnTxt: { color: black, fontWeight: "500" },
+    btnTxtActive: { fontWeight: "600" },
   });
-
-  const handleButton = useCallback((index: number) => {
-    setActiveBtn(index);
-    onPress(index);
-  }, []);
 
   const activeBtnStyle = { ...styles.button, ...styles.active };
   const activeBtnTxt = { ...styles.btnTxt, ...styles.btnTxtActive };
@@ -59,7 +45,7 @@ export const ButtonGroup = ({
           {buttons.map((button: any, index: number) => (
             <Pressable
               key={index}
-              onPress={() => handleButton(index)}
+              onPress={() => onPress(index)}
               style={index === activeBtn ? activeBtnStyle : styles.button}
             >
               <Text style={index === activeBtn ? activeBtnTxt : styles.btnTxt}>

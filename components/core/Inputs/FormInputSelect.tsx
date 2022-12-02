@@ -8,12 +8,14 @@ import { Stack } from "../Stack/Stack";
 import { Icon } from "@rneui/themed";
 
 const { black, error } = theme.lightColors || {};
+
+type Item = { name: string; _id: string | number | undefined };
 type IProps = {
   name: string;
   placeholder: string;
   rules?: {};
-  items: [{ name: string; _id: string | number | undefined }];
-  disabled: boolean;
+  items: Item[];
+  disabled?: boolean;
   label?: string;
 };
 
