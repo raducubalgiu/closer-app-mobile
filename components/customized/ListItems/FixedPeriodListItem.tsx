@@ -5,16 +5,24 @@ import theme from "../../../assets/styles/theme";
 
 const { black, grey0 } = theme.lightColors || {};
 
-type IProps = { title: string; description: string };
+type IProps = {
+  title: string;
+  description: string;
+  onSwitch: (checked: boolean) => void;
+};
 
-export const CalendarIntervalListItem = ({ title, description }: IProps) => {
+export const FixedPeriodListItem = ({
+  title,
+  description,
+  onSwitch,
+}: IProps) => {
   return (
     <Stack direction="row" sx={styles.container}>
       <View style={{ flex: 1 }}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{description}</Text>
       </View>
-      <Switch value={false} />
+      <Switch value={false} onValueChange={onSwitch} />
     </Stack>
   );
 };

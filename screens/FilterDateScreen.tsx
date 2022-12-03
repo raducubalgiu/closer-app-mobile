@@ -1,69 +1,77 @@
-import { useNavigation } from "@react-navigation/native";
 import { useCallback, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import * as Haptics from "expo-haptics";
-import dayjs from "dayjs";
-import { View } from "react-native";
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import { ButtonGroup, Stack } from "../components/core";
+import { ButtonGroup } from "../components/core";
 import {
   FiltersContainer,
-  SheetHeader,
   CalendarList,
-  CalendarIntervalListItem,
   PickerHoursModal,
+  FixedPeriodList,
 } from "../components/customized";
 import { RootStackParams } from "../models/navigation/rootStackParams";
+import { Period } from "../models/period";
+import { dayMonthFormat, startOfDayFormatUTC } from "../utils/date-utils";
+import dayjs from "dayjs";
 
 type IProps = NativeStackScreenProps<RootStackParams, "FiltersDate">;
 
 export const FiltersDateScreen = ({ route }: IProps) => {
-  const { service, period } = route.params;
+  const { service } = route.params;
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
-  const [activeBtn, setActiveBtn] = useState(period.code);
-  const [activeHours, setActiveHours] = useState(0);
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
   const [visible, setVisible] = useState(false);
+  const [activeBtn, setActiveBtn] = useState(0);
+  const [activeHours, setActiveHours] = useState(0);
+  const [period, setPeriod] = useState<Period>({
+    startDate: null,
+    endDate: null,
+    startMinutes: null,
+    endMinutes: null,
+    code: "CALENDAR",
+  });
+  const [pickHour, setPickHour] = useState(`${t("pickHour")}`);
 
   const dateButtons = [
-    { title: t("selectDates") },
-    { title: t("flexibleDates") },
+    { title: t("choosePeriod") },
+    { title: t("fixedPeriods") },
   ];
-  const hoursButtons = [{ title: t("anyHour") }, { title: t("pickHour") }];
+  const hoursButtons = [{ title: t("anyHour") }, { title: pickHour }];
 
   const handleDateBtns = useCallback((index: number) => {
-    setStartDate(null);
-    setEndDate(null);
+    setPeriod((period: Period) => ({
+      ...period,
+      startDate: null,
+      endDate: null,
+    }));
     setActiveBtn(index);
+    setActiveHours(0);
+    setPickHour(`${t("pickHour")}`);
   }, []);
 
   const handleHoursBtns = useCallback((index: number) => {
     setActiveHours(index);
     if (index === 1) setVisible(true);
-    if (index === 0) setVisible(false);
+    if (index === 0) {
+      setVisible(false);
+      setPickHour(`${t("pickHour")}`);
+    }
   }, []);
 
-  const footerBtns = (
-    <>
-      {activeBtn === 0 && (
-        <ButtonGroup
-          onPress={handleHoursBtns}
-          buttons={hoursButtons}
-          activeBtn={activeHours}
-        />
-      )}
-      {activeBtn === 1 && <View />}
-    </>
-  );
-
   const goNext = () => {
-    navigation.navigate("FiltersService", { startDate, endDate, service });
+    navigation.navigate("FiltersService", {
+      period: {
+        ...period,
+        startDate: dayjs(period.startDate).format(),
+        endDate: dayjs(period.endDate).format(),
+      },
+      service,
+    });
   };
 
   const handleDayPress = useCallback(
@@ -71,84 +79,103 @@ export const FiltersDateScreen = ({ route }: IProps) => {
       if (item.disabled) return;
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 
-      if (!startDate && !endDate) {
-        setStartDate(item.date.format());
-        setEndDate(null);
+      const { startDate, endDate } = period;
+
+      if (!startDate && !endDate && !item.prevDates) {
+        setPeriod((period: Period) => ({
+          ...period,
+          startDate: item.date,
+          endDate: null,
+        }));
         return;
       }
-      if (item.date.isBefore(startDate)) {
-        setStartDate(item.date);
+      if (item.date.isBefore(startDate) && !item.prevDates) {
+        setPeriod((period: Period) => ({
+          ...period,
+          startDate: item.date,
+        }));
         return;
       }
-      if (startDate && endDate) {
-        setStartDate(item.date);
-        setEndDate(null);
+      if (startDate && endDate && !item.prevDates) {
+        setPeriod((period: Period) => ({
+          ...period,
+          startDate: item.date,
+          endDate: null,
+        }));
         return;
       }
-      if (startDate) {
-        setEndDate(item.date);
+      if (startDate && !item.prevDates) {
+        setPeriod((period: Period) => ({
+          ...period,
+          endDate: item.date,
+        }));
         return;
       }
     },
-    [startDate, endDate]
+    [period]
   );
 
-  const startDateHeader = startDate
-    ? dayjs(startDate)?.format("D MMM").split(".")[0]
-    : "";
-  const endDateHeader = endDate
-    ? dayjs(endDate)?.format("D MMM").split(".")[0]
-    : "";
+  const handleHours = useCallback((data: any) => {
+    const { startMinutes, endMinutes } = data;
+    setPeriod((period: Period) => ({ ...period, startMinutes, endMinutes }));
+    setPickHour(`14:00 - 16:00`);
+    setVisible(false);
+  }, []);
 
-  const handleHours = (data: any) => console.log(data);
+  let disabled;
+  if (period.startDate && period.endDate) {
+    disabled = false;
+  } else {
+    disabled = true;
+  }
+
+  const footerBtns = (
+    <ButtonGroup
+      onPress={handleHoursBtns}
+      buttons={hoursButtons}
+      activeBtn={activeHours}
+    />
+  );
 
   return (
     <>
       <FiltersContainer
-        headerTitle={t("select")}
-        headerDescription={t("period")}
+        mainHeading={t("select")}
+        secondHeading={t("period")}
+        headerTitle={service?.name}
+        headerDescription={`${dayMonthFormat(
+          period.startDate
+        )} - ${dayMonthFormat(period.endDate)}`}
         onNext={goNext}
         btnTitle={t("next")}
         footerExtraBtns={footerBtns}
-        disabled={!startDate && !endDate}
+        disabled={disabled}
       >
-        <SheetHeader
-          title={service?.name}
-          description={`${startDateHeader} - ${endDateHeader}`}
-        />
         <ButtonGroup
           onPress={handleDateBtns}
           buttons={dateButtons}
           activeBtn={activeBtn}
           sx={{ marginBottom: 15 }}
+          disableActiveBtn={true}
         />
         {activeBtn === 0 && (
           <CalendarList
-            startDate={startDate}
-            endDate={endDate}
+            startDate={period.startDate}
+            endDate={period.endDate}
             onDayPress={handleDayPress}
           />
         )}
         {activeBtn === 1 && (
-          <Stack sx={{ margin: 15 }}>
-            <CalendarIntervalListItem
-              title={t("anytime")}
-              description={t("anytimeDescription")}
-            />
-            <CalendarIntervalListItem
-              title={t("now")}
-              description={t("nowDescription")}
-            />
-            <CalendarIntervalListItem
-              title={t("after18")}
-              description={t("after18Description")}
-            />
-          </Stack>
+          <FixedPeriodList onSwitch={(checked: boolean) => {}} />
         )}
       </FiltersContainer>
       <PickerHoursModal
         visible={visible}
-        onCloseModal={() => handleHoursBtns(0)}
+        onCloseModal={(notChangeIndex) =>
+          !notChangeIndex
+            ? handleHoursBtns(0)
+            : setVisible((visible) => !visible)
+        }
         handleHours={handleHours}
       />
     </>

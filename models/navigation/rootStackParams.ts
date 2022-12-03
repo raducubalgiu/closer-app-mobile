@@ -40,11 +40,18 @@ export type RootStackParams = {
   SearchServices: any;
   FindFriends: any;
   FiltersDate: { service: Service; period: any };
-  FiltersService: { service: Service; startDate: any; endDate: any };
+  FiltersService: {
+    service: Service;
+    period: any;
+  };
   Feed: any;
   Hashtag: { name: string };
   Login: any;
-  Locations: { service: Service; option: Option; period: any };
+  Locations: {
+    service: Service;
+    option: Option | null;
+    period: any;
+  };
   LocationItem: { locationId: string };
   Likes: { postId: string };
   MyBusiness: any;

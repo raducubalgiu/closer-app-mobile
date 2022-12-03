@@ -3,10 +3,11 @@ import { FormProvider, useForm } from "react-hook-form";
 import { CModal, FormInputSelect, Stack, Button } from "../../core";
 import { useMinutes } from "../../../hooks";
 import { useTranslation } from "react-i18next";
+import { isGreaterThan } from "../../../constants/validation";
 
 type IProps = {
   handleHours: (data: any) => void;
-  onCloseModal: () => void;
+  onCloseModal: (withoutChangeIndex: boolean) => void;
   visible: boolean;
 };
 
@@ -15,16 +16,25 @@ export const PickerHoursModal = ({
   onCloseModal,
   visible,
 }: IProps) => {
-  const methods = useForm({ defaultValues: { startHour: "", endHour: "" } });
+  const methods = useForm({
+    defaultValues: { startMinutes: "", endMinutes: "" },
+  });
   const { handleSubmit, watch } = methods;
   const { minutes } = useMinutes();
   const { t } = useTranslation();
+  const { isGreater } = isGreaterThan(
+    watch("startMinutes"),
+    watch("endMinutes"),
+    t
+  );
+  const startMinutes = watch("startMinutes");
+  const endMinutes = watch("endMinutes");
 
   const modalFooter = (
     <Button
       onPress={handleSubmit(handleHours)}
       title={t("add")}
-      disabled={true}
+      disabled={isGreater.value}
     />
   );
 
@@ -32,25 +42,26 @@ export const PickerHoursModal = ({
     <CModal
       size="sm"
       visible={visible}
-      onCloseModal={onCloseModal}
+      onCloseModal={() => onCloseModal(!!startMinutes && !!endMinutes)}
       footer={modalFooter}
+      headerTitle={t("hoursInterval")}
     >
       <FormProvider {...methods}>
-        <Stack direction="row" sx={{ flex: 1, marginHorizontal: 25 }}>
+        <Stack direction="row" sx={styles.container}>
           <View style={{ flex: 1, marginRight: 20 }}>
             <FormInputSelect
               items={minutes}
-              name="startHour"
-              placeholder="De la"
-              label="De la"
+              name="startMinutes"
+              placeholder={t("from")}
+              label={t("from")}
             />
           </View>
           <View style={{ flex: 1 }}>
             <FormInputSelect
               items={minutes}
-              name="endHour"
-              placeholder="Pana la"
-              label="Pana la"
+              name="endMinutes"
+              placeholder={t("until")}
+              label={"until"}
             />
           </View>
         </Stack>
@@ -59,4 +70,6 @@ export const PickerHoursModal = ({
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: { flex: 1, marginHorizontal: 25 },
+});

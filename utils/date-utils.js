@@ -11,6 +11,17 @@ export const NOW = dayjs.utc().format();
 
 export const FROM_NOW = (date) => dayjs(date).fromNow();
 
+export const dayMonthFormat = (date) => {
+  if (date) {
+    return dayjs(date)?.format("D MMM").split(".")[0];
+  } else {
+    return "";
+  }
+};
+export const startOfDayFormatUTC = (date) => {
+  return dayjs(date).utc().startOf("day").format();
+};
+
 export const yearMonthFormat = (year, month) => {
   return dayjs()
     .year(year)

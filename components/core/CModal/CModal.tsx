@@ -24,6 +24,8 @@ type Props = {
   footer: any;
   header?: boolean;
   sx?: {};
+  animationInTiming?: number;
+  animationOutTiming?: number;
 };
 
 export const CModal = ({
@@ -35,6 +37,8 @@ export const CModal = ({
   footer,
   header = true,
   sx = {},
+  animationInTiming = 200,
+  animationOutTiming = 200,
 }: Props) => {
   const backdrop = (
     <TouchableWithoutFeedback onPress={onCloseModal}>
@@ -78,8 +82,8 @@ export const CModal = ({
       }}
       customBackdrop={backdrop}
       propagateSwipe
-      animationInTiming={200}
-      animationOutTiming={200}
+      animationInTiming={animationInTiming}
+      animationOutTiming={animationOutTiming}
     >
       <SafeAreaView style={styles.container}>
         {header && (

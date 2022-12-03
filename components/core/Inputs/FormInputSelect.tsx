@@ -95,7 +95,7 @@ export const FormInputSelect = ({
               style={styles}
               doneText="Gata"
               value={value}
-              items={items?.map((item) => {
+              items={items?.map((item: Item) => {
                 return {
                   label: item?.name,
                   value: item?._id,

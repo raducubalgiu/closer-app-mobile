@@ -1,0 +1,44 @@
+import { FlatList, ListRenderItemInfo } from "react-native";
+import { useCallback } from "react";
+import { useTranslation } from "react-i18next";
+import { FixedPeriodListItem } from "../ListItems/FixedPeriodListItem";
+
+type ItemInterval = { _id: string; title: string; description: string };
+type IProps = { onSwitch: (checked: boolean) => void };
+
+export const FixedPeriodList = ({ onSwitch }: IProps) => {
+  const { t } = useTranslation();
+
+  const fixedPeriods = [
+    { _id: "1", title: t("now"), description: t("nowDescription") },
+    { _id: "2", title: t("anytime"), description: t("anytimeDescription") },
+    {
+      _id: "3",
+      title: t("after18"),
+      description: t("after18Description"),
+    },
+    { _id: "4", title: t("weekend"), description: t("weekendDescription") },
+  ];
+
+  const renderFixedPeriod = useCallback(
+    ({ item }: ListRenderItemInfo<ItemInterval>) => (
+      <FixedPeriodListItem
+        onSwitch={onSwitch}
+        title={item.title}
+        description={item.description}
+      />
+    ),
+    []
+  );
+
+  return (
+    <FlatList
+      data={fixedPeriods}
+      keyExtractor={(item: ItemInterval) => item._id}
+      renderItem={renderFixedPeriod}
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={{ margin: 15 }}
+      bounces={false}
+    />
+  );
+};

@@ -29,7 +29,7 @@ export const CalendarList = ({ startDate, endDate, onDayPress }: IProps) => {
     (item: any) => {
       if (
         (item.date.isSame(startDate) || item.date.isSame(endDate)) &&
-        !item.disabled
+        !item.prevDates
       ) {
         return { backgroundColor: primary, borderRadius: 50 };
       }
@@ -42,7 +42,7 @@ export const CalendarList = ({ startDate, endDate, onDayPress }: IProps) => {
       if (
         item.date.isSameOrAfter(startDate) &&
         item.date.isSame(startDate) &&
-        !item.disabled
+        !item.prevDates
       ) {
         return {
           backgroundColor: "#f1f1f1",
@@ -53,7 +53,7 @@ export const CalendarList = ({ startDate, endDate, onDayPress }: IProps) => {
       if (
         item.date.isSameOrBefore(endDate) &&
         item.date.isSame(endDate) &&
-        !item.disabled
+        !item.prevDates
       ) {
         return {
           backgroundColor: "#f1f1f1",
@@ -64,7 +64,7 @@ export const CalendarList = ({ startDate, endDate, onDayPress }: IProps) => {
       if (
         item.date.isSameOrAfter(startDate) &&
         item.date.isSameOrBefore(endDate) &&
-        !item.disabled
+        !item.prevDates
       ) {
         return { backgroundColor: "#f1f1f1" };
       }
@@ -76,7 +76,7 @@ export const CalendarList = ({ startDate, endDate, onDayPress }: IProps) => {
     (item: any) => {
       if (
         (item.date.isSame(startDate) || item.date.isSame(endDate)) &&
-        !item.disabled
+        !item.prevDates
       ) {
         return "white";
       } else if (item.disabled) {

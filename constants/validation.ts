@@ -24,3 +24,16 @@ export const maxField = (length: number) => {
     },
   };
 };
+
+export const isGreaterThan = (
+  first: number | string,
+  second: number | string,
+  t: any
+) => {
+  return {
+    isGreater: {
+      value: first >= second || (!!!first && !!!first),
+      message: t("isGreatherThanMessage"),
+    },
+  };
+};

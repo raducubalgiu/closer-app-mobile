@@ -1,14 +1,17 @@
 import { StyleSheet, Text, View, Dimensions, SafeAreaView } from "react-native";
 import theme from "../../../assets/styles/theme";
-import { Stack, Button } from "../../core";
+import { Icon } from "@rneui/themed";
+import { Stack, Button, IconBackButton } from "../../core";
 import { LinearGradient } from "expo-linear-gradient";
 
 const { height } = Dimensions.get("window");
-const { primary } = theme.lightColors || {};
+const { grey0 } = theme.lightColors || {};
 
 type IProps = {
   children: any;
   onNext: () => void;
+  mainHeading: string;
+  secondHeading: string;
   headerTitle: string;
   headerDescription: string;
   footerExtraBtns?: any;
@@ -19,6 +22,8 @@ type IProps = {
 export const FiltersContainer = ({
   children,
   onNext,
+  mainHeading,
+  secondHeading,
   headerTitle,
   headerDescription,
   footerExtraBtns = false,
@@ -36,10 +41,20 @@ export const FiltersContainer = ({
         <SafeAreaView style={styles.screen}>
           <View style={{ flex: 1 }}>
             <View style={styles.header}>
-              <Text style={styles.mainHeading}>{headerTitle}</Text>
-              <Text style={styles.mainHeading}>{headerDescription}</Text>
+              <Text style={styles.mainHeading}>{mainHeading}</Text>
+              <Text style={styles.mainHeading}>{secondHeading}</Text>
             </View>
-            <View style={styles.body}>{children}</View>
+            <View style={styles.body}>
+              <Stack direction="row" sx={styles.sheetOverview}>
+                <IconBackButton size={20} />
+                <Stack>
+                  <Text style={styles.title}>{headerTitle}</Text>
+                  <Text style={styles.description}>{headerDescription}</Text>
+                </Stack>
+                <Icon name="chevron-back" type="ionicon" color="white" />
+              </Stack>
+              {children}
+            </View>
           </View>
         </SafeAreaView>
       </LinearGradient>
@@ -58,10 +73,7 @@ export const FiltersContainer = ({
 };
 
 const styles = StyleSheet.create({
-  screen: {
-    //backgroundColor: primary,
-    flex: 1,
-  },
+  screen: { flex: 1 },
   header: { height: height / 8, margin: 25 },
   mainHeading: { color: "white", fontSize: 28, fontWeight: "700" },
   body: {
@@ -69,6 +81,24 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
+  },
+  sheetOverview: {
+    marginHorizontal: 15,
+    marginBottom: 15,
+  },
+  title: {
+    textAlign: "center",
+    marginTop: 10,
+    fontSize: 18,
+    fontWeight: "700",
+  },
+  description: {
+    color: grey0,
+    marginTop: 5,
+    textAlign: "center",
+    fontSize: 15,
+    marginBottom: 15,
+    fontWeight: "500",
   },
   footer: {
     backgroundColor: "white",

@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 
-export const useCalendarList = () => {
+export const useCalendarList = (noMonths: number = 5) => {
   let month = dayjs().month();
   let year = dayjs().year();
 
@@ -9,8 +9,16 @@ export const useCalendarList = () => {
   };
 
   const generateCalendar = (month: any, year: any) => {
-    const firstDateOfMonth = dayjs().year(year).month(month).startOf("month");
-    const lastDateOfMonth = dayjs().year(year).month(month).endOf("month");
+    const firstDateOfMonth = dayjs()
+      .year(year)
+      .month(month)
+      .utc()
+      .startOf("month");
+    const lastDateOfMonth = dayjs()
+      .year(year)
+      .month(month)
+      .utc()
+      .endOf("month");
 
     const arrayOfDate = [];
 
@@ -19,7 +27,7 @@ export const useCalendarList = () => {
 
       arrayOfDate.push({
         prevDates: true,
-        date,
+        date: date.utc().startOf("day"),
       });
     }
 
@@ -27,10 +35,7 @@ export const useCalendarList = () => {
       arrayOfDate.push({
         prevDates: false,
         disabled: firstDateOfMonth.date(i).isBefore(dayjs().startOf("day")),
-        date: firstDateOfMonth.date(i),
-        today:
-          firstDateOfMonth.date(i).toDate().toDateString() ===
-          dayjs().toDate().toDateString(),
+        date: firstDateOfMonth.date(i).utc().startOf("day"),
       });
     }
 
@@ -38,22 +43,17 @@ export const useCalendarList = () => {
   };
 
   const DAYS_HEADER = ["D", "L", "M", "M", "J", "V", "S"];
+  let MONTHS = [];
+
+  for (let i = 0; i <= noMonths; i++) {
+    MONTHS.push({
+      month: displayMonth(month + i, year),
+      data: [{ list: [...generateCalendar(month + i, year)] }],
+    });
+  }
 
   return {
     DAYS_HEADER,
-    MONTHS: [
-      {
-        month: displayMonth(month, year),
-        data: [{ list: [...generateCalendar(month, year)] }],
-      },
-      {
-        month: displayMonth(month + 1, year),
-        data: [{ list: [...generateCalendar(month + 1, year)] }],
-      },
-      {
-        month: displayMonth(month + 2, year),
-        data: [{ list: [...generateCalendar(month + 2, year)] }],
-      },
-    ],
+    MONTHS,
   };
 };
