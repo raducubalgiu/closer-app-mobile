@@ -13,7 +13,9 @@ type Props = {
   rules?: {};
   sx?: {};
   label?: string;
+  maxLength?: number;
   secureTextEntry?: boolean;
+  keyboardType?: any;
 };
 
 export const FormInput = ({
@@ -23,15 +25,18 @@ export const FormInput = ({
   sx = {},
   label = "",
   secureTextEntry = false,
+  maxLength,
+  keyboardType = "default",
   ...props
 }: Props) => {
   const { formState, control } = useFormContext();
   const { errors } = formState;
+  const message: string = get(errors, name)?.message as string;
 
   const errMsg = (
     <Stack direction="row" sx={{ marginBottom: 10 }}>
       <Icon name="alert-circle" type="feather" size={20} color={error} />
-      <Text style={styles.errMsg}>{get<any>(errors, name)?.message}</Text>
+      <Text style={styles.errMsg}>{message}</Text>
     </Stack>
   );
 
@@ -50,6 +55,8 @@ export const FormInput = ({
               borderColor: has(errors, name) ? error : "#ccc",
               ...sx,
             }}
+            maxLength={maxLength}
+            keyboardType={keyboardType}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}

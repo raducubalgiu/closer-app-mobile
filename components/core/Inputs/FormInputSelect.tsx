@@ -29,6 +29,7 @@ export const FormInputSelect = ({
 }: IProps) => {
   const { formState, control } = useFormContext();
   const { errors } = formState;
+  const message: string = get(errors, name)?.message as string;
 
   const inputPlaceholder = {
     label: placeholder,
@@ -75,7 +76,7 @@ export const FormInputSelect = ({
   const errMsg = (
     <Stack direction="row" sx={{ marginBottom: 10 }}>
       <Icon name="alert-circle" type="feather" size={20} color={error} />
-      <Text style={styles.errMsg}>{get(errors, name)?.message}</Text>
+      <Text style={styles.errMsg}>{message}</Text>
     </Stack>
   );
 
@@ -98,7 +99,10 @@ export const FormInputSelect = ({
               items={items?.map((item: Item) => {
                 return {
                   label: item?.name,
-                  value: item?._id,
+                  value: {
+                    _id: item?._id,
+                    name: item?.name,
+                  },
                 };
               })}
             />

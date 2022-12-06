@@ -15,6 +15,7 @@ import { FormInputSelect } from "../../../../components/core";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../models/navigation/rootStackParams";
+import { Product } from "../../../../models/product";
 
 const defaultValues = {
   service: "",
@@ -26,6 +27,8 @@ const defaultValues = {
   duration: "",
 };
 
+type Value = { _id: string; name: string };
+
 export const AddProductsScreen = () => {
   const { user } = useAuth();
   const { location } = user;
@@ -34,7 +37,7 @@ export const AddProductsScreen = () => {
   const { t } = useTranslation();
   const methods = useForm({ defaultValues });
   const { handleSubmit, watch } = methods;
-  const service = watch("service");
+  const service: any = watch("service");
   const isRequired = required(t);
   const headerHeight = useHeaderHeight();
 
@@ -54,7 +57,7 @@ export const AddProductsScreen = () => {
 
   const filtersArr = (filters && filters[0]) || [];
 
-  const goBack = (data) =>
+  const goBack = (data: any) =>
     navigation.navigate({
       name: "MyProducts",
       params: { product: data },
@@ -66,7 +69,7 @@ export const AddProductsScreen = () => {
     onSuccess: () => navigation.goBack(),
   });
 
-  const handleCreate = (data) => {
+  const handleCreate = (data: any) => {
     makePost({
       ...data,
       service: service?._id,

@@ -61,7 +61,7 @@ export const PickerHoursModal = ({
               items={minutes}
               name="endMinutes"
               placeholder={t("until")}
-              label={"until"}
+              label={t("until")}
             />
           </View>
         </Stack>
