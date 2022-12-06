@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import React, { useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
+import * as Location from "expo-location";
 import {
   HeaderServices,
   CardLocation,
@@ -22,6 +23,7 @@ import { useGet } from "../hooks";
 import theme from "../assets/styles/theme";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParams } from "../models/navigation/rootStackParams";
+import { useFocusEffect } from "@react-navigation/native";
 
 const { black } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "Locations">;
@@ -34,6 +36,8 @@ export const LocationsScreen = ({ route }: IProps) => {
   const [maxDistance, setMaxDistance] = useState(50000);
   const latlng = "26.100195,44.428286";
   const [checked, setChecked] = useState(true);
+  const [location, setLocation] = useState<any>(null);
+  const { longitude, latitude } = location?.coords || {};
   const [visible, setVisible] = useState({
     price: false,
     distance: false,
@@ -41,9 +45,34 @@ export const LocationsScreen = ({ route }: IProps) => {
   });
   const { t } = useTranslation();
 
+  useFocusEffect(
+    useCallback(() => {
+      let isActive = true;
+
+      try {
+        const fetchUserLocation = async () => {
+          let { status } = await Location.requestForegroundPermissionsAsync();
+          if (status !== "granted") {
+            //setErrorMsg("Permission to access location was denied");
+            return;
+          }
+
+          let location = await Location.getCurrentPositionAsync({});
+          setLocation(location);
+        };
+
+        fetchUserLocation();
+
+        return () => {
+          isActive = false;
+        };
+      } catch (err) {}
+    }, [])
+  );
+
   const { data: locations } = useGet({
     model: "locations",
-    uri: `/locations?latlng=26.100195,44.428286&serviceId=${service?._id}&option=${option?._id}&minprice=${minPrice}&maxprice=${maxPrice}&mindistance=${minDistance}&maxdistance=${maxDistance}&minrating=0&maxrating=5&page=1&limit=5`,
+    uri: `/locations?latlng=${longitude},${latitude}&serviceId=${service?._id}&option=${option?._id}&minprice=${minPrice}&maxprice=${maxPrice}&mindistance=${minDistance}&maxdistance=${maxDistance}&minrating=0&maxrating=5&page=1&limit=25`,
   });
 
   const renderLocation = useCallback(({ item }: ListRenderItemInfo<any>) => {
@@ -61,7 +90,7 @@ export const LocationsScreen = ({ route }: IProps) => {
   const toggleSwitch = useCallback(() => setChecked(!checked), [checked]);
 
   let footer;
-  if (locations.length === 0) {
+  if (locations && locations.length === 0) {
     footer = (
       <NoFoundMessage
         title={service.name}
@@ -112,11 +141,18 @@ export const LocationsScreen = ({ route }: IProps) => {
       />
       {checked && (
         <>
-          <Map locations={locations} serviceName={service?.name} />
+          {latitude && longitude && (
+            <Map
+              locations={locations}
+              serviceName={service?.name}
+              initialLatitude={latitude}
+              initialLongitude={longitude}
+            />
+          )}
           <SheetService>
             <View style={{ height: 50 }}>
               <Text style={styles.sheetHeading}>
-                {locations?.length} rezultate
+                {locations && locations?.length} rezultate
               </Text>
             </View>
             {list}

@@ -9,9 +9,19 @@ import { RootStackParams } from "../../../models/navigation/rootStackParams";
 
 const { grey0 } = theme.lightColors || {};
 
-type IProps = { locations: any; serviceName: string };
+type IProps = {
+  locations: any;
+  serviceName: string;
+  initialLatitude: number;
+  initialLongitude: number;
+};
 
-export const Map = ({ locations, serviceName }: IProps) => {
+export const Map = ({
+  locations,
+  serviceName,
+  initialLatitude,
+  initialLongitude,
+}: IProps) => {
   const { t } = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -75,13 +85,14 @@ export const Map = ({ locations, serviceName }: IProps) => {
     <MapView
       style={{ height: "100%" }}
       initialRegion={{
-        latitude: 44.425625,
-        longitude: 26.102312,
+        latitude: initialLatitude,
+        longitude: initialLongitude,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       }}
       customMapStyle={mapStyle}
       provider={PROVIDER_GOOGLE}
+      showsUserLocation={true}
     >
       {locations?.map((loc: any, i: number) => (
         <Marker

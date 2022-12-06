@@ -1,4 +1,6 @@
 import dayjs from "dayjs";
+import "dayjs/locale/ro";
+dayjs.locale("ro");
 
 export const useCalendarList = (noMonths: number = 5) => {
   let month = dayjs().month();
@@ -14,6 +16,7 @@ export const useCalendarList = (noMonths: number = 5) => {
       .month(month)
       .utc()
       .startOf("month");
+
     const lastDateOfMonth = dayjs()
       .year(year)
       .month(month)

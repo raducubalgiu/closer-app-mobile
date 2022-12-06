@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { Switch } from "@rneui/themed";
 import { Stack } from "../../core";
 import theme from "../../../assets/styles/theme";
+import { useState } from "react";
 
 const { black, grey0 } = theme.lightColors || {};
 
@@ -9,12 +10,14 @@ type IProps = {
   title: string;
   description: string;
   onSwitch: (checked: boolean) => void;
+  checked: boolean;
 };
 
 export const FixedPeriodListItem = ({
   title,
   description,
   onSwitch,
+  checked,
 }: IProps) => {
   return (
     <Stack direction="row" sx={styles.container}>
@@ -22,7 +25,7 @@ export const FixedPeriodListItem = ({
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{description}</Text>
       </View>
-      <Switch value={false} onValueChange={onSwitch} />
+      <Switch value={checked} onValueChange={onSwitch} />
     </Stack>
   );
 };

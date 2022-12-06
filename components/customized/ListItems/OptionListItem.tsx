@@ -22,7 +22,7 @@ export const OptionListItem = ({ isActive, name, onPress }: IProps) => {
 const styles = StyleSheet.create({
   btn: {
     backgroundColor: "#eee",
-    marginHorizontal: 10,
+    marginHorizontal: 15,
     margin: 10,
     padding: 15,
     borderRadius: 10,

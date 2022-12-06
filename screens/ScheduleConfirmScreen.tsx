@@ -1,4 +1,10 @@
-import { SafeAreaView, ScrollView, StyleSheet, Text } from "react-native";
+import {
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  Dimensions,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Icon } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
@@ -9,10 +15,12 @@ import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
+import Toast from "react-native-root-toast";
 
 import dayjs from "dayjs";
 import { RootStackParams } from "../models/navigation/rootStackParams";
 
+const { width } = Dimensions.get("window");
 const { black, grey0 } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "ScheduleConfirm">;
 
@@ -29,6 +37,24 @@ export const ScheduleConfirmScreen = ({ route }: IProps) => {
   const { mutate, isLoading, isSuccess } = usePost({
     uri: "/schedules",
     onSuccess: () => navigation.navigate("Schedules"),
+    onError: () => {
+      Toast.show(t("somethingWentWrong"), {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.TOP,
+        shadow: false,
+        animation: true,
+        hideOnPress: true,
+        containerStyle: {
+          marginTop: 30,
+          width: width - 30,
+          shadowColor: "#404040",
+          shadowOffset: { width: -2.5, height: 3 },
+          shadowOpacity: 0.2,
+        },
+        opacity: 0.975,
+        backgroundColor: "#404040",
+      });
+    },
   });
 
   const handleBook = () => {

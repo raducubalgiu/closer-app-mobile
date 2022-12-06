@@ -1,5 +1,5 @@
 import { FlatList, ListRenderItemInfo } from "react-native";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FixedPeriodListItem } from "../ListItems/FixedPeriodListItem";
 
@@ -7,6 +7,7 @@ type ItemInterval = { _id: string; title: string; description: string };
 type IProps = { onSwitch: (checked: boolean) => void };
 
 export const FixedPeriodList = ({ onSwitch }: IProps) => {
+  const [checked, setChecked] = useState(false);
   const { t } = useTranslation();
 
   const fixedPeriods = [
@@ -21,8 +22,9 @@ export const FixedPeriodList = ({ onSwitch }: IProps) => {
   ];
 
   const renderFixedPeriod = useCallback(
-    ({ item }: ListRenderItemInfo<ItemInterval>) => (
+    ({ item, index }: ListRenderItemInfo<ItemInterval>) => (
       <FixedPeriodListItem
+        checked={checked}
         onSwitch={onSwitch}
         title={item.title}
         description={item.description}

@@ -1,18 +1,22 @@
 import axios from "axios";
 import { useAuth } from "./auth";
 import { useMutation, useQuery, useInfiniteQuery } from "@tanstack/react-query";
-import Toast from "react-native-root-toast";
-import { useTranslation } from "react-i18next";
 
 const BASE_ENDPOINT = `${process.env.BASE_ENDPOINT}`;
 
 type PatchProps = {
   uri: string;
   onSuccess?: (res: any) => void;
+  onError?: (err: any) => void;
   config?: {};
 };
 
-export function usePatch<T>({ uri, onSuccess, config = {} }: PatchProps) {
+export function usePatch<T>({
+  uri,
+  onSuccess,
+  onError,
+  config = {},
+}: PatchProps) {
   const { user } = useAuth();
 
   const mutations = useMutation(
@@ -22,7 +26,7 @@ export function usePatch<T>({ uri, onSuccess, config = {} }: PatchProps) {
       }),
     {
       onSuccess,
-      onError: (err) => console.log(err),
+      onError,
       ...config,
     }
   );
@@ -33,16 +37,17 @@ export function usePatch<T>({ uri, onSuccess, config = {} }: PatchProps) {
 type PostProps = {
   uri: string;
   onSuccess?: (res: any) => void;
+  onError?: (err: any) => void;
   config?: {};
 };
 
 export function usePost<T>({
   uri,
-  onSuccess = undefined,
+  onSuccess,
+  onError,
   config = {},
 }: PostProps) {
   const { user } = useAuth();
-  const { t } = useTranslation();
 
   const mutations = useMutation(
     (body: T) =>
@@ -51,16 +56,7 @@ export function usePost<T>({
       }),
     {
       onSuccess,
-      onError: () => {
-        Toast.show(t("somethingWentWrong"), {
-          duration: Toast.durations.LONG,
-          position: Toast.positions.BOTTOM,
-          shadow: true,
-          animation: true,
-          hideOnPress: true,
-          delay: 0,
-        });
-      },
+      onError,
       ...config,
     }
   );
@@ -71,10 +67,11 @@ export function usePost<T>({
 type DeleteProps = {
   uri: string;
   onSuccess?: (res: any) => void;
+  onError?: (err: any) => void;
   config?: {};
 };
 
-export const useDelete = ({ uri, onSuccess = undefined }: DeleteProps) => {
+export const useDelete = ({ uri, onSuccess, onError }: DeleteProps) => {
   const { user } = useAuth();
 
   const mutations = useMutation(
@@ -84,7 +81,7 @@ export const useDelete = ({ uri, onSuccess = undefined }: DeleteProps) => {
       }),
     {
       onSuccess,
-      onError: (err) => console.log(err),
+      onError,
     }
   );
 
@@ -95,15 +92,17 @@ type GetProps = {
   model: string;
   uri: string;
   onSuccess?: (res: any) => void;
+  onError?: (err: any) => void;
   enabled?: boolean;
   enableId?: string;
   others?: {};
 };
 
 export const useGet = ({
-  model = "",
-  uri = "",
+  model,
+  uri,
   onSuccess,
+  onError,
   enabled = true,
   enableId = "",
   others = {},
@@ -120,7 +119,7 @@ export const useGet = ({
     },
     {
       onSuccess,
-      onError: (err) => console.log(err),
+      onError,
       enabled,
       ...others,
     }
@@ -135,11 +134,13 @@ export const useGet = ({
 type GetMutateProps = {
   uri: string;
   onSuccess?: (res: any) => void;
+  onError?: (err: any) => void;
 };
 
 export const useGetMutate = ({
   uri,
   onSuccess = undefined,
+  onError = undefined,
 }: GetMutateProps) => {
   const { user } = useAuth();
 
@@ -150,17 +151,34 @@ export const useGetMutate = ({
       }),
     {
       onSuccess,
-      onError: (err) => console.log(err),
+      onError,
     }
   );
 
   return mutations;
 };
 
-export const useGetPaginate = ({ model, uri, limit, enabled = true }) => {
+type GetPaginateProps = {
+  model: string;
+  uri: string;
+  limit: string;
+  enabled?: boolean;
+};
+
+export const useGetPaginate = ({
+  model,
+  uri,
+  limit,
+  enabled = true,
+}: GetPaginateProps) => {
   const { user } = useAuth();
 
-  const fetchData = async (page, uri, limit, signal) => {
+  const fetchData = async (
+    page: number,
+    uri: string,
+    limit: string,
+    signal: any
+  ) => {
     const { data } = await axios.get(
       `${process.env.BASE_ENDPOINT}${uri}?page=${page}&limit=${limit}`,
       { signal, headers: { Authorization: `Bearer ${user?.token}` } }

@@ -8,7 +8,7 @@ type Props = {
 };
 
 const CustomAvatar = ({ avatar = [], size = 55, sx = {} }: Props) => {
-  const uri = avatar.length ? `${avatar[0]?.url}` : "";
+  const uri = avatar.length ? `${avatar[0]?.url}` : null;
 
   return (
     <Avatar
