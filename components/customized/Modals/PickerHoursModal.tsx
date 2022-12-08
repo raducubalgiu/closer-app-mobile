@@ -1,34 +1,43 @@
 import { StyleSheet, View } from "react-native";
 import { FormProvider, useForm } from "react-hook-form";
 import { CModal, FormInputSelect, Stack, Button } from "../../core";
-import { useMinutes } from "../../../hooks";
 import { useTranslation } from "react-i18next";
 import { isGreaterThan } from "../../../constants/validation";
+
+type Minutes = {
+  _id: string | number;
+  name: string;
+};
 
 type IProps = {
   handleHours: (data: any) => void;
   onCloseModal: (withoutChangeIndex: boolean) => void;
   visible: boolean;
+  minutes: Minutes[];
 };
+
+interface IFormInputs {
+  startMinutes: "";
+  endMinutes: "";
+}
 
 export const PickerHoursModal = ({
   handleHours,
   onCloseModal,
   visible,
+  minutes,
 }: IProps) => {
-  const methods = useForm({
-    defaultValues: { startMinutes: "", endMinutes: "" },
+  const methods = useForm<IFormInputs>({
+    defaultValues: {
+      startMinutes: "",
+      endMinutes: "",
+    },
   });
   const { handleSubmit, watch } = methods;
-  const { minutes } = useMinutes();
   const { t } = useTranslation();
-  const { isGreater } = isGreaterThan(
-    watch("startMinutes"),
-    watch("endMinutes"),
-    t
-  );
   const startMinutes = watch("startMinutes");
   const endMinutes = watch("endMinutes");
+  const { isGreater } = isGreaterThan(startMinutes, endMinutes, t);
 
   const modalFooter = (
     <Button
@@ -50,7 +59,7 @@ export const PickerHoursModal = ({
         <Stack direction="row" sx={styles.container}>
           <View style={{ flex: 1, marginRight: 20 }}>
             <FormInputSelect
-              items={minutes}
+              items={minutes.slice(0, minutes.length - 1)}
               name="startMinutes"
               placeholder={t("from")}
               label={t("from")}
@@ -58,7 +67,7 @@ export const PickerHoursModal = ({
           </View>
           <View style={{ flex: 1 }}>
             <FormInputSelect
-              items={minutes}
+              items={minutes.slice(0, minutes.length - 1)}
               name="endMinutes"
               placeholder={t("until")}
               label={t("until")}

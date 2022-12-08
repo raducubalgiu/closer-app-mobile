@@ -3,39 +3,44 @@ import {
   StyleSheet,
   View,
   Text,
-  FlatList,
-  ListRenderItemInfo,
+  RefreshControl,
 } from "react-native";
-import React, { useCallback, useRef } from "react";
+import {
+  MasonryFlashList,
+  MasonryListRenderItemInfo,
+} from "@shopify/flash-list";
+import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { Divider } from "@rneui/themed";
 import FakeSearchBar from "../components/customized/FakeSearchBar/FakeSearchBar";
 import theme from "../assets/styles/theme";
-import { useNavigation, useScrollToTop } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { ServicesList, CardRecommended } from "../components/customized";
-import { useGet } from "../hooks";
+import { useGet, useRefreshByUser } from "../hooks";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../models/navigation/rootStackParams";
+import { RecommendedLocation } from "../models/recommendedLocation";
 
 const { black } = theme.lightColors || {};
 
 export const HomeScreen = () => {
   const { t } = useTranslation();
-  const ref = useRef(null);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-
-  useScrollToTop(ref);
 
   const { data: locations } = useGet({
     model: "recommended",
     uri: `/locations/get-recommended?latlng=26.100195,44.428286`,
   });
 
-  const { data: services } = useGet({ model: "services", uri: "/services" });
+  const { data: services, refetch } = useGet({
+    model: "services",
+    uri: "/services",
+  });
 
   const renderRecommended = useCallback(
-    ({ item }: ListRenderItemInfo<any>) => <CardRecommended location={item} />,
+    ({ item, index }: MasonryListRenderItemInfo<RecommendedLocation>) => (
+      <CardRecommended location={item} index={index} />
+    ),
     []
   );
   const keyExtractor = useCallback((item: any) => item._id, []);
@@ -49,45 +54,43 @@ export const HomeScreen = () => {
       period: { code: 1 },
     });
 
+  const { refetchByUser, refreshing } = useRefreshByUser(refetch);
+
+  const refreshControl = (
+    <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
+  );
+
   const header = (
     <>
       <ServicesList services={services} />
-      <View style={{ paddingHorizontal: 15 }}>
-        <Text style={styles.sheetHeading}>{t("nearYou")}</Text>
-        <Divider width={2} color="#f1f1f1" style={styles.divider} />
-      </View>
+      <Text style={styles.sheetHeading}>{t("nearYou")}</Text>
     </>
   );
 
   return (
     <SafeAreaView style={styles.screen}>
-      <View style={styles.container}>
-        <FakeSearchBar
-          onGoAnytime={goToServicesAnytime}
-          onGoNow={goToServicesNow}
-        />
-        <FlatList
-          ref={ref}
-          ListHeaderComponent={header}
-          data={locations}
-          keyExtractor={keyExtractor}
-          showsVerticalScrollIndicator={false}
-          renderItem={renderRecommended}
-        />
-      </View>
+      <FakeSearchBar
+        onGoAnytime={goToServicesAnytime}
+        onGoNow={goToServicesNow}
+      />
+      <MasonryFlashList
+        refreshControl={refreshControl}
+        ListHeaderComponent={header}
+        data={locations}
+        keyExtractor={keyExtractor}
+        showsVerticalScrollIndicator={false}
+        renderItem={renderRecommended}
+        numColumns={2}
+        estimatedItemSize={125}
+      />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  screen: {
-    backgroundColor: "white",
-    flex: 1,
-  },
-  container: {
-    flex: 1,
-  },
+  screen: { flex: 1, backgroundColor: "white" },
   sheetHeading: {
+    paddingLeft: 10,
     paddingVertical: 15,
     color: black,
     fontSize: 15,

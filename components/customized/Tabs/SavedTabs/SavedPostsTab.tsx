@@ -11,6 +11,12 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 import { User } from "../../../../models/user";
 
+type ListRenderItemPost = {
+  _id: string;
+  postId: Post;
+  userId: string;
+};
+
 export const SavedPostsTab = ({ user }: { user: User }) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -32,21 +38,20 @@ export const SavedPostsTab = ({ user }: { user: User }) => {
   });
 
   const renderPosts = useCallback(
-    ({ item, index }: ListRenderItemInfo<any>) => {
-      const { post } = item;
-      const { bookable, postType } = post || {};
-      const { user } = item;
+    ({ item, index }: ListRenderItemInfo<ListRenderItemPost>) => {
+      const { postId, userId } = item;
+      const { bookable, postType } = postId || {};
 
       return (
         <CardPostImage
           onPress={() =>
             navigation.navigate("AllBookmarks", {
-              postId: post?._id,
-              userId: user?._id,
+              postId: postId?._id,
+              userId: userId,
             })
           }
           index={index}
-          image={post?.images[0]?.url}
+          image={postId?.images[0]?.url}
           bookable={bookable}
           fixed={null}
           postType={postType}
@@ -56,7 +61,7 @@ export const SavedPostsTab = ({ user }: { user: User }) => {
     []
   );
 
-  const keyExtractor = useCallback((item: Post) => item._id, []);
+  const keyExtractor = useCallback((item: ListRenderItemPost) => item._id, []);
 
   const loadMore = () => {
     if (hasNextPage) {

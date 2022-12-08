@@ -1,5 +1,5 @@
 import { StyleSheet, Text } from "react-native";
-import React from "react";
+import { useCallback } from "react";
 import { useFormContext, Controller } from "react-hook-form";
 import RNPickerSelect from "react-native-picker-select";
 import theme from "../../../assets/styles/theme";
@@ -8,8 +8,8 @@ import { Stack } from "../Stack/Stack";
 import { Icon } from "@rneui/themed";
 
 const { black, error } = theme.lightColors || {};
+type Item = { _id: string | number; name: string };
 
-type Item = { name: string; _id: string | number | undefined };
 type IProps = {
   name: string;
   placeholder: string;
@@ -23,11 +23,11 @@ export const FormInputSelect = ({
   name,
   placeholder,
   rules = {},
-  items = [{ name: "", _id: undefined }],
+  items = [],
   disabled = false,
   label = "",
 }: IProps) => {
-  const { formState, control } = useFormContext();
+  const { formState, control, watch } = useFormContext();
   const { errors } = formState;
   const message: string = get(errors, name)?.message as string;
 
@@ -80,34 +80,33 @@ export const FormInputSelect = ({
     </Stack>
   );
 
+  const renderItem = useCallback(({ field: { onChange, value } }: any) => {
+    return (
+      <RNPickerSelect
+        disabled={disabled}
+        placeholder={inputPlaceholder}
+        useNativeAndroidPickerStyle={false}
+        onValueChange={onChange}
+        style={styles}
+        doneText="Gata"
+        value={value}
+        items={items?.map((item: Item) => {
+          return {
+            label: item?.name,
+            value: item._id,
+          };
+        })}
+      />
+    );
+  }, []);
+
   return (
     <>
       {label?.length > 0 && <Text style={styles.label}>{label}</Text>}
       <Controller
         control={control}
         rules={{ ...rules }}
-        render={({ field: { onChange, value } }) => {
-          return (
-            <RNPickerSelect
-              disabled={disabled}
-              placeholder={inputPlaceholder}
-              useNativeAndroidPickerStyle={false}
-              onValueChange={onChange}
-              style={styles}
-              doneText="Gata"
-              value={value}
-              items={items?.map((item: Item) => {
-                return {
-                  label: item?.name,
-                  value: {
-                    _id: item?._id,
-                    name: item?.name,
-                  },
-                };
-              })}
-            />
-          );
-        }}
+        render={renderItem}
         name={name}
       />
       {has(errors, name) && errMsg}

@@ -52,7 +52,7 @@ export const ServicesList = ({ services }: IProps) => {
 const styles = StyleSheet.create({
   container: {
     marginBottom: 5,
-    paddingRight: 15,
+    marginRight: 15,
   },
   headingContainer: {
     paddingBottom: 20,
@@ -71,8 +71,8 @@ const styles = StyleSheet.create({
     paddingVertical: 9,
     paddingHorizontal: 20,
     borderRadius: 15,
-    marginLeft: 10,
     minWidth: 90,
+    marginLeft: 10,
   },
   servicesTitle: {
     textAlign: "center",

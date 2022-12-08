@@ -10,12 +10,17 @@ type Props = {
 const CustomAvatar = ({ avatar = [], size = 55, sx = {} }: Props) => {
   const uri = avatar.length ? `${avatar[0]?.url}` : null;
 
-  return (
+  https: return (
     <Avatar
       size={size}
       rounded
       source={{ uri }}
-      containerStyle={{ backgroundColor: "#ddd", ...sx }}
+      containerStyle={{
+        backgroundColor: "#f1f1f1",
+        borderWidth: 1,
+        borderColor: "#f1f1f1",
+        ...sx,
+      }}
       title="JS"
     />
   );

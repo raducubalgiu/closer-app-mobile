@@ -109,7 +109,7 @@ export const Map = ({
                 fontWeight: "700",
               }}
             >
-              {loc?.minPrice} LEI
+              LEI {loc?.minPrice}
             </Text>
           </Stack>
           <Callout
@@ -188,7 +188,8 @@ const styles = StyleSheet.create({
   },
   priceLabel: {
     backgroundColor: "white",
-    padding: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 7.5,
     borderRadius: 50,
     shadowColor: "#171717",
     shadowOffset: { width: -2, height: 4 },

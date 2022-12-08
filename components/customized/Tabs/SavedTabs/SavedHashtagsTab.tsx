@@ -7,9 +7,16 @@ import { Spinner } from "../../../core";
 import { HashtagListItem } from "../../ListItems/HashtagListItem";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { Hashtag } from "../../../../models/hashtag";
+import { User } from "../../../../models/user";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../models/navigation/rootStackParams";
-import { User } from "../../../../models/user";
+
+type ListRenderItemHashtag = {
+  _id: string;
+  name: string;
+  postsCount: string;
+  hashtagId: Hashtag;
+};
 
 export const SavedHashtagsTab = ({ user }: { user: User }) => {
   const { t } = useTranslation();
@@ -31,19 +38,25 @@ export const SavedHashtagsTab = ({ user }: { user: User }) => {
     enabled: isFocused,
   });
 
-  const renderHashtags = useCallback(({ item }: ListRenderItemInfo<any>) => {
-    const { name, postsCount } = item?.hashtag;
+  const renderHashtags = useCallback(
+    ({ item }: ListRenderItemInfo<ListRenderItemHashtag>) => {
+      const { name, postsCount } = item?.hashtagId;
 
-    return (
-      <HashtagListItem
-        name={name}
-        postsCount={postsCount}
-        onPress={() => navigation.navigate("Hashtag", { name })}
-      />
-    );
-  }, []);
+      return (
+        <HashtagListItem
+          name={name}
+          postsCount={postsCount}
+          onPress={() => navigation.navigate("Hashtag", { name })}
+        />
+      );
+    },
+    []
+  );
 
-  const keyExtractor = useCallback((item: Hashtag) => item?._id, []);
+  const keyExtractor = useCallback(
+    (item: ListRenderItemHashtag) => item?._id,
+    []
+  );
 
   const loadMore = () => {
     if (hasNextPage) {

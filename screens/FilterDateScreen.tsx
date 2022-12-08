@@ -15,7 +15,8 @@ import {
 } from "../components/customized";
 import { RootStackParams } from "../models/navigation/rootStackParams";
 import { Period } from "../models/period";
-import { dayMonthFormat, startOfDayFormatUTC } from "../utils/date-utils";
+import { dayMonthFormat } from "../utils/date-utils";
+import { useMinutes } from "../hooks";
 import dayjs from "dayjs";
 
 type IProps = NativeStackScreenProps<RootStackParams, "FiltersDate">;
@@ -25,6 +26,7 @@ export const FiltersDateScreen = ({ route }: IProps) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
+  const { minutes } = useMinutes();
   const [visible, setVisible] = useState(false);
   const [activeBtn, setActiveBtn] = useState(0);
   const [activeHours, setActiveHours] = useState(0);
@@ -115,10 +117,17 @@ export const FiltersDateScreen = ({ route }: IProps) => {
     [period]
   );
 
+  const getMinutesName = (min: number) => {
+    const minuteEl = minutes.find((el) => el?._id === min);
+    return minuteEl?.name;
+  };
+
   const handleHours = useCallback((data: any) => {
     const { startMinutes, endMinutes } = data;
     setPeriod((period: Period) => ({ ...period, startMinutes, endMinutes }));
-    setPickHour(`14:00 - 16:00`);
+    setPickHour(
+      `${getMinutesName(startMinutes)} - ${getMinutesName(endMinutes)}`
+    );
     setVisible(false);
   }, []);
 
@@ -171,6 +180,7 @@ export const FiltersDateScreen = ({ route }: IProps) => {
       </FiltersContainer>
       <PickerHoursModal
         visible={visible}
+        minutes={minutes}
         onCloseModal={(notChangeIndex) =>
           !notChangeIndex
             ? handleHoursBtns(0)
