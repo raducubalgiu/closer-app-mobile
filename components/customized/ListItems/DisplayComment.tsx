@@ -36,7 +36,7 @@ export const DisplayComment = ({
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
-  const { user, comment, _id, relatedCommentsCount } = item;
+  const { user, comment, id, relatedCommentsCount } = item;
   const { likesCount, previousComment, likedByCreator } = item;
   const { username, name, avatar, checkmark } = user;
   const [likes, setLikes] = useState(likesCount);
@@ -44,7 +44,7 @@ export const DisplayComment = ({
 
   const goToUserExtra = () =>
     navigation.push("ProfileGeneral", {
-      userId: user?._id,
+      userId: user?.id,
       avatar,
       username,
       name,
@@ -88,7 +88,7 @@ export const DisplayComment = ({
             <Text style={styles.likesCount}>
               {likes} {t("likes")}
             </Text>
-            <Pressable onPress={() => onReply(username, _id, previousComment)}>
+            <Pressable onPress={() => onReply(username, id, previousComment)}>
               <Text style={styles.reply}>{t("reply")}</Text>
             </Pressable>
           </Stack>
@@ -109,8 +109,8 @@ export const DisplayComment = ({
         </Stack>
       </Stack>
       <LikeCommentButton
-        userId={userContext?._id}
-        commentId={_id}
+        userId={userContext?.id}
+        commentId={id}
         onLikes={(action) => setLikes(likes + action)}
         creatorId={creatorId}
       />

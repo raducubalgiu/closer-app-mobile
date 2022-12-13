@@ -13,7 +13,7 @@ export const RelatedCommentsList = ({
   onReply,
   creatorId,
 }: IProps) => {
-  const keyExtractor = useCallback((item: any) => item?._id, []);
+  const keyExtractor = useCallback((item: any) => item?.id, []);
 
   const renderComment = useCallback(({ item }: ListRenderItemInfo<any>) => {
     return (
@@ -21,7 +21,7 @@ export const RelatedCommentsList = ({
         item={item}
         creatorId={creatorId}
         onReply={() =>
-          onReply(item.user.username, item._id, item.previousComment)
+          onReply(item.user.username, item.id, item.previousComment)
         }
       />
     );

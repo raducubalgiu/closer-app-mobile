@@ -25,17 +25,17 @@ export const MessReceivedItem = ({
   dateSame,
   date,
 }: IProps) => {
-  const { message, _id, liked, createdAt } = item || {};
+  const { message, id, liked, createdAt } = item || {};
   const [isLiked, setIsLiked] = useState(liked);
   const { user } = useAuth();
 
   const { mutate } = usePatch({
-    uri: `/users/${user?._id}/messages/${_id}`,
+    uri: `/users/${user?.id}/messages/${id}`,
   });
 
   const handleLike = () => {
     setIsLiked((isLiked: boolean) => !isLiked);
-    mutate({ userId: user?._id, messageId: _id });
+    mutate({ userId: user?.id, messageId: id });
   };
 
   return (

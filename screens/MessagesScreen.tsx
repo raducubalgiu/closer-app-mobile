@@ -48,7 +48,7 @@ export const MessagesScreen = () => {
     refetch,
   } = useGetPaginate({
     model: "conversations",
-    uri: `/users/${user._id}/conversations`,
+    uri: `/users/${user.id}/conversations`,
     limit: "12",
   });
 
@@ -59,7 +59,7 @@ export const MessagesScreen = () => {
     []
   );
 
-  const keyExtractor = useCallback((item: Message) => item?._id, []);
+  const keyExtractor = useCallback((item: Message) => item?.id, []);
 
   const { refreshing, refetchByUser } = useRefreshByUser(refetch);
   useRefreshOnFocus(refetch);

@@ -16,7 +16,7 @@ const { grey0, black } = theme.lightColors || {};
 type IProps = {
   user: {
     avatar: any;
-    _id: string;
+    id: string;
     username: string;
     name: string;
     checkmark: boolean;
@@ -28,9 +28,9 @@ const UserListItem = ({ user, sx = {} }: IProps) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { user: userContext } = useAuth();
-  const { avatar, _id, username, name, checkmark } = user;
+  const { avatar, id, username, name, checkmark } = user;
   const [follow, setFollow] = useState(true);
-  const FOLLOW_ENDPOINT = `/users/${userContext?._id}/followings/${_id}/follows`;
+  const FOLLOW_ENDPOINT = `/users/${userContext?.id}/followings/${id}/follows`;
 
   const goToUser = (userId: string) => {
     navigation.push("ProfileGeneral", {
@@ -77,7 +77,7 @@ const UserListItem = ({ user, sx = {} }: IProps) => {
 
   return (
     <Stack direction="row" sx={{ ...styles.container, ...sx }}>
-      <Pressable style={styles.goToUser} onPress={() => goToUser(_id)}>
+      <Pressable style={styles.goToUser} onPress={() => goToUser(id)}>
         <CustomAvatar avatar={avatar} size={50} />
         <Stack align="start" sx={{ marginLeft: 10 }}>
           <Stack direction="row">
