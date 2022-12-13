@@ -11,7 +11,18 @@ import { DisplayText } from "../../DisplayText/DisplayText";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 
-const { grey0, black } = theme.lightColors;
+const { grey0, black } = theme.lightColors || {};
+
+type IProps = {
+  postId: string;
+  creatorId: string;
+  description: string;
+  username: string;
+  name: string;
+  date: string;
+  avatar: any;
+  commentsCount: number;
+};
 
 const CardPostFooter = ({
   postId,
@@ -22,7 +33,7 @@ const CardPostFooter = ({
   date,
   avatar,
   commentsCount,
-}) => {
+}: IProps) => {
   const [comments, setComments] = useState(commentsCount);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();

@@ -12,20 +12,30 @@ import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";
 import { trimFunc, AddressFormat } from "../../../utils";
 import { IconLocation, IconStar, Stack } from "../../core";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../models/navigation/rootStackParams";
 
 const { width } = Dimensions.get("window");
-const { black, grey0 } = theme.lightColors;
+const { black, grey0 } = theme.lightColors || {};
 
-export const CardLocation = ({ location, service, option, moreProducts }) => {
+type IProps = { location: any; service: any; option: any; moreProducts: any };
+
+export const CardLocation = ({
+  location,
+  service,
+  option,
+  moreProducts,
+}: IProps) => {
   const { images, minPrice, distance, owner, address, counter } = location;
   const { name, username, avatar, checkmark } = owner;
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
 
   const goToUser = () =>
     navigation.push("ProfileGeneral", {
       screen: `Products`,
-      userId: owner?._id,
+      userId: owner?.id,
       username,
       name,
       avatar,

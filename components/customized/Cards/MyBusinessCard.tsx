@@ -1,11 +1,20 @@
 import { StyleSheet, Text, Dimensions, Pressable } from "react-native";
-import React from "react";
 import { Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 import { Stack } from "../../core";
 
 const width = Dimensions.get("window").width;
-const { black } = theme.lightColors;
+const { black, grey0 } = theme.lightColors || {};
+
+type IProps = {
+  onPress: () => void;
+  iconName: string;
+  iconType: string;
+  title: string;
+  description: string;
+  sx?: {};
+  size?: number;
+};
 
 const MyBusinessCard = ({
   sx = {},
@@ -15,7 +24,7 @@ const MyBusinessCard = ({
   size = 30,
   title,
   description,
-}) => {
+}: IProps) => {
   return (
     <Pressable style={{ ...styles.container, ...sx }} onPress={onPress}>
       <Stack
@@ -47,12 +56,12 @@ const styles = StyleSheet.create({
   title: {
     marginVertical: 10,
     fontSize: 15,
-    color: theme.lightColors.black,
+    color: black,
     textAlign: "center",
     fontWeight: "600",
   },
   description: {
     textAlign: "center",
-    color: theme.lightColors.grey0,
+    color: grey0,
   },
 });

@@ -7,10 +7,13 @@ import CustomAvatar from "../../core/Avatars/CustomAvatar";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../models/navigation/rootStackParams";
+import { Schedule } from "../../../models/schedule";
 
-const { black, grey0, error, success, primary } = theme.lightColors;
+const { black, grey0, error, success, primary } = theme.lightColors || {};
 
-export const CardScheduleOverview = ({ schedule, start }) => {
+type IProps = { schedule: Schedule; start: string };
+
+export const CardScheduleOverview = ({ schedule, start }: IProps) => {
   const { user, status, service, product } = schedule;
   const { name, avatar, checkmark } = user || {};
   const { t } = useTranslation();

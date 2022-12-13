@@ -7,10 +7,13 @@ import { useTranslation } from "react-i18next";
 import { trimFunc } from "../../../utils";
 import FollowButton from "../Buttons/FollowButton";
 import { MAIN_ROLE, SECOND_ROLE } from "@env";
+import { User } from "../../../models/user";
 
-const { grey0, black, primary } = theme.lightColors;
+const { grey0, black, primary } = theme.lightColors || {};
 
-const CardSuggestedPeople = ({ item, onRemoveCard }) => {
+type IProps = { item: User; onRemoveCard: () => void };
+
+const CardSuggestedPeople = ({ item, onRemoveCard }: IProps) => {
   const {
     username,
     avatar,

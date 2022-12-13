@@ -9,10 +9,18 @@ import { LikeButton } from "../../Buttons/LikeButton";
 import { BookmarkIconButton } from "../../Buttons/BookmarkIconButton";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../models/navigation/rootStackParams";
+import { Product } from "../../../../models/product";
 
-const { black } = theme.lightColors;
+const { black } = theme.lightColors || {};
 
-const CardPostButtons = ({ bookable, product, postId, likesCount }) => {
+type IProps = {
+  bookable: boolean;
+  product: Product;
+  postId: string;
+  likesCount: number;
+};
+
+const CardPostButtons = ({ bookable, product, postId, likesCount }: IProps) => {
   const { name, price } = product || {};
   const [likes, setLikes] = useState(likesCount);
   const navigation =
@@ -36,7 +44,7 @@ const CardPostButtons = ({ bookable, product, postId, likesCount }) => {
         // dismissed
       }
     } catch (error) {
-      alert(error.message);
+      //alert(error?.message);
     }
   };
 

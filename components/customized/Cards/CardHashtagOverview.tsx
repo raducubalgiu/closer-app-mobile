@@ -7,19 +7,25 @@ import theme from "../../../assets/styles/theme";
 import { displayCount } from "../../../utils";
 import { useAuth, useGet } from "../../../hooks";
 
-const { black, grey0 } = theme.lightColors;
+const { black, grey0 } = theme.lightColors || {};
+
+type IProps = {
+  bookmarkId: string;
+  postsCount: number;
+  bookmarksCount: number;
+};
 
 export const CardHashtagOverview = ({
   bookmarkId,
   postsCount,
   bookmarksCount,
-}) => {
+}: IProps) => {
   const { user } = useAuth();
   const { t } = useTranslation();
 
   const { data } = useGet({
     model: "hCheck",
-    uri: `/users/${user?._id}/hashtags/${bookmarkId}/bookmarks`,
+    uri: `/users/${user?.id}/hashtags/${bookmarkId}/bookmarks`,
   });
 
   return (
@@ -51,7 +57,6 @@ export const CardHashtagOverview = ({
           type="hashtags"
           typeId={bookmarkId}
           status={data?.status}
-          onBookmarksCount={null}
         />
       </Stack>
     </Stack>

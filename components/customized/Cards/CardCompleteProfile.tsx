@@ -1,25 +1,40 @@
 import { StyleSheet, Text } from "react-native";
-import { Stack, AvatarComplete, CardButton } from "../../core";
-import React from "react";
+import { Stack, AvatarComplete } from "../../core";
 import theme from "../../../assets/styles/theme";
 
-const CardCompleteProfile = (props) => {
+const { black, grey0 } = theme.lightColors || {};
+
+type IProps = {
+  iconName: string;
+  iconType: string;
+  withBadge: boolean;
+  title: string;
+  description: string;
+};
+
+const CardCompleteProfile = ({
+  iconName,
+  iconType,
+  withBadge,
+  title,
+  description,
+}: IProps) => {
   return (
     <Stack sx={styles.container}>
       <Stack>
         <AvatarComplete
-          iconName={props.iconName}
-          iconType={props.iconType}
-          withBadge={props.withBadge}
+          iconName={iconName}
+          iconType={iconType}
+          withBadge={withBadge}
         />
-        <Text style={styles.title}>{props.title}</Text>
-        <Text style={styles.description}>{props.description}</Text>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.description}>{description}</Text>
       </Stack>
-      <CardButton
+      {/* <CardButton
         title={props.actionTitle}
         completed={props.completed}
         onPress={props.onPress}
-      />
+      /> */}
     </Stack>
   );
 };
@@ -39,12 +54,12 @@ const styles = StyleSheet.create({
     height: 210,
   },
   title: {
-    color: theme.lightColors.black,
+    color: black,
     textAlign: "center",
     marginBottom: 2.5,
   },
   description: {
-    color: theme.lightColors.grey0,
+    color: grey0,
     fontSize: 12,
     textAlign: "center",
     maxWidth: 170,

@@ -1,10 +1,20 @@
 import { StyleSheet, Text } from "react-native";
 import theme from "../../../assets/styles/theme";
-import { Stack, CustomAvatar } from "../../core";
+import { Stack } from "../../core";
+import CustomAvatar from "../../core/Avatars/CustomAvatar";
 import { displayCount } from "../../../utils";
 import { useTranslation } from "react-i18next";
 
-const { grey0 } = theme.lightColors;
+const { grey0 } = theme.lightColors || {};
+
+type IProps = {
+  name: string;
+  avatar: any;
+  username: string;
+  followingsCount: number;
+  followersCount: number;
+  sx?: {};
+};
 
 export const CardMessageUser = ({
   name,
@@ -13,7 +23,7 @@ export const CardMessageUser = ({
   followingsCount,
   followersCount,
   sx,
-}) => {
+}: IProps) => {
   const { t } = useTranslation();
 
   return (

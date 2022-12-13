@@ -5,7 +5,7 @@ import theme from "../../../assets/styles/theme";
 
 const { black } = theme.lightColors || {};
 
-type Props = { onPress: () => void; sx: {}; size: number };
+type Props = { onPress: () => void; sx?: {}; size?: number };
 
 export const ShareIButton = ({ onPress, sx = {}, size = 24 }: Props) => {
   return (

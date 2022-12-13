@@ -46,18 +46,18 @@ export const FeedScreen = () => {
     sheetContent
   );
   const showDetails = useCallback((item: any) => {
-    setPostId(item._id);
+    setPostId(item.id);
     SHOW_BS();
   }, []);
 
-  const renderAllPosts = useCallback(({ item }: ListRenderItemInfo<any>) => {
+  const renderAllPosts = useCallback(({ item }: ListRenderItemInfo<Post>) => {
     return <CardPost post={item} onShowDetails={() => showDetails(item)} />;
   }, []);
 
   const keyExtractor = useCallback((item: Post) => item?.id, []);
 
   const { mutate: handleDelete } = useDelete({
-    uri: `/users/${user?._id}/posts/${postId}`,
+    uri: `/users/${user?.id}/posts/${postId}`,
     onSuccess: () => {
       CLOSE_BS();
       setVisible(false);

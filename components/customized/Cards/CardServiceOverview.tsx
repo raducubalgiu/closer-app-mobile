@@ -8,15 +8,21 @@ import theme from "../../../assets/styles/theme";
 import { BookmarkButton } from "../Buttons/BookmarkButton";
 import { useAuth, useGet } from "../../../hooks";
 
-const { grey0 } = theme.lightColors;
+const { grey0 } = theme.lightColors || {};
 
-export const CardServiceOverview = ({ name, postsCount, serviceId }) => {
+type IProps = { name: string; postsCount: number; serviceId: string };
+
+export const CardServiceOverview = ({
+  name,
+  postsCount,
+  serviceId,
+}: IProps) => {
   const { user } = useAuth();
   const { t } = useTranslation();
 
   const { data } = useGet({
     model: "service",
-    uri: `/users/${user?._id}/services/${serviceId}/bookmarks`,
+    uri: `/users/${user?.id}/services/${serviceId}/bookmarks`,
   });
 
   return (
@@ -35,7 +41,6 @@ export const CardServiceOverview = ({ name, postsCount, serviceId }) => {
           type="services"
           typeId={serviceId}
           status={data?.status}
-          onBookmarksCount={null}
         />
       </Stack>
     </Stack>

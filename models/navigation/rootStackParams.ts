@@ -87,6 +87,7 @@ export type RootStackParams = {
   Post: { userId: string };
   Profile: any;
   ProfileGeneral: {
+    screen?: string;
     userId: string;
     username: string;
     avatar: any | null;

@@ -4,7 +4,16 @@ import theme from "../../../assets/styles/theme";
 import { Stack } from "../../core";
 import CustomAvatar from "../../core/Avatars/CustomAvatar";
 
-const { black, primary, grey0 } = theme.lightColors;
+const { black, primary, grey0 } = theme.lightColors || {};
+
+type IProps = {
+  avatar: any;
+  name: string;
+  date: string;
+  rating: number;
+  service: string;
+  review: string;
+};
 
 export const CardRatings = ({
   avatar,
@@ -13,7 +22,7 @@ export const CardRatings = ({
   rating,
   service,
   review,
-}) => {
+}: IProps) => {
   return (
     <View style={styles.container}>
       <Stack direction="row" align="start">

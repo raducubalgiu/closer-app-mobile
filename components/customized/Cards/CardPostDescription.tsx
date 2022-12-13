@@ -1,10 +1,18 @@
 import { StyleSheet, Text, View } from "react-native";
-import { CustomAvatar } from "../../core";
+import CustomAvatar from "../../core/Avatars/CustomAvatar";
 import { DisplayText } from "../DisplayText/DisplayText";
 import { Divider } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 
-const { grey0 } = theme.lightColors;
+const { grey0 } = theme.lightColors || {};
+
+type IProps = {
+  avatar: any;
+  username: string;
+  description: string;
+  date: string;
+  onGoToUserAllInfo: () => void;
+};
 
 export const CardPostDescription = ({
   avatar,
@@ -12,11 +20,11 @@ export const CardPostDescription = ({
   description,
   date,
   onGoToUserAllInfo,
-}) => {
+}: IProps) => {
   return (
     <>
       <View style={styles.headerCont}>
-        <CustomAvatar size={32.5} iconSize={15} avatar={avatar} />
+        <CustomAvatar size={32.5} avatar={avatar} />
         <View style={styles.textCont}>
           <DisplayText
             text={description}

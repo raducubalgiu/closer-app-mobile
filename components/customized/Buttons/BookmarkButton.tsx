@@ -10,8 +10,8 @@ const { black } = theme.lightColors || {};
 type IProps = {
   type: string;
   typeId: string;
-  status: boolean;
-  onBookmarksCount: (no: number) => void;
+  status?: boolean;
+  onBookmarksCount?: (no: number) => void;
 };
 
 export const BookmarkButton = ({

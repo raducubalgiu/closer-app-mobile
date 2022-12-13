@@ -2,7 +2,11 @@ import { StyleSheet, Text, Pressable } from "react-native";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 
-export const CardServicesHeader = ({ item, activeService }) => {
+const { primary } = theme.lightColors || {};
+
+type IProps = { item: any; activeService: any };
+
+export const CardServicesHeader = ({ item, activeService }: IProps) => {
   return (
     <Pressable
       style={
@@ -34,7 +38,7 @@ const styles = StyleSheet.create({
     marginRight: 15,
   },
   activeBtn: {
-    backgroundColor: theme.lightColors.primary,
+    backgroundColor: primary,
   },
   btnText: {},
   activeBtnText: { color: "white" },

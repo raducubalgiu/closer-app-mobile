@@ -1,10 +1,21 @@
 import { StyleSheet, Text, Pressable } from "react-native";
-import { Stack, CustomAvatar } from "../../core";
-import React from "react";
-import theme from "../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
+import { Stack } from "../../core";
+import CustomAvatar from "../../core/Avatars/CustomAvatar";
+import theme from "../../../assets/styles/theme";
 
-const { black, grey0 } = theme.lightColors;
+const { black } = theme.lightColors || {};
+
+type IProps = {
+  startHour: string;
+  channel: string;
+  avatar: any;
+  customer: string;
+  product: string;
+  price: number;
+  service: string;
+  day: string;
+};
 
 export const CardSlotDetails = ({
   startHour,
@@ -15,9 +26,9 @@ export const CardSlotDetails = ({
   price,
   service,
   day,
-}) => {
+}: IProps) => {
   const { t } = useTranslation();
-  const getBgColor = (channel) => {
+  const getBgColor = (channel: string) => {
     if (channel === "closer") {
       return "#fff5cc";
     } else if (channel === "owner") {
@@ -41,7 +52,7 @@ export const CardSlotDetails = ({
           sx={{ ...styles.slotDetails, backgroundColor: getBgColor(channel) }}
         >
           <Stack align="start" direction="row">
-            <CustomAvatar avatar={avatar} size={22.5} iconSize={12.5} />
+            <CustomAvatar avatar={avatar} size={22.5} />
             <Stack align="start" sx={{ marginLeft: 10, flex: 1 }}>
               <Text style={styles.customer}>{customer}</Text>
               <Stack align="start">

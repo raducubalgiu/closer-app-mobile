@@ -9,7 +9,7 @@ export interface Post {
   images: [{ url: string }];
   hashtags: Hashtag[];
   mentions: User[];
-  userId: User[];
+  userId: User;
   bookable: boolean;
   fixed: boolean;
   product: Product;

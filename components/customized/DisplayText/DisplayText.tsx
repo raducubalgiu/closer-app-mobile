@@ -11,8 +11,8 @@ const { grey0, black } = theme.lightColors || {};
 type IProps = {
   text: string;
   maxWords?: number;
-  username: string | null;
-  checkmark: boolean;
+  username?: string | null;
+  checkmark?: boolean;
   goToUserAllInfo: () => void;
 };
 

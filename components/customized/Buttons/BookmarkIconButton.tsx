@@ -7,7 +7,7 @@ import * as Haptics from "expo-haptics";
 import { usePost, useDelete, useGet } from "../../../hooks";
 
 const { black } = theme.lightColors || {};
-type IProps = { sx: {}; size: number; type: string; typeId: number };
+type IProps = { sx?: {}; size?: number; type: string; typeId: string };
 
 export const BookmarkIconButton = ({
   sx = {},

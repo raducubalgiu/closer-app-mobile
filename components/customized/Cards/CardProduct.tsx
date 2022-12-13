@@ -12,19 +12,27 @@ import { BookButton } from "../Buttons/BookButton";
 import { UserListItemSimple } from "../ListItems/UserListItemSimple";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../models/navigation/rootStackParams";
+import { Product } from "../../../models/product";
 
-const { black, grey0, primary } = theme.lightColors;
+const { black, grey0, primary } = theme.lightColors || {};
+
+type IProps = {
+  product: Product;
+  ownerInfo: boolean;
+  onDeleteProduct: () => void;
+  onEditProduct: () => void;
+};
 
 export const CardProduct = ({
   product,
   ownerInfo = false,
   onDeleteProduct,
   onEditProduct,
-}) => {
+}: IProps) => {
   const { user: userContext } = useAuth();
   const { t } = useTranslation();
   const { name, duration, description, price } = product || {};
-  const { option, service, user } = product || {};
+  const { option, service, userId } = product || {};
   const currDuration = duration ? useDuration(duration) : "";
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -36,7 +44,15 @@ export const CardProduct = ({
     });
 
   const goToOwner = () => {
-    navigation.navigate("ProfileGeneral", { ...user });
+    navigation.navigate("ProfileGeneral", {
+      userId: userId.id,
+      username: userId?.username,
+      avatar: userId?.avatar,
+      name: userId?.name,
+      checkmark: userId?.checkmark,
+      service: null,
+      option: null,
+    });
   };
 
   return (
@@ -65,9 +81,10 @@ export const CardProduct = ({
       </Stack>
       {ownerInfo && (
         <UserListItemSimple
-          name={user?.name}
-          profession={user?.profession.name}
-          avatar={user?.avatar}
+          name={userId?.name}
+          profession={userId?.profession.name}
+          avatar={userId?.avatar}
+          checkmark={userId?.checkmark}
           onGoToUser={goToOwner}
           sx={{ marginTop: 15 }}
         />
@@ -76,7 +93,7 @@ export const CardProduct = ({
         <Stack align="end" sx={styles.bookmark}>
           <BookmarkButton
             type="products"
-            typeId={product?._id}
+            typeId={product?.id}
             onBookmarksCount={() => {}}
           />
         </Stack>

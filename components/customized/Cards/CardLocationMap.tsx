@@ -3,9 +3,16 @@ import { memo } from "react";
 import { Stack, IconStar, Spinner } from "../../core";
 import theme from "../../../assets/styles/theme";
 
-const { black, grey0 } = theme.lightColors;
+const { black, grey0 } = theme.lightColors || {};
 
-const CardLocationMap = ({ onPress, sx = {}, item, isLoading }) => {
+type IProps = {
+  onPress: () => void;
+  sx?: {};
+  item: any;
+  isLoading: boolean;
+};
+
+const CardLocationMap = ({ onPress, sx = {}, item, isLoading }: IProps) => {
   const { owner, images, address } = item;
 
   return (

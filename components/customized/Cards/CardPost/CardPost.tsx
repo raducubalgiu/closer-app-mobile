@@ -23,8 +23,6 @@ const CardPost = ({ post, onShowDetails }: IProps) => {
   } = post || {};
   const { name, username, avatar, checkmark, profession } = userId || {};
 
-  console.log("POST!!!", post);
-
   return (
     <View style={styles.container}>
       <CardPostHeader
