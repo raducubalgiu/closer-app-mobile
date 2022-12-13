@@ -3,22 +3,24 @@ import { Avatar, Badge, Icon } from "@rneui/themed";
 import React from "react";
 import theme from "../../../assets/styles/theme";
 
-const { black, success } = theme.lightColors;
+const { black, success } = theme.lightColors || {};
 
-export const AvatarComplete = (props) => {
+type IProps = { iconName: string; iconType: string; withBadge: boolean };
+
+export const AvatarComplete = ({ iconName, iconType, withBadge }: IProps) => {
   return (
     <View>
       <Avatar
         rounded
         icon={{
-          name: props.iconName,
-          type: props.iconType,
+          name: iconName,
+          type: iconType,
           size: 25,
           color: black,
         }}
         containerStyle={styles.avatarContainer}
       />
-      {props.withBadge && (
+      {withBadge && (
         <Badge
           containerStyle={styles.badgeContainer}
           value={<Icon name="check" type="entypo" size={10} color="white" />}
