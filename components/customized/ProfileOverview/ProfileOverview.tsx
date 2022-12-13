@@ -45,7 +45,7 @@ const ProfileOverview = ({
   const goToFollowers = () =>
     navigation.push("ProfileStats", {
       screen: "Followers",
-      userId: user?._id,
+      userId: user?.id,
       username: username,
       initialRoute: "Followers",
       role,
@@ -56,7 +56,7 @@ const ProfileOverview = ({
   const goToReviews = () =>
     navigation.push("ProfileStats", {
       screen: "Reviews",
-      userId: user?._id,
+      userId: user?.id,
       username: username,
       initialRoute: "Reviews",
       role,
@@ -67,7 +67,7 @@ const ProfileOverview = ({
   const goToFollowings = () =>
     navigation.push("ProfileStats", {
       screen: "Following",
-      userId: user?._id,
+      userId: user?.id,
       username: username,
       initialRoute: "Following",
       role,

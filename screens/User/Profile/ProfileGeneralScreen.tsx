@@ -53,7 +53,7 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
   });
 
   const { mutate: follow } = usePost({
-    uri: `/users/${user?._id}/followings/${userId}/follows`,
+    uri: `/users/${user?.id}/followings/${userId}/follows`,
     onSuccess: () => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       setIsFollow(true);
@@ -62,7 +62,7 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
   });
 
   const { mutate: unfollow } = useDelete({
-    uri: `/users/${user?._id}/followings/${userId}/follows`,
+    uri: `/users/${user?.id}/followings/${userId}/follows`,
     onSuccess: () => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       setIsFollow(false);
@@ -126,7 +126,7 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
       )}
       <TopTabProfile
         user={userDetails}
-        userId={userId || userDetails?._id}
+        userId={userId || userDetails?.id}
         service={service}
         option={option}
       />

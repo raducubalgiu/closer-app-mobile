@@ -54,7 +54,7 @@ export const FeedScreen = () => {
     return <CardPost post={item} onShowDetails={() => showDetails(item)} />;
   }, []);
 
-  const keyExtractor = useCallback((item: Post) => item?._id, []);
+  const keyExtractor = useCallback((item: Post) => item?.id, []);
 
   const { mutate: handleDelete } = useDelete({
     uri: `/users/${user?._id}/posts/${postId}`,

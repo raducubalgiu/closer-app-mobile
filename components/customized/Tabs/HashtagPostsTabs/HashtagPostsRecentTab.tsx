@@ -40,7 +40,7 @@ export const HashtagPostsRecentTab = ({ name }: { name: string }) => {
     []
   );
 
-  const keyExtractor = useCallback((item: Post) => item._id, []);
+  const keyExtractor = useCallback((item: Post) => item.id, []);
 
   const loadMore = () => {
     if (hasNextPage) {

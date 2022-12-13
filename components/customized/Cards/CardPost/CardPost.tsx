@@ -6,24 +6,29 @@ import CardPostButtons from "./CardPostButtons";
 import CardPostFooter from "./CardPostFooter";
 import { FROM_NOW } from "../../../../utils/date-utils";
 import { SharedElement } from "react-navigation-shared-element";
+import { Post } from "../../../../models/post";
 
-const CardPost = ({ post, onShowDetails }) => {
+type IProps = { post: Post; onShowDetails: () => void };
+
+const CardPost = ({ post, onShowDetails }: IProps) => {
   const {
-    _id,
+    id,
     bookable,
     likesCount,
     commentsCount,
     description,
     createdAt,
-    user,
+    userId,
     product,
   } = post || {};
-  const { name, username, avatar, checkmark, profession } = user || {};
+  const { name, username, avatar, checkmark, profession } = userId || {};
+
+  console.log("POST!!!", post);
 
   return (
     <View style={styles.container}>
       <CardPostHeader
-        userId={user?._id}
+        userId={userId?.id}
         avatar={avatar}
         username={username}
         name={name}
@@ -32,7 +37,7 @@ const CardPost = ({ post, onShowDetails }) => {
         onShowDetails={onShowDetails}
       />
       <View>
-        <SharedElement id={_id}>
+        <SharedElement id={id}>
           <Animated.Image
             source={{ uri: `${post?.images[0]?.url}` }}
             style={[{ width: "100%", height: 400 }]}
@@ -42,12 +47,12 @@ const CardPost = ({ post, onShowDetails }) => {
       <CardPostButtons
         bookable={bookable}
         product={product}
-        postId={_id}
+        postId={id}
         likesCount={likesCount}
       />
       <CardPostFooter
-        postId={_id}
-        creatorId={user?._id}
+        postId={id}
+        creatorId={userId?.id}
         description={description}
         username={username}
         name={name}

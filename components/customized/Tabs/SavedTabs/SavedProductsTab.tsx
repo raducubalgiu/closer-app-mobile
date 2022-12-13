@@ -10,6 +10,12 @@ import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { Product } from "../../../../models/product";
 import { User } from "../../../../models/user";
 
+type ListRenderItemProduct = {
+  _id: string;
+  productId: Product;
+  userId: string;
+};
+
 export const SavedProductsTab = ({ user }: { user: User }) => {
   const { t } = useTranslation();
   const isFocused = useIsFocused();
@@ -29,20 +35,26 @@ export const SavedProductsTab = ({ user }: { user: User }) => {
     enabled: isFocused,
   });
 
-  const renderProduct = useCallback(({ item }: ListRenderItemInfo<any>) => {
-    const { product } = item;
+  const renderProduct = useCallback(
+    ({ item }: ListRenderItemInfo<ListRenderItemProduct>) => {
+      const { productId } = item;
 
-    return (
-      <CardProduct
-        product={product}
-        ownerInfo
-        onDeleteProduct={() => {}}
-        onEditProduct={() => {}}
-      />
-    );
-  }, []);
+      return (
+        <CardProduct
+          product={productId}
+          ownerInfo
+          onDeleteProduct={() => {}}
+          onEditProduct={() => {}}
+        />
+      );
+    },
+    []
+  );
 
-  const keyExtractor = useCallback((item: Product) => item._id, []);
+  const keyExtractor = useCallback(
+    (item: ListRenderItemProduct) => item._id,
+    []
+  );
 
   const loadMore = () => {
     if (hasNextPage) {

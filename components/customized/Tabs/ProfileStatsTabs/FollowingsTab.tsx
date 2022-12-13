@@ -7,6 +7,7 @@ import { Spinner } from "../../../core";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import UserListItem from "../../ListItems/UserListItem";
 import { useGetPaginate, useRefreshByUser } from "../../../../hooks";
+import { User } from "../../../../models/user";
 
 type IProps = { userId: string };
 
@@ -34,7 +35,7 @@ export const FollowingsTab = ({ userId }: IProps) => {
     ),
     []
   );
-  const keyExtractor = useCallback((item: any) => item?._id, []);
+  const keyExtractor = useCallback((item: User) => item?.id, []);
 
   const loadMore = () => {
     if (hasNextPage) fetchNextPage();

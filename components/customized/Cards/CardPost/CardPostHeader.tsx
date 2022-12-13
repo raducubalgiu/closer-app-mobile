@@ -8,7 +8,17 @@ import { Icon } from "@rneui/themed";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 
-const { grey0 } = theme.lightColors;
+const { grey0 } = theme.lightColors || {};
+
+type IProps = {
+  userId: string;
+  avatar: any;
+  username: string;
+  checkmark: boolean;
+  profession: any;
+  name: string;
+  onShowDetails: () => void;
+};
 
 const CardPostHeader = ({
   userId,
@@ -18,7 +28,7 @@ const CardPostHeader = ({
   profession,
   name,
   onShowDetails,
-}) => {
+}: IProps) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
@@ -38,7 +48,7 @@ const CardPostHeader = ({
     <Stack direction="row" sx={{ paddingHorizontal: 10 }}>
       <Pressable onPress={() => goToUser(userId)}>
         <Stack direction="row" sx={styles.avatarContainer}>
-          <CustomAvatar avatar={avatar} size={35} iconSize={15} />
+          <CustomAvatar avatar={avatar} size={35} />
           <Stack align="start">
             <Stack direction="row">
               <Text style={styles.name}>{username}</Text>

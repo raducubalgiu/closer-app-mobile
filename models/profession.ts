@@ -1,5 +1,5 @@
 export interface Profession {
-  _id: string;
+  id: string;
   name: string;
   category?: string;
 }

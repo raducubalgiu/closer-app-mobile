@@ -3,7 +3,7 @@ import { Service } from "./service";
 import { User } from "./user";
 
 export interface Schedule {
-  _id: string;
+  id: string;
   start: string;
   end: string;
   user: User;

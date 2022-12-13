@@ -31,11 +31,11 @@ export const FollowersTab = ({ userId }: Props): JSX.Element => {
   });
 
   const renderPerson = useCallback(
-    ({ item }: any) => <UserListItem user={item.user} />,
+    ({ item }: any) => <UserListItem user={item.userId} />,
     []
   );
 
-  const keyExtractor = useCallback((item: User) => item?._id, []);
+  const keyExtractor = useCallback((item: User) => item?.id, []);
 
   const loadMore = () => {
     if (hasNextPage) fetchNextPage();

@@ -3,7 +3,7 @@ import { Option } from "./option";
 import { User } from "./user";
 
 export interface Product {
-  _id: string;
+  id: string;
   name: string;
   description: string;
   duration: number;
@@ -14,5 +14,5 @@ export interface Product {
   location: string;
   bookmarksCount: number;
   reservationsCount: number;
-  user: User;
+  userId: User;
 }

@@ -62,7 +62,7 @@ export const ProfileScreen = () => {
         <ProfileIconButton name="youtube" onPress={navigateYoutube} />
       </ProfileOverview>
       <TopTabProfile
-        userId={user?._id}
+        userId={user?.id}
         service={null}
         option={null}
         user={user}

@@ -15,7 +15,7 @@ const DUMMY_DATA = {
       next: null,
       results: [
         {
-          _id: "1",
+          id: "1",
           reviewer: {
             name: "Raducu Balgiu",
           },
@@ -64,7 +64,7 @@ export const RatingsTab = ({ userId }: IProps) => {
     );
   }, []);
 
-  const keyExtractor = useCallback((item: any) => item?._id, []);
+  const keyExtractor = useCallback((item: any) => item?.id, []);
 
   const loadMore = () => {
     if (hasNextPage) fetchNextPage();

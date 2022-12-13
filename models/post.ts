@@ -4,12 +4,12 @@ import { Service } from "./service";
 import { User } from "./user";
 
 export interface Post {
-  _id: string;
+  id: string;
   description: string;
   images: [{ url: string }];
   hashtags: Hashtag[];
   mentions: User[];
-  user: User[];
+  userId: User[];
   bookable: boolean;
   fixed: boolean;
   product: Product;
@@ -22,4 +22,5 @@ export interface Post {
   bookablesCount: number;
   active: boolean;
   expirationTime: string;
+  createdAt: string;
 }

@@ -1,5 +1,5 @@
 export interface RelatedComments {
-  _id: string;
+  id: string;
   comment: string;
   post: string;
   previousComment: null;

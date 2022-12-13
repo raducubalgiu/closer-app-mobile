@@ -1,7 +1,7 @@
 import { Product } from "./product";
 
 export interface RecommendedLocation {
-  _id: string;
+  id: string;
   owner: {
     _id: string;
     name: string;

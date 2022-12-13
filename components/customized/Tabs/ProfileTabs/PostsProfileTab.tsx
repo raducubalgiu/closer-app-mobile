@@ -20,6 +20,8 @@ export const PostsProfileTab = ({ userId }: { userId: string }) => {
       enabled: isFocused,
     });
 
+  console.log("DATA!!", data);
+
   const { pages } = data || {};
   const posts = pages?.map((page) => page.results).flat() || [];
 
@@ -48,7 +50,7 @@ export const PostsProfileTab = ({ userId }: { userId: string }) => {
     );
   }
 
-  const keyExtractor = useCallback((item: Post) => item?._id, []);
+  const keyExtractor = useCallback((item: Post) => item?.id, []);
 
   const loadMore = () => {
     if (hasNextPage) {
