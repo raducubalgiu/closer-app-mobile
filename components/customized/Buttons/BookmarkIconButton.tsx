@@ -18,7 +18,7 @@ export const BookmarkIconButton = ({
   const { user } = useAuth();
   const [bookmarked, setBookmarked] = useState(false);
   const animatedScale = useRef(new Animated.Value(0)).current;
-  const bookmarkEndpoints = `/users/${user._id}/${type}/${typeId}/bookmarks`;
+  const bookmarkEndpoints = `/users/${user.id}/${type}/${typeId}/bookmarks`;
 
   useGet({
     model: "checkBookmark",

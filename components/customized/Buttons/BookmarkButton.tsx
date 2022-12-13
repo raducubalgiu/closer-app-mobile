@@ -23,7 +23,7 @@ export const BookmarkButton = ({
   const { user } = useAuth();
   const [bookmarked, setBookmarked] = useState(status);
   const { t } = useTranslation();
-  const endoints = `/users/${user?._id}/${type}/${typeId}/bookmarks`;
+  const endoints = `/users/${user?.id}/${type}/${typeId}/bookmarks`;
 
   useGet({
     model: "checkBookmark",

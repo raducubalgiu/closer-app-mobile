@@ -24,7 +24,7 @@ export const LikeButton = ({
 }: IProps) => {
   const { user } = useAuth();
   const [liked, setLiked] = useState(false);
-  const endpoints = `/users/${user?._id}/posts/${postId}/likes`;
+  const endpoints = `/users/${user?.id}/posts/${postId}/likes`;
   const animatedScale = useRef(new Animated.Value(0)).current;
 
   useGet({
