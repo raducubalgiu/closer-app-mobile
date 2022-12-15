@@ -42,7 +42,7 @@ export const ServicePostsRecentTab = ({ serviceId }: IProps) => {
     []
   );
 
-  const keyExtractor = useCallback((item: Post) => item._id, []);
+  const keyExtractor = useCallback((item: Post) => item.id, []);
 
   const loadMore = () => {
     if (hasNextPage) {

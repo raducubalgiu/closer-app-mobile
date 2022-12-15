@@ -42,6 +42,7 @@
     "expo-location": "~15.0.1",
     "expo-media-library": "~15.0.0",
     "expo-notifications": "~0.17.0",
+    "expo-screen-orientation": "~5.0.1",
     "expo-sharing": "~11.0.1",
     "expo-status-bar": "~1.4.2",
     "firebase": "^9.6.10",

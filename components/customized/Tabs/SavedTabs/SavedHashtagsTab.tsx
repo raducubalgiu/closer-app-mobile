@@ -12,7 +12,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 
 type ListRenderItemHashtag = {
-  _id: string;
+  id: string;
   name: string;
   postsCount: string;
   hashtagId: Hashtag;
@@ -33,7 +33,7 @@ export const SavedHashtagsTab = ({ user }: { user: User }) => {
     isFetching,
   } = useGetPaginate({
     model: "hashtags",
-    uri: `/users/${user?._id}/hashtags/bookmarks`,
+    uri: `/users/${user?.id}/hashtags/bookmarks`,
     limit: "25",
     enabled: isFocused,
   });
@@ -54,7 +54,7 @@ export const SavedHashtagsTab = ({ user }: { user: User }) => {
   );
 
   const keyExtractor = useCallback(
-    (item: ListRenderItemHashtag) => item?._id,
+    (item: ListRenderItemHashtag) => item?.id,
     []
   );
 

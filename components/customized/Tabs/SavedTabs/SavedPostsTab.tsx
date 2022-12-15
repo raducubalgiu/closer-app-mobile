@@ -12,7 +12,7 @@ import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 import { User } from "../../../../models/user";
 
 type ListRenderItemPost = {
-  _id: string;
+  id: string;
   postId: Post;
   userId: string;
 };
@@ -32,7 +32,7 @@ export const SavedPostsTab = ({ user }: { user: User }) => {
     isFetching,
   } = useGetPaginate({
     model: "posts",
-    uri: `/users/${user?._id}/posts/bookmarks`,
+    uri: `/users/${user?.id}/posts/bookmarks`,
     limit: "21",
     enabled: isFocused,
   });
@@ -46,7 +46,7 @@ export const SavedPostsTab = ({ user }: { user: User }) => {
         <CardPostImage
           onPress={() =>
             navigation.navigate("AllBookmarks", {
-              postId: postId?._id,
+              postId: postId?.id,
               userId: userId,
             })
           }
@@ -61,7 +61,7 @@ export const SavedPostsTab = ({ user }: { user: User }) => {
     []
   );
 
-  const keyExtractor = useCallback((item: ListRenderItemPost) => item._id, []);
+  const keyExtractor = useCallback((item: ListRenderItemPost) => item.id, []);
 
   const loadMore = () => {
     if (hasNextPage) {

@@ -11,7 +11,7 @@ import { Product } from "../../../../models/product";
 import { User } from "../../../../models/user";
 
 type ListRenderItemProduct = {
-  _id: string;
+  id: string;
   productId: Product;
   userId: string;
 };
@@ -30,7 +30,7 @@ export const SavedProductsTab = ({ user }: { user: User }) => {
     isFetching,
   } = useGetPaginate({
     model: "products",
-    uri: `/users/${user?._id}/products/bookmarks`,
+    uri: `/users/${user?.id}/products/bookmarks`,
     limit: "10",
     enabled: isFocused,
   });
@@ -52,7 +52,7 @@ export const SavedProductsTab = ({ user }: { user: User }) => {
   );
 
   const keyExtractor = useCallback(
-    (item: ListRenderItemProduct) => item._id,
+    (item: ListRenderItemProduct) => item.id,
     []
   );
 

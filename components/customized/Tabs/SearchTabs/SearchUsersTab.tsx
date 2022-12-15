@@ -66,7 +66,7 @@ export const SearchUsersTab = ({ search }: { search: string }) => {
     header = <NoFoundMessage title="Users" description={t("noFoundUsers")} />;
   }
 
-  const keyExtractor = useCallback((item: User) => item?._id, []);
+  const keyExtractor = useCallback((item: User) => item?.id, []);
 
   return (
     <>

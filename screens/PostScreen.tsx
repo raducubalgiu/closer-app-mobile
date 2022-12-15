@@ -40,7 +40,7 @@ export const PostScreen = ({ route }: IProps) => {
     }),
     []
   );
-  const keyExtractor = useCallback((item: Post) => item?._id, []);
+  const keyExtractor = useCallback((item: Post) => item?.id, []);
 
   return (
     <View style={styles.screen}>

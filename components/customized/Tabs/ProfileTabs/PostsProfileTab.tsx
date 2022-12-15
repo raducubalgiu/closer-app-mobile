@@ -1,4 +1,4 @@
-import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
+import { FlatList, ListRenderItemInfo } from "react-native";
 import { useCallback } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import { CardPostImage } from "../../Cards/CardPostImage";
@@ -67,7 +67,7 @@ export const PostsProfileTab = ({ userId }: { userId: string }) => {
   };
 
   return (
-    <FlashList
+    <FlatList
       ListHeaderComponent={header}
       numColumns={3}
       data={posts}
@@ -76,7 +76,7 @@ export const PostsProfileTab = ({ userId }: { userId: string }) => {
       ListFooterComponent={showSpinner}
       onEndReached={loadMore}
       onEndReachedThreshold={0.3}
-      estimatedItemSize={125}
+      //estimatedItemSize={125}
     />
   );
 };

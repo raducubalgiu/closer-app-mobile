@@ -39,7 +39,7 @@ export const TopTabServices = ({
 
         return (
           <Tab.Screen
-            key={service._id}
+            key={service.id}
             name={service.name.toLowerCase()}
             component={Service}
             options={{

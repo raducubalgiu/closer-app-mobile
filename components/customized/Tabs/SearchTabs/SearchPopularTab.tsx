@@ -130,7 +130,7 @@ export const SearchPopularTab = ({ search }: { search: string }) => {
         }
         numColumns={3}
         data={pages?.map((page) => page.results).flat()}
-        keyExtractor={useCallback((item: Post) => item._id, [])}
+        keyExtractor={useCallback((item: Post) => item.id, [])}
         renderItem={renderPopularPosts}
         ListFooterComponent={showSpinner}
         onEndReached={loadMore}
@@ -152,7 +152,7 @@ export const SearchPopularTab = ({ search }: { search: string }) => {
           />
         }
         data={hashtags?.results}
-        keyExtractor={(item) => item._id}
+        keyExtractor={(item) => item.id}
         renderItem={renderHashtags}
         ListFooterComponent={popularPostsList}
       />
@@ -171,7 +171,7 @@ export const SearchPopularTab = ({ search }: { search: string }) => {
         />
       }
       data={users?.results}
-      keyExtractor={(item) => item._id}
+      keyExtractor={(item) => item.id}
       showsVerticalScrollIndicator={false}
       renderItem={renderUsers}
       ListFooterComponent={hashtagsList}

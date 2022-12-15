@@ -71,7 +71,7 @@ export const SearchHashtagsTab = ({ search }: { search: string }) => {
     ),
     []
   );
-  const keyExtractor = useCallback((item: Hashtag) => item._id, []);
+  const keyExtractor = useCallback((item: Hashtag) => item.id, []);
 
   let header;
   if (!isLoading && !isFetchingNextPage && hashtags?.length) {

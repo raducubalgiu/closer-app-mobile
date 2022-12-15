@@ -37,8 +37,7 @@ export const CardPostImage = ({
     box: {
       width: width / col,
       height: width / col,
-      marginBottom: 1.25,
-      backgroundColor: "#f1f1f1",
+      paddingBottom: 1.25,
     },
   });
 
@@ -79,6 +78,7 @@ export const CardPostImage = ({
 const styles = StyleSheet.create({
   image: {
     flex: 1,
+    backgroundColor: "#f1f1f1",
   },
   bookable: {
     position: "absolute",

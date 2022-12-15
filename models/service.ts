@@ -5,5 +5,5 @@ export interface Service {
   name: string;
   locationsCount?: string;
   postsCount: number;
-  filters: Filter[];
+  filters?: Filter[];
 }

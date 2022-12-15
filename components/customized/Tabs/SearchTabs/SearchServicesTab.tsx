@@ -71,7 +71,7 @@ export const SearchServicesTab = ({ search }: { search: string }) => {
     ),
     []
   );
-  const keyExtractor = useCallback((item: Service) => item._id, []);
+  const keyExtractor = useCallback((item: Service) => item.id, []);
 
   let header;
   if (!isLoading && !isFetchingNextPage && services?.length === 0) {

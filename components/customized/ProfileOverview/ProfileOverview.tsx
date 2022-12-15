@@ -76,9 +76,6 @@ const ProfileOverview = ({
       followingsCount,
     });
 
-  const withBadge = userContext?._id === user?._id && user?.role === THIRD_ROLE;
-  const badgeDetails = { name: "plus", type: "entypo", size: 17 };
-
   return (
     <View style={styles.container}>
       <Stack justify="center" align="center">
@@ -98,7 +95,7 @@ const ProfileOverview = ({
       </Stack>
       <Stack direction="row" justify="between" sx={styles.statsContainer}>
         <StatsButton
-          onPress={role !== THIRD_ROLE ? goToReviews : null}
+          onPress={() => (role !== THIRD_ROLE ? goToReviews : null)}
           label={role !== THIRD_ROLE ? t("reviews") : t("posts")}
           statsNo={displayDash(
             role !== THIRD_ROLE ? ratingsQuantity : postsCount

@@ -114,7 +114,7 @@ export const Map = ({
           </Stack>
           <Callout
             onPress={() =>
-              navigation.push("LocationItem", { locationId: loc?._id })
+              navigation.push("LocationItem", { locationId: loc?.id })
             }
           >
             <Stack align="start" sx={styles.callOut}>

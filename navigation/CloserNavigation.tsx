@@ -73,6 +73,7 @@ import {
   PhotoLibraryScreen,
   PhotoAlbumsScreen,
   AddPostScreen,
+  ExploreVideoLandscape,
 } from "../screens";
 
 import TestScreen from "../screens/TestScreen";
@@ -82,10 +83,11 @@ const SharedStack = createSharedElementStackNavigator();
 const Tab = createBottomTabNavigator();
 const RootStack = createNativeStackNavigator<RootStackParams>();
 
-const { black } = theme.lightColors;
+const { black } = theme.lightColors || {};
 
 import { SharedList } from "../screens/SharedList";
 import { SharedDetails } from "../screens/SharedDetails";
+import { ExploreVideoPortraitScreen } from "../screens/ExploreVideoPortraitScreen";
 
 const Shared = () => {
   return (
@@ -397,6 +399,14 @@ const CloserNavigation = () => {
             </RootStack.Group>
             <RootStack.Screen name="SharedList" component={Shared} />
             <RootStack.Screen name="Test" component={TestScreen} />
+            <RootStack.Screen
+              name="ExploreVideoLandscape"
+              component={ExploreVideoLandscape}
+            />
+            <RootStack.Screen
+              name="ExploreVideoPortrait"
+              component={ExploreVideoPortraitScreen}
+            />
           </RootStack.Navigator>
         </PortalProvider>
       );

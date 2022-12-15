@@ -26,25 +26,26 @@ export const SavedServicesTab = ({ user }: { user: User }) => {
     isFetching,
   } = useGetPaginate({
     model: "services",
-    uri: `/users/${user?._id}/services/bookmarks`,
+    uri: `/users/${user?.id}/services/bookmarks`,
     limit: "25",
     enabled: isFocused,
   });
 
   const renderService = useCallback(({ item }: ListRenderItemInfo<any>) => {
-    const { _id, name, postsCount } = item.service;
+    const { id, name, postsCount } = item.service;
+
     return (
       <ServiceListItem
         name={name}
         postsCount={postsCount}
         onPress={() =>
-          navigation.navigate("Service", { service: { _id, name, postsCount } })
+          navigation.navigate("Service", { service: { id, name, postsCount } })
         }
       />
     );
   }, []);
 
-  const keyExtractor = useCallback((item: Service) => item?._id, []);
+  const keyExtractor = useCallback((item: Service) => item?.id, []);
 
   const loadMore = () => {
     if (hasNextPage) {
