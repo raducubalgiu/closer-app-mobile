@@ -1,9 +1,8 @@
 import { StyleSheet, Dimensions, View, Text, Pressable } from "react-native";
-import React from "react";
 import { Image, Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 const { black } = theme.lightColors || {};
 
 type IProps = {

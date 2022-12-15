@@ -15,13 +15,15 @@ import CustomAvatar from "../../core/Avatars/CustomAvatar";
 import theme from "../../../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
 import Toast from "react-native-root-toast";
+import { Slider } from "@rneui/themed";
 
 const { height, width } = Dimensions.get("window");
-const { error, black } = theme.lightColors || {};
+const { error, black, primary } = theme.lightColors || {};
 
 type IProps = { uri: string; avatar: any; description: string };
 
 const VideoLandscapeListItem = ({ uri, avatar, description }: IProps) => {
+  const [status, setStatus] = useState(null);
   const video = useRef<any>(null);
   const navigation = useNavigation();
 
@@ -47,6 +49,10 @@ const VideoLandscapeListItem = ({ uri, avatar, description }: IProps) => {
     });
   };
 
+  const handleStatusUpdate = (status: any) => {
+    setStatus(status);
+  };
+
   return (
     <VisibilitySensor onChange={handleImageVisibility}>
       <View style={styles.container}>
@@ -55,7 +61,7 @@ const VideoLandscapeListItem = ({ uri, avatar, description }: IProps) => {
           style={styles.video}
           source={{ uri }}
           useNativeControls={false}
-          onPlaybackStatusUpdate={(status) => {}}
+          onPlaybackStatusUpdate={handleStatusUpdate}
           shouldPlay={false}
           isMuted={false}
           isLooping={true}
@@ -91,12 +97,31 @@ const VideoLandscapeListItem = ({ uri, avatar, description }: IProps) => {
               }}
             >
               <Stack direction="row">
-                <Stack justify="start" direction="row" sx={{ flex: 1 }}>
-                  <CustomAvatar avatar={avatar} size={30} />
-                  <Stack align="start" sx={{ marginLeft: 10 }}>
-                    <Text style={styles.description}>{description}</Text>
-                    <Text style={styles.username}>@raducubalgiu</Text>
+                <Stack align="start" sx={{ flex: 1 }}>
+                  <Stack justify="start" direction="row">
+                    <CustomAvatar avatar={avatar} size={30} />
+                    <Stack align="start" sx={{ marginLeft: 10 }}>
+                      <Text style={styles.description}>{description}</Text>
+                      <Text style={styles.username}>@raducubalgiu</Text>
+                    </Stack>
                   </Stack>
+                  <Slider
+                    value={0}
+                    onValueChange={() => {}}
+                    maximumValue={10}
+                    minimumValue={0}
+                    allowTouchTrack
+                    trackStyle={{
+                      height: 2.5,
+                      width: 400,
+                      backgroundColor: "transparent",
+                    }}
+                    thumbStyle={{
+                      height: 12.5,
+                      width: 12.5,
+                      backgroundColor: error,
+                    }}
+                  />
                 </Stack>
                 <Stack direction="row">
                   <Pressable style={styles.button}>
@@ -153,8 +178,8 @@ const styles = StyleSheet.create({
     right: 0,
   },
   safearea: {
-    flex: 1,
     justifyContent: "space-between",
+    flex: 1,
   },
   video: {
     width,

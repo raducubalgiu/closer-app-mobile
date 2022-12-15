@@ -72,7 +72,7 @@ export const LocationsScreen = ({ route }: IProps) => {
 
   const { data: locations } = useGet({
     model: "locations",
-    uri: `/locations?latlng=${longitude},${latitude}&serviceId=${service?._id}&option=${option?._id}&minprice=${minPrice}&maxprice=${maxPrice}&mindistance=${minDistance}&maxdistance=${maxDistance}&minrating=0&maxrating=5&page=1&limit=25`,
+    uri: `/locations?latlng=${longitude},${latitude}&serviceId=${service?.id}&option=${option?._id}&minprice=${minPrice}&maxprice=${maxPrice}&mindistance=${minDistance}&maxdistance=${maxDistance}&minrating=0&maxrating=5&page=1&limit=25`,
   });
 
   const renderLocation = useCallback(({ item }: ListRenderItemInfo<any>) => {
@@ -86,7 +86,7 @@ export const LocationsScreen = ({ route }: IProps) => {
     );
   }, []);
 
-  const keyExtractor = useCallback((item: any) => item._id, []);
+  const keyExtractor = useCallback((item: any) => item.id, []);
   const toggleSwitch = useCallback(() => setChecked(!checked), [checked]);
 
   let footer;

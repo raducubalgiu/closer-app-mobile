@@ -1,4 +1,3 @@
-import React, { useCallback } from "react";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -76,8 +75,6 @@ import {
   ExploreVideoLandscape,
 } from "../screens";
 
-import TestScreen from "../screens/TestScreen";
-
 const Stack = createNativeStackNavigator();
 const SharedStack = createSharedElementStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -122,6 +119,10 @@ const FeedStackNavigator = () => {
       <Stack.Screen name="Feed" component={FeedScreen} />
       <Stack.Screen name="Likes" component={LikesScreen} />
       <Stack.Screen name="SearchPosts" component={SearchPostsScreen} />
+      <RootStack.Screen
+        name="ExploreVideoPortrait"
+        component={ExploreVideoPortraitScreen}
+      />
     </Stack.Navigator>
   );
 };
@@ -180,10 +181,11 @@ const TabsScreen = () => {
             />
           );
         },
-        tabBarActiveTintColor: black,
+        tabBarActiveTintColor: "white",
         tabBarInactiveTintColor: "gray",
         headerShown: false,
         tabBarShowLabel: false,
+        tabBarStyle: { backgroundColor: "black" },
       })}
       sceneContainerStyle={{ backgroundColor: "white" }}
     >
@@ -200,7 +202,7 @@ const CloserNavigation = () => {
   const { user } = useAuth();
   const { t } = useTranslation();
 
-  const getScreens = (user) => {
+  const getScreens = (user: any) => {
     if (user) {
       return (
         <PortalProvider>
@@ -398,14 +400,9 @@ const CloserNavigation = () => {
               />
             </RootStack.Group>
             <RootStack.Screen name="SharedList" component={Shared} />
-            <RootStack.Screen name="Test" component={TestScreen} />
             <RootStack.Screen
               name="ExploreVideoLandscape"
               component={ExploreVideoLandscape}
-            />
-            <RootStack.Screen
-              name="ExploreVideoPortrait"
-              component={ExploreVideoPortraitScreen}
             />
           </RootStack.Navigator>
         </PortalProvider>

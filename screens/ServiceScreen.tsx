@@ -16,31 +16,27 @@ type IProps = NativeStackScreenProps<RootStackParams, "Service">;
 
 export const ServiceScreen = ({ route }: IProps) => {
   const { service } = route.params;
-  const { _id, name, postsCount } = service;
+  const { id, name, postsCount } = service;
   const Tab = createMaterialTopTabNavigator();
   const { t } = useTranslation();
 
   const ServicePostsPopular = useCallback(
-    () => <ServicePostsPopularTab serviceId={_id} />,
-    [_id]
+    () => <ServicePostsPopularTab serviceId={id} />,
+    [id]
   );
   const ServicePostsLastMinute = useCallback(
-    () => <ServicePostsLastMinuteTab serviceId={_id} />,
-    [_id]
+    () => <ServicePostsLastMinuteTab serviceId={id} />,
+    [id]
   );
   const ServicePostsRecent = useCallback(
-    () => <ServicePostsRecentTab serviceId={_id} />,
-    [_id]
+    () => <ServicePostsRecentTab serviceId={id} />,
+    [id]
   );
 
   return (
     <SafeAreaView style={styles.screen}>
       <Header title="" />
-      <CardServiceOverview
-        serviceId={_id}
-        postsCount={postsCount}
-        name={name}
-      />
+      <CardServiceOverview serviceId={id} postsCount={postsCount} name={name} />
       <TopTabContainer initialRouteName="ServicePostsPopular">
         <Tab.Screen
           name="ServicePostsPopular"

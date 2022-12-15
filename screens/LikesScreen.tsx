@@ -28,7 +28,7 @@ export const LikesScreen = ({ route }: IProps) => {
     refetch,
   } = useGetPaginate({
     model: "likes",
-    uri: `/users/${user._id}/posts/${postId}/get-likes`,
+    uri: `/users/${user.id}/posts/${postId}/get-likes`,
     limit: "25",
   });
 
@@ -37,7 +37,7 @@ export const LikesScreen = ({ route }: IProps) => {
     []
   );
 
-  const keyExtractor = useCallback((item: User) => item?._id, []);
+  const keyExtractor = useCallback((item: User) => item?.id, []);
 
   const loadMore = () => {
     if (hasNextPage) {

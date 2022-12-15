@@ -7,23 +7,24 @@ import {
   StyleSheet,
 } from "react-native";
 import * as ScreenOrientation from "expo-screen-orientation";
+
 import { useFocusEffect } from "@react-navigation/native";
 import VideoLandscapeListItem from "../components/customized/ListItems/VideoLandscapeListItem";
 
 const DATA = [
   {
     id: "1",
-    url: "https://res.cloudinary.com/closer-app/video/upload/v1671035489/IMG_6668_tpqfwy.mov",
+    url: "https://res.cloudinary.com/closer-app/video/upload/v1671034520/Music_Box_-_11543_a5pd3y.mp4",
     description: "Lionel Messi reveals if he wants to play in final...",
   },
   {
     id: "2",
-    url: "https://res.cloudinary.com/closer-app/video/upload/v1671021391/mixkit-going-down-a-curved-highway-through-a-mountain-range-41576-medium_n4v1hg.mp4",
+    url: "https://res.cloudinary.com/closer-app/video/upload/v1671032010/video_xocive.mp4",
     description: "Roncero estalla contra Messi",
   },
   {
     id: "3",
-    url: "https://res.cloudinary.com/closer-app/video/upload/v1671021461/mixkit-people-pouring-a-warm-drink-around-a-campfire-513-medium_knr1yg.mp4",
+    url: "https://res.cloudinary.com/closer-app/video/upload/v1671101878/video_1_blnab0.mp4",
     description: "Something was really changed",
   },
   {

@@ -32,7 +32,7 @@ export const SavedServicesTab = ({ user }: { user: User }) => {
   });
 
   const renderService = useCallback(({ item }: ListRenderItemInfo<any>) => {
-    const { id, name, postsCount } = item.service;
+    const { id, name, postsCount } = item.serviceId;
 
     return (
       <ServiceListItem
