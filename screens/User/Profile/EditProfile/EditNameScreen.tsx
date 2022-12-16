@@ -1,5 +1,5 @@
 import { SafeAreaView, StyleSheet, Keyboard } from "react-native";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { HeaderEdit } from "../../../../components/customized";
@@ -13,7 +13,7 @@ export const EditNameScreen = () => {
   const { t } = useTranslation();
 
   const { mutate, isLoading } = usePatch({
-    uri: "/users/update",
+    uri: `/users/${user.id}/update`,
     onSuccess: (res) => {
       setUser({ ...user, name: res.data.name });
       navigation.goBack();

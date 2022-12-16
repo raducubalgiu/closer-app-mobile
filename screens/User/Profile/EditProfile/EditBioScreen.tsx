@@ -23,7 +23,7 @@ export const EditBioScreen = () => {
   const { t } = useTranslation();
 
   const { mutate, isLoading } = usePatch({
-    uri: `/users/${user?._id}/update`,
+    uri: `/users/${user?.id}/update`,
     onSuccess: (res) => {
       setUser({ ...user, description: res.data.description });
       navigation.goBack();

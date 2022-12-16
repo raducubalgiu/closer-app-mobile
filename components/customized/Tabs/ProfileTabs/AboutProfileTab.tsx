@@ -1,5 +1,4 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
 import theme from "../../../../assets/styles/theme";
 import { Stack } from "../../../core";
 import { useTranslation } from "react-i18next";
@@ -7,7 +6,9 @@ import { trimFunc } from "../../../../utils";
 
 const { black, primary, grey0 } = theme.lightColors || {};
 
-export const AboutProfileTab = ({ biography }: { biography: string }) => {
+type IProps = { biography: string; website: string };
+
+export const AboutProfileTab = ({ biography, website }: IProps) => {
   const { t } = useTranslation();
 
   return (
@@ -20,6 +21,11 @@ export const AboutProfileTab = ({ biography }: { biography: string }) => {
       </Stack>
       <Stack align="start" sx={styles.section}>
         <Text style={styles.heading}>{t("contact")}</Text>
+        <Text style={styles.bio}>{website}</Text>
+      </Stack>
+      <Stack align="start" sx={styles.section}>
+        <Text style={styles.heading}>{t("contact")}</Text>
+        <Text style={styles.bio}>{website}</Text>
       </Stack>
     </View>
   );

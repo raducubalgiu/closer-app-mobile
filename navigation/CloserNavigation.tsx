@@ -181,11 +181,11 @@ const TabsScreen = () => {
             />
           );
         },
-        tabBarActiveTintColor: "white",
+        tabBarActiveTintColor: black,
         tabBarInactiveTintColor: "gray",
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarStyle: { backgroundColor: "black" },
+        tabBarStyle: { backgroundColor: "white" },
       })}
       sceneContainerStyle={{ backgroundColor: "white" }}
     >

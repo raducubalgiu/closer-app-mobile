@@ -8,7 +8,6 @@ import theme from "../../../../assets/styles/theme";
 import { Icon } from "@rneui/themed";
 import { THIRD_ROLE } from "@env";
 import { useCallback } from "react";
-import { Service } from "../../../../models/service";
 import { User } from "../../../../models/user";
 
 const { black } = theme.lightColors || {};
@@ -37,7 +36,7 @@ export const TopTabProfile = ({ userId, service, option, user }: IProps) => {
   );
 
   const AboutProfile = useCallback(
-    () => <AboutProfileTab biography={description} />,
+    () => <AboutProfileTab biography={description} website={website} />,
     []
   );
 

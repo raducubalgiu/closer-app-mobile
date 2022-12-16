@@ -1,7 +1,7 @@
 import { Product } from "./product";
 
 export interface RecommendedLocation {
-  id: string;
+  _id: string;
   owner: {
     _id: string;
     name: string;
@@ -22,7 +22,10 @@ export interface RecommendedLocation {
     number: string;
     blockApartment: string;
   };
-  images: any;
+  imageCover: {
+    url: string;
+    orientation: string;
+  };
   services: string[];
   distance: number;
   product: Product;

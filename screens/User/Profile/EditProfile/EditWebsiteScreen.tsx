@@ -13,7 +13,7 @@ export const EditWebsiteScreen = () => {
   const { t } = useTranslation();
 
   const { mutate, isLoading } = usePatch({
-    uri: `/users/${user?._id}/update`,
+    uri: `/users/${user?.id}/update`,
     onSuccess: (res) => {
       setUser({ ...user, website: res.data.website });
       navigation.goBack();

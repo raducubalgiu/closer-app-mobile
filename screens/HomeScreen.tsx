@@ -27,12 +27,12 @@ export const HomeScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
-  const { data: locations } = useGet({
+  const { data: locations, refetch } = useGet({
     model: "recommended",
     uri: `/locations/get-recommended?latlng=26.100195,44.428286`,
   });
 
-  const { data: services, refetch } = useGet({
+  const { data: services } = useGet({
     model: "services",
     uri: "/services",
   });
@@ -43,7 +43,7 @@ export const HomeScreen = () => {
     ),
     []
   );
-  const keyExtractor = useCallback((item: any) => item._id, []);
+  const keyExtractor = useCallback((item: RecommendedLocation) => item._id, []);
 
   const goToServicesAnytime = () =>
     navigation.navigate("SearchServices", {
