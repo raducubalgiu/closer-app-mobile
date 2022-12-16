@@ -1,110 +1,134 @@
-import { SafeAreaView, StyleSheet, Text, View, Pressable } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  ActivityIndicator,
+} from "react-native";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { useCallback, useState } from "react";
 import { Icon } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
 import {
   Stack,
-  InputSelect,
   Header,
   IconButtonDelete,
+  FormInputSelect,
 } from "../../../../components/core";
 import theme from "../../../../assets/styles/theme";
 import { useAuth, usePatch, useGet } from "../../../../hooks";
 import { ConfirmModal } from "../../../../components/customized/Modals/ConfirmModal";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { Service } from "../../../../models/service";
+import { FormProvider, useForm } from "react-hook-form";
+import { showToast } from "../../../../utils";
 
-const { primary } = theme.lightColors || {};
+const { primary, error } = theme.lightColors || {};
 
 export const AddServicesScreen = () => {
   const { user } = useAuth();
+  const [services, setServices] = useState<Service[]>([]);
   const [visible, setVisible] = useState(false);
-  const [services, setServices] = useState([]);
-  const [service, setService] = useState<Service | null>(null);
   const { t } = useTranslation();
+  const methods = useForm({ defaultValues: { serviceId: "" } });
+  const { handleSubmit, watch, setValue } = methods;
+  const serviceId = watch("serviceId");
 
-  const { data: allServices } = useQuery(["allServices"], async () => {
-    const { data } = await axios.get(`${process.env.BASE_ENDPOINT}/services`, {
-      headers: { Authorization: `Bearer ${user.token}` },
-    });
-    return data;
+  const { data: allServices } = useGet({
+    model: "allServices",
+    uri: "/services",
   });
-
-  let servicesEndpoint = `/users/${user?._id}/locations/${user?.location}/services`;
 
   useGet({
     model: "services",
-    uri: servicesEndpoint,
+    uri: `/users/${user?.id}/locations/${user?.location}/services`,
     onSuccess: (res) => setServices(res.data),
+  });
+
+  const { mutate: addService, isLoading: isLoadingAdd } = usePatch({
+    uri: `/locations/${user?.location}/add-service`,
+    onSuccess: (res) => setServices((services) => services.concat(res.data)),
+    onError: (err) =>
+      showToast({ message: t(`${err.response.data.message}`), bgColor: error }),
+  });
+
+  const { mutate: removeService, isLoading: isLoadingRemove } = usePatch({
+    uri: `/locations/${user?.location}/remove-service`,
+    onSuccess: (res) => {
+      setServices((services) =>
+        services.filter((serv: Service) => serv.id !== res.data.id)
+      );
+    },
+    onError: () =>
+      showToast({ message: t("somethingWentWrong"), bgColor: error }),
   });
 
   const closeModal = () => {
     setVisible(false);
-    setService(null);
   };
 
-  const { mutate: addService } = usePatch({
-    uri: `/locations/${user?.location}/add-service`,
-    onSuccess: (res) => {
-      setServices((services) => services.concat(res.data));
-      setService(null);
-    },
-  });
+  const handleCreate = (data: any) => {
+    addService({ serviceId: data.serviceId });
+    setValue("serviceId", "");
+  };
 
-  const { mutate: removeService } = usePatch({
-    uri: `/locations/${user?.location}/remove-service`,
-    onSuccess: (res) => {
-      setServices((services) =>
-        services.filter((serv) => serv._id !== res.data._id)
-      );
-      closeModal();
-    },
-  });
+  const handleDelete = () => {
+    removeService({ serviceId });
+    setValue("serviceId", "");
+    closeModal();
+  };
 
   const renderService = useCallback(
     ({ item }: ListRenderItemInfo<Service>) => (
       <Stack direction="row" sx={styles.service}>
         <Text style={styles.name}>{item?.name}</Text>
         <IconButtonDelete
+          disabled={isLoadingRemove}
+          isLoading={isLoadingRemove}
           onPress={() => {
             setVisible(true);
-            setService(item);
+            setValue("serviceId", item.id);
           }}
         />
       </Stack>
     ),
-    []
+    [isLoadingRemove]
   );
-  const keyExtractor = useCallback((item: Service) => item._id, []);
+
+  const keyExtractor = useCallback((item: Service) => item.id, []);
+
+  let footer;
+  if (isLoadingAdd) {
+    footer = <ActivityIndicator style={{ marginTop: 15 }} />;
+  }
 
   return (
     <SafeAreaView style={styles.screen}>
       <Header title={t("myServices")} divider={true} />
-      <Stack align="start" sx={{ margin: 15 }}>
-        <Stack direction="row" sx={{ width: "100%" }}>
-          <View style={{ flex: 1 }}>
-            <InputSelect
-              value={service}
-              placeholder={t("selectService")}
-              onValueChange={(value) => setService(value)}
-              items={allServices}
-            />
-          </View>
-          <Pressable
-            style={!service ? styles.disabledBtn : styles.addIcon}
-            onPress={() => addService({ serviceId: service })}
-            disabled={!service}
-          >
-            <Icon
-              name="add-outline"
-              type="ionicon"
-              size={25}
-              color={service && "white"}
-            />
-          </Pressable>
-        </Stack>
+      <Stack align="start" sx={{ marginHorizontal: 15, marginTop: 15 }}>
+        <FormProvider {...methods}>
+          <Stack direction="row" sx={{ width: "100%" }}>
+            <View style={{ flex: 1 }}>
+              <FormInputSelect
+                name="serviceId"
+                placeholder={t("selectService")}
+                items={allServices}
+              />
+            </View>
+            <Pressable
+              style={!serviceId ? styles.disabledBtn : styles.addIcon}
+              onPress={handleSubmit(handleCreate)}
+              disabled={!serviceId}
+            >
+              <Icon
+                name="add-outline"
+                type="ionicon"
+                size={25}
+                color={serviceId ? "white" : ""}
+              />
+            </Pressable>
+          </Stack>
+        </FormProvider>
       </Stack>
       <FlashList
         data={services}
@@ -113,9 +137,10 @@ export const AddServicesScreen = () => {
         bounces={false}
         showsVerticalScrollIndicator={false}
         estimatedItemSize={59}
+        ListFooterComponent={footer}
       />
       <ConfirmModal
-        onDelete={() => removeService({ serviceId: service?._id })}
+        onDelete={handleDelete}
         visible={visible}
         onCloseModal={closeModal}
         title={t("deleteService")}
@@ -132,8 +157,9 @@ const styles = StyleSheet.create({
   },
   service: {
     marginTop: 15,
-    backgroundColor: "#f1f1f1",
+    marginHorizontal: 15,
     padding: 10,
+    backgroundColor: "#f1f1f1",
     borderRadius: 5,
   },
   addIcon: {
@@ -143,6 +169,7 @@ const styles = StyleSheet.create({
     padding: 7.5,
     borderRadius: 10,
     backgroundColor: primary,
+    marginBottom: 10,
   },
   disabledBtn: {
     marginLeft: 10,
@@ -151,6 +178,7 @@ const styles = StyleSheet.create({
     padding: 7.5,
     borderRadius: 10,
     backgroundColor: "#ddd",
+    marginBottom: 10,
   },
   name: { fontWeight: "500" },
 });

@@ -1,13 +1,23 @@
-import { Animated, Pressable } from "react-native";
+import { ActivityIndicator, Animated, Pressable } from "react-native";
 import { useRef, useEffect } from "react";
 import { Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 
 const { black } = theme.lightColors || {};
 
-type IProps = { onPress: () => void; sx?: {} };
+type IProps = {
+  onPress: () => void;
+  sx?: {};
+  disabled?: boolean;
+  isLoading?: boolean;
+};
 
-export const IconButtonDelete = ({ onPress, sx = {} }: IProps) => {
+export const IconButtonDelete = ({
+  onPress,
+  sx = {},
+  disabled = false,
+  isLoading,
+}: IProps) => {
   const animatedScale = useRef(new Animated.Value(0)).current;
 
   const handlePress = () => {
@@ -27,9 +37,13 @@ export const IconButtonDelete = ({ onPress, sx = {} }: IProps) => {
   }, []);
 
   return (
-    <Pressable onPress={handlePress} style={sx}>
+    <Pressable onPress={handlePress} style={sx} disabled={disabled}>
       <Animated.View style={[{ transform: [{ scale: animatedScale }] }]}>
-        <Icon name="minuscircleo" type="antdesign" color={black} />
+        {!isLoading ? (
+          <Icon name="minuscircleo" type="antdesign" color={black} />
+        ) : (
+          <ActivityIndicator />
+        )}
       </Animated.View>
     </Pressable>
   );

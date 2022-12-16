@@ -8,7 +8,7 @@ import { Stack } from "../Stack/Stack";
 import { Icon } from "@rneui/themed";
 
 const { black, error } = theme.lightColors || {};
-type Item = { _id: string | number; name: string };
+type Item = { id: string | number; name: string };
 
 type IProps = {
   name: string;
@@ -93,7 +93,7 @@ export const FormInputSelect = ({
         items={items?.map((item: Item) => {
           return {
             label: item?.name,
-            value: item._id,
+            value: item.id,
           };
         })}
       />

@@ -1,19 +1,19 @@
-import { Dimensions } from "react-native";
 import Toast from "react-native-root-toast";
-import theme from "../../../assets/styles/theme";
+import { Dimensions } from "react-native";
+import theme from "../assets/styles/theme";
 
-const { black } = theme.lightColors || {};
 const { width } = Dimensions.get("window");
+const { black } = theme.lightColors || {};
 
 type IProps = {
   message: string;
   bgColor?: string;
-  short?: boolean;
-  position?: number;
+  short?: string;
+  position?: any;
 };
 
-const Feedback = ({ message, bgColor, short, position }: IProps) => {
-  const toast = Toast.show(message, {
+export const showToast = ({ message, bgColor, short, position }: IProps) => {
+  return Toast.show(message, {
     duration: short ? Toast.durations.SHORT : Toast.durations.LONG,
     position: position ? position : 50,
     shadow: false,
@@ -24,8 +24,4 @@ const Feedback = ({ message, bgColor, short, position }: IProps) => {
     backgroundColor: bgColor ? bgColor : black,
     containerStyle: { width: width - 30 },
   });
-
-  return toast;
 };
-
-export default Feedback;

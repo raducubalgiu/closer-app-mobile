@@ -312,5 +312,6 @@
   "filter": "Filtrează",
   "correspondingServices": "serviciile",
   "isGreatherThanMessage": "Data de început nu poate fi mai mare decât data de final",
-  "hoursInterval": "Interval orar"
+  "hoursInterval": "Interval orar",
+  "serviceAlreadyPresent": "Acest serviciu a fost adăugat deja"
 }

@@ -8,14 +8,14 @@ const { black } = theme.lightColors || {};
 type IProps = {
   value: string;
   onValueChange: (text: string) => void;
-  items: [{ name: string; _id: string | number | undefined }];
+  items: [{ name: string; id: string | number | undefined }];
   placeholder: string;
 };
 
 export const InputSelect = ({
   value,
   onValueChange,
-  items = [{ name: "", _id: undefined }],
+  items = [{ name: "", id: undefined }],
   placeholder,
 }: IProps) => {
   const inputPlaceholder = {
@@ -35,7 +35,7 @@ export const InputSelect = ({
       items={items?.map((item) => {
         return {
           label: item?.name,
-          value: item?._id,
+          value: item?.id,
         };
       })}
     />
