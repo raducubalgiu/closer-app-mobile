@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     color: black,
     fontWeight: "700",
     fontSize: 14,
-    margin: 15,
+    marginTop: 15,
+    marginBottom: 10,
   },
 });

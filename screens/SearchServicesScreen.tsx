@@ -20,24 +20,6 @@ import {
 import { RootStackParams } from "../models/navigation/rootStackParams";
 import { Service } from "../models/service";
 
-const SUGGESTED_SERVICES = [
-  {
-    _id: "1",
-    name: "Tuns",
-    category: [{ _id: "1", name: "Frizerii, saloane de infrumusetare" }],
-  },
-  {
-    _id: "2",
-    name: "Pensat",
-    category: [{ _id: "2", name: "Frizerii, saloane de infrumusetare" }],
-  },
-  {
-    _id: "3",
-    name: "Restaurant",
-    category: [{ _id: "3", name: "Restaurante, baruri" }],
-  },
-];
-
 const { black, grey0 } = theme.lightColors || {};
 
 type IProps = NativeStackScreenProps<RootStackParams, "SearchServices">;
@@ -84,13 +66,6 @@ export const SearchServicesScreen = ({ route }: IProps) => {
     });
   };
 
-  const renderSuggested = useCallback(({ item }: ListRenderItemInfo<any>) => {
-    <Pressable onPress={() => goToFilters(item)} style={styles.item}>
-      <Text>{item.name}</Text>
-      <Text>{item.category.name}</Text>
-    </Pressable>;
-  }, []);
-
   const renderServices = useCallback(
     ({ item }: ListRenderItemInfo<Service>) => (
       <Pressable onPress={() => goToFilters(item)} style={styles.item}>
@@ -102,6 +77,8 @@ export const SearchServicesScreen = ({ route }: IProps) => {
     ),
     []
   );
+
+  const keyExtractor = useCallback((item: Service) => item.id, []);
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -116,8 +93,8 @@ export const SearchServicesScreen = ({ route }: IProps) => {
         />
       </Stack>
       <FlatList
-        data={services.length > 0 ? services : SUGGESTED_SERVICES}
-        keyExtractor={(item) => item._id}
+        data={services}
+        keyExtractor={keyExtractor}
         renderItem={renderServices}
         ListFooterComponent={
           <>

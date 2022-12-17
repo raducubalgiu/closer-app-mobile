@@ -21,7 +21,7 @@ type Props = {
   onCloseModal: () => void;
   visible: boolean;
   headerTitle?: string;
-  footer: any;
+  footer?: any;
   header?: boolean;
   sx?: {};
   animationInTiming?: number;
@@ -99,7 +99,7 @@ export const CModal = ({
           </>
         )}
         <View style={styles.body}>{children}</View>
-        <View style={styles.footer}>{footer}</View>
+        {footer && <View style={styles.footer}>{footer}</View>}
       </SafeAreaView>
     </Modal>
   );

@@ -1,6 +1,6 @@
 import {
   FlatList,
-  ListRenderItem,
+  ListRenderItemInfo,
   SafeAreaView,
   StyleSheet,
   View,
@@ -12,16 +12,37 @@ import { useForm, FormProvider } from "react-hook-form";
 import { useAuth, usePatch, useMinutes } from "../../../../hooks";
 import { useNavigation } from "@react-navigation/native";
 import UserProgramListItem from "../../../../components/customized/ListItems/UserProgramListItem";
+import { showToast } from "../../../../utils";
+import theme from "../../../../assets/styles/theme";
+
+type FormData = {
+  startmon: number;
+  endmon: number;
+  starttue: number;
+  endtue: number;
+  startwed: number;
+  endwed: number;
+  startthu: number;
+  endthu: number;
+  startfri: number;
+  endfri: number;
+  startsat: number;
+  endsat: number;
+  startsun: number;
+  endsun: number;
+};
 
 const DAYS = [
-  { _id: "1", name: "mon" },
-  { _id: "2", name: "tue" },
-  { _id: "3", name: "wed" },
-  { _id: "4", name: "thu" },
-  { _id: "5", name: "fri" },
-  { _id: "6", name: "sat" },
-  { _id: "7", name: "sun" },
+  { id: "1", name: "mon" },
+  { id: "2", name: "tue" },
+  { id: "3", name: "wed" },
+  { id: "4", name: "thu" },
+  { id: "5", name: "fri" },
+  { id: "6", name: "sat" },
+  { id: "7", name: "sun" },
 ];
+
+const { error } = theme.lightColors || {};
 
 export const AddUserProgramScreen = () => {
   const { user, setUser } = useAuth();
@@ -30,14 +51,14 @@ export const AddUserProgramScreen = () => {
   const { t } = useTranslation();
   const navigation = useNavigation();
 
-  const getStart = (day, def) => {
+  const getStart = (day: any, def: number) => {
     if (day?.start) {
       return day.start;
     } else {
       return def;
     }
   };
-  const getEnd = (day, def) => {
+  const getEnd = (day: any, def: number) => {
     if (day?.end) {
       return day.end;
     } else {
@@ -66,15 +87,17 @@ export const AddUserProgramScreen = () => {
   const { handleSubmit, getValues, setValue, watch, formState } = methods;
 
   const { mutate, isLoading } = usePatch({
-    uri: `/users/${user?._id}/update`,
+    uri: `/users/${user?.id}/update`,
     onSuccess: (res) => {
       const { hours } = res.data;
       setUser({ ...user, hours });
       navigation.goBack();
     },
+    onError: () =>
+      showToast({ message: t("somethingWentWrong"), bgColor: error }),
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: FormData) => {
     mutate({
       hours: {
         mon: {
@@ -122,7 +145,7 @@ export const AddUserProgramScreen = () => {
     }
   };
 
-  const renderDay = useCallback(({ item }) => {
+  const renderDay = useCallback(({ item }: ListRenderItemInfo<any>) => {
     const start: any = "start".concat(item.name);
 
     return (
@@ -145,7 +168,7 @@ export const AddUserProgramScreen = () => {
             <FlatList
               data={DAYS}
               showsVerticalScrollIndicator={false}
-              keyExtractor={(item) => item._id}
+              keyExtractor={(item) => item.id}
               renderItem={renderDay}
               contentContainerStyle={{ marginTop: 15 }}
             />

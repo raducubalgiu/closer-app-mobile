@@ -22,6 +22,7 @@ import { ConfirmModal } from "../../../../components/customized/Modals/ConfirmMo
 import { Service } from "../../../../models/service";
 import { FormProvider, useForm } from "react-hook-form";
 import { showToast } from "../../../../utils";
+import { NoFoundMessage } from "../../../../components/customized";
 
 const { primary, error } = theme.lightColors || {};
 
@@ -39,7 +40,7 @@ export const AddServicesScreen = () => {
     uri: "/services",
   });
 
-  useGet({
+  const { isLoading: isLoadingServices } = useGet({
     model: "services",
     uri: `/users/${user?.id}/locations/${user?.location}/services`,
     onSuccess: (res) => setServices(res.data),
@@ -98,8 +99,18 @@ export const AddServicesScreen = () => {
   const keyExtractor = useCallback((item: Service) => item.id, []);
 
   let footer;
-  if (isLoadingAdd) {
+  if (isLoadingAdd || isLoadingServices) {
     footer = <ActivityIndicator style={{ marginTop: 15 }} />;
+  }
+
+  let header;
+  if (services.length === 0 && !isLoadingAdd && !isLoadingRemove) {
+    header = (
+      <NoFoundMessage
+        title={t("noFoundServices")}
+        description={t("noFoundServicesDescription")}
+      />
+    );
   }
 
   return (
@@ -131,6 +142,7 @@ export const AddServicesScreen = () => {
         </FormProvider>
       </Stack>
       <FlashList
+        ListHeaderComponent={header}
         data={services}
         renderItem={renderService}
         keyExtractor={keyExtractor}

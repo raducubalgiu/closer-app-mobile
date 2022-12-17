@@ -1,12 +1,23 @@
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 
-type IProps = { height?: number; sx?: {}; longitude: number; latitude: number };
+type IProps = {
+  longitude: number;
+  latitude: number;
+  height?: number | string;
+  sx?: {};
+  minZoom?: number;
+  zoomEnabled?: boolean;
+  scrollEnabled?: boolean;
+};
 
 export const MapStatic = ({
-  height = 250,
-  sx = {},
   longitude,
   latitude,
+  height = 250,
+  sx = {},
+  minZoom = 13,
+  zoomEnabled = false,
+  scrollEnabled = false,
 }: IProps) => {
   const mapStyle = [
     {
@@ -48,10 +59,10 @@ export const MapStatic = ({
         longitudeDelta: 0.0421,
       }}
       provider={PROVIDER_GOOGLE}
-      zoomEnabled={false}
-      pitchEnabled={false}
-      scrollEnabled={false}
-      minZoomLevel={13}
+      zoomEnabled={zoomEnabled}
+      pitchEnabled={true}
+      scrollEnabled={scrollEnabled}
+      minZoomLevel={minZoom}
     >
       <Marker
         coordinate={{ latitude, longitude }}

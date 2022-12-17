@@ -239,6 +239,7 @@
   "noFoundProducts": "Încă nu au fost adăugate produse",
   "noFoundSavedProducts": "Încă nu ai salvat produse",
   "noFoundSavedPosts": "Încă nu ai salvat postări",
+  "noFoundServicesDescription": "Încă nu ai adăugat servicii",
   "saved": "Salvate",
   "savedPosts": "Postări salvate",
   "createAUsername": "Creează un nume de utilizator",
@@ -313,5 +314,6 @@
   "correspondingServices": "serviciile",
   "isGreatherThanMessage": "Data de început nu poate fi mai mare decât data de final",
   "hoursInterval": "Interval orar",
+  "myLocation": "Locaţia mea",
   "serviceAlreadyPresent": "Acest serviciu a fost adăugat deja"
 }

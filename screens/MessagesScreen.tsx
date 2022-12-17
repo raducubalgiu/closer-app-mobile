@@ -8,7 +8,7 @@ import {
 import React, { useState, useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { MessageListItem } from "../components/customized";
+import { MessageListItem, NoFoundMessage } from "../components/customized";
 import theme from "../assets/styles/theme";
 import {
   useAuth,
@@ -75,19 +75,18 @@ export const MessagesScreen = () => {
     if (hasNextPage) fetchNextPage();
   };
 
-  const showSpinner = () => {
-    if (isFetchingNextPage) {
-      return <Spinner />;
-    } else {
-      return null;
-    }
-  };
+  const header = <Heading title={t("messages")} sx={{ marginLeft: 15 }} />;
 
-  const noFoundMessage = (
-    <Stack sx={{ padding: 15 }}>
-      <Text style={{ color: grey0 }}>{t("noFoundMessage")}</Text>
-    </Stack>
-  );
+  let footer;
+  if (isFetchingNextPage) {
+    footer = <Spinner />;
+  } else if (messages?.length === 0) {
+    footer = (
+      <NoFoundMessage title={t("messages")} description={t("noFoundMessage")} />
+    );
+  }
+
+  console.log("MESSAGES!!!!", messages);
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -109,13 +108,13 @@ export const MessagesScreen = () => {
       {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
       <FlashList
         refreshControl={refreshControl}
-        ListHeaderComponent={<Heading title={t("messages")} />}
+        ListHeaderComponent={header}
         showsVerticalScrollIndicator={false}
         data={messages}
         keyExtractor={keyExtractor}
         renderItem={renderMessages}
         estimatedItemSize={70}
-        ListFooterComponent={showSpinner}
+        ListFooterComponent={footer}
         onEndReached={loadMore}
         onEndReachedThreshold={0.3}
       />

@@ -34,7 +34,7 @@ export const ServicesList = ({ services }: IProps) => {
     ),
     []
   );
-  const keyExtractor = useCallback((item: Service) => item._id, []);
+  const keyExtractor = useCallback((item: Service) => item.id, []);
 
   return (
     <FlatList
