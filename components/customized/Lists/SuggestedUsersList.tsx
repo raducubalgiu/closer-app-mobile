@@ -16,7 +16,7 @@ const SuggestedUsersList = ({ suggested, userId }: IProps) => {
     return <CardSuggestedPeople item={item} onRemoveCard={() => {}} />;
   }, []);
 
-  const keyExtractor = useCallback((item: any) => item?._id, []);
+  const keyExtractor = useCallback((item: any) => item?.id, []);
 
   return (
     <Stack align="start" justify="start">

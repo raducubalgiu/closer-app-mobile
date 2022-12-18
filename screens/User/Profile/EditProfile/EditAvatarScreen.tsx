@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, View, Text } from "react-native";
+import { SafeAreaView, StyleSheet, View, Text, Dimensions } from "react-native";
 import { Avatar } from "@rneui/themed";
 import { Button, Stack } from "../../../../components/core";
 import { useNavigation } from "@react-navigation/native";
@@ -8,6 +8,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 const { black } = theme.lightColors || {};
 
+const { width } = Dimensions.get("window");
 type IProps = NativeStackScreenProps<RootStackParams, "EditAvatar">;
 
 export const EditAvatarScreen = ({ route }: IProps) => {
@@ -27,15 +28,11 @@ export const EditAvatarScreen = ({ route }: IProps) => {
         <Text style={styles.title}>Decupeaza</Text>
         <View style={{ width: 20 }} />
       </Stack>
-      <Avatar
-        size={350}
-        source={{ uri: photo.uri }}
-        containerStyle={{ marginBottom: 50 }}
-      />
+      <Avatar size={300} source={{ uri: photo.uri }} rounded />
       <Button
         title="Salveaza"
         size="lg"
-        sxBtn={{ marginHorizontal: 20 }}
+        sxBtn={{ width: width - 30 }}
         onPress={handleAvatar}
       />
     </SafeAreaView>

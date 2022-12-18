@@ -13,7 +13,7 @@ export const EditNameScreen = () => {
   const { t } = useTranslation();
 
   const { mutate, isLoading } = usePatch({
-    uri: `/users/${user.id}/update`,
+    uri: `/users/${user.id}`,
     onSuccess: (res) => {
       setUser({ ...user, name: res.data.name });
       navigation.goBack();

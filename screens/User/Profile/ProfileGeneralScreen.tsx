@@ -57,7 +57,7 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
     onSuccess: () => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       setIsFollow(true);
-      //handleSuggested();
+      handleSuggested();
     },
   });
 

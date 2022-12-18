@@ -34,7 +34,7 @@ export const EditProfessionScreen = () => {
   });
 
   const { isLoading: loadingPatch, mutate } = usePatch({
-    uri: `/users/${user?._id}/update`,
+    uri: `/users/${user?._id}`,
     onSuccess: (res) => {
       setUser({ ...user, profession: res.data.profession });
       navigation.goBack();
@@ -45,7 +45,7 @@ export const EditProfessionScreen = () => {
     if (selected) {
       mutate({
         profession: {
-          _id: selected?._id,
+          _id: selected?.id,
           category: selected?.category,
           name: selected?.name,
         },
@@ -75,7 +75,7 @@ export const EditProfessionScreen = () => {
     [selected]
   );
 
-  const keyExtractor = useCallback((item: Profession) => item._id, []);
+  const keyExtractor = useCallback((item: Profession) => item.id, []);
 
   let data;
   if (role === "admin") data = businesses;

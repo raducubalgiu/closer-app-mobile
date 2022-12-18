@@ -27,7 +27,7 @@ export const PostInfoSheet = ({ onShowConfirm }: IProps) => {
         onPress={onShowConfirm}
         sx={{ ...styles.listItem, backgroundColor: "#f1f1f1" }}
       >
-        <Text style={{ ...styles.text, color: error, fontWeight: "bold" }}>
+        <Text style={{ ...styles.text, color: error, fontWeight: "500" }}>
           {t("delete")}
         </Text>
       </ListItem>
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   text: {
-    fontSize: 15.5,
+    fontSize: 15,
     color: black,
   },
 });

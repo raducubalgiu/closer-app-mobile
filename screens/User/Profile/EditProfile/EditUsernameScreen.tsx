@@ -13,7 +13,7 @@ export const EditUsernameScreen = () => {
   const navigation = useNavigation();
 
   const { mutate, isLoading } = usePatch({
-    uri: `/users/${user?._id}/update`,
+    uri: `/users/${user?._id}`,
     onSuccess: (res) => {
       setUser({ ...user, username: res.data.username });
       navigation.goBack();
