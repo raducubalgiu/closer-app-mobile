@@ -39,7 +39,7 @@ export const HashtagScreen = ({ route }: IProps) => {
     <SafeAreaView style={styles.screen}>
       <Header title={`#${name}`} />
       <CardHashtagOverview
-        bookmarkId={data?._id}
+        bookmarkId={data?.id}
         postsCount={data?.postsCount}
         bookmarksCount={data?.bookmarksCount}
       />

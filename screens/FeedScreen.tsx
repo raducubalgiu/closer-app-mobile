@@ -1,5 +1,10 @@
-import { SafeAreaView, StyleSheet, RefreshControl } from "react-native";
-import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
+import {
+  SafeAreaView,
+  StyleSheet,
+  RefreshControl,
+  FlatList,
+  ListRenderItemInfo,
+} from "react-native";
 import React, { useCallback, useRef, useState } from "react";
 import { useScrollToTop } from "@react-navigation/native";
 import { Divider } from "@rneui/themed";
@@ -89,7 +94,7 @@ export const FeedScreen = () => {
         onFetchPosts={(index: number) => console.log("INDEX!!", index)}
       />
       <Divider color="#ddd" />
-      <FlashList
+      <FlatList
         ref={ref}
         refreshControl={refreshControl}
         data={allPosts}
@@ -99,7 +104,6 @@ export const FeedScreen = () => {
         ListFooterComponent={showSpinner}
         onEndReached={loadMore}
         onEndReachedThreshold={0.3}
-        estimatedItemSize={636}
       />
       {BOTTOM_SHEET}
       <ConfirmModal

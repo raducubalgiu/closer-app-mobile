@@ -1,5 +1,5 @@
-import { StyleSheet, Text, Pressable } from "react-native";
-import React, { useState } from "react";
+import { StyleSheet, Text, Pressable, Animated } from "react-native";
+import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Icon } from "@rneui/themed";
 import { Stack } from "../../core";
@@ -23,6 +23,7 @@ export const BookmarkButton = ({
   const { user } = useAuth();
   const [bookmarked, setBookmarked] = useState(status);
   const { t } = useTranslation();
+  const animatedScale = useRef(new Animated.Value(0)).current;
   const endoints = `/users/${user?.id}/${type}/${typeId}/bookmarks`;
 
   useGet({
@@ -34,6 +35,15 @@ export const BookmarkButton = ({
   const { mutate: makeDelete } = useDelete({ uri: endoints });
 
   const handleBookmark = () => {
+    animatedScale.setValue(0.8);
+
+    Animated.spring(animatedScale, {
+      toValue: 1,
+      bounciness: 15,
+      speed: 20,
+      useNativeDriver: true,
+    }).start();
+
     if (!bookmarked) {
       setBookmarked(true);
       onBookmarksCount && onBookmarksCount(1);
@@ -45,15 +55,21 @@ export const BookmarkButton = ({
     }
   };
 
+  useEffect(() => {
+    animatedScale.setValue(1);
+  }, []);
+
   return (
     <Pressable style={styles.button} onPress={handleBookmark}>
       <Stack direction="row">
-        <Icon
-          name={bookmarked ? "bookmark" : "bookmark-o"}
-          type="font-awesome"
-          color={black}
-          size={17.5}
-        />
+        <Animated.View style={[{ transform: [{ scale: animatedScale }] }]}>
+          <Icon
+            name={bookmarked ? "bookmark" : "bookmark-o"}
+            type="font-awesome"
+            color={black}
+            size={17.5}
+          />
+        </Animated.View>
         <Text style={styles.buttonText}>
           {bookmarked ? t("addedToBookmarks") : t("addToBookmarks")}
         </Text>

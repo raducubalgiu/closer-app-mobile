@@ -1,11 +1,10 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Image } from "react-native";
 import Animated from "react-native-reanimated";
 import React, { memo } from "react";
 import CardPostHeader from "./CardPostHeader";
 import CardPostButtons from "./CardPostButtons";
 import CardPostFooter from "./CardPostFooter";
 import { FROM_NOW } from "../../../../utils/date-utils";
-import { SharedElement } from "react-navigation-shared-element";
 import { Post } from "../../../../models/post";
 
 type IProps = { post: Post; onShowDetails: () => void };
@@ -34,14 +33,10 @@ const CardPost = ({ post, onShowDetails }: IProps) => {
         checkmark={checkmark}
         onShowDetails={onShowDetails}
       />
-      <View>
-        <SharedElement id={id}>
-          <Animated.Image
-            source={{ uri: `${post?.images[0]?.url}` }}
-            style={[{ width: "100%", height: 400 }]}
-          />
-        </SharedElement>
-      </View>
+      <Image
+        source={{ uri: `${post?.images[0]?.url}` }}
+        style={[{ width: "100%", height: 400 }]}
+      />
       <CardPostButtons
         bookable={bookable}
         product={product}
@@ -68,7 +63,6 @@ const styles = StyleSheet.create({
   container: {
     marginBottom: 15,
     borderRadius: 20,
-    height: 600,
   },
   image: {
     aspectRatio: 1,
