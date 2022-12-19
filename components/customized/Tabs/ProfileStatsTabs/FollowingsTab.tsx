@@ -56,7 +56,7 @@ export const FollowingsTab = ({ userId }: IProps) => {
   if (!isLoading && !isFetchingNextPage && followings?.length === 0) {
     header = (
       <NoFoundMessage
-        title={t("followings")}
+        title={t("following")}
         description={t("noFoundFollowings")}
       />
     );
