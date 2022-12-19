@@ -5,6 +5,10 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Stack, IconButton, Checkmark } from "../../../core";
 import theme from "../../../../assets/styles/theme";
 import { RootStackParams } from "../../../../models/navigation/rootStackParams";
+import { getAuth, signOut } from "firebase/auth";
+import { useAuth } from "../../../../hooks";
+import { showToast } from "../../../../utils";
+import { useTranslation } from "react-i18next";
 
 const { black } = theme.lightColors || {};
 
@@ -21,15 +25,24 @@ export const HeaderProfile = ({
   onGoToFindFriends,
   onOpenSettings,
 }: IProps) => {
+  const { setUser } = useAuth();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
+  const auth = getAuth();
+  const { t } = useTranslation();
+
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => setUser(null))
+      .catch(() => showToast({ message: t("somethingWentWrong") }));
+  };
 
   return (
     <SafeAreaView style={{ backgroundColor: "white", zIndex: 1000 }}>
       <Stack direction="row" sx={styles.container}>
         <Stack direction="row">
           <IconButton
-            onPress={onGoToFindFriends}
+            onPress={handleLogout}
             name="adduser"
             type="antdesign"
             size={27}

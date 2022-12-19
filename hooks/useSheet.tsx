@@ -7,7 +7,7 @@ import {
 } from "@gorhom/bottom-sheet";
 import { Portal } from "@gorhom/portal";
 
-export const useSheet = (intervals: any, sheetContent: any) => {
+export const useSheet = (intervals: string[], children: any) => {
   const bottomSheetModalRef = useRef<any>(null);
   const snapPoints = useMemo(() => [...intervals], []);
 
@@ -46,7 +46,7 @@ export const useSheet = (intervals: any, sheetContent: any) => {
           onDismiss={handleCloseSheet}
           onChange={handleSheetChange}
         >
-          {sheetContent}
+          {children}
         </BottomSheetModal>
       </BottomSheetModalProvider>
     </Portal>

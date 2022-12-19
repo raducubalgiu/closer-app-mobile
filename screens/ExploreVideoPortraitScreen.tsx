@@ -27,8 +27,6 @@ const DATA = [
 const { height } = Dimensions.get("window");
 
 export const ExploreVideoPortraitScreen = () => {
-  const insets = useSafeAreaInsets();
-
   const renderVideo = useCallback(
     ({ item }: { item: any }) => (
       <VideoPortraitListItem uri={item.url} bgColor={item.bgColor} />
@@ -39,18 +37,20 @@ export const ExploreVideoPortraitScreen = () => {
   const keyExtractor = useCallback((item: any) => item.id, []);
 
   return (
-    <FlatList
-      data={DATA}
-      keyExtractor={keyExtractor}
-      renderItem={renderVideo}
-      snapToInterval={height - insets.top - insets.bottom}
-      initialNumToRender={5}
-      snapToAlignment={"center"}
-      decelerationRate={"fast"}
-      pagingEnabled={true}
-      bounces={false}
-      showsVerticalScrollIndicator={false}
-    />
+    <View style={{ backgroundColor: "black" }}>
+      <FlatList
+        data={DATA}
+        keyExtractor={keyExtractor}
+        renderItem={renderVideo}
+        snapToInterval={height}
+        initialNumToRender={5}
+        snapToAlignment="center"
+        decelerationRate="fast"
+        pagingEnabled={true}
+        //bounces={false}
+        showsVerticalScrollIndicator={false}
+      />
+    </View>
   );
 };
 

@@ -11,6 +11,7 @@ import { Protected, ListItem } from "../../core";
 import { useTranslation } from "react-i18next";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../models/navigation/rootStackParams";
+import { showToast } from "../../../utils";
 
 const { black } = theme.lightColors || {};
 
@@ -25,12 +26,8 @@ export const ProfileMenuList = ({ onCloseSheet }: IProps) => {
 
   const handleLogout = () => {
     signOut(auth)
-      .then(() => {
-        setUser(null);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      .then(() => setUser(null))
+      .catch(() => showToast({ message: t("somethingWentWrong") }));
   };
 
   const items = [
@@ -112,7 +109,7 @@ export const ProfileMenuList = ({ onCloseSheet }: IProps) => {
 };
 
 const styles = StyleSheet.create({
-  container: { marginHorizontal: 20, marginTop: 10 },
+  container: { marginHorizontal: 20, marginTop: 10, flex: 1 },
   listItem: {
     paddingLeft: 0,
     backgroundColor: "white",

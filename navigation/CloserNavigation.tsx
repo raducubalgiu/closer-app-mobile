@@ -119,10 +119,6 @@ const FeedStackNavigator = () => {
       <Stack.Screen name="Feed" component={FeedScreen} />
       <Stack.Screen name="Likes" component={LikesScreen} />
       <Stack.Screen name="SearchPosts" component={SearchPostsScreen} />
-      <RootStack.Screen
-        name="ExploreVideoPortrait"
-        component={ExploreVideoPortraitScreen}
-      />
     </Stack.Navigator>
   );
 };
@@ -403,6 +399,10 @@ const CloserNavigation = () => {
             <RootStack.Screen
               name="ExploreVideoLandscape"
               component={ExploreVideoLandscape}
+            />
+            <RootStack.Screen
+              name="ExploreVideoPortrait"
+              component={ExploreVideoPortraitScreen}
             />
           </RootStack.Navigator>
         </PortalProvider>

@@ -14,6 +14,7 @@ export { IconButtonDelete } from "./IconButton/IconButtonDelete";
 export { Header } from "./Header/Header";
 
 export { AvatarComplete } from "./Avatars/AvatarComplete";
+export { AvatarGroup } from "./Avatars/AvatarGroup";
 
 export { Checkmark } from "./Icons/Checkmark";
 export { IconStar } from "./Icons/IconStar";

@@ -27,7 +27,7 @@ export const ProfileScreen = () => {
 
   const { data: user, refetch } = useGet({
     model: "fetchUser",
-    uri: `/users/${userContext.username}`,
+    uri: `/users/${userContext?.username}`,
   });
 
   const { name, username, avatar, checkmark, role } = user || {};
@@ -35,7 +35,7 @@ export const ProfileScreen = () => {
   const closeSheet = useCallback(() => CLOSE_BS(), []);
   const profileMenu = <ProfileMenuList onCloseSheet={closeSheet} />;
   const { BOTTOM_SHEET, SHOW_BS, CLOSE_BS } = useSheet(
-    [10, "50%"],
+    ["1%", "50%"],
     profileMenu
   );
   const navigateBookmarks = () => navigation.navigate("Bookmarks", { user });

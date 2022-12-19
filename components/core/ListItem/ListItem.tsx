@@ -7,7 +7,7 @@ type IProps = {
   center?: boolean;
   mt?: number;
   sx?: {};
-  onPress: () => void;
+  onPress?: () => void;
   children: any;
 };
 

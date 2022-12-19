@@ -13,11 +13,12 @@ export const ProductsProfileTab = ({
   option = null,
 }: IProps) => {
   return (
-    <TopTabServices
-      userId={userId}
-      initialRoute={service?.name.toLowerCase()}
-      service={service}
-      option={option}
-    />
+    // <TopTabServices
+    //   userId={userId}
+    //   initialRoute={service?.name.toLowerCase()}
+    //   service={service}
+    //   option={option}
+    // />
+    <></>
   );
 };

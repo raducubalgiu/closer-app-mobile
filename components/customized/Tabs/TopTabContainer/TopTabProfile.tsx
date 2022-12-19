@@ -1,5 +1,6 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { PostsProfileTab } from "../ProfileTabs/PostsProfileTab";
+import { VideosPortraitTab } from "../ProfileTabs/VideosPortraitTab";
 import { ProductsProfileTab } from "../ProfileTabs/ProductsProfileTab";
 import { JobsProfileTab } from "../ProfileTabs/JobsProfileTab";
 import { AboutProfileTab } from "../ProfileTabs/AboutProfileTab";
@@ -23,6 +24,11 @@ export const TopTabProfile = ({ userId, service, option, user }: IProps) => {
     [userId]
   );
 
+  const VideosPortraitProfile = useCallback(
+    () => <PostsProfileTab userId={userId} />,
+    [userId]
+  );
+
   const ProductsProfile = useCallback(
     () => (
       <ProductsProfileTab userId={userId} service={service} option={option} />
@@ -35,10 +41,7 @@ export const TopTabProfile = ({ userId, service, option, user }: IProps) => {
     [userId]
   );
 
-  const AboutProfile = useCallback(
-    () => <AboutProfileTab biography={description} website={website} />,
-    []
-  );
+  const AboutProfile = useCallback(() => <AboutProfileTab />, []);
 
   return (
     <Tab.Navigator
@@ -51,6 +54,9 @@ export const TopTabProfile = ({ userId, service, option, user }: IProps) => {
           if (route.name === "Posts") {
             iconType = "feather";
             iconName = focused ? "grid" : "grid";
+          } else if (route.name === "Videos") {
+            iconType = "feather";
+            iconName = focused ? "video" : "video";
           } else if (route.name === "Calendar") {
             iconType = "feather";
             iconName = focused ? "clock" : "clock";
@@ -78,6 +84,7 @@ export const TopTabProfile = ({ userId, service, option, user }: IProps) => {
       sceneContainerStyle={{ backgroundColor: "white" }}
     >
       <Tab.Screen name="Posts" component={PostsProfile} />
+      <Tab.Screen name="Videos" component={VideosPortraitProfile} />
       {role !== THIRD_ROLE && (
         <Tab.Screen
           name="Products"

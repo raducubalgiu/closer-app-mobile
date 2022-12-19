@@ -3,7 +3,7 @@ import { useState, memo } from "react";
 import { Icon, Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { Stack, ShareIButton } from "../../../core";
+import { Stack, ShareIButton, AvatarGroup } from "../../../core";
 import theme from "../../../../assets/styles/theme";
 import { LikeButton } from "../../Buttons/LikeButton";
 import { BookmarkIconButton } from "../../Buttons/BookmarkIconButton";
@@ -69,9 +69,12 @@ const CardPostButtons = ({ bookable, product, postId, likesCount }: IProps) => {
       <Divider color="#ddd" style={{ marginHorizontal: 15 }} />
       <Stack direction="row" sx={styles.buttons}>
         <Pressable onPress={goToLikes}>
-          <Text style={styles.likes}>
-            {likes} {t("likes")}
-          </Text>
+          <Stack direction="row">
+            <AvatarGroup />
+            <Text style={styles.likes}>
+              {likes} {t("likes")}
+            </Text>
+          </Stack>
         </Pressable>
         <Stack direction="row">
           <LikeButton
@@ -105,7 +108,12 @@ const styles = StyleSheet.create({
   },
   buttons: { paddingHorizontal: 15, paddingVertical: 2.5 },
   button: { marginLeft: 15 },
-  likes: { color: black, fontWeight: "bold", textTransform: "lowercase" },
+  likes: {
+    color: black,
+    fontWeight: "bold",
+    textTransform: "lowercase",
+    marginLeft: 2.5,
+  },
   productName: {
     fontWeight: "600",
     fontSize: 14.5,
