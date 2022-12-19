@@ -28,7 +28,7 @@ export const SchedulesScreen = () => {
     isFetching,
   } = useGet({
     model: "schedules",
-    uri: `/users/${user?._id}/schedules`,
+    uri: `/users/${user?.id}/schedules`,
   });
 
   useRefreshOnFocus(refetch);

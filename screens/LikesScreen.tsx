@@ -28,12 +28,12 @@ export const LikesScreen = ({ route }: IProps) => {
     refetch,
   } = useGetPaginate({
     model: "likes",
-    uri: `/users/${user.id}/posts/${postId}/get-likes`,
+    uri: `/users/${user?.id}/posts/${postId}/get-likes`,
     limit: "25",
   });
 
   const renderPerson = useCallback(
-    ({ item }: ListRenderItemInfo<any>) => <UserListItem user={item.user} />,
+    ({ item }: ListRenderItemInfo<any>) => <UserListItem user={item.userId} />,
     []
   );
 

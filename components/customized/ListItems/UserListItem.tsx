@@ -29,7 +29,7 @@ const UserListItem = ({ user, sx = {} }: IProps) => {
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { user: userContext } = useAuth();
   const { avatar, id, username, name, checkmark } = user;
-  const [follow, setFollow] = useState(true);
+  const [follow, setFollow] = useState(false);
   const FOLLOW_ENDPOINT = `/users/${userContext?.id}/followings/${id}/follows`;
 
   const goToUser = (userId: string) => {

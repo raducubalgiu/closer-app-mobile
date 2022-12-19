@@ -29,7 +29,7 @@ export const HomeScreen = () => {
 
   const { data: locations, refetch } = useGet({
     model: "recommended",
-    uri: `/locations/get-recommended?latlng=26.100195,44.428286`,
+    uri: `/locations/recommended?latlng=26.100195,44.428286`,
   });
 
   const { data: services } = useGet({
