@@ -31,7 +31,6 @@ type Value = { _id: string; name: string };
 
 export const AddProductsScreen = () => {
   const { user } = useAuth();
-  const { location } = user;
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
@@ -43,9 +42,9 @@ export const AddProductsScreen = () => {
 
   const { data: services, isLoading: loading } = useGet({
     model: "services",
-    uri: `/locations/${location}/services`,
-    enabled: !!location,
-    enableId: location,
+    uri: `/locations/${user?.location}/services`,
+    enabled: !!user?.location,
+    enableId: user?.location,
   });
 
   const { data: filters } = useGet({
@@ -73,8 +72,8 @@ export const AddProductsScreen = () => {
     makePost({
       ...data,
       service: service?._id,
-      user: user._id,
-      location: user.location,
+      user: user?.id,
+      location: user?.location,
     });
   };
 

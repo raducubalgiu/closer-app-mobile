@@ -1,18 +1,21 @@
-import React, {
-  useState,
-  useEffect,
-  useContext,
-  createContext,
-  useMemo,
-} from "react";
+import { useState, useEffect, useContext, createContext, useMemo } from "react";
 import { getAuth } from "firebase/auth";
 import { getCurrentUser } from "../utils/auth-middleware";
+import { User } from "../models/user";
 
-const AuthContext = createContext();
+interface UserContext {
+  user: User | null;
+  setUser: (user: any) => void;
+}
 
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [loadingInitial, setLoadingInitial] = useState(true);
+const AuthContext = createContext<UserContext>({
+  user: null,
+  setUser: () => {},
+});
+
+export const AuthProvider = ({ children }: { children: any }) => {
+  const [user, setUser] = useState<User | null>(null);
+  const [loadingInitial, setLoadingInitial] = useState<boolean>(true);
 
   useEffect(() => {
     const unsubscribe = getAuth().onAuthStateChanged(async (user) => {
@@ -37,13 +40,7 @@ export const AuthProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
-  const memoedValue = useMemo(
-    () => ({
-      user,
-      setUser,
-    }),
-    [user]
-  );
+  const memoedValue = useMemo(() => ({ user, setUser }), [user]);
 
   return (
     <AuthContext.Provider value={memoedValue}>

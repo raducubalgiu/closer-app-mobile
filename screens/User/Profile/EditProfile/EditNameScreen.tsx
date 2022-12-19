@@ -13,7 +13,7 @@ export const EditNameScreen = () => {
   const { t } = useTranslation();
 
   const { mutate, isLoading } = usePatch({
-    uri: `/users/${user.id}`,
+    uri: `/users/${user?.id}`,
     onSuccess: (res) => {
       setUser({ ...user, name: res.data.name });
       navigation.goBack();
@@ -30,7 +30,7 @@ export const EditNameScreen = () => {
       <HeaderEdit title={t("name")} onSave={updateName} disabled={isLoading} />
       <InputEdit
         placeholder={t("addName")}
-        value={name}
+        value={name ? name : ""}
         fieldLength={30}
         updateValue={(name: string) => setName(name)}
         withDetails

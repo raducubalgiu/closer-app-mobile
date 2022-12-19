@@ -14,7 +14,7 @@ type IProps = {
 };
 
 export const InputEdit = ({
-  value,
+  value = "",
   fieldLength,
   placeholder,
   updateValue,

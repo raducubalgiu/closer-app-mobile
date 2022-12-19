@@ -2,7 +2,8 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true
+    "strict": true,
+    "strictPropertyInitialization": false
   },
   "exclude": ["node_modules"],
   "extends": "expo/tsconfig.base"

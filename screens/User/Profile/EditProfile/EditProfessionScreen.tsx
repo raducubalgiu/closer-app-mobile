@@ -23,7 +23,6 @@ const { primary, grey0 } = theme.lightColors || {};
 
 export const EditProfessionScreen = () => {
   const { user, setUser } = useAuth();
-  const { role } = user;
   const [selected, setSelected] = useState<Profession>();
   const navigation = useNavigation();
   const { t } = useTranslation();
@@ -34,7 +33,7 @@ export const EditProfessionScreen = () => {
   });
 
   const { isLoading: loadingPatch, mutate } = usePatch({
-    uri: `/users/${user?._id}`,
+    uri: `/users/${user?.id}`,
     onSuccess: (res) => {
       setUser({ ...user, profession: res.data.profession });
       navigation.goBack();
@@ -78,7 +77,7 @@ export const EditProfessionScreen = () => {
   const keyExtractor = useCallback((item: Profession) => item.id, []);
 
   let data;
-  if (role === "admin") data = businesses;
+  if (user?.role === "admin") data = businesses;
 
   return (
     <SafeAreaView style={styles.screen}>

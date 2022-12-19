@@ -3,6 +3,7 @@ import { Product } from "../product";
 import { Schedule } from "../schedule";
 import { Service } from "../service";
 import { Slot } from "../slot";
+import { User } from "../user";
 
 export type RootStackParams = {
   App: any;
@@ -29,7 +30,7 @@ export type RootStackParams = {
   Camera: { name: string; avatar: any };
   CameraPreview: { photo: { uri: string }; avatar: any; name: string };
   Discounts: any;
-  EditProfile: { user: any };
+  EditProfile: { user: User };
   EditBio: any;
   EditName: any;
   EditWebsite: any;
