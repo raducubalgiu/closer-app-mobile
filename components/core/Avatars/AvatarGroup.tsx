@@ -6,7 +6,7 @@ export const AvatarGroup = () => {
     <View style={styles.container}>
       <Avatar
         rounded
-        size={22.5}
+        size={25}
         source={{
           uri: "https://res.cloudinary.com/closer-app/image/upload/v1667841461/raducu-balgiu-avatar_ejmoaf.jpg",
         }}
@@ -18,7 +18,7 @@ export const AvatarGroup = () => {
       />
       <Avatar
         rounded
-        size={22.5}
+        size={25}
         source={{
           uri: "https://res.cloudinary.com/closer-app/image/upload/v1667922458/romina-1_f4pyf9.jpg",
         }}
@@ -31,7 +31,7 @@ export const AvatarGroup = () => {
       />
       <Avatar
         rounded
-        size={22.5}
+        size={25}
         source={{
           uri: "https://res.cloudinary.com/closer-app/image/upload/v1667549749/marina-filimon-avatar_n6aiua.jpg",
         }}

@@ -35,6 +35,7 @@ export const FeedScreen = () => {
       model: "allPosts",
       uri: `/posts/get-all-posts`,
       limit: "10",
+      queries: "postType=photo",
     });
 
   const { pages } = data || {};

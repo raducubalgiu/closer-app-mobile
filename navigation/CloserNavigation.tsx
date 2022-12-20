@@ -85,6 +85,7 @@ const { black } = theme.lightColors || {};
 import { SharedList } from "../screens/SharedList";
 import { SharedDetails } from "../screens/SharedDetails";
 import { ExploreVideoPortraitScreen } from "../screens/ExploreVideoPortraitScreen";
+import CustomAvatar from "../components/core/Avatars/CustomAvatar";
 
 const Shared = () => {
   return (
@@ -142,40 +143,28 @@ const AuthStackNavigator = () => {
 };
 
 const TabsScreen = () => {
+  const { user } = useAuth();
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color }) => {
-          let iconName;
-          let iconType;
-          let iconSize;
+          let iconName = "";
+
           if (route.name === "Home") {
-            iconType = "feather";
             iconName = focused ? "search" : "search";
           } else if (route.name === "Messages") {
-            iconType = "feather";
             iconName = focused ? "message-circle" : "message-circle";
           } else if (route.name === "FeedStack") {
-            iconType = "feather";
             iconName = focused ? "compass" : "compass";
           } else if (route.name === "Schedules") {
-            iconType = "feather";
             iconName = focused ? "calendar" : "calendar";
           } else if (route.name === "Profile") {
-            iconType = "feather";
             iconName = focused ? "user" : "user";
           } else if (route.name === "SharedStack") {
-            iconType = "feather";
             iconName = focused ? "user" : "user";
           }
-          return (
-            <Icon
-              name={iconName}
-              type={iconType}
-              color={color}
-              size={iconSize}
-            />
-          );
+          return <Icon name={iconName} type="feather" color={color} />;
         },
         tabBarActiveTintColor: black,
         tabBarInactiveTintColor: "gray",
@@ -189,7 +178,19 @@ const TabsScreen = () => {
       <Tab.Screen name="Messages" component={MessagesScreen} />
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Schedules" component={SchedulesScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <CustomAvatar
+              avatar={user?.avatar}
+              size={27.5}
+              sx={focused ? { borderWidth: 1, borderColor: black } : {}}
+            />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 };

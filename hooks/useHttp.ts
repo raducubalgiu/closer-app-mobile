@@ -77,7 +77,7 @@ export const useDelete = ({ uri, onSuccess, onError }: DeleteProps) => {
   const mutations = useMutation(
     () =>
       axios.delete(`${BASE_ENDPOINT}${uri}`, {
-        headers: { Authorization: `Bearer ${user.token}` },
+        headers: { Authorization: `Bearer ${user?.token}` },
       }),
     {
       onSuccess,
@@ -114,7 +114,7 @@ export const useGet = ({
     async ({ signal }) => {
       return await axios.get(`${BASE_ENDPOINT}${uri}`, {
         signal,
-        headers: { Authorization: `Bearer ${user.token}` },
+        headers: { Authorization: `Bearer ${user?.token}` },
       });
     },
     {
@@ -147,7 +147,7 @@ export const useGetMutate = ({
   const mutations = useMutation(
     () =>
       axios.get(`${BASE_ENDPOINT}${uri}`, {
-        headers: { Authorization: `Bearer ${user.token}` },
+        headers: { Authorization: `Bearer ${user?.token}` },
       }),
     {
       onSuccess,
@@ -162,6 +162,7 @@ type GetPaginateProps = {
   model: string;
   uri: string;
   limit: string;
+  queries?: string;
   enabled?: boolean;
 };
 
@@ -169,6 +170,7 @@ export const useGetPaginate = ({
   model,
   uri,
   limit,
+  queries = "",
   enabled = true,
 }: GetPaginateProps) => {
   const { user } = useAuth();
@@ -177,18 +179,24 @@ export const useGetPaginate = ({
     page: number,
     uri: string,
     limit: string,
+    queries: string,
     signal: any
   ) => {
-    const { data } = await axios.get(
-      `${process.env.BASE_ENDPOINT}${uri}?page=${page}&limit=${limit}`,
-      { signal, headers: { Authorization: `Bearer ${user?.token}` } }
-    );
+    const endpoint = !queries?.length
+      ? `${process.env.BASE_ENDPOINT}${uri}?page=${page}&limit=${limit}`
+      : `${process.env.BASE_ENDPOINT}${uri}?page=${page}&limit=${limit}&${queries}`;
+
+    const { data } = await axios.get(endpoint, {
+      signal,
+      headers: { Authorization: `Bearer ${user?.token}` },
+    });
     return data;
   };
 
   const response = useInfiniteQuery(
-    [model, uri, limit],
-    ({ pageParam = 1, signal }) => fetchData(pageParam, uri, limit, signal),
+    [model, uri, limit, queries],
+    ({ pageParam = 1, signal }) =>
+      fetchData(pageParam, uri, limit, queries, signal),
     {
       getNextPageParam: (lastPage) => {
         if (lastPage.next !== null) {

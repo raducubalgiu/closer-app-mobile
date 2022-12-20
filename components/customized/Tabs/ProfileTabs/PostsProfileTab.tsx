@@ -17,10 +17,9 @@ export const PostsProfileTab = ({ userId }: { userId: string }) => {
       model: "posts",
       uri: `/users/${userId}/posts`,
       limit: "12",
+      queries: "postType=photo",
       enabled: isFocused,
     });
-
-  console.log("DATA!!", data);
 
   const { pages } = data || {};
   const posts = pages?.map((page) => page.results).flat() || [];

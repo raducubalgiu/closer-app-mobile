@@ -25,7 +25,7 @@ export const TopTabProfile = ({ userId, service, option, user }: IProps) => {
   );
 
   const VideosPortraitProfile = useCallback(
-    () => <PostsProfileTab userId={userId} />,
+    () => <VideosPortraitTab userId={userId} />,
     [userId]
   );
 
@@ -89,7 +89,11 @@ export const TopTabProfile = ({ userId, service, option, user }: IProps) => {
         <Tab.Screen
           name="Products"
           component={ProductsProfile}
-          options={{ tabBarIcon: () => <TabBadge value={0} /> }}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <TabBadge value={0} color={focused ? black : "#ccc"} />
+            ),
+          }}
         />
       )}
       {role !== THIRD_ROLE && (
