@@ -1,14 +1,14 @@
 import { FlatList, ListRenderItemInfo } from "react-native";
 import { useCallback } from "react";
 import { useIsFocused } from "@react-navigation/native";
-import { CardPostImage } from "../../Cards/CardPostImage";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { useTranslation } from "react-i18next";
 import { useGetPaginate } from "../../../../hooks";
 import { Spinner } from "../../../core";
 import { Post } from "../../../../models/post";
+import { GridVideoHLitemItem } from "../../ListItems/PostGrid/GridVideoHListItem";
 
-export const VideosPortraitTab = ({ userId }: { userId: string }) => {
+export const VideosHTab = ({ userId }: { userId: string }) => {
   const isFocused = useIsFocused();
   const { t } = useTranslation();
 
@@ -17,7 +17,7 @@ export const VideosPortraitTab = ({ userId }: { userId: string }) => {
       model: "posts",
       uri: `/users/${userId}/posts`,
       limit: "12",
-      queries: "postType=video&orientation=portrait",
+      queries: "postType=video&orientation=landscape",
       enabled: isFocused,
     });
 
@@ -26,13 +26,10 @@ export const VideosPortraitTab = ({ userId }: { userId: string }) => {
 
   const renderPosts = useCallback(
     ({ item, index }: ListRenderItemInfo<Post>) => (
-      <CardPostImage
-        onPress={() => {}}
+      <GridVideoHLitemItem
+        uri={item.images[0]?.url}
         index={index}
-        image={item?.images[0]?.url}
-        bookable={item.bookable}
-        fixed={null}
-        postType={item.postType}
+        onPress={() => {}}
       />
     ),
     []
@@ -68,14 +65,13 @@ export const VideosPortraitTab = ({ userId }: { userId: string }) => {
   return (
     <FlatList
       ListHeaderComponent={header}
-      numColumns={3}
+      numColumns={2}
       data={posts}
       keyExtractor={keyExtractor}
       renderItem={renderPosts}
       ListFooterComponent={showSpinner}
       onEndReached={loadMore}
       onEndReachedThreshold={0.3}
-      //estimatedItemSize={125}
     />
   );
 };

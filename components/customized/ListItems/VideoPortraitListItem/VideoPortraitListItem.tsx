@@ -196,17 +196,6 @@ const VideoPortraitListItem = ({ post }: IProps) => {
                     5 persoane
                   </Text>
                 </Stack>
-                {/* <Stack direction="row" sx={{ marginLeft: 10 }}>
-                <Icon
-                  name="music"
-                  type="font-awesome"
-                  size={15}
-                  color="white"
-                />
-                <Text style={{ marginLeft: 5, color: "white" }}>
-                  Continut original
-                </Text>
-              </Stack> */}
               </Stack>
               <Stack>
                 <Text>Hello</Text>
@@ -222,7 +211,6 @@ const VideoPortraitListItem = ({ post }: IProps) => {
                 height: 2.5,
                 width: width,
                 backgroundColor: "transparent",
-                padding: 0,
               }}
               thumbStyle={{
                 height: 12.5,

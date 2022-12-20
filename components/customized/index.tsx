@@ -33,10 +33,10 @@ export { SearchUsersTab } from "./Tabs/SearchTabs/SearchUsersTab";
 export { SearchVideoTab } from "./Tabs/SearchTabs/SearchVideoTab";
 export { SearchPopularTab } from "./Tabs/SearchTabs/SearchPopularTab";
 export { PostsProfileTab } from "./Tabs/ProfileTabs/PostsProfileTab";
-export { VideosPortraitTab } from "./Tabs/ProfileTabs/VideosPortraitTab";
+export { VideosVTab } from "./Tabs/ProfileTabs/VideosVTab";
+export { VideosHTab } from "./Tabs/ProfileTabs/VideosHTab";
 export { ProductsProfileTab } from "./Tabs/ProfileTabs/ProductsProfileTab";
 export { AboutProfileTab } from "./Tabs/ProfileTabs/AboutProfileTab";
-export { JobsProfileTab } from "./Tabs/ProfileTabs/JobsProfileTab";
 export { FollowersTab } from "./Tabs/ProfileStatsTabs/FollowersTab";
 export { FollowingsTab } from "./Tabs/ProfileStatsTabs/FollowingsTab";
 export { RatingsTab } from "./Tabs/ProfileStatsTabs/RatingsTab";
@@ -92,6 +92,8 @@ export { AlbumListItem } from "./ListItems/AlbumListItem";
 export { PresetListItem } from "./ListItems/PresetListItem";
 export { FixedPeriodListItem } from "./ListItems/FixedPeriodListItem";
 export { OptionListItem } from "./ListItems/OptionListItem";
+export { GridVideoVLitemItem } from "./ListItems/PostGrid/GridVideoVListItem";
+export { GridVideoHLitemItem } from "./ListItems/PostGrid/GridVideoHListItem";
 
 export { NoFoundMessage } from "./NotFoundContent/NoFoundMessage";
 

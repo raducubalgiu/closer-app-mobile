@@ -80,7 +80,7 @@ const SharedStack = createSharedElementStackNavigator();
 const Tab = createBottomTabNavigator();
 const RootStack = createNativeStackNavigator<RootStackParams>();
 
-const { black } = theme.lightColors || {};
+const { black, primary } = theme.lightColors || {};
 
 import { SharedList } from "../screens/SharedList";
 import { SharedDetails } from "../screens/SharedDetails";
@@ -186,7 +186,7 @@ const TabsScreen = () => {
             <CustomAvatar
               avatar={user?.avatar}
               size={27.5}
-              sx={focused ? { borderWidth: 1, borderColor: black } : {}}
+              sx={focused ? { borderWidth: 2, borderColor: primary } : {}}
             />
           ),
         }}
@@ -199,9 +199,9 @@ const CloserNavigation = () => {
   const { user } = useAuth();
   const { t } = useTranslation();
 
-  const getScreens = (user: any) => {
-    if (user) {
-      return (
+  return (
+    <NavigationContainer>
+      {user ? (
         <PortalProvider>
           <RootStack.Navigator screenOptions={{ headerShown: false }}>
             <RootStack.Screen name="App" component={TabsScreen} />
@@ -407,17 +407,13 @@ const CloserNavigation = () => {
             />
           </RootStack.Navigator>
         </PortalProvider>
-      );
-    } else {
-      return (
+      ) : (
         <RootStack.Navigator screenOptions={{ headerShown: false }}>
           <RootStack.Screen name="AuthStack" component={AuthStackNavigator} />
         </RootStack.Navigator>
-      );
-    }
-  };
-
-  return <NavigationContainer>{getScreens(user)}</NavigationContainer>;
+      )}
+    </NavigationContainer>
+  );
 };
 
 export default CloserNavigation;
