@@ -54,15 +54,14 @@ export const TopTabProfile = ({ userId, service, option, user }: IProps) => {
           if (route.name === "Posts") {
             iconType = "feather";
             iconName = focused ? "grid" : "grid";
+          } else if (route.name === "Products") {
+            iconType = "";
           } else if (route.name === "VideoV") {
             iconType = "feather";
             iconName = focused ? "video" : "video";
           } else if (route.name === "VideoH") {
             iconType = "feather";
             iconName = focused ? "video" : "video";
-          } else if (route.name === "Calendar") {
-            iconType = "feather";
-            iconName = focused ? "clock" : "clock";
           } else if (route.name === "About") {
             iconType = "feather";
             iconName = focused ? "user-check" : "user-check";
@@ -84,8 +83,6 @@ export const TopTabProfile = ({ userId, service, option, user }: IProps) => {
       sceneContainerStyle={{ backgroundColor: "white" }}
     >
       <Tab.Screen name="Posts" component={PostsProfile} />
-      <Tab.Screen name="VideoV" component={VideosVProfile} />
-      <Tab.Screen name="VideoH" component={VideosHProfile} />
       {role !== THIRD_ROLE && (
         <Tab.Screen
           name="Products"
@@ -97,6 +94,8 @@ export const TopTabProfile = ({ userId, service, option, user }: IProps) => {
           }}
         />
       )}
+      <Tab.Screen name="VideoV" component={VideosVProfile} />
+      <Tab.Screen name="VideoH" component={VideosHProfile} />
       <Tab.Screen name="About" component={AboutProfile} />
     </Tab.Navigator>
   );

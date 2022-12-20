@@ -76,6 +76,8 @@ const ProfileOverview = ({
       followingsCount,
     });
 
+  const isBusiness = role === MAIN_ROLE || role === SECOND_ROLE;
+
   return (
     <View style={styles.container}>
       <Stack justify="center" align="center">
@@ -96,7 +98,7 @@ const ProfileOverview = ({
       <Stack direction="row" justify="between" sx={styles.statsContainer}>
         <StatsButton
           onPress={() => (role !== THIRD_ROLE ? goToReviews : null)}
-          label={role !== THIRD_ROLE ? t("reviews") : t("posts")}
+          label={isBusiness ? t("reviews") : t("posts")}
           statsNo={displayDash(
             role !== THIRD_ROLE ? ratingsQuantity : postsCount
           )}

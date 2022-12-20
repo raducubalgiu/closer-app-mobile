@@ -1,7 +1,7 @@
 import { StyleSheet, SafeAreaView, View } from "react-native";
 import React, { useCallback } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { THIRD_ROLE } from "@env";
+import { MAIN_ROLE, SECOND_ROLE } from "@env";
 import { useTranslation } from "react-i18next";
 import {
   FollowersTab,
@@ -31,13 +31,15 @@ export const ProfileStatsScreen = ({ route }: IProps) => {
     [userId]
   );
 
+  const isBusiness = role === MAIN_ROLE || role === SECOND_ROLE;
+
   return (
     <View style={styles.screen}>
       <SafeAreaView>
         <Header title={username} />
       </SafeAreaView>
       <TopTabContainer initialRouteName={initialRoute}>
-        {role !== THIRD_ROLE && (
+        {isBusiness && (
           <Tab.Screen
             name="Ratings"
             component={Ratings}
