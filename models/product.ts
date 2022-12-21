@@ -9,7 +9,7 @@ export interface Product {
   duration: number;
   price: number;
   priceDiscount: number;
-  service: Service;
+  serviceId: Service;
   option: Option;
   location: string;
   bookmarksCount: number;

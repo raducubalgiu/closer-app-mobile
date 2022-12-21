@@ -6,10 +6,10 @@ export interface Schedule {
   id: string;
   start: string;
   end: string;
-  user: User;
-  customer: string;
-  service: Service;
-  location: string;
+  ownerId: User;
+  customerId: string;
+  serviceId: Service;
+  locationId: string;
   product: Product;
   channel: string;
   newClient: boolean;

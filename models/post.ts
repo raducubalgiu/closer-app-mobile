@@ -9,11 +9,11 @@ export interface Post {
   images: [{ url: string }];
   hashtags: Hashtag[];
   mentions: User[];
+  product: Product;
+  serviceId: Service;
   userId: User;
   bookable: boolean;
   fixed: boolean;
-  product: Product;
-  service: Service;
   postType: string;
   orientation: string;
   likesCount: number;

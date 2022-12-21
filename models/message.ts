@@ -4,6 +4,6 @@ export interface Message {
   sender: string;
   receiver: string;
   liked: boolean;
-  conversation: string;
+  conversationId: string;
   createdAt: string;
 }

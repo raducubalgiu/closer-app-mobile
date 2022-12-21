@@ -1,8 +1,10 @@
+import { Profession } from "./profession";
+
 export interface User {
   id: string;
   name: string;
   username: string;
-  profession: any;
+  profession: Profession;
   email: string;
   description: string;
   website: string;
@@ -16,6 +18,6 @@ export interface User {
   postsCount: number;
   ratingsQuantity: number;
   ratingsAverage: number;
-  location: string;
+  locationId: string;
   hours: any;
 }

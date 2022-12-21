@@ -66,7 +66,7 @@ export const CardProduct = ({
             </Stack>
             <Protected
               roles={[SECOND_ROLE, THIRD_ROLE]}
-              userRole={userContext.role}
+              userRole={userContext?.role}
             >
               <BookButton onPress={goToCalendar} />
             </Protected>
@@ -89,7 +89,7 @@ export const CardProduct = ({
           sx={{ marginTop: 15 }}
         />
       )}
-      <Protected roles={[SECOND_ROLE, THIRD_ROLE]} userRole={userContext.role}>
+      <Protected roles={[SECOND_ROLE, THIRD_ROLE]} userRole={userContext?.role}>
         <Stack align="end" sx={styles.bookmark}>
           <BookmarkButton
             type="products"

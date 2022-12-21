@@ -35,12 +35,12 @@ export const LikeCommentButton = ({
   const handleLike = useCallback(() => {
     if (!liked) {
       setLiked(true);
-      if (creatorId === user?._id) makePatch({ likedByCreator: true });
+      if (creatorId === user?.id) makePatch({ likedByCreator: true });
       onLikes(1);
       makePost({});
     } else {
       setLiked(false);
-      if (creatorId === user?._id) makePatch({ likedByCreator: false });
+      if (creatorId === user?.id) makePatch({ likedByCreator: false });
       onLikes(-1);
       makeDelete();
     }
