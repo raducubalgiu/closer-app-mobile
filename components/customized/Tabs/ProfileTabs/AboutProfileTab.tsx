@@ -1,5 +1,6 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text } from "react-native";
 import theme from "../../../../assets/styles/theme";
+import { useIsFocused } from "@react-navigation/native";
 import { ListItem, Stack } from "../../../core";
 import { useTranslation } from "react-i18next";
 import { trimFunc } from "../../../../utils";
@@ -8,36 +9,50 @@ import { MapStatic } from "../../Map/MapStatic";
 import { Icon } from "@rneui/themed";
 
 const { black, primary, grey0 } = theme.lightColors || {};
+type IProps = {
+  userId: string;
+  website: string;
+  description: string;
+  email: string;
+};
 
-export const AboutProfileTab = () => {
-  const { user } = useAuth();
+export const AboutProfileTab = ({
+  userId,
+  website,
+  description,
+  email,
+}: IProps) => {
   const { t } = useTranslation();
+  const isFocused = useIsFocused();
 
   return (
     <ScrollView style={styles.screen}>
       <Stack align="start" sx={styles.section}>
         <Text style={styles.heading}>{t("biography")}</Text>
         <Text style={styles.bio}>
-          {user?.description ? trimFunc(user?.description, 115) : t("notAdded")}
+          {description ? trimFunc(description, 115) : t("notAdded")}
         </Text>
       </Stack>
       <Stack align="start" sx={styles.section}>
         <Text style={styles.heading}>{t("contact")}</Text>
         <ListItem>
           <Icon name="globe" type="feather" color={grey0} />
-          <Text style={styles.bio}>{user?.website}</Text>
+          <Text style={{ ...styles.bio, marginTop: 0, marginLeft: 5 }}>
+            {website}
+          </Text>
         </ListItem>
         <ListItem>
           <Icon name="mail" type="feather" color={grey0} />
-          <Text style={styles.bio}>{user?.email}</Text>
+          <Text style={{ ...styles.bio, marginTop: 0, marginLeft: 5 }}>
+            {email}
+          </Text>
         </ListItem>
       </Stack>
       <Stack align="start" sx={styles.section}>
         <Text style={styles.heading}>{t("location")}</Text>
         <ListItem>
           <Icon name="map-pin" type="feather" color={grey0} />
-
-          <Text style={styles.bio}>
+          <Text style={{ ...styles.bio, marginTop: 0, marginLeft: 5, flex: 1 }}>
             Strada Oarecare, nr 25, bloc H5, et 3, ap 25, Sector 3, Bucuresti
           </Text>
         </ListItem>

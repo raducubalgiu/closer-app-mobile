@@ -41,7 +41,17 @@ export const TopTabProfile = ({ userId, service, option, user }: IProps) => {
     [userId, service, option]
   );
 
-  const AboutProfile = useCallback(() => <AboutProfileTab />, []);
+  const AboutProfile = useCallback(
+    () => (
+      <AboutProfileTab
+        userId={userId}
+        website={user?.website}
+        description={user?.description}
+        email={user?.email}
+      />
+    ),
+    [userId, user]
+  );
 
   return (
     <Tab.Navigator

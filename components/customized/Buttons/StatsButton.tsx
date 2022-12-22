@@ -4,7 +4,7 @@ import theme from "../../../assets/styles/theme";
 const { grey3 } = theme.lightColors || {};
 
 type IProps = {
-  onPress: () => void;
+  onPress: any;
   statsNo: number | string;
   label: string;
 };

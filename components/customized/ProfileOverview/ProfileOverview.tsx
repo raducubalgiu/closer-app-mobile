@@ -97,7 +97,7 @@ const ProfileOverview = ({
       </Stack>
       <Stack direction="row" justify="between" sx={styles.statsContainer}>
         <StatsButton
-          onPress={() => (role !== THIRD_ROLE ? goToReviews : null)}
+          onPress={isBusiness ? goToReviews : null}
           label={isBusiness ? t("reviews") : t("posts")}
           statsNo={displayDash(
             role !== THIRD_ROLE ? ratingsQuantity : postsCount
