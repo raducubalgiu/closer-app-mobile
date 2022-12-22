@@ -54,7 +54,6 @@ export { ServicePostsPopularTab } from "./Tabs/ServicePostsTabs/ServicePostsPopu
 export { ServicePostsLastMinuteTab } from "./Tabs/ServicePostsTabs/ServicePostsLastMinuteTab";
 export { ServicePostsRecentTab } from "./Tabs/ServicePostsTabs/ServicePostsRecentTab";
 
-export { CardRatings } from "./Cards/CardRatings";
 export { CardProduct } from "./Cards/CardProduct";
 export { CardLocation } from "./Cards/CardLocation";
 export { CardRecommended } from "./Cards/CardRecommended";
@@ -67,6 +66,7 @@ export { CardHashtagOverview } from "./Cards/CardHashtagOverview";
 export { CardServiceOverview } from "./Cards/CardServiceOverview";
 export { CardMessageUser } from "./Cards/CardMessageUser";
 export { CardPostDescription } from "./Cards/CardPostDescription";
+export { CardReviewSummary } from "./Cards/CardReviewSummary";
 
 export { HeaderServices } from "./Layout/Headers/HeaderServices";
 export { HeaderEdit } from "./Layout/Headers/HeaderEdit";

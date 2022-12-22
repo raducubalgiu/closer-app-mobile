@@ -42,19 +42,19 @@ export const AddServicesScreen = () => {
 
   const { isLoading: isLoadingServices } = useGet({
     model: "services",
-    uri: `/users/${user?.id}/locations/${user?.location}/services`,
+    uri: `/users/${user?.id}/locations/${user?.locationId}/services`,
     onSuccess: (res) => setServices(res.data),
   });
 
   const { mutate: addService, isLoading: isLoadingAdd } = usePatch({
-    uri: `/locations/${user?.location}/add-service`,
+    uri: `/locations/${user?.locationId}/add-service`,
     onSuccess: (res) => setServices((services) => services.concat(res.data)),
     onError: (err) =>
       showToast({ message: t(`${err.response.data.message}`), bgColor: error }),
   });
 
   const { mutate: removeService, isLoading: isLoadingRemove } = usePatch({
-    uri: `/locations/${user?.location}/remove-service`,
+    uri: `/locations/${user?.locationId}/remove-service`,
     onSuccess: (res) => {
       setServices((services) =>
         services.filter((serv: Service) => serv.id !== res.data.id)

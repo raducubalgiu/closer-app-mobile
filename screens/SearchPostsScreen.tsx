@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { Icon } from "@rneui/themed";
-import { Checkmark, Feedback, IconButton } from "../components/core";
+import { Checkmark, IconButton } from "../components/core";
 import { IconBackButton, SearchBarInput, Stack } from "../components/core";
 import CustomAvatar from "../components/core/Avatars/CustomAvatar";
 import {
@@ -24,7 +24,6 @@ import { useAuth, useDelete, useGet } from "../hooks";
 import { trimFunc } from "../utils";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../models/navigation/rootStackParams";
-import { User } from "firebase/auth";
 
 const { grey0, primary, black } = theme.lightColors || {};
 
@@ -37,26 +36,6 @@ export const SearchPostsScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
-
-  useGet({
-    model: "search-word",
-    uri: `/users/${user?._id}/searches/searched-word`,
-    onSuccess: (res) => setWords(res.data),
-  });
-
-  useGet({
-    model: "search-user",
-    uri: `/users/${user?._id}/searches/searched-user`,
-    onSuccess: (res) => setSearchedUsers(res.data),
-  });
-
-  const { mutate: makeDelete } = useDelete({
-    uri: `/users/${user?._id}/searches`,
-    onSuccess: () => {
-      setWords([]);
-      setSearchedUsers([]);
-    },
-  });
 
   const updateSearch = useCallback(
     (search: string) => {
@@ -75,7 +54,7 @@ export const SearchPostsScreen = () => {
         axios
           .get(endpoint, {
             signal: controller.signal,
-            headers: { Authorization: `Bearer ${user.token}` },
+            headers: { Authorization: `Bearer ${user?.token}` },
           })
           .then((res) => {
             setResults(res.data.results);
@@ -95,7 +74,7 @@ export const SearchPostsScreen = () => {
   const deleteSearch = (searchId: string) => {
     axios
       .delete(`${process.env.BASE_ENDPOINT}/searches/${searchId}`, {
-        headers: { Authorization: `Bearer ${user.token}` },
+        headers: { Authorization: `Bearer ${user?.token}` },
       })
       .then(() =>
         setWords((searches) => searches.filter((s: any) => s._id !== searchId))
@@ -223,7 +202,7 @@ export const SearchPostsScreen = () => {
           color="white"
           size={17}
           sx={{ backgroundColor: "#ddd", borderRadius: 50, padding: 3 }}
-          onPress={() => makeDelete()}
+          onPress={() => {}}
         />
       </Stack>
       {searchedUsers.length > 0 && (

@@ -3,36 +3,30 @@ import { RefreshControl } from "react-native";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useIsFocused } from "@react-navigation/native";
-import { CardRatings } from "../../Cards/CardRatings";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
-import { Spinner } from "../../../core";
-import { useGetPaginate, useRefreshByUser } from "../../../../hooks";
-
-const DUMMY_DATA = {
-  pageParams: 1,
-  pages: [
-    {
-      next: null,
-      results: [
-        {
-          id: "1",
-          reviewer: {
-            name: "Raducu Balgiu",
-          },
-          rating: 4,
-          review:
-            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled",
-        },
-      ],
-    },
-  ],
-};
+import { InputSelect, Spinner, Stack } from "../../../core";
+import { useGet, useGetPaginate, useRefreshByUser } from "../../../../hooks";
+import { CardReviewSummary } from "../../Cards/CardReviewSummary";
+import RatingListItem from "../../ListItems/RatingListItem";
+import { Review } from "../../../../models/review";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type IProps = { userId: string };
 
 export const RatingsTab = ({ userId }: IProps) => {
   const { t } = useTranslation();
   const isFocused = useIsFocused();
+  const insets = useSafeAreaInsets();
+
+  const { data: summary } = useGet({
+    model: "summary",
+    uri: `/users/${userId}/reviews/summary`,
+  });
+
+  const { data: products } = useGet({
+    model: "products",
+    uri: `/users/${userId}/products`,
+  });
 
   const {
     data,
@@ -45,26 +39,27 @@ export const RatingsTab = ({ userId }: IProps) => {
   } = useGetPaginate({
     model: "ratings",
     uri: `/users/${userId}/reviews`,
-    limit: "20",
+    limit: "10",
     enabled: isFocused,
   });
 
-  const renderRatings = useCallback(({ item }: ListRenderItemInfo<any>) => {
-    const { reviewer, rating, review, createdAt } = item || {};
+  const renderRatings = useCallback(({ item }: ListRenderItemInfo<Review>) => {
+    const { reviewerId, productId, rating, review, createdAt, likesCount } =
+      item || {};
 
     return (
-      <CardRatings
-        avatar={reviewer?.avatar}
-        name={reviewer?.name}
+      <RatingListItem
+        reviewer={reviewerId}
         date={createdAt}
         rating={rating}
         review={review}
-        service={"Tuns"}
+        product={productId?.name}
+        likesCount={likesCount}
       />
     );
   }, []);
 
-  const keyExtractor = useCallback((item: any) => item?.id, []);
+  const keyExtractor = useCallback((item: Review) => item?.id, []);
 
   const loadMore = () => {
     if (hasNextPage) fetchNextPage();
@@ -77,15 +72,28 @@ export const RatingsTab = ({ userId }: IProps) => {
       return null;
     }
   };
-  const { pages } = DUMMY_DATA || {};
+  const { pages } = data || {};
   const reviews = pages?.map((page) => page.results).flat();
 
-  let header;
-  if (!isLoading && !isFetchingNextPage && pages[0]?.results?.length === 0) {
-    header = (
-      <NoFoundMessage title={t("reviews")} description={t("noFoundReviews")} />
-    );
-  }
+  const header = (
+    <>
+      <Stack sx={{ marginHorizontal: 15, marginBottom: 15 }}>
+        <InputSelect
+          items={[products]}
+          placeholder="Toate serviciile"
+          value="1"
+          onValueChange={() => {}}
+        />
+      </Stack>
+      <CardReviewSummary summary={summary} ratingsQuantity={8} />
+      {!isLoading && !isFetchingNextPage && reviews?.length === 0 && (
+        <NoFoundMessage
+          title={t("reviews")}
+          description={t("noFoundReviews")}
+        />
+      )}
+    </>
+  );
 
   const { refreshing, refetchByUser } = useRefreshByUser(refetch);
 
@@ -99,7 +107,7 @@ export const RatingsTab = ({ userId }: IProps) => {
       <FlashList
         ListHeaderComponent={header}
         refreshControl={refreshControl}
-        contentContainerStyle={{ paddingVertical: 15 }}
+        contentContainerStyle={{ paddingTop: 15, paddingBottom: insets.bottom }}
         data={reviews}
         keyExtractor={keyExtractor}
         renderItem={renderRatings}

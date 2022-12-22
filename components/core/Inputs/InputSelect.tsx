@@ -49,9 +49,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderWidth: 1,
     borderColor: "#ddd",
-    borderRadius: 10,
+    borderRadius: 2.5,
     color: black,
-    paddingRight: 30,
+    paddingRight: 10,
   },
   inputAndroid: {
     fontSize: 15,
@@ -59,8 +59,8 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderWidth: 0.5,
     borderColor: "purple",
-    borderRadius: 10,
+    borderRadius: 2.5,
     color: black,
-    paddingRight: 30,
+    paddingRight: 10,
   },
 });
