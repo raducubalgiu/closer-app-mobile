@@ -14,6 +14,7 @@ import { MAIN_ROLE, SECOND_ROLE } from "@env";
 import { MapPreviewModal } from "../../Modals/MapPreviewModal";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../models/navigation/rootStackParams";
+import dayjs from "dayjs";
 
 const { black, grey0, primary } = theme.lightColors || {};
 type IProps = {
@@ -51,7 +52,7 @@ export const AboutProfileTab = ({
   });
 
   const { ownerId } = location || {};
-  const loading = isLoading || isFetching;
+  const loading = (isLoading || isFetching) && locationId;
   const contactInfo = website || email;
 
   const goToUser = () => {
@@ -66,49 +67,59 @@ export const AboutProfileTab = ({
     });
   };
 
+  const dateFormat = (minutes: number) => {
+    if (minutes === -1) return t("closed");
+
+    return dayjs().utc().startOf("day").add(minutes, "minutes").format("HH:mm");
+  };
+
   return (
     <>
-      <ScrollView style={styles.screen}>
-        <Stack align="start" sx={styles.section}>
-          <Text style={styles.heading}>{t("biography")}</Text>
-          <Text style={styles.text}>
-            {description ? trimFunc(description, 115) : t("notAdded")}
-          </Text>
-        </Stack>
-        <Stack align="start" sx={styles.section}>
-          <Text style={styles.heading}>{t("contact")}</Text>
-          {website && (
-            <ListItem
-              onPress={() => WebBrowser.openBrowserAsync(`https://${website}`)}
-            >
-              <Icon name="globe" type="feather" color={grey0} />
-              <Text style={{ ...styles.text, marginTop: 0, marginLeft: 5 }}>
-                {website}
-              </Text>
-            </ListItem>
-          )}
-          {email && (
-            <ListItem onPress={() => Linking.openURL(`mailto:${email}`)}>
-              <Icon name="mail" type="feather" color={grey0} />
-              <Text style={{ ...styles.text, marginTop: 0, marginLeft: 5 }}>
-                {email}
-              </Text>
-            </ListItem>
-          )}
-          <Protected userRole={role} roles={[SECOND_ROLE]}>
-            <ListItem onPress={goToUser}>
-              <Icon name="repeat" type="feather" color={grey0} />
-              <Stack direction="row">
-                <Text style={{ ...styles.text, marginTop: 0, marginLeft: 5 }}>
-                  Angajat la
+      {!loading && (
+        <ScrollView style={styles.screen}>
+          <Stack align="start" sx={styles.section}>
+            <Text style={styles.heading}>{t("biography")}</Text>
+            <Text style={styles.text}>
+              {description ? trimFunc(description, 115) : t("notAdded")}
+            </Text>
+          </Stack>
+          <Stack align="start" sx={styles.section}>
+            <Text style={styles.heading}>{t("contact")}</Text>
+            {website && (
+              <ListItem
+                onPress={() =>
+                  WebBrowser.openBrowserAsync(`https://${website}`)
+                }
+              >
+                <Icon name="globe" type="feather" color={grey0} />
+                <Text style={{ ...styles.text, marginTop: 0, marginLeft: 7.5 }}>
+                  {website}
                 </Text>
-                <Text style={styles.owner}>{ownerId?.name}</Text>
-              </Stack>
-            </ListItem>
-          </Protected>
-          {!contactInfo && <Text style={styles.text}>{t("notAdded")}</Text>}
-        </Stack>
-        {!loading && (
+              </ListItem>
+            )}
+            {email && (
+              <ListItem onPress={() => Linking.openURL(`mailto:${email}`)}>
+                <Icon name="mail" type="feather" color={grey0} />
+                <Text style={{ ...styles.text, marginTop: 0, marginLeft: 7.5 }}>
+                  {email}
+                </Text>
+              </ListItem>
+            )}
+            <Protected userRole={role} roles={[SECOND_ROLE]}>
+              <ListItem onPress={goToUser}>
+                <Icon name="repeat" type="feather" color={grey0} />
+                <Stack direction="row">
+                  <Text
+                    style={{ ...styles.text, marginTop: 0, marginLeft: 7.5 }}
+                  >
+                    Angajat la
+                  </Text>
+                  <Text style={styles.owner}>{ownerId?.name}</Text>
+                </Stack>
+              </ListItem>
+            </Protected>
+            {!contactInfo && <Text style={styles.text}>{t("notAdded")}</Text>}
+          </Stack>
           <Protected userRole={role} roles={[MAIN_ROLE, SECOND_ROLE]}>
             <Stack align="start" sx={styles.section}>
               <Text style={styles.heading}>{t("location")}</Text>
@@ -134,7 +145,7 @@ export const AboutProfileTab = ({
                     <ListItem between key={i}>
                       <Text style={styles.text}>{t(el[0])}</Text>
                       <Text style={styles.heading}>
-                        {el[1].start} - {el[1].end}
+                        {dateFormat(el[1].start)} - {dateFormat(el[1].end)}
                       </Text>
                     </ListItem>
                   );
@@ -142,9 +153,9 @@ export const AboutProfileTab = ({
               </Stack>
             )}
           </Protected>
-        )}
-        {loading && <Spinner />}
-      </ScrollView>
+        </ScrollView>
+      )}
+      {loading && <Spinner />}
       <MapPreviewModal
         visible={visible}
         onCloseModal={() => setVisible(false)}
@@ -169,7 +180,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: grey0,
   },
-  address: { marginTop: 0, marginLeft: 5, flex: 1 },
+  address: { marginTop: 0, marginLeft: 7.5, flex: 1 },
   owner: {
     marginLeft: 5,
     fontWeight: "600",

@@ -18,7 +18,7 @@ export const PostsProfileTab = ({ userId }: { userId: string }) => {
       uri: `/users/${userId}/posts`,
       limit: "12",
       queries: "postType=photo",
-      enabled: isFocused,
+      enabled: isFocused && !!userId,
     });
 
   const { pages } = data || {};
