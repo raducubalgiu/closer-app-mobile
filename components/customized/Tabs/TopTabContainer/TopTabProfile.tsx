@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { PostsProfileTab } from "../ProfileTabs/PostsProfileTab";
-import { MAIN_ROLE, THIRD_ROLE } from "@env";
+import { MAIN_ROLE, SECOND_ROLE } from "@env";
 import { Icon } from "@rneui/themed";
 import { VideosVTab } from "../ProfileTabs/VideosVTab";
 import { VideosHTab } from "../ProfileTabs/VideosHTab";
@@ -100,7 +100,7 @@ export const TopTabProfile = ({ userId, service, option, user }: IProps) => {
       sceneContainerStyle={{ backgroundColor: "white" }}
     >
       <Tab.Screen name="Posts" component={PostsProfile} />
-      {role !== THIRD_ROLE && (
+      {(role === MAIN_ROLE || role === SECOND_ROLE) && (
         <Tab.Screen
           name="Products"
           component={ProductsProfile}

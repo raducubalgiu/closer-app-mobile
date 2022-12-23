@@ -85,15 +85,13 @@ const ProductListItem = ({
           sx={{ marginTop: 15 }}
         />
       )}
-      <Protected roles={[SECOND_ROLE, THIRD_ROLE]} userRole={userContext?.role}>
-        <Stack align="end" sx={styles.bookmark}>
-          <BookmarkButton
-            type="products"
-            typeId={product?.id}
-            onBookmarksCount={() => {}}
-          />
-        </Stack>
-      </Protected>
+      <Stack align="end" sx={styles.bookmark}>
+        <BookmarkButton
+          type="products"
+          typeId={product?.id}
+          onBookmarksCount={() => {}}
+        />
+      </Stack>
     </Stack>
   );
 };

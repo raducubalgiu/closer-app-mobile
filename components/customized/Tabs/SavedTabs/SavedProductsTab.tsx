@@ -3,7 +3,7 @@ import { RefreshControl } from "react-native";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { useTranslation } from "react-i18next";
 import { Spinner } from "../../../core";
-import { CardProduct } from "../../ListItems/ProductListItem";
+import ProductListItem from "../../ListItems/ProductListItem";
 import { useGetPaginate, useRefreshByUser } from "../../../../hooks";
 import { useIsFocused } from "@react-navigation/native";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
@@ -40,7 +40,7 @@ export const SavedProductsTab = ({ user }: { user: User }) => {
       const { productId } = item;
 
       return (
-        <CardProduct
+        <ProductListItem
           product={productId}
           ownerInfo
           onDeleteProduct={() => {}}
