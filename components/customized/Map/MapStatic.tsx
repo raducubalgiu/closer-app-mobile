@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { StyleSheet } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { IconButton } from "../../core";
@@ -14,7 +15,7 @@ type IProps = {
   isModal?: boolean;
 };
 
-export const MapStatic = ({
+const MapStatic = ({
   longitude,
   latitude,
   height = 250,
@@ -85,6 +86,8 @@ export const MapStatic = ({
     </MapView>
   );
 };
+
+export default memo(MapStatic);
 
 const styles = StyleSheet.create({
   button: {

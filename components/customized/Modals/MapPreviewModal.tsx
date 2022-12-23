@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { CModal, IconButton } from "../../core";
-import { MapStatic } from "../Map/MapStatic";
+import MapStatic from "../Map/MapStatic";
 
 type IProps = {
   visible: boolean;

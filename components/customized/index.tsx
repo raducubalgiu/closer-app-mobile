@@ -97,7 +97,6 @@ export { GridVideoHLitemItem } from "./ListItems/PostGrid/GridVideoHListItem";
 export { NoFoundMessage } from "./NotFoundContent/NoFoundMessage";
 
 export { Map } from "./Map/Map";
-export { MapStatic } from "./Map/MapStatic";
 export { MapPreviewModal } from "./Modals/MapPreviewModal";
 
 export { LoginRegisterForm } from "./Forms/LoginRegisterForm";
