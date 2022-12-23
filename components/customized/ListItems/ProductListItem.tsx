@@ -1,5 +1,5 @@
 import { StyleSheet, Text } from "react-native";
-import React from "react";
+import { memo } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import { SECOND_ROLE, THIRD_ROLE } from "@env";
@@ -9,7 +9,7 @@ import { trimFunc } from "../../../utils";
 import { useAuth, useDuration } from "../../../hooks";
 import { BookmarkButton } from "../Buttons/BookmarkButton";
 import { BookButton } from "../Buttons/BookButton";
-import { UserListItemSimple } from "../ListItems/UserListItemSimple";
+import { UserListItemSimple } from "./UserListItemSimple";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../models/navigation/rootStackParams";
 import { Product } from "../../../models/product";
@@ -23,7 +23,7 @@ type IProps = {
   onEditProduct: () => void;
 };
 
-export const CardProduct = ({
+const ProductListItem = ({
   product,
   ownerInfo = false,
   onDeleteProduct,
@@ -97,6 +97,8 @@ export const CardProduct = ({
     </Stack>
   );
 };
+
+export default memo(ProductListItem);
 
 const styles = StyleSheet.create({
   card: {

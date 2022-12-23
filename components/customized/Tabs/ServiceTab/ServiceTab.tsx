@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Spinner } from "../../../core";
 import { useGetPaginate } from "../../../../hooks";
-import { CardProduct } from "../../Cards/CardProduct";
+import ProductListItem from "../../ListItems/ProductListItem";
 import { Product } from "../../../../models/product";
 
 type IProps = {
@@ -34,7 +34,7 @@ export const ServiceTab = ({
 
   const renderProduct = useCallback(
     ({ item }: ListRenderItemInfo<Product>) => (
-      <CardProduct
+      <ProductListItem
         product={item}
         ownerInfo={false}
         onDeleteProduct={() => {}}

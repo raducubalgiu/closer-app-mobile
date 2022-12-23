@@ -54,7 +54,6 @@ export { ServicePostsPopularTab } from "./Tabs/ServicePostsTabs/ServicePostsPopu
 export { ServicePostsLastMinuteTab } from "./Tabs/ServicePostsTabs/ServicePostsLastMinuteTab";
 export { ServicePostsRecentTab } from "./Tabs/ServicePostsTabs/ServicePostsRecentTab";
 
-export { CardProduct } from "./Cards/CardProduct";
 export { CardLocation } from "./Cards/CardLocation";
 export { CardRecommended } from "./Cards/CardRecommended";
 export { CardAvailableHour } from "./Cards/CardAvailableHour";
