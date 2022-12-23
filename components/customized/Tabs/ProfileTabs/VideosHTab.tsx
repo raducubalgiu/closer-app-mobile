@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useGetPaginate } from "../../../../hooks";
 import { Spinner } from "../../../core";
 import { Post } from "../../../../models/post";
-import { GridVideoHLitemItem } from "../../ListItems/PostGrid/GridVideoHListItem";
+import GridVideoHListItem from "../../ListItems/PostGrid/GridVideoHListItem";
 
 export const VideosHTab = ({ userId }: { userId: string }) => {
   const isFocused = useIsFocused();
@@ -26,7 +26,7 @@ export const VideosHTab = ({ userId }: { userId: string }) => {
 
   const renderPosts = useCallback(
     ({ item, index }: ListRenderItemInfo<Post>) => (
-      <GridVideoHLitemItem
+      <GridVideoHListItem
         uri={item.images[0]?.url}
         index={index}
         onPress={() => {}}

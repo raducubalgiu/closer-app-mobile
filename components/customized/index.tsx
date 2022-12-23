@@ -91,8 +91,6 @@ export { AlbumListItem } from "./ListItems/AlbumListItem";
 export { PresetListItem } from "./ListItems/PresetListItem";
 export { FixedPeriodListItem } from "./ListItems/FixedPeriodListItem";
 export { OptionListItem } from "./ListItems/OptionListItem";
-export { GridVideoVLitemItem } from "./ListItems/PostGrid/GridVideoVListItem";
-export { GridVideoHLitemItem } from "./ListItems/PostGrid/GridVideoHListItem";
 
 export { NoFoundMessage } from "./NotFoundContent/NoFoundMessage";
 

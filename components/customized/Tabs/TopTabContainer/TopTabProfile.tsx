@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { PostsProfileTab } from "../ProfileTabs/PostsProfileTab";
-import { THIRD_ROLE } from "@env";
+import { MAIN_ROLE, THIRD_ROLE } from "@env";
 import { Icon } from "@rneui/themed";
 import { VideosVTab } from "../ProfileTabs/VideosVTab";
 import { VideosHTab } from "../ProfileTabs/VideosHTab";
@@ -101,13 +101,32 @@ export const TopTabProfile = ({ userId, service, option, user }: IProps) => {
           component={ProductsProfile}
           options={{
             tabBarIcon: ({ focused }) => (
-              <TabBadge value={0} color={focused ? black : "#ccc"} />
+              <TabBadge
+                value={0}
+                name="shopping-bag"
+                color={focused ? black : "#ccc"}
+              />
             ),
           }}
         />
       )}
       <Tab.Screen name="VideoV" component={VideosVProfile} />
       <Tab.Screen name="VideoH" component={VideosHProfile} />
+      {role === MAIN_ROLE && (
+        <Tab.Screen
+          name="Jobs"
+          component={VideosHProfile}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <TabBadge
+                name="briefcase"
+                value={0}
+                color={focused ? black : "#ccc"}
+              />
+            ),
+          }}
+        />
+      )}
       <Tab.Screen name="About" component={AboutProfile} />
     </Tab.Navigator>
   );

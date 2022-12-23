@@ -4,10 +4,18 @@ import theme from "../../../../assets/styles/theme";
 
 const { primary } = theme.lightColors || {};
 
-export const TabBadge = ({ value, color }: { value: number; color: any }) => {
+export const TabBadge = ({
+  value,
+  color,
+  name,
+}: {
+  value: number;
+  color: any;
+  name: string;
+}) => {
   return (
     <View>
-      <Icon name="shopping-bag" type="feather" size={22} color={color} />
+      <Icon name={name} type="feather" size={22} color={color} />
       <Badge
         value={value}
         containerStyle={styles.containerStyle}

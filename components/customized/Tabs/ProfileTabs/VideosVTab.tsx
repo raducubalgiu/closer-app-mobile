@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useGetPaginate } from "../../../../hooks";
 import { Spinner } from "../../../core";
 import { Post } from "../../../../models/post";
-import { GridVideoVLitemItem } from "../../ListItems/PostGrid/GridVideoVListItem";
+import GridVideoVListItem from "../../ListItems/PostGrid/GridVideoVListItem";
 
 export const VideosVTab = ({ userId }: { userId: string }) => {
   const isFocused = useIsFocused();
@@ -26,7 +26,7 @@ export const VideosVTab = ({ userId }: { userId: string }) => {
 
   const renderPosts = useCallback(
     ({ item, index }: ListRenderItemInfo<Post>) => (
-      <GridVideoVLitemItem
+      <GridVideoVListItem
         uri={item.images[0]?.url}
         index={index}
         onPress={() => {}}

@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions, Pressable } from "react-native";
+import { memo } from "react";
 import { ResizeMode, Video } from "expo-av";
 
 const { width } = Dimensions.get("window");
@@ -9,7 +10,7 @@ type IProps = {
   onPress: () => void;
 };
 
-export const GridVideoHLitemItem = ({ index = 0, uri, onPress }: IProps) => {
+const GridVideoHLitemItem = ({ index = 0, uri, onPress }: IProps) => {
   let borderBox;
 
   if (index % 2 !== 0) {
@@ -45,3 +46,5 @@ export const GridVideoHLitemItem = ({ index = 0, uri, onPress }: IProps) => {
     </Pressable>
   );
 };
+
+export default memo(GridVideoHLitemItem);
