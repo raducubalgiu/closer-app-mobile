@@ -25,7 +25,7 @@ export const MyLocationScreen = () => {
 
   const { data, isLoading, isFetching } = useGet({
     model: "myLocation",
-    uri: `/users/${user.id}/locations/${user.location}`,
+    uri: `/users/${user?.id}/locations/${user?.locationId}`,
     onError: () => showToast({ message: t("somethingWentWrong") }),
   });
 

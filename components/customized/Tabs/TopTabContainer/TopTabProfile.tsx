@@ -44,13 +44,15 @@ export const TopTabProfile = ({ userId, service, option, user }: IProps) => {
   const AboutProfile = useCallback(
     () => (
       <AboutProfileTab
-        userId={userId}
+        locationId={user?.locationId}
         website={user?.website}
         description={user?.description}
         email={user?.email}
+        role={user?.role}
+        hours={user?.hours}
       />
     ),
-    [userId, user]
+    [user]
   );
 
   return (
