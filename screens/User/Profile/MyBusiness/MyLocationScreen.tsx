@@ -48,6 +48,7 @@ export const MyLocationScreen = () => {
                   longitude={coordinates && coordinates[1]}
                   latitude={coordinates && coordinates[0]}
                   minZoom={15}
+                  isModal={false}
                 />
                 <IconButton
                   name="maximize-2"
@@ -81,6 +82,7 @@ export const MyLocationScreen = () => {
           zoomEnabled={true}
           scrollEnabled={true}
           sx={{ borderRadius: 5 }}
+          isModal={true}
         />
         <IconButton
           name="close"

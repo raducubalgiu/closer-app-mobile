@@ -1,23 +1,19 @@
 import { ScrollView, StyleSheet, Text } from "react-native";
 import { useState } from "react";
-import theme from "../../../../assets/styles/theme";
 import { useIsFocused } from "@react-navigation/native";
-import {
-  ListItem,
-  Protected,
-  Spinner,
-  Stack,
-  IconButton,
-  CModal,
-} from "../../../core";
+import * as Linking from "expo-linking";
+import * as WebBrowser from "expo-web-browser";
+import { Icon } from "@rneui/themed";
+import theme from "../../../../assets/styles/theme";
+import { ListItem, Protected, Spinner, Stack } from "../../../core";
 import { useTranslation } from "react-i18next";
 import { AddressFormat, trimFunc } from "../../../../utils";
 import { useGet } from "../../../../hooks";
 import { MapStatic } from "../../Map/MapStatic";
-import { Icon } from "@rneui/themed";
 import { MAIN_ROLE, SECOND_ROLE } from "@env";
+import { MapPreviewModal } from "../../Modals/MapPreviewModal";
 
-const { black, primary, grey0 } = theme.lightColors || {};
+const { black, grey0 } = theme.lightColors || {};
 type IProps = {
   locationId: string;
   role: string;
@@ -51,6 +47,7 @@ export const AboutProfileTab = ({
   });
 
   const loading = isLoading || isFetching;
+  const contactInfo = website || email;
 
   return (
     <>
@@ -58,96 +55,84 @@ export const AboutProfileTab = ({
         <ScrollView style={styles.screen}>
           <Stack align="start" sx={styles.section}>
             <Text style={styles.heading}>{t("biography")}</Text>
-            <Text style={styles.bio}>
+            <Text style={styles.text}>
               {description ? trimFunc(description, 115) : t("notAdded")}
             </Text>
           </Stack>
           <Stack align="start" sx={styles.section}>
             <Text style={styles.heading}>{t("contact")}</Text>
-            <ListItem>
-              <Icon name="globe" type="feather" color={grey0} />
-              <Text style={{ ...styles.bio, marginTop: 0, marginLeft: 5 }}>
-                {website}
-              </Text>
-            </ListItem>
-            <ListItem>
-              <Icon name="mail" type="feather" color={grey0} />
-              <Text style={{ ...styles.bio, marginTop: 0, marginLeft: 5 }}>
-                {email}
-              </Text>
-            </ListItem>
+            {website && (
+              <ListItem
+                onPress={() =>
+                  WebBrowser.openBrowserAsync(`https://${website}`)
+                }
+              >
+                <Icon name="globe" type="feather" color={grey0} />
+                <Text style={{ ...styles.text, marginTop: 0, marginLeft: 5 }}>
+                  {website}
+                </Text>
+              </ListItem>
+            )}
+            {email && (
+              <ListItem onPress={() => Linking.openURL(`mailto:${email}`)}>
+                <Icon name="mail" type="feather" color={grey0} />
+                <Text style={{ ...styles.text, marginTop: 0, marginLeft: 5 }}>
+                  {email}
+                </Text>
+              </ListItem>
+            )}
+            <Protected userRole={role} roles={[SECOND_ROLE]}>
+              <ListItem onPress={() => Linking.openURL(`mailto:${email}`)}>
+                <Icon name="repeat" type="feather" color={grey0} />
+                <Text style={{ ...styles.text, marginTop: 0, marginLeft: 5 }}>
+                  Angajat la @trattoria_monza
+                </Text>
+              </ListItem>
+            </Protected>
+            {!contactInfo && <Text style={styles.text}>{t("notAdded")}</Text>}
           </Stack>
           <Protected userRole={role} roles={[MAIN_ROLE, SECOND_ROLE]}>
             <Stack align="start" sx={styles.section}>
               <Text style={styles.heading}>{t("location")}</Text>
               <ListItem>
                 <Icon name="map-pin" type="feather" color={grey0} />
-                <Text
-                  style={{
-                    ...styles.bio,
-                    marginTop: 0,
-                    marginLeft: 5,
-                    flex: 1,
-                  }}
-                >
+                <Text style={{ ...styles.text, ...styles.address }}>
                   {AddressFormat(location?.address)}
                 </Text>
               </ListItem>
             </Stack>
-            <Stack>
-              <MapStatic
-                height={200}
-                longitude={26.100195}
-                latitude={44.428286}
-                minZoom={10}
-              />
-              <IconButton
-                name="maximize-2"
-                size={20}
-                onPress={() => setVisible(true)}
-                sx={{ ...styles.button, bottom: 15 }}
-              />
-            </Stack>
-            <Stack align="start" sx={styles.section}>
-              <Text style={styles.heading}>Program</Text>
-              {hours &&
-                Object.entries(hours)?.map((el: any, i) => {
+            <MapStatic
+              height={200}
+              latitude={location?.address?.coordinates[0]}
+              longitude={location?.address?.coordinates[1]}
+              minZoom={10}
+              onOpenModal={() => setVisible(true)}
+            />
+            {hours && (
+              <Stack align="start" sx={styles.section}>
+                <Text style={styles.heading}>Program</Text>
+                {Object.entries(hours)?.map((el: any, i) => {
                   return (
                     <ListItem between key={i}>
-                      <Text style={styles.bio}>{t(el[0])}</Text>
+                      <Text style={styles.text}>{t(el[0])}</Text>
                       <Text style={styles.heading}>
                         {el[1].start} - {el[1].end}
                       </Text>
                     </ListItem>
                   );
                 })}
-            </Stack>
+              </Stack>
+            )}
           </Protected>
         </ScrollView>
       )}
       {loading && <Spinner />}
-      <CModal
+      <MapPreviewModal
         visible={visible}
-        size="xl"
         onCloseModal={() => setVisible(false)}
-        header={false}
-      >
-        <MapStatic
-          height={"100%"}
-          longitude={26.100195}
-          latitude={44.428286}
-          zoomEnabled={true}
-          scrollEnabled={true}
-          sx={{ borderRadius: 5 }}
-        />
-        <IconButton
-          name="close"
-          type="material"
-          onPress={() => setVisible(false)}
-          size={20}
-          sx={{ top: 15, ...styles.button }}
-        />
-      </CModal>
+        latitude={location?.address?.coordinates[0]}
+        longitude={location?.address?.coordinates[1]}
+      />
     </>
   );
 };
@@ -162,48 +147,9 @@ const styles = StyleSheet.create({
     color: black,
     fontWeight: "600",
   },
-  seeMoreBtn: {
-    color: primary,
-    fontSize: 14,
-    marginLeft: 5,
-  },
-  bio: {
+  text: {
     marginTop: 10,
     color: grey0,
   },
-  label: {
-    color: black,
-    marginLeft: 10,
-  },
-  actionBtn: {
-    color: black,
-    fontSize: 14.5,
-  },
-  location: {
-    flex: 1,
-    marginLeft: 10,
-    fontSize: 13.5,
-    color: black,
-    paddingRight: 10,
-  },
-  distance: {
-    flex: 1,
-    marginLeft: 5,
-    fontSize: 13.5,
-    color: primary,
-  },
-  stack: { marginTop: 10 },
-  schedule: { marginTop: 10 },
-  button: {
-    backgroundColor: "white",
-    padding: 10,
-    borderRadius: 50,
-    shadowColor: "#171717",
-    shadowOffset: { width: -2, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    elevation: 20,
-    position: "absolute",
-    right: 15,
-  },
+  address: { marginTop: 0, marginLeft: 5, flex: 1 },
 });

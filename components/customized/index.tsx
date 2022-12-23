@@ -98,6 +98,7 @@ export { NoFoundMessage } from "./NotFoundContent/NoFoundMessage";
 
 export { Map } from "./Map/Map";
 export { MapStatic } from "./Map/MapStatic";
+export { MapPreviewModal } from "./Modals/MapPreviewModal";
 
 export { LoginRegisterForm } from "./Forms/LoginRegisterForm";
 export { AuthProviders } from "./Forms/AuthProviders";

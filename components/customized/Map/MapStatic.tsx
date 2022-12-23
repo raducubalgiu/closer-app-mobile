@@ -1,4 +1,6 @@
+import { StyleSheet } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import { IconButton } from "../../core";
 
 type IProps = {
   longitude: number;
@@ -8,6 +10,8 @@ type IProps = {
   minZoom?: number;
   zoomEnabled?: boolean;
   scrollEnabled?: boolean;
+  onOpenModal?: () => void;
+  isModal?: boolean;
 };
 
 export const MapStatic = ({
@@ -18,6 +22,8 @@ export const MapStatic = ({
   minZoom = 13,
   zoomEnabled = false,
   scrollEnabled = false,
+  onOpenModal,
+  isModal = false,
 }: IProps) => {
   const mapStyle = [
     {
@@ -68,6 +74,29 @@ export const MapStatic = ({
         coordinate={{ latitude, longitude }}
         image={require("../../../assets/images/map_marker.png")}
       />
+      {!isModal && (
+        <IconButton
+          name="maximize-2"
+          size={20}
+          onPress={onOpenModal}
+          sx={{ ...styles.button, bottom: 15 }}
+        />
+      )}
     </MapView>
   );
 };
+
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: "white",
+    padding: 10,
+    borderRadius: 50,
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 20,
+    position: "absolute",
+    right: 15,
+  },
+});

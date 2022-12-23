@@ -10,7 +10,7 @@ type Props = {
   color?: string | undefined;
   loading?: boolean;
   sx?: {};
-  onPress: () => void;
+  onPress?: () => void;
 };
 
 export const IconButton = ({
