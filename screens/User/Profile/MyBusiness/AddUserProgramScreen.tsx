@@ -87,7 +87,7 @@ export const AddUserProgramScreen = () => {
   const { handleSubmit, getValues, setValue, watch, formState } = methods;
 
   const { mutate, isLoading } = usePatch({
-    uri: `/users/${user?.id}/update`,
+    uri: `/users/${user?.id}`,
     onSuccess: (res) => {
       const { hours } = res.data;
       setUser({ ...user, hours });

@@ -107,7 +107,7 @@ export const TopTabProfile = ({ userId, service, option, user }: IProps) => {
           options={{
             tabBarIcon: ({ focused }) => (
               <TabBadge
-                value={0}
+                value={user?.productsCount}
                 name="shopping-bag"
                 color={focused ? black : "#ccc"}
               />
