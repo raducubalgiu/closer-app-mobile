@@ -1,6 +1,7 @@
 import { StyleSheet, Dimensions, View, Text, Pressable } from "react-native";
+import { memo } from "react";
 import { Image, Icon } from "@rneui/themed";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 
 const { width } = Dimensions.get("window");
 const { black } = theme.lightColors || {};
@@ -15,7 +16,7 @@ type IProps = {
   col?: number;
 };
 
-export const CardPostImage = ({
+const GridImageListItem = ({
   index = 0,
   image,
   bookable = false,
@@ -73,6 +74,8 @@ export const CardPostImage = ({
     </Pressable>
   );
 };
+
+export default memo(GridImageListItem);
 
 const styles = StyleSheet.create({
   image: {

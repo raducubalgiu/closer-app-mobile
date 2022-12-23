@@ -56,10 +56,8 @@ export { ServicePostsRecentTab } from "./Tabs/ServicePostsTabs/ServicePostsRecen
 
 export { CardLocation } from "./Cards/CardLocation";
 export { CardRecommended } from "./Cards/CardRecommended";
-export { CardAvailableHour } from "./Cards/CardAvailableHour";
 export { CardServicesHeader } from "./Cards/CardServicesHeader";
 export { CardSlotDetails } from "./Cards/CardSlotDetails";
-export { CardPostImage } from "./Cards/CardPostImage";
 export { CardScheduleOverview } from "./Cards/CardScheduleOverview";
 export { CardHashtagOverview } from "./Cards/CardHashtagOverview";
 export { CardServiceOverview } from "./Cards/CardServiceOverview";

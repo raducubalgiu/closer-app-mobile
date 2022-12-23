@@ -3,7 +3,7 @@ import { useIsFocused } from "@react-navigation/native";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useGetPaginate } from "../../../../hooks";
-import { CardPostImage } from "../../Cards/CardPostImage";
+import GridImageListItem from "../../ListItems/PostGrid/GridImageListItem";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { Spinner } from "../../../core";
 import { Post } from "../../../../models/post";
@@ -28,7 +28,7 @@ export const HashtagPostsRecentTab = ({ name }: { name: string }) => {
 
   const renderPosts = useCallback(
     ({ item, index }: ListRenderItemInfo<Post>) => (
-      <CardPostImage
+      <GridImageListItem
         onPress={() => {}}
         index={index}
         image={item?.images[0]?.url}

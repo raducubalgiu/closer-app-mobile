@@ -7,7 +7,7 @@ import { HashtagListItem } from "../../ListItems/HashtagListItem";
 import { SearchPopularHeading } from "../../Headings/SearchPopularHeading";
 import { Spinner } from "../../../core";
 import UserListItem from "../../ListItems/UserListItem";
-import { CardPostImage } from "../../Cards/CardPostImage";
+import GridImageListItem from "../../ListItems/PostGrid/GridImageListItem";
 import axios from "axios";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -107,7 +107,7 @@ export const SearchPopularTab = ({ search }: { search: string }) => {
 
   const renderPopularPosts = useCallback(
     ({ item, index }: ListRenderItemInfo<Post>) => (
-      <CardPostImage
+      <GridImageListItem
         onPress={() => {}}
         index={index}
         image={item?.images[0]?.url}

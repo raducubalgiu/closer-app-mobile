@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { CardPostImage } from "../../Cards/CardPostImage";
+import GridImageListItem from "../../ListItems/PostGrid/GridImageListItem";
 import { useGetPaginate } from "../../../../hooks";
 import { Spinner } from "../../../core";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
@@ -43,7 +43,7 @@ export const SavedPostsTab = ({ user }: { user: User }) => {
       const { bookable, postType } = postId || {};
 
       return (
-        <CardPostImage
+        <GridImageListItem
           onPress={() =>
             navigation.navigate("AllBookmarks", {
               postId: postId?.id,
