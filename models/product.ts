@@ -14,5 +14,5 @@ export interface Product {
   location: string;
   bookmarksCount: number;
   reservationsCount: number;
-  userId: User;
+  ownerId: User;
 }

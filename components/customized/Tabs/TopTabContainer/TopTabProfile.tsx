@@ -24,6 +24,18 @@ export const TopTabProfile = ({ userId, service, option, user }: IProps) => {
     [userId]
   );
 
+  const ProductsProfile = useCallback(
+    () => (
+      <ProductsProfileTab
+        locationId={user?.locationId}
+        userId={userId}
+        service={service}
+        option={option}
+      />
+    ),
+    [userId, service, option, user]
+  );
+
   const VideosVProfile = useCallback(
     () => <VideosVTab userId={userId} />,
     [userId]
@@ -32,13 +44,6 @@ export const TopTabProfile = ({ userId, service, option, user }: IProps) => {
   const VideosHProfile = useCallback(
     () => <VideosHTab userId={userId} />,
     [userId]
-  );
-
-  const ProductsProfile = useCallback(
-    () => (
-      <ProductsProfileTab userId={userId} service={service} option={option} />
-    ),
-    [userId, service, option]
   );
 
   const AboutProfile = useCallback(

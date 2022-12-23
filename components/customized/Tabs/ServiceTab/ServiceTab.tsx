@@ -1,8 +1,10 @@
+import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
+import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { StyleSheet, View, ActivityIndicator, Text } from "react-native";
-import { useAuth, useGet } from "../../../../hooks";
+import { Spinner } from "../../../core";
+import { useGetPaginate } from "../../../../hooks";
 import { CardProduct } from "../../Cards/CardProduct";
-import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
+import { Product } from "../../../../models/product";
 
 type IProps = {
   userId: string;
@@ -17,13 +19,56 @@ export const ServiceTab = ({
   option,
   initialRoute,
 }: IProps) => {
-  const { user } = useAuth();
   const { t } = useTranslation();
 
+  const { data, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
+    useGetPaginate({
+      model: "products",
+      uri: `/users/${userId}/services/${service?.id}/products`,
+      limit: "10",
+      enabled: !!userId,
+    });
+
+  const { pages } = data || {};
+  const products = pages?.map((page) => page.results).flat() || [];
+
+  const renderProduct = useCallback(
+    ({ item }: ListRenderItemInfo<Product>) => (
+      <CardProduct
+        product={item}
+        ownerInfo={false}
+        onDeleteProduct={() => {}}
+        onEditProduct={() => {}}
+      />
+    ),
+    []
+  );
+
+  const keyExtractor = useCallback((item: Product) => item?.id, []);
+
+  const loadMore = () => {
+    if (hasNextPage) {
+      fetchNextPage();
+    }
+  };
+
+  const showSpinner = () => {
+    if (isFetchingNextPage) {
+      return <Spinner sx={{ paddingVertical: 50 }} />;
+    } else {
+      return null;
+    }
+  };
+
   return (
-    <View style={styles.screen}>
-      <Text>Hello World</Text>
-    </View>
+    <FlatList
+      data={products}
+      keyExtractor={keyExtractor}
+      renderItem={renderProduct}
+      ListFooterComponent={showSpinner}
+      onEndReached={loadMore}
+      onEndReachedThreshold={0.3}
+    />
   );
 };
 

@@ -32,27 +32,28 @@ export const CardProduct = ({
   const { user: userContext } = useAuth();
   const { t } = useTranslation();
   const { name, duration, description, price } = product || {};
-  const { option, service, userId } = product || {};
+  const { option, serviceId, ownerId } = product || {};
   const currDuration = duration ? useDuration(duration) : "";
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
-  const goToCalendar = () =>
-    navigation.navigate("CalendarBig", {
-      product,
-      service,
-    });
+  const goToCalendar = () => {
+    // navigation.navigate("CalendarBig", {
+    //   product,
+    //   service,
+    // });
+  };
 
   const goToOwner = () => {
-    navigation.navigate("ProfileGeneral", {
-      userId: userId.id,
-      username: userId?.username,
-      avatar: userId?.avatar,
-      name: userId?.name,
-      checkmark: userId?.checkmark,
-      service: null,
-      option: null,
-    });
+    // navigation.navigate("ProfileGeneral", {
+    //   userId: userId.id,
+    //   username: userId?.username,
+    //   avatar: userId?.avatar,
+    //   name: userId?.name,
+    //   checkmark: userId?.checkmark,
+    //   service: null,
+    //   option: null,
+    // });
   };
 
   return (
@@ -64,12 +65,7 @@ export const CardProduct = ({
               <Text style={styles.name}>{name} </Text>
               <Text style={styles.option}>{option?.name}</Text>
             </Stack>
-            <Protected
-              roles={[SECOND_ROLE, THIRD_ROLE]}
-              userRole={userContext?.role}
-            >
-              <BookButton onPress={goToCalendar} />
-            </Protected>
+            <BookButton onPress={goToCalendar} />
           </Stack>
           <Stack sx={{ marginVertical: 5 }}>
             <Text style={styles.description}>{trimFunc(description, 80)}</Text>
@@ -81,10 +77,10 @@ export const CardProduct = ({
       </Stack>
       {ownerInfo && (
         <UserListItemSimple
-          name={userId?.name}
-          profession={userId?.profession.name}
-          avatar={userId?.avatar}
-          checkmark={userId?.checkmark}
+          name={ownerId?.name}
+          profession={ownerId?.profession.name}
+          avatar={ownerId?.avatar}
+          checkmark={ownerId?.checkmark}
           onGoToUser={goToOwner}
           sx={{ marginTop: 15 }}
         />

@@ -1,15 +1,15 @@
 import { useCallback } from "react";
 import { TopTabContainer } from "./TopTabContainer";
 import { ServiceTab } from "../ServiceTab/ServiceTab";
-import { useGet } from "../../../../hooks";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { Service } from "../../../../models/service";
 
 type IProps = {
   userId: string;
-  initialRoute: string;
-  option: any;
-  service: Service;
+  initialRoute: any;
+  option: string | null;
+  service: Service | null;
+  services: Service[];
 };
 
 export const TopTabServices = ({
@@ -17,17 +17,17 @@ export const TopTabServices = ({
   initialRoute,
   option,
   service,
+  services,
 }: IProps) => {
   const Tab = createMaterialTopTabNavigator();
 
-  const { data: services } = useGet({ model: "services", uri: "/services" });
-
   return (
-    <TopTabContainer initialRouteName={initialRoute}>
-      {services?.map((service: Service) => {
+    <TopTabContainer initialRouteName={initialRoute} tabBarScrollEnabled>
+      {services?.map((service: Service, i: number) => {
         const Service = useCallback(
           () => (
             <ServiceTab
+              key={i}
               userId={userId}
               service={service}
               option={option}
@@ -39,11 +39,20 @@ export const TopTabServices = ({
 
         return (
           <Tab.Screen
-            key={service.id}
+            key={i}
             name={service.name.toLowerCase()}
             component={Service}
             options={{
               tabBarLabel: `${service?.name}`,
+              tabBarItemStyle: {
+                height: 37.5,
+              },
+              tabBarLabelStyle: {
+                textTransform: "uppercase",
+                fontWeight: "600",
+                height: 15,
+                marginBottom: 15,
+              },
             }}
           />
         );
