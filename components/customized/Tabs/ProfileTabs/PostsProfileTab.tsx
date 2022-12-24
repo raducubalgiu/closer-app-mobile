@@ -75,7 +75,7 @@ export const PostsProfileTab = ({ userId }: { userId: string }) => {
       ListFooterComponent={showSpinner}
       onEndReached={loadMore}
       onEndReachedThreshold={0.3}
-      //estimatedItemSize={125}
+      showsVerticalScrollIndicator={false}
     />
   );
 };

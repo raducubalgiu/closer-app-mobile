@@ -81,15 +81,19 @@ export const ServiceTab = ({
     return { length: 160, offset: 145 * index, index };
   }, []);
 
+  console.log(service.filters[0].options.length);
+
   const renderOption = useCallback(
     ({ item, index }: ListRenderItemInfo<any>) => (
       <Pressable
         onPress={() => {
           setInitialOption(item._id);
-          ref.current?.scrollToIndex({
-            index,
-            animated: true,
-          });
+          if (service.filters[0].options.length > 3) {
+            ref.current?.scrollToIndex({
+              index,
+              animated: true,
+            });
+          }
         }}
         style={{
           width: 130,

@@ -1,4 +1,4 @@
-import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
+import { FlatList, ListRenderItemInfo } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
@@ -22,7 +22,7 @@ export const HashtagPostsPopularTab = ({ name }: { name: string }) => {
   } = useGetPaginate({
     model: "hPopular",
     uri: `/hashtags/${name}/posts/popular`,
-    limit: "15",
+    limit: "21",
     enabled: isFocused,
   });
 
@@ -69,7 +69,7 @@ export const HashtagPostsPopularTab = ({ name }: { name: string }) => {
   return (
     <>
       {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
-      <FlashList
+      <FlatList
         ListHeaderComponent={header}
         numColumns={3}
         data={posts}
@@ -78,7 +78,6 @@ export const HashtagPostsPopularTab = ({ name }: { name: string }) => {
         ListFooterComponent={showSpinner}
         onEndReached={loadMore}
         onEndReachedThreshold={0.3}
-        estimatedItemSize={125}
       />
     </>
   );

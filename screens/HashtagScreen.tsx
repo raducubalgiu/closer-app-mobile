@@ -1,4 +1,4 @@
-import { StyleSheet, SafeAreaView } from "react-native";
+import { StyleSheet, SafeAreaView, View } from "react-native";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
@@ -36,8 +36,10 @@ export const HashtagScreen = ({ route }: IProps) => {
   );
 
   return (
-    <SafeAreaView style={styles.screen}>
-      <Header title={`#${name}`} />
+    <View style={styles.screen}>
+      <SafeAreaView>
+        <Header title={`#${name}`} />
+      </SafeAreaView>
       <CardHashtagOverview
         bookmarkId={data?.id}
         postsCount={data?.postsCount}
@@ -60,7 +62,7 @@ export const HashtagScreen = ({ route }: IProps) => {
           options={{ tabBarLabel: t("recent") }}
         />
       </TopTabContainer>
-    </SafeAreaView>
+    </View>
   );
 };
 
