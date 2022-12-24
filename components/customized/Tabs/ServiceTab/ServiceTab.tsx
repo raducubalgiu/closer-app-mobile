@@ -157,8 +157,10 @@ export const ServiceTab = ({
 
 const styles = StyleSheet.create({
   listHoriz: {
-    paddingVertical: 15,
+    paddingVertical: 7.5,
     paddingLeft: 15,
     paddingRight: 215,
+    borderBottomWidth: 1,
+    borderBottomColor: "#f1f1f1",
   },
 });
