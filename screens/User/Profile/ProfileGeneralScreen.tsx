@@ -48,7 +48,7 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
 
   useGet({
     model: "checkFollow",
-    uri: `/users/${user.id}/followings/${userId || userDetails?.id}/follows`,
+    uri: `/users/${user?.id}/followings/${userId || userDetails?.id}/follows`,
     onSuccess: (res: any) => setIsFollow(res.data.status),
   });
 

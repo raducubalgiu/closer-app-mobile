@@ -1,6 +1,8 @@
 import { Service } from "../../../../models/service";
 import { TopTabServices } from "../TopTabContainer/TopTabServices";
 import { useGet } from "../../../../hooks";
+import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
+import { useTranslation } from "react-i18next";
 
 type IProps = {
   userId: string;
@@ -15,6 +17,8 @@ export const ProductsProfileTab = ({
   option,
   locationId,
 }: IProps) => {
+  const { t } = useTranslation();
+
   const { data: services } = useGet({
     model: "services",
     uri: `/locations/${locationId}/services`,
@@ -29,6 +33,13 @@ export const ProductsProfileTab = ({
           service={service}
           option={option}
           services={services}
+        />
+      )}
+      {services?.length === 0 && (
+        <NoFoundMessage
+          sx={{ marginTop: 50 }}
+          title={t("products")}
+          description={t("noFoundProducts")}
         />
       )}
     </>

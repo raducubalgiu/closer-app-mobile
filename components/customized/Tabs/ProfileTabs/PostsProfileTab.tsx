@@ -59,7 +59,7 @@ export const PostsProfileTab = ({ userId }: { userId: string }) => {
 
   const showSpinner = () => {
     if (isFetchingNextPage) {
-      return <Spinner sx={{ paddingVertical: 50 }} />;
+      return <Spinner sx={{ paddingTop: 25, paddingBottom: 150 }} />;
     } else {
       return null;
     }

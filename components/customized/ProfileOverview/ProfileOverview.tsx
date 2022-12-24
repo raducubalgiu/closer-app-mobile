@@ -99,9 +99,7 @@ const ProfileOverview = ({
         <StatsButton
           onPress={isBusiness ? goToReviews : null}
           label={isBusiness ? t("reviews") : t("posts")}
-          statsNo={displayDash(
-            role !== THIRD_ROLE ? ratingsQuantity : postsCount
-          )}
+          statsNo={displayDash(isBusiness ? ratingsQuantity : postsCount)}
         />
         <StatsButton
           onPress={goToFollowers}
