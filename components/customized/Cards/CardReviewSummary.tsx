@@ -54,16 +54,20 @@ const RatingItem = ({
   );
 };
 
-type IProps = { summary: any; ratingsQuantity: number };
+type IProps = { ratings: any; ratingsQuantity: number; ratingsAverage: number };
 
-export const CardReviewSummary = ({ summary, ratingsQuantity = 0 }: IProps) => {
+export const CardReviewSummary = ({
+  ratings,
+  ratingsQuantity = 0,
+  ratingsAverage = 0,
+}: IProps) => {
   const getPercentage = (quantity: number, count: number) => {
     return `${(count / quantity) * 100}%`;
   };
-  const displayCount = (summary: any, defRating: number) => {
-    const el = find(summary, { _id: defRating });
+  const displayCount = (ratings: any, defRating: number) => {
+    const el = find(ratings, { _id: defRating });
     if (el) {
-      return el.totalRatings;
+      return el.count;
     } else {
       return 0;
     }
@@ -72,33 +76,33 @@ export const CardReviewSummary = ({ summary, ratingsQuantity = 0 }: IProps) => {
   return (
     <Stack direction="row" justify="start" sx={styles.container}>
       <Stack sx={styles.ratingAvg}>
-        <Text style={styles.ratingAvgTxt}>4.5</Text>
+        <Text style={styles.ratingAvgTxt}>{ratingsAverage}</Text>
       </Stack>
       <Stack sx={{ flex: 1 }}>
         <RatingItem
           defRating={5}
-          count={displayCount(summary, 5)}
-          percentage={getPercentage(ratingsQuantity, displayCount(summary, 5))}
+          count={displayCount(ratings, 5)}
+          percentage={getPercentage(ratingsQuantity, displayCount(ratings, 5))}
         />
         <RatingItem
           defRating={4}
-          count={displayCount(summary, 4)}
-          percentage={getPercentage(ratingsQuantity, displayCount(summary, 4))}
+          count={displayCount(ratings, 4)}
+          percentage={getPercentage(ratingsQuantity, displayCount(ratings, 4))}
         />
         <RatingItem
           defRating={3}
-          count={displayCount(summary, 3)}
-          percentage={getPercentage(ratingsQuantity, displayCount(summary, 3))}
+          count={displayCount(ratings, 3)}
+          percentage={getPercentage(ratingsQuantity, displayCount(ratings, 3))}
         />
         <RatingItem
           defRating={2}
-          count={displayCount(summary, 2)}
-          percentage={getPercentage(ratingsQuantity, displayCount(summary, 2))}
+          count={displayCount(ratings, 2)}
+          percentage={getPercentage(ratingsQuantity, displayCount(ratings, 2))}
         />
         <RatingItem
           defRating={1}
-          count={displayCount(summary, 1)}
-          percentage={getPercentage(ratingsQuantity, displayCount(summary, 1))}
+          count={displayCount(ratings, 1)}
+          percentage={getPercentage(ratingsQuantity, displayCount(ratings, 1))}
         />
       </Stack>
     </Stack>
@@ -117,7 +121,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ddd",
     marginRight: 15,
-    padding: 10,
+    width: 45,
+    height: 45,
+    justifyContent: "center",
+    alignItems: "center",
   },
   ratingAvgTxt: { color: black, fontSize: 16, fontWeight: "700" },
 });

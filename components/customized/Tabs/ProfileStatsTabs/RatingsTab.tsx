@@ -1,15 +1,16 @@
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { RefreshControl } from "react-native";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useIsFocused } from "@react-navigation/native";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
-import { InputSelect, Spinner, Stack } from "../../../core";
+import { FormInputSelect, InputSelect, Spinner, Stack } from "../../../core";
 import { useGet, useGetPaginate, useRefreshByUser } from "../../../../hooks";
 import { CardReviewSummary } from "../../Cards/CardReviewSummary";
 import RatingListItem from "../../ListItems/RatingListItem";
 import { Review } from "../../../../models/review";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useForm, FormProvider } from "react-hook-form";
 
 type IProps = { userId: string };
 
@@ -17,15 +18,23 @@ export const RatingsTab = ({ userId }: IProps) => {
   const { t } = useTranslation();
   const isFocused = useIsFocused();
   const insets = useSafeAreaInsets();
+  const methods = useForm({ defaultValues: { productId: "" } });
+  const { watch } = methods;
+  const productId = watch("productId") ? watch("productId") : "";
+
+  // const { data: products } = useGet({
+  //   model: "products",
+  //   uri: `/users/${userId}/products`,
+  // });
+
+  const products = [
+    { id: "63a5d4753036ad0eddc58664", name: "Autoutilitare mici" },
+    { id: "63a43f9e669ab4c917f6e665", name: "Autoturisme" },
+  ];
 
   const { data: summary } = useGet({
     model: "summary",
-    uri: `/users/${userId}/reviews/summary`,
-  });
-
-  const { data: products } = useGet({
-    model: "products",
-    uri: `/users/${userId}/products`,
+    uri: `/users/${userId}/reviews/summary?productId=${productId}`,
   });
 
   const {
@@ -39,6 +48,7 @@ export const RatingsTab = ({ userId }: IProps) => {
   } = useGetPaginate({
     model: "ratings",
     uri: `/users/${userId}/reviews`,
+    queries: `productId=${productId}`,
     limit: "10",
     enabled: isFocused,
   });
@@ -77,15 +87,22 @@ export const RatingsTab = ({ userId }: IProps) => {
 
   const header = (
     <>
-      <Stack sx={{ marginHorizontal: 15, marginBottom: 15 }}>
-        <InputSelect
-          items={[products]}
-          placeholder="Toate serviciile"
-          value="1"
-          onValueChange={() => {}}
-        />
-      </Stack>
-      <CardReviewSummary summary={summary} ratingsQuantity={8} />
+      {products.length && (
+        <Stack sx={{ marginHorizontal: 15, marginBottom: 15 }}>
+          <FormProvider {...methods}>
+            <FormInputSelect
+              name="productId"
+              items={products}
+              placeholder="Toate serviciile"
+            />
+          </FormProvider>
+        </Stack>
+      )}
+      <CardReviewSummary
+        ratings={summary?.ratings}
+        ratingsQuantity={summary?.ratingsQuantity}
+        ratingsAverage={summary?.ratingsAvg}
+      />
       {!isLoading && !isFetchingNextPage && reviews?.length === 0 && (
         <NoFoundMessage
           title={t("reviews")}

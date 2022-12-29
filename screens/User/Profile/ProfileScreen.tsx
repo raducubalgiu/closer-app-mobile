@@ -41,7 +41,7 @@ export const ProfileScreen = () => {
   const navigateBookmarks = () => navigation.navigate("Bookmarks", { user });
   const navigateProfile = () => navigation.navigate("EditProfile", { user });
   const navigateInstagram = () => navigation.navigate("ExploreVideoPortrait");
-  const navigateYoutube = () => navigation.navigate("ExploreVideoLandscape");
+  const navigateYoutube = () => navigation.navigate("AddProducts");
 
   useRefreshOnFocus(refetch);
 
