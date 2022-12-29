@@ -26,7 +26,7 @@ export type RootStackParams = {
     date: string;
     name: string;
   };
-  CalendarBig: { product: Product; service: Service };
+  CalendarBig: { product: Product; serviceId: Service };
   Camera: { name: string; avatar: any };
   CameraPreview: { photo: { uri: string }; avatar: any; name: string };
   Discounts: any;
@@ -117,7 +117,7 @@ export type RootStackParams = {
   SearchAll: { screen: string | null; search: string };
   Schedules: any;
   ScheduleConfirm: {
-    service: Service;
+    serviceId: Service;
     product: Product;
     slot: Slot;
   };

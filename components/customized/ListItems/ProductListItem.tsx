@@ -38,22 +38,22 @@ const ProductListItem = ({
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const goToCalendar = () => {
-    // navigation.navigate("CalendarBig", {
-    //   product,
-    //   service,
-    // });
+    navigation.navigate("CalendarBig", {
+      product: product,
+      serviceId,
+    });
   };
 
   const goToOwner = () => {
-    // navigation.navigate("ProfileGeneral", {
-    //   userId: userId.id,
-    //   username: userId?.username,
-    //   avatar: userId?.avatar,
-    //   name: userId?.name,
-    //   checkmark: userId?.checkmark,
-    //   service: null,
-    //   option: null,
-    // });
+    navigation.navigate("ProfileGeneral", {
+      userId: ownerId.id,
+      username: ownerId?.username,
+      avatar: ownerId?.avatar,
+      name: ownerId?.name,
+      checkmark: ownerId?.checkmark,
+      service: null,
+      option: null,
+    });
   };
 
   return (

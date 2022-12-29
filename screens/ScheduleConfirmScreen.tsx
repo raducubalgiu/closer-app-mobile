@@ -15,20 +15,20 @@ import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import Toast from "react-native-root-toast";
 
 import dayjs from "dayjs";
 import { RootStackParams } from "../models/navigation/rootStackParams";
+import { showToast } from "../utils";
 
 const { width } = Dimensions.get("window");
 const { black, grey0 } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "ScheduleConfirm">;
 
 export const ScheduleConfirmScreen = ({ route }: IProps) => {
-  const { user: customer } = useAuth();
-  const { service, product, slot } = route.params;
+  const { user: customerId } = useAuth();
+  const { serviceId, product, slot } = route.params;
   const { start, end, hour } = slot;
-  const { user, name, price, option, duration, description, location } =
+  const { ownerId, name, price, option, duration, description, locationId } =
     product;
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -37,34 +37,17 @@ export const ScheduleConfirmScreen = ({ route }: IProps) => {
   const { mutate, isLoading, isSuccess } = usePost({
     uri: "/schedules",
     onSuccess: () => navigation.navigate("Schedules"),
-    onError: () => {
-      Toast.show(t("somethingWentWrong"), {
-        duration: Toast.durations.LONG,
-        position: Toast.positions.TOP,
-        shadow: false,
-        animation: true,
-        hideOnPress: true,
-        containerStyle: {
-          marginTop: 30,
-          width: width - 30,
-          shadowColor: "#404040",
-          shadowOffset: { width: -2.5, height: 3 },
-          shadowOpacity: 0.2,
-        },
-        opacity: 0.975,
-        backgroundColor: "#404040",
-      });
-    },
+    onError: () => showToast({ message: t("somethingWentWrong") }),
   });
 
   const handleBook = () => {
     mutate({
       start,
       end,
-      user,
-      customer: customer?._id,
-      service,
-      location,
+      ownerId: ownerId.id,
+      customerId: customerId?.id,
+      serviceId,
+      locationId,
       product: {
         name,
         description,
@@ -92,7 +75,7 @@ export const ScheduleConfirmScreen = ({ route }: IProps) => {
               <Text style={styles.heading}>
                 {dayjs(start).format("DD-MM-YYYY")} - {hour}
               </Text>
-              <Text style={styles.description}>{user?.name}</Text>
+              <Text style={styles.description}>{ownerId?.name}</Text>
             </Stack>
           </Stack>
           <Stack align="start" direction="row" sx={{ marginBottom: 50 }}>

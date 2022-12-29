@@ -25,8 +25,8 @@ const { primary, grey0, black } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "CalendarBig">;
 
 export const CalendarScreen = ({ route }: IProps) => {
-  const { product, service } = route.params;
-  const { user } = product;
+  const { product, serviceId } = route.params;
+  const { ownerId } = product;
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const now = dayjs().format("YYYY-MM-DD");
@@ -41,14 +41,14 @@ export const CalendarScreen = ({ route }: IProps) => {
     isError,
   } = useGet({
     model: "slots",
-    uri: `/users/${user?._id}/schedules/slots?day=${day}`,
+    uri: `/users/${ownerId.id}/schedules/slots?day=${day}`,
   });
 
   useRefreshOnFocus(refetch);
 
   const goToConfirm = (slot: any) => {
     navigation.navigate("ScheduleConfirm", {
-      service,
+      serviceId,
       product,
       slot,
     });

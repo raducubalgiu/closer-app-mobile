@@ -11,7 +11,7 @@ export interface Product {
   priceDiscount: number;
   serviceId: Service;
   option: Option;
-  location: string;
+  locationId: string;
   bookmarksCount: number;
   reservationsCount: number;
   ownerId: User;
