@@ -315,5 +315,6 @@
   "isGreatherThanMessage": "Data de început nu poate fi mai mare decât data de final",
   "hoursInterval": "Interval orar",
   "myLocation": "Locaţia mea",
-  "serviceAlreadyPresent": "Acest serviciu a fost adăugat deja"
+  "serviceAlreadyPresent": "Acest serviciu a fost adăugat deja",
+  "allServices": "Toate serviciile"
 }

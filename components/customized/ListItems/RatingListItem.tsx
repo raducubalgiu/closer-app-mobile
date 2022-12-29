@@ -1,15 +1,18 @@
-import { StyleSheet, Text, View } from "react-native";
-import { memo } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import { memo, useState } from "react";
 import { AirbnbRating, Divider, Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
-import { AvatarGroup, Checkmark, Stack } from "../../core";
+import { Checkmark, Stack } from "../../core";
 import CustomAvatar from "../../core/Avatars/CustomAvatar";
 import dayjs from "dayjs";
 import { User } from "../../../models/user";
+import { useAuth, useDelete, useGet, usePost } from "../../../hooks";
+import { useTranslation } from "react-i18next";
 
 const { black, primary, grey0, error } = theme.lightColors || {};
 
 type IProps = {
+  id: string;
   reviewer: User;
   date: string;
   rating: number;
@@ -19,6 +22,7 @@ type IProps = {
 };
 
 const RatingListItem = ({
+  id,
   reviewer,
   date,
   rating,
@@ -26,6 +30,30 @@ const RatingListItem = ({
   review,
   likesCount,
 }: IProps) => {
+  const { user } = useAuth();
+  const { t } = useTranslation();
+  const [liked, setLiked] = useState(false);
+  const endpoint = `/users/${user?.id}/reviews/${id}/likes`;
+
+  useGet({
+    model: "checkLike",
+    uri: endpoint,
+    onSuccess: (res) => setLiked(res.data.status),
+  });
+
+  const { mutate: like } = usePost({ uri: endpoint });
+  const { mutate: unlike } = useDelete({ uri: endpoint });
+
+  const handleLike = () => {
+    if (!liked) {
+      setLiked(true);
+      like({});
+    } else {
+      setLiked(false);
+      unlike();
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Stack direction="row" align="start">
@@ -56,14 +84,23 @@ const RatingListItem = ({
       </Stack>
       <Text style={styles.review}>{review}</Text>
       <Stack direction="row" sx={{ marginTop: 10 }}>
-        <Stack direction="row">
-          <AvatarGroup />
-          <Text style={styles.comments}>1 rapuns</Text>
-        </Stack>
-        <Stack direction="row">
-          <Icon name="heart" type="feather" color={grey0} size={17.5} />
-          <Text style={styles.likesCount}>{likesCount}</Text>
-        </Stack>
+        <Pressable onPress={() => {}}>
+          <Stack direction="row">
+            <CustomAvatar avatar={user?.avatar} size={27.5} />
+            <Text style={{ marginLeft: 7.5, color: grey0 }}>Răspunde...</Text>
+          </Stack>
+        </Pressable>
+        <Pressable style={styles.likeCont} onPress={handleLike}>
+          <Stack direction="row">
+            <Icon
+              name="heart"
+              type={liked ? "antdesign" : "feather"}
+              color={liked ? error : grey0}
+              size={15}
+            />
+            <Text style={styles.likesCount}>{likesCount}</Text>
+          </Stack>
+        </Pressable>
       </Stack>
     </View>
   );
@@ -109,6 +146,10 @@ const styles = StyleSheet.create({
     color: grey0,
     fontWeight: "500",
     marginLeft: 5,
+  },
+  likeCont: {
+    paddingVertical: 5,
+    paddingLeft: 7.5,
   },
   likesCount: {
     color: grey0,

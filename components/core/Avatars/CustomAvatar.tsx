@@ -16,9 +16,9 @@ const CustomAvatar = ({ avatar = [], size = 55, sx = {} }: Props) => {
       rounded
       source={{ uri }}
       containerStyle={{
-        backgroundColor: "#f1f1f1",
+        backgroundColor: "#ddd",
         borderWidth: 1,
-        borderColor: "#f1f1f1",
+        borderColor: "#ddd",
         ...sx,
       }}
       title="JS"

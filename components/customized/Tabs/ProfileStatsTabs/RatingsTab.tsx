@@ -1,22 +1,16 @@
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { RefreshControl } from "react-native";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useIsFocused } from "@react-navigation/native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useForm, FormProvider } from "react-hook-form";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
-import {
-  FormInputSelect,
-  IconButton,
-  InputSelect,
-  Spinner,
-  Stack,
-} from "../../../core";
+import { FormInputSelect, Spinner, Stack } from "../../../core";
 import { useGet, useGetPaginate, useRefreshByUser } from "../../../../hooks";
 import { CardReviewSummary } from "../../Cards/CardReviewSummary";
 import RatingListItem from "../../ListItems/RatingListItem";
 import { Review } from "../../../../models/review";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useForm, FormProvider } from "react-hook-form";
 
 type IProps = { userId: string };
 
@@ -28,15 +22,10 @@ export const RatingsTab = ({ userId }: IProps) => {
   const { watch } = methods;
   const productId = watch("productId") ? watch("productId") : "";
 
-  // const { data: products } = useGet({
-  //   model: "products",
-  //   uri: `/users/${userId}/products`,
-  // });
-
-  const products = [
-    { id: "63a5d4753036ad0eddc58664", name: "Autoutilitare mici" },
-    { id: "63a43f9e669ab4c917f6e665", name: "Autoturisme" },
-  ];
+  const { data: products } = useGet({
+    model: "products",
+    uri: `/users/${userId}/products/all`,
+  });
 
   const { data: summary } = useGet({
     model: "summary",
@@ -60,11 +49,12 @@ export const RatingsTab = ({ userId }: IProps) => {
   });
 
   const renderRatings = useCallback(({ item }: ListRenderItemInfo<Review>) => {
-    const { reviewerId, productId, rating, review, createdAt, likesCount } =
+    const { id, reviewerId, productId, rating, review, createdAt, likesCount } =
       item || {};
 
     return (
       <RatingListItem
+        id={id}
         reviewer={reviewerId}
         date={createdAt}
         rating={rating}
@@ -93,13 +83,13 @@ export const RatingsTab = ({ userId }: IProps) => {
 
   const header = (
     <>
-      {products.length && (
-        <Stack sx={{ marginHorizontal: 15, marginBottom: 15 }}>
+      {products?.length && (
+        <Stack sx={{ marginHorizontal: 15, marginBottom: 5 }}>
           <FormProvider {...methods}>
             <FormInputSelect
               name="productId"
               items={products}
-              placeholder="Toate serviciile"
+              placeholder={t("allServices")}
             />
           </FormProvider>
         </Stack>

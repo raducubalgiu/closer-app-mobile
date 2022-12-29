@@ -125,6 +125,7 @@ const styles = StyleSheet.create({
     height: 45,
     justifyContent: "center",
     alignItems: "center",
+    borderRadius: 2.5,
   },
   ratingAvgTxt: { color: black, fontSize: 16, fontWeight: "700" },
 });
