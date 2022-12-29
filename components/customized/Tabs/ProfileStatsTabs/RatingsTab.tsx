@@ -4,7 +4,13 @@ import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useIsFocused } from "@react-navigation/native";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
-import { FormInputSelect, InputSelect, Spinner, Stack } from "../../../core";
+import {
+  FormInputSelect,
+  IconButton,
+  InputSelect,
+  Spinner,
+  Stack,
+} from "../../../core";
 import { useGet, useGetPaginate, useRefreshByUser } from "../../../../hooks";
 import { CardReviewSummary } from "../../Cards/CardReviewSummary";
 import RatingListItem from "../../ListItems/RatingListItem";
@@ -83,7 +89,7 @@ export const RatingsTab = ({ userId }: IProps) => {
     }
   };
   const { pages } = data || {};
-  const reviews = pages?.map((page) => page.results).flat();
+  const reviews = pages?.map((page) => page.results).flat() || [];
 
   const header = (
     <>
@@ -98,11 +104,13 @@ export const RatingsTab = ({ userId }: IProps) => {
           </FormProvider>
         </Stack>
       )}
-      <CardReviewSummary
-        ratings={summary?.ratings}
-        ratingsQuantity={summary?.ratingsQuantity}
-        ratingsAverage={summary?.ratingsAvg}
-      />
+      {!isLoading && !isFetchingNextPage && reviews?.length > 0 && (
+        <CardReviewSummary
+          ratings={summary?.ratings}
+          ratingsQuantity={summary?.ratingsQuantity}
+          ratingsAverage={summary?.ratingsAvg}
+        />
+      )}
       {!isLoading && !isFetchingNextPage && reviews?.length === 0 && (
         <NoFoundMessage
           title={t("reviews")}

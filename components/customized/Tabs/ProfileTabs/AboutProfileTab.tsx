@@ -15,6 +15,7 @@ import { MapPreviewModal } from "../../Modals/MapPreviewModal";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 import dayjs from "dayjs";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const { black, grey0, primary } = theme.lightColors || {};
 type IProps = {
@@ -39,6 +40,7 @@ export const AboutProfileTab = ({
   const isFocused = useIsFocused();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
+  const insets = useSafeAreaInsets();
 
   const {
     data: location,
@@ -76,7 +78,7 @@ export const AboutProfileTab = ({
   return (
     <>
       {!loading && (
-        <ScrollView style={styles.screen}>
+        <ScrollView style={{ ...styles.screen, marginBottom: insets.bottom }}>
           <Stack align="start" sx={styles.section}>
             <Text style={styles.heading}>{t("biography")}</Text>
             <Text style={styles.text}>

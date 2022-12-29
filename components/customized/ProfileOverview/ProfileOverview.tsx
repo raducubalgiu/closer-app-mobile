@@ -162,7 +162,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   buttonsContainer: {
-    marginVertical: 10,
+    marginTop: 10,
+    marginBottom: 15,
   },
   star: { marginLeft: 7.5 },
   text: {
