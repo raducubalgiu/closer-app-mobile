@@ -111,6 +111,7 @@ export type RootStackParams = {
   };
   PhotoLibrary: any;
   PhotoAlbums: any;
+  Product: { product: Product };
   Register: any;
   RegisterBusiness: any;
   Settings: any;

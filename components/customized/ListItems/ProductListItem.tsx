@@ -1,4 +1,4 @@
-import { StyleSheet, Text } from "react-native";
+import { Pressable, StyleSheet, Text } from "react-native";
 import { memo } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
@@ -57,42 +57,56 @@ const ProductListItem = ({
   };
 
   return (
-    <Stack sx={styles.card} align="start">
-      <Stack direction="row" align="start">
-        <Stack align="start" sx={styles.descriptionCont}>
-          <Stack direction="row" align="start" sx={{ width: "100%" }}>
-            <Stack align="start" sx={{ flex: 1 }}>
-              <Text style={styles.name}>{name} </Text>
-              <Text style={styles.option}>{option?.name}</Text>
+    <Pressable onPress={() => navigation.navigate("Product", { product })}>
+      <Stack sx={styles.card} align="start">
+        <Stack direction="row" align="start">
+          <Stack align="start" sx={styles.descriptionCont}>
+            <Stack direction="row" align="start" sx={{ width: "100%" }}>
+              <Stack align="start" sx={{ flex: 1 }}>
+                <Text style={styles.name}>{name} </Text>
+                <Text style={styles.option}>{option?.name}</Text>
+              </Stack>
+              <Protected
+                userRole={userContext?.role}
+                roles={[SECOND_ROLE, THIRD_ROLE]}
+              >
+                <BookButton onPress={goToCalendar} />
+              </Protected>
             </Stack>
-            <BookButton onPress={goToCalendar} />
+            <Stack sx={{ marginVertical: 5 }}>
+              <Text style={styles.description}>
+                {trimFunc(description, 80)}
+              </Text>
+            </Stack>
+            <Text style={styles.price}>
+              {price} {t("ron")}
+            </Text>
           </Stack>
-          <Stack sx={{ marginVertical: 5 }}>
-            <Text style={styles.description}>{trimFunc(description, 80)}</Text>
-          </Stack>
-          <Text style={styles.price}>
-            {price} {t("ron")}
-          </Text>
         </Stack>
+        {ownerInfo && (
+          <UserListItemSimple
+            name={ownerId?.name}
+            profession={ownerId?.profession.name}
+            avatar={ownerId?.avatar}
+            checkmark={ownerId?.checkmark}
+            onGoToUser={goToOwner}
+            sx={{ marginTop: 15 }}
+          />
+        )}
+        <Protected
+          userRole={userContext?.role}
+          roles={[SECOND_ROLE, THIRD_ROLE]}
+        >
+          <Stack align="end" sx={styles.bookmark}>
+            <BookmarkButton
+              type="products"
+              typeId={product?.id}
+              onBookmarksCount={() => {}}
+            />
+          </Stack>
+        </Protected>
       </Stack>
-      {ownerInfo && (
-        <UserListItemSimple
-          name={ownerId?.name}
-          profession={ownerId?.profession.name}
-          avatar={ownerId?.avatar}
-          checkmark={ownerId?.checkmark}
-          onGoToUser={goToOwner}
-          sx={{ marginTop: 15 }}
-        />
-      )}
-      <Stack align="end" sx={styles.bookmark}>
-        <BookmarkButton
-          type="products"
-          typeId={product?.id}
-          onBookmarksCount={() => {}}
-        />
-      </Stack>
-    </Stack>
+    </Pressable>
   );
 };
 
