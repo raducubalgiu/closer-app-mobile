@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import {
   FollowersTab,
   FollowingsTab,
-  RatingsTab,
+  ReviewsTab,
   TopTabContainer,
 } from "../../../components/customized/index";
 import { Header } from "../../../components/core";
@@ -21,7 +21,7 @@ export const ProfileStatsScreen = ({ route }: IProps) => {
   const { t } = useTranslation();
   const Tab = createMaterialTopTabNavigator();
 
-  const Ratings = useCallback(() => <RatingsTab userId={userId} />, [userId]);
+  const Ratings = useCallback(() => <ReviewsTab userId={userId} />, [userId]);
   const Followers = useCallback(
     () => <FollowersTab userId={userId} />,
     [userId]

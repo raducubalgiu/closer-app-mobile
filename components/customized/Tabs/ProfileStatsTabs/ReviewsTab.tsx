@@ -14,7 +14,7 @@ import { Review } from "../../../../models/review";
 
 type IProps = { userId: string };
 
-export const RatingsTab = ({ userId }: IProps) => {
+export const ReviewsTab = ({ userId }: IProps) => {
   const { t } = useTranslation();
   const isFocused = useIsFocused();
   const insets = useSafeAreaInsets();

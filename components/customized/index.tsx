@@ -39,7 +39,7 @@ export { ProductsProfileTab } from "./Tabs/ProfileTabs/ProductsProfileTab";
 export { AboutProfileTab } from "./Tabs/ProfileTabs/AboutProfileTab";
 export { FollowersTab } from "./Tabs/ProfileStatsTabs/FollowersTab";
 export { FollowingsTab } from "./Tabs/ProfileStatsTabs/FollowingsTab";
-export { RatingsTab } from "./Tabs/ProfileStatsTabs/RatingsTab";
+export { ReviewsTab } from "./Tabs/ProfileStatsTabs/ReviewsTab";
 export { DashboardScheduleTab } from "./Tabs/DashboardTabs/DashboardScheduleTab";
 export { DashboardPostsTab } from "./Tabs/DashboardTabs/DashboardPostsTab";
 export { DashboardJobsTab } from "./Tabs/DashboardTabs/DashboardJobsTab";
