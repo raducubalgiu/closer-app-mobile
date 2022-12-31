@@ -70,6 +70,7 @@ export const ProductScreen = ({ route }: IProps) => {
   const goToProductReviews = () =>
     navigation.navigate("ProductReviews", {
       productId: product?._id,
+      productName: product?.name,
     });
 
   return (
