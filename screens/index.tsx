@@ -61,3 +61,4 @@ export { CameraScreen } from "./CameraScreen";
 export { CameraPreviewScreen } from "./CameraPreviewScreen";
 export { ExploreVideoLandscape } from "./ExploreVideoLandscape";
 export { ProductScreen } from "./ProductScreen";
+export { ProductReviewsScreen } from "./ProductReviewsScreen";

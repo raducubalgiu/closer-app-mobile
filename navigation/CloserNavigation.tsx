@@ -54,6 +54,7 @@ import {
   NotificationsScreen,
   PostScreen,
   ProductScreen,
+  ProductReviewsScreen,
   SchedulesScreen,
   ScheduleCancelScreen,
   ScheduleConfirmScreen,
@@ -338,6 +339,10 @@ const CloserNavigation = () => {
             <RootStack.Screen name="Hashtag" component={HashtagScreen} />
             <RootStack.Screen name="Service" component={ServiceScreen} />
             <RootStack.Screen name="Product" component={ProductScreen} />
+            <RootStack.Screen
+              name="ProductReviews"
+              component={ProductReviewsScreen}
+            />
             <RootStack.Screen
               name="Notifications"
               component={NotificationsScreen}

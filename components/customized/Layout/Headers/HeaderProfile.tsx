@@ -56,7 +56,7 @@ export const HeaderProfile = ({
           />
         </Stack>
         <Stack direction="row">
-          <Text style={styles.name}>@{username}</Text>
+          <Text style={styles.name}>{username && `@${username}`}</Text>
           {checkmark && <Checkmark sx={{ marginLeft: 5 }} />}
         </Stack>
         <Stack direction="row">

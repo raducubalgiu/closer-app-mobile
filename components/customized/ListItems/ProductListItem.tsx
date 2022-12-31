@@ -57,7 +57,9 @@ const ProductListItem = ({
   };
 
   return (
-    <Pressable onPress={() => navigation.navigate("Product", { product })}>
+    <Pressable
+      onPress={() => navigation.navigate("Product", { id: product.id })}
+    >
       <Stack sx={styles.card} align="start">
         <Stack direction="row" align="start">
           <Stack align="start" sx={styles.descriptionCont}>
