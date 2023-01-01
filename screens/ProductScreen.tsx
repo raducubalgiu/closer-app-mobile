@@ -71,6 +71,7 @@ export const ProductScreen = ({ route }: IProps) => {
     navigation.navigate("ProductReviews", {
       productId: product?._id,
       productName: product?.name,
+      ownerId: ownerId?._id,
     });
 
   return (

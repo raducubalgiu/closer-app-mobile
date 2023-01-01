@@ -1,25 +1,32 @@
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { StyleSheet, RefreshControl, Text } from "react-native";
 import { useCallback } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Header, Spinner, Stack } from "../components/core";
-import { NoFoundMessage } from "../components/customized";
-import RatingListItem from "../components/customized/ListItems/RatingListItem";
-import { useGetPaginate, useRefreshByUser } from "../hooks";
-import { Review } from "../models/review";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParams } from "../models/navigation/rootStackParams";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import theme from "../assets/styles/theme";
+import { Header, Spinner, Stack } from "../components/core";
+import { NoFoundMessage, CardReviewSummary } from "../components/customized";
+import RatingListItem from "../components/customized/ListItems/RatingListItem";
+import { useGet, useGetPaginate, useRefreshByUser } from "../hooks";
+import { Review } from "../models/review";
+import { RootStackParams } from "../models/navigation/rootStackParams";
 
 type IProps = NativeStackScreenProps<RootStackParams, "ProductReviews">;
 const { black, grey0 } = theme.lightColors || {};
 
 export const ProductReviewsScreen = ({ route }: IProps) => {
-  const { productId, productName } = route.params;
+  const { productId, productName, ownerId } = route.params;
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
+
+  const { data: summary } = useGet({
+    model: "summary",
+    uri: `/users/${ownerId}/reviews/summary?productId=${productId}`,
+  });
 
   const {
     data,
@@ -75,6 +82,13 @@ export const ProductReviewsScreen = ({ route }: IProps) => {
 
   const header = (
     <>
+      {!isLoading && !isFetchingNextPage && reviews?.length > 0 && (
+        <CardReviewSummary
+          ratings={summary?.ratings}
+          ratingsQuantity={summary?.ratingsQuantity}
+          ratingsAverage={summary?.ratingsAvg}
+        />
+      )}
       {!isLoading && !isFetchingNextPage && reviews?.length === 0 && (
         <NoFoundMessage
           title={t("reviews")}
@@ -89,12 +103,8 @@ export const ProductReviewsScreen = ({ route }: IProps) => {
       <Header
         title={
           <Stack>
-            <Text style={{ color: grey0, fontWeight: "600", fontSize: 16 }}>
-              {t("reviews")}
-            </Text>
-            <Text style={{ color: black, fontWeight: "500", fontSize: 16 }}>
-              {productName}
-            </Text>
+            <Text style={styles.title}>{t("reviews")}</Text>
+            <Text style={styles.description}>{productName}</Text>
           </Stack>
         }
       />
@@ -119,4 +129,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     flex: 1,
   },
+  title: { color: grey0, fontWeight: "600", fontSize: 16 },
+  description: { color: black, fontWeight: "500", fontSize: 16 },
 });
