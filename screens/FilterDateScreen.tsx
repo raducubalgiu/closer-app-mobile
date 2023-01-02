@@ -118,7 +118,7 @@ export const FiltersDateScreen = ({ route }: IProps) => {
   );
 
   const getMinutesName = (min: number) => {
-    const minuteEl = minutes.find((el) => el?._id === min);
+    const minuteEl = minutes.find((el) => el?.id === min);
     return minuteEl?.name;
   };
 
@@ -159,6 +159,7 @@ export const FiltersDateScreen = ({ route }: IProps) => {
         btnTitle={t("next")}
         footerExtraBtns={footerBtns}
         disabled={disabled}
+        closeBtn
       >
         <ButtonGroup
           onPress={handleDateBtns}

@@ -19,8 +19,6 @@ export const FiltersServiceScreen = ({ route }: IProps) => {
   const [option, setOption] = useState<Option | null>(null);
   const { t } = useTranslation();
 
-  console.log("PERIOD!!!", period);
-
   const goToLocations = () => {
     navigation.navigate("Locations", {
       service,

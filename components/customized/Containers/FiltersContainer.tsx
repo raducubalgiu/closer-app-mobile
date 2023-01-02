@@ -1,11 +1,13 @@
 import { StyleSheet, Text, View, Dimensions, SafeAreaView } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import theme from "../../../assets/styles/theme";
 import { Icon } from "@rneui/themed";
-import { Stack, Button, IconBackButton } from "../../core";
+import { Stack, Button, IconBackButton, IconButton } from "../../core";
 import { LinearGradient } from "expo-linear-gradient";
+import { useNavigation } from "@react-navigation/native";
 
 const { height } = Dimensions.get("window");
-const { grey0 } = theme.lightColors || {};
+const { grey0, black } = theme.lightColors || {};
 
 type IProps = {
   children: any;
@@ -17,6 +19,7 @@ type IProps = {
   footerExtraBtns?: any;
   btnTitle: string;
   disabled?: boolean;
+  closeBtn?: boolean;
 };
 
 export const FiltersContainer = ({
@@ -29,7 +32,11 @@ export const FiltersContainer = ({
   footerExtraBtns = false,
   btnTitle,
   disabled = false,
+  closeBtn = false,
 }: IProps) => {
+  const insets = useSafeAreaInsets();
+  const navigation = useNavigation();
+
   return (
     <>
       <LinearGradient
@@ -44,18 +51,37 @@ export const FiltersContainer = ({
               <Text style={styles.mainHeading}>{mainHeading}</Text>
               <Text style={styles.mainHeading}>{secondHeading}</Text>
             </View>
-            <View style={styles.body}>
+            <View
+              style={
+                closeBtn
+                  ? { ...styles.body, alignItems: "center" }
+                  : styles.body
+              }
+            >
               <Stack direction="row" sx={styles.sheetOverview}>
-                <IconBackButton size={20} />
+                {!closeBtn && <IconBackButton size={20} />}
                 <Stack>
                   <Text style={styles.title}>{headerTitle}</Text>
                   <Text style={styles.description}>{headerDescription}</Text>
                 </Stack>
-                <Icon name="chevron-back" type="ionicon" color="white" />
+                {!closeBtn && (
+                  <Icon name="chevron-back" type="ionicon" color="white" />
+                )}
               </Stack>
               {children}
             </View>
           </View>
+          {closeBtn && (
+            <View style={{ ...styles.closeBtn, top: insets.top + 10 }}>
+              <IconButton
+                name="close"
+                type="ionicon"
+                color={black}
+                size={20}
+                onPress={() => navigation.goBack()}
+              />
+            </View>
+          )}
         </SafeAreaView>
       </LinearGradient>
       <Stack direction="row" sx={styles.footer}>
@@ -108,5 +134,12 @@ const styles = StyleSheet.create({
     borderTopColor: "#ddd",
     paddingHorizontal: 15,
     width: "100%",
+  },
+  closeBtn: {
+    position: "absolute",
+    right: 20,
+    backgroundColor: "white",
+    borderRadius: 50,
+    padding: 2.5,
   },
 });

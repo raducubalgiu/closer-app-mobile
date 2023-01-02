@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { isGreaterThan } from "../../../constants/validation";
 
 type Minutes = {
-  _id: string | number;
+  id: string | number;
   name: string;
 };
 
