@@ -20,7 +20,7 @@ const CardPost = ({ post, onShowDetails }: IProps) => {
     userId,
     product,
   } = post || {};
-  const { name, username, avatar, checkmark, profession } = userId || {};
+  const { name, username, avatar, checkmark, profession, role } = userId || {};
 
   return (
     <View style={styles.container}>
@@ -29,6 +29,7 @@ const CardPost = ({ post, onShowDetails }: IProps) => {
         avatar={avatar}
         username={username}
         name={name}
+        role={role}
         profession={profession}
         checkmark={checkmark}
         onShowDetails={onShowDetails}

@@ -9,14 +9,12 @@ const { black } = theme.lightColors || {};
 type IProps = {
   username: string;
   onOpenSettings: () => void;
-  onOpenNotifications: () => void;
   checkmark: boolean;
 };
 
 export const HeaderProfileGeneral = ({
   username,
   onOpenSettings,
-  onOpenNotifications,
   checkmark,
 }: IProps) => {
   return (
@@ -24,14 +22,12 @@ export const HeaderProfileGeneral = ({
       <Stack direction="row" sx={styles.container}>
         <Stack direction="row">
           <IconBackButton sx={{ marginRight: 15 }} />
-          <Icon name="bells" type="antdesign" color="white" />
         </Stack>
         <Stack direction="row">
           <Text style={styles.name}>@{username}</Text>
           {checkmark && <Checkmark sx={{ marginLeft: 5 }} />}
         </Stack>
         <Stack direction="row">
-          <IconButton onPress={onOpenNotifications} name="bell" color={black} />
           <IconButton
             onPress={onOpenSettings}
             name="more-horizontal"

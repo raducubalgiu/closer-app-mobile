@@ -1,6 +1,5 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, SafeAreaView } from "react-native";
 import { Divider } from "@rneui/themed";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { HeaderFeed } from "../../components/customized";
 
 export const FeedBookablesScreen = () => {

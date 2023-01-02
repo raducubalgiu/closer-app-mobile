@@ -55,7 +55,7 @@ export const ScheduleOverviewListItem = ({ schedule }: IProps) => {
       {status === "accepted" && (
         <Stack align="start">
           <Stack sx={styles.new}>
-            <Text style={styles.newTxt}>t('new')</Text>
+            <Text style={styles.newTxt}>{t("new")}</Text>
           </Stack>
         </Stack>
       )}
@@ -137,5 +137,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 2.5,
   },
-  newTxt: { color: "white", fontWeight: "600", fontSize: 12 },
+  newTxt: {
+    color: "white",
+    fontWeight: "600",
+    fontSize: 12,
+    textTransform: "uppercase",
+  },
 });

@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";
 
 const { black } = theme.lightColors || {};
-type IProps = { size: number; color?: any; sx?: {}; disabled?: boolean };
+type IProps = { size?: number; color?: any; sx?: {}; disabled?: boolean };
 
 export const IconBackButton = ({
   size = 21,

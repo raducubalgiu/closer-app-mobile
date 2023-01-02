@@ -38,7 +38,11 @@ export const HeaderFeed = ({ indexLabel }: IProps) => {
       return (
         <FeedLabelButton
           onPress={() => {
+            if (index === indexLabel) {
+              return;
+            }
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+
             if (index === 0) {
               navigation.replace("FeedExplore");
             } else if (index === 1) {
@@ -75,11 +79,6 @@ export const HeaderFeed = ({ indexLabel }: IProps) => {
             containerStyle={styles.badgeContainer}
           />
         </View>
-        <IconButton
-          name="plus-circle"
-          sx={{ marginLeft: 15 }}
-          onPress={goToSearch}
-        />
         <Divider orientation="vertical" style={{ marginLeft: 15 }} />
         <FlatList
           data={LABELS}

@@ -3,8 +3,8 @@ import {
   RefreshControl,
   FlatList,
   ListRenderItemInfo,
+  SafeAreaView,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useCallback, useRef, useState } from "react";
 import { useScrollToTop } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";

@@ -2,11 +2,12 @@ import { StyleSheet, Text, Pressable } from "react-native";
 import React, { memo } from "react";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../../assets/styles/theme";
-import { Stack, Checkmark } from "../../../core";
+import { Stack, Checkmark, Protected } from "../../../core";
 import CustomAvatar from "../../../core/Avatars/CustomAvatar";
 import { Icon } from "@rneui/themed";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../models/navigation/rootStackParams";
+import { MAIN_ROLE, SECOND_ROLE } from "@env";
 
 const { grey0 } = theme.lightColors || {};
 
@@ -17,6 +18,7 @@ type IProps = {
   checkmark: boolean;
   profession: any;
   name: string;
+  role: string;
   onShowDetails: () => void;
 };
 
@@ -27,6 +29,7 @@ const CardPostHeader = ({
   checkmark,
   profession,
   name,
+  role,
   onShowDetails,
 }: IProps) => {
   const navigation =
@@ -48,13 +51,15 @@ const CardPostHeader = ({
     <Stack direction="row" sx={{ paddingHorizontal: 10 }}>
       <Pressable onPress={() => goToUser(userId)}>
         <Stack direction="row" sx={styles.avatarContainer}>
-          <CustomAvatar avatar={avatar} size={35} />
+          <CustomAvatar avatar={avatar} size={30} />
           <Stack align="start">
             <Stack direction="row">
-              <Text style={styles.name}>{username}</Text>
+              <Text style={styles.name}>@{username}</Text>
               {checkmark && <Checkmark sx={{ marginLeft: 5 }} size={8} />}
             </Stack>
-            <Text style={styles.profession}>{profession?.name}</Text>
+            <Protected userRole={role} roles={[MAIN_ROLE, SECOND_ROLE]}>
+              <Text style={styles.profession}>{profession?.name}</Text>
+            </Protected>
           </Stack>
         </Stack>
       </Pressable>

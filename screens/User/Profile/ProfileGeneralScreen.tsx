@@ -114,6 +114,7 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
         >
           <ProfileIconButton name="map-pin" onPress={goToMap} />
         </Protected>
+        <ProfileIconButton name="bell" onPress={() => {}} />
         <ProfileIconButton
           name="adduser"
           type="antdesign"

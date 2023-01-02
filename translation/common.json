@@ -318,5 +318,6 @@
   "myLocation": "Locaţia mea",
   "serviceAlreadyPresent": "Acest serviciu a fost adăugat deja",
   "allServices": "Toate serviciile",
-  "product": "Produs"
+  "product": "Produs",
+  "new": "Nou"
 }

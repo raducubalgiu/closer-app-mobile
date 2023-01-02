@@ -1,5 +1,4 @@
-import { StyleSheet } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { StyleSheet, SafeAreaView } from "react-native";
 import { HeaderFeed } from "../../components/customized";
 import { Divider } from "@rneui/themed";
 
