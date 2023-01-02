@@ -1,20 +1,20 @@
 import { StyleSheet, Text, Pressable } from "react-native";
 import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
-import theme from "../../../assets/styles/theme";
-import { Stack } from "../../core";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { Icon } from "@rneui/themed";
+import theme from "../../../assets/styles/theme";
+import { Stack } from "../../core";
 import { RootStackParams } from "../../../models/navigation/rootStackParams";
 import { Schedule } from "../../../models/schedule";
-import { Icon } from "@rneui/themed";
-import { UserListItemSimple } from "../ListItems/UserListItemSimple";
+import { UserListItemSimple } from "./UserListItemSimple";
 
 const { black, grey0, error, success, primary } = theme.lightColors || {};
 
 type IProps = { schedule: Schedule };
 
-export const CardScheduleOverview = ({ schedule }: IProps) => {
+export const ScheduleOverviewListItem = ({ schedule }: IProps) => {
   const { ownerId, status, product, start } = schedule;
   const { name, avatar, checkmark, profession } = ownerId || {};
   const { t } = useTranslation();
@@ -55,9 +55,7 @@ export const CardScheduleOverview = ({ schedule }: IProps) => {
       {status === "accepted" && (
         <Stack align="start">
           <Stack sx={styles.new}>
-            <Text style={{ color: "white", fontWeight: "600", fontSize: 12 }}>
-              NOU
-            </Text>
+            <Text style={styles.newTxt}>t('new')</Text>
           </Stack>
         </Stack>
       )}
@@ -139,4 +137,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 2.5,
   },
+  newTxt: { color: "white", fontWeight: "600", fontSize: 12 },
 });

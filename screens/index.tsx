@@ -27,7 +27,7 @@ export { ProfileStatsScreen } from "./User/Profile/ProfileStatsScreen";
 export { SettingsProfileScreen } from "./User/Profile/SettingsProfileScreen";
 export { CalendarScreen } from "./CalendarScreen";
 export { CommentsScreen } from "./CommentsScreen";
-export { FeedScreen } from "./FeedScreen";
+export { FeedScreen } from "./Feed/FeedScreen";
 export { FiltersDateScreen } from "./FilterDateScreen";
 export { FiltersServiceScreen } from "./FiltersServiceScreen";
 export { HashtagScreen } from "./HashtagScreen";

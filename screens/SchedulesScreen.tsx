@@ -11,7 +11,10 @@ import { useCallback } from "react";
 import { Header } from "../components/core";
 import { useTranslation } from "react-i18next";
 import { useAuth, useGet, useRefreshOnFocus, useRefreshByUser } from "../hooks";
-import { CardScheduleOverview, NoFoundMessage } from "../components/customized";
+import {
+  ScheduleOverviewListItem,
+  NoFoundMessage,
+} from "../components/customized";
 import theme from "../assets/styles/theme";
 import { yearMonthFormat } from "../utils/date-utils";
 import { Divider } from "@rneui/themed";
@@ -43,7 +46,7 @@ export const SchedulesScreen = () => {
   }, []);
 
   const renderSchedules = useCallback(({ item }: ListRenderItemInfo<any>) => {
-    return <CardScheduleOverview schedule={item} />;
+    return <ScheduleOverviewListItem schedule={item} />;
   }, []);
 
   const keyExtractor = useCallback(

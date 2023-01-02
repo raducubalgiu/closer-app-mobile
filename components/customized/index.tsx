@@ -58,7 +58,6 @@ export { CardLocation } from "./Cards/CardLocation";
 export { CardRecommended } from "./Cards/CardRecommended";
 export { CardServicesHeader } from "./Cards/CardServicesHeader";
 export { CardSlotDetails } from "./Cards/CardSlotDetails";
-export { CardScheduleOverview } from "./Cards/CardScheduleOverview";
 export { CardHashtagOverview } from "./Cards/CardHashtagOverview";
 export { CardServiceOverview } from "./Cards/CardServiceOverview";
 export { CardMessageUser } from "./Cards/CardMessageUser";
@@ -88,6 +87,7 @@ export { AlbumListItem } from "./ListItems/AlbumListItem";
 export { PresetListItem } from "./ListItems/PresetListItem";
 export { FixedPeriodListItem } from "./ListItems/FixedPeriodListItem";
 export { OptionListItem } from "./ListItems/OptionListItem";
+export { ScheduleOverviewListItem } from "./ListItems/ScheduleOverviewListItem";
 
 export { NoFoundMessage } from "./NotFoundContent/NoFoundMessage";
 
