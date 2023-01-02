@@ -47,7 +47,10 @@ export type RootStackParams = {
     service: Service;
     period: any;
   };
-  Feed: any;
+  FeedExplore: any;
+  FeedFollowings: any;
+  FeedBookables: any;
+  FeedLastMinute: any;
   Hashtag: { name: string };
   Login: any;
   Locations: {

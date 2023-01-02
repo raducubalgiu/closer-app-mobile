@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, View, FlatList, ListRenderItemInfo } from "react-native";
-import { useRef, useState, useCallback } from "react";
+import { useRef, useCallback } from "react";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Badge, Divider } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
@@ -9,27 +9,24 @@ import { Stack, IconButton } from "../../../core";
 import { FeedLabelButton } from "../../Buttons/FeedLabelButton";
 import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 
-type IProps = {
-  onFetchPosts: (index: number) => void;
-};
+type IProps = { indexLabel: number };
 type Label = {
-  _id: string;
+  id: string;
   title: string;
   isActive: boolean;
 };
 
-export const HeaderFeed = ({ onFetchPosts }: IProps) => {
-  const [indexLabel, setIndexLabel] = useState(0);
+export const HeaderFeed = ({ indexLabel }: IProps) => {
   const ref = useRef<FlatList>(null);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
 
   const LABELS = [
-    { _id: "1", title: t("explore"), isActive: true },
-    { _id: "2", title: t("following"), isActive: false },
-    { _id: "3", title: t("book"), isActive: false },
-    { _id: "4", title: t("lastMinute"), isActive: false },
+    { id: "1", title: t("explore"), isActive: true },
+    { id: "2", title: t("following"), isActive: false },
+    { id: "3", title: t("book"), isActive: false },
+    { id: "4", title: t("lastMinute"), isActive: false },
   ];
 
   const getItemLayout = useCallback((_: any, index: number) => {
@@ -42,22 +39,14 @@ export const HeaderFeed = ({ onFetchPosts }: IProps) => {
         <FeedLabelButton
           onPress={() => {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-            if (index === indexLabel && index === LABELS.length - 1) {
-              setIndexLabel(0);
-              ref.current?.scrollToIndex({
-                index: 0,
-                animated: true,
-                viewPosition: 0,
-              });
-              onFetchPosts(0);
-            } else {
-              setIndexLabel(index);
-              ref.current?.scrollToIndex({
-                index,
-                animated: true,
-                viewPosition: 0,
-              });
-              onFetchPosts(indexLabel + 1);
+            if (index === 0) {
+              navigation.replace("FeedExplore");
+            } else if (index === 1) {
+              navigation.replace("FeedFollowings");
+            } else if (index === 2) {
+              navigation.replace("FeedBookables");
+            } else if (index === 3) {
+              navigation.replace("FeedLastMinute");
             }
           }}
           isActive={index == indexLabel}
@@ -86,6 +75,11 @@ export const HeaderFeed = ({ onFetchPosts }: IProps) => {
             containerStyle={styles.badgeContainer}
           />
         </View>
+        <IconButton
+          name="plus-circle"
+          sx={{ marginLeft: 15 }}
+          onPress={goToSearch}
+        />
         <Divider orientation="vertical" style={{ marginLeft: 15 }} />
         <FlatList
           data={LABELS}
@@ -94,7 +88,7 @@ export const HeaderFeed = ({ onFetchPosts }: IProps) => {
           showsHorizontalScrollIndicator={false}
           initialScrollIndex={indexLabel}
           getItemLayout={getItemLayout}
-          keyExtractor={(item) => item._id}
+          keyExtractor={(item) => item.id}
           contentContainerStyle={{ paddingRight: 165 }}
           renderItem={renderLabel}
         />

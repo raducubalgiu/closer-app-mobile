@@ -1,10 +1,10 @@
 import {
-  SafeAreaView,
   StyleSheet,
   RefreshControl,
   FlatList,
   ListRenderItemInfo,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useCallback, useRef, useState } from "react";
 import { useScrollToTop } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
@@ -20,12 +20,13 @@ import {
   useAuth,
   useGetPaginate,
   useRefreshByUser,
+  useRefreshOnFocus,
   useDelete,
 } from "../../hooks";
 import CardPost from "../../components/customized/Cards/CardPost/CardPost";
 import { Post } from "../../models/post";
 
-export const FeedScreen = () => {
+export const FeedExploreScreen = () => {
   const { user } = useAuth();
   const [postId, setPostId] = useState(null);
   const [visible, setVisible] = useState(false);
@@ -40,6 +41,8 @@ export const FeedScreen = () => {
       limit: "10",
       queries: "postType=photo",
     });
+
+  useRefreshOnFocus(refetch);
 
   const { pages } = data || {};
   const allPosts = pages?.map((page) => page.results).flat();
@@ -94,9 +97,7 @@ export const FeedScreen = () => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <HeaderFeed
-        onFetchPosts={(index: number) => console.log("INDEX!!", index)}
-      />
+      <HeaderFeed indexLabel={0} />
       <Divider color="#ddd" />
       <FlatList
         ref={ref}

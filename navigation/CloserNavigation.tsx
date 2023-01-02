@@ -41,7 +41,10 @@ import {
   SettingsProfileScreen,
   CalendarScreen,
   CommentsScreen,
-  FeedScreen,
+  FeedExploreScreen,
+  FeedFollowingsScreen,
+  FeedBookablesScreen,
+  FeedLastMinuteScreen,
   FiltersDateScreen,
   FiltersServiceScreen,
   HashtagScreen,
@@ -118,11 +121,15 @@ const FeedStackNavigator = () => {
   return (
     <Stack.Navigator
       initialRouteName="Feed"
-      screenOptions={{ headerShown: false }}
+      screenOptions={{
+        headerShown: false,
+        animation: "none",
+      }}
     >
-      <Stack.Screen name="Feed" component={FeedScreen} />
-      <Stack.Screen name="Likes" component={LikesScreen} />
-      <Stack.Screen name="SearchPosts" component={SearchPostsScreen} />
+      <Stack.Screen name="FeedExplore" component={FeedExploreScreen} />
+      <Stack.Screen name="FeedFollowings" component={FeedFollowingsScreen} />
+      <Stack.Screen name="FeedBookables" component={FeedBookablesScreen} />
+      <Stack.Screen name="FeedLastMinute" component={FeedLastMinuteScreen} />
     </Stack.Navigator>
   );
 };
@@ -429,6 +436,8 @@ const CloserNavigation = () => {
               name="ExploreVideoPortrait"
               component={ExploreVideoPortraitScreen}
             />
+            <Stack.Screen name="Likes" component={LikesScreen} />
+            <Stack.Screen name="SearchPosts" component={SearchPostsScreen} />
           </RootStack.Navigator>
         </PortalProvider>
       ) : (

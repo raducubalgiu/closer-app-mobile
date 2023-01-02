@@ -70,7 +70,6 @@ const CardPostButtons = ({ bookable, product, postId, likesCount }: IProps) => {
       <Stack direction="row" sx={styles.buttons}>
         <Pressable onPress={goToLikes}>
           <Stack direction="row">
-            <AvatarGroup />
             <Text style={styles.likes}>
               {likes} {t("likes")}
             </Text>
@@ -85,6 +84,7 @@ const CardPostButtons = ({ bookable, product, postId, likesCount }: IProps) => {
           />
           <BookmarkIconButton type="posts" typeId={postId} sx={styles.button} />
           <ShareIButton onPress={onShare} sx={styles.button} />
+          <Icon name="bar-chart" type="feather" style={{ marginLeft: 15 }} />
         </Stack>
       </Stack>
       <Divider color="#ddd" style={{ marginHorizontal: 15 }} />
