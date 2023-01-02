@@ -5,14 +5,15 @@ import {
   View,
   Text,
   ListRenderItemInfo,
+  RefreshControl,
 } from "react-native";
 import { useCallback } from "react";
 import { Header } from "../components/core";
 import { useTranslation } from "react-i18next";
-import { useAuth, useGet, useRefreshOnFocus } from "../hooks";
+import { useAuth, useGet, useRefreshOnFocus, useRefreshByUser } from "../hooks";
 import { CardScheduleOverview, NoFoundMessage } from "../components/customized";
 import theme from "../assets/styles/theme";
-import { dayMonthTime, yearMonthFormat } from "../utils/date-utils";
+import { yearMonthFormat } from "../utils/date-utils";
 import { Divider } from "@rneui/themed";
 
 const { black } = theme.lightColors || {};
@@ -41,12 +42,9 @@ export const SchedulesScreen = () => {
     );
   }, []);
 
-  const renderSchedules = useCallback(
-    ({ item }: ListRenderItemInfo<any>) => (
-      <CardScheduleOverview schedule={item} start={dayMonthTime(item.start)} />
-    ),
-    []
-  );
+  const renderSchedules = useCallback(({ item }: ListRenderItemInfo<any>) => {
+    return <CardScheduleOverview schedule={item} />;
+  }, []);
 
   const keyExtractor = useCallback(
     (item: any, index: number) => item + index,
@@ -57,12 +55,18 @@ export const SchedulesScreen = () => {
     <NoFoundMessage title={t("bookings")} description={t("dontHaveBookings")} />
   );
 
+  const { refreshing, refetchByUser } = useRefreshByUser(refetch);
+  const refreshControl = (
+    <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
+  );
+
   return (
     <SafeAreaView style={styles.screen}>
       <Header title={t("myOrders")} hideBtnLeft divider />
       <View style={styles.container}>
         {!isFetching && !isLoading && !schedules.length && noFoundMessage}
         <SectionList
+          refreshControl={refreshControl}
           sections={schedules ? schedules : []}
           keyExtractor={keyExtractor}
           stickySectionHeadersEnabled={false}

@@ -101,6 +101,7 @@ export { FilterPriceModal } from "./Modals/FilterPriceModal";
 export { FilterDistanceModal } from "./Modals/FilterDistanceModal";
 export { FilterRatingModal } from "./Modals/FilterRatingModal";
 export { PickerHoursModal } from "./Modals/PickerHoursModal";
+export { ConfirmModal } from "./Modals/ConfirmModal";
 
 export { EditProfileSheet } from "./Sheets/EditProfileSheet";
 export { DashboardInfoSheet } from "./Sheets/DashboardInfoSheet";

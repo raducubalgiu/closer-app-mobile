@@ -1,4 +1,5 @@
 import "react-native-gesture-handler";
+import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -82,7 +83,7 @@ const SharedStack = createSharedElementStackNavigator();
 const Tab = createBottomTabNavigator();
 const RootStack = createNativeStackNavigator<RootStackParams>();
 
-const { black, primary } = theme.lightColors || {};
+const { black, primary, error } = theme.lightColors || {};
 
 import { SharedList } from "../screens/SharedList";
 import { SharedDetails } from "../screens/SharedDetails";
@@ -146,6 +147,18 @@ const AuthStackNavigator = () => {
 
 const TabsScreen = () => {
   const { user } = useAuth();
+  const schedules = 1;
+
+  const badgeOptions =
+    schedules > 0
+      ? {
+          tabBarBadge: schedules,
+          tabBarBadgeStyle: {
+            backgroundColor: error,
+            fontSize: 11,
+          },
+        }
+      : {};
 
   return (
     <Tab.Navigator
@@ -179,7 +192,11 @@ const TabsScreen = () => {
       <Tab.Screen name="FeedStack" component={FeedStackNavigator} />
       <Tab.Screen name="Messages" component={MessagesScreen} />
       <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Schedules" component={SchedulesScreen} />
+      <Tab.Screen
+        name="Schedules"
+        component={SchedulesScreen}
+        options={badgeOptions}
+      />
       <Tab.Screen
         name="Profile"
         component={ProfileScreen}

@@ -7,7 +7,14 @@ import {
 } from "react-native";
 import React, { useCallback, useRef, useState } from "react";
 import { useScrollToTop } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 import { Divider } from "@rneui/themed";
+import { Spinner } from "../components/core";
+import {
+  PostInfoSheet,
+  HeaderFeed,
+  ConfirmModal,
+} from "../components/customized";
 import {
   useSheet,
   useAuth,
@@ -15,10 +22,6 @@ import {
   useRefreshByUser,
   useDelete,
 } from "../hooks";
-import { Spinner } from "../components/core";
-import { PostInfoSheet, HeaderFeed } from "../components/customized";
-import { useTranslation } from "react-i18next";
-import { ConfirmModal } from "../components/customized/Modals/ConfirmModal";
 import CardPost from "../components/customized/Cards/CardPost/CardPost";
 import { Post } from "../models/post";
 

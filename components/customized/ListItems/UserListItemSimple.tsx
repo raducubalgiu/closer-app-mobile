@@ -11,7 +11,8 @@ type IProps = {
   avatar: any;
   profession: any;
   sx?: {};
-  onGoToUser: () => void;
+  avatarSize?: number;
+  onGoToUser?: () => void;
 };
 
 export const UserListItemSimple = ({
@@ -20,13 +21,14 @@ export const UserListItemSimple = ({
   avatar,
   profession,
   onGoToUser,
+  avatarSize = 50,
   sx,
 }: IProps) => {
   return (
     <Pressable onPress={onGoToUser} style={sx}>
       <Stack align="start">
         <Stack direction="row">
-          <CustomAvatar avatar={avatar} size={50} />
+          <CustomAvatar avatar={avatar} size={avatarSize} />
           <Stack align="start" justify="start" sx={{ marginLeft: 10 }}>
             <Stack direction="row">
               <Text style={styles.ownerName}>{name}</Text>

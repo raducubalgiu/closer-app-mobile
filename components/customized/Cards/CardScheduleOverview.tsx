@@ -1,21 +1,22 @@
 import { StyleSheet, Text, Pressable } from "react-native";
-import React from "react";
 import { useTranslation } from "react-i18next";
+import dayjs from "dayjs";
 import theme from "../../../assets/styles/theme";
-import { Stack, Checkmark } from "../../core";
-import CustomAvatar from "../../core/Avatars/CustomAvatar";
+import { Stack } from "../../core";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../models/navigation/rootStackParams";
 import { Schedule } from "../../../models/schedule";
+import { Icon } from "@rneui/themed";
+import { UserListItemSimple } from "../ListItems/UserListItemSimple";
 
 const { black, grey0, error, success, primary } = theme.lightColors || {};
 
-type IProps = { schedule: Schedule; start: string };
+type IProps = { schedule: Schedule };
 
-export const CardScheduleOverview = ({ schedule, start }: IProps) => {
-  const { user, status, service, product } = schedule;
-  const { name, avatar, checkmark } = user || {};
+export const CardScheduleOverview = ({ schedule }: IProps) => {
+  const { ownerId, status, product, start } = schedule;
+  const { name, avatar, checkmark, profession } = ownerId || {};
   const { t } = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -23,32 +24,66 @@ export const CardScheduleOverview = ({ schedule, start }: IProps) => {
   const goToDetails = () =>
     navigation.navigate("ScheduleDetails", { schedule });
 
-  let statusColor =
-    status === "canceled" ? { color: error } : { color: success };
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "canceled":
+        return { color: error };
+      case "finished":
+        return { color: success };
+      case "accepted":
+        return { color: grey0 };
+      default:
+        return { color: success };
+    }
+  };
+
+  const getStatus = (status: string) => {
+    switch (status) {
+      case "canceled":
+        return t("canceled");
+      case "finished":
+        return t("finished");
+      case "accepted":
+        return t("accepted");
+      default:
+        return t("accepted");
+    }
+  };
 
   return (
     <Pressable onPress={goToDetails} style={{ paddingVertical: 15 }}>
+      {status === "accepted" && (
+        <Stack align="start">
+          <Stack sx={styles.new}>
+            <Text style={{ color: "white", fontWeight: "600", fontSize: 12 }}>
+              NOU
+            </Text>
+          </Stack>
+        </Stack>
+      )}
       <Stack direction="row" align="start">
         <Stack direction="row">
           <Stack align="start" sx={{ marginLeft: 10 }}>
-            <Text style={styles.service}>{service?.name}</Text>
-            <Text style={styles.date}>{start}</Text>
-            <Stack direction="row" sx={{ marginTop: 15 }}>
-              <CustomAvatar avatar={avatar} size={32.5} />
-              <Stack align="start" sx={{ marginLeft: 10 }}>
-                <Stack direction="row">
-                  <Text style={styles.name}>{name}</Text>
-                  {checkmark && <Checkmark sx={{ marginLeft: 5 }} size={7.5} />}
-                </Stack>
-                <Text style={styles.profession}>Frizerie</Text>
-              </Stack>
+            <Text style={styles.service}>{product?.name}</Text>
+            <Stack direction="row" sx={{ marginTop: 5, marginBottom: 15 }}>
+              <Icon name="clock" type="feather" color={grey0} size={20} />
+              <Text style={styles.date}>
+                {dayjs(start).format("D MMMM, HH:mm")}
+              </Text>
             </Stack>
+            <UserListItemSimple
+              checkmark={checkmark}
+              name={name}
+              avatar={avatar}
+              profession={profession.name}
+              avatarSize={30}
+            />
           </Stack>
         </Stack>
         <Stack>
           <Text style={styles.price}>LEI {product?.price}</Text>
-          <Text style={{ ...styles.status, ...statusColor }}>
-            {status === "accepted" ? t("accepted") : t("canceled")}
+          <Text style={[styles.status, getStatusColor(status)]}>
+            {getStatus(status)}
           </Text>
         </Stack>
       </Stack>
@@ -68,21 +103,18 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   service: {
-    fontSize: 13.5,
+    fontSize: 16,
     color: black,
-    textTransform: "uppercase",
     fontWeight: "600",
   },
-  product: { fontSize: 15, fontWeight: "400", color: black },
   date: {
     color: grey0,
-    fontSize: 14,
-    marginTop: 5,
-    fontWeight: "500",
+    fontSize: 14.5,
     textTransform: "lowercase",
+    marginLeft: 5,
   },
   price: {
-    fontSize: 15,
+    fontSize: 16,
     color: black,
     marginBottom: 5,
     fontWeight: "700",
@@ -91,6 +123,7 @@ const styles = StyleSheet.create({
     color: grey0,
     fontSize: 12,
     textTransform: "uppercase",
+    fontWeight: "600",
   },
   newCont: {
     marginLeft: 5,
@@ -99,9 +132,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   new: {
-    color: "white",
-    paddingHorizontal: 10,
+    marginLeft: 10,
+    marginBottom: 12.5,
+    backgroundColor: primary,
     paddingVertical: 5,
-    fontSize: 12,
+    paddingHorizontal: 10,
+    borderRadius: 2.5,
   },
 });

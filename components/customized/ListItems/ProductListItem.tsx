@@ -2,7 +2,7 @@ import { Pressable, StyleSheet, Text } from "react-native";
 import { memo } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
-import { SECOND_ROLE, THIRD_ROLE } from "@env";
+import { SECOND_ROLE, THIRD_ROLE, SUPERADMIN_ROLE } from "@env";
 import { Stack, Protected } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { trimFunc } from "../../../utils";
@@ -70,7 +70,7 @@ const ProductListItem = ({
               </Stack>
               <Protected
                 userRole={userContext?.role}
-                roles={[SECOND_ROLE, THIRD_ROLE]}
+                roles={[SECOND_ROLE, THIRD_ROLE, SUPERADMIN_ROLE]}
               >
                 <BookButton onPress={goToCalendar} />
               </Protected>
@@ -97,7 +97,7 @@ const ProductListItem = ({
         )}
         <Protected
           userRole={userContext?.role}
-          roles={[SECOND_ROLE, THIRD_ROLE]}
+          roles={[SECOND_ROLE, THIRD_ROLE, SUPERADMIN_ROLE]}
         >
           <Stack align="end" sx={styles.bookmark}>
             <BookmarkButton

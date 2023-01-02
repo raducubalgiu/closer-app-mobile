@@ -15,4 +15,5 @@ declare module "@env" {
   export const MAIN_ROLE: string;
   export const SECOND_ROLE: string;
   export const THIRD_ROLE: string;
+  export const SUPERADMIN_ROLE: string;
 }
