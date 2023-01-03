@@ -62,7 +62,7 @@ export const FeedExploreScreen = () => {
     SHOW_BS();
   }, []);
 
-  const renderAllPosts = useCallback(({ item }: ListRenderItemInfo<Post>) => {
+  const renderPost = useCallback(({ item }: ListRenderItemInfo<Post>) => {
     return <CardPost post={item} onShowDetails={() => showDetails(item)} />;
   }, []);
 
@@ -103,7 +103,7 @@ export const FeedExploreScreen = () => {
         ref={ref}
         refreshControl={refreshControl}
         data={allPosts}
-        renderItem={renderAllPosts}
+        renderItem={renderPost}
         keyExtractor={keyExtractor}
         showsVerticalScrollIndicator={false}
         ListFooterComponent={showSpinner}
