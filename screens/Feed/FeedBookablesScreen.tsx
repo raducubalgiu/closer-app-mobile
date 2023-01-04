@@ -5,7 +5,8 @@ import {
   ListRenderItemInfo,
   RefreshControl,
 } from "react-native";
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
+import { useScrollToTop } from "@react-navigation/native";
 import { Divider } from "@rneui/themed";
 import CardPost from "../../components/customized/Cards/CardPost/CardPost";
 import { Spinner } from "../../components/core";
@@ -18,6 +19,9 @@ import {
 import { Post } from "../../models/post";
 
 export const FeedBookablesScreen = () => {
+  const ref = useRef<FlatList>(null);
+  useScrollToTop(ref);
+
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage, refetch } =
     useGetPaginate({
       model: "allPosts",
@@ -61,7 +65,7 @@ export const FeedBookablesScreen = () => {
       <HeaderFeed indexLabel={2} />
       <Divider color="#ddd" />
       <FlatList
-        //ref={ref}
+        ref={ref}
         refreshControl={refreshControl}
         data={allPosts}
         renderItem={renderPost}
