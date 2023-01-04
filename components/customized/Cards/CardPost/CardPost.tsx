@@ -1,5 +1,5 @@
 import { StyleSheet, View, Image } from "react-native";
-import Animated from "react-native-reanimated";
+import { SharedElement } from "react-navigation-shared-element";
 import React, { memo } from "react";
 import CardPostHeader from "./CardPostHeader";
 import CardPostButtons from "./CardPostButtons";
@@ -33,11 +33,14 @@ const CardPost = ({ post, onShowDetails }: IProps) => {
         profession={profession}
         checkmark={checkmark}
         onShowDetails={onShowDetails}
+        ratingsAverage={userId?.ratingsAverage}
       />
-      <Image
-        source={{ uri: `${post?.images[0]?.url}` }}
-        style={[{ width: "100%", height: 400 }]}
-      />
+      <SharedElement id={id}>
+        <Image
+          source={{ uri: `${post?.images[0]?.url}` }}
+          style={[{ width: "100%", height: 400 }]}
+        />
+      </SharedElement>
       <CardPostButtons
         bookable={bookable}
         product={product}

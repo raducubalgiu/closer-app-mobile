@@ -1,4 +1,5 @@
 import { Option } from "../option";
+import { Post } from "../post";
 import { Product } from "../product";
 import { Schedule } from "../schedule";
 import { Service } from "../service";
@@ -51,6 +52,7 @@ export type RootStackParams = {
   FeedFollowings: any;
   FeedBookables: any;
   FeedLastMinute: any;
+  FeedVideoExplore: { item: Post; allVideos: any; index: number };
   Hashtag: { name: string };
   Login: any;
   Locations: {

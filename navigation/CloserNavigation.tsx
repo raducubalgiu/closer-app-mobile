@@ -1,5 +1,4 @@
 import "react-native-gesture-handler";
-import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -45,6 +44,7 @@ import {
   FeedFollowingsScreen,
   FeedBookablesScreen,
   FeedLastMinuteScreen,
+  FeedVideoExploreScreen,
   FiltersDateScreen,
   FiltersServiceScreen,
   HashtagScreen,
@@ -119,18 +119,38 @@ const Shared = () => {
 
 const FeedStackNavigator = () => {
   return (
-    <Stack.Navigator
+    <SharedStack.Navigator
       initialRouteName="Feed"
       screenOptions={{
         headerShown: false,
-        animation: "none",
+        animationEnabled: false,
+        gestureEnabled: false,
+        cardOverlayEnabled: true,
+        presentation: "transparentModal",
       }}
     >
-      <Stack.Screen name="FeedExplore" component={FeedExploreScreen} />
-      <Stack.Screen name="FeedFollowings" component={FeedFollowingsScreen} />
-      <Stack.Screen name="FeedBookables" component={FeedBookablesScreen} />
-      <Stack.Screen name="FeedLastMinute" component={FeedLastMinuteScreen} />
-    </Stack.Navigator>
+      <SharedStack.Screen name="FeedExplore" component={FeedExploreScreen} />
+      <SharedStack.Screen
+        name="FeedFollowings"
+        component={FeedFollowingsScreen}
+      />
+      <SharedStack.Screen
+        name="FeedBookables"
+        component={FeedBookablesScreen}
+      />
+      <SharedStack.Screen
+        name="FeedLastMinute"
+        component={FeedLastMinuteScreen}
+      />
+      <SharedStack.Screen
+        name="FeedVideoExplore"
+        component={FeedVideoExploreScreen}
+        sharedElements={(route, otherRoute, showing) => {
+          const { item } = route.params;
+          return [{ id: item.id, animation: "move" }];
+        }}
+      />
+    </SharedStack.Navigator>
   );
 };
 

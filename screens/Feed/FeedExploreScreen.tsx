@@ -8,7 +8,7 @@ import {
   Pressable,
 } from "react-native";
 import React, { useCallback, useRef, useState } from "react";
-import { useScrollToTop } from "@react-navigation/native";
+import { useNavigation, useScrollToTop } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { Divider, Icon } from "@rneui/themed";
 import { Spinner, Stack } from "../../components/core";
@@ -29,6 +29,9 @@ import CardPost from "../../components/customized/Cards/CardPost/CardPost";
 import { Post } from "../../models/post";
 import PostVideoOverviewListItem from "../../components/customized/ListItems/Post/PostVideoOverviewListItem";
 import theme from "../../assets/styles/theme";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../models/navigation/rootStackParams";
+import { first } from "lodash";
 
 const { black, grey0 } = theme.lightColors || {};
 
@@ -39,6 +42,8 @@ export const FeedExploreScreen = () => {
   const ref = useRef<FlatList>(null);
   useScrollToTop(ref);
   const { t } = useTranslation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage, refetch } =
     useGetPaginate({
@@ -59,6 +64,8 @@ export const FeedExploreScreen = () => {
 
   const { pages } = data || {};
   const allPosts = pages?.map((page) => page.results).flat();
+  const allVideos = videos?.pages?.map((page) => page.results).flat();
+  const firstVideo = first(allVideos);
 
   const showConfirm = useCallback(() => {
     CLOSE_BS();
@@ -108,14 +115,20 @@ export const FeedExploreScreen = () => {
     <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
   );
 
-  const renderVideo = useCallback(({ item }: ListRenderItemInfo<Post>) => {
-    return (
-      <PostVideoOverviewListItem
-        uri={item?.images[0]?.url}
-        avatar={item?.userId.avatar}
-      />
-    );
-  }, []);
+  const renderVideo = useCallback(
+    ({ item, index }: ListRenderItemInfo<Post>) => {
+      return (
+        <PostVideoOverviewListItem
+          uri={item?.images[0]?.url}
+          id={item.id}
+          onPress={() =>
+            navigation.push("FeedVideoExplore", { item, allVideos, index })
+          }
+        />
+      );
+    },
+    []
+  );
 
   const keyExtractorVideo = useCallback((item: Post) => item?.id, []);
 
@@ -126,12 +139,21 @@ export const FeedExploreScreen = () => {
           Videoclipuri
         </Text>
         <Pressable
-          style={{
-            paddingVertical: 2.5,
-            paddingHorizontal: 15,
-          }}
+          onPress={() =>
+            navigation.push("FeedVideoExplore", {
+              item: firstVideo,
+              index: 0,
+              allVideos,
+            })
+          }
         >
-          <Stack direction="row">
+          <Stack
+            direction="row"
+            sx={{
+              paddingVertical: 2.5,
+              paddingHorizontal: 15,
+            }}
+          >
             <Icon name="arrow-right" />
             <Text style={{ color: black, fontWeight: "600", fontSize: 13 }}>
               Vezi tot
@@ -142,7 +164,7 @@ export const FeedExploreScreen = () => {
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
-        data={videos?.pages?.map((page) => page.results).flat()}
+        data={allVideos}
         keyExtractor={keyExtractorVideo}
         renderItem={renderVideo}
         contentContainerStyle={{

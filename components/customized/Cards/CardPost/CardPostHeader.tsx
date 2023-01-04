@@ -19,6 +19,7 @@ type IProps = {
   profession: any;
   name: string;
   role: string;
+  ratingsAverage: number;
   onShowDetails: () => void;
 };
 
@@ -30,6 +31,7 @@ const CardPostHeader = ({
   profession,
   name,
   role,
+  ratingsAverage,
   onShowDetails,
 }: IProps) => {
   const navigation =
@@ -57,9 +59,18 @@ const CardPostHeader = ({
               <Text style={styles.name}>@{username}</Text>
               {checkmark && <Checkmark sx={{ marginLeft: 5 }} size={8} />}
             </Stack>
-            <Protected userRole={role} roles={[MAIN_ROLE, SECOND_ROLE]}>
+            <Stack direction="row" sx={{ marginTop: 1 }}>
               <Text style={styles.profession}>{profession?.name}</Text>
-            </Protected>
+              <Protected userRole={role} roles={[MAIN_ROLE, SECOND_ROLE]}>
+                <Text style={styles.point}>{"\u2B24"}</Text>
+                <Stack direction="row">
+                  <Icon name="staro" type="antdesign" size={12} color={grey0} />
+                  <Text style={styles.ratingsAverage}>
+                    {ratingsAverage?.toFixed(1)}
+                  </Text>
+                </Stack>
+              </Protected>
+            </Stack>
           </Stack>
         </Stack>
       </Pressable>
@@ -83,5 +94,12 @@ const styles = StyleSheet.create({
     fontSize: 12.5,
     textTransform: "capitalize",
     fontWeight: "500",
+  },
+  point: { fontSize: 3, color: grey0, marginHorizontal: 5 },
+  ratingsAverage: {
+    color: grey0,
+    fontSize: 11,
+    fontWeight: "700",
+    marginLeft: 2.5,
   },
 });

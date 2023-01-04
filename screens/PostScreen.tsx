@@ -19,42 +19,13 @@ const { width, height } = Dimensions.get("window");
 type IProps = NativeStackScreenProps<RootStackParams, "Post">;
 
 export const PostScreen = ({ route }: IProps) => {
-  const { userId } = route.params;
-  const { data: posts } = useGet({
-    model: "posts",
-    uri: `/users/${userId}/posts`,
-  });
   const { t } = useTranslation();
-
-  const renderUserPosts = useCallback(
-    ({ item }: ListRenderItemInfo<Post>) => (
-      <CardPost post={item} onShowDetails={() => {}} />
-    ),
-    []
-  );
-  const getItemLayout = useCallback(
-    (posts: any, index: number) => ({
-      length: width,
-      offset: height * index,
-      index,
-    }),
-    []
-  );
-  const keyExtractor = useCallback((item: Post) => item?.id, []);
 
   return (
     <View style={styles.screen}>
       <SafeAreaView>
         <Header title={t("posts")} divider />
       </SafeAreaView>
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        initialScrollIndex={3}
-        getItemLayout={getItemLayout}
-        data={posts}
-        keyExtractor={keyExtractor}
-        renderItem={renderUserPosts}
-      />
     </View>
   );
 };
