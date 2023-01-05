@@ -9,7 +9,7 @@ type IProps = { uri: string; id: string; onPress: () => void };
 
 const PostVideoOverviewListItem = ({ uri, id, onPress }: IProps) => {
   return (
-    <SharedElement id={id} style={{ flex: 1 }}>
+    <SharedElement id={id} style={styles.container}>
       <Pressable onPress={onPress}>
         <Video
           style={styles.video}
@@ -28,6 +28,7 @@ const PostVideoOverviewListItem = ({ uri, id, onPress }: IProps) => {
 export default memo(PostVideoOverviewListItem);
 
 const styles = StyleSheet.create({
+  container: { flex: 1, height: width / 1.75 },
   video: {
     width: width / 3,
     height: width / 1.75,

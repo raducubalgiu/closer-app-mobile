@@ -11,13 +11,13 @@ import { useTranslation } from "react-i18next";
 import * as Location from "expo-location";
 import {
   HeaderServices,
-  CardLocation,
   Map,
   SheetService,
   FilterPriceModal,
   FilterDistanceModal,
   FilterRatingModal,
   NoFoundMessage,
+  LocationListItem,
 } from "../components/customized";
 import { useGet } from "../hooks";
 import theme from "../assets/styles/theme";
@@ -77,7 +77,7 @@ export const LocationsScreen = ({ route }: IProps) => {
 
   const renderLocation = useCallback(({ item }: ListRenderItemInfo<any>) => {
     return (
-      <CardLocation
+      <LocationListItem
         location={item}
         service={service}
         option={option}

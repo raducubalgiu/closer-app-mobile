@@ -20,14 +20,14 @@ const { black, grey0 } = theme.lightColors || {};
 
 type IProps = { location: any; service: any; option: any; moreProducts: any };
 
-export const CardLocation = ({
+export const LocationListItem = ({
   location,
   service,
   option,
   moreProducts,
 }: IProps) => {
-  const { images, minPrice, distance, owner, address, counter } = location;
-  const { name, username, avatar, checkmark } = owner;
+  const { imageCover, minPrice, distance, ownerId, address } = location;
+  const { name, username, avatar, checkmark } = ownerId;
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
@@ -35,7 +35,7 @@ export const CardLocation = ({
   const goToUser = () =>
     navigation.push("ProfileGeneral", {
       screen: `Products`,
-      userId: owner?.id,
+      userId: ownerId?.id,
       username,
       name,
       avatar,
@@ -51,7 +51,7 @@ export const CardLocation = ({
           <Image
             style={styles.image}
             source={{
-              uri: images[0]?.url,
+              uri: imageCover?.url,
             }}
           />
         </Stack>
@@ -64,10 +64,10 @@ export const CardLocation = ({
             <Stack direction="row" sx={styles.ratings}>
               <IconStar />
               <Text style={styles.ratingsAverage}>
-                {counter?.ratingsAverage}
+                {ownerId?.ratingsAverage}
               </Text>
               <Text style={styles.ratingsQuantity}>
-                {counter?.ratingsQuantity} {t("reviews")}
+                {ownerId?.ratingsQuantity} {t("reviews")}
               </Text>
             </Stack>
           </Stack>
