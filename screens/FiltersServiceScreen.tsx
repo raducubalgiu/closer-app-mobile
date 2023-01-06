@@ -3,6 +3,7 @@ import { useCallback, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { first } from "lodash";
+import * as Location from "expo-location";
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
@@ -24,8 +25,19 @@ export const FiltersServiceScreen = ({ route }: IProps) => {
 
   const { data } = useGet({ model: "filter", uri: `/filters/${filterId}` });
 
-  const goToLocations = () => {
+  const goToLocations = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+
+    if (status !== "granted") {
+      navigation.navigate("UserLocationPermission");
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    const { longitude, latitude } = location?.coords || {};
+
     navigation.navigate("Locations", {
+      longitude,
+      latitude,
       service,
       option,
       period,

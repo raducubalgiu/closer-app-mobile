@@ -7,6 +7,7 @@ import {
   Pressable,
 } from "react-native";
 import React from "react";
+import { Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";
@@ -14,11 +15,17 @@ import { trimFunc, AddressFormat } from "../../../utils";
 import { IconLocation, IconStar, Stack } from "../../core";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../models/navigation/rootStackParams";
+import { Location } from "../../../models/location";
 
 const { width } = Dimensions.get("window");
 const { black, grey0 } = theme.lightColors || {};
 
-type IProps = { location: any; service: any; option: any; moreProducts: any };
+type IProps = {
+  location: Location;
+  service: any;
+  option: any;
+  moreProducts: any;
+};
 
 export const LocationListItem = ({
   location,
@@ -59,13 +66,17 @@ export const LocationListItem = ({
           <Stack align="start">
             <Text style={styles.business}>{name}</Text>
             <Text style={styles.address}>
-              {trimFunc(AddressFormat(address), 60)}{" "}
+              {trimFunc(
+                `${address?.street}, ${address?.number}, ${address?.city}`,
+                30
+              )}
             </Text>
             <Stack direction="row" sx={styles.ratings}>
               <IconStar />
               <Text style={styles.ratingsAverage}>
                 {ownerId?.ratingsAverage}
               </Text>
+              <Divider orientation="vertical" style={{ marginHorizontal: 5 }} />
               <Text style={styles.ratingsQuantity}>
                 {ownerId?.ratingsQuantity} {t("reviews")}
               </Text>
@@ -101,18 +112,19 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   imageC: {
-    width: width / 3,
+    width: width / 3.25,
   },
   image: {
     flex: 1,
     width: "100%",
     resizeMode: "cover",
-    borderRadius: 5,
+    borderRadius: 15,
   },
   content: {
     flex: 1,
     paddingVertical: 5,
-    paddingHorizontal: 10,
+    paddingLeft: 15,
+    paddingRight: 10,
   },
   business: {
     fontSize: 16,
@@ -132,17 +144,16 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   ratingsQuantity: {
-    marginLeft: 7.5,
-    fontSize: 13,
     color: grey0,
   },
   option: {
-    fontWeight: "700",
-    marginVertical: 2.5,
-    backgroundColor: "#f1f1f1",
-    paddingHorizontal: 2.5,
-    paddingVertical: 5,
+    fontWeight: "600",
+    marginTop: 2.5,
+    padding: 5,
     fontSize: 13,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 5,
   },
   serviceContainer: {
     flexDirection: "row",
@@ -167,7 +178,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   distanceC: {
-    marginTop: 15,
+    marginTop: 5,
   },
   distance: {
     marginLeft: 5,

@@ -19,6 +19,7 @@ import {
 import { RootStackParams } from "../models/navigation/rootStackParams";
 import { Service } from "../models/service";
 import { NoFoundMessage } from "../components/customized";
+import { Icon } from "@rneui/themed";
 
 const { black, grey0 } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "SearchServices">;
@@ -54,10 +55,25 @@ export const SearchServicesScreen = ({ route }: IProps) => {
   const renderServices = useCallback(
     ({ item }: ListRenderItemInfo<Service>) => (
       <Pressable onPress={() => goToFilters(item)} style={styles.item}>
-        <Text style={styles.service}>{item.name}</Text>
-        <Text style={styles.locationsCount}>
-          {item.locationsCount} {t("locations")}
-        </Text>
+        <Stack direction="row" justify="start">
+          <Icon
+            name="tag"
+            type="feather"
+            size={15}
+            style={{
+              padding: 7.5,
+              borderWidth: 1,
+              borderColor: "#ddd",
+              borderRadius: 50,
+            }}
+          />
+          <Stack align="start" sx={{ marginLeft: 10 }}>
+            <Text style={styles.service}>{item.name}</Text>
+            <Text style={styles.locationsCount}>
+              {item.locationsCount} {t("locations")}
+            </Text>
+          </Stack>
+        </Stack>
       </Pressable>
     ),
     []
@@ -117,13 +133,13 @@ const styles = StyleSheet.create({
     fontSize: 15.5,
   },
   item: {
-    paddingVertical: 15,
+    paddingVertical: 12.5,
   },
   service: {
-    textTransform: "uppercase",
     color: black,
-    fontWeight: "600",
-    fontSize: 14.5,
+    fontWeight: "500",
+    fontSize: 16.5,
+    marginBottom: 2.5,
   },
   locationsCount: {
     color: grey0,

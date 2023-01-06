@@ -1,111 +1,83 @@
-import { ScrollView, StyleSheet, Text, TouchableOpacity } from "react-native";
-import { Icon, Switch } from "@rneui/themed";
-import { useTranslation } from "react-i18next";
+import { Pressable, StyleSheet, Text } from "react-native";
+import { Icon } from "@rneui/themed";
 import theme from "../../../../assets/styles/theme";
-import { Stack, IconBackButton } from "../../../core";
-import { ButtonFilter } from "../../Buttons/ButtonFilter";
+import { Stack } from "../../../core";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 
 const { grey0, black } = theme.lightColors || {};
 
 type IProps = {
-  onToggleSwitch: () => void;
   serviceName: string;
-  checked: boolean;
   period: string;
-  onDisplayPrice: () => void;
-  onDisplayDistance: () => void;
-  onDisplayRating: () => void;
 };
 
-export const HeaderServices = ({
-  onToggleSwitch,
-  serviceName,
-  checked,
-  period,
-  onDisplayPrice,
-  onDisplayDistance,
-  onDisplayRating,
-}: IProps) => {
-  const { t } = useTranslation();
-
-  const toggleSwitch = () => onToggleSwitch();
+export const HeaderServices = ({ serviceName, period }: IProps) => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   return (
-    <Stack>
-      <Stack direction="row" sx={styles.header}>
-        <IconBackButton />
-        <TouchableOpacity style={styles.search}>
-          <Icon name="search" size={18} color={grey0} />
-          <Text style={styles.service}>{serviceName},</Text>
-          <Text style={styles.searchText}>Period</Text>
-        </TouchableOpacity>
+    <Stack sx={styles.container}>
+      <Stack direction="row">
+        <Pressable onPress={() => navigation.popToTop()} style={{ padding: 5 }}>
+          <Icon name="arrow-back-ios" size={21} color={black} />
+        </Pressable>
+        <Pressable style={styles.search} onPress={() => navigation.pop(2)}>
+          <Stack direction="row" justify="center">
+            <Icon name="search" size={18} color={grey0} />
+            <Text style={styles.service}>{serviceName},</Text>
+            <Text style={styles.period}>{period}</Text>
+          </Stack>
+        </Pressable>
+        <Pressable onPress={() => navigation.navigate("LocationFilters")}>
+          <Icon
+            name="filter"
+            type="feather"
+            color={black}
+            size={19}
+            style={styles.filter}
+          />
+        </Pressable>
       </Stack>
-      <ScrollView
-        horizontal
-        contentContainerStyle={styles.filters}
-        showsHorizontalScrollIndicator={false}
-        bounces={false}
-      >
-        <Switch
-          value={checked}
-          onValueChange={toggleSwitch}
-          color="#f1f1f1"
-          style={styles.item}
-        />
-        <ButtonFilter
-          sx={styles.item}
-          title={t("price")}
-          onPress={onDisplayPrice}
-        />
-        <ButtonFilter
-          sx={styles.item}
-          title={t("distance")}
-          onPress={onDisplayDistance}
-        />
-        <ButtonFilter
-          sx={styles.item}
-          title={t("ratings")}
-          onPress={onDisplayRating}
-        />
-      </ScrollView>
     </Stack>
   );
 };
 
 const styles = StyleSheet.create({
-  header: {
+  container: {
+    marginHorizontal: 15,
+    zIndex: 1000000,
+    height: 70,
     backgroundColor: "white",
-    marginBottom: 15,
-    paddingHorizontal: 15,
-    marginTop: 10,
+    justifyContent: "center",
+    alignItems: "center",
   },
   search: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
     backgroundColor: "#f1f1f1",
-    borderRadius: 20,
+    borderRadius: 50,
     paddingVertical: 12.5,
     paddingHorizontal: 15,
+    marginRight: 10,
     flex: 1,
-    marginLeft: 20,
   },
   service: {
     marginLeft: 10,
     color: black,
     fontWeight: "700",
   },
-  searchText: {
+  period: {
     marginLeft: 5,
     color: grey0,
     fontWeight: "500",
   },
-  filters: {
-    paddingHorizontal: 5,
-    paddingBottom: 15,
-    overflow: "scroll",
-  },
   item: {
     marginRight: 5,
+  },
+  filter: {
+    padding: 10,
+    borderWidth: 1,
+    borderRadius: 50,
+    borderColor: "#ddd",
   },
 });

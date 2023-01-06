@@ -2,7 +2,7 @@ import { SafeAreaView, StyleSheet } from "react-native";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { AuthService } from "../../../services/AuthService";
-import { IconBackButton } from "../../../components/core";
+import { IconBackButton, Stack } from "../../../components/core";
 import { LoginRegisterForm } from "../../../components/customized";
 import { MAIN_ROLE } from "@env";
 import { useTranslation } from "react-i18next";
@@ -45,7 +45,9 @@ export const RegisterBusinessScreen = () => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <IconBackButton />
+      <Stack align="start" sx={{ marginLeft: 15 }}>
+        <IconBackButton />
+      </Stack>
       <LoginRegisterForm
         loading={loading}
         onSubmit={onSubmit}

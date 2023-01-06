@@ -1,23 +1,16 @@
 import { useRef, useMemo, useCallback } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 
 type IProp = { children: any };
+const { height } = Dimensions.get("window");
 
 export const SheetService = ({ children }: IProp) => {
   const sheetRef = useRef(null);
-  const snapPoints = useMemo(() => [75, "60%", "90%"], []);
-
-  const renderBackdrop = useCallback(
-    (props: any) => (
-      <BottomSheetBackdrop
-        {...props}
-        disappearsOnIndex={1}
-        appearsOnIndex={2}
-      />
-    ),
-    []
-  );
+  const insets = useSafeAreaInsets();
+  const fullHeight = height - insets.top - insets.bottom - 45;
+  const snapPoints = useMemo(() => [75, fullHeight], []);
 
   return (
     <BottomSheet
@@ -25,7 +18,6 @@ export const SheetService = ({ children }: IProp) => {
       snapPoints={snapPoints}
       handleIndicatorStyle={styles.indicatorStyle}
       enableOverDrag={true}
-      backdropComponent={renderBackdrop}
       index={1}
     >
       {children}

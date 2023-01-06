@@ -2,7 +2,7 @@ import { SafeAreaView, StyleSheet } from "react-native";
 import { useState } from "react";
 import axios from "axios";
 import { AuthService } from "../../../services/AuthService";
-import { IconBackButton } from "../../../components/core";
+import { IconBackButton, Stack } from "../../../components/core";
 import { useAuth } from "../../../hooks/auth";
 import { LoginRegisterForm } from "../../../components/customized";
 import { useTranslation } from "react-i18next";
@@ -48,7 +48,9 @@ export const LoginScreen = () => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <IconBackButton />
+      <Stack align="start" sx={{ marginLeft: 15 }}>
+        <IconBackButton />
+      </Stack>
       <LoginRegisterForm
         loading={loading}
         onSubmit={onSubmit}

@@ -51,6 +51,7 @@ import {
   HomeScreen,
   LikesScreen,
   LocationsScreen,
+  LocationFiltersScreen,
   MapScreen,
   MessageItemScreen,
   MessageNewScreen,
@@ -79,6 +80,7 @@ import {
   PhotoAlbumsScreen,
   AddPostScreen,
   ExploreVideoLandscape,
+  UserLocationPermissionScreen,
 } from "../screens";
 
 const Stack = createNativeStackNavigator();
@@ -266,6 +268,11 @@ const CloserNavigation = () => {
                 component={FiltersServiceScreen}
               />
               <RootStack.Screen name="Locations" component={LocationsScreen} />
+              <RootStack.Screen
+                name="LocationFilters"
+                component={LocationFiltersScreen}
+                options={{ presentation: "modal" }}
+              />
             </RootStack.Group>
             <RootStack.Group>
               <RootStack.Screen
@@ -458,6 +465,10 @@ const CloserNavigation = () => {
             />
             <Stack.Screen name="Likes" component={LikesScreen} />
             <Stack.Screen name="SearchPosts" component={SearchPostsScreen} />
+            <Stack.Screen
+              name="UserLocationPermission"
+              component={UserLocationPermissionScreen}
+            />
           </RootStack.Navigator>
         </PortalProvider>
       ) : (

@@ -2,92 +2,70 @@ import {
   SafeAreaView,
   StyleSheet,
   View,
-  FlatList,
   Text,
   ListRenderItemInfo,
+  Dimensions,
+  Pressable,
 } from "react-native";
-import React, { useState, useCallback } from "react";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useState, useCallback, useRef, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import * as Location from "expo-location";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import {
   HeaderServices,
   Map,
-  SheetService,
-  FilterPriceModal,
-  FilterDistanceModal,
-  FilterRatingModal,
   NoFoundMessage,
   LocationListItem,
 } from "../components/customized";
 import { useGet } from "../hooks";
 import theme from "../assets/styles/theme";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParams } from "../models/navigation/rootStackParams";
-import { useFocusEffect } from "@react-navigation/native";
+import { Location } from "../models/location";
+import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
+import { Icon } from "@rneui/themed";
+import { Spinner, Stack } from "../components/core";
 
-const { black } = theme.lightColors || {};
+const { black, primary } = theme.lightColors || {};
+const { height } = Dimensions.get("window");
 type IProps = NativeStackScreenProps<RootStackParams, "Locations">;
 
 export const LocationsScreen = ({ route }: IProps) => {
-  const { service, option, period } = route.params;
+  const { service, option, period, longitude, latitude } = route.params;
+  const sheetRef = useRef<any>(null);
+  const insets = useSafeAreaInsets();
+  const fullHeight = height - insets.top - insets.bottom + 40;
+  const snapPoints = useMemo(() => [90, fullHeight], []);
+
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(10000);
   const [minDistance, setMinDistance] = useState(0);
   const [maxDistance, setMaxDistance] = useState(50000);
-  const latlng = "26.100195,44.428286";
-  const [checked, setChecked] = useState(true);
-  const [location, setLocation] = useState<any>(null);
-  const { longitude, latitude } = location?.coords || {};
-  const [visible, setVisible] = useState({
-    price: false,
-    distance: false,
-    rating: false,
-  });
   const { t } = useTranslation();
 
-  useFocusEffect(
-    useCallback(() => {
-      let isActive = true;
-
-      try {
-        const fetchUserLocation = async () => {
-          let { status } = await Location.requestForegroundPermissionsAsync();
-          if (status !== "granted") {
-            //setErrorMsg("Permission to access location was denied");
-            return;
-          }
-
-          let location = await Location.getCurrentPositionAsync({});
-          setLocation(location);
-        };
-
-        fetchUserLocation();
-
-        return () => {
-          isActive = false;
-        };
-      } catch (err) {}
-    }, [])
-  );
-
-  const { data: locations } = useGet({
+  const {
+    data: locations,
+    isLoading,
+    isFetching,
+  } = useGet({
     model: "locations",
     uri: `/locations?latlng=${longitude},${latitude}&serviceId=${service?.id}&option=${option?._id}&minprice=${minPrice}&maxprice=${maxPrice}&mindistance=${minDistance}&maxdistance=${maxDistance}&minrating=0&maxrating=5&page=1&limit=25`,
   });
 
-  const renderLocation = useCallback(({ item }: ListRenderItemInfo<any>) => {
-    return (
-      <LocationListItem
-        location={item}
-        service={service}
-        option={option}
-        moreProducts={item.products.length > 1}
-      />
-    );
-  }, []);
+  const renderLocation = useCallback(
+    ({ item }: ListRenderItemInfo<Location>) => {
+      return (
+        <LocationListItem
+          location={item}
+          service={service}
+          option={option}
+          moreProducts={item.products.length > 1}
+        />
+      );
+    },
+    []
+  );
 
   const keyExtractor = useCallback((item: any) => item.id, []);
-  const toggleSwitch = useCallback(() => setChecked(!checked), [checked]);
 
   let footer;
   if (locations && locations.length === 0) {
@@ -99,67 +77,84 @@ export const LocationsScreen = ({ route }: IProps) => {
     );
   }
 
-  const list = (
-    <View style={{ flex: 1 }}>
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        data={locations}
-        keyExtractor={keyExtractor}
-        renderItem={renderLocation}
-        bounces={false}
-        ListFooterComponent={footer}
-      />
-    </View>
+  const handleDisplayMap = useCallback((index: number) => {
+    if (index === 0) {
+      sheetRef.current.snapToIndex(index);
+    }
+  }, []);
+
+  const header = (
+    <>
+      <View style={{ height: 50, marginBottom: 20 }}>
+        <Text style={styles.sheetHeading}>
+          {locations && locations?.length} rezultate
+        </Text>
+      </View>
+      {(isLoading || isFetching) && <Spinner />}
+    </>
   );
 
   return (
     <SafeAreaView style={styles.screen}>
-      <FilterPriceModal
-        visible={visible.price}
-        onClose={() => setVisible({ ...visible, price: false })}
-      />
-      <FilterDistanceModal
-        visible={visible.distance}
-        onClose={() => setVisible({ ...visible, distance: false })}
-        onHandleDistance={() => {
-          setMaxDistance(50000);
-          setVisible({ ...visible, distance: false });
-        }}
-      />
-      <FilterRatingModal
-        visible={visible.rating}
-        onClose={() => setVisible({ ...visible, rating: false })}
-      />
-      <HeaderServices
-        period={period}
-        onToggleSwitch={toggleSwitch}
+      <HeaderServices period={""} serviceName={service?.name} />
+      <Map
+        locations={locations}
         serviceName={service?.name}
-        checked={checked}
-        onDisplayPrice={() => setVisible({ ...visible, price: true })}
-        onDisplayDistance={() => setVisible({ ...visible, distance: true })}
-        onDisplayRating={() => setVisible({ ...visible, rating: true })}
+        initialLatitude={latitude}
+        initialLongitude={longitude}
       />
-      {checked && (
-        <>
-          {latitude && longitude && (
-            <Map
-              locations={locations}
-              serviceName={service?.name}
-              initialLatitude={latitude}
-              initialLongitude={longitude}
-            />
-          )}
-          <SheetService>
-            <View style={{ height: 50 }}>
-              <Text style={styles.sheetHeading}>
-                {locations && locations?.length} rezultate
-              </Text>
-            </View>
-            {list}
-          </SheetService>
-        </>
-      )}
-      {!checked && list}
+      <BottomSheet
+        ref={sheetRef}
+        snapPoints={snapPoints}
+        handleIndicatorStyle={styles.indicatorStyle}
+        enableOverDrag={true}
+        animateOnMount={false}
+        index={1}
+      >
+        <BottomSheetFlatList
+          ListHeaderComponent={header}
+          showsVerticalScrollIndicator={false}
+          data={locations}
+          keyExtractor={keyExtractor}
+          renderItem={renderLocation}
+          ListFooterComponent={footer}
+        />
+      </BottomSheet>
+      <View
+        style={{
+          position: "absolute",
+          bottom: 120,
+          left: 0,
+          right: 0,
+          alignItems: "center",
+          justifyContent: "center",
+          flex: 1,
+        }}
+      >
+        <Pressable
+          onPress={() => handleDisplayMap(0)}
+          style={{
+            backgroundColor: "#333333",
+            paddingVertical: 11.5,
+            paddingHorizontal: 25,
+            borderRadius: 50,
+          }}
+        >
+          <Stack direction="row">
+            <Icon name="map-pin" type="feather" color="white" size={20} />
+            <Text
+              style={{
+                color: "white",
+                marginLeft: 5,
+                fontWeight: "600",
+                fontSize: 15.5,
+              }}
+            >
+              Hartă
+            </Text>
+          </Stack>
+        </Pressable>
+      </View>
     </SafeAreaView>
   );
 };
@@ -174,5 +169,11 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: "center",
     fontWeight: "600",
+    marginTop: 10,
+  },
+  indicatorStyle: {
+    backgroundColor: "#ddd",
+    width: 45,
+    height: 5,
   },
 });

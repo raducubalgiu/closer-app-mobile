@@ -59,8 +59,11 @@ export type RootStackParams = {
     service: Service;
     option: Option | null;
     period: any;
+    longitude: number;
+    latitude: number;
   };
   LocationItem: { locationId: string };
+  LocationFilters: any;
   Likes: { postId: string };
   MyBusiness: any;
   MyDashboard: any;
@@ -137,4 +140,5 @@ export type RootStackParams = {
   SharedList: any;
   SharedDetail: any;
   Shared: any;
+  UserLocationPermission: any;
 };
