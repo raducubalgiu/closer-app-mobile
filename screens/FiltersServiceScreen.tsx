@@ -19,22 +19,29 @@ export const FiltersServiceScreen = ({ route }: IProps) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { service, period } = route.params;
+  const [loading, setLoading] = useState<boolean>(false);
   const [option, setOption] = useState<Option | null>(null);
   const { t } = useTranslation();
-  const filterId = first(service?.filters);
+  const filter = first(service?.filters);
 
-  const { data } = useGet({ model: "filter", uri: `/filters/${filterId}` });
+  const { data } = useGet({
+    model: "filter",
+    uri: `/filters/${filter?.id ? filter?.id : filter}`,
+  });
 
   const goToLocations = async () => {
+    setLoading(true);
     let { status } = await Location.requestForegroundPermissionsAsync();
 
     if (status !== "granted") {
+      setLoading(false);
       navigation.navigate("UserLocationPermission");
     }
 
     let location = await Location.getCurrentPositionAsync({});
     const { longitude, latitude } = location?.coords || {};
 
+    setLoading(false);
     navigation.navigate("Locations", {
       longitude,
       latitude,
@@ -63,7 +70,8 @@ export const FiltersServiceScreen = ({ route }: IProps) => {
       headerDescription={option ? option?.name : "-"}
       onNext={goToLocations}
       btnTitle={t("search")}
-      disabled={!option}
+      disabled={!option || loading}
+      loading={loading}
     >
       <FlatList
         bounces={false}

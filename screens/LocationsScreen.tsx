@@ -11,12 +11,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useState, useCallback, useRef, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import {
-  HeaderServices,
-  Map,
-  NoFoundMessage,
-  LocationListItem,
-} from "../components/customized";
+import { HeaderServices, Map, NoFoundMessage } from "../components/customized";
+import LocationListItem from "../components/customized/ListItems/LocationListItem";
 import { useGet } from "../hooks";
 import theme from "../assets/styles/theme";
 import { RootStackParams } from "../models/navigation/rootStackParams";
@@ -96,7 +92,10 @@ export const LocationsScreen = ({ route }: IProps) => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <HeaderServices period={""} serviceName={service?.name} />
+      <HeaderServices
+        details={`${option?.name}, 23 aug - 31 aug, Orice ora`}
+        serviceName={service?.name}
+      />
       <Map
         locations={locations}
         serviceName={service?.name}
@@ -123,7 +122,7 @@ export const LocationsScreen = ({ route }: IProps) => {
       <View
         style={{
           position: "absolute",
-          bottom: 120,
+          bottom: 75,
           left: 0,
           right: 0,
           alignItems: "center",
@@ -138,6 +137,10 @@ export const LocationsScreen = ({ route }: IProps) => {
             paddingVertical: 11.5,
             paddingHorizontal: 25,
             borderRadius: 50,
+            shadowColor: "#171717",
+            shadowOffset: { width: -3, height: 3 },
+            shadowOpacity: 0.2,
+            shadowRadius: 5,
           }}
         >
           <Stack direction="row">

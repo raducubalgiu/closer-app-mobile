@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import MapView, { Marker, Callout, PROVIDER_GOOGLE } from "react-native-maps";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
@@ -103,15 +103,9 @@ export const Map = ({
           }}
           //image={require("../../../assets/images/map_marker_yellow.png")}
         >
-          <Stack sx={styles.priceLabel}>
-            <Text
-              style={{
-                fontWeight: "700",
-              }}
-            >
-              LEI {loc?.minPrice}
-            </Text>
-          </Stack>
+          <Pressable style={styles.priceLabel}>
+            <Text style={{ fontWeight: "700" }}>{loc?.minPrice} lei</Text>
+          </Pressable>
           <Callout
             onPress={() =>
               navigation.push("LocationItem", { locationId: loc?.id })

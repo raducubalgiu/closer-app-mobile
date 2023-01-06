@@ -6,7 +6,7 @@ import {
   Dimensions,
   Pressable,
 } from "react-native";
-import React from "react";
+import { memo } from "react";
 import { Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
@@ -27,7 +27,7 @@ type IProps = {
   moreProducts: any;
 };
 
-export const LocationListItem = ({
+const LocationListItem = ({
   location,
   service,
   option,
@@ -55,12 +55,7 @@ export const LocationListItem = ({
     <Pressable onPress={goToUser}>
       <Stack direction="row" sx={styles.container}>
         <Stack sx={styles.imageC}>
-          <Image
-            style={styles.image}
-            source={{
-              uri: imageCover?.url,
-            }}
-          />
+          <Image style={styles.image} source={{ uri: imageCover?.url }} />
         </Stack>
         <View style={styles.content}>
           <Stack align="start">
@@ -76,7 +71,7 @@ export const LocationListItem = ({
               <Text style={styles.ratingsAverage}>
                 {ownerId?.ratingsAverage}
               </Text>
-              <Divider orientation="vertical" style={{ marginHorizontal: 5 }} />
+              <Text style={styles.point}>{"\u2B24"}</Text>
               <Text style={styles.ratingsQuantity}>
                 {ownerId?.ratingsQuantity} {t("reviews")}
               </Text>
@@ -91,12 +86,8 @@ export const LocationListItem = ({
               <Text style={styles.price}>{minPrice} Lei</Text>
             </Stack>
             <Stack direction="row" sx={styles.distanceC}>
-              <IconLocation />
-              <Text style={styles.distance}>
-                {distance < 1
-                  ? `la mai putin de 1 km`
-                  : `la ${Math.round(distance)} km de tine`}
-              </Text>
+              <IconLocation size={15} />
+              <Text style={styles.distance}>{distance} km</Text>
             </Stack>
           </Stack>
         </View>
@@ -104,6 +95,8 @@ export const LocationListItem = ({
     </Pressable>
   );
 };
+
+export default memo(LocationListItem);
 
 const styles = StyleSheet.create({
   container: {
@@ -147,7 +140,7 @@ const styles = StyleSheet.create({
     color: grey0,
   },
   option: {
-    fontWeight: "600",
+    fontWeight: "500",
     marginTop: 2.5,
     padding: 5,
     fontSize: 13,
@@ -178,12 +171,13 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   distanceC: {
-    marginTop: 5,
+    marginTop: 7.5,
   },
   distance: {
-    marginLeft: 5,
+    marginLeft: 2.5,
     fontSize: 13,
     color: black,
-    fontWeight: "500",
+    fontWeight: "600",
   },
+  point: { fontSize: 3, color: grey0, marginHorizontal: 5 },
 });

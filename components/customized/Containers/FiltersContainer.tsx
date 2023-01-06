@@ -19,6 +19,7 @@ type IProps = {
   footerExtraBtns?: any;
   btnTitle: string;
   disabled?: boolean;
+  loading?: boolean;
   closeBtn?: boolean;
 };
 
@@ -32,6 +33,7 @@ export const FiltersContainer = ({
   footerExtraBtns = false,
   btnTitle,
   disabled = false,
+  loading = false,
   closeBtn = false,
 }: IProps) => {
   const insets = useSafeAreaInsets();
@@ -84,13 +86,18 @@ export const FiltersContainer = ({
           )}
         </SafeAreaView>
       </LinearGradient>
-      <Stack direction="row" sx={styles.footer}>
+      <Stack
+        direction="row"
+        sx={styles.footer}
+        justify={!footerExtraBtns ? "end" : "between"}
+      >
         {footerExtraBtns}
         <Button
           size="lg"
           onPress={onNext}
           title={btnTitle}
           disabled={disabled}
+          loading={loading}
           sxBtn={{ width: 120 }}
         />
       </Stack>
