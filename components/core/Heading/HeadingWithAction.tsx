@@ -12,7 +12,7 @@ type IProps = {
   seeAll?: boolean;
 };
 
-export const SearchPopularHeading = ({
+export const HeadingWithAction = ({
   heading,
   onSeeAll,
   collection,

@@ -24,6 +24,7 @@ export const CardRecommended = ({ location, index }: IProps) => {
 
   const goToUser = () => {
     navigation.push("ProfileGeneral", {
+      screen: "Products",
       userId: owner?._id,
       avatar,
       username,

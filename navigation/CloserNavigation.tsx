@@ -196,7 +196,7 @@ const TabsScreen = () => {
           let iconName = "";
 
           if (route.name === "Home") {
-            iconName = focused ? "shopping-bag" : "search";
+            iconName = focused ? "search" : "shopping-bag";
           } else if (route.name === "Messages") {
             iconName = focused ? "message-circle" : "message-circle";
           } else if (route.name === "FeedStack") {

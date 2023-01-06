@@ -4,8 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useAuth, useGet } from "../../../../hooks";
 import { HashtagListItem } from "../../ListItems/HashtagListItem";
-import { SearchPopularHeading } from "../../Headings/SearchPopularHeading";
-import { Spinner } from "../../../core";
+import { Spinner, HeadingWithAction } from "../../../core";
 import UserListItem from "../../ListItems/UserListItem";
 import GridImageListItem from "../../ListItems/PostGrid/GridImageListItem";
 import axios from "axios";
@@ -123,7 +122,7 @@ export const SearchPopularTab = ({ search }: { search: string }) => {
     () => (
       <FlatList
         ListHeaderComponent={
-          <SearchPopularHeading
+          <HeadingWithAction
             heading={t("populars")}
             collection={pages?.map((page) => page.results)}
           />
@@ -144,7 +143,7 @@ export const SearchPopularTab = ({ search }: { search: string }) => {
     () => (
       <FlatList
         ListHeaderComponent={
-          <SearchPopularHeading
+          <HeadingWithAction
             heading={t("hashtags")}
             seeAll
             collection={hashtags?.results}
@@ -163,7 +162,7 @@ export const SearchPopularTab = ({ search }: { search: string }) => {
   return (
     <FlatList
       ListHeaderComponent={
-        <SearchPopularHeading
+        <HeadingWithAction
           heading={t("users")}
           seeAll
           collection={users?.results}

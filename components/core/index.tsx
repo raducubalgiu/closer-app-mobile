@@ -44,3 +44,4 @@ export { CSwitch } from "./CSwitch/CSwitch";
 export { CModal } from "./CModal/CModal";
 
 export { Heading } from "./Heading/Heading";
+export { HeadingWithAction } from "./Heading/HeadingWithAction";

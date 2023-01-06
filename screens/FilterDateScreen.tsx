@@ -157,7 +157,7 @@ export const FiltersDateScreen = ({ route }: IProps) => {
         )} - ${dayMonthFormat(period.endDate)}`}
         onNext={goNext}
         btnTitle={t("next")}
-        footerExtraBtns={footerBtns}
+        footerExtraBtns={activeBtn === 0 ? footerBtns : null}
         disabled={disabled}
         closeBtn
       >

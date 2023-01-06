@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Icon } from "@rneui/themed";
 import { useAuth } from "../../../hooks/auth";
 import theme from "../../../assets/styles/theme";
-import { MAIN_ROLE, SECOND_ROLE, THIRD_ROLE } from "@env";
+import { MAIN_ROLE, SECOND_ROLE, SUPERADMIN_ROLE, THIRD_ROLE } from "@env";
 import { Protected, ListItem } from "../../core";
 import { useTranslation } from "react-i18next";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -16,6 +16,14 @@ import { showToast } from "../../../utils";
 const { black } = theme.lightColors || {};
 
 type IProps = { onCloseSheet: () => void };
+type Item = {
+  id: string;
+  title: string;
+  iconName: string;
+  iconType: string;
+  navigation?: any;
+  roles: string[];
+};
 
 export const ProfileMenuList = ({ onCloseSheet }: IProps) => {
   const navigation =
@@ -32,7 +40,7 @@ export const ProfileMenuList = ({ onCloseSheet }: IProps) => {
 
   const items = [
     {
-      _id: "1",
+      id: "1",
       title: t("myBusiness"),
       iconName: "airplay",
       iconType: "feather",
@@ -40,46 +48,46 @@ export const ProfileMenuList = ({ onCloseSheet }: IProps) => {
       roles: [MAIN_ROLE, SECOND_ROLE],
     },
     {
-      _id: "2",
+      id: "2",
       title: t("settings"),
       iconName: "setting",
       iconType: "antdesign",
       navigation: "Settings",
-      roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE],
+      roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE, SUPERADMIN_ROLE],
     },
     {
-      _id: "4",
+      id: "4",
       title: t("discounts"),
       iconName: "gift",
       iconType: "antdesign",
       navigation: "Discounts",
-      roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE],
+      roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE, SUPERADMIN_ROLE],
     },
     {
-      _id: "5",
+      id: "5",
       title: t("reportAProblem"),
       iconName: "exclamationcircleo",
       iconType: "antdesign",
       navigation: "Discounts",
-      roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE],
+      roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE, SUPERADMIN_ROLE],
     },
     {
-      _id: "6",
+      id: "6",
       title: t("shareProfile"),
       iconName: "sharealt",
       iconType: "antdesign",
-      roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE],
+      roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE, SUPERADMIN_ROLE],
     },
     {
-      _id: "7",
+      id: "7",
       title: t("logout"),
       iconName: "logout",
       iconType: "antdesign",
-      roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE],
+      roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE, SUPERADMIN_ROLE],
     },
   ];
 
-  const handleNavigate = (item: any) => {
+  const handleNavigate = (item: Item) => {
     if (item.navigation) {
       navigation.navigate(item?.navigation);
       onCloseSheet();
@@ -88,7 +96,7 @@ export const ProfileMenuList = ({ onCloseSheet }: IProps) => {
     }
   };
 
-  const renderItem = ({ item }: ListRenderItemInfo<any>) => (
+  const renderItem = ({ item }: ListRenderItemInfo<Item>) => (
     <Protected userRole={user?.role} roles={item?.roles}>
       <ListItem onPress={() => handleNavigate(item)} sx={styles.listItem}>
         <Icon name={item?.iconName} type={item?.iconType} color={black} />
@@ -101,9 +109,8 @@ export const ProfileMenuList = ({ onCloseSheet }: IProps) => {
     <BottomSheetFlatList
       data={items}
       contentContainerStyle={styles.container}
-      keyExtractor={(item) => item?._id}
+      keyExtractor={(item) => item?.id}
       renderItem={renderItem}
-      bounces={false}
     />
   );
 };

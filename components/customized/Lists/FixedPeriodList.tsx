@@ -40,7 +40,7 @@ export const FixedPeriodList = ({ onSwitch }: IProps) => {
       renderItem={renderFixedPeriod}
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{ margin: 15 }}
-      bounces={false}
+      //bounces={false}
     />
   );
 };
