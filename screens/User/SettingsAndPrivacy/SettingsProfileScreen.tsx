@@ -1,14 +1,29 @@
 import { StyleSheet, ScrollView, SafeAreaView, Text, View } from "react-native";
-import React from "react";
-import { Header, Heading, ListItem, Stack } from "../../../../components/core";
-import { useTranslation } from "react-i18next";
-import theme from "../../../../assets/styles/theme";
 import { Divider, Icon } from "@rneui/themed";
+import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
+import { getAuth, signOut } from "firebase/auth";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { Header, Heading, ListItem, Stack } from "../../../components/core";
+import theme from "../../../assets/styles/theme";
+import { RootStackParams } from "../../../models/navigation/rootStackParams";
+import { useAuth } from "../../../hooks";
+import { showToast } from "../../../utils";
 
 const { black, grey0 } = theme.lightColors || {};
 
 export const SettingsProfileScreen = () => {
+  const { user, setUser } = useAuth();
+  const auth = getAuth();
   const { t } = useTranslation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => setUser(null))
+      .catch(() => showToast({ message: t("somethingWentWrong") }));
+  };
 
   return (
     <View style={styles.screen}>
@@ -18,7 +33,7 @@ export const SettingsProfileScreen = () => {
       <ScrollView style={styles.container}>
         <Stack align="start">
           <Heading title={t("account")} />
-          <ListItem between>
+          <ListItem between onPress={() => navigation.navigate("Account")}>
             <Stack direction="row">
               <Icon
                 name="user"
@@ -31,7 +46,11 @@ export const SettingsProfileScreen = () => {
             </Stack>
             <Icon name="keyboard-arrow-right" color={grey0} />
           </ListItem>
-          <ListItem between mt={15}>
+          <ListItem
+            between
+            mt={15}
+            onPress={() => navigation.navigate("Privacy")}
+          >
             <Stack direction="row">
               <Icon
                 name="lock"
@@ -40,11 +59,15 @@ export const SettingsProfileScreen = () => {
                 color={black}
                 style={styles.icon}
               />
-              <Text style={styles.text}>{t("confidentiality")}</Text>
+              <Text style={styles.text}>{t("privacy")}</Text>
             </Stack>
             <Icon name="keyboard-arrow-right" color={grey0} />
           </ListItem>
-          <ListItem between mt={15}>
+          <ListItem
+            between
+            mt={15}
+            onPress={() => navigation.navigate("Discounts")}
+          >
             <Stack direction="row">
               <Icon
                 name="gift"
@@ -74,7 +97,7 @@ export const SettingsProfileScreen = () => {
         <Divider color="#ddd" style={{ marginTop: 15, marginBottom: 10 }} />
         <Stack align="start">
           <Heading title={t("cacheAndMobileData")} />
-          <ListItem between>
+          <ListItem between onPress={() => navigation.navigate("ClearCache")}>
             <Stack direction="row">
               <Icon
                 name="trash-2"
@@ -87,7 +110,11 @@ export const SettingsProfileScreen = () => {
             </Stack>
             <Icon name="keyboard-arrow-right" color={grey0} />
           </ListItem>
-          <ListItem between mt={15}>
+          <ListItem
+            between
+            mt={15}
+            onPress={() => navigation.navigate("SavingData")}
+          >
             <Stack direction="row">
               <Icon
                 name="wifi"
@@ -104,7 +131,10 @@ export const SettingsProfileScreen = () => {
         <Divider color="#ddd" style={{ marginTop: 15, marginBottom: 10 }} />
         <Stack align="start">
           <Heading title={t("assistance")} />
-          <ListItem between>
+          <ListItem
+            between
+            onPress={() => navigation.navigate("ReportAProblem")}
+          >
             <Stack direction="row">
               <Icon
                 name="flag"
@@ -117,7 +147,11 @@ export const SettingsProfileScreen = () => {
             </Stack>
             <Icon name="keyboard-arrow-right" color={grey0} />
           </ListItem>
-          <ListItem between mt={15}>
+          <ListItem
+            between
+            mt={15}
+            onPress={() => navigation.navigate("Assistance")}
+          >
             <Stack direction="row">
               <Icon
                 name="message-circle"
@@ -146,8 +180,8 @@ export const SettingsProfileScreen = () => {
         </Stack>
         <Divider color="#ddd" style={{ marginTop: 15, marginBottom: 10 }} />
         <Stack align="start">
-          <Heading title={t("login")} />
-          <ListItem between>
+          <Heading title={t("connecting")} />
+          <ListItem between onPress={handleLogout}>
             <Stack direction="row">
               <Icon
                 name="log-out"

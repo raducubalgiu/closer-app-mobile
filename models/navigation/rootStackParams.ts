@@ -7,7 +7,9 @@ import { Slot } from "../slot";
 import { User } from "../user";
 
 export type RootStackParams = {
+  Account: any;
   App: any;
+  Assistance: any;
   AuthStack: any;
   AllBookmarks: { postId: string; userId: string };
   AddLocation: any;
@@ -30,6 +32,7 @@ export type RootStackParams = {
   CalendarBig: { product: Product; serviceId: Service };
   Camera: { name: string; avatar: any };
   CameraPreview: { photo: { uri: string }; avatar: any; name: string };
+  ClearCache: any;
   Discounts: any;
   EditProfile: { user: User };
   EditBio: any;
@@ -96,6 +99,7 @@ export type RootStackParams = {
     userId: string;
   };
   Post: { userId: string };
+  Privacy: any;
   Profile: any;
   ProfileGeneral: {
     screen?: string;
@@ -123,6 +127,8 @@ export type RootStackParams = {
   ProductReviews: { productId: string; productName: string; ownerId: string };
   Register: any;
   RegisterBusiness: any;
+  ReportAProblem: any;
+  SavingData: any;
   Settings: any;
   SearchAll: { screen: string | null; search: string };
   Schedules: any;

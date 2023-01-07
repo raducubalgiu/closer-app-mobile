@@ -1,7 +1,6 @@
 import { ListRenderItemInfo, StyleSheet, Text } from "react-native";
 import { getAuth, signOut } from "firebase/auth";
 import { BottomSheetFlatList } from "@gorhom/bottom-sheet";
-import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Icon } from "@rneui/themed";
 import { useAuth } from "../../../hooks/auth";
@@ -62,29 +61,6 @@ export const ProfileMenuList = ({ onCloseSheet }: IProps) => {
       iconType: "feather",
       roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE, SUPERADMIN_ROLE],
     },
-    // {
-    //   id: "4",
-    //   title: t("discounts"),
-    //   iconName: "gift",
-    //   iconType: "feather",
-    //   navigation: "Discounts",
-    //   roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE, SUPERADMIN_ROLE],
-    // },
-    // {
-    //   id: "5",
-    //   title: t("reportAProblem"),
-    //   iconName: "info",
-    //   iconType: "feather",
-    //   navigation: "Discounts",
-    //   roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE, SUPERADMIN_ROLE],
-    // },
-    // {
-    //   id: "7",
-    //   title: t("logout"),
-    //   iconName: "log-out",
-    //   iconType: "feather",
-    //   roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE, SUPERADMIN_ROLE],
-    // },
   ];
 
   const handleNavigate = (item: Item) => {

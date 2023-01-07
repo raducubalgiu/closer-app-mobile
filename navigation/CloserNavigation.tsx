@@ -11,6 +11,9 @@ import { useAuth } from "../hooks";
 import { RootStackParams } from "../models/navigation/rootStackParams";
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 import {
+  AccountScreen,
+  AssistanceScreen,
+  ClearCacheScreen,
   EditProfileScreen,
   EditBioScreen,
   EditNameScreen,
@@ -59,7 +62,9 @@ import {
   NotificationsScreen,
   PostScreen,
   ProductScreen,
+  PrivacyScreen,
   ProductReviewsScreen,
+  ReportAProblemScreen,
   SchedulesScreen,
   ScheduleCancelScreen,
   ScheduleConfirmScreen,
@@ -72,6 +77,7 @@ import {
   LoginScreen,
   RegisterBusinessScreen,
   RegisterScreen,
+  SavingDataScreen,
   UsernameScreen,
   CameraScreen,
   CameraPreviewScreen,
@@ -327,10 +333,30 @@ const CloserNavigation = () => {
                 component={MessageNewScreen}
               />
             </RootStack.Group>
-            <RootStack.Screen
-              name="Settings"
-              component={SettingsProfileScreen}
-            />
+            <RootStack.Group>
+              <RootStack.Screen
+                name="Settings"
+                component={SettingsProfileScreen}
+              />
+              <RootStack.Screen name="Account" component={AccountScreen} />
+              <RootStack.Screen name="Privacy" component={PrivacyScreen} />
+              <RootStack.Screen
+                name="ClearCache"
+                component={ClearCacheScreen}
+              />
+              <RootStack.Screen
+                name="SavingData"
+                component={SavingDataScreen}
+              />
+              <RootStack.Screen
+                name="Assistance"
+                component={AssistanceScreen}
+              />
+              <RootStack.Screen
+                name="ReportAProblem"
+                component={ReportAProblemScreen}
+              />
+            </RootStack.Group>
             <RootStack.Screen
               name="ScheduleDetails"
               component={ScheduleDetailsScreen}
