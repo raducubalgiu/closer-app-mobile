@@ -50,8 +50,8 @@ const CardPostHeader = ({
   };
 
   return (
-    <Stack direction="row" sx={{ paddingHorizontal: 10 }}>
-      <Pressable onPress={() => goToUser(userId)}>
+    <Stack direction="row">
+      <Pressable onPress={() => goToUser(userId)} style={{ paddingLeft: 15 }}>
         <Stack direction="row" sx={styles.avatarContainer}>
           <CustomAvatar avatar={avatar} size={30} />
           <Stack align="start">
@@ -74,7 +74,7 @@ const CardPostHeader = ({
           </Stack>
         </Stack>
       </Pressable>
-      <Pressable onPress={onShowDetails}>
+      <Pressable onPress={onShowDetails} style={{ padding: 15 }}>
         <Icon name="more-horizontal" type="feather" size={20} />
       </Pressable>
     </Stack>

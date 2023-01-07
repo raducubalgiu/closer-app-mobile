@@ -13,7 +13,7 @@ const { grey0, black, primary } = theme.lightColors || {};
 
 type IProps = { item: User; onRemoveCard: () => void };
 
-const CardSuggestedPeople = ({ item, onRemoveCard }: IProps) => {
+const RecommendedUserListItem = ({ item, onRemoveCard }: IProps) => {
   const {
     username,
     avatar,
@@ -68,7 +68,7 @@ const CardSuggestedPeople = ({ item, onRemoveCard }: IProps) => {
   );
 };
 
-export default memo(CardSuggestedPeople);
+export default memo(RecommendedUserListItem);
 
 const styles = StyleSheet.create({
   container: {

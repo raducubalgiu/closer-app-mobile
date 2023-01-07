@@ -319,5 +319,12 @@
   "serviceAlreadyPresent": "Acest serviciu a fost adăugat deja",
   "allServices": "Toate serviciile",
   "product": "Produs",
-  "new": "Nou"
+  "new": "Nou",
+  "settingsAndPrivacy": "Setări şi confidenţialitate",
+  "account": "Cont",
+  "confidentiality": "Confidenţialitate",
+  "assistance": "Asistenţă",
+  "cacheAndMobileData": "Cache şi date mobile",
+  "eraseStorage": "Eliberează spaţiul",
+  "savingData": "Economisire date"
 }

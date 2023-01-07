@@ -54,8 +54,7 @@ export { ServicePostsPopularTab } from "./Tabs/ServicePostsTabs/ServicePostsPopu
 export { ServicePostsLastMinuteTab } from "./Tabs/ServicePostsTabs/ServicePostsLastMinuteTab";
 export { ServicePostsRecentTab } from "./Tabs/ServicePostsTabs/ServicePostsRecentTab";
 
-export { CardRecommended } from "./Cards/CardRecommended";
-export { CardServicesHeader } from "./Cards/CardServicesHeader";
+export { CardRecommended } from "./ListItems/CardRecommended";
 export { CardSlotDetails } from "./Cards/CardSlotDetails";
 export { CardHashtagOverview } from "./Cards/CardHashtagOverview";
 export { CardServiceOverview } from "./Cards/CardServiceOverview";

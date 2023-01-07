@@ -24,7 +24,7 @@ export { FindFriendsScreen } from "./User/Profile/FindFriendsScreen";
 export { ProfileGeneralScreen } from "./User/Profile/ProfileGeneralScreen";
 export { ProfileScreen } from "./User/Profile/ProfileScreen";
 export { ProfileStatsScreen } from "./User/Profile/ProfileStatsScreen";
-export { SettingsProfileScreen } from "./User/Profile/SettingsProfileScreen";
+export { SettingsProfileScreen } from "./User/Profile/SettingsAndPrivacy/SettingsProfileScreen";
 export { CalendarScreen } from "./CalendarScreen";
 export { CommentsScreen } from "./CommentsScreen";
 export { FeedExploreScreen } from "./Feed/FeedExploreScreen";

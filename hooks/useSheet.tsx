@@ -6,10 +6,14 @@ import {
   BottomSheetBackdrop,
 } from "@gorhom/bottom-sheet";
 import { Portal } from "@gorhom/portal";
+import { useBottomSheetTimingConfigs } from "@gorhom/bottom-sheet";
 
 export const useSheet = (intervals: string[], children: any) => {
-  const bottomSheetModalRef = useRef<any>(null);
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => [...intervals], []);
+  const animationConfig = useBottomSheetTimingConfigs({
+    duration: 200,
+  });
 
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
@@ -45,6 +49,7 @@ export const useSheet = (intervals: string[], children: any) => {
           handleIndicatorStyle={styles.indicatorStyle}
           onDismiss={handleCloseSheet}
           onChange={handleSheetChange}
+          animationConfigs={animationConfig}
         >
           {children}
         </BottomSheetModal>

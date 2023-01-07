@@ -49,42 +49,42 @@ export const ProfileMenuList = ({ onCloseSheet }: IProps) => {
     },
     {
       id: "2",
-      title: t("settings"),
-      iconName: "setting",
-      iconType: "antdesign",
+      title: t("settingsAndPrivacy"),
+      iconName: "settings",
+      iconType: "feather",
       navigation: "Settings",
-      roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE, SUPERADMIN_ROLE],
-    },
-    {
-      id: "4",
-      title: t("discounts"),
-      iconName: "gift",
-      iconType: "antdesign",
-      navigation: "Discounts",
-      roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE, SUPERADMIN_ROLE],
-    },
-    {
-      id: "5",
-      title: t("reportAProblem"),
-      iconName: "exclamationcircleo",
-      iconType: "antdesign",
-      navigation: "Discounts",
       roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE, SUPERADMIN_ROLE],
     },
     {
       id: "6",
       title: t("shareProfile"),
-      iconName: "sharealt",
-      iconType: "antdesign",
+      iconName: "share-2",
+      iconType: "feather",
       roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE, SUPERADMIN_ROLE],
     },
-    {
-      id: "7",
-      title: t("logout"),
-      iconName: "logout",
-      iconType: "antdesign",
-      roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE, SUPERADMIN_ROLE],
-    },
+    // {
+    //   id: "4",
+    //   title: t("discounts"),
+    //   iconName: "gift",
+    //   iconType: "feather",
+    //   navigation: "Discounts",
+    //   roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE, SUPERADMIN_ROLE],
+    // },
+    // {
+    //   id: "5",
+    //   title: t("reportAProblem"),
+    //   iconName: "info",
+    //   iconType: "feather",
+    //   navigation: "Discounts",
+    //   roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE, SUPERADMIN_ROLE],
+    // },
+    // {
+    //   id: "7",
+    //   title: t("logout"),
+    //   iconName: "log-out",
+    //   iconType: "feather",
+    //   roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE, SUPERADMIN_ROLE],
+    // },
   ];
 
   const handleNavigate = (item: Item) => {
@@ -99,7 +99,12 @@ export const ProfileMenuList = ({ onCloseSheet }: IProps) => {
   const renderItem = ({ item }: ListRenderItemInfo<Item>) => (
     <Protected userRole={user?.role} roles={item?.roles}>
       <ListItem onPress={() => handleNavigate(item)} sx={styles.listItem}>
-        <Icon name={item?.iconName} type={item?.iconType} color={black} />
+        <Icon
+          name={item?.iconName}
+          type={item?.iconType}
+          color={black}
+          size={22.5}
+        />
         <Text style={styles.text}>{item?.title}</Text>
       </ListItem>
     </Protected>
@@ -116,20 +121,18 @@ export const ProfileMenuList = ({ onCloseSheet }: IProps) => {
 };
 
 const styles = StyleSheet.create({
-  container: { marginHorizontal: 20, marginTop: 10, flex: 1 },
+  container: { marginHorizontal: 17.5, marginTop: 10, flex: 1 },
   listItem: {
     paddingLeft: 0,
     backgroundColor: "white",
-    borderBottomWidth: 0.5,
-    borderBottomColor: "#ddd",
     paddingTop: 5,
     paddingBottom: 12.5,
   },
   text: {
     color: black,
-    fontSize: 15,
     paddingVertical: 2.5,
-    marginLeft: 10,
-    fontWeight: "400",
+    marginLeft: 15,
+    fontWeight: "500",
+    fontSize: 14,
   },
 });

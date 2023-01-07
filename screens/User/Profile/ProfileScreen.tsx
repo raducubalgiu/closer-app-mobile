@@ -35,7 +35,7 @@ export const ProfileScreen = () => {
   const closeSheet = useCallback(() => CLOSE_BS(), []);
   const profileMenu = <ProfileMenuList onCloseSheet={closeSheet} />;
   const { BOTTOM_SHEET, SHOW_BS, CLOSE_BS } = useSheet(
-    ["1%", "50%"],
+    ["1%", "30%"],
     profileMenu
   );
   const navigateBookmarks = () => navigation.navigate("Bookmarks", { user });

@@ -89,35 +89,8 @@ const Tab = createBottomTabNavigator();
 const RootStack = createNativeStackNavigator<RootStackParams>();
 
 const { black, primary, error } = theme.lightColors || {};
-
-import { SharedList } from "../screens/SharedList";
-import { SharedDetails } from "../screens/SharedDetails";
 import { ExploreVideoPortraitScreen } from "../screens/ExploreVideoPortraitScreen";
 import CustomAvatar from "../components/core/Avatars/CustomAvatar";
-
-const Shared = () => {
-  return (
-    <SharedStack.Navigator
-      initialRouteName="SharedList"
-      screenOptions={{
-        headerShown: false,
-        gestureEnabled: false,
-        cardOverlayEnabled: true,
-        presentation: "transparentModal",
-      }}
-    >
-      <SharedStack.Screen name="SharedList" component={SharedList} />
-      <SharedStack.Screen
-        name="SharedDetail"
-        component={SharedDetails}
-        sharedElements={(route, otherRoute, showing) => {
-          const { item } = route.params;
-          return [{ id: item._id, animation: "move" }];
-        }}
-      />
-    </SharedStack.Navigator>
-  );
-};
 
 const FeedStackNavigator = () => {
   return (
@@ -454,7 +427,6 @@ const CloserNavigation = () => {
                 component={CameraPreviewScreen}
               />
             </RootStack.Group>
-            <RootStack.Screen name="SharedList" component={Shared} />
             <RootStack.Screen
               name="ExploreVideoLandscape"
               component={ExploreVideoLandscape}
@@ -463,9 +435,12 @@ const CloserNavigation = () => {
               name="ExploreVideoPortrait"
               component={ExploreVideoPortraitScreen}
             />
-            <Stack.Screen name="Likes" component={LikesScreen} />
-            <Stack.Screen name="SearchPosts" component={SearchPostsScreen} />
-            <Stack.Screen
+            <RootStack.Screen name="Likes" component={LikesScreen} />
+            <RootStack.Screen
+              name="SearchPosts"
+              component={SearchPostsScreen}
+            />
+            <RootStack.Screen
               name="UserLocationPermission"
               component={UserLocationPermissionScreen}
             />

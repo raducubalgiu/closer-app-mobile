@@ -3,17 +3,17 @@ import { memo, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";
 import { Stack } from "../../core";
-import CardSuggestedPeople from "../Cards/CardSuggestedPeople";
+import RecommendedUserListItem from "../ListItems/RecommendedUserListItem";
 
 const { black } = theme.lightColors || {};
 
-type IProps = { suggested: any; userId: string };
+type IProps = { suggested: any; userId: string | undefined };
 
 const SuggestedUsersList = ({ suggested, userId }: IProps) => {
   const { t } = useTranslation();
 
   const renderSuggested = useCallback(({ item }: ListRenderItemInfo<any>) => {
-    return <CardSuggestedPeople item={item} onRemoveCard={() => {}} />;
+    return <RecommendedUserListItem item={item} onRemoveCard={() => {}} />;
   }, []);
 
   const keyExtractor = useCallback((item: any) => item?.id, []);
