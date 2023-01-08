@@ -1,4 +1,3 @@
-export { AccountScreen } from "./User/SettingsAndPrivacy/Account/AccountScreen";
 export { AllBookmarksScreen } from "./User/Profile/AllBookmarksScreen";
 export { EditBioScreen } from "./User/Profile/EditProfile/EditBioScreen";
 export { EditNameScreen } from "./User/Profile/EditProfile/EditNameScreen";
@@ -69,6 +68,10 @@ export { ExploreVideoLandscape } from "./ExploreVideoLandscape";
 export { ProductScreen } from "./ProductScreen";
 export { ProductReviewsScreen } from "./ProductReviewsScreen";
 export { UserLocationPermissionScreen } from "./UserLocationPermissionScreen";
+export { AccountScreen } from "./User/SettingsAndPrivacy/Account/AccountScreen";
+export { AccountInfoScreen } from "./User/SettingsAndPrivacy/Account/AccountInfoScreen";
+export { AccountPasswordScreen } from "./User/SettingsAndPrivacy/Account/AccountPasswordScreen";
+export { DeleteAccountScreen } from "./User/SettingsAndPrivacy/Account/DeleteAccountScreen";
 export { PrivacyScreen } from "./User/SettingsAndPrivacy/Privacy/PrivacyScreen";
 export { ClearCacheScreen } from "./User/SettingsAndPrivacy/Cache/ClearCacheScreen";
 export { SavingDataScreen } from "./User/SettingsAndPrivacy/Cache/SavingDataScreen";

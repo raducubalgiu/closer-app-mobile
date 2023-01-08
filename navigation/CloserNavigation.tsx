@@ -12,8 +12,11 @@ import { RootStackParams } from "../models/navigation/rootStackParams";
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 import {
   AccountScreen,
+  AccountInfoScreen,
+  AccountPasswordScreen,
   AssistanceScreen,
   ClearCacheScreen,
+  DeleteAccountScreen,
   EditProfileScreen,
   EditBioScreen,
   EditNameScreen,
@@ -339,6 +342,18 @@ const CloserNavigation = () => {
                 component={SettingsProfileScreen}
               />
               <RootStack.Screen name="Account" component={AccountScreen} />
+              <RootStack.Screen
+                name="AccountInfo"
+                component={AccountInfoScreen}
+              />
+              <RootStack.Screen
+                name="AccountPassword"
+                component={AccountPasswordScreen}
+              />
+              <RootStack.Screen
+                name="DeleteAccount"
+                component={DeleteAccountScreen}
+              />
               <RootStack.Screen name="Privacy" component={PrivacyScreen} />
               <RootStack.Screen
                 name="ClearCache"

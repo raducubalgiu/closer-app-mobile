@@ -327,5 +327,7 @@
   "cacheAndMobileData": "Cache şi date mobile",
   "eraseStorage": "Eliberează spaţiul",
   "savingData": "Economisire date",
-  "connecting": "Conectare"
+  "connecting": "Conectare",
+  "userInfo": "Informaţii utilizator",
+  "deleteOrDisableAccount": "Şterge sau dezactivează contul"
 }

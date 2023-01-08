@@ -8,6 +8,8 @@ import { User } from "../user";
 
 export type RootStackParams = {
   Account: any;
+  AccountInfo: any;
+  AccountPassword: any;
   App: any;
   Assistance: any;
   AuthStack: any;
@@ -33,6 +35,7 @@ export type RootStackParams = {
   Camera: { name: string; avatar: any };
   CameraPreview: { photo: { uri: string }; avatar: any; name: string };
   ClearCache: any;
+  DeleteAccount: any;
   Discounts: any;
   EditProfile: { user: User };
   EditBio: any;
