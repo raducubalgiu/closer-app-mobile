@@ -75,7 +75,7 @@ const VideoPortraitListItem = ({ post }: IProps) => {
                 <Icon name="arrow-back-ios" size={22.5} color="white" />
               </Pressable>
               <Pressable style={styles.camera}>
-                <Icon name="camera" type="feather" size={25} color="white" />
+                <Icon name="search" type="feather" size={25} color="white" />
               </Pressable>
             </Stack>
           </Stack>

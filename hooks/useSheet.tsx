@@ -8,7 +8,7 @@ import {
 import { Portal } from "@gorhom/portal";
 import { useBottomSheetTimingConfigs } from "@gorhom/bottom-sheet";
 
-export const useSheet = (intervals: string[], children: any) => {
+export const useSheet = (intervals: any, children: any) => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => [...intervals], []);
   const animationConfig = useBottomSheetTimingConfigs({

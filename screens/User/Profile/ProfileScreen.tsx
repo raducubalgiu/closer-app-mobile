@@ -31,11 +31,12 @@ export const ProfileScreen = () => {
   });
 
   const { name, username, avatar, checkmark, role } = user || {};
+  const isBusiness = role === MAIN_ROLE || role === SECOND_ROLE;
 
   const closeSheet = useCallback(() => CLOSE_BS(), []);
   const profileMenu = <ProfileMenuList onCloseSheet={closeSheet} />;
   const { BOTTOM_SHEET, SHOW_BS, CLOSE_BS } = useSheet(
-    ["1%", "30%"],
+    ["1%", isBusiness ? 235 : 200],
     profileMenu
   );
   const navigateBookmarks = () => navigation.navigate("Bookmarks", { user });

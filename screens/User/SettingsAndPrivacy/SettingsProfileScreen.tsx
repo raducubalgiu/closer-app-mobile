@@ -48,7 +48,7 @@ export const SettingsProfileScreen = () => {
           </ListItem>
           <ListItem
             between
-            mt={15}
+            mt={20}
             onPress={() => navigation.navigate("Privacy")}
           >
             <Stack direction="row">
@@ -65,7 +65,7 @@ export const SettingsProfileScreen = () => {
           </ListItem>
           <ListItem
             between
-            mt={15}
+            mt={20}
             onPress={() => navigation.navigate("Discounts")}
           >
             <Stack direction="row">
@@ -80,7 +80,7 @@ export const SettingsProfileScreen = () => {
             </Stack>
             <Icon name="keyboard-arrow-right" color={grey0} />
           </ListItem>
-          <ListItem between mt={15}>
+          <ListItem between mt={20}>
             <Stack direction="row">
               <Icon
                 name="share"
@@ -94,7 +94,7 @@ export const SettingsProfileScreen = () => {
             <Icon name="keyboard-arrow-right" color={grey0} />
           </ListItem>
         </Stack>
-        <Divider color="#ddd" style={{ marginTop: 15, marginBottom: 10 }} />
+        <Divider color="#ddd" style={{ marginTop: 20, marginBottom: 10 }} />
         <Stack align="start">
           <Heading title={t("cacheAndMobileData")} />
           <ListItem between onPress={() => navigation.navigate("ClearCache")}>
@@ -112,7 +112,7 @@ export const SettingsProfileScreen = () => {
           </ListItem>
           <ListItem
             between
-            mt={15}
+            mt={20}
             onPress={() => navigation.navigate("SavingData")}
           >
             <Stack direction="row">
@@ -128,7 +128,7 @@ export const SettingsProfileScreen = () => {
             <Icon name="keyboard-arrow-right" color={grey0} />
           </ListItem>
         </Stack>
-        <Divider color="#ddd" style={{ marginTop: 15, marginBottom: 10 }} />
+        <Divider color="#ddd" style={{ marginTop: 20, marginBottom: 10 }} />
         <Stack align="start">
           <Heading title={t("assistance")} />
           <ListItem
@@ -149,7 +149,7 @@ export const SettingsProfileScreen = () => {
           </ListItem>
           <ListItem
             between
-            mt={15}
+            mt={20}
             onPress={() => navigation.navigate("Assistance")}
           >
             <Stack direction="row">
@@ -164,7 +164,7 @@ export const SettingsProfileScreen = () => {
             </Stack>
             <Icon name="keyboard-arrow-right" color={grey0} />
           </ListItem>
-          <ListItem between mt={15}>
+          <ListItem between mt={20}>
             <Stack direction="row">
               <Icon
                 name="info"
@@ -178,7 +178,7 @@ export const SettingsProfileScreen = () => {
             <Icon name="keyboard-arrow-right" color={grey0} />
           </ListItem>
         </Stack>
-        <Divider color="#ddd" style={{ marginTop: 15, marginBottom: 10 }} />
+        <Divider color="#ddd" style={{ marginTop: 20, marginBottom: 10 }} />
         <Stack align="start">
           <Heading title={t("connecting")} />
           <ListItem between onPress={handleLogout}>

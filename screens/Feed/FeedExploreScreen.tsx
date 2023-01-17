@@ -140,11 +140,12 @@ export const FeedExploreScreen = () => {
         </Text>
         <Pressable
           onPress={() =>
-            navigation.push("FeedVideoExplore", {
-              item: firstVideo,
-              index: 0,
-              allVideos,
-            })
+            // navigation.push("FeedVideoExplore", {
+            //   item: firstVideo,
+            //   index: 0,
+            //   allVideos,
+            // })
+            navigation.navigate("ExploreVideoPortrait")
           }
         >
           <Stack
