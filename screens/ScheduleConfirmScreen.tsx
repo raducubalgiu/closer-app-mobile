@@ -49,6 +49,7 @@ export const ScheduleConfirmScreen = ({ route }: IProps) => {
       serviceId,
       locationId,
       product: {
+        id: product?.id,
         name,
         description,
         price,
@@ -75,7 +76,9 @@ export const ScheduleConfirmScreen = ({ route }: IProps) => {
               <Text style={styles.heading}>
                 {dayjs(start).format("DD-MM-YYYY")} - {hour}
               </Text>
-              <Text style={styles.description}>{ownerId?.name}</Text>
+              <Text style={{ ...styles.heading, marginTop: 5 }}>
+                {ownerId?.name}
+              </Text>
             </Stack>
           </Stack>
           <Stack align="start" direction="row" sx={{ marginBottom: 50 }}>
@@ -91,8 +94,7 @@ export const ScheduleConfirmScreen = ({ route }: IProps) => {
               <Text style={styles.description}>
                 {`Categorie: ${option.name || option}`}
               </Text>
-              <Text style={styles.duration}>Durata: {duration} min</Text>
-              <Text style={styles.description}>{description}</Text>
+              <Text style={styles.duration}>Durata: ~ {duration} min</Text>
             </Stack>
           </Stack>
           <Stack align="start" direction="row" sx={{ marginBottom: 50 }}>
@@ -113,11 +115,11 @@ export const ScheduleConfirmScreen = ({ route }: IProps) => {
       </ScrollView>
       <Button
         size="lg"
-        radius={25}
         title={t("confirmBooking")}
         loading={isLoading && !isSuccess}
         onPress={handleBook}
         sxBtn={{ marginHorizontal: 15 }}
+        sxText={{ fontSize: 15 }}
       />
     </SafeAreaView>
   );
@@ -129,13 +131,13 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   scrollView: {
-    paddingHorizontal: 20,
-    paddingTop: 40,
+    marginHorizontal: 20,
+    marginTop: 40,
     flex: 1,
   },
   heading: {
     color: black,
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: "600",
   },
   icon: {

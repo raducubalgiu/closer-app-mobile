@@ -1,10 +1,12 @@
 import dayjs from "dayjs";
 import "dayjs/locale/ro";
+import { useTranslation } from "react-i18next";
 dayjs.locale("ro");
 
 export const useCalendarList = (noMonths: number = 5) => {
   let month = dayjs().month();
   let year = dayjs().year();
+  const { t } = useTranslation();
 
   const displayMonth = (month: any, year: any) => {
     return dayjs().month(month).year(year).format("MMMM YYYY");
@@ -46,6 +48,15 @@ export const useCalendarList = (noMonths: number = 5) => {
   };
 
   const DAYS_HEADER = ["D", "L", "M", "M", "J", "V", "S"];
+  const DAYS_NAMES = [
+    t("sun"),
+    t("mon"),
+    t("tue"),
+    t("wed"),
+    t("thu"),
+    t("fri"),
+    t("sat"),
+  ];
   let MONTHS = [];
 
   for (let i = 0; i <= noMonths; i++) {
@@ -57,6 +68,7 @@ export const useCalendarList = (noMonths: number = 5) => {
 
   return {
     DAYS_HEADER,
+    DAYS_NAMES,
     MONTHS,
   };
 };

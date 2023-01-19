@@ -10,6 +10,7 @@ dayjs.locale(country);
 export const NOW = dayjs.utc().format();
 
 export const FROM_NOW = (date) => dayjs(date).fromNow();
+export const SHORT_DATE = (date) => dayjs(date).format("YYYY-MM-DD");
 
 export const dayMonthFormat = (date) => {
   if (date) {

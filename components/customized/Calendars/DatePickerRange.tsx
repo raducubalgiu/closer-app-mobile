@@ -22,7 +22,7 @@ const WIDTH_AND_HEIGHT = width / 7 - 10;
 
 type IProps = { startDate: any; endDate: any; onDayPress: (day: any) => void };
 
-export const CalendarList = ({ startDate, endDate, onDayPress }: IProps) => {
+export const DatePickerRange = ({ startDate, endDate, onDayPress }: IProps) => {
   const { MONTHS, DAYS_HEADER } = useCalendarList();
 
   const getBackgroundColor = useCallback(

@@ -241,6 +241,10 @@
   "noFoundSavedProducts": "Încă nu ai salvat produse",
   "noFoundSavedPosts": "Încă nu ai salvat postări",
   "noFoundServicesDescription": "Încă nu ai adăugat servicii",
+  "noFoundAvailableProgram": "Locaţia este închisă pentru ziua selectată",
+  "noFoundAvailableSlots": "Nu mai sunt locuri",
+  "noFoundAvailableSlotsDescription": "Se pare că nu mai sunt locuri pentru ziua selectată",
+  "findAvailable": "Găseşti liber",
   "saved": "Salvate",
   "savedPosts": "Postări salvate",
   "createAUsername": "Creează un nume de utilizator",
@@ -329,5 +333,6 @@
   "savingData": "Economisire date",
   "connecting": "Conectare",
   "userInfo": "Informaţii utilizator",
-  "deleteOrDisableAccount": "Şterge sau dezactivează contul"
+  "deleteOrDisableAccount": "Şterge sau dezactivează contul",
+  "pickDateAndHour": "Alege data şi ora"
 }

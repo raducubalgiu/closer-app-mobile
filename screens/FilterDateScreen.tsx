@@ -9,7 +9,7 @@ import {
 import { ButtonGroup } from "../components/core";
 import {
   FiltersContainer,
-  CalendarList,
+  DatePickerRange,
   PickerHoursModal,
   FixedPeriodList,
 } from "../components/customized";
@@ -169,7 +169,7 @@ export const FiltersDateScreen = ({ route }: IProps) => {
           disableActiveBtn={true}
         />
         {activeBtn === 0 && (
-          <CalendarList
+          <DatePickerRange
             startDate={period.startDate}
             endDate={period.endDate}
             onDayPress={handleDayPress}

@@ -1,18 +1,15 @@
 import { SafeAreaView, StyleSheet, Text, Pressable } from "react-native";
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Icon } from "@rneui/themed";
 import theme from "../../../../assets/styles/theme";
-import { NoFoundMessage } from "../../../../components/customized";
-import { Header } from "../../../../components/core";
-import { useAuth, useSheet } from "../../../../hooks";
+import { NoFoundMessage, DatePicker } from "../../../../components/customized";
+import { Header, Stack } from "../../../../components/core";
+import { useSheet } from "../../../../hooks";
 
-const { black } = theme.lightColors || {};
+const { black, grey0 } = theme.lightColors || {};
 
 export const MyCalendarScreen = () => {
-  const { user } = useAuth();
   const { t } = useTranslation();
-  const [schedules, setSchedules] = useState({});
 
   const sheetContent = <Text>Hello World</Text>;
   const { BOTTOM_SHEET, SHOW_BS } = useSheet(["25%", "60%"], sheetContent);
@@ -30,13 +27,37 @@ export const MyCalendarScreen = () => {
   return (
     <SafeAreaView style={styles.screen}>
       <Header
-        title={t("myCalendar")}
+        divider
+        title={
+          <Stack align="center" justify="center">
+            <Text
+              style={{
+                fontSize: 16.5,
+                color: black,
+                fontWeight: "700",
+              }}
+            >
+              {t("myCalendar")}
+            </Text>
+            <Text
+              style={{
+                marginTop: 2.5,
+                fontWeight: "500",
+                color: grey0,
+                fontSize: 15,
+              }}
+            >
+              14 noiembrie 22
+            </Text>
+          </Stack>
+        }
         actionBtn={
-          <Pressable onPress={SHOW_BS}>
-            <Icon name="info" type="feather" color={black} size={27.5} />
+          <Pressable onPress={SHOW_BS} style={{ padding: 5 }}>
+            <Icon name="info" type="feather" color={black} size={25} />
           </Pressable>
         }
       />
+      <DatePicker />
       {BOTTOM_SHEET}
     </SafeAreaView>
   );

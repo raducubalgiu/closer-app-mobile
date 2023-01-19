@@ -9,7 +9,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 import { MAIN_ROLE, SECOND_ROLE } from "@env";
 
-const { grey0 } = theme.lightColors || {};
+const { grey0, primary, black } = theme.lightColors || {};
 
 type IProps = {
   userId: string;
@@ -64,7 +64,12 @@ const CardPostHeader = ({
               <Protected userRole={role} roles={[MAIN_ROLE, SECOND_ROLE]}>
                 <Text style={styles.point}>{"\u2B24"}</Text>
                 <Stack direction="row">
-                  <Icon name="staro" type="antdesign" size={12} color={grey0} />
+                  <Icon
+                    name="star"
+                    type="antdesign"
+                    size={12}
+                    color={primary}
+                  />
                   <Text style={styles.ratingsAverage}>
                     {ratingsAverage?.toFixed(1)}
                   </Text>
@@ -97,8 +102,8 @@ const styles = StyleSheet.create({
   },
   point: { fontSize: 3, color: grey0, marginHorizontal: 5 },
   ratingsAverage: {
-    color: grey0,
-    fontSize: 11,
+    color: black,
+    fontSize: 12,
     fontWeight: "700",
     marginLeft: 2.5,
   },

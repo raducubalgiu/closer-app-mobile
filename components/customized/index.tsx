@@ -119,4 +119,5 @@ export { RevertIconButton } from "./IconButtons/RevertIconButton";
 export { InfoIconButton } from "./IconButtons/InfoIconButton";
 export { ProfileIconButton } from "./IconButtons/ProfileIconButton";
 
-export { CalendarList } from "./Calendars/CalendarList";
+export { DatePickerRange } from "./Calendars/DatePickerRange";
+export { DatePicker } from "./Calendars/DatePicker";
