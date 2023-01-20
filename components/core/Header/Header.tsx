@@ -31,12 +31,12 @@ export const Header = ({
         <TouchableOpacity onPress={handleBack}>
           <IconBackButton color={!hideBtnLeft ? black : "white"} />
         </TouchableOpacity>
-        <View>
+        <Stack>
           <Text style={styles.title}>{title}</Text>
           {subtitle?.length > 0 && (
             <Text style={styles.subtitle}>{subtitle}</Text>
           )}
-        </View>
+        </Stack>
         {actionBtn && actionBtn}
         {!actionBtn && <Icon name="arrow-back-ios" color="white" />}
       </Stack>

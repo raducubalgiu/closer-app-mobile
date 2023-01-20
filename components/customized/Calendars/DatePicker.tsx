@@ -149,7 +149,9 @@ export const DatePicker = ({
           />
         </>
       </ListItem.Accordion>
-      <View style={styles.children}>{children}</View>
+      <ListItem.Content style={styles.children}>
+        <View style={{ width: "100%" }}>{children}</View>
+      </ListItem.Content>
     </View>
   );
 };

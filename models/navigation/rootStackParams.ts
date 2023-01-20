@@ -74,6 +74,7 @@ export type RootStackParams = {
   MyBusiness: any;
   MyDashboard: any;
   MyCalendar: any;
+  MyCalendarStatistics: { day: string };
   MyLocation: any;
   MyProducts: any;
   MyJobs: any;
