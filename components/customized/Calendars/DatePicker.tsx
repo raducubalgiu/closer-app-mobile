@@ -9,13 +9,11 @@ import {
 } from "react-native";
 import { useCallback, useState } from "react";
 import dayjs from "dayjs";
-import { Divider, Icon, ListItem } from "@rneui/themed";
+import { Divider, ListItem } from "@rneui/themed";
 import * as Haptics from "expo-haptics";
 import { useCalendarList } from "../../../hooks";
 import theme from "../../../assets/styles/theme";
 import { SHORT_DATE } from "../../../utils/date-utils";
-import { Stack } from "../../core";
-import { timing } from "react-native-reanimated";
 
 const { primary, black, grey0 } = theme.lightColors || {};
 const { width } = Dimensions.get("window");
@@ -105,8 +103,6 @@ export const DatePicker = ({
     () => setIsVisible((isVisible) => !isVisible),
     [isVisible]
   );
-
-  console.log("DAY NAME", DAYS_NAMES[dayjs(selectedDay).startOf("week").day()]);
 
   return (
     <View style={styles.container}>

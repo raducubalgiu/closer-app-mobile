@@ -55,7 +55,6 @@ export { ServicePostsLastMinuteTab } from "./Tabs/ServicePostsTabs/ServicePostsL
 export { ServicePostsRecentTab } from "./Tabs/ServicePostsTabs/ServicePostsRecentTab";
 
 export { CardRecommended } from "./ListItems/CardRecommended";
-export { CardSlotDetails } from "./Cards/CardSlotDetails";
 export { CardHashtagOverview } from "./Cards/CardHashtagOverview";
 export { CardServiceOverview } from "./Cards/CardServiceOverview";
 export { CardMessageUser } from "./Cards/CardMessageUser";
@@ -86,6 +85,7 @@ export { PresetListItem } from "./ListItems/PresetListItem";
 export { FixedPeriodListItem } from "./ListItems/FixedPeriodListItem";
 export { OptionListItem } from "./ListItems/OptionListItem";
 export { ScheduleOverviewListItem } from "./ListItems/ScheduleOverviewListItem";
+export { SlotDetailsListItem } from "./ListItems/SlotDetailsListItem";
 
 export { NoFoundMessage } from "./NotFoundContent/NoFoundMessage";
 

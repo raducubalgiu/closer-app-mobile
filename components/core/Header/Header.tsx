@@ -9,7 +9,8 @@ const { black, grey0 } = theme.lightColors || {};
 
 type IProps = {
   hideBtnLeft?: boolean;
-  title: any;
+  title: string;
+  subtitle?: string;
   actionBtn?: React.ReactElement<any>;
   divider?: boolean;
 };
@@ -17,6 +18,7 @@ type IProps = {
 export const Header = ({
   hideBtnLeft = false,
   title = "",
+  subtitle = "",
   actionBtn,
   divider = false,
 }: IProps) => {
@@ -29,7 +31,12 @@ export const Header = ({
         <TouchableOpacity onPress={handleBack}>
           <IconBackButton color={!hideBtnLeft ? black : "white"} />
         </TouchableOpacity>
-        <Text style={styles.title}>{title}</Text>
+        <View>
+          <Text style={styles.title}>{title}</Text>
+          {subtitle?.length > 0 && (
+            <Text style={styles.subtitle}>{subtitle}</Text>
+          )}
+        </View>
         {actionBtn && actionBtn}
         {!actionBtn && <Icon name="arrow-back-ios" color="white" />}
       </Stack>
@@ -46,6 +53,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
     fontWeight: "700",
   },
+  subtitle: { marginTop: 1, color: grey0, fontSize: 15 },
   description: {
     color: grey0,
     fontSize: 15,

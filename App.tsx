@@ -1,18 +1,53 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { enableScreens } from "react-native-screens";
 import CloserNavigation from "./navigation/CloserNavigation";
-import { AuthProvider } from "./hooks/auth";
+import { AuthProvider, useAuth } from "./hooks/auth";
 import { ThemeProvider } from "@rneui/themed";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import theme from "./assets/styles/theme";
 import "./firebase/firebase.config";
 import { RootSiblingParent } from "react-native-root-siblings";
+import * as SplashScreen from "expo-splash-screen";
+import { Asset } from "expo-asset";
+import AppLoading from "expo-app-loading";
 
 enableScreens();
 const queryClient = new QueryClient();
 
 const App = () => {
+  let [isLoaded, setIsLoaded] = useState(false);
+  const { user } = useAuth();
+
+  let cacheResources = async () => {
+    const images = [require("./assets/images/splash-screen.png")];
+    const cacheImages = images.map((image) => {
+      return Asset.fromModule(image).downloadAsync();
+    });
+
+    return Promise.all(cacheImages);
+  };
+
+  useEffect(() => {
+    async function loadResources() {
+      try {
+        SplashScreen.preventAutoHideAsync();
+        await cacheResources();
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        setIsLoaded(true);
+        SplashScreen.hideAsync();
+      }
+    }
+
+    loadResources();
+  }, []);
+
+  if (!isLoaded) {
+    return <AppLoading />;
+  }
+
   return (
     <AuthProvider>
       <SafeAreaProvider>

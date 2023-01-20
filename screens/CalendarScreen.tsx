@@ -135,21 +135,10 @@ export const CalendarScreen = ({ route }: IProps) => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Header
-        title={
-          <Stack>
-            <Text style={styles.title}>{product?.name}</Text>
-            <Text style={styles.subTitle}>{t("pickDateAndHour")}</Text>
-          </Stack>
-        }
-        divider
-      />
+      <Header title={product?.name} subtitle={t("pickDateAndHour")} divider />
       <DatePicker
         selectedDay={selectedDay}
-        onSelectedDay={(item) => {
-          setSelectedDay(SHORT_DATE(item.date));
-          refetch();
-        }}
+        onSelectedDay={(item) => setSelectedDay(SHORT_DATE(item.date))}
       >
         <FlatList
           data={data?.slots}
@@ -168,12 +157,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
   },
-  title: {
-    fontSize: 17,
-    color: black,
-    fontWeight: "700",
-  },
-  subTitle: { color: grey0, marginTop: 1, fontSize: 15 },
   slot: {
     marginHorizontal: 15,
     marginTop: 15,
