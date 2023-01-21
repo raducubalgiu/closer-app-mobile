@@ -94,11 +94,9 @@ export { MapPreviewModal } from "./Modals/MapPreviewModal";
 export { LoginRegisterForm } from "./Forms/LoginRegisterForm";
 export { AuthProviders } from "./Forms/AuthProviders";
 
-export { FilterPriceModal } from "./Modals/FilterPriceModal";
-export { FilterDistanceModal } from "./Modals/FilterDistanceModal";
-export { FilterRatingModal } from "./Modals/FilterRatingModal";
 export { PickerHoursModal } from "./Modals/PickerHoursModal";
 export { ConfirmModal } from "./Modals/ConfirmModal";
+export { AddScheduleModal } from "./Modals/AddScheduleModal";
 
 export { EditProfileSheet } from "./Sheets/EditProfileSheet";
 export { DashboardInfoSheet } from "./Sheets/DashboardInfoSheet";

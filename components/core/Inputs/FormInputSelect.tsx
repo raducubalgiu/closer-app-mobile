@@ -80,25 +80,28 @@ export const FormInputSelect = ({
     </Stack>
   );
 
-  const renderItem = useCallback(({ field: { onChange, value } }: any) => {
-    return (
-      <RNPickerSelect
-        disabled={disabled}
-        placeholder={inputPlaceholder}
-        useNativeAndroidPickerStyle={false}
-        onValueChange={onChange}
-        style={styles}
-        doneText="Gata"
-        value={value}
-        items={items?.map((item: Item) => {
-          return {
-            label: item?.name,
-            value: item.id,
-          };
-        })}
-      />
-    );
-  }, []);
+  const renderItem = useCallback(
+    ({ field: { onChange, value } }: any) => {
+      return (
+        <RNPickerSelect
+          disabled={disabled}
+          placeholder={inputPlaceholder}
+          useNativeAndroidPickerStyle={false}
+          onValueChange={onChange}
+          style={styles}
+          doneText="Gata"
+          value={value}
+          items={items?.map((item: Item) => {
+            return {
+              label: item?.name,
+              value: item.id,
+            };
+          })}
+        />
+      );
+    },
+    [items]
+  );
 
   return (
     <>

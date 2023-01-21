@@ -12,6 +12,7 @@ import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Icon } from "@rneui/themed";
 import dayjs from "dayjs";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import theme from "../../../../assets/styles/theme";
 import { NoFoundMessage, DatePicker } from "../../../../components/customized";
 import SlotDetailsListItem from "../../../../components/customized/ListItems/SlotDetailsListItem";
@@ -24,16 +25,22 @@ import {
   useRefreshOnFocus,
 } from "../../../../hooks";
 import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 
 const { black, primary, success, error } = theme.lightColors || {};
+type IProps = NativeStackScreenProps<RootStackParams, "MyCalendar">;
 
-export const MyCalendarScreen = () => {
+export const MyCalendarScreen = ({ route }: IProps) => {
+  const { initialIndex } = route.params || {};
   const { user } = useAuth();
   const now = dayjs().format("YYYY-MM-DD");
   const [selectedDay, setSelectedDay] = useState(now);
   const { t } = useTranslation();
+  const insets = useSafeAreaInsets();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
@@ -44,9 +51,18 @@ export const MyCalendarScreen = () => {
 
   const { open, availableSlots, schedules } = data || {};
 
-  const renderSlot = useCallback(({ item }: ListRenderItemInfo<any>) => {
+  const renderSlot = useCallback(({ item, index }: ListRenderItemInfo<any>) => {
     return (
-      <Pressable disabled={item.bookable}>
+      <Pressable
+        disabled={!item.bookable}
+        onPress={() =>
+          navigation.navigate("AddSchedule", {
+            start: item.start,
+            end: item.end,
+            index,
+          })
+        }
+      >
         <Stack direction="row" sx={{ margin: 15 }} align="start">
           <Text style={styles.hour}>{item.hour}</Text>
           {!item.schedule && (
@@ -66,6 +82,15 @@ export const MyCalendarScreen = () => {
   }, []);
 
   const keyExtractor = useCallback((item: any) => item.hour, []);
+
+  const getItemLayout = useCallback(
+    (data: any, index: number) => ({
+      length: 170,
+      offset: 170 * index,
+      index,
+    }),
+    []
+  );
 
   const actionBtn = (
     <Pressable
@@ -141,13 +166,15 @@ export const MyCalendarScreen = () => {
   );
 
   return (
-    <SafeAreaView style={styles.screen}>
-      <Header
-        divider
-        title={t("myCalendar")}
-        subtitle={user?.name}
-        actionBtn={actionBtn}
-      />
+    <View style={styles.screen}>
+      <SafeAreaView>
+        <Header
+          divider
+          title={t("myCalendar")}
+          subtitle={user?.name}
+          actionBtn={actionBtn}
+        />
+      </SafeAreaView>
       <DatePicker
         selectedDay={selectedDay}
         onSelectedDay={(item) => setSelectedDay(SHORT_DATE(item.date))}
@@ -159,9 +186,12 @@ export const MyCalendarScreen = () => {
           ListHeaderComponent={header}
           ListFooterComponent={footer}
           refreshControl={refreshControl}
+          initialScrollIndex={initialIndex ? initialIndex : 0}
+          getItemLayout={getItemLayout}
+          contentContainerStyle={{ paddingBottom: insets.bottom }}
         />
       </DatePicker>
-    </SafeAreaView>
+    </View>
   );
 };
 

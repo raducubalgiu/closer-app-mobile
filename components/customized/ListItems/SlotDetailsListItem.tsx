@@ -14,6 +14,7 @@ type IProps = { schedule: any };
 const SlotDetailsListItem = ({ schedule }: IProps) => {
   const { t } = useTranslation();
   const { channel, customerId, product, serviceId, status } = schedule || {};
+  const { name, username, avatar, checkmark } = customerId || {};
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
@@ -30,10 +31,10 @@ const SlotDetailsListItem = ({ schedule }: IProps) => {
   const goToCustomer = () => {
     navigation.push("ProfileGeneral", {
       userId: customerId?.id,
-      avatar: customerId?.avatar,
-      username: customerId?.username,
-      name: customerId?.name,
-      checkmark: customerId?.checkmark,
+      avatar: avatar,
+      username: username,
+      name: name,
+      checkmark: checkmark,
       service: null,
       option: null,
     });
@@ -50,7 +51,9 @@ const SlotDetailsListItem = ({ schedule }: IProps) => {
             <CustomAvatar avatar={customerId?.avatar} size={30} />
             <Stack align="start" sx={{ marginLeft: 10 }}>
               <Text style={styles.customer}>{customerId?.name}</Text>
-              <Text style={styles.username}>@{customerId?.username}</Text>
+              {username && (
+                <Text style={styles.username}>@{customerId?.username}</Text>
+              )}
             </Stack>
           </Stack>
         </Pressable>

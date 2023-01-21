@@ -38,8 +38,9 @@ export const LoginScreen = () => {
             },
           }
         );
+
         setLoading(false);
-        setUser(userResult.data);
+        setUser({ ...userResult.data, token: idTokenResult?.token });
       }
     } catch (err) {
       setLoading(false);

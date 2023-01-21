@@ -347,5 +347,6 @@
   "scheduleIntervalDescription": "Alege intervalul de timp în care primeşti programări",
   "takeABreak": "Pune pauză",
   "takeABreakDescription": "Poţi alege să iei o pauză, iar noi vom bloca automat sloturile disponibile următoare",
-  "done": "Gata"
+  "done": "Gata",
+  "addSchedule": "Adaugă o programare"
 }

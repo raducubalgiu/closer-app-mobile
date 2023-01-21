@@ -15,6 +15,7 @@ import {
   AccountInfoScreen,
   AccountPasswordScreen,
   AssistanceScreen,
+  AddScheduleScreen,
   ClearCacheScreen,
   DeleteAccountScreen,
   EditProfileScreen,
@@ -290,6 +291,14 @@ const CloserNavigation = () => {
               <RootStack.Screen
                 name="MyCalendar"
                 component={MyCalendarScreen}
+              />
+              <RootStack.Screen
+                name="AddSchedule"
+                component={AddScheduleScreen}
+                options={{
+                  presentation: "modal",
+                  gestureEnabled: false,
+                }}
               />
               <RootStack.Screen
                 name="MyCalendarStatistics"

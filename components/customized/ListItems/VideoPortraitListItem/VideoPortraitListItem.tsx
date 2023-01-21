@@ -217,7 +217,7 @@ const VideoPortraitListItem = ({ post }: IProps) => {
                 width: 12.5,
                 backgroundColor: "white",
               }}
-              containerStyle={{ padding: 0 }}
+              //containerStyle={{ padding: 0 }}
             />
           </LinearGradient>
         </Stack>

@@ -16,6 +16,7 @@ type Props = {
   maxLength?: number;
   secureTextEntry?: boolean;
   keyboardType?: any;
+  editable?: boolean;
 };
 
 export const FormInput = ({
@@ -25,6 +26,7 @@ export const FormInput = ({
   sx = {},
   label = "",
   secureTextEntry = false,
+  editable = true,
   maxLength,
   keyboardType = "default",
   ...props
@@ -40,6 +42,18 @@ export const FormInput = ({
     </Stack>
   );
 
+  const inputStyle = StyleSheet.create({
+    input: {
+      padding: 12.5,
+      borderWidth: 1,
+      width: "100%",
+      marginBottom: 10,
+      borderRadius: 10,
+      borderColor: has(errors, name) ? error : "#ccc",
+      ...sx,
+    },
+  });
+
   return (
     <>
       {label?.length > 0 && <Text style={styles.label}>{label}</Text>}
@@ -50,11 +64,11 @@ export const FormInput = ({
           <TextInput
             {...props}
             placeholder={placeholder}
-            style={{
-              ...styles.input,
-              borderColor: has(errors, name) ? error : "#ccc",
-              ...sx,
-            }}
+            style={
+              editable
+                ? inputStyle.input
+                : { ...inputStyle.input, backgroundColor: "#eee" }
+            }
             maxLength={maxLength}
             keyboardType={keyboardType}
             onBlur={onBlur}
@@ -62,6 +76,7 @@ export const FormInput = ({
             value={value}
             placeholderTextColor="#9EA0A4"
             secureTextEntry={secureTextEntry}
+            editable={editable}
           />
         )}
         name={name}
@@ -72,13 +87,6 @@ export const FormInput = ({
 };
 
 const styles = StyleSheet.create({
-  input: {
-    padding: 12.5,
-    borderWidth: 1,
-    width: "100%",
-    marginBottom: 10,
-    borderRadius: 10,
-  },
   label: {
     textTransform: "uppercase",
     color: black,

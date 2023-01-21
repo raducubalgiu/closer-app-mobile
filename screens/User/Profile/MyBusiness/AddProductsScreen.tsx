@@ -42,9 +42,9 @@ export const AddProductsScreen = () => {
 
   const { data: services, isLoading: loading } = useGet({
     model: "services",
-    uri: `/locations/${user?.location}/services`,
-    enabled: !!user?.location,
-    enableId: user?.location,
+    uri: `/locations/${user?.locationId}/services`,
+    enabled: !!user?.locationId,
+    enableId: user?.locationId,
   });
 
   const { data: filters } = useGet({
@@ -73,7 +73,7 @@ export const AddProductsScreen = () => {
       ...data,
       service: service?._id,
       user: user?.id,
-      location: user?.location,
+      location: user?.locationId,
     });
   };
 
@@ -84,7 +84,7 @@ export const AddProductsScreen = () => {
           behavior={Platform.OS === "ios" ? "position" : "height"}
           keyboardVerticalOffset={headerHeight}
         >
-          <ScrollView showsVerticalScrollIndicator={true}>
+          <ScrollView>
             <Stack align="start" sx={{ margin: 15 }}>
               <FormProvider {...methods}>
                 <FormInputSelect
