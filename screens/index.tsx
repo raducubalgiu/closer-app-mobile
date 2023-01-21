@@ -15,6 +15,7 @@ export { EditProductScreen } from "./User/Profile/MyBusiness/EditProductScreen";
 export { MyBusinessScreen } from "./User/Profile/MyBusiness/MyBusinessScreen";
 export { MyCalendarScreen } from "./User/Profile/MyBusiness/MyCalendarScreen";
 export { MyCalendarStatisticsScreen } from "./User/Profile/MyBusiness/MyCalendarStatisticsScreen";
+export { MyCalendarSettingsScreen } from "./User/Profile/MyBusiness/MyCalendarSettingsScreen";
 export { MyDashboardScreen } from "./User/Profile/MyBusiness/MyDashboardScreen";
 export { MyJobsScreen } from "./User/Profile/MyBusiness/MyJobsScreen";
 export { MyLocationScreen } from "./User/Profile/MyBusiness/MyLocationScreen";

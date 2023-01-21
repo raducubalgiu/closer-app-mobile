@@ -68,7 +68,10 @@ export const MyCalendarScreen = () => {
   const keyExtractor = useCallback((item: any) => item.hour, []);
 
   const actionBtn = (
-    <Pressable onPress={() => {}} style={{ padding: 5 }}>
+    <Pressable
+      onPress={() => navigation.navigate("MyCalendarSettings")}
+      style={{ padding: 5 }}
+    >
       <Icon name="settings" color={black} size={25} />
     </Pressable>
   );

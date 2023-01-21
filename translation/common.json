@@ -341,5 +341,11 @@
   "connecting": "Conectare",
   "userInfo": "Informaţii utilizator",
   "deleteOrDisableAccount": "Şterge sau dezactivează contul",
-  "pickDateAndHour": "Alege data şi ora"
+  "pickDateAndHour": "Alege data şi ora",
+  "settingsCalendar": "Setări calendar",
+  "schedulesInterval": "Intervalul programărilor",
+  "scheduleIntervalDescription": "Alege intervalul de timp în care primeşti programări",
+  "takeABreak": "Pune pauză",
+  "takeABreakDescription": "Poţi alege să iei o pauză, iar noi vom bloca automat sloturile disponibile următoare",
+  "done": "Gata"
 }

@@ -150,7 +150,7 @@ export const DatePicker = ({
         </>
       </ListItem.Accordion>
       <ListItem.Content style={styles.children}>
-        <View style={{ width: "100%" }}>{children}</View>
+        <View style={{ width: "100%", flex: 1 }}>{children}</View>
       </ListItem.Content>
     </View>
   );
@@ -205,5 +205,5 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "black",
   },
-  children: { flex: 1, width: "100%" },
+  children: { width: "100%" },
 });

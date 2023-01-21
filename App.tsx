@@ -17,10 +17,12 @@ const queryClient = new QueryClient();
 
 const App = () => {
   let [isLoaded, setIsLoaded] = useState(false);
-  const { user } = useAuth();
 
   let cacheResources = async () => {
-    const images = [require("./assets/images/splash-screen.png")];
+    const images = [
+      require("./assets/images/splash-screen.png"),
+      require("./assets/images/avatar.jpg"),
+    ];
     const cacheImages = images.map((image) => {
       return Asset.fromModule(image).downloadAsync();
     });

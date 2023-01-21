@@ -1,5 +1,6 @@
 import { Avatar } from "@rneui/themed";
 import { memo } from "react";
+import NoAvatar from "../../../assets/images/avatar.jpg";
 
 type Props = {
   avatar: any;
@@ -8,20 +9,20 @@ type Props = {
 };
 
 const CustomAvatar = ({ avatar = [], size = 55, sx = {} }: Props) => {
-  const uri = avatar.length ? `${avatar[0]?.url}` : "";
+  const uri = avatar.length ? { uri: `${avatar[0]?.url}` } : NoAvatar;
 
-  https: return (
+  return (
     <Avatar
       size={size}
       rounded
-      source={{ uri }}
+      source={uri}
+      avatarStyle={{ resizeMode: "cover" }}
       containerStyle={{
         backgroundColor: "#ddd",
         borderWidth: 1,
         borderColor: "#ddd",
         ...sx,
       }}
-      title="JS"
     />
   );
 };

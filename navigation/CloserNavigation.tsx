@@ -29,6 +29,7 @@ import {
   MyProductsScreen,
   MyCalendarScreen,
   MyCalendarStatisticsScreen,
+  MyCalendarSettingsScreen,
   MyLocationScreen,
   MyJobsScreen,
   AddJobsScreen,
@@ -293,6 +294,10 @@ const CloserNavigation = () => {
               <RootStack.Screen
                 name="MyCalendarStatistics"
                 component={MyCalendarStatisticsScreen}
+              />
+              <RootStack.Screen
+                name="MyCalendarSettings"
+                component={MyCalendarSettingsScreen}
               />
               <RootStack.Screen
                 name="MyLocation"
