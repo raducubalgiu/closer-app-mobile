@@ -17,3 +17,6 @@ declare module "@env" {
   export const THIRD_ROLE: string;
   export const SUPERADMIN_ROLE: string;
 }
+
+declare module "*.png";
+declare module "*.jpg";
