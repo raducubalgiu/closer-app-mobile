@@ -1,10 +1,4 @@
-import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  Dimensions,
-} from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Icon } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
@@ -20,7 +14,6 @@ import dayjs from "dayjs";
 import { RootStackParams } from "../models/navigation/rootStackParams";
 import { showToast } from "../utils";
 
-const { width } = Dimensions.get("window");
 const { black, grey0 } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "ScheduleConfirm">;
 
@@ -28,8 +21,8 @@ export const ScheduleConfirmScreen = ({ route }: IProps) => {
   const { user: customerId } = useAuth();
   const { serviceId, product, slot } = route.params;
   const { start, end, hour } = slot;
-  const { ownerId, name, price, option, duration, description, locationId } =
-    product;
+  const { ownerId, name, option, duration, description, locationId } = product;
+  const { price, priceWithDiscount, discount } = product;
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
@@ -45,7 +38,13 @@ export const ScheduleConfirmScreen = ({ route }: IProps) => {
       start,
       end,
       ownerId: ownerId.id,
-      customerId: customerId?.id,
+      customerId: {
+        id: customerId?.id,
+        name: customerId?.name,
+        username: customerId?.username,
+        avatar: customerId?.avatar,
+        checkmark: customerId?.checkmark,
+      },
       serviceId,
       locationId,
       product: {
@@ -53,6 +52,8 @@ export const ScheduleConfirmScreen = ({ route }: IProps) => {
         name,
         description,
         price,
+        priceWithDiscount,
+        discount,
         option,
         duration,
       },

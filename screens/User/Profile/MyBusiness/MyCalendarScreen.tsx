@@ -25,17 +25,12 @@ import {
   useRefreshOnFocus,
 } from "../../../../hooks";
 import { useNavigation } from "@react-navigation/native";
-import {
-  NativeStackNavigationProp,
-  NativeStackScreenProps,
-} from "@react-navigation/native-stack";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 
 const { black, primary, success, error } = theme.lightColors || {};
-type IProps = NativeStackScreenProps<RootStackParams, "MyCalendar">;
 
-export const MyCalendarScreen = ({ route }: IProps) => {
-  const { initialIndex } = route.params || {};
+export const MyCalendarScreen = () => {
   const { user } = useAuth();
   const now = dayjs().format("YYYY-MM-DD");
   const [selectedDay, setSelectedDay] = useState(now);
@@ -59,7 +54,6 @@ export const MyCalendarScreen = ({ route }: IProps) => {
           navigation.navigate("AddSchedule", {
             start: item.start,
             end: item.end,
-            index,
           })
         }
       >
@@ -186,7 +180,6 @@ export const MyCalendarScreen = ({ route }: IProps) => {
           ListHeaderComponent={header}
           ListFooterComponent={footer}
           refreshControl={refreshControl}
-          initialScrollIndex={initialIndex ? initialIndex : 0}
           getItemLayout={getItemLayout}
           contentContainerStyle={{ paddingBottom: insets.bottom }}
         />

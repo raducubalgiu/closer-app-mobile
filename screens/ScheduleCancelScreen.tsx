@@ -17,14 +17,15 @@ import {
 } from "@react-navigation/native-stack";
 import { Header, Button, Textarea } from "../components/core";
 import theme from "../assets/styles/theme";
-import { usePatch } from "../hooks";
+import { useAuth, usePatch } from "../hooks";
 import { RootStackParams } from "../models/navigation/rootStackParams";
+import { showToast } from "../utils";
 
 const { error, black, grey0 } = theme.lightColors || {};
-
 type IProps = NativeStackScreenProps<RootStackParams, "ScheduleCancel">;
 
 export const ScheduleCancelScreen = ({ route }: IProps) => {
+  const { user } = useAuth();
   const { scheduleId } = route.params;
   const [textarea, setTextarea] = useState(false);
   const [textareaVal, setTextareaVal] = useState("");
@@ -34,25 +35,26 @@ export const ScheduleCancelScreen = ({ route }: IProps) => {
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const messages = [
-    { _id: "1", message: t("cannotArrive") },
-    { _id: "2", message: t("foundBetterOffer") },
-    { _id: "3", message: t("others") },
+    { id: "1", message: t("cannotArrive") },
+    { id: "2", message: t("foundBetterOffer") },
+    { id: "3", message: t("others") },
   ];
 
   const { mutate, isLoading } = usePatch({
-    uri: `/schedules/${scheduleId}`,
+    uri: `/users/${user?.id}/schedules/${scheduleId}`,
     onSuccess: () => navigation.navigate("Schedules"),
+    onError: () => showToast({ message: "somethingWentWrong", bgColor: error }),
   });
 
   const cancelAppoinment = () =>
     mutate({
       status: "canceled",
-      cancelMessage: active?._id === "3" ? textareaVal : active.message,
+      cancelMessage: active?.id === "3" ? textareaVal : active.message,
     });
 
   const handleActive = (item: any) => {
-    setActive({ _id: item._id, message: item.message });
-    item._id === "3" ? setTextarea(true) : setTextarea(false);
+    setActive({ id: item.id, message: item.message });
+    item.id === "3" ? setTextarea(true) : setTextarea(false);
   };
 
   const activeBtn = { ...styles.btn, ...styles.activeBtn };
@@ -60,7 +62,7 @@ export const ScheduleCancelScreen = ({ route }: IProps) => {
 
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<any>) => {
-      const isSame = item?._id === active?._id;
+      const isSame = item?.id === active?.id;
 
       return (
         <Pressable
@@ -109,7 +111,7 @@ export const ScheduleCancelScreen = ({ route }: IProps) => {
           ListHeaderComponent={header}
           data={messages}
           renderItem={renderItem}
-          keyExtractor={(item) => item._id}
+          keyExtractor={(item) => item.id}
           contentContainerStyle={{ padding: 15 }}
           ListFooterComponent={footer}
         />

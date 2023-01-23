@@ -8,13 +8,14 @@ import CustomAvatar from "../../core/Avatars/CustomAvatar";
 import theme from "../../../assets/styles/theme";
 import { RootStackParams } from "../../../models/navigation/rootStackParams";
 
-const { black, success } = theme.lightColors || {};
+const { black, success, error } = theme.lightColors || {};
 type IProps = { schedule: any };
 
 const SlotDetailsListItem = ({ schedule }: IProps) => {
   const { t } = useTranslation();
   const { channel, customerId, product, serviceId, status } = schedule || {};
   const { name, username, avatar, checkmark } = customerId || {};
+  const { price, priceWithDiscount, discount } = product;
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
@@ -41,9 +42,9 @@ const SlotDetailsListItem = ({ schedule }: IProps) => {
   };
 
   return (
-    <Stack
-      align="start"
-      sx={{ ...styles.container, backgroundColor: getBgColor(channel) }}
+    <Pressable
+      onPress={() => navigation.navigate("ScheduleDetails", { schedule })}
+      style={{ ...styles.container, backgroundColor: getBgColor(channel) }}
     >
       <Stack align="start">
         <Pressable onPress={goToCustomer}>
@@ -69,11 +70,25 @@ const SlotDetailsListItem = ({ schedule }: IProps) => {
             {t(`${status}`)}
           </Text>
         </Stack>
-        <Text style={styles.priceNo}>
-          {product?.price} {t("ron")}
-        </Text>
+        <Stack align="end">
+          <Text
+            style={
+              discount > 0
+                ? { ...styles.priceWithDiscount, color: error }
+                : { ...styles.priceWithDiscount, color: black }
+            }
+          >
+            {discount > 0 ? product?.priceWithDiscount : product?.price}{" "}
+            {t("lei")}
+          </Text>
+          {discount > 0 && (
+            <Text style={styles.price}>
+              {product?.price} {t("lei")} (-{discount}%)
+            </Text>
+          )}
+        </Stack>
       </Stack>
-    </Stack>
+    </Pressable>
   );
 };
 
@@ -87,6 +102,7 @@ const styles = StyleSheet.create({
     height: 170,
     width: "100%",
     borderRadius: 5,
+    justifyContent: "space-between",
   },
   customer: {
     color: black,
@@ -123,9 +139,15 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     backgroundColor: success,
   },
-  priceNo: {
+  price: {
     color: black,
-    fontSize: 16,
+    fontSize: 13,
+    fontWeight: "500",
+    textTransform: "lowercase",
+  },
+  priceWithDiscount: {
+    fontSize: 15,
     fontWeight: "700",
+    marginBottom: 5,
   },
 });

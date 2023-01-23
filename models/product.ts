@@ -8,7 +8,8 @@ export interface Product {
   description: string;
   duration: number;
   price: number;
-  priceDiscount: number;
+  priceWithDiscount: number;
+  discount: number;
   serviceId: Service;
   option: Option;
   locationId: string;

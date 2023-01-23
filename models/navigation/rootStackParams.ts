@@ -20,7 +20,7 @@ export type RootStackParams = {
   AddJobs: any;
   AddProgram: any;
   AddPost: any;
-  AddSchedule: { start: string; end: string; index: any };
+  AddSchedule: { start: string; end: string };
   Bookmarks: { user: any };
   Comments: {
     postId: string;
@@ -74,7 +74,7 @@ export type RootStackParams = {
   Likes: { postId: string };
   MyBusiness: any;
   MyDashboard: any;
-  MyCalendar: { initialIndex: number };
+  MyCalendar: any;
   MyCalendarStatistics: { day: string };
   MyCalendarSettings: any;
   MyLocation: any;

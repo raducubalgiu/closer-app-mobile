@@ -4,6 +4,7 @@ import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
+import { useCallback, useState } from "react";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 import { Divider, Icon } from "@rneui/themed";
@@ -21,30 +22,33 @@ import { useAuth, useCalendarList, useGet, usePost } from "../../../../hooks";
 import theme from "../../../../assets/styles/theme";
 import { Product } from "../../../../models/product";
 import { showToast } from "../../../../utils";
+import { required, minField, maxField } from "../../../../constants/validation";
 
 const { black, grey0 } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "AddSchedule">;
 type Options = { id: string; name: string; options: any };
 
+const defaultValues = {
+  customer: "",
+  serviceId: "",
+  option: "",
+  product: "",
+  price: "",
+  discount: "0",
+};
+
 export const AddScheduleScreen = ({ route }: IProps) => {
-  const { start, end, index } = route.params;
+  const { start, end } = route.params;
   const { user } = useAuth();
+  const [priceWithDiscount, setPriceWithDiscount] = useState("");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
   const { DAYS_NAMES } = useCalendarList();
+  const isRequired = required(t);
 
-  const methods = useForm({
-    defaultValues: {
-      customer: "",
-      serviceId: "",
-      option: "",
-      product: "",
-      price: 130,
-      discount: 0,
-    },
-  });
-  const { handleSubmit, watch } = methods;
+  const methods = useForm({ defaultValues });
+  const { handleSubmit, watch, setValue } = methods;
   const selectedService = watch("serviceId");
   const selectedOption = watch("option");
 
@@ -71,12 +75,7 @@ export const AddScheduleScreen = ({ route }: IProps) => {
 
   const { mutate, isLoading } = usePost({
     uri: `/schedules`,
-    onSuccess: () =>
-      navigation.navigate({
-        name: "MyCalendar",
-        params: { initialIndex: index },
-        merge: true,
-      }),
+    onSuccess: () => navigation.goBack(),
     onError: () => showToast({ message: t("somethingWentWrong") }),
   });
 
@@ -101,11 +100,43 @@ export const AddScheduleScreen = ({ route }: IProps) => {
         name: product?.name,
         description: product?.description,
         price: product?.price,
+        priceWithDiscount,
+        discount: data?.discount,
         option: product?.option,
         duration: product?.duration,
       },
       channel: "owner",
     });
+  };
+
+  const setPrice = useCallback(
+    (event: string) => {
+      setValue("product", event);
+      products?.results?.map((prod: Product) => {
+        if (prod.id === event) {
+          setValue("price", prod.price.toString());
+          setPriceWithDiscount(prod.price.toString());
+        }
+      });
+    },
+    [products]
+  );
+
+  const handlePriceWithDiscount = useCallback(
+    (event: string) => {
+      const newPrice =
+        parseInt(priceWithDiscount) -
+        (parseInt(event) / 100) * parseInt(priceWithDiscount);
+      return newPrice.toString();
+    },
+    [priceWithDiscount]
+  );
+
+  const discountRightIcon = {
+    name: "percent",
+    type: "feather",
+    size: 17.5,
+    color: black,
   };
 
   return (
@@ -143,36 +174,50 @@ export const AddScheduleScreen = ({ route }: IProps) => {
               name="name"
               placeholder="Numele clientului"
               label="Client"
+              rules={{ ...isRequired }}
             />
             <FormInputSelect
               name="serviceId"
               placeholder="Alege serviciul"
               label="Serviciu"
               items={services}
+              rules={{ ...isRequired }}
             />
             <FormInputSelect
               name="option"
               placeholder="Alege categoria"
               label={t("option")}
               items={options}
+              rules={{ ...isRequired }}
             />
             <FormInputSelect
               name="product"
               placeholder="Alege produsul"
               label="Produs"
               items={products?.results}
+              onValueChange={(event: string) => setPrice(event)}
+              rules={{ ...isRequired }}
             />
             <FormInput
               name="price"
               placeholder="Pretul produsului"
               label={t("price")}
               editable={false}
+              rightText="lei"
+              rules={{ ...isRequired }}
             />
             <FormInput
               name="discount"
               placeholder={t("discount")}
               label={t("discount")}
               keyboardType="numeric"
+              rightIconProps={discountRightIcon}
+              maxLength={90}
+              onChangeInput={(event: string) => {
+                setValue("discount", event);
+                setValue("price", handlePriceWithDiscount(event));
+              }}
+              rules={{ ...isRequired }}
             />
           </FormProvider>
         </Stack>

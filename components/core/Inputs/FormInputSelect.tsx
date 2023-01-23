@@ -17,6 +17,7 @@ type IProps = {
   items: Item[];
   disabled?: boolean;
   label?: string;
+  onValueChange?: (event: any) => void;
 };
 
 export const FormInputSelect = ({
@@ -26,6 +27,7 @@ export const FormInputSelect = ({
   items = [],
   disabled = false,
   label = "",
+  onValueChange,
 }: IProps) => {
   const { formState, control, watch } = useFormContext();
   const { errors } = formState;
@@ -87,7 +89,7 @@ export const FormInputSelect = ({
           disabled={disabled}
           placeholder={inputPlaceholder}
           useNativeAndroidPickerStyle={false}
-          onValueChange={onChange}
+          onValueChange={onValueChange ? onValueChange : onChange}
           style={styles}
           doneText="Gata"
           value={value}

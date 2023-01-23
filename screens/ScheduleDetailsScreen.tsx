@@ -18,11 +18,11 @@ import { useTranslation } from "react-i18next";
 import { Icon } from "@rneui/base";
 import theme from "../assets/styles/theme";
 import { Divider } from "@rneui/themed";
-import { AddressFormat } from "../utils";
+import { AddressFormat, showToast } from "../utils";
 import { useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
 import { useGet } from "../hooks";
-import { MapStatic } from "../components/customized";
+import MapStatic from "../components/customized/Map/MapStatic";
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
@@ -33,23 +33,25 @@ const { black, grey0, success, error } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "ScheduleDetails">;
 
 export const ScheduleDetailsScreen = ({ route }: IProps) => {
-  const { user, product, start, service, status, _id, location } =
+  const { _id, ownerId, product, start, serviceId, status, locationId } =
     route.params.schedule;
-  const { name, username, avatar, checkmark } = user;
+  const { name, username, avatar, checkmark } = ownerId;
   const { t } = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const { data } = useGet({
     model: "location",
-    uri: `/users/${user._id}/locations/${location}`,
+    uri: `/users/${ownerId?.id}/locations/${locationId}`,
+    onError: () =>
+      showToast({ message: "Nu au fost obtinute detaliile despre locatie" }),
   });
 
   const { address } = data || {};
 
   const goToOwner = () =>
     navigation.push("ProfileGeneral", {
-      userId: user._id,
+      userId: ownerId.id,
       username,
       name,
       avatar,
@@ -62,7 +64,7 @@ export const ScheduleDetailsScreen = ({ route }: IProps) => {
     navigation.navigate("ScheduleCancel", { scheduleId: _id });
 
   const goToBookAgain = () =>
-    navigation.navigate("CalendarBig", { product, service });
+    navigation.navigate("CalendarBig", { product, serviceId });
 
   let actionButton;
 
@@ -104,13 +106,13 @@ export const ScheduleDetailsScreen = ({ route }: IProps) => {
       </SafeAreaView>
       <ScrollView style={styles.container}>
         <View>
-          <View style={{ padding: 15 }}>
+          <View style={{ paddingHorizontal: 15, paddingVertical: 5 }}>
             <Text style={{ ...styles.status, ...statusColor }}>{status}</Text>
             <Stack direction="row" justify="start">
               <Text style={styles.date}>
-                {dayjs(start).format("DD MMMM YY, HH:MM")}
+                {dayjs(start).utc().format("DD MMMM YY, HH:mm")}
               </Text>
-              <Text style={styles.service}>{service?.name}</Text>
+              <Text style={styles.service}>{serviceId?.name}</Text>
             </Stack>
             <Divider color="#ddd" style={styles.divider} />
             <Stack direction="row" align="start">
@@ -128,6 +130,18 @@ export const ScheduleDetailsScreen = ({ route }: IProps) => {
               </Stack>
             </Stack>
           </View>
+          <Pressable onPress={goToOwner} style={styles.userCont}>
+            <Stack direction="row" justify="start">
+              <CustomAvatar avatar={ownerId?.avatar} size={40} />
+              <Stack align="start" sx={{ marginLeft: 10 }}>
+                <Text style={styles.name}>{ownerId?.name}</Text>
+                <Stack direction="row" align="start">
+                  <IconStar />
+                  <Text style={styles.rating}>4.5</Text>
+                </Stack>
+              </Stack>
+            </Stack>
+          </Pressable>
           {actionButton}
           {address && (
             <View>
@@ -151,25 +165,7 @@ export const ScheduleDetailsScreen = ({ route }: IProps) => {
               </Stack>
             </View>
           )}
-          <Pressable onPress={goToOwner} style={styles.userCont}>
-            <Stack direction="row" justify="start">
-              <CustomAvatar avatar={user?.avatar} size={40} />
-              <Stack align="start" sx={{ marginLeft: 10 }}>
-                <Text style={styles.name}>{user?.name}</Text>
-                <Stack direction="row" align="start">
-                  <IconStar />
-                  <Text style={styles.rating}>4.5</Text>
-                </Stack>
-              </Stack>
-            </Stack>
-          </Pressable>
-          <Divider style={styles.divider} />
-          <Stack
-            direction="row"
-            justify="start"
-            align="start"
-            sx={{ marginHorizontal: 15 }}
-          >
+          <Stack direction="row" justify="start" sx={{ marginHorizontal: 15 }}>
             <IconLocation size={22} color={black} />
             <Text style={styles.address}>{AddressFormat(address)}</Text>
           </Stack>
@@ -221,7 +217,7 @@ const styles = StyleSheet.create({
     fontSize: 14.5,
     marginLeft: 5,
   },
-  userCont: { paddingHorizontal: 15, paddingVertical: 10 },
+  userCont: { padding: 15 },
   name: {
     fontSize: 16,
     color: black,

@@ -66,7 +66,7 @@ export const ScheduleOverviewListItem = ({ schedule }: IProps) => {
             <Stack direction="row" sx={{ marginTop: 5, marginBottom: 15 }}>
               <Icon name="clock" type="feather" color={grey0} size={20} />
               <Text style={styles.date}>
-                {dayjs(start).format("D MMMM, HH:mm")}
+                {dayjs(start).utc().format("D MMMM, HH:mm")}
               </Text>
             </Stack>
             <UserListItemSimple

@@ -17,6 +17,10 @@ type Props = {
   secureTextEntry?: boolean;
   keyboardType?: any;
   editable?: boolean;
+  initialValue?: any;
+  rightIconProps?: any;
+  rightText?: string;
+  onChangeInput?: (event: string) => void;
 };
 
 export const FormInput = ({
@@ -29,6 +33,10 @@ export const FormInput = ({
   editable = true,
   maxLength,
   keyboardType = "default",
+  initialValue = null,
+  rightIconProps,
+  rightText,
+  onChangeInput,
   ...props
 }: Props) => {
   const { formState, control } = useFormContext();
@@ -44,11 +52,11 @@ export const FormInput = ({
 
   const inputStyle = StyleSheet.create({
     input: {
-      padding: 12.5,
       borderWidth: 1,
       width: "100%",
       marginBottom: 10,
       borderRadius: 10,
+      paddingHorizontal: 12.5,
       borderColor: has(errors, name) ? error : "#ccc",
       ...sx,
     },
@@ -61,23 +69,34 @@ export const FormInput = ({
         control={control}
         rules={{ ...rules }}
         render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            {...props}
-            placeholder={placeholder}
-            style={
+          <Stack
+            direction="row"
+            sx={
               editable
                 ? inputStyle.input
                 : { ...inputStyle.input, backgroundColor: "#eee" }
             }
-            maxLength={maxLength}
-            keyboardType={keyboardType}
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            placeholderTextColor="#9EA0A4"
-            secureTextEntry={secureTextEntry}
-            editable={editable}
-          />
+          >
+            <TextInput
+              {...props}
+              placeholder={placeholder}
+              style={{ flex: 1, paddingVertical: 12.5 }}
+              maxLength={maxLength}
+              keyboardType={keyboardType}
+              onBlur={onBlur}
+              onChangeText={onChangeInput ? onChangeInput : onChange}
+              value={initialValue ? initialValue : value}
+              placeholderTextColor="#9EA0A4"
+              secureTextEntry={secureTextEntry}
+              editable={editable}
+            />
+            {!!rightIconProps && <Icon {...rightIconProps} />}
+            {!!rightText && (
+              <Text style={{ color: black, fontWeight: "600" }}>
+                {rightText}
+              </Text>
+            )}
+          </Stack>
         )}
         name={name}
       />
