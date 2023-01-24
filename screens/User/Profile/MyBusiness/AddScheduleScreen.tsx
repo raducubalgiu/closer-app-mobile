@@ -1,4 +1,11 @@
-import { SafeAreaView, ScrollView, StyleSheet, Text } from "react-native";
+import {
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  Platform,
+  KeyboardAvoidingView,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import {
   NativeStackNavigationProp,
@@ -151,86 +158,89 @@ export const AddScheduleScreen = ({ route }: IProps) => {
         />
       </Stack>
       <Divider color="#ddd" style={{ marginHorizontal: 15 }} />
-      <ScrollView>
-        <Stack sx={{ margin: 25 }}>
-          <Icon
-            name="calendar-clock-outline"
-            type="material-community"
-            size={60}
-            color="#ddd"
-          />
-          <Text style={styles.date}>
-            {DAYS_NAMES[dayjs(start).utc().day()]},{" "}
-            {dayjs(start).utc().format("D MMMM YY")}
-          </Text>
-          <Text style={styles.hour}>
-            Ora {dayjs(start).utc().format("HH:mm")}
-          </Text>
-        </Stack>
-        <Divider color="#ddd" style={{ marginHorizontal: 15 }} />
-        <Stack align="start" sx={{ margin: 15 }}>
-          <FormProvider {...methods}>
-            <FormInput
-              name="name"
-              placeholder="Numele clientului"
-              label="Client"
-              rules={{ ...isRequired }}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "position" : "height"}
+        keyboardVerticalOffset={60}
+      >
+        <ScrollView contentContainerStyle={{ paddingVertical: 10 }}>
+          <Stack>
+            <Icon
+              name="calendar-clock-outline"
+              type="material-community"
+              size={60}
+              color="#ddd"
             />
-            <FormInputSelect
-              name="serviceId"
-              placeholder="Alege serviciul"
-              label="Serviciu"
-              items={services}
-              rules={{ ...isRequired }}
-            />
-            <FormInputSelect
-              name="option"
-              placeholder="Alege categoria"
-              label={t("option")}
-              items={options}
-              rules={{ ...isRequired }}
-            />
-            <FormInputSelect
-              name="product"
-              placeholder="Alege produsul"
-              label="Produs"
-              items={products?.results}
-              onValueChange={(event: string) => setPrice(event)}
-              rules={{ ...isRequired }}
-            />
-            <FormInput
-              name="price"
-              placeholder="Pretul produsului"
-              label={t("price")}
-              editable={false}
-              rightText="lei"
-              rules={{ ...isRequired }}
-            />
-            <FormInput
-              name="discount"
-              placeholder={t("discount")}
-              label={t("discount")}
-              keyboardType="numeric"
-              rightIconProps={discountRightIcon}
-              maxLength={90}
-              onChangeInput={(event: string) => {
-                setValue("discount", event);
-                setValue("price", handlePriceWithDiscount(event));
-              }}
-              rules={{ ...isRequired }}
-            />
-          </FormProvider>
-        </Stack>
-      </ScrollView>
-      <Stack sx={styles.buttonContainer}>
+            <Text style={styles.date}>
+              {DAYS_NAMES[dayjs(start).utc().day()]},{" "}
+              {dayjs(start).utc().format("D MMMM YY")}
+            </Text>
+            <Text style={styles.hour}>
+              Ora {dayjs(start).utc().format("HH:mm")}
+            </Text>
+          </Stack>
+          <Divider color="#ddd" style={{ marginHorizontal: 15 }} />
+          <Stack align="start" sx={{ margin: 15 }}>
+            <FormProvider {...methods}>
+              <FormInput
+                name="name"
+                placeholder="Numele clientului"
+                label="Client"
+                rules={{ ...isRequired }}
+              />
+              <FormInputSelect
+                name="serviceId"
+                placeholder="Alege serviciul"
+                label="Serviciu"
+                items={services}
+                rules={{ ...isRequired }}
+              />
+              <FormInputSelect
+                name="option"
+                placeholder="Alege categoria"
+                label={t("option")}
+                items={options}
+                rules={{ ...isRequired }}
+              />
+              <FormInputSelect
+                name="product"
+                placeholder="Alege produsul"
+                label="Produs"
+                items={products?.results}
+                onValueChange={(event: string) => setPrice(event)}
+                rules={{ ...isRequired }}
+              />
+              <FormInput
+                name="price"
+                placeholder="Pretul produsului"
+                label={t("price")}
+                editable={false}
+                rightText="lei"
+                rules={{ ...isRequired }}
+              />
+              <FormInput
+                name="discount"
+                placeholder={t("discount")}
+                label={t("discount")}
+                keyboardType="numeric"
+                rightIconProps={discountRightIcon}
+                maxLength={90}
+                onChangeInput={(event: string) => {
+                  setValue("discount", event);
+                  setValue("price", handlePriceWithDiscount(event));
+                }}
+                rules={{ ...isRequired }}
+              />
+            </FormProvider>
+          </Stack>
+        </ScrollView>
         <Button
           title={t("add")}
-          sxBtn={{ width: "100%" }}
+          sxBtn={{ marginHorizontal: 15 }}
           onPress={handleSubmit(handleSchedule)}
           loading={isLoading}
           disabled={isLoading}
         />
-      </Stack>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
@@ -239,13 +249,13 @@ const styles = StyleSheet.create({
   screen: {
     backgroundColor: "white",
     flex: 1,
-    justifyContent: "space-between",
   },
   header: {
-    padding: 15,
     width: "100%",
     backgroundColor: "white",
     zIndex: 10000,
+    height: 50,
+    paddingHorizontal: 15,
   },
   title: {
     fontWeight: "500",

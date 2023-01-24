@@ -16,7 +16,7 @@ import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import { Header, Button, Textarea } from "../components/core";
+import { Button, Textarea } from "../components/core";
 import { THIRD_ROLE } from "@env";
 import theme from "../assets/styles/theme";
 import { useAuth, usePatch } from "../hooks";
