@@ -26,8 +26,8 @@ export const Header = ({
   const handleBack = () => navigation.goBack();
 
   return (
-    <View>
-      <Stack direction="row" sx={styles.container}>
+    <View style={styles.container}>
+      <Stack direction="row">
         <TouchableOpacity onPress={handleBack}>
           <IconBackButton color={!hideBtnLeft ? black : "white"} />
         </TouchableOpacity>
@@ -40,13 +40,18 @@ export const Header = ({
         {actionBtn && actionBtn}
         {!actionBtn && <Icon name="arrow-back-ios" color="white" />}
       </Stack>
-      {divider && <Divider color="#ddd" />}
+      {divider && <Divider color="#ddd" style={{ marginTop: 5 }} />}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { paddingVertical: 10, paddingHorizontal: 15, zIndex: 10000 },
+  container: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    zIndex: 100000,
+    backgroundColor: "white",
+  },
   title: {
     fontSize: 16,
     color: black,

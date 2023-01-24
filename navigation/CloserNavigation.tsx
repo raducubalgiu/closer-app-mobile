@@ -398,6 +398,13 @@ const CloserNavigation = () => {
             <RootStack.Screen
               name="ScheduleCancel"
               component={ScheduleCancelScreen}
+              options={{
+                headerShown: true,
+                headerTitle: "",
+                headerBackButtonMenuEnabled: false,
+                headerTintColor: black,
+                headerShadowVisible: false,
+              }}
             />
             <RootStack.Screen name="Discounts" component={DiscountsScreen} />
             <RootStack.Screen

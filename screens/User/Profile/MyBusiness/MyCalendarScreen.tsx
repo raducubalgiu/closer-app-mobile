@@ -163,7 +163,6 @@ export const MyCalendarScreen = () => {
     <View style={styles.screen}>
       <SafeAreaView>
         <Header
-          divider
           title={t("myCalendar")}
           subtitle={user?.name}
           actionBtn={actionBtn}

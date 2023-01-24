@@ -1,11 +1,4 @@
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  RefreshControl,
-} from "react-native";
+import { SafeAreaView, StyleSheet, Text, View, ScrollView } from "react-native";
 import { Divider } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -19,7 +12,8 @@ import {
   Stack,
 } from "../../../../components/core";
 import theme from "../../../../assets/styles/theme";
-import { useAuth, useGet, useRefreshByUser } from "../../../../hooks";
+import { useAuth, useGet } from "../../../../hooks";
+import { displayZero } from "../../../../utils";
 
 type IProps = NativeStackScreenProps<RootStackParams, "MyCalendarStatistics">;
 const { success, black } = theme.lightColors || {};
@@ -70,54 +64,57 @@ export const MyCalendarStatisticsScreen = ({ route }: IProps) => {
     data?.statistics || {};
 
   const loading = isFetching || isLoading;
-  const { refreshing, refetchByUser } = useRefreshByUser(refetch);
-
-  const refreshControl = (
-    <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
-  );
 
   return (
     <SafeAreaView style={styles.screen}>
       <Header
         title={t("bookingsStatistics")}
         subtitle={dayjs(day, "YYYY/MM/DD").format("D MMM YYYY")}
-        divider
       />
-      {loading && !refreshing && <Spinner />}
+      {loading && <Spinner />}
       {!loading && (
-        <ScrollView refreshControl={refreshControl} style={styles.scrollView}>
+        <ScrollView style={styles.scrollView}>
           <Stack direction="row" justify="around" sx={styles.countersContainer}>
             <ItemSummary
               title={t("newClients")}
-              counter={newClients}
+              counter={displayZero(newClients)}
               bgColor={success}
             />
             <ItemSummary
               title={t("ownClients")}
-              counter={ownClients}
+              counter={displayZero(ownClients)}
               bgColor="#ccf2ff"
             />
             <ItemSummary
               title={t("closerClients")}
-              counter={closerClients}
+              counter={displayZero(closerClients)}
               bgColor="#fff5cc"
             />
           </Stack>
           <Divider style={styles.divider} />
           <Heading title="Incasari" sx={styles.heading} />
-          <ItemList title={t("acceptedOrders")} counter={statusAccepted} />
-          <ItemList title={t("finishedOrders")} counter={statusFinished} />
-          <ItemList title={t("canceledOrders")} counter={statusCanceled} />
-          <ItemList title={t("total")} counter={totalBookings} />
+          <ItemList
+            title={t("acceptedOrders")}
+            counter={displayZero(statusAccepted)}
+          />
+          <ItemList
+            title={t("finishedOrders")}
+            counter={displayZero(statusFinished)}
+          />
+          <ItemList
+            title={t("canceledOrders")}
+            counter={displayZero(statusCanceled)}
+          />
+          <ItemList title={t("total")} counter={displayZero(totalBookings)} />
           <Divider style={styles.divider} />
           <Heading title="Incasari" sx={styles.heading} />
           <ItemList
             title={t("salesFinishedOrders")}
-            counter={`${totalSalesFinalized} lei`}
+            counter={`${displayZero(totalSalesFinalized)} lei`}
           />
           <ItemList
             title={t("closerCommission")}
-            counter={`${closerCommission} lei`}
+            counter={`${displayZero(closerCommission)} lei`}
           />
         </ScrollView>
       )}

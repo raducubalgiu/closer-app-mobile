@@ -12,6 +12,7 @@ import {
   IconLocation,
   IconStar,
   Button,
+  Protected,
 } from "../components/core";
 import CustomAvatar from "../components/core/Avatars/CustomAvatar";
 import { useTranslation } from "react-i18next";
@@ -21,20 +22,30 @@ import { Divider } from "@rneui/themed";
 import { AddressFormat, showToast } from "../utils";
 import { useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
-import { useGet } from "../hooks";
+import { useAuth, useGet } from "../hooks";
 import MapStatic from "../components/customized/Map/MapStatic";
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
 import { RootStackParams } from "../models/navigation/rootStackParams";
+import { SECOND_ROLE, THIRD_ROLE } from "@env";
 
 const { black, grey0, success, error } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "ScheduleDetails">;
 
 export const ScheduleDetailsScreen = ({ route }: IProps) => {
-  const { _id, ownerId, product, start, serviceId, status, locationId } =
-    route.params.schedule;
+  const { user } = useAuth();
+  const {
+    id,
+    ownerId,
+    product,
+    start,
+    serviceId,
+    status,
+    locationId,
+    customerId,
+  } = route.params.schedule;
   const { name, username, avatar, checkmark } = ownerId;
   const { t } = useTranslation();
   const navigation =
@@ -61,7 +72,7 @@ export const ScheduleDetailsScreen = ({ route }: IProps) => {
     });
 
   const goToCancel = () =>
-    navigation.navigate("ScheduleCancel", { scheduleId: _id });
+    navigation.navigate("ScheduleCancel", { scheduleId: id });
 
   const goToBookAgain = () =>
     navigation.navigate("CalendarBig", { product, serviceId });
@@ -81,15 +92,17 @@ export const ScheduleDetailsScreen = ({ route }: IProps) => {
     );
   } else {
     actionButton = (
-      <Button
-        onPress={goToBookAgain}
-        title={t("bookAgain")}
-        size="lg"
-        radius={25}
-        bgColor={"#eee"}
-        color={black}
-        sxBtn={{ margin: 15 }}
-      />
+      <Protected userRole={user?.role} roles={[THIRD_ROLE, SECOND_ROLE]}>
+        <Button
+          onPress={goToBookAgain}
+          title={t("bookAgain")}
+          size="lg"
+          radius={25}
+          bgColor={"#eee"}
+          color={black}
+          sxBtn={{ margin: 15 }}
+        />
+      </Protected>
     );
   }
 
@@ -110,7 +123,7 @@ export const ScheduleDetailsScreen = ({ route }: IProps) => {
             <Text style={{ ...styles.status, ...statusColor }}>{status}</Text>
             <Stack direction="row" justify="start">
               <Text style={styles.date}>
-                {dayjs(start).utc().format("DD MMMM YY, HH:mm")}
+                {dayjs(start).utc().format("DD MMMM YYYY, HH:mm")}
               </Text>
               <Text style={styles.service}>{serviceId?.name}</Text>
             </Stack>
@@ -132,43 +145,47 @@ export const ScheduleDetailsScreen = ({ route }: IProps) => {
           </View>
           <Pressable onPress={goToOwner} style={styles.userCont}>
             <Stack direction="row" justify="start">
-              <CustomAvatar avatar={ownerId?.avatar} size={40} />
+              <CustomAvatar
+                avatar={
+                  user?.role !== "subscriber"
+                    ? customerId?.avatar
+                    : ownerId?.avatar
+                }
+                size={40}
+              />
               <Stack align="start" sx={{ marginLeft: 10 }}>
-                <Text style={styles.name}>{ownerId?.name}</Text>
-                <Stack direction="row" align="start">
-                  <IconStar />
-                  <Text style={styles.rating}>4.5</Text>
-                </Stack>
+                <Text style={styles.name}>
+                  {user?.role !== "subscriber"
+                    ? customerId?.name
+                    : ownerId?.name}
+                </Text>
+                {user?.role === THIRD_ROLE && (
+                  <Stack direction="row" align="start">
+                    <IconStar />
+                    <Text style={styles.rating}>4.5</Text>
+                  </Stack>
+                )}
               </Stack>
             </Stack>
           </Pressable>
           {actionButton}
-          {address && (
-            <View>
+          <Protected userRole={user?.role} roles={[SECOND_ROLE, THIRD_ROLE]}>
+            {address && (
               <MapStatic
                 latitude={address.coordinates[0]}
                 longitude={address.coordinates[1]}
                 sx={{ marginVertical: 20 }}
               />
-              <Stack
-                align="start"
-                sx={{ position: "absolute", bottom: 30, right: 15 }}
-              >
-                <Button
-                  onPress={() => {}}
-                  title={t("navigate")}
-                  bgColor="white"
-                  size="md"
-                  radius={25}
-                  sxBtn={styles.navigateBtn}
-                />
-              </Stack>
-            </View>
-          )}
-          <Stack direction="row" justify="start" sx={{ marginHorizontal: 15 }}>
-            <IconLocation size={22} color={black} />
-            <Text style={styles.address}>{AddressFormat(address)}</Text>
-          </Stack>
+            )}
+            <Stack
+              direction="row"
+              justify="start"
+              sx={{ marginHorizontal: 15 }}
+            >
+              <IconLocation size={22} color={black} />
+              <Text style={styles.address}>{AddressFormat(address)}</Text>
+            </Stack>
+          </Protected>
         </View>
       </ScrollView>
     </View>

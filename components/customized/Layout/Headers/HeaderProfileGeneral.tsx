@@ -1,6 +1,5 @@
 import { SafeAreaView, StyleSheet, Text } from "react-native";
 import React from "react";
-import { Icon } from "@rneui/themed";
 import { IconBackButton, IconButton, Stack, Checkmark } from "../../../core";
 import theme from "../../../../assets/styles/theme";
 

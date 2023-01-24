@@ -6,6 +6,7 @@ import {
   FlatList,
   KeyboardAvoidingView,
   ListRenderItemInfo,
+  Platform,
 } from "react-native";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -16,10 +17,12 @@ import {
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
 import { Header, Button, Textarea } from "../components/core";
+import { THIRD_ROLE } from "@env";
 import theme from "../assets/styles/theme";
 import { useAuth, usePatch } from "../hooks";
 import { RootStackParams } from "../models/navigation/rootStackParams";
 import { showToast } from "../utils";
+import { useHeaderHeight } from "@react-navigation/elements";
 
 const { error, black, grey0 } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "ScheduleCancel">;
@@ -33,6 +36,7 @@ export const ScheduleCancelScreen = ({ route }: IProps) => {
   const { t } = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
+  const headerHeight = useHeaderHeight();
 
   const messages = [
     { id: "1", message: t("cannotArrive") },
@@ -42,8 +46,12 @@ export const ScheduleCancelScreen = ({ route }: IProps) => {
 
   const { mutate, isLoading } = usePatch({
     uri: `/users/${user?.id}/schedules/${scheduleId}`,
-    onSuccess: () => navigation.navigate("Schedules"),
-    onError: () => showToast({ message: "somethingWentWrong", bgColor: error }),
+    onSuccess: () =>
+      user?.role === THIRD_ROLE
+        ? navigation.navigate("Schedules")
+        : navigation.navigate("MyCalendar"),
+    onError: () =>
+      showToast({ message: t('"somethingWentWrong"'), bgColor: error }),
   });
 
   const cancelAppoinment = () =>
@@ -102,10 +110,9 @@ export const ScheduleCancelScreen = ({ route }: IProps) => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Header title="" />
       <KeyboardAvoidingView
-        behavior="padding"
-        style={{ justifyContent: "space-between", flex: 1 }}
+        behavior={Platform.OS === "ios" ? "position" : "height"}
+        keyboardVerticalOffset={headerHeight}
       >
         <FlatList
           ListHeaderComponent={header}
@@ -114,6 +121,7 @@ export const ScheduleCancelScreen = ({ route }: IProps) => {
           keyExtractor={(item) => item.id}
           contentContainerStyle={{ padding: 15 }}
           ListFooterComponent={footer}
+          bounces={false}
         />
         <Button
           title={t("cancelAppoinment")}
@@ -130,10 +138,7 @@ export const ScheduleCancelScreen = ({ route }: IProps) => {
 };
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: "white",
-  },
+  screen: { flex: 1, backgroundColor: "white" },
   container: {
     flex: 1,
     paddingHorizontal: 15,
@@ -160,7 +165,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   activeBtn: {
-    backgroundColor: "#222222",
+    backgroundColor: black,
   },
   btnText: {
     fontSize: 14,

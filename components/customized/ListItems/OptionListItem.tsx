@@ -32,6 +32,6 @@ const styles = StyleSheet.create({
     color: black,
     fontWeight: "500",
   },
-  activeBtn: { backgroundColor: "#bbb" },
+  activeBtn: { backgroundColor: black },
   activeTxt: { color: "white" },
 });
