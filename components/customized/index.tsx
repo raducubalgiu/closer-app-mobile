@@ -117,4 +117,3 @@ export { InfoIconButton } from "./IconButtons/InfoIconButton";
 export { ProfileIconButton } from "./IconButtons/ProfileIconButton";
 
 export { DatePickerRange } from "./Calendars/DatePickerRange";
-export { DatePicker } from "./Calendars/DatePicker";

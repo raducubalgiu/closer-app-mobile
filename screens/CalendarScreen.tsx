@@ -19,7 +19,8 @@ import {
 } from "@react-navigation/native-stack";
 import theme from "../assets/styles/theme";
 import { Header, Heading, Spinner, Stack } from "../components/core";
-import { DatePicker, NoFoundMessage } from "../components/customized";
+import { NoFoundMessage } from "../components/customized";
+import DatePicker from "../components/customized/Calendars/DatePicker";
 import { useGet, useRefreshOnFocus, useRefreshByUser } from "../hooks";
 import { RootStackParams } from "../models/navigation/rootStackParams";
 import { SHORT_DATE } from "../utils/date-utils";

@@ -1,5 +1,12 @@
-import { SafeAreaView, StyleSheet, Text, View, ScrollView } from "react-native";
-import { Divider } from "@rneui/themed";
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Pressable,
+} from "react-native";
+import { Divider, Icon } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import dayjs from "dayjs";
@@ -12,16 +19,32 @@ import {
   Stack,
 } from "../../../../components/core";
 import theme from "../../../../assets/styles/theme";
-import { useAuth, useGet } from "../../../../hooks";
+import { useAuth, useGet, useSheet } from "../../../../hooks";
 import { displayZero } from "../../../../utils";
 
 type IProps = NativeStackScreenProps<RootStackParams, "MyCalendarStatistics">;
-const { success, black } = theme.lightColors || {};
+const { success, black, grey0 } = theme.lightColors || {};
 
-const ItemList = ({ title, counter }: { title: string; counter: any }) => {
+const ItemList = ({
+  title,
+  counter,
+  bold,
+}: {
+  title: string;
+  counter: any;
+  bold?: boolean;
+}) => {
   return (
-    <ListItem between sx={{ marginBottom: 15 }}>
-      <Text style={styles.statusLabel}>{title}</Text>
+    <ListItem between sx={styles.listItem}>
+      <Text
+        style={
+          !bold
+            ? { ...styles.statusLabel }
+            : { ...styles.statusLabel, fontWeight: "600" }
+        }
+      >
+        {title}
+      </Text>
       <Text style={styles.status}>{counter}</Text>
     </ListItem>
   );
@@ -51,17 +74,33 @@ export const MyCalendarStatisticsScreen = ({ route }: IProps) => {
   const { user } = useAuth();
   const { day } = route.params;
   const { t } = useTranslation();
+  const { BOTTOM_SHEET, SHOW_BS } = useSheet(
+    ["1%", 200],
+    <Stack align="center" sx={{ flex: 1, padding: 20, marginTop: 10 }}>
+      <Stack>
+        <Text style={styles.headingSheet}>{t("sales")}</Text>
+        <Text style={{ color: grey0, textAlign: "center" }}>
+          {t("salesAreCalculatedFinalized")}
+        </Text>
+      </Stack>
+    </Stack>
+  );
 
-  const { data, isLoading, isFetching, refetch } = useGet({
+  const { data, isLoading, isFetching } = useGet({
     model: "calendarStatistics",
     uri: `/users/${user?.id}/schedules/calendar/statistics?day=${day}`,
   });
 
   const { newClients, ownClients, closerClients } = data?.statistics || {};
-  const { statusAccepted, statusCanceled, statusFinished } =
+  const { statusAccepted, statusCanceled, statusFinished, totalBookings } =
     data?.statistics || {};
-  const { totalBookings, totalSalesFinalized, closerCommission } =
-    data?.statistics || {};
+  const {
+    salesWithOwn,
+    salesNewClients,
+    salesWithCloser,
+    totalSales,
+    closerCommission,
+  } = data?.statistics || {};
 
   const loading = isFetching || isLoading;
 
@@ -92,7 +131,7 @@ export const MyCalendarStatisticsScreen = ({ route }: IProps) => {
             />
           </Stack>
           <Divider style={styles.divider} />
-          <Heading title="Incasari" sx={styles.heading} />
+          <Heading title={t("orders")} sx={styles.heading} />
           <ItemList
             title={t("acceptedOrders")}
             counter={displayZero(statusAccepted)}
@@ -105,19 +144,42 @@ export const MyCalendarStatisticsScreen = ({ route }: IProps) => {
             title={t("canceledOrders")}
             counter={displayZero(statusCanceled)}
           />
-          <ItemList title={t("total")} counter={displayZero(totalBookings)} />
-          <Divider style={styles.divider} />
-          <Heading title="Incasari" sx={styles.heading} />
           <ItemList
-            title={t("salesFinishedOrders")}
-            counter={`${displayZero(totalSalesFinalized)} lei`}
+            title={t("total")}
+            counter={displayZero(totalBookings)}
+            bold
+          />
+          <Divider style={styles.divider} />
+          <Stack direction="row" align="center">
+            <Heading title={t("sales")} sx={styles.heading} />
+            <Pressable onPress={() => SHOW_BS()} style={{ padding: 15 }}>
+              <Icon name="info" type="feather" size={17.5} />
+            </Pressable>
+          </Stack>
+          <ItemList
+            title={t("salesNewClients")}
+            counter={`${displayZero(salesNewClients)} lei`}
+          />
+          <ItemList
+            title={t("salesWithOwn")}
+            counter={`${displayZero(salesWithOwn)} lei`}
+          />
+          <ItemList
+            title={t("salesWithCloser")}
+            counter={`${displayZero(salesWithCloser)} lei`}
+          />
+          <ItemList
+            title={t("totalSales")}
+            counter={`${displayZero(totalSales)} lei`}
           />
           <ItemList
             title={t("closerCommission")}
             counter={`${displayZero(closerCommission)} lei`}
+            bold
           />
         </ScrollView>
       )}
+      {BOTTOM_SHEET}
     </SafeAreaView>
   );
 };
@@ -127,8 +189,13 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     flex: 1,
   },
-  scrollView: { marginHorizontal: 15, flex: 1 },
-  countersContainer: { paddingTop: 30, paddingBottom: 50, width: "100%" },
+  scrollView: { flex: 1 },
+  countersContainer: {
+    paddingTop: 30,
+    paddingBottom: 50,
+    width: "100%",
+    paddingHorizontal: 15,
+  },
   counter: { color: black, fontWeight: "700", fontSize: 18 },
   bullet: { width: 10, height: 10, borderRadius: 50 },
   label: {
@@ -137,8 +204,15 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     fontSize: 13,
   },
-  heading: { fontSize: 16 },
+  heading: { fontSize: 16, marginLeft: 15 },
   divider: { marginVertical: 10 },
+  listItem: { marginBottom: 15, marginHorizontal: 15 },
   statusLabel: { fontSize: 15, color: black },
   status: { color: black, fontWeight: "500", fontSize: 15 },
+  headingSheet: {
+    marginBottom: 10,
+    fontWeight: "600",
+    fontSize: 19,
+    color: black,
+  },
 });

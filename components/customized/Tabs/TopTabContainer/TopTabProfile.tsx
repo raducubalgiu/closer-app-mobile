@@ -116,7 +116,6 @@ export const TopTabProfile = ({ userId, service, option, user }: IProps) => {
         />
       )}
       <Tab.Screen name="VideoV" component={VideosVProfile} />
-      <Tab.Screen name="VideoH" component={VideosHProfile} />
       {role === MAIN_ROLE && (
         <Tab.Screen
           name="Jobs"

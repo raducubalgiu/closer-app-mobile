@@ -5,13 +5,16 @@ import {
   Text,
   Platform,
   KeyboardAvoidingView,
+  View,
+  Pressable,
+  Keyboard,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 import { Divider, Icon } from "@rneui/themed";
@@ -159,8 +162,9 @@ export const AddScheduleScreen = ({ route }: IProps) => {
       </Stack>
       <Divider color="#ddd" style={{ marginHorizontal: 15 }} />
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "position" : "height"}
-        keyboardVerticalOffset={60}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ justifyContent: "space-between", flex: 1 }}
+        keyboardVerticalOffset={-5}
       >
         <ScrollView contentContainerStyle={{ paddingVertical: 10 }}>
           <Stack>
@@ -235,10 +239,12 @@ export const AddScheduleScreen = ({ route }: IProps) => {
         </ScrollView>
         <Button
           title={t("add")}
-          sxBtn={{ marginHorizontal: 15 }}
           onPress={handleSubmit(handleSchedule)}
           loading={isLoading}
           disabled={isLoading}
+          sxBtn={{
+            marginHorizontal: 15,
+          }}
         />
       </KeyboardAvoidingView>
     </SafeAreaView>

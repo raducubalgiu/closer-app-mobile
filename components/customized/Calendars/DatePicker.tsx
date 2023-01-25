@@ -7,7 +7,7 @@ import {
   Pressable,
   SectionList,
 } from "react-native";
-import { useCallback, useState } from "react";
+import { useCallback, useState, memo } from "react";
 import dayjs from "dayjs";
 import { Divider, ListItem } from "@rneui/themed";
 import * as Haptics from "expo-haptics";
@@ -26,11 +26,7 @@ type IProps = {
   onSelectedDay: (item: any) => void;
 };
 
-export const DatePicker = ({
-  children,
-  selectedDay,
-  onSelectedDay,
-}: IProps) => {
+const DatePicker = ({ children, selectedDay, onSelectedDay }: IProps) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const { MONTHS, DAYS_HEADER, DAYS_NAMES } = useCalendarList();
 
@@ -156,7 +152,7 @@ export const DatePicker = ({
   );
 };
 
-export default DatePicker;
+export default memo(DatePicker);
 
 const styles = StyleSheet.create({
   container: {
