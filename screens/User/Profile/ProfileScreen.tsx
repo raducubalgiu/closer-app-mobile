@@ -56,9 +56,9 @@ export const ProfileScreen = () => {
       />
       <ProfileOverview
         user={user}
-        name={name}
-        username={username}
-        avatar={avatar}
+        name={userContext?.name}
+        username={userContext?.username}
+        avatar={userContext?.avatar}
       >
         <Button
           title={t("editProfile")}

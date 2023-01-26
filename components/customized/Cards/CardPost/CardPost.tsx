@@ -43,7 +43,7 @@ const CardPost = ({ post, onShowDetails }: IProps) => {
       </SharedElement>
       <CardPostButtons
         bookable={bookable}
-        product={product}
+        product={{ ...product, ownerId: userId }}
         postId={id}
         likesCount={likesCount}
       />

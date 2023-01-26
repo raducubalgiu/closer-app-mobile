@@ -37,7 +37,7 @@ type IProps = NativeStackScreenProps<RootStackParams, "ScheduleDetails">;
 export const ScheduleDetailsScreen = ({ route }: IProps) => {
   const { user } = useAuth();
   const {
-    id,
+    _id,
     ownerId,
     product,
     start,
@@ -72,7 +72,7 @@ export const ScheduleDetailsScreen = ({ route }: IProps) => {
     });
 
   const goToCancel = () =>
-    navigation.navigate("ScheduleCancel", { scheduleId: id });
+    navigation.navigate("ScheduleCancel", { scheduleId: _id });
 
   const goToBookAgain = () =>
     navigation.navigate("CalendarBig", { product, serviceId });

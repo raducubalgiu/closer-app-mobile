@@ -7,7 +7,6 @@ import theme from "../../../assets/styles/theme";
 import { Stack, IconStar, Protected } from "../../core";
 import { StatsButton } from "../Buttons/StatsButton";
 import CustomAvatar from "../../core/Avatars/CustomAvatar";
-import { useAuth } from "../../../hooks";
 import { displayDash } from "../../../utils";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../models/navigation/rootStackParams";
@@ -15,8 +14,8 @@ import { RootStackParams } from "../../../models/navigation/rootStackParams";
 const { black, primary } = theme.lightColors || {};
 
 type IProps = {
-  name: string;
-  username: string;
+  name: any;
+  username: any;
   avatar: any;
   children: any;
   user: any;
@@ -29,7 +28,6 @@ const ProfileOverview = ({
   children,
   user,
 }: IProps) => {
-  const { user: userContext } = useAuth();
   const { role, profession } = user || {};
   const {
     ratingsQuantity,

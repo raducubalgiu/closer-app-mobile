@@ -59,7 +59,7 @@ export const ProfileMenuList = ({ onCloseSheet }: IProps) => {
       title: t("shareProfile"),
       iconName: "share-2",
       iconType: "feather",
-      roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE, SUPERADMIN_ROLE],
+      roles: [THIRD_ROLE, SUPERADMIN_ROLE],
     },
   ];
 

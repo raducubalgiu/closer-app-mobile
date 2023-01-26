@@ -83,7 +83,7 @@ export const ReviewsTab = ({ userId }: IProps) => {
 
   const header = (
     <>
-      {products?.length && (
+      {products?.length > 0 && (
         <Stack sx={{ marginHorizontal: 15, marginBottom: 5 }}>
           <FormProvider {...methods}>
             <FormInputSelect

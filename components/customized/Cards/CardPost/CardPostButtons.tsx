@@ -10,6 +10,7 @@ import { BookmarkIconButton } from "../../Buttons/BookmarkIconButton";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../models/navigation/rootStackParams";
 import { Product } from "../../../../models/product";
+import { Service } from "../../../../models/service";
 
 const { black } = theme.lightColors || {};
 
@@ -28,6 +29,11 @@ const CardPostButtons = ({ bookable, product, postId, likesCount }: IProps) => {
   const { t } = useTranslation();
 
   const goToLikes = () => navigation.navigate("Likes", { postId });
+  const goToCalendar = () =>
+    navigation.navigate("CalendarBig", {
+      serviceId: product.serviceId,
+      product,
+    });
 
   const onShare = async () => {
     try {
@@ -49,7 +55,7 @@ const CardPostButtons = ({ bookable, product, postId, likesCount }: IProps) => {
   };
 
   const bookableSection = (
-    <Pressable onPress={() => {}}>
+    <Pressable onPress={goToCalendar}>
       <Stack direction="row" sx={styles.bookable}>
         <Stack direction="row">
           {/* <Text style={styles.book}>{t("book")}</Text> */}

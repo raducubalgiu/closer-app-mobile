@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Header, Spinner } from "../components/core";
 import { NoFoundMessage } from "../components/customized";
 import UserListItem from "../components/customized/ListItems/UserListItem";
-import { useAuth, useRefreshByUser } from "../hooks";
+import { useRefreshByUser } from "../hooks";
 import { useGetPaginate } from "../hooks";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParams } from "../models/navigation/rootStackParams";
@@ -14,7 +14,6 @@ import { User } from "../models/user";
 type IProps = NativeStackScreenProps<RootStackParams, "Likes">;
 
 export const LikesScreen = ({ route }: IProps) => {
-  const { user } = useAuth();
   const { postId } = route.params;
   const { t } = useTranslation();
 
@@ -28,7 +27,7 @@ export const LikesScreen = ({ route }: IProps) => {
     refetch,
   } = useGetPaginate({
     model: "likes",
-    uri: `/users/${user?.id}/posts/${postId}/get-likes`,
+    uri: `/posts/${postId}/get-likes`,
     limit: "25",
   });
 

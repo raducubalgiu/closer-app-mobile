@@ -17,7 +17,7 @@ import {
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
 import { Button, Textarea } from "../components/core";
-import { THIRD_ROLE } from "@env";
+import { MAIN_ROLE } from "@env";
 import theme from "../assets/styles/theme";
 import { useAuth, usePatch } from "../hooks";
 import { RootStackParams } from "../models/navigation/rootStackParams";
@@ -47,7 +47,7 @@ export const ScheduleCancelScreen = ({ route }: IProps) => {
   const { mutate, isLoading } = usePatch({
     uri: `/users/${user?.id}/schedules/${scheduleId}`,
     onSuccess: () =>
-      user?.role === THIRD_ROLE
+      user?.role !== MAIN_ROLE
         ? navigation.navigate("Schedules")
         : navigation.navigate("MyCalendar"),
     onError: () =>
