@@ -4,129 +4,84 @@ import {
   RefreshControl,
   StyleSheet,
   Dimensions,
-  Pressable,
 } from "react-native";
-import { useCallback, useEffect, useState } from "react";
 import { BarChart } from "react-native-chart-kit";
 import { useTranslation } from "react-i18next";
-import { Divider } from "@rneui/themed";
-import axios from "axios";
 import theme from "../../../../assets/styles/theme";
 import { Stack, ListItem, Spinner } from "../../../core";
-import { useAuth } from "../../../../hooks";
-import { displayZero } from "../../../../utils";
-import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
-import { scheduleChannel } from "../../../../constants/constants";
+import { useAuth, useGet, useRefreshByUser } from "../../../../hooks";
+import { numberWithComma } from "../../../../utils";
 
 const { black, grey0, error, success, primary } = theme.lightColors || {};
 const { width } = Dimensions.get("window");
+type IProps = { start: string; end: string };
+type IListItem = { label: string; counter: string; percentage: string };
 
-export const DashboardScheduleTab = ({ startPeriod, lastPeriod }) => {
-  const [stats, setStats] = useState([]);
-  const [active, setActive] = useState({ count: true, sales: false });
-  const [loading, setLoading] = useState(false);
-  const { CLOSER, OWNER } = scheduleChannel;
+const ListItemSummary = ({ label, counter, percentage }: IListItem) => {
+  return (
+    <ListItem align="start" between sx={{ marginBottom: 10 }}>
+      <Text style={styles.label}>{label}</Text>
+      <Stack align="end">
+        <Text style={styles.amount}>{counter}</Text>
+        <Text>{percentage}</Text>
+      </Stack>
+    </ListItem>
+  );
+};
+
+export const DashboardScheduleTab = ({ start, end }: IProps) => {
   const { user } = useAuth();
   const { t } = useTranslation();
+  const hasPayment = false;
 
-  const getData = (channel, action) => {
-    const statsObj = stats.find((stat) => stat._id === channel);
-    if (action === "count") {
-      return statsObj?.count;
-    }
-    if (action === "sales") {
-      return statsObj?.sales;
-    }
-  };
+  const {
+    data: stats,
+    refetch,
+    isLoading,
+    isFetching,
+  } = useGet({
+    model: "stats",
+    uri: `/users/${user?.id}/schedules/stats?start=${start}&end=${end}`,
+  });
+
+  const loading = isLoading || isFetching;
+
+  const {
+    ordersNewClients,
+    ordersOwnClients,
+    ordersCloserClients,
+    totalOrders,
+    salesNewClients,
+    salesOwnClients,
+    salesCloserClients,
+    totalSales,
+    closerCommission,
+  } = stats || {};
 
   const data = {
-    labels: [t("closer"), t("own"), t("newClients"), t("total")],
+    labels: [t("newClients"), t("closer"), t("own"), t("total")],
     datasets: [
       {
         data: [
-          getData(CLOSER, active.count ? "count" : "sales"),
-          getData(OWNER, active.count ? "count" : "sales"),
-          0,
-          getData(CLOSER, active.count ? "count" : "sales") +
-            getData(OWNER, active.count ? "count" : "sales"),
+          ordersNewClients,
+          ordersCloserClients,
+          ordersOwnClients,
+          totalOrders,
         ],
+        // colors: [
+        //   (opacity = 1) => `rgba(0, 204, 109, ${opacity})`,
+        //   (opacity = 1) => `rgba(255, 245, 204, ${opacity})`,
+        //   (opacity = 1) => `rgba(204, 242, 255, ${opacity})`,
+        //   (opacity = 1) => "#ddd",
+        // ],
       },
     ],
   };
+  const { refreshing, refetchByUser } = useRefreshByUser(refetch);
 
-  const fetchStats = useCallback(() => {}, []);
-
-  useEffect(() => {
-    fetchStats();
-  }, [fetchStats]);
-
-  const handleCount = useCallback(() => {
-    setActive({ count: true, sales: false });
-  }, []);
-  const handleSales = useCallback(() => {
-    setActive({ count: false, sales: true });
-  }, []);
-
-  const paymentMessage = (
-    <Text style={styles.paymentMessage}>{t("pleaseMakePayment")}</Text>
+  const refreshControl = (
+    <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
   );
-
-  const listItems = [
-    {
-      label: t("salesWithCloser"),
-      amount: displayZero(getData(CLOSER, "sales")),
-      percentage: 30,
-    },
-    {
-      label: t("salesWithOwn"),
-      amount: displayZero(getData(OWNER, "sales")),
-      percentage: -10,
-    },
-    {
-      label: t("totalSales"),
-      amount: displayZero(getData(CLOSER, "sales") + getData(OWNER, "sales")),
-      percentage: 10,
-    },
-    {
-      label: t("closerCommission"),
-      amount: displayZero(
-        ((getData(CLOSER, "sales") + getData(OWNER, "sales")) * 10) / 100
-      ),
-      percentage: "",
-    },
-  ];
-
-  const colorPerc = (percentage) => {
-    if (percentage === 0) {
-      return { ...styles.percentage, color: black };
-    } else if (percentage > 0) {
-      return { ...styles.percentage, color: success };
-    } else if (percentage < 0) {
-      return { ...styles.percentage, color: error };
-    }
-  };
-  const displayPerc = (percentage) => {
-    if (percentage === 0) {
-      return `${percentage}%`;
-    } else if (percentage > 0) {
-      return `+ ${percentage}%`;
-    } else if (percentage < 0) {
-      return `${percentage}%`;
-    }
-  };
-
-  const activeCountBtn = active.count
-    ? { ...styles.btn, ...styles.btnActive }
-    : { ...styles.btn };
-  const activeSalesBtn = active.sales
-    ? { ...styles.btn, ...styles.btnActive }
-    : { ...styles.btn };
-  const activeCountBtnTxt = active.count
-    ? { ...styles.btnTxt, ...styles.btnTxtActive }
-    : { ...styles.btnTxtActive };
-  const activeSalesBtnTxt = active.sales
-    ? { ...styles.btnTxt, ...styles.btnTxtActive }
-    : { ...styles.btnTxtActive };
 
   return (
     <>
@@ -135,8 +90,11 @@ export const DashboardScheduleTab = ({ startPeriod, lastPeriod }) => {
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingHorizontal: 15 }}
+          refreshControl={refreshControl}
         >
-          {/* {paymentMessage} */}
+          {hasPayment && (
+            <Text style={styles.paymentMessage}>{t("pleaseMakePayment")}</Text>
+          )}
           <Stack
             direction="row"
             align="start"
@@ -145,85 +103,55 @@ export const DashboardScheduleTab = ({ startPeriod, lastPeriod }) => {
           >
             <Stack>
               <Text style={styles.title}>{t("schedules")}</Text>
-              <Text style={styles.number}>
-                {displayZero(
-                  getData(CLOSER, "count") + getData(OWNER, "count")
-                )}
-              </Text>
+              <Text style={styles.number}>{numberWithComma(totalOrders)}</Text>
             </Stack>
             <Stack>
               <Text style={styles.title}>{t("sales")}</Text>
               <Text style={styles.number}>
-                LEI{" "}
-                {displayZero(
-                  getData(CLOSER, "sales") + getData(OWNER, "sales")
-                )}
+                {numberWithComma(totalSales)} {t("lei")}
               </Text>
-              <Text style={colorPerc(10)}>{displayPerc(10)}</Text>
+              <Text>-10%</Text>
             </Stack>
           </Stack>
-          <Divider />
           <Stack align="start">
-            {stats.length > 0 && (
-              <Stack
-                direction="row"
-                justify="between"
-                sx={{ width: width - 30 }}
-              >
-                <Text style={styles.sectionTitle}>Statistici</Text>
-                <Stack direction="row">
-                  <Pressable style={activeCountBtn} onPress={handleCount}>
-                    <Text style={activeCountBtnTxt}>
-                      <Text>{t("schedules")}</Text>
-                    </Text>
-                  </Pressable>
-                  <Pressable style={activeSalesBtn} onPress={handleSales}>
-                    <Text style={activeSalesBtnTxt}>
-                      <Text>{t("sales")}</Text>
-                    </Text>
-                  </Pressable>
-                </Stack>
-              </Stack>
-            )}
-            {stats?.length > 0 && (
-              <BarChart
-                style={{
-                  paddingTop: 15,
-                  marginBottom: 15,
-                  borderRadius: 15,
-                  borderWidth: 1,
-                  borderColor: "#ddd",
-                }}
-                data={data}
-                width={width - 30}
-                height={250}
-                chartConfig={{
-                  backgroundGradientFrom: "white",
-                  backgroundGradientTo: "white",
-                  backgroundGradientFromOpacity: 1,
-                  backgroundGradientToOpacity: 0.5,
-                  color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                  useShadowColorFromDataset: false,
-                  decimalPlaces: 0,
-                  propsForVerticalLabels: {
-                    fontSize: 14.5,
-                    fontStyle: "italic",
-                  },
-                  propsForHorizontalLabels: {
-                    fontWeight: "bold",
-                    fontSize: 12,
-                  },
-                  barRadius: 2.5,
-                  barPercentage: 0.8,
-                }}
-                fromZero={true}
-                verticalLabelRotation={0}
-                withInnerLines={false}
-                showValuesOnTopOfBars={true}
-                segments={3}
-              />
-            )}
-            {stats.length === 0 && (
+            <Text style={styles.sectionTitle}>{t("orders")}</Text>
+            <BarChart
+              style={styles.barChartStyle}
+              data={data}
+              width={width - 30}
+              height={200}
+              yAxisLabel=""
+              yAxisSuffix=""
+              yAxisInterval={1}
+              chartConfig={{
+                backgroundColor: "red",
+                backgroundGradientFrom: "white",
+                backgroundGradientTo: "white",
+                backgroundGradientFromOpacity: 1,
+                backgroundGradientToOpacity: 0.5,
+                color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                useShadowColorFromDataset: false,
+                decimalPlaces: 0,
+                barRadius: 5,
+                propsForVerticalLabels: {
+                  fontSize: 13,
+                },
+                propsForHorizontalLabels: {
+                  fontSize: 12,
+                  fontWeight: "600",
+                },
+                barPercentage: 0.7,
+              }}
+              //withCustomBarColorFromData={true}
+              //flatColor={true}
+              fromZero={true}
+              withInnerLines={false}
+              showValuesOnTopOfBars={true}
+              showBarTops={false}
+              segments={3}
+              withVerticalLabels={true}
+            />
+            {/* {stats.length === 0 && (
               <NoFoundMessage
                 sx={{ marginTop: 0, paddingVertical: 15, width: width }}
                 title="Opss.."
@@ -231,27 +159,35 @@ export const DashboardScheduleTab = ({ startPeriod, lastPeriod }) => {
                 iconName="alert-circle"
                 iconType="feather"
               />
-            )}
+            )} */}
           </Stack>
-          <Divider />
           <Stack align="start">
             <Text style={styles.sectionTitle}>{t("sales")}</Text>
-            {listItems.map((list, i) => (
-              <ListItem
-                key={i}
-                between
-                sx={{ marginBottom: 10 }}
-                onPress={() => {}}
-              >
-                <Text style={styles.label}>{list.label}</Text>
-                <Stack align="end">
-                  <Text style={styles.amount}>LEI {list.amount}</Text>
-                  <Text style={colorPerc(list.percentage)}>
-                    {displayPerc(list.percentage)}
-                  </Text>
-                </Stack>
-              </ListItem>
-            ))}
+            <ListItemSummary
+              label={t("salesNewClients")}
+              counter={`${numberWithComma(salesNewClients)} ${t("lei")}`}
+              percentage="-10%"
+            />
+            <ListItemSummary
+              label={t("salesWithCloser")}
+              counter={`${numberWithComma(salesCloserClients)} ${t("lei")}`}
+              percentage="-10%"
+            />
+            <ListItemSummary
+              label={t("salesWithOwn")}
+              counter={`${numberWithComma(salesOwnClients)} ${t("lei")}`}
+              percentage="-10%"
+            />
+            <ListItemSummary
+              label={t("totalSales")}
+              counter={`${numberWithComma(totalSales)} ${t("lei")}`}
+              percentage="-10%"
+            />
+            <ListItemSummary
+              label={t("closerCommission")}
+              counter={`${numberWithComma(closerCommission)} ${t("lei")}`}
+              percentage="-10%"
+            />
           </Stack>
         </ScrollView>
       )}
@@ -268,10 +204,11 @@ const styles = StyleSheet.create({
   number: {
     color: black,
     fontSize: 17,
-    marginTop: 7.5,
+    marginTop: 5,
+    marginBottom: 2.5,
     fontWeight: "600",
+    textTransform: "lowercase",
   },
-  percentage: { marginTop: 5, color: success },
   sectionTitle: {
     color: black,
     paddingVertical: 15,
@@ -289,9 +226,10 @@ const styles = StyleSheet.create({
   label: { color: black, fontSize: 15 },
   amount: {
     color: black,
-    fontWeight: "500",
+    fontWeight: "700",
+    textTransform: "lowercase",
+    marginBottom: 5,
   },
-  percentage: { marginLeft: 2.5, fontSize: 13 },
   btn: {
     padding: 7.5,
     borderRadius: 10,
@@ -301,4 +239,11 @@ const styles = StyleSheet.create({
   btnActive: { backgroundColor: primary },
   btnTxt: { color: black },
   btnTxtActive: { color: "white" },
+  barChartStyle: {
+    marginVertical: 5,
+    paddingVertical: 10,
+    borderRadius: 2.5,
+    borderWidth: 1,
+    borderColor: "#ddd",
+  },
 });

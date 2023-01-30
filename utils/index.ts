@@ -5,3 +5,4 @@ export { displayDash } from "./display-dash";
 export { displayZero } from "./display-zero";
 export { displayCount } from "./display-count";
 export { showToast } from "./showToast";
+export { numberWithComma } from "./numberWithComma";

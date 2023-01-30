@@ -5,6 +5,7 @@ type IProps = {
   between?: boolean;
   around?: boolean;
   center?: boolean;
+  align?: string;
   mt?: number;
   sx?: {};
   onPress?: () => void;
@@ -15,6 +16,7 @@ export const ListItem = ({
   between = false,
   around = false,
   center = false,
+  align = "start",
   mt = 10,
   sx = {},
   onPress,
@@ -37,7 +39,7 @@ export const ListItem = ({
       <Stack
         sx={{ marginTop: mt, ...sx }}
         direction="row"
-        align="center"
+        align={align}
         justify={justifyContent}
       >
         {children}

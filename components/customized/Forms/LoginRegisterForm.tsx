@@ -104,8 +104,8 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
     borderBottomWidth: 0,
-    padding: 17.5,
+    padding: 7.5,
   },
-  inputPass: { borderTopLeftRadius: 0, borderTopRightRadius: 0, padding: 17.5 },
+  inputPass: { borderTopLeftRadius: 0, borderTopRightRadius: 0, padding: 7.5 },
   divider: { marginTop: 20, marginBottom: 35 },
 });

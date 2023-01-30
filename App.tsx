@@ -11,6 +11,17 @@ import { RootSiblingParent } from "react-native-root-siblings";
 import * as SplashScreen from "expo-splash-screen";
 import { Asset } from "expo-asset";
 import AppLoading from "expo-app-loading";
+import dayjs from "dayjs";
+import "dayjs/locale/ro";
+import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
+import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
+import utc from "dayjs/plugin/utc";
+import weekday from "dayjs/plugin/weekday";
+dayjs.extend(weekday);
+dayjs.extend(isSameOrBefore);
+dayjs.extend(isSameOrAfter);
+dayjs.extend(utc);
+dayjs.locale("ro");
 
 enableScreens();
 const queryClient = new QueryClient();

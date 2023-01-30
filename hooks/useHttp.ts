@@ -182,9 +182,10 @@ export const useGetPaginate = ({
     queries: string,
     signal: any
   ) => {
-    const endpoint = !queries?.length
-      ? `${process.env.BASE_ENDPOINT}${uri}?page=${page}&limit=${limit}`
-      : `${process.env.BASE_ENDPOINT}${uri}?page=${page}&limit=${limit}&${queries}`;
+    const endpoint =
+      queries?.length === 0
+        ? `${process.env.BASE_ENDPOINT}${uri}?page=${page}&limit=${limit}`
+        : `${process.env.BASE_ENDPOINT}${uri}?page=${page}&limit=${limit}&${queries}`;
 
     const { data } = await axios.get(endpoint, {
       signal,

@@ -3,79 +3,78 @@ import { useTranslation } from "react-i18next";
 import { Divider } from "@rneui/themed";
 import { Stack } from "../../core";
 import theme from "../../../assets/styles/theme";
+import { BottomSheetFlatList } from "@gorhom/bottom-sheet";
+import { useCallback } from "react";
 
 const { black, grey0 } = theme.lightColors || {};
+type MessageInfo = { id: string; title: string; message: string };
 
 export const DashboardInfoSheet = () => {
   const { t } = useTranslation();
 
   const MESSAGES = [
     {
-      _id: "1",
+      id: "1",
       title: t("schedules"),
       message: t("schedulesMessage"),
     },
     {
-      _id: "2",
+      id: "2",
       title: t("sales"),
       message: t("salesMessage"),
     },
     {
-      _id: "3",
+      id: "3",
       title: t("salesWithCloser"),
       message: t("salesCloserMessage"),
     },
     {
-      _id: "4",
+      id: "4",
       title: t("salesWithOwn"),
       message: t("newClientsMessage"),
     },
     {
-      _id: "5",
+      id: "5",
       title: t("newClients"),
       message: t("salesOwnMessage"),
     },
     {
-      _id: "6",
+      id: "6",
       title: t("closerCommission"),
       message: t("closerCommissionMessage"),
     },
   ];
 
-  const renderItem = ({ item }: ListRenderItemInfo<any>) => (
-    <Stack align="start" sx={{ marginBottom: 30 }}>
-      <Text style={styles.title}>{item.title}</Text>
-      <Text style={styles.description}>{item.message}</Text>
-    </Stack>
+  const renderItem = useCallback(
+    ({ item }: ListRenderItemInfo<MessageInfo>) => (
+      <Stack align="start" sx={{ marginBottom: 30 }}>
+        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.description}>{item.message}</Text>
+      </Stack>
+    ),
+    []
+  );
+
+  const keyExtractor = useCallback((item: MessageInfo) => item.id, []);
+
+  const header = (
+    <>
+      <Stack align="start">
+        <Text style={styles.title}>{t("summary")}</Text>
+        <Text style={styles.description}>{t("dashboardNotes")}</Text>
+      </Stack>
+      <Divider style={{ marginVertical: 15 }} />
+    </>
   );
 
   return (
-    <Stack sx={{ padding: 15 }}>
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        bounces={false}
-        data={MESSAGES}
-        keyExtractor={(item) => item._id}
-        renderItem={renderItem}
-        ListHeaderComponent={
-          <>
-            <Stack align="start">
-              <Text
-                style={{
-                  ...styles.title,
-                  fontSize: 18,
-                  marginBottom: 5,
-                }}
-              >
-                {t("summary")}
-              </Text>
-              <Text style={styles.description}>{t("dashboardNotes")}</Text>
-            </Stack>
-            <Divider style={{ marginVertical: 15 }} />
-          </>
-        }
-      />
-    </Stack>
+    <BottomSheetFlatList
+      data={MESSAGES}
+      keyExtractor={keyExtractor}
+      renderItem={renderItem}
+      contentContainerStyle={{ padding: 15 }}
+      ListHeaderComponent={header}
+    />
   );
 };
 

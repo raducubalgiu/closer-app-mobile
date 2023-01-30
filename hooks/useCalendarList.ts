@@ -1,11 +1,27 @@
 import dayjs from "dayjs";
-import "dayjs/locale/ro";
 import { useTranslation } from "react-i18next";
-dayjs.locale("ro");
+import { Month } from "../models/month";
+import { Day } from "../models/day";
 
-export const useCalendarList = (noMonths: number = 5) => {
-  let month = dayjs().month();
-  let year = dayjs().year();
+type Config = {
+  pastMonths?: number;
+  noMonths?: number;
+  disablePastDays?: boolean;
+};
+const config = {
+  pastMonths: 0,
+  noMonths: 5,
+  disablePastDays: true,
+};
+
+export const useCalendarList = (others: Config = { ...config }) => {
+  const calendarStart = others?.pastMonths
+    ? dayjs().subtract(others?.pastMonths, "months")
+    : dayjs();
+  const calendarEnd = others?.noMonths ? others?.noMonths : config?.noMonths;
+
+  let month = calendarStart.month();
+  let year = calendarStart.year();
   const { t } = useTranslation();
 
   const displayMonth = (month: any, year: any) => {
@@ -25,7 +41,7 @@ export const useCalendarList = (noMonths: number = 5) => {
       .utc()
       .endOf("month");
 
-    const arrayOfDate = [];
+    const arrayOfDate: Day[] = [];
 
     for (let i = 0; i < firstDateOfMonth.day(); i++) {
       const date = firstDateOfMonth.day(i);
@@ -39,7 +55,9 @@ export const useCalendarList = (noMonths: number = 5) => {
     for (let i = firstDateOfMonth.date(); i <= lastDateOfMonth.date(); i++) {
       arrayOfDate.push({
         prevDates: false,
-        disabled: firstDateOfMonth.date(i).isBefore(dayjs().startOf("day")),
+        disabled: others?.disablePastDays
+          ? firstDateOfMonth.date(i).isBefore(dayjs().startOf("day"))
+          : false,
         date: firstDateOfMonth.date(i).utc().startOf("day"),
       });
     }
@@ -57,12 +75,13 @@ export const useCalendarList = (noMonths: number = 5) => {
     t("fri"),
     t("sat"),
   ];
-  let MONTHS = [];
+  let MONTHS: Month[] = [];
 
-  for (let i = 0; i <= noMonths; i++) {
+  for (let i = 0; i <= calendarEnd; i++) {
     MONTHS.push({
+      monthIndex: i,
       month: displayMonth(month + i, year),
-      data: [{ list: [...generateCalendar(month + i, year)] }],
+      data: [...generateCalendar(month + i, year)],
     });
   }
 

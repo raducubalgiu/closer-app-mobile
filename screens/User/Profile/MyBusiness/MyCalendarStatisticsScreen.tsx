@@ -20,7 +20,7 @@ import {
 } from "../../../../components/core";
 import theme from "../../../../assets/styles/theme";
 import { useAuth, useGet, useSheet } from "../../../../hooks";
-import { displayZero } from "../../../../utils";
+import { numberWithComma } from "../../../../utils";
 
 type IProps = NativeStackScreenProps<RootStackParams, "MyCalendarStatistics">;
 const { success, black, grey0 } = theme.lightColors || {};
@@ -55,7 +55,7 @@ const ItemSummary = ({
   bgColor,
   title,
 }: {
-  counter: number;
+  counter: any;
   bgColor: any;
   title: string;
 }) => {
@@ -116,17 +116,17 @@ export const MyCalendarStatisticsScreen = ({ route }: IProps) => {
           <Stack direction="row" justify="around" sx={styles.countersContainer}>
             <ItemSummary
               title={t("newClients")}
-              counter={displayZero(newClients)}
+              counter={numberWithComma(newClients)}
               bgColor={success}
             />
             <ItemSummary
               title={t("ownClients")}
-              counter={displayZero(ownClients)}
+              counter={numberWithComma(ownClients)}
               bgColor="#ccf2ff"
             />
             <ItemSummary
               title={t("closerClients")}
-              counter={displayZero(closerClients)}
+              counter={numberWithComma(closerClients)}
               bgColor="#fff5cc"
             />
           </Stack>
@@ -134,19 +134,19 @@ export const MyCalendarStatisticsScreen = ({ route }: IProps) => {
           <Heading title={t("orders")} sx={styles.heading} />
           <ItemList
             title={t("acceptedOrders")}
-            counter={displayZero(statusAccepted)}
+            counter={numberWithComma(statusAccepted)}
           />
           <ItemList
             title={t("finishedOrders")}
-            counter={displayZero(statusFinished)}
+            counter={numberWithComma(statusFinished)}
           />
           <ItemList
             title={t("canceledOrders")}
-            counter={displayZero(statusCanceled)}
+            counter={numberWithComma(statusCanceled)}
           />
           <ItemList
             title={t("total")}
-            counter={displayZero(totalBookings)}
+            counter={numberWithComma(totalBookings)}
             bold
           />
           <Divider style={styles.divider} />
@@ -158,23 +158,23 @@ export const MyCalendarStatisticsScreen = ({ route }: IProps) => {
           </Stack>
           <ItemList
             title={t("salesNewClients")}
-            counter={`${displayZero(salesNewClients)} lei`}
+            counter={`${numberWithComma(salesNewClients)} lei`}
           />
           <ItemList
             title={t("salesWithOwn")}
-            counter={`${displayZero(salesWithOwn)} lei`}
+            counter={`${numberWithComma(salesWithOwn)} lei`}
           />
           <ItemList
             title={t("salesWithCloser")}
-            counter={`${displayZero(salesWithCloser)} lei`}
+            counter={`${numberWithComma(salesWithCloser)} lei`}
           />
           <ItemList
             title={t("totalSales")}
-            counter={`${displayZero(totalSales)} lei`}
+            counter={`${numberWithComma(totalSales)} lei`}
           />
           <ItemList
             title={t("closerCommission")}
-            counter={`${displayZero(closerCommission)} lei`}
+            counter={`${numberWithComma(closerCommission)} lei`}
             bold
           />
         </ScrollView>

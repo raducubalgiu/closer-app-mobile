@@ -15,7 +15,6 @@ import dayjs from "dayjs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import theme from "../../../../assets/styles/theme";
 import { NoFoundMessage } from "../../../../components/customized";
-import DatePicker from "../../../../components/customized/Calendars/DatePicker";
 import SlotDetailsListItem from "../../../../components/customized/ListItems/SlotDetailsListItem";
 import { Header, Spinner, Stack } from "../../../../components/core";
 import { SHORT_DATE } from "../../../../utils/date-utils";
@@ -28,6 +27,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../models/navigation/rootStackParams";
+import CalendarAgenda from "../../../../components/customized/Calendars/CalendarAgenda";
 
 const { black, success, error } = theme.lightColors || {};
 
@@ -35,6 +35,8 @@ export const MyCalendarScreen = () => {
   const { user } = useAuth();
   const now = dayjs().format("YYYY-MM-DD");
   const [selectedDay, setSelectedDay] = useState(now);
+  const [monthIndex, setMonthIndex] = useState(0);
+
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const navigation =
@@ -108,7 +110,9 @@ export const MyCalendarScreen = () => {
           <Pressable
             style={{ padding: 15 }}
             onPress={() =>
-              navigation.navigate("MyCalendarStatistics", { day: selectedDay })
+              navigation.navigate("MyCalendarStatistics", {
+                day: selectedDay,
+              })
             }
           >
             <Icon name="bar-chart" type="feather" size={25} />
@@ -139,9 +143,13 @@ export const MyCalendarScreen = () => {
           actionBtn={actionBtn}
         />
       </SafeAreaView>
-      <DatePicker
+      <CalendarAgenda
+        initialIndex={monthIndex}
         selectedDay={selectedDay}
-        onSelectedDay={(item: any) => setSelectedDay(SHORT_DATE(item.date))}
+        onSelectedDay={(item: any, mIndex: number) => {
+          setSelectedDay(SHORT_DATE(item.date));
+          setMonthIndex(mIndex);
+        }}
       >
         <FlatList
           data={schedules}
@@ -156,7 +164,7 @@ export const MyCalendarScreen = () => {
           initialNumToRender={5}
           maxToRenderPerBatch={5}
         />
-      </DatePicker>
+      </CalendarAgenda>
     </View>
   );
 };

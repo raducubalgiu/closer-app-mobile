@@ -3,88 +3,118 @@ import {
   StyleSheet,
   Text,
   FlatList,
+  ListRenderItemInfo,
   Pressable,
+  View,
 } from "react-native";
-import { useCallback, useState } from "react";
-import { Divider, Icon } from "@rneui/themed";
+import { useCallback, useRef, useState } from "react";
+import { Divider, Icon, ListItem } from "@rneui/themed";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import theme from "../../../../assets/styles/theme";
-import moment from "moment";
-import { Header, Stack } from "../../../../components/core";
+import dayjs from "dayjs";
+import { Button, Header, Stack } from "../../../../components/core";
 import {
   DashboardInfoSheet,
   TopTabContainer,
   DashboardScheduleTab,
-  DashboardPostsTab,
-  DashboardJobsTab,
 } from "../../../../components/customized";
-import { useSheet } from "../../../../hooks";
+import { useCalendarList, useSheet } from "../../../../hooks";
 import { useTranslation } from "react-i18next";
+import DateRangePicker from "../../../../components/customized/Calendars/DateRangePicker";
 
 const { primary, black } = theme.lightColors || {};
+type Period = {
+  id: string;
+  title?: string;
+  startDate: any;
+  endDate: any;
+  monthIndex: number;
+};
 
 export const MyDashboardScreen = () => {
   const { t } = useTranslation();
-  const [period, setPeriod] = useState({
-    _id: "1",
-    title: t("last7Days"),
-    days: 7,
-  });
   const Tab = createMaterialTopTabNavigator();
+  const ref = useRef<FlatList>(null);
+  const [expanded, setExpanded] = useState(false);
+  const now = dayjs().utc(true).startOf("day");
+  const { MONTHS, DAYS_HEADER } = useCalendarList({
+    disablePastDays: false,
+    pastMonths: 6,
+    noMonths: 12,
+  });
 
-  const closeSheetInfo = useCallback(() => CLOSE_BS_INFO(), []);
+  const [period, setPeriod] = useState<Period>({
+    id: "1",
+    startDate: now,
+    endDate: now.add(1, "day").startOf("day"),
+    monthIndex: 0,
+  });
+
   const dashboardInfo = <DashboardInfoSheet />;
-  const {
-    BOTTOM_SHEET: BS_INFO,
-    SHOW_BS: SHOW_BS_INFO,
-    CLOSE_BS: CLOSE_BS_INFO,
-  } = useSheet(["1%", "90%"], dashboardInfo, closeSheetInfo);
-
-  const startPeriod = moment.utc().format();
-  const lastPeriod = moment(startPeriod)
-    .clone()
-    .utc()
-    .subtract(period.days, "days")
-    .format();
-
-  const DashboardSchedule = useCallback(
-    () => (
-      <DashboardScheduleTab startPeriod={startPeriod} lastPeriod={lastPeriod} />
-    ),
-    [startPeriod, lastPeriod]
-  );
-  const DashboardPosts = useCallback(
-    () => (
-      <DashboardPostsTab startPeriod={startPeriod} lastPeriod={lastPeriod} />
-    ),
-    [startPeriod, lastPeriod]
-  );
-  const DashboardJobs = useCallback(
-    () => (
-      <DashboardJobsTab startPeriod={startPeriod} lastPeriod={lastPeriod} />
-    ),
-    [startPeriod, lastPeriod]
+  const { BOTTOM_SHEET: BS_INFO, SHOW_BS: SHOW_BS_INFO } = useSheet(
+    ["1%", "90%"],
+    dashboardInfo
   );
 
   const buttons = [
-    { _id: "1", title: t("last7Days"), days: 7 },
-    { _id: "2", title: t("last15Days"), days: 15 },
-    { _id: "3", title: t("last30Days"), days: 30 },
-    { _id: "4", title: t("last3Months"), days: 120 },
-    { _id: "5", title: t("last6Months"), days: 240 },
-    { _id: "6", title: t("lastYear"), days: 365 },
+    {
+      id: "1",
+      title: t("today"),
+      startDate: now,
+      endDate: now.add(1, "day").startOf("day"),
+      monthIndex: 0,
+    },
+    {
+      id: "2",
+      title: t("last7Days"),
+      startDate: now.subtract(7, "days"),
+      endDate: now,
+      monthIndex: 0,
+    },
+    {
+      id: "3",
+      title: t("last30Days"),
+      startDate: now.subtract(30, "days"),
+      endDate: now,
+      monthIndex: 0,
+    },
+    {
+      id: "4",
+      title: t("last6Months"),
+      startDate: now.subtract(6, "months"),
+      endDate: now,
+      monthIndex: 0,
+    },
   ];
+
+  const DashboardSchedule = useCallback(
+    () => (
+      <DashboardScheduleTab
+        start={period?.startDate?.format("YYYY-MM-DD")}
+        end={period?.endDate?.format("YYYY-MM-DD")}
+      />
+    ),
+    [period]
+  );
 
   const btnActive = { ...styles.btn, ...styles.btnActive };
   const btnTxtActive = { ...styles.btnTxt, ...styles.btnTxtActive };
 
+  const handleLabel = (item: Period, index: number) => {
+    setPeriod(item);
+    ref.current?.scrollToIndex({
+      animated: true,
+      index,
+    });
+  };
+
   const renderButton = useCallback(
-    ({ item }) => (
+    ({ item, index }: ListRenderItemInfo<Period>) => (
       <Pressable
-        onPress={() => setPeriod(item)}
-        style={item._id === period._id ? btnActive : styles.btn}
+        onPress={() => handleLabel(item, index)}
+        style={item.id === period.id ? btnActive : styles.btn}
       >
-        <Text style={item._id === period._id ? btnTxtActive : styles.btnTxt}>
+        <Text style={item.id === period.id ? btnTxtActive : styles.btnTxt}>
           {item.title}
         </Text>
       </Pressable>
@@ -92,44 +122,68 @@ export const MyDashboardScreen = () => {
     [period]
   );
 
+  const keyExtractor = useCallback((item: Period) => item.id, []);
+  const handlePeriod = (per: Period) => {
+    console.log("PER!!", per);
+    setPeriod(per);
+  };
+
+  const actionButton = (
+    <Pressable onPress={() => SHOW_BS_INFO()}>
+      <Icon name="alert-circle" type="feather" />
+    </Pressable>
+  );
+
   return (
     <SafeAreaView style={styles.screen}>
-      <Header
-        title="Dashboard"
-        divider
-        actionBtn={
-          <Pressable onPress={() => SHOW_BS_INFO()}>
-            <Icon name="alert-circle" type="feather" />
-          </Pressable>
-        }
-      />
+      <Header title="Dashboard" divider actionBtn={actionButton} />
       <Stack direction="row" sx={{ paddingVertical: 10 }}>
+        <ListItem.Accordion
+          animation={{ duration: 200 }}
+          containerStyle={{ padding: 0, marginLeft: 15 }}
+          content={<Icon name="calendar" type="antdesign" size={25} />}
+          isExpanded={expanded}
+          onPress={() => setExpanded((expanded) => !expanded)}
+        />
+        <Divider orientation="vertical" style={{ marginLeft: 10 }} />
         <FlatList
+          ref={ref}
           horizontal
           showsHorizontalScrollIndicator={false}
           data={buttons}
-          keyExtractor={(item) => item._id}
+          keyExtractor={keyExtractor}
           renderItem={renderButton}
+          contentContainerStyle={{ paddingRight: 15 }}
         />
       </Stack>
       <Divider />
-      <TopTabContainer initialRouteName="DashboardSchedule">
-        <Tab.Screen
-          name="DashboardSchedule"
-          component={DashboardSchedule}
-          options={{ tabBarLabel: t("schedules") }}
-        />
-        <Tab.Screen
-          name="DashboardPosts"
-          component={DashboardPosts}
-          options={{ tabBarLabel: t("posts") }}
-        />
-        <Tab.Screen
-          name="DashboardJobs"
-          component={DashboardJobs}
-          options={{ tabBarLabel: t("jobs") }}
-        />
-      </TopTabContainer>
+      {!expanded && (
+        <TopTabContainer initialRouteName="DashboardSchedule">
+          <Tab.Screen
+            name="DashboardSchedule"
+            component={DashboardSchedule}
+            options={{ tabBarLabel: t("schedules") }}
+          />
+        </TopTabContainer>
+      )}
+      {expanded && (
+        <View style={{ justifyContent: "space-between", flex: 1 }}>
+          <DateRangePicker
+            period={period}
+            onSetPeriod={handlePeriod}
+            initialIndex={period?.monthIndex}
+            months={MONTHS}
+            daysHeader={DAYS_HEADER}
+          />
+          <View style={styles.selectBtn}>
+            <Button
+              disabled={!period.startDate || !period.endDate}
+              title={t("select")}
+              onPress={() => setExpanded(false)}
+            />
+          </View>
+        </View>
+      )}
       {BS_INFO}
     </SafeAreaView>
   );
@@ -141,11 +195,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   btn: {
-    paddingVertical: 7.5,
-    paddingHorizontal: 15,
+    width: 130,
+    height: 32.5,
     backgroundColor: "#f1f1f1",
     borderRadius: 20,
     marginLeft: 15,
+    alignItems: "center",
+    justifyContent: "center",
   },
   btnActive: { backgroundColor: primary },
   btnTxt: {
@@ -154,4 +210,5 @@ const styles = StyleSheet.create({
     fontSize: 13.5,
   },
   btnTxtActive: { color: "white", fontWeight: "600" },
+  selectBtn: { padding: 15, borderTopWidth: 1, borderTopColor: "#ddd" },
 });

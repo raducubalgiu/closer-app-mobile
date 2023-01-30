@@ -115,5 +115,3 @@ export { PhotoIconButton } from "./IconButtons/PhotoIconButton";
 export { RevertIconButton } from "./IconButtons/RevertIconButton";
 export { InfoIconButton } from "./IconButtons/InfoIconButton";
 export { ProfileIconButton } from "./IconButtons/ProfileIconButton";
-
-export { DatePickerRange } from "./Calendars/DatePickerRange";

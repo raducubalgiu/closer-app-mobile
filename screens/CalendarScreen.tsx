@@ -20,10 +20,10 @@ import {
 import theme from "../assets/styles/theme";
 import { Header, Heading, Spinner, Stack } from "../components/core";
 import { NoFoundMessage } from "../components/customized";
-import DatePicker from "../components/customized/Calendars/DatePicker";
 import { useGet, useRefreshOnFocus, useRefreshByUser } from "../hooks";
 import { RootStackParams } from "../models/navigation/rootStackParams";
 import { SHORT_DATE } from "../utils/date-utils";
+import CalendarAgenda from "../components/customized/Calendars/CalendarAgenda";
 
 const { black, grey0 } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "CalendarBig">;
@@ -43,6 +43,7 @@ export const CalendarScreen = ({ route }: IProps) => {
   const { t } = useTranslation();
   const now = dayjs().format("YYYY-MM-DD");
   const [selectedDay, setSelectedDay] = useState(now);
+  const [monthIndex, setMonthIndex] = useState(0);
 
   const { data, refetch, isFetching, isLoading } = useGet({
     model: "slots",
@@ -137,9 +138,13 @@ export const CalendarScreen = ({ route }: IProps) => {
   return (
     <SafeAreaView style={styles.screen}>
       <Header title={product?.name} subtitle={t("pickDateAndHour")} divider />
-      <DatePicker
+      <CalendarAgenda
+        initialIndex={monthIndex}
         selectedDay={selectedDay}
-        onSelectedDay={(item) => setSelectedDay(SHORT_DATE(item.date))}
+        onSelectedDay={(item, mIndex) => {
+          setSelectedDay(SHORT_DATE(item.date));
+          setMonthIndex(mIndex);
+        }}
       >
         <FlatList
           data={data?.slots}
@@ -148,7 +153,7 @@ export const CalendarScreen = ({ route }: IProps) => {
           refreshControl={refreshControl}
           ListFooterComponent={footer}
         />
-      </DatePicker>
+      </CalendarAgenda>
     </SafeAreaView>
   );
 };
