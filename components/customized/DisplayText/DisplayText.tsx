@@ -13,7 +13,8 @@ type IProps = {
   maxWords?: number;
   username?: string | null;
   checkmark?: boolean;
-  goToUserAllInfo: () => void;
+  postType?: string;
+  goToUserAllInfo?: () => void;
 };
 
 export const DisplayText = ({
@@ -21,6 +22,7 @@ export const DisplayText = ({
   maxWords = 200,
   username = null,
   checkmark = false,
+  postType = "feed",
   goToUserAllInfo,
 }: IProps) => {
   const navigation =
@@ -58,6 +60,7 @@ export const DisplayText = ({
               key={i}
               word={`${slicedArr[i]} `}
               onPress={() => goToUser(slicedArr[i].split("@")[1])}
+              color={postType === "video" && "white"}
             />
           );
           break;
@@ -67,11 +70,20 @@ export const DisplayText = ({
               key={i}
               word={`${slicedArr[i]} `}
               onPress={() => goToHashtag(slicedArr[i].split("#")[1])}
+              color={postType === "video" && "white"}
             />
           );
           break;
         default:
-          displayText.push(<Text key={i}>{`${slicedArr[i]} `}</Text>);
+          displayText.push(
+            <Text
+              style={{
+                color: postType === "video" ? "#f2f2f2" : black,
+                fontSize: postType === "video" ? 13.5 : 14,
+              }}
+              key={i}
+            >{`${slicedArr[i]} `}</Text>
+          );
       }
     }
 
@@ -88,8 +100,29 @@ export const DisplayText = ({
       {checkmark && <Checkmark size={7.5} sx={styles.checkmark} />}
       {handleText()}
       {cutText && (
+        <>
+          <Pressable onPress={() => setCutText((cutText) => !cutText)}>
+            <Text
+              style={{
+                color: postType === "video" ? "white" : grey0,
+                fontWeight: postType === "video" ? "600" : "500",
+              }}
+            >
+              ...mai mult
+            </Text>
+          </Pressable>
+        </>
+      )}
+      {!cutText && (
         <Pressable onPress={() => setCutText((cutText) => !cutText)}>
-          <Text style={styles.seeMore}>...mai mult</Text>
+          <Text
+            style={{
+              color: postType === "video" ? "white" : grey0,
+              fontWeight: postType === "video" ? "600" : "500",
+            }}
+          >
+            ...mai putin
+          </Text>
         </Pressable>
       )}
     </View>
@@ -106,10 +139,6 @@ const styles = StyleSheet.create({
     color: black,
     fontWeight: "500",
     fontSize: 15,
-  },
-  seeMore: {
-    color: grey0,
-    fontWeight: "500",
   },
   checkmark: { marginHorizontal: 5 },
 });

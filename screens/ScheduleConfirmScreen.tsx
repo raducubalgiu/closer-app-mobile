@@ -109,7 +109,7 @@ export const ScheduleConfirmScreen = ({ route }: IProps) => {
             <Stack align="start" sx={{ marginLeft: 15, flex: 1 }}>
               <Text style={styles.heading}>{t("payment")}</Text>
               <Text style={styles.description}>{t("paymentDetails")}</Text>
-              <Text style={styles.price}>{price} LEI</Text>
+              <Text style={styles.price}>{priceWithDiscount} LEI</Text>
             </Stack>
           </Stack>
         </Stack>

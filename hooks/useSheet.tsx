@@ -8,12 +8,16 @@ import {
 import { Portal } from "@gorhom/portal";
 import { useBottomSheetTimingConfigs } from "@gorhom/bottom-sheet";
 
-export const useSheet = (intervals: any, children: any) => {
+const animation = { duration: 200 };
+
+export const useSheet = (
+  intervals: any,
+  children: any,
+  animateConfig: any = animation
+) => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => [...intervals], []);
-  const animationConfig = useBottomSheetTimingConfigs({
-    duration: 200,
-  });
+  const animationConfig = useBottomSheetTimingConfigs(animateConfig);
 
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();

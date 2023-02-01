@@ -1,83 +1,85 @@
-import {
-  StyleSheet,
-  View,
-  Dimensions,
-  ListRenderItemInfo,
-  FlatList,
-} from "react-native";
-import { SharedElement } from "react-navigation-shared-element";
-import { ResizeMode, Video } from "expo-av";
-import { useCallback, useRef } from "react";
-import { Post } from "../../models/post";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { FlatList, Dimensions, View, RefreshControl } from "react-native";
+import { useCallback } from "react";
+import VideoPortraitListItem from "../../components/customized/ListItems/VideoPortraitListItem/VideoPortraitListItem";
+import { useGetPaginate, useRefreshByUser } from "../../hooks";
+import { Spinner } from "../../components/core";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../models/navigation/rootStackParams";
-import VisibilitySensor from "@svanboxel/visibility-sensor-react-native";
 
-const { width, height } = Dimensions.get("window");
+const { height } = Dimensions.get("window");
 type IProps = NativeStackScreenProps<RootStackParams, "FeedVideoExplore">;
 
 export const FeedVideoExploreScreen = ({ route }: IProps) => {
-  const { allVideos, index, item } = route.params;
-  const insets = useSafeAreaInsets();
-  const videoHeight = height - insets.bottom - insets.top;
-  const ref = useRef<any>(null);
+  const { initialIndex } = route.params;
 
-  const handleImageVisibility = (visible: boolean) => {
-    if (visible) {
-      ref.current.playAsync();
+  const {
+    data,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isFetching,
+    refetch,
+  } = useGetPaginate({
+    model: "videos",
+    uri: `/posts/get-all-posts`,
+    queries: `postType=video&orientation=portrait`,
+    limit: "5",
+  });
+
+  const renderVideo = useCallback(({ item }: { item: any }) => {
+    return <VideoPortraitListItem post={item} />;
+  }, []);
+
+  const loadMore = () => {
+    if (hasNextPage) fetchNextPage();
+  };
+
+  const showSpinner = () => {
+    if (isFetchingNextPage) {
+      return <Spinner />;
     } else {
-      ref.current.pauseAsync();
+      return null;
     }
   };
 
-  const renderVideo = useCallback(
-    ({ item }: ListRenderItemInfo<Post>) => (
-      <VisibilitySensor onChange={handleImageVisibility}>
-        <SharedElement id={item.id}>
-          <Video
-            ref={ref}
-            style={{ width, height: videoHeight }}
-            source={{ uri: item?.images[0]?.url }}
-            useNativeControls={false}
-            shouldPlay={false}
-            isMuted={false}
-            isLooping={true}
-            resizeMode={ResizeMode.COVER}
-          />
-        </SharedElement>
-      </VisibilitySensor>
-    ),
+  const { pages } = data || {};
+  const videos = pages?.map((page) => page.results).flat();
+  const keyExtractor = useCallback((item: any) => item?.id, []);
+
+  const getItemLayout = useCallback(
+    (data: any, index: number) => ({
+      length: height,
+      offset: height * index,
+      index,
+    }),
     []
   );
 
-  const getItemLayout = (data: any, index: number) => ({
-    length: videoHeight,
-    offset: videoHeight * index,
-    index,
-  });
-
-  const keyExtractor = useCallback((item: Post) => item.id, []);
+  const { refreshing, refetchByUser } = useRefreshByUser(refetch);
+  const refreshControl = (
+    <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
+  );
 
   return (
-    <View style={styles.screen}>
+    <View style={{ backgroundColor: "black" }}>
       <FlatList
-        data={allVideos}
-        renderItem={renderVideo}
+        data={videos}
         keyExtractor={keyExtractor}
-        initialScrollIndex={index}
-        getItemLayout={getItemLayout}
-        pagingEnabled={true}
+        renderItem={renderVideo}
+        refreshControl={refreshControl}
+        initialNumToRender={5}
         bounces={false}
         showsVerticalScrollIndicator={false}
+        snapToInterval={height}
+        decelerationRate={0.5}
+        pagingEnabled={true}
+        getItemLayout={getItemLayout}
+        initialScrollIndex={initialIndex ? initialIndex : 0}
+        onEndReached={loadMore}
+        onEndReachedThreshold={0.3}
+        ListFooterComponent={showSpinner}
       />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  screen: {
-    backgroundColor: "black",
-    flex: 1,
-  },
-});

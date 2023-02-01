@@ -104,43 +104,6 @@ const { black, primary, error } = theme.lightColors || {};
 import { ExploreVideoPortraitScreen } from "../screens/ExploreVideoPortraitScreen";
 import CustomAvatar from "../components/core/Avatars/CustomAvatar";
 
-const FeedStackNavigator = () => {
-  return (
-    <SharedStack.Navigator
-      initialRouteName="Feed"
-      screenOptions={{
-        headerShown: false,
-        animationEnabled: false,
-        gestureEnabled: false,
-        cardOverlayEnabled: true,
-        presentation: "transparentModal",
-      }}
-    >
-      <SharedStack.Screen name="FeedExplore" component={FeedExploreScreen} />
-      <SharedStack.Screen
-        name="FeedFollowings"
-        component={FeedFollowingsScreen}
-      />
-      <SharedStack.Screen
-        name="FeedBookables"
-        component={FeedBookablesScreen}
-      />
-      <SharedStack.Screen
-        name="FeedLastMinute"
-        component={FeedLastMinuteScreen}
-      />
-      <SharedStack.Screen
-        name="FeedVideoExplore"
-        component={FeedVideoExploreScreen}
-        sharedElements={(route, otherRoute, showing) => {
-          const { item } = route.params;
-          return [{ id: item.id, animation: "move" }];
-        }}
-      />
-    </SharedStack.Navigator>
-  );
-};
-
 const AuthStackNavigator = () => {
   return (
     <Stack.Navigator
@@ -155,6 +118,20 @@ const AuthStackNavigator = () => {
         name="RegisterBusiness"
         component={RegisterBusinessScreen}
       />
+    </Stack.Navigator>
+  );
+};
+
+const FeedStack = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName="Feed"
+      screenOptions={{ headerShown: false, animation: "fade" }}
+    >
+      <Stack.Screen name="FeedExplore" component={FeedExploreScreen} />
+      <Stack.Screen name="FeedFollowings" component={FeedFollowingsScreen} />
+      <Stack.Screen name="FeedBookables" component={FeedBookablesScreen} />
+      <Stack.Screen name="FeedLastMinute" component={FeedLastMinuteScreen} />
     </Stack.Navigator>
   );
 };
@@ -184,7 +161,7 @@ const TabsScreen = () => {
             iconName = focused ? "search" : "shopping-bag";
           } else if (route.name === "Messages") {
             iconName = focused ? "message-circle" : "message-circle";
-          } else if (route.name === "FeedStack") {
+          } else if (route.name === "Feed") {
             iconName = focused ? "compass" : "compass";
           } else if (route.name === "Schedules") {
             iconName = focused ? "calendar" : "calendar";
@@ -203,7 +180,7 @@ const TabsScreen = () => {
       })}
       sceneContainerStyle={{ backgroundColor: "white" }}
     >
-      <Tab.Screen name="FeedStack" component={FeedStackNavigator} />
+      <Tab.Screen name="FeedStack" component={FeedStack} />
       <Tab.Screen name="Messages" component={MessagesScreen} />
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen
@@ -457,11 +434,19 @@ const CloserNavigation = () => {
               name="AddProgram"
               component={AddUserProgramScreen}
             />
-            <RootStack.Screen
-              name="AddPost"
-              component={AddPostScreen}
-              options={{ animation: "fade", animationDuration: 2 }}
-            />
+            <RootStack.Screen name="AddPost" component={AddPostScreen} />
+            <RootStack.Group
+              screenOptions={{
+                gestureEnabled: false,
+                animation: "fade",
+              }}
+            >
+              <RootStack.Screen
+                name="FeedVideoExplore"
+                component={FeedVideoExploreScreen}
+                options={{ animation: "fade", animationDuration: 200 }}
+              />
+            </RootStack.Group>
             <RootStack.Group screenOptions={{ gestureEnabled: false }}>
               <RootStack.Screen
                 options={{ presentation: "modal" }}

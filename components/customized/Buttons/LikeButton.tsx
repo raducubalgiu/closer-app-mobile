@@ -6,13 +6,14 @@ import * as Haptics from "expo-haptics";
 import theme from "../../../assets/styles/theme";
 import { useDelete, useGet, usePost } from "../../../hooks";
 
-const { error } = theme.lightColors || {};
+const { error, black } = theme.lightColors || {};
 type IProps = {
   postId: string;
   onAddLike: () => void;
   onRemoveLike: () => void;
   size?: number;
   sx?: {};
+  color?: any;
 };
 
 export const LikeButton = ({
@@ -21,6 +22,7 @@ export const LikeButton = ({
   onRemoveLike,
   size = 25,
   sx = {},
+  color = black,
 }: IProps) => {
   const { user } = useAuth();
   const [liked, setLiked] = useState(false);
@@ -73,7 +75,7 @@ export const LikeButton = ({
           type={liked ? "antdesign" : "feather"}
           name="heart"
           size={size}
-          color={liked ? error : "black"}
+          color={liked ? error : color}
         />
       </Animated.View>
     </Pressable>

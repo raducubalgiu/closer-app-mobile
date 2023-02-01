@@ -138,7 +138,7 @@ export const ScheduleDetailsScreen = ({ route }: IProps) => {
               </Stack>
               <Stack align="end">
                 <Text style={styles.price}>
-                  {product?.price} {t("ron")}
+                  {product?.priceWithDiscount} {t("ron")}
                 </Text>
               </Stack>
             </Stack>

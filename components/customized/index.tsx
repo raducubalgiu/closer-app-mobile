@@ -19,6 +19,7 @@ export { FollowProfileButton } from "./Buttons/FollowProfileButton";
 export { ButtonFilter } from "./Buttons/ButtonFilter";
 export { ButtonProvider } from "./Buttons/ButtonProvider";
 export { FeedLabelButton } from "./Buttons/FeedLabelButton";
+export { VideoCommentButton } from "./Buttons/VideoCommentButton";
 
 export { TopTabContainer } from "./Tabs/TopTabContainer/TopTabContainer";
 export { TopTabProfile } from "./Tabs/TopTabContainer/TopTabProfile";
@@ -104,6 +105,9 @@ export { DashboardCalendarSheet } from "./Sheets/DashboardCalendarSheet";
 export { PostInfoSheet } from "./Sheets/PostInfoSheet";
 export { SheetService } from "./Sheets/SheetService";
 export { FollowUserSheet } from "./Sheets/FollowUserSheet";
+export { LikesSheet } from "./Sheets/LikesSheet";
+export { CommentsSheet } from "./Sheets/CommentsSheet";
+export { MoreSheet } from "./Sheets/MoreSheet";
 
 export { FiltersContainer } from "./Containers/FiltersContainer";
 

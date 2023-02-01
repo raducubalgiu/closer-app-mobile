@@ -122,7 +122,7 @@ export const FeedExploreScreen = () => {
           uri={item?.images[0]?.url}
           id={item.id}
           onPress={() =>
-            navigation.push("FeedVideoExplore", { item, allVideos, index })
+            navigation.push("FeedVideoExplore", { initialIndex: index })
           }
         />
       );
@@ -140,12 +140,7 @@ export const FeedExploreScreen = () => {
         </Text>
         <Pressable
           onPress={() =>
-            // navigation.push("FeedVideoExplore", {
-            //   item: firstVideo,
-            //   index: 0,
-            //   allVideos,
-            // })
-            navigation.navigate("ExploreVideoPortrait")
+            navigation.navigate("FeedVideoExplore", { initialIndex: 0 })
           }
         >
           <Stack
