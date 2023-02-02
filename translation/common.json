@@ -353,5 +353,7 @@
   "takeABreak": "Pune pauză",
   "takeABreakDescription": "Poţi alege să iei o pauză, iar noi vom bloca automat sloturile disponibile următoare",
   "done": "Gata",
-  "addSchedule": "Adaugă o programare"
+  "addSchedule": "Adaugă o programare",
+  "newPhoto": "Fotografie nouă",
+  "newVideo": "Videoclip nou"
 }

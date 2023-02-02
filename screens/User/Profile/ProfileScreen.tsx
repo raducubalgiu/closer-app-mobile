@@ -1,4 +1,4 @@
-import { StyleSheet, SafeAreaView } from "react-native";
+import { StyleSheet, SafeAreaView, View, Text } from "react-native";
 import { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
@@ -10,6 +10,7 @@ import {
   HeaderProfile,
   TopTabProfile,
   ProfileIconButton,
+  PostOptionsSheet,
 } from "../../../components/customized";
 import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
 import { useSheet, useAuth, useGet, useRefreshOnFocus } from "../../../hooks";
@@ -30,7 +31,7 @@ export const ProfileScreen = () => {
     uri: `/users/${userContext?.username}`,
   });
 
-  const { name, username, avatar, checkmark, role } = user || {};
+  const { username, checkmark, role } = user || {};
   const isBusiness = role === MAIN_ROLE || role === SECOND_ROLE;
 
   const closeSheet = useCallback(() => CLOSE_BS(), []);
@@ -39,6 +40,13 @@ export const ProfileScreen = () => {
     ["1%", isBusiness ? 235 : 200],
     profileMenu
   );
+
+  const postSheet = <PostOptionsSheet />;
+  const { BOTTOM_SHEET: postOptions, SHOW_BS: showPostOptions } = useSheet(
+    [1, 230],
+    postSheet
+  );
+
   const navigateBookmarks = () => navigation.navigate("Bookmarks", { user });
   const navigateProfile = () => navigation.navigate("EditProfile", { user });
   const navigateInstagram = () => navigation.navigate("ExploreVideoPortrait");
@@ -53,6 +61,7 @@ export const ProfileScreen = () => {
         onGoToFindFriends={() => navigation.navigate("FindFriends")}
         username={username}
         onOpenSettings={SHOW_BS}
+        onOpenPostOptions={showPostOptions}
       />
       <ProfileOverview
         user={user}
@@ -85,6 +94,7 @@ export const ProfileScreen = () => {
         />
       </Protected>
       {BOTTOM_SHEET}
+      {postOptions}
     </SafeAreaView>
   );
 };

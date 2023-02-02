@@ -13,12 +13,14 @@ type IProps = {
   checkmark: boolean;
   onGoToFindFriends: () => void;
   onOpenSettings: () => void;
+  onOpenPostOptions: () => void;
 };
 
 export const HeaderProfile = ({
   username,
   checkmark,
   onOpenSettings,
+  onOpenPostOptions,
 }: IProps) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -48,7 +50,7 @@ export const HeaderProfile = ({
         </Stack>
         <Stack direction="row">
           <IconButton
-            onPress={() => navigation.navigate("AddPost")}
+            onPress={onOpenPostOptions}
             size={30}
             name="add-circle-outline"
             type="ionicon"
