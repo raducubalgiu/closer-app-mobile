@@ -14,7 +14,7 @@ type IProps = {
   reactions: string;
 };
 
-const VideoPortraitListItemButtons = ({
+const VideoListItemButtons = ({
   postId,
   onShowCommentsSheet,
   onShowMoreSheet,
@@ -25,7 +25,7 @@ const VideoPortraitListItemButtons = ({
     <Stack direction="row" align="center">
       <Pressable style={styles.button} onPress={onShowLikesSheet}>
         <Stack direction="row">
-          <Icon name="bar-chart" type="feather" size={25} color="white" />
+          <Icon name="bar-chart" type="feather" size={27.5} color="white" />
           <Stack direction="row" sx={{ marginLeft: 7.5 }}>
             <Text style={styles.reactions}>{reactions}</Text>
           </Stack>
@@ -57,13 +57,13 @@ const VideoPortraitListItemButtons = ({
   );
 };
 
-export default memo(VideoPortraitListItemButtons);
+export default memo(VideoListItemButtons);
 
 const styles = StyleSheet.create({
   button: { paddingHorizontal: 10, paddingVertical: 5 },
   reactions: {
     color: "#ddd",
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: "600",
   },
 });

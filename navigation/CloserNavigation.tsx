@@ -9,7 +9,6 @@ import { useTranslation } from "react-i18next";
 import theme from "../assets/styles/theme";
 import { useAuth } from "../hooks";
 import { RootStackParams } from "../models/navigation/rootStackParams";
-import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 import {
   AccountScreen,
   AccountInfoScreen,
@@ -91,17 +90,14 @@ import {
   PhotoLibraryScreen,
   PhotoAlbumsScreen,
   AddPostScreen,
-  ExploreVideoLandscape,
   UserLocationPermissionScreen,
 } from "../screens";
 
 const Stack = createNativeStackNavigator();
-const SharedStack = createSharedElementStackNavigator();
 const Tab = createBottomTabNavigator();
 const RootStack = createNativeStackNavigator<RootStackParams>();
 
 const { black, primary, error } = theme.lightColors || {};
-import { ExploreVideoPortraitScreen } from "../screens/ExploreVideoPortraitScreen";
 import CustomAvatar from "../components/core/Avatars/CustomAvatar";
 
 const AuthStackNavigator = () => {
@@ -161,7 +157,7 @@ const TabsScreen = () => {
             iconName = focused ? "search" : "shopping-bag";
           } else if (route.name === "Messages") {
             iconName = focused ? "message-circle" : "message-circle";
-          } else if (route.name === "Feed") {
+          } else if (route.name === "FeedStack") {
             iconName = focused ? "compass" : "compass";
           } else if (route.name === "Schedules") {
             iconName = focused ? "calendar" : "calendar";
@@ -444,7 +440,10 @@ const CloserNavigation = () => {
               <RootStack.Screen
                 name="FeedVideoExplore"
                 component={FeedVideoExploreScreen}
-                options={{ animation: "fade", animationDuration: 200 }}
+                options={{
+                  animation: "fade",
+                  animationDuration: 200,
+                }}
               />
             </RootStack.Group>
             <RootStack.Group screenOptions={{ gestureEnabled: false }}>
@@ -479,14 +478,6 @@ const CloserNavigation = () => {
                 component={CameraPreviewScreen}
               />
             </RootStack.Group>
-            <RootStack.Screen
-              name="ExploreVideoLandscape"
-              component={ExploreVideoLandscape}
-            />
-            <RootStack.Screen
-              name="ExploreVideoPortrait"
-              component={ExploreVideoPortraitScreen}
-            />
             <RootStack.Screen name="Likes" component={LikesScreen} />
             <RootStack.Screen
               name="SearchPosts"

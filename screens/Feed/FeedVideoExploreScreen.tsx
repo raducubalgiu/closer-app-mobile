@@ -1,6 +1,6 @@
 import { FlatList, Dimensions, View, RefreshControl } from "react-native";
 import { useCallback } from "react";
-import VideoPortraitListItem from "../../components/customized/ListItems/VideoPortraitListItem/VideoPortraitListItem";
+import VideoPortraitListItem from "../../components/customized/ListItems/VideoListItem/VideoListItem";
 import { useGetPaginate, useRefreshByUser } from "../../hooks";
 import { Spinner } from "../../components/core";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -27,9 +27,14 @@ export const FeedVideoExploreScreen = ({ route }: IProps) => {
     limit: "5",
   });
 
-  const renderVideo = useCallback(({ item }: { item: any }) => {
-    return <VideoPortraitListItem post={item} />;
-  }, []);
+  const loading = isLoading || isFetching;
+
+  const renderVideo = useCallback(
+    ({ item }: { item: any }) => {
+      return <VideoPortraitListItem post={item} isLoading={loading} />;
+    },
+    [loading]
+  );
 
   const loadMore = () => {
     if (hasNextPage) fetchNextPage();

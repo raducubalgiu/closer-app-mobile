@@ -10,7 +10,7 @@ type IProps = {
   maximumValue?: number;
 };
 
-const VideoPortraitListItemSlider = ({
+const VideoListItemSlider = ({
   width,
   onSlidingStart,
   onSlidingComplete,
@@ -75,4 +75,4 @@ const VideoPortraitListItemSlider = ({
   );
 };
 
-export default memo(VideoPortraitListItemSlider);
+export default memo(VideoListItemSlider);

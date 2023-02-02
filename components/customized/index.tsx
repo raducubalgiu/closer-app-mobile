@@ -20,6 +20,7 @@ export { ButtonFilter } from "./Buttons/ButtonFilter";
 export { ButtonProvider } from "./Buttons/ButtonProvider";
 export { FeedLabelButton } from "./Buttons/FeedLabelButton";
 export { VideoCommentButton } from "./Buttons/VideoCommentButton";
+export { FollowOutlinedButton } from "./Buttons/FollowOutlinedButton";
 
 export { TopTabContainer } from "./Tabs/TopTabContainer/TopTabContainer";
 export { TopTabProfile } from "./Tabs/TopTabContainer/TopTabProfile";
@@ -119,3 +120,5 @@ export { PhotoIconButton } from "./IconButtons/PhotoIconButton";
 export { RevertIconButton } from "./IconButtons/RevertIconButton";
 export { InfoIconButton } from "./IconButtons/InfoIconButton";
 export { ProfileIconButton } from "./IconButtons/ProfileIconButton";
+
+export { VideoDetailsSkeleton } from "./Skeletons/VideoDetailsSkeleton";

@@ -65,7 +65,6 @@ export const FeedExploreScreen = () => {
   const { pages } = data || {};
   const allPosts = pages?.map((page) => page.results).flat();
   const allVideos = videos?.pages?.map((page) => page.results).flat();
-  const firstVideo = first(allVideos);
 
   const showConfirm = useCallback(() => {
     CLOSE_BS();

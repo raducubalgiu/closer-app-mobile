@@ -1,5 +1,5 @@
-import { StyleSheet, Text, Pressable } from "react-native";
-import { Icon } from "@rneui/themed";
+import { StyleSheet, Text, Pressable, Dimensions } from "react-native";
+import { Icon, Skeleton } from "@rneui/themed";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { memo } from "react";
@@ -10,9 +10,13 @@ import { User } from "../../../../models/user";
 import theme from "../../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 import { DisplayText } from "../../DisplayText/DisplayText";
+import { FollowOutlinedButton } from "../../Buttons/FollowOutlinedButton";
+import { VideoDetailsSkeleton } from "../../Skeletons/VideoDetailsSkeleton";
 
-const { primary, error } = theme.lightColors || {};
+const { width } = Dimensions.get("window");
+const { error } = theme.lightColors || {};
 type IProps = {
+  isLoading: boolean;
   product: Product;
   userDetails: User;
   bookable: boolean;
@@ -21,7 +25,8 @@ type IProps = {
   onGoToCalendar: () => void;
 };
 
-const VideoPortraitListItemDetails = ({
+const VideoListItemDetails = ({
+  isLoading,
   product,
   userDetails,
   bookable,
@@ -35,12 +40,58 @@ const VideoPortraitListItemDetails = ({
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
 
+  const details = (
+    <Stack direction="row" sx={styles.content}>
+      <Stack sx={{ flex: 1, width: "100%" }}>
+        <Stack direction="row" align="start" sx={styles.userDetails}>
+          <Stack direction="row">
+            <Stack direction="row">
+              <Stack align="start">
+                <Stack direction="row">
+                  <CustomAvatar avatar={avatar} size={20} />
+                  <Text style={styles.username}>@{username}</Text>
+                  {checkmark && <Checkmark />}
+                </Stack>
+                <Stack sx={styles.professionCont}>
+                  <Stack direction="row">
+                    <Text style={styles.profession}>{profession?.name}</Text>
+                    <Stack direction="row">
+                      <IconStar />
+                      <Text style={styles.rating}>{ratingsAverage}</Text>
+                    </Stack>
+                  </Stack>
+                </Stack>
+              </Stack>
+            </Stack>
+          </Stack>
+          {bookable && (
+            <Button
+              title={t("book")}
+              sxBtn={{ width: 120, opacity: 0.9, marginVertical: 0 }}
+              onPress={onGoToCalendar}
+            />
+          )}
+          {!bookable && <FollowOutlinedButton />}
+        </Stack>
+        <Pressable style={styles.descriptionContainer}>
+          <Stack align="start">
+            {description ? (
+              <DisplayText maxWords={10} text={description} postType="video" />
+            ) : (
+              <Text style={styles.description}>...</Text>
+            )}
+          </Stack>
+        </Pressable>
+      </Stack>
+    </Stack>
+  );
+
   return (
     <Stack sx={StyleSheet.absoluteFill}>
       <Stack sx={{ width: "100%" }}>
         <Stack direction="row" sx={{ ...styles.header, marginTop: insets.top }}>
           <Pressable onPress={onGoBack} style={styles.back}>
-            <Icon name="arrow-back-ios" size={22.5} color="white" />
+            <Icon name="close" type="antdesign" size={26} color="white" />
           </Pressable>
           <Pressable style={styles.search}>
             <Icon name="search" type="feather" size={25} color="white" />
@@ -52,91 +103,10 @@ const VideoPortraitListItemDetails = ({
         start={{ x: 0, y: 0.5 }}
         end={{ x: 0, y: 0 }}
       >
-        <Stack direction="row" sx={styles.content}>
-          <Stack sx={{ flex: 1, width: "100%" }}>
-            <Stack
-              direction="row"
-              align="start"
-              sx={{
-                width: "100%",
-                marginBottom: 7.5,
-                height: 50,
-              }}
-            >
-              <Stack direction="row">
-                <Stack direction="row">
-                  <Stack align="start">
-                    <Stack direction="row">
-                      <CustomAvatar avatar={avatar} size={20} />
-                      <Text style={styles.username}>@{username}</Text>
-                      {checkmark && <Checkmark />}
-                    </Stack>
-                    <Stack sx={styles.professionCont}>
-                      <Stack direction="row">
-                        <Text style={styles.profession}>
-                          {profession?.name}
-                        </Text>
-                        <Stack direction="row">
-                          <IconStar />
-                          <Text style={styles.rating}>{ratingsAverage}</Text>
-                        </Stack>
-                      </Stack>
-                    </Stack>
-                  </Stack>
-                </Stack>
-              </Stack>
-              {bookable && (
-                <Button
-                  title={t("book")}
-                  sxBtn={{ width: 120, opacity: 0.9, marginVertical: 0 }}
-                  onPress={onGoToCalendar}
-                />
-              )}
-              {!bookable && (
-                <Pressable
-                  style={{
-                    marginLeft: 15,
-                    borderWidth: 1.25,
-                    borderColor: "#a6a6a6",
-                    borderRadius: 5,
-                    height: 30,
-                    width: 100,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Text style={{ color: "white", fontWeight: "600" }}>
-                    {t("following")}
-                  </Text>
-                </Pressable>
-              )}
-            </Stack>
-            <Pressable
-              style={{
-                width: "100%",
-                paddingVertical: 1.5,
-              }}
-            >
-              <Stack align="start">
-                {description ? (
-                  <DisplayText
-                    maxWords={10}
-                    text={description}
-                    postType="video"
-                  />
-                ) : (
-                  <Text style={styles.description}>...</Text>
-                )}
-              </Stack>
-            </Pressable>
-          </Stack>
-        </Stack>
+        {isLoading ? <VideoDetailsSkeleton width={width} /> : details}
         <Stack
           direction="row"
-          sx={{
-            paddingHorizontal: 15,
-            marginVertical: 15,
-          }}
+          sx={{ paddingHorizontal: 15, marginVertical: 15 }}
           justify={bookable ? "between" : "end"}
         >
           {bookable && (
@@ -145,21 +115,9 @@ const VideoPortraitListItemDetails = ({
                 colors={["rgba(51, 194, 255, 0.9)", "white"]}
                 start={{ x: 1.4, y: 0.75 }}
                 end={{ x: 1.75, y: 0.75 }}
-                style={{
-                  paddingVertical: 4,
-                  paddingHorizontal: 7.5,
-                  borderRadius: 1,
-                }}
+                style={styles.productContainer}
               >
-                <Text
-                  style={{
-                    color: "white",
-                    marginLeft: 5,
-                    fontSize: 12.5,
-                  }}
-                >
-                  {product?.name}
-                </Text>
+                <Text style={styles.product}>{product?.name}</Text>
               </LinearGradient>
               <Stack sx={{ marginLeft: 10 }}>
                 <Text style={styles.option}>{option?.name}</Text>
@@ -181,7 +139,7 @@ const VideoPortraitListItemDetails = ({
   );
 };
 
-export default memo(VideoPortraitListItemDetails);
+export default memo(VideoListItemDetails);
 
 const styles = StyleSheet.create({
   header: { padding: 10, width: "100%" },
@@ -205,6 +163,11 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 15,
   },
+  userDetails: {
+    width: "100%",
+    marginBottom: 7.5,
+    height: 50,
+  },
   username: {
     color: "#f2f2f2",
     fontWeight: "600",
@@ -222,9 +185,23 @@ const styles = StyleSheet.create({
     fontSize: 14.5,
     marginRight: 5,
   },
+  descriptionContainer: {
+    width: "100%",
+    paddingVertical: 1.5,
+  },
   description: {
     color: "#f2f2f2",
     fontSize: 13.5,
+  },
+  productContainer: {
+    paddingVertical: 4,
+    paddingHorizontal: 7.5,
+    borderRadius: 1,
+  },
+  product: {
+    color: "white",
+    marginLeft: 5,
+    fontSize: 12.5,
   },
   rating: {
     marginLeft: 2.5,

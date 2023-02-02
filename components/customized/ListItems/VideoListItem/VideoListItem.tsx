@@ -2,25 +2,18 @@ import { Pressable, StyleSheet, Dimensions, View, Text } from "react-native";
 import { memo, useCallback, useRef, useState } from "react";
 import { ResizeMode, Video } from "expo-av";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
-import { LinearGradient } from "expo-linear-gradient";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import theme from "../../../../assets/styles/theme";
-import { Icon } from "@rneui/themed";
 import { useSheet } from "../../../../hooks";
-import { Stack, Button, Checkmark } from "../../../core";
-import { LikesSheet, CommentsSheet, MoreSheet } from "../../../customized";
-import { trimFunc } from "../../../../utils";
+import { LikesSheet, CommentsSheet, MoreSheet } from "../..";
 import { RootStackParams } from "../../../../models/navigation/rootStackParams";
-import VideoPortraitListItemButtons from "./VideoPortraitListItemButtons";
-import CustomAvatar from "../../../core/Avatars/CustomAvatar";
 import VisibilitySensor from "@svanboxel/visibility-sensor-react-native";
-import VideoPortraitListItemSlider from "./VideoPortraitListItemSlider";
 import { Post } from "../../../../models/post";
-import VideoPortraitListItemDetails from "./VideoPortraitListItemDetails";
+import VideoListItemButtons from "./VideoListItemButtons";
+import VideoListItemDetails from "./VideoListItemDetails";
+import VideoListItemSlider from "./VideoListItemSlider";
 
-type IProps = { post: Post };
+type IProps = { post: Post; isLoading: boolean };
 
 type Status = {
   progressUpdateIntervalMillis: number;
@@ -35,11 +28,11 @@ type Status = {
 };
 
 const { width, height } = Dimensions.get("window");
-const { primary, error } = theme.lightColors || {};
 
-const VideoPortraitListItem = ({ post }: IProps) => {
+const VideoListItem = ({ post, isLoading }: IProps) => {
   const { id, description, bookable, images, userId, product } = post;
   const { priceWithDiscount, option, discount, serviceId } = product || {};
+  const video = useRef<any>(null);
   const [status, setStatus] = useState<Status>({
     progressUpdateIntervalMillis: 500,
     positionMillis: 0,
@@ -51,9 +44,7 @@ const VideoPortraitListItem = ({ post }: IProps) => {
     isLooping: false,
   });
   const [isPlaying, setIsPlaying] = useState(false);
-  const video = useRef<any>(null);
   const insets = useSafeAreaInsets();
-  const { t } = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const VIDEO_HEIGHT = height - insets.bottom - 55;
@@ -93,6 +84,13 @@ const VideoPortraitListItem = ({ post }: IProps) => {
     }
   }, []);
 
+  const handleChangeStatus = (value: any) => {
+    video.current.setStatusAsync({
+      ...status,
+      positionMillis: value,
+    });
+  };
+
   return (
     <VisibilitySensor onChange={handleImageVisibility}>
       <View style={styles.container}>
@@ -109,7 +107,8 @@ const VideoPortraitListItem = ({ post }: IProps) => {
             isLooping={true}
             resizeMode={ResizeMode.COVER}
           />
-          <VideoPortraitListItemDetails
+          <VideoListItemDetails
+            isLoading={isLoading}
             userDetails={userId}
             product={product}
             description={description}
@@ -124,15 +123,15 @@ const VideoPortraitListItem = ({ post }: IProps) => {
           />
         </Pressable>
         <View style={{ height: 55 + insets.bottom }}>
-          <VideoPortraitListItemSlider
+          <VideoListItemSlider
             width={width}
             onSlidingStart={() => video.current.pauseAsync()}
             onSlidingComplete={() => video.current.playAsync()}
             value={status?.positionMillis}
             maximumValue={status?.playableDurationMillis}
-            onValueChange={(value) => {}}
+            onValueChange={handleChangeStatus}
           />
-          <VideoPortraitListItemButtons
+          <VideoListItemButtons
             postId={id}
             reactions="17.k"
             onShowCommentsSheet={() => showCommSheet()}
@@ -148,7 +147,7 @@ const VideoPortraitListItem = ({ post }: IProps) => {
   );
 };
 
-export default memo(VideoPortraitListItem);
+export default memo(VideoListItem);
 
 const styles = StyleSheet.create({
   container: {
