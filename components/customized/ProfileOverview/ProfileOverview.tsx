@@ -9,7 +9,7 @@ import { StatsButton } from "../Buttons/StatsButton";
 import CustomAvatar from "../../core/Avatars/CustomAvatar";
 import { displayDash } from "../../../utils";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../navigation/rootStackParams";
 
 const { black, primary } = theme.lightColors || {};
 

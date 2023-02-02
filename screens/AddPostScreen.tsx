@@ -19,7 +19,7 @@ import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import { RootStackParams } from "../models/navigation/rootStackParams";
+import { RootStackParams } from "../navigation/rootStackParams";
 
 const { height, width } = Dimensions.get("window");
 const { primary } = theme.lightColors || {};

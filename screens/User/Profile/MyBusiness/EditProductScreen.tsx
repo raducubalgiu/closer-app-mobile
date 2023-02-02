@@ -20,7 +20,7 @@ import {
   Button,
 } from "../../../../components/core";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../../navigation/rootStackParams";
 
 export const EditProductScreen = ({ route }) => {
   const { user } = useAuth();

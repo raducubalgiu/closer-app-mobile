@@ -10,7 +10,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Service } from "../../../../models/service";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../../navigation/rootStackParams";
 
 export const SearchServicesTab = ({ search }: { search: string }) => {
   const { t } = useTranslation();

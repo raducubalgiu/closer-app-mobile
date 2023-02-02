@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Checkmark, IconStar, Stack } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../navigation/rootStackParams";
 import { RecommendedLocation } from "../../../models/recommendedLocation";
 import { trimFunc } from "../../../utils";
 import { Divider } from "@rneui/themed";

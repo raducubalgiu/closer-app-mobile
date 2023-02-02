@@ -9,7 +9,7 @@ import {
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
 import { FiltersContainer, OptionListItem } from "../components/customized";
-import { RootStackParams } from "../models/navigation/rootStackParams";
+import { RootStackParams } from "../navigation/rootStackParams";
 import { Option } from "../models/option";
 import { useGet } from "../hooks";
 

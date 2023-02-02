@@ -1,10 +1,9 @@
-import { Option } from "../option";
-import { Post } from "../post";
-import { Product } from "../product";
-import { Schedule } from "../schedule";
-import { Service } from "../service";
-import { Slot } from "../slot";
-import { User } from "../user";
+import { Option } from "../models/option";
+import { Product } from "../models/product";
+import { Schedule } from "../models/schedule";
+import { Service } from "../models/service";
+import { Slot } from "../models/slot";
+import { User } from "../models/user";
 
 export type RootStackParams = {
   Account: any;
@@ -104,7 +103,6 @@ export type RootStackParams = {
     profession: string;
     userId: string;
   };
-  Post: { userId: string };
   Privacy: any;
   Profile: any;
   ProfileGeneral: {

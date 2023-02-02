@@ -11,7 +11,7 @@ import {
   HashtagPostsBookableTab,
 } from "../components/customized";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParams } from "../models/navigation/rootStackParams";
+import { RootStackParams } from "../navigation/rootStackParams";
 
 type IProps = NativeStackScreenProps<RootStackParams, "Hashtag">;
 

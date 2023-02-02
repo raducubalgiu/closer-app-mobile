@@ -20,7 +20,7 @@ import { Button, Textarea } from "../components/core";
 import { MAIN_ROLE } from "@env";
 import theme from "../assets/styles/theme";
 import { useAuth, usePatch } from "../hooks";
-import { RootStackParams } from "../models/navigation/rootStackParams";
+import { RootStackParams } from "../navigation/rootStackParams";
 import { showToast } from "../utils";
 import { useHeaderHeight } from "@react-navigation/elements";
 

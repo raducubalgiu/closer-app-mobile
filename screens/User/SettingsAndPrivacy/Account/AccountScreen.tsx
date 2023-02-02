@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Header, ListItem, Stack } from "../../../../components/core";
 import theme from "../../../../assets/styles/theme";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../../navigation/rootStackParams";
 
 const { grey0, black } = theme.lightColors || {};
 

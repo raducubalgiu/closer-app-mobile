@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Stack, IconButton, Checkmark } from "../../../core";
 import theme from "../../../../assets/styles/theme";
-import { RootStackParams } from "../../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../../navigation/rootStackParams";
 
 const { black } = theme.lightColors || {};
 

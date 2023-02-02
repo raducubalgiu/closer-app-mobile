@@ -10,7 +10,7 @@ import {
 } from "../components/customized";
 import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParams } from "../models/navigation/rootStackParams";
+import { RootStackParams } from "../navigation/rootStackParams";
 
 type IProps = NativeStackScreenProps<RootStackParams, "Service">;
 

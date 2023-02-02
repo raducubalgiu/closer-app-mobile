@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useSheet } from "../../../../hooks";
 import { LikesSheet, CommentsSheet, MoreSheet } from "../..";
-import { RootStackParams } from "../../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../../navigation/rootStackParams";
 import VisibilitySensor from "@svanboxel/visibility-sensor-react-native";
 import { Post } from "../../../../models/post";
 import VideoListItemButtons from "./VideoListItemButtons";

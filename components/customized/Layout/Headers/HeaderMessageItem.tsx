@@ -5,7 +5,7 @@ import { Stack, IconBackButton, Checkmark } from "../../../core";
 import { InfoIconButton } from "../../IconButtons/InfoIconButton";
 import CustomAvatar from "../../../core/Avatars/CustomAvatar";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../../navigation/rootStackParams";
 
 const { grey0 } = theme.lightColors || {};
 

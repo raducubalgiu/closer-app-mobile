@@ -11,7 +11,7 @@ import {
 } from "@react-navigation/native-stack";
 
 import dayjs from "dayjs";
-import { RootStackParams } from "../models/navigation/rootStackParams";
+import { RootStackParams } from "../navigation/rootStackParams";
 import { showToast } from "../utils";
 
 const { black, grey0 } = theme.lightColors || {};

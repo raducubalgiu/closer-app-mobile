@@ -13,7 +13,7 @@ import {
 } from "../components/customized";
 import { useAuth, usePost } from "../hooks";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParams } from "../models/navigation/rootStackParams";
+import { RootStackParams } from "../navigation/rootStackParams";
 
 type IProps = NativeStackScreenProps<RootStackParams, "SearchAll">;
 

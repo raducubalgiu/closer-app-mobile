@@ -9,7 +9,7 @@ import { MAIN_ROLE, SECOND_ROLE, SUPERADMIN_ROLE, THIRD_ROLE } from "@env";
 import { Protected, ListItem } from "../../core";
 import { useTranslation } from "react-i18next";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../navigation/rootStackParams";
 import { showToast } from "../../../utils";
 
 const { black } = theme.lightColors || {};

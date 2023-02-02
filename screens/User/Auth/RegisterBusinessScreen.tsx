@@ -7,7 +7,7 @@ import { LoginRegisterForm } from "../../../components/customized";
 import { MAIN_ROLE } from "@env";
 import { useTranslation } from "react-i18next";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../navigation/rootStackParams";
 
 export const RegisterBusinessScreen = () => {
   const navigation =

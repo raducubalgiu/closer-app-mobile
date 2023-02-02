@@ -8,7 +8,7 @@ import { ServiceListItem } from "../../ListItems/ServiceListItem";
 import { useGetPaginate } from "../../../../hooks";
 import { Service } from "../../../../models/service";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../../navigation/rootStackParams";
 import { User } from "../../../../models/user";
 
 export const SavedServicesTab = ({ user }: { user: User }) => {

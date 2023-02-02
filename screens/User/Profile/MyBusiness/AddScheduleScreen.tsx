@@ -27,7 +27,7 @@ import {
   IconButton,
   Stack,
 } from "../../../../components/core";
-import { RootStackParams } from "../../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../../navigation/rootStackParams";
 import { useAuth, useCalendarList, useGet, usePost } from "../../../../hooks";
 import theme from "../../../../assets/styles/theme";
 import { Product } from "../../../../models/product";

@@ -9,7 +9,7 @@ import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { Hashtag } from "../../../../models/hashtag";
 import { User } from "../../../../models/user";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../../navigation/rootStackParams";
 
 type ListRenderItemHashtag = {
   id: string;

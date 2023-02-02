@@ -28,7 +28,7 @@ import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import { RootStackParams } from "../models/navigation/rootStackParams";
+import { RootStackParams } from "../navigation/rootStackParams";
 import { SECOND_ROLE, THIRD_ROLE } from "@env";
 
 const { black, grey0, success, error } = theme.lightColors || {};

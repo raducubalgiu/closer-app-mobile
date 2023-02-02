@@ -6,7 +6,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Header, Heading, ListItem, Stack } from "../../../components/core";
 import theme from "../../../assets/styles/theme";
-import { RootStackParams } from "../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../navigation/rootStackParams";
 import { useAuth } from "../../../hooks";
 import { showToast } from "../../../utils";
 

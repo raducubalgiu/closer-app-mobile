@@ -15,7 +15,7 @@ import { HeaderServices, Map, NoFoundMessage } from "../components/customized";
 import LocationListItem from "../components/customized/ListItems/LocationListItem";
 import { useGet } from "../hooks";
 import theme from "../assets/styles/theme";
-import { RootStackParams } from "../models/navigation/rootStackParams";
+import { RootStackParams } from "../navigation/rootStackParams";
 import { Location } from "../models/location";
 import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import { Icon } from "@rneui/themed";

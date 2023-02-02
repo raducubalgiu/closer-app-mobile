@@ -17,7 +17,7 @@ import {
 } from "@react-navigation/native-stack";
 import { Stack } from "../components/core";
 import { useGet, useRefreshOnFocus } from "../hooks";
-import { RootStackParams } from "../models/navigation/rootStackParams";
+import { RootStackParams } from "../navigation/rootStackParams";
 import { HeaderMap } from "../components/customized";
 import BusinessButton from "../components/customized/Buttons/BusinessButton";
 import CardLocationMap from "../components/customized/Cards/CardLocationMap";

@@ -9,7 +9,7 @@ import theme from "../../../../assets/styles/theme";
 import { useAuth } from "../../../../hooks";
 import { DisplayText } from "../../DisplayText/DisplayText";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../../navigation/rootStackParams";
 
 const { grey0, black } = theme.lightColors || {};
 

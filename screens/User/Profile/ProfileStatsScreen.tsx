@@ -11,7 +11,7 @@ import {
 } from "../../../components/customized/index";
 import { Header } from "../../../components/core";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../navigation/rootStackParams";
 
 type IProps = NativeStackScreenProps<RootStackParams, "ProfileStats">;
 

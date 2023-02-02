@@ -10,7 +10,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Hashtag } from "../../../../models/hashtag";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../../navigation/rootStackParams";
 
 export const SearchHashtagsTab = ({ search }: { search: string }) => {
   const { user } = useAuth();

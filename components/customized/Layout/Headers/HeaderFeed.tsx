@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import * as Haptics from "expo-haptics";
 import { Stack, IconButton } from "../../../core";
 import { FeedLabelButton } from "../../Buttons/FeedLabelButton";
-import { RootStackParams } from "../../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../../navigation/rootStackParams";
 
 type IProps = { indexLabel: number };
 type Label = {

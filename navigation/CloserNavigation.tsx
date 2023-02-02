@@ -8,7 +8,7 @@ import "../i18next";
 import { useTranslation } from "react-i18next";
 import theme from "../assets/styles/theme";
 import { useAuth } from "../hooks";
-import { RootStackParams } from "../models/navigation/rootStackParams";
+import { RootStackParams } from "./rootStackParams";
 import {
   AccountScreen,
   AccountInfoScreen,
@@ -65,7 +65,6 @@ import {
   MessageNewScreen,
   MessagesScreen,
   NotificationsScreen,
-  PostScreen,
   ProductScreen,
   PrivacyScreen,
   ProductReviewsScreen,
@@ -411,7 +410,6 @@ const CloserNavigation = () => {
               name="Notifications"
               component={NotificationsScreen}
             />
-            <RootStack.Screen name="Post" component={PostScreen} />
             <RootStack.Screen
               name="ProfileGeneral"
               component={ProfileGeneralScreen}

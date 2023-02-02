@@ -13,7 +13,7 @@ import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import { RootStackParams } from "../models/navigation/rootStackParams";
+import { RootStackParams } from "../navigation/rootStackParams";
 
 const { grey0, black, error } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "MessageSettings">;

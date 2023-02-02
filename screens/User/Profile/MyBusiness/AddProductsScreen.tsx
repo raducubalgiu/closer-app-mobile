@@ -14,7 +14,7 @@ import { Button, FormInput, Stack } from "../../../../components/core";
 import { FormInputSelect } from "../../../../components/core";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../../navigation/rootStackParams";
 import { Product } from "../../../../models/product";
 
 const defaultValues = {

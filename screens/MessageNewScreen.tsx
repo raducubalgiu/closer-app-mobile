@@ -12,7 +12,7 @@ import { Header, SearchBarInput, Heading, Spinner } from "../components/core";
 import { useAuth, useGet } from "../hooks";
 import { UserListItemSimple } from "../components/customized";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../models/navigation/rootStackParams";
+import { RootStackParams } from "../navigation/rootStackParams";
 
 export const MessageNewScreen = () => {
   const { user } = useAuth();

@@ -17,7 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 import { ServicesList, CardRecommended } from "../components/customized";
 import { useGet, useRefreshByUser } from "../hooks";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../models/navigation/rootStackParams";
+import { RootStackParams } from "../navigation/rootStackParams";
 import { RecommendedLocation } from "../models/recommendedLocation";
 
 const { black } = theme.lightColors || {};

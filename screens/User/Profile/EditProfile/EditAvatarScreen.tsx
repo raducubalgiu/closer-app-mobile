@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import { CloseIconButton } from "../../../../components/customized";
 import theme from "../../../../assets/styles/theme";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../../navigation/rootStackParams";
 const { black } = theme.lightColors || {};
 
 const { width } = Dimensions.get("window");

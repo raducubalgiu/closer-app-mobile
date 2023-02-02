@@ -21,7 +21,7 @@ import {
 } from "../../../components/customized";
 import SuggestedUsersList from "../../../components/customized/Lists/SuggestedUsersList";
 import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
-import { RootStackParams } from "../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../navigation/rootStackParams";
 import { Protected } from "../../../components/core";
 import { MAIN_ROLE, SECOND_ROLE } from "@env";
 

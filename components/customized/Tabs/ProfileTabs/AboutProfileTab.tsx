@@ -13,7 +13,7 @@ import MapStatic from "../../Map/MapStatic";
 import { MAIN_ROLE, SECOND_ROLE } from "@env";
 import { MapPreviewModal } from "../../Modals/MapPreviewModal";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../../navigation/rootStackParams";
 import dayjs from "dayjs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 

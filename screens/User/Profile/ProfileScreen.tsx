@@ -15,7 +15,7 @@ import {
 import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
 import { useSheet, useAuth, useGet, useRefreshOnFocus } from "../../../hooks";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../navigation/rootStackParams";
 import { FAB } from "@rneui/themed";
 
 const { primary } = theme.lightColors || {};

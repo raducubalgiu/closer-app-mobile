@@ -6,7 +6,7 @@ import { Stack, Checkmark, Protected } from "../../../core";
 import CustomAvatar from "../../../core/Avatars/CustomAvatar";
 import { Icon } from "@rneui/themed";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../../navigation/rootStackParams";
 import { MAIN_ROLE, SECOND_ROLE } from "@env";
 
 const { grey0, primary, black } = theme.lightColors || {};

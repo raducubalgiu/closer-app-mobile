@@ -10,7 +10,7 @@ import { RelatedCommentsList } from "./RelatedCommentsList";
 import { useState } from "react";
 import { DisplayText } from "../DisplayText/DisplayText";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../navigation/rootStackParams";
 import { UseMutateFunction } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 

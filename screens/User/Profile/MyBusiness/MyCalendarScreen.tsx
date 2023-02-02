@@ -26,7 +26,7 @@ import {
 } from "../../../../hooks";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../../navigation/rootStackParams";
 import CalendarAgenda from "../../../../components/customized/Calendars/CalendarAgenda";
 
 const { black, success, error } = theme.lightColors || {};

@@ -13,7 +13,7 @@ import { NoFoundMessage, CardReviewSummary } from "../components/customized";
 import RatingListItem from "../components/customized/ListItems/RatingListItem";
 import { useGet, useGetPaginate, useRefreshByUser } from "../hooks";
 import { Review } from "../models/review";
-import { RootStackParams } from "../models/navigation/rootStackParams";
+import { RootStackParams } from "../navigation/rootStackParams";
 
 type IProps = NativeStackScreenProps<RootStackParams, "ProductReviews">;
 const { black, grey0 } = theme.lightColors || {};

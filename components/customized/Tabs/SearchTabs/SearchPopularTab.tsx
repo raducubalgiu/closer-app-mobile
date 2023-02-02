@@ -10,7 +10,7 @@ import GridImageListItem from "../../ListItems/PostGrid/GridImageListItem";
 import axios from "axios";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../../navigation/rootStackParams";
 import { User } from "../../../../models/user";
 import { Hashtag } from "../../../../models/hashtag";
 import { Post } from "../../../../models/post";

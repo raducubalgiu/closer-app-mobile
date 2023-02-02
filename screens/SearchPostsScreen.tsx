@@ -23,7 +23,7 @@ import theme from "../assets/styles/theme";
 import { useAuth, useDelete, useGet } from "../hooks";
 import { trimFunc } from "../utils";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../models/navigation/rootStackParams";
+import { RootStackParams } from "../navigation/rootStackParams";
 
 const { grey0, primary, black } = theme.lightColors || {};
 

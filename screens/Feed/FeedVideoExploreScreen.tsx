@@ -4,7 +4,7 @@ import VideoPortraitListItem from "../../components/customized/ListItems/VideoLi
 import { useGetPaginate, useRefreshByUser } from "../../hooks";
 import { Spinner } from "../../components/core";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../navigation/rootStackParams";
 
 const { height } = Dimensions.get("window");
 type IProps = NativeStackScreenProps<RootStackParams, "FeedVideoExplore">;

@@ -13,7 +13,7 @@ import {
   PickerHoursModal,
   FixedPeriodList,
 } from "../components/customized";
-import { RootStackParams } from "../models/navigation/rootStackParams";
+import { RootStackParams } from "../navigation/rootStackParams";
 import { Period } from "../models/period";
 import { dayMonthFormat } from "../utils/date-utils";
 import { useMinutes } from "../hooks";

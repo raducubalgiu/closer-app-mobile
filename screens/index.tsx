@@ -47,7 +47,6 @@ export { MessageItemScreen } from "./MessageItemScreen";
 export { MessageNewScreen } from "./MessageNewScreen";
 export { MessagesScreen } from "./MessagesScreen";
 export { NotificationsScreen } from "./NotificationsScreen";
-export { PostScreen } from "./PostScreen";
 export { ScheduleCancelScreen } from "./ScheduleCancelScreen";
 export { ScheduleConfirmScreen } from "./ScheduleConfirmScreen";
 export { ScheduleDetailsScreen } from "./ScheduleDetailsScreen";

@@ -6,7 +6,7 @@ import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import { RootStackParams } from "../models/navigation/rootStackParams";
+import { RootStackParams } from "../navigation/rootStackParams";
 import { useTranslation } from "react-i18next";
 import { Divider, Icon } from "@rneui/themed";
 import { BookmarkButton, UserListItemSimple } from "../components/customized";

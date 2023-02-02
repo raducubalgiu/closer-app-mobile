@@ -16,7 +16,7 @@ import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import { RootStackParams } from "../models/navigation/rootStackParams";
+import { RootStackParams } from "../navigation/rootStackParams";
 import { Service } from "../models/service";
 import { NoFoundMessage } from "../components/customized";
 import { Icon } from "@rneui/themed";

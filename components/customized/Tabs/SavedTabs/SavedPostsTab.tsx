@@ -8,7 +8,7 @@ import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { Post } from "../../../../models/post";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../../navigation/rootStackParams";
 import { User } from "../../../../models/user";
 
 type ListRenderItemPost = {

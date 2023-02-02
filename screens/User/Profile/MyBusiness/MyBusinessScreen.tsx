@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks";
 import { MAIN_ROLE, SECOND_ROLE } from "@env";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../../navigation/rootStackParams";
 
 interface Screen {
   _id: string;

@@ -30,7 +30,7 @@ import { Post } from "../../models/post";
 import PostVideoOverviewListItem from "../../components/customized/ListItems/Post/PostVideoOverviewListItem";
 import theme from "../../assets/styles/theme";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../navigation/rootStackParams";
 import { first } from "lodash";
 
 const { black, grey0 } = theme.lightColors || {};

@@ -12,7 +12,7 @@ import {
 import { Header } from "../../../components/core";
 import theme from "../../../assets/styles/theme";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../navigation/rootStackParams";
 
 const { black } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "Bookmarks">;

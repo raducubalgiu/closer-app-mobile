@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";
 import { Stack, ListItem, Button } from "../../../components/core";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../navigation/rootStackParams";
 
 const { black, primary, grey0 } = theme.lightColors || {};
 

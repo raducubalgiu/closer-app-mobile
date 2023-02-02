@@ -6,7 +6,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 import { Stack } from "../../core";
-import { RootStackParams } from "../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../navigation/rootStackParams";
 import { Schedule } from "../../../models/schedule";
 import { UserListItemSimple } from "./UserListItemSimple";
 

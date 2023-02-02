@@ -8,7 +8,7 @@ import UserListItem from "../components/customized/ListItems/UserListItem";
 import { useRefreshByUser } from "../hooks";
 import { useGetPaginate } from "../hooks";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParams } from "../models/navigation/rootStackParams";
+import { RootStackParams } from "../navigation/rootStackParams";
 import { User } from "../models/user";
 
 type IProps = NativeStackScreenProps<RootStackParams, "Likes">;

@@ -11,7 +11,7 @@ import { BookmarkButton } from "../Buttons/BookmarkButton";
 import { BookButton } from "../Buttons/BookButton";
 import { UserListItemSimple } from "./UserListItemSimple";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../models/navigation/rootStackParams";
+import { RootStackParams } from "../../../navigation/rootStackParams";
 import { Product } from "../../../models/product";
 
 const { black, grey0, primary } = theme.lightColors || {};
