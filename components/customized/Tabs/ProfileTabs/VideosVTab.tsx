@@ -47,16 +47,6 @@ export const VideosVTab = ({ userId, onScroll }: IProps) => {
     []
   );
 
-  if (!isLoading && !isFetchingNextPage && videos?.length === 0) {
-    return (
-      <NoFoundMessage
-        sx={{ marginTop: 50 }}
-        title={t("posts")}
-        description={t("noFoundPosts")}
-      />
-    );
-  }
-
   const keyExtractor = useCallback((item: Post) => item?.id, []);
 
   const loadMore = () => {
@@ -72,6 +62,16 @@ export const VideosVTab = ({ userId, onScroll }: IProps) => {
       return null;
     }
   };
+
+  if (!isLoading && !isFetchingNextPage && videos?.length === 0) {
+    return (
+      <NoFoundMessage
+        sx={{ marginTop: 50 }}
+        title={t("posts")}
+        description={t("noFoundPosts")}
+      />
+    );
+  }
 
   return (
     <Animated.FlatList

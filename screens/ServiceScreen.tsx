@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions, Animated, View } from "react-native";
+import { StyleSheet, Animated, View, Dimensions } from "react-native";
 import { useCallback, useRef } from "react";
 import { Header } from "../components/core";
 import { CardServiceOverview, TopTabContainer } from "../components/customized";
@@ -84,23 +84,25 @@ export const ServiceScreen = ({ route }: IProps) => {
           postsCount={postsCount}
           name={name}
         />
-        <TopTabContainer initialRouteName="ServicePostsPopular">
-          <Tab.Screen
-            name="ServicePostsPopular"
-            component={ServicePostsPopular}
-            options={{ tabBarLabel: t("popular") }}
-          />
-          <Tab.Screen
-            name="ServicePostsLastMinute"
-            component={ServicePostsLastMinute}
-            options={{ tabBarLabel: t("lastMinute") }}
-          />
-          <Tab.Screen
-            name="ServicePostsRecent"
-            component={ServicePostsRecent}
-            options={{ tabBarLabel: t("recent") }}
-          />
-        </TopTabContainer>
+        <View style={{ height }}>
+          <TopTabContainer initialRouteName="ServicePostsPopular">
+            <Tab.Screen
+              name="ServicePostsPopular"
+              component={ServicePostsPopular}
+              options={{ tabBarLabel: t("popular") }}
+            />
+            <Tab.Screen
+              name="ServicePostsLastMinute"
+              component={ServicePostsLastMinute}
+              options={{ tabBarLabel: t("lastMinute") }}
+            />
+            <Tab.Screen
+              name="ServicePostsRecent"
+              component={ServicePostsRecent}
+              options={{ tabBarLabel: t("recent") }}
+            />
+          </TopTabContainer>
+        </View>
       </Animated.View>
     </View>
   );

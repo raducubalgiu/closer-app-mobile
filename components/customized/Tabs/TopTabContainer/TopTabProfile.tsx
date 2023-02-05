@@ -35,6 +35,7 @@ export const TopTabProfile = ({ userId, service, option, user }: IProps) => {
 
   const TOP_TAB_HEIGHT = height - insets.top - insets.bottom;
   const HEADER_HEIGHT = 290;
+  const listPB = HEADER_HEIGHT - insets.top - insets.bottom - 100;
 
   const value = useRef(new Animated.Value(0)).current;
   const headerTranslate = value.interpolate({
@@ -88,6 +89,7 @@ export const TopTabProfile = ({ userId, service, option, user }: IProps) => {
         role={user?.role}
         hours={user?.hours}
         onScroll={onScroll}
+        paddingBottom={listPB}
       />
     ),
     [user]

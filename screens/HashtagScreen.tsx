@@ -1,10 +1,4 @@
-import {
-  StyleSheet,
-  SafeAreaView,
-  View,
-  Animated,
-  Dimensions,
-} from "react-native";
+import { StyleSheet, View, Animated, Dimensions } from "react-native";
 import { useCallback, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
@@ -30,7 +24,6 @@ export const HashtagScreen = ({ route }: IProps) => {
   const insets = useSafeAreaInsets();
   const { data } = useGet({ model: "hashtag", uri: `/hashtags/${name}` });
 
-  const TOP_TAB_HEIGHT = height - insets.top - insets.bottom;
   const HEADER_HEIGHT = 144;
   const HEADER_PADDING_TOP = insets.top + 10;
 
@@ -93,7 +86,7 @@ export const HashtagScreen = ({ route }: IProps) => {
           postsCount={data?.postsCount}
           bookmarksCount={data?.bookmarksCount}
         />
-        <View style={{ height: TOP_TAB_HEIGHT }}>
+        <View style={{ height }}>
           <TopTabContainer initialRouteName="HashtagPostsPopular">
             <Tab.Screen
               name="HashtagPostsPopular"

@@ -26,6 +26,7 @@ type IProps = {
   email: string;
   hours: any;
   onScroll: () => void;
+  paddingBottom: number;
 };
 const { height } = Dimensions.get("window");
 
@@ -37,6 +38,7 @@ export const AboutProfileTab = ({
   email,
   hours,
   onScroll,
+  paddingBottom,
 }: IProps) => {
   const [visible, setVisible] = useState(false);
   const { t } = useTranslation();
@@ -83,7 +85,7 @@ export const AboutProfileTab = ({
       {!loading && (
         <Animated.ScrollView
           onScroll={onScroll}
-          contentContainerStyle={{ minHeight: height + 290 }}
+          contentContainerStyle={{ paddingBottom }}
         >
           <Stack align="start" sx={styles.section}>
             <Text style={styles.heading}>{t("biography")}</Text>
