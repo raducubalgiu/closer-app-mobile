@@ -1,6 +1,6 @@
 import { FlatList, Dimensions, View, RefreshControl } from "react-native";
-import { useCallback } from "react";
-import VideoPortraitListItem from "../../components/customized/ListItems/VideoListItem/VideoListItem";
+import { useCallback, useState } from "react";
+import VideoListItem from "../../components/customized/ListItems/VideoListItem/VideoListItem";
 import { useGetPaginate, useRefreshByUser } from "../../hooks";
 import { Spinner } from "../../components/core";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -11,6 +11,7 @@ type IProps = NativeStackScreenProps<RootStackParams, "FeedVideoExplore">;
 
 export const FeedVideoExploreScreen = ({ route }: IProps) => {
   const { initialIndex } = route.params;
+  const [scrollEnabled, setScrollEnabled] = useState(true);
 
   const {
     data,
@@ -31,7 +32,13 @@ export const FeedVideoExploreScreen = ({ route }: IProps) => {
 
   const renderVideo = useCallback(
     ({ item }: { item: any }) => {
-      return <VideoPortraitListItem post={item} isLoading={loading} />;
+      return (
+        <VideoListItem
+          post={item}
+          isLoading={loading}
+          setScrollEnabled={setScrollEnabled}
+        />
+      );
     },
     [loading]
   );
@@ -80,10 +87,11 @@ export const FeedVideoExploreScreen = ({ route }: IProps) => {
         decelerationRate={0.5}
         pagingEnabled={true}
         getItemLayout={getItemLayout}
-        initialScrollIndex={initialIndex ? initialIndex : 0}
+        initialScrollIndex={initialIndex}
         onEndReached={loadMore}
         onEndReachedThreshold={0.3}
         ListFooterComponent={showSpinner}
+        scrollEnabled={scrollEnabled}
       />
     </View>
   );

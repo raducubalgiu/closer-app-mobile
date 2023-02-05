@@ -151,4 +151,8 @@ export type RootStackParams = {
   SharedDetail: any;
   Shared: any;
   UserLocationPermission: any;
+  Videos: {
+    userId: string;
+    initialIndex: number;
+  };
 };

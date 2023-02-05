@@ -1,5 +1,5 @@
-import { StyleSheet, Text, Pressable, Dimensions } from "react-native";
-import { Icon, Skeleton } from "@rneui/themed";
+import { StyleSheet, Text, Pressable, Dimensions, Image } from "react-native";
+import { Icon } from "@rneui/themed";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { memo } from "react";
@@ -16,6 +16,7 @@ import { VideoDetailsSkeleton } from "../../Skeletons/VideoDetailsSkeleton";
 const { width } = Dimensions.get("window");
 const { error } = theme.lightColors || {};
 type IProps = {
+  status: any;
   isLoading: boolean;
   product: Product;
   userDetails: User;
@@ -27,6 +28,7 @@ type IProps = {
 
 const VideoListItemDetails = ({
   isLoading,
+  status,
   product,
   userDetails,
   bookable,
@@ -107,7 +109,6 @@ const VideoListItemDetails = ({
         <Stack
           direction="row"
           sx={{ paddingHorizontal: 15, marginVertical: 15 }}
-          justify={bookable ? "between" : "end"}
         >
           {bookable && (
             <Stack direction="row">
@@ -130,9 +131,31 @@ const VideoListItemDetails = ({
               </Stack>
             </Stack>
           )}
-          <Stack>
-            <Text>Hello</Text>
-          </Stack>
+          {!bookable && (
+            <Stack direction="row">
+              <Icon
+                name="music"
+                type="font-awesome-5"
+                size={15}
+                color="#f2f2f2"
+              />
+              <Text style={{ color: "#f2f2f2", fontSize: 13, marginLeft: 10 }}>
+                Continut Original
+              </Text>
+            </Stack>
+          )}
+          <Pressable>
+            <Image
+              source={{ uri: userDetails?.avatar[0]?.url }}
+              style={{
+                width: 27.5,
+                height: 27.5,
+                borderWidth: 1,
+                borderColor: "white",
+                borderRadius: 5,
+              }}
+            />
+          </Pressable>
         </Stack>
       </LinearGradient>
     </Stack>

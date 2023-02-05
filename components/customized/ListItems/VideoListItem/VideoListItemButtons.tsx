@@ -24,7 +24,7 @@ const VideoListItemButtons = ({
   return (
     <Stack direction="row" align="center">
       <Pressable style={styles.button} onPress={onShowLikesSheet}>
-        <Stack direction="row">
+        <Stack direction="row" align="center">
           <Icon name="bar-chart" type="feather" size={27.5} color="white" />
           <Stack direction="row" sx={{ marginLeft: 7.5 }}>
             <Text style={styles.reactions}>{reactions}</Text>
@@ -62,8 +62,8 @@ export default memo(VideoListItemButtons);
 const styles = StyleSheet.create({
   button: { paddingHorizontal: 10, paddingVertical: 5 },
   reactions: {
-    color: "#ddd",
-    fontSize: 16,
-    fontWeight: "600",
+    color: "white",
+    fontSize: 15.5,
+    fontWeight: "700",
   },
 });

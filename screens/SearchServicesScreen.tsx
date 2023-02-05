@@ -56,17 +56,7 @@ export const SearchServicesScreen = ({ route }: IProps) => {
     ({ item }: ListRenderItemInfo<Service>) => (
       <Pressable onPress={() => goToFilters(item)} style={styles.item}>
         <Stack direction="row" justify="start">
-          <Icon
-            name="tag"
-            type="feather"
-            size={15}
-            style={{
-              padding: 7.5,
-              borderWidth: 1,
-              borderColor: "#ddd",
-              borderRadius: 50,
-            }}
-          />
+          <Icon name="tag" type="feather" size={15} style={styles.iconTag} />
           <Stack align="start" sx={{ marginLeft: 10 }}>
             <Text style={styles.service}>{item.name}</Text>
             <Text style={styles.locationsCount}>
@@ -144,5 +134,11 @@ const styles = StyleSheet.create({
   locationsCount: {
     color: grey0,
     fontSize: 14.5,
+  },
+  iconTag: {
+    padding: 7.5,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 50,
   },
 });

@@ -15,6 +15,7 @@ import {
   AccountPasswordScreen,
   AssistanceScreen,
   AddScheduleScreen,
+  AuthScreen,
   ClearCacheScreen,
   DeleteAccountScreen,
   EditProfileScreen,
@@ -77,11 +78,11 @@ import {
   SearchPostsScreen,
   SearchServicesScreen,
   ServiceScreen,
-  AuthScreen,
   LoginScreen,
   RegisterBusinessScreen,
   RegisterScreen,
   SavingDataScreen,
+  VideosScreen,
   UsernameScreen,
   CameraScreen,
   CameraPreviewScreen,
@@ -433,15 +434,13 @@ const CloserNavigation = () => {
               screenOptions={{
                 gestureEnabled: false,
                 animation: "fade",
+                animationDuration: 200,
               }}
             >
+              <RootStack.Screen name="Videos" component={VideosScreen} />
               <RootStack.Screen
                 name="FeedVideoExplore"
                 component={FeedVideoExploreScreen}
-                options={{
-                  animation: "fade",
-                  animationDuration: 200,
-                }}
               />
             </RootStack.Group>
             <RootStack.Group screenOptions={{ gestureEnabled: false }}>

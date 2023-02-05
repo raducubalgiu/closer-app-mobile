@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text } from "react-native";
+import { Animated, StyleSheet, Text, Dimensions, View } from "react-native";
 import { useState } from "react";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import * as Linking from "expo-linking";
@@ -25,7 +25,9 @@ type IProps = {
   description: string;
   email: string;
   hours: any;
+  onScroll: () => void;
 };
+const { height } = Dimensions.get("window");
 
 export const AboutProfileTab = ({
   locationId,
@@ -34,6 +36,7 @@ export const AboutProfileTab = ({
   description,
   email,
   hours,
+  onScroll,
 }: IProps) => {
   const [visible, setVisible] = useState(false);
   const { t } = useTranslation();
@@ -76,9 +79,12 @@ export const AboutProfileTab = ({
   };
 
   return (
-    <>
+    <View style={{ flex: 1 }}>
       {!loading && (
-        <ScrollView style={{ ...styles.screen, marginBottom: insets.bottom }}>
+        <Animated.ScrollView
+          onScroll={onScroll}
+          contentContainerStyle={{ minHeight: height + 290 }}
+        >
           <Stack align="start" sx={styles.section}>
             <Text style={styles.heading}>{t("biography")}</Text>
             <Text style={styles.text}>
@@ -155,7 +161,7 @@ export const AboutProfileTab = ({
               </Stack>
             )}
           </Protected>
-        </ScrollView>
+        </Animated.ScrollView>
       )}
       {loading && <Spinner />}
       <MapPreviewModal
@@ -164,7 +170,7 @@ export const AboutProfileTab = ({
         latitude={location?.address?.coordinates[0]}
         longitude={location?.address?.coordinates[1]}
       />
-    </>
+    </View>
   );
 };
 

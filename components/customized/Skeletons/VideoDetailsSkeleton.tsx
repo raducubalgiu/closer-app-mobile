@@ -13,35 +13,35 @@ export const VideoDetailsSkeleton = ({ width }: IProps) => {
             <Stack direction="row">
               <Stack align="start">
                 <Stack direction="row">
-                  <Skeleton circle width={20} height={20} animation="wave" />
+                  <Skeleton circle width={20} height={10} animation="wave" />
                   <Skeleton
                     width={120}
-                    height={20}
+                    height={10}
                     style={{ marginLeft: 7.5, backgroundColor: "#ddd" }}
                     animation="wave"
                   />
                 </Stack>
                 <Skeleton
                   width={150}
-                  height={20}
+                  height={10}
                   style={{ marginTop: 7.5, backgroundColor: "#ddd" }}
                   animation="wave"
                 />
               </Stack>
             </Stack>
           </Stack>
-          <Skeleton width={175} height={20} animation="wave" />
+          <Skeleton width={175} height={30} animation="wave" />
         </Stack>
         <Stack align="start">
           <Skeleton
             width={width - 30}
-            height={20}
+            height={10}
             style={{ marginTop: 7.5, backgroundColor: "#ddd" }}
             animation="wave"
           />
           <Skeleton
             width={width / 2}
-            height={20}
+            height={10}
             style={{ marginTop: 7.5, backgroundColor: "#ddd" }}
             animation="wave"
           />

@@ -71,16 +71,18 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
 
   const handleFollow = () => (isFollow ? unfollow() : follow({}));
 
-  const goToMessage = () =>
-    navigation.navigate("MessageItem", {
-      user: {
-        _id: userId,
-        username,
-        avatar,
-        name,
-        checkmark,
-      },
-    });
+  const goToMessage = () => {
+    // navigation.navigate("MessageItem", {
+    //   user: {
+    //     _id: userId,
+    //     username,
+    //     avatar,
+    //     name,
+    //     checkmark,
+    //   },
+    // });
+  };
+
   const goToMap = () => {
     navigation.push("Map", {
       profession: userDetails?.profession?._id,
@@ -90,14 +92,12 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
 
   return (
     <View style={styles.container}>
-      <SafeAreaView>
-        <HeaderProfileGeneral
-          username={username}
-          checkmark={checkmark}
-          onOpenSettings={() => {}}
-        />
-      </SafeAreaView>
-      <ProfileOverview
+      <HeaderProfileGeneral
+        username={username}
+        checkmark={checkmark}
+        onOpenSettings={() => {}}
+      />
+      {/* <ProfileOverview
         user={userDetails}
         name={name ? name : userDetails?.name}
         username={username}
@@ -120,7 +120,7 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
           onPress={handleSuggested}
           loading={isLoading}
         />
-      </ProfileOverview>
+      </ProfileOverview> */}
       {suggested && (
         <SuggestedUsersList suggested={suggested?.data} userId={userId} />
       )}

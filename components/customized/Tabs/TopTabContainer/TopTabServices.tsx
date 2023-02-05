@@ -10,6 +10,7 @@ type IProps = {
   option: string | null;
   service: Service | null;
   services: Service[];
+  onScroll: () => void;
 };
 
 export const TopTabServices = ({
@@ -18,6 +19,7 @@ export const TopTabServices = ({
   option,
   service,
   services,
+  onScroll,
 }: IProps) => {
   const Tab = createMaterialTopTabNavigator();
 
@@ -32,6 +34,7 @@ export const TopTabServices = ({
               service={service}
               option={option}
               initialRoute={initialRoute}
+              onScroll={onScroll}
             />
           ),
           [userId, service, option, initialRoute]

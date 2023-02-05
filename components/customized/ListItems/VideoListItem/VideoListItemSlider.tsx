@@ -4,7 +4,7 @@ import { memo } from "react";
 type IProps = {
   width: number;
   onSlidingStart: () => void;
-  onSlidingComplete: () => void;
+  onSlidingComplete: (value: number) => Promise<void>;
   onValueChange: (value: any) => void;
   value: number;
   maximumValue?: number;
@@ -29,7 +29,7 @@ const VideoListItemSlider = ({
       maximumValue={maximumValue}
       trackStyle={{
         height: 2.5,
-        width: width,
+        width,
       }}
       thumbStyle={{
         height: 10,

@@ -1,42 +1,54 @@
-import { FlatList, ListRenderItemInfo } from "react-native";
+import { Dimensions, ListRenderItemInfo, Animated } from "react-native";
 import { useCallback } from "react";
-import { useIsFocused } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { useTranslation } from "react-i18next";
 import { useGetPaginate } from "../../../../hooks";
 import { Spinner } from "../../../core";
 import { Post } from "../../../../models/post";
 import GridVideoVListItem from "../../ListItems/PostGrid/GridVideoVListItem";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../../navigation/rootStackParams";
 
-export const VideosVTab = ({ userId }: { userId: string }) => {
+type IProps = { userId: string; onScroll: () => void };
+const { height } = Dimensions.get("window");
+
+export const VideosVTab = ({ userId, onScroll }: IProps) => {
   const isFocused = useIsFocused();
   const { t } = useTranslation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
     useGetPaginate({
       model: "posts",
       uri: `/users/${userId}/posts`,
-      limit: "12",
+      limit: "6",
       queries: "postType=video&orientation=portrait",
       enabled: isFocused,
     });
 
   const { pages } = data || {};
-  const posts = pages?.map((page) => page.results).flat() || [];
+  const videos = pages?.map((page) => page.results).flat() || [];
 
   const renderPosts = useCallback(
     ({ item, index }: ListRenderItemInfo<Post>) => (
       <GridVideoVListItem
         uri={item.images[0]?.url}
         index={index}
-        onPress={() => {}}
+        onPress={() =>
+          navigation.navigate("Videos", {
+            userId,
+            initialIndex: index,
+          })
+        }
       />
     ),
     []
   );
 
   let header;
-  if (!isLoading && !isFetchingNextPage && posts?.length === 0) {
+  if (!isLoading && !isFetchingNextPage && videos?.length === 0) {
     header = (
       <NoFoundMessage
         sx={{ marginTop: 50 }}
@@ -63,15 +75,18 @@ export const VideosVTab = ({ userId }: { userId: string }) => {
   };
 
   return (
-    <FlatList
+    <Animated.FlatList
       ListHeaderComponent={header}
       numColumns={3}
-      data={posts}
+      data={videos}
       keyExtractor={keyExtractor}
       renderItem={renderPosts}
       ListFooterComponent={showSpinner}
       onEndReached={loadMore}
       onEndReachedThreshold={0.3}
+      onScroll={onScroll}
+      contentContainerStyle={{ minHeight: height }}
+      showsVerticalScrollIndicator={false}
     />
   );
 };

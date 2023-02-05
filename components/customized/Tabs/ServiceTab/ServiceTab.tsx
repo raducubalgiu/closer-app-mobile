@@ -4,6 +4,7 @@ import {
   Pressable,
   StyleSheet,
   Text,
+  Animated,
 } from "react-native";
 import { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -20,6 +21,7 @@ type IProps = {
   service: any;
   option: any;
   initialRoute: string;
+  onScroll: () => void;
 };
 
 const { black } = theme.lightColors || {};
@@ -29,6 +31,7 @@ export const ServiceTab = ({
   service,
   option,
   initialRoute,
+  onScroll,
 }: IProps) => {
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
@@ -142,7 +145,7 @@ export const ServiceTab = ({
   );
 
   return (
-    <FlatList
+    <Animated.FlatList
       ListHeaderComponent={header}
       data={products}
       keyExtractor={keyExtractor}
@@ -151,6 +154,7 @@ export const ServiceTab = ({
       onEndReached={loadMore}
       onEndReachedThreshold={0.3}
       contentContainerStyle={{ paddingBottom: insets.bottom }}
+      onScroll={onScroll}
     />
   );
 };

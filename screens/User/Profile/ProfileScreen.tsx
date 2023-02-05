@@ -1,22 +1,20 @@
-import { StyleSheet, SafeAreaView, View, Text } from "react-native";
+import { StyleSheet, SafeAreaView, View } from "react-native";
 import { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { useTranslation } from "react-i18next";
 import { MAIN_ROLE, SECOND_ROLE } from "@env";
 import theme from "../../../assets/styles/theme";
-import { Protected, Button } from "../../../components/core";
+import { Protected } from "../../../components/core";
 import {
   ProfileMenuList,
   HeaderProfile,
   TopTabProfile,
-  ProfileIconButton,
   PostOptionsSheet,
 } from "../../../components/customized";
-import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
 import { useSheet, useAuth, useGet, useRefreshOnFocus } from "../../../hooks";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/rootStackParams";
 import { FAB } from "@rneui/themed";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const { primary } = theme.lightColors || {};
 
@@ -24,7 +22,7 @@ export const ProfileScreen = () => {
   const { user: userContext } = useAuth();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const { t } = useTranslation();
+  const insets = useSafeAreaInsets();
 
   const { data: user, refetch } = useGet({
     model: "fetchUser",
@@ -47,38 +45,19 @@ export const ProfileScreen = () => {
     postSheet
   );
 
-  const navigateBookmarks = () => navigation.navigate("Bookmarks", { user });
-  const navigateProfile = () => navigation.navigate("EditProfile", { user });
-  const navigateInstagram = () => navigation.navigate("ExploreVideoPortrait");
-  const navigateYoutube = () => navigation.navigate("AddProducts");
-
   useRefreshOnFocus(refetch);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <HeaderProfile
-        checkmark={checkmark}
-        onGoToFindFriends={() => navigation.navigate("FindFriends")}
-        username={username}
-        onOpenSettings={SHOW_BS}
-        onOpenPostOptions={showPostOptions}
-      />
-      <ProfileOverview
-        user={user}
-        name={userContext?.name}
-        username={userContext?.username}
-        avatar={userContext?.avatar}
-      >
-        <Button
-          title={t("editProfile")}
-          onPress={navigateProfile}
-          variant="outlined"
-          sxBtn={{ width: 150 }}
+    <View style={styles.container}>
+      <View style={{ height: 100, zIndex: 10000 }}>
+        <HeaderProfile
+          checkmark={checkmark}
+          onGoToFindFriends={() => navigation.navigate("FindFriends")}
+          username={username}
+          onOpenSettings={SHOW_BS}
+          onOpenPostOptions={showPostOptions}
         />
-        <ProfileIconButton name="bookmark" onPress={navigateBookmarks} />
-        <ProfileIconButton name="instagram" onPress={navigateInstagram} />
-        <ProfileIconButton name="youtube" onPress={navigateYoutube} />
-      </ProfileOverview>
+      </View>
       <TopTabProfile
         userId={user?.id}
         service={null}
@@ -95,7 +74,7 @@ export const ProfileScreen = () => {
       </Protected>
       {BOTTOM_SHEET}
       {postOptions}
-    </SafeAreaView>
+    </View>
   );
 };
 

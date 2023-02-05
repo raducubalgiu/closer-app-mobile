@@ -9,6 +9,7 @@ type IProps = {
   service: Service | null;
   option: string | null;
   locationId: string;
+  onScroll: () => void;
 };
 
 export const ProductsProfileTab = ({
@@ -16,6 +17,7 @@ export const ProductsProfileTab = ({
   service,
   option,
   locationId,
+  onScroll,
 }: IProps) => {
   const { t } = useTranslation();
 
@@ -33,6 +35,7 @@ export const ProductsProfileTab = ({
           service={service}
           option={option}
           services={services}
+          onScroll={onScroll}
         />
       )}
       {services?.length === 0 && (

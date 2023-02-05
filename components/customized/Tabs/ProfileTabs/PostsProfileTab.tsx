@@ -1,4 +1,4 @@
-import { FlatList, ListRenderItemInfo } from "react-native";
+import { ListRenderItemInfo, Animated, Dimensions } from "react-native";
 import { useCallback } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import GridImageListItem from "../../ListItems/PostGrid/GridImageListItem";
@@ -8,7 +8,13 @@ import { useGetPaginate } from "../../../../hooks";
 import { Spinner } from "../../../core";
 import { Post } from "../../../../models/post";
 
-export const PostsProfileTab = ({ userId }: { userId: string }) => {
+type IProps = {
+  userId: string;
+  onScroll: () => void;
+};
+const { height } = Dimensions.get("window");
+
+export const PostsProfileTab = ({ userId, onScroll }: IProps) => {
   const isFocused = useIsFocused();
   const { t } = useTranslation();
 
@@ -16,7 +22,7 @@ export const PostsProfileTab = ({ userId }: { userId: string }) => {
     useGetPaginate({
       model: "posts",
       uri: `/users/${userId}/posts`,
-      limit: "12",
+      limit: "24",
       queries: "postType=photo",
       enabled: isFocused && !!userId,
     });
@@ -51,12 +57,6 @@ export const PostsProfileTab = ({ userId }: { userId: string }) => {
 
   const keyExtractor = useCallback((item: Post) => item?.id, []);
 
-  const loadMore = () => {
-    if (hasNextPage) {
-      fetchNextPage();
-    }
-  };
-
   const showSpinner = () => {
     if (isFetchingNextPage) {
       return <Spinner sx={{ paddingTop: 25, paddingBottom: 150 }} />;
@@ -65,8 +65,14 @@ export const PostsProfileTab = ({ userId }: { userId: string }) => {
     }
   };
 
+  const loadMore = () => {
+    if (hasNextPage) {
+      fetchNextPage();
+    }
+  };
+
   return (
-    <FlatList
+    <Animated.FlatList
       ListHeaderComponent={header}
       numColumns={3}
       data={posts}
@@ -76,6 +82,8 @@ export const PostsProfileTab = ({ userId }: { userId: string }) => {
       onEndReached={loadMore}
       onEndReachedThreshold={0.3}
       showsVerticalScrollIndicator={false}
+      onScroll={onScroll}
+      contentContainerStyle={{ minHeight: height, paddingBottom: 100 }}
     />
   );
 };

@@ -12,30 +12,34 @@ import { Post } from "../../../../models/post";
 import VideoListItemButtons from "./VideoListItemButtons";
 import VideoListItemDetails from "./VideoListItemDetails";
 import VideoListItemSlider from "./VideoListItemSlider";
+import { Icon } from "@rneui/themed";
+import { Stack } from "../../../core";
 
-type IProps = { post: Post; isLoading: boolean };
+type IProps = {
+  post: Post;
+  isLoading: boolean;
+  setScrollEnabled: (scroll: boolean) => void;
+};
 
 type Status = {
-  progressUpdateIntervalMillis: number;
   positionMillis: number;
+  durationMillis: number;
   shouldPlay: boolean;
   rate: number;
   shouldCorrectPitch: boolean;
   volume: number;
   isMuted: boolean;
   isLooping: boolean;
-  playableDurationMillis?: number;
 };
 
 const { width, height } = Dimensions.get("window");
 
-const VideoListItem = ({ post, isLoading }: IProps) => {
+const VideoListItem = ({ post, isLoading, setScrollEnabled }: IProps) => {
   const { id, description, bookable, images, userId, product } = post;
-  const { priceWithDiscount, option, discount, serviceId } = product || {};
   const video = useRef<any>(null);
   const [status, setStatus] = useState<Status>({
-    progressUpdateIntervalMillis: 500,
     positionMillis: 0,
+    durationMillis: 0,
     shouldPlay: false,
     rate: 1.0,
     shouldCorrectPitch: false,
@@ -44,15 +48,17 @@ const VideoListItem = ({ post, isLoading }: IProps) => {
     isLooping: false,
   });
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isSliding, setIsSliding] = useState(false);
+  const [currentValue, setCurrentValue] = useState(0);
   const insets = useSafeAreaInsets();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const VIDEO_HEIGHT = height - insets.bottom - 55;
   const sheetHeight = height / 1.5;
 
-  const handlePlay = () => {
+  const handlePlay = useCallback(() => {
     setIsPlaying((isPlaying) => !isPlaying);
-  };
+  }, [isPlaying]);
 
   const likesSheet = <LikesSheet postId={id} />;
   const commentsSheet = <CommentsSheet postId={id} />;
@@ -84,12 +90,53 @@ const VideoListItem = ({ post, isLoading }: IProps) => {
     }
   }, []);
 
-  const handleChangeStatus = (value: any) => {
-    video.current.setStatusAsync({
-      ...status,
-      positionMillis: value,
+  const updatePlaybackStatus = useCallback(
+    (stat: any) => setStatus({ ...stat }),
+    []
+  );
+
+  const onSlidingStart = useCallback(async () => {
+    await video.current.pauseAsync();
+    setScrollEnabled(false);
+    setIsSliding(true);
+  }, [isSliding, video]);
+
+  const onSlidingComplete = useCallback(
+    async (value: any) => {
+      await video.current.setStatusAsync({
+        ...status,
+        positionMillis: value,
+      });
+      await video.current.playAsync();
+      setIsSliding(false);
+      setScrollEnabled(true);
+    },
+    [video, isSliding]
+  );
+
+  const goToCalendar = () => {
+    navigation.push("CalendarBig", {
+      product: { ...product, ownerId: userId },
+      serviceId: product?.serviceId,
     });
   };
+
+  const hasSlider = status?.durationMillis > 29999;
+  const pausePlay =
+    !status.shouldPlay && status.positionMillis > 0 && !isSliding;
+
+  const getTime = useCallback((millis: number) => {
+    var minutes = Math.floor(millis / 60000);
+    var seconds = ((millis % 60000) / 1000).toFixed(0);
+    return minutes + ":" + (parseFloat(seconds) < 10 ? "0" : "") + seconds;
+  }, []);
+
+  const handleValue = useCallback(
+    (value: number) => {
+      setCurrentValue(value);
+    },
+    [currentValue]
+  );
 
   return (
     <VisibilitySensor onChange={handleImageVisibility}>
@@ -100,37 +147,61 @@ const VideoListItem = ({ post, isLoading }: IProps) => {
             style={{ ...styles.video, height: VIDEO_HEIGHT }}
             source={{ uri: images[0]?.url }}
             useNativeControls={false}
-            onPlaybackStatusUpdate={(status: any) => setStatus(() => status)}
+            onPlaybackStatusUpdate={updatePlaybackStatus}
             shouldCorrectPitch={true}
             shouldPlay={isPlaying}
             isMuted={false}
             isLooping={true}
             resizeMode={ResizeMode.COVER}
           />
-          <VideoListItemDetails
-            isLoading={isLoading}
-            userDetails={userId}
-            product={product}
-            description={description}
-            bookable={bookable}
-            onGoBack={() => navigation.goBack()}
-            onGoToCalendar={() =>
-              navigation.push("CalendarBig", {
-                product: { ...product, ownerId: userId },
-                serviceId,
-              })
-            }
-          />
+          {pausePlay && (
+            <View style={[StyleSheet.absoluteFill, styles.isPlaying]}>
+              <Icon
+                name="play"
+                type="font-awesome-5"
+                color="#f1f1f1"
+                size={37.5}
+                style={{ opacity: 0.4 }}
+              />
+            </View>
+          )}
+          {isSliding && (
+            <View style={[StyleSheet.absoluteFill, styles.timer]}>
+              <Stack direction="row">
+                <Text style={styles.time}>{getTime(currentValue)}</Text>
+                <Text style={{ marginHorizontal: 5, ...styles.time }}>/</Text>
+                <Text style={{ ...styles.time, color: "#bbb" }}>
+                  {getTime(status?.durationMillis)}
+                </Text>
+              </Stack>
+            </View>
+          )}
+          {!isSliding && (
+            <VideoListItemDetails
+              isLoading={isLoading}
+              userDetails={userId}
+              product={product}
+              description={description}
+              bookable={bookable}
+              onGoBack={() => navigation.goBack()}
+              onGoToCalendar={goToCalendar}
+              status={status}
+            />
+          )}
         </Pressable>
         <View style={{ height: 55 + insets.bottom }}>
-          <VideoListItemSlider
-            width={width}
-            onSlidingStart={() => video.current.pauseAsync()}
-            onSlidingComplete={() => video.current.playAsync()}
-            value={status?.positionMillis}
-            maximumValue={status?.playableDurationMillis}
-            onValueChange={handleChangeStatus}
-          />
+          {hasSlider ? (
+            <VideoListItemSlider
+              width={width}
+              onSlidingStart={onSlidingStart}
+              onSlidingComplete={onSlidingComplete}
+              value={status?.positionMillis}
+              maximumValue={status?.durationMillis}
+              onValueChange={handleValue}
+            />
+          ) : (
+            <View style={{ height: 10 }} />
+          )}
           <VideoListItemButtons
             postId={id}
             reactions="17.k"
@@ -157,4 +228,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   video: { width, flex: 1 },
+  isPlaying: { alignItems: "center", justifyContent: "center" },
+  timer: {
+    alignItems: "center",
+    justifyContent: "flex-end",
+    marginBottom: 50,
+  },
+  time: { fontSize: 18, fontWeight: "600", color: "white" },
 });
