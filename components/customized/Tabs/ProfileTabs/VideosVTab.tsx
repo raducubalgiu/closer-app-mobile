@@ -47,9 +47,8 @@ export const VideosVTab = ({ userId, onScroll }: IProps) => {
     []
   );
 
-  let header;
   if (!isLoading && !isFetchingNextPage && videos?.length === 0) {
-    header = (
+    return (
       <NoFoundMessage
         sx={{ marginTop: 50 }}
         title={t("posts")}
@@ -76,7 +75,6 @@ export const VideosVTab = ({ userId, onScroll }: IProps) => {
 
   return (
     <Animated.FlatList
-      ListHeaderComponent={header}
       numColumns={3}
       data={videos}
       keyExtractor={keyExtractor}

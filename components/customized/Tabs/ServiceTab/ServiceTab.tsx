@@ -40,7 +40,7 @@ export const ServiceTab = ({
     option ? option : service.filters[0].options[0]._id
   );
 
-  const { data, hasNextPage, fetchNextPage, isFetchingNextPage } =
+  const { data, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
     useGetPaginate({
       model: "products",
       uri: `/users/${userId}/services/${service?.id}/products`,
@@ -84,8 +84,6 @@ export const ServiceTab = ({
     return { length: 160, offset: 145 * index, index };
   }, []);
 
-  console.log(service.filters[0].options.length);
-
   const renderOption = useCallback(
     ({ item, index }: ListRenderItemInfo<any>) => (
       <Pressable
@@ -124,25 +122,23 @@ export const ServiceTab = ({
   );
 
   const header = (
-    <>
-      <FlatList
-        ref={ref}
-        horizontal
-        data={service.filters[0].options}
-        keyExtractor={(item) => item._id}
-        renderItem={renderOption}
-        contentContainerStyle={styles.listHoriz}
-        showsHorizontalScrollIndicator={false}
-        getItemLayout={getItemLayout}
-      />
-      {products.length === 0 && (
-        <NoFoundMessage
-          title="Produse"
-          description="Nu au fost gasite produse"
-        />
-      )}
-    </>
+    <FlatList
+      ref={ref}
+      horizontal
+      data={service.filters[0].options}
+      keyExtractor={(item) => item._id}
+      renderItem={renderOption}
+      contentContainerStyle={styles.listHoriz}
+      showsHorizontalScrollIndicator={false}
+      getItemLayout={getItemLayout}
+    />
   );
+
+  if (!isLoading && !isFetchingNextPage && products?.length === 0) {
+    return (
+      <NoFoundMessage title="Produse" description="Nu au fost gasite produse" />
+    );
+  }
 
   return (
     <Animated.FlatList

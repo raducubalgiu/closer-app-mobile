@@ -44,17 +44,6 @@ export const PostsProfileTab = ({ userId, onScroll }: IProps) => {
     []
   );
 
-  let header;
-  if (!isLoading && !isFetchingNextPage && posts?.length === 0) {
-    header = (
-      <NoFoundMessage
-        sx={{ marginTop: 50 }}
-        title={t("posts")}
-        description={t("noFoundPosts")}
-      />
-    );
-  }
-
   const keyExtractor = useCallback((item: Post) => item?.id, []);
 
   const showSpinner = () => {
@@ -71,9 +60,18 @@ export const PostsProfileTab = ({ userId, onScroll }: IProps) => {
     }
   };
 
+  if (!isLoading && !isFetchingNextPage && posts?.length === 0) {
+    return (
+      <NoFoundMessage
+        sx={{ marginTop: 50 }}
+        title={t("posts")}
+        description={t("noFoundPosts")}
+      />
+    );
+  }
+
   return (
     <Animated.FlatList
-      ListHeaderComponent={header}
       numColumns={3}
       data={posts}
       keyExtractor={keyExtractor}

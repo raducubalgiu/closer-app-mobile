@@ -61,7 +61,6 @@ export const HashtagPostsBookableTab = ({ name, onScroll }: IProps) => {
   const { pages } = data || {};
   const posts = pages?.map((page) => page.results).flat();
 
-  let header;
   if (!isLoading && !isFetchingNextPage && posts?.length === 0) {
     return (
       <NoFoundMessage title={t("posts")} description={t("noFoundPosts")} />
@@ -72,7 +71,6 @@ export const HashtagPostsBookableTab = ({ name, onScroll }: IProps) => {
     <>
       {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
       <Animated.FlatList
-        ListHeaderComponent={header}
         numColumns={3}
         data={posts}
         keyExtractor={keyExtractor}

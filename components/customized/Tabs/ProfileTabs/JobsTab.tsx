@@ -35,17 +35,6 @@ export const JobsTab = ({ userId }: { userId: string }) => {
     []
   );
 
-  let header;
-  if (!isLoading && !isFetchingNextPage && posts?.length === 0) {
-    header = (
-      <NoFoundMessage
-        sx={{ marginTop: 50 }}
-        title={t("posts")}
-        description={t("noFoundPosts")}
-      />
-    );
-  }
-
   const keyExtractor = useCallback((item: Post) => item?.id, []);
 
   const loadMore = () => {
@@ -62,9 +51,18 @@ export const JobsTab = ({ userId }: { userId: string }) => {
     }
   };
 
+  if (!isLoading && !isFetchingNextPage && posts?.length === 0) {
+    return (
+      <NoFoundMessage
+        sx={{ marginTop: 50 }}
+        title={t("posts")}
+        description={t("noFoundPosts")}
+      />
+    );
+  }
+
   return (
     <Animated.FlatList
-      ListHeaderComponent={header}
       numColumns={2}
       data={posts}
       keyExtractor={keyExtractor}

@@ -1,5 +1,5 @@
 import { StyleSheet, Dimensions, View, Text, Pressable } from "react-native";
-import { memo, useState } from "react";
+import { memo } from "react";
 import { Image, Icon } from "@rneui/themed";
 import theme from "../../../../assets/styles/theme";
 
@@ -25,7 +25,6 @@ const GridImageListItem = ({
   onPress,
   col = 3,
 }: IProps) => {
-  const [isLoadEnd, setIsLoadEnd] = useState(false);
   let borderBox;
 
   if (index % col !== 0) {
