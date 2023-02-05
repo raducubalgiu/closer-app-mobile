@@ -1,4 +1,4 @@
-import { FlatList, ListRenderItemInfo } from "react-native";
+import { ListRenderItemInfo, Animated } from "react-native";
 import { useCallback } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
@@ -8,7 +8,7 @@ import { Spinner } from "../../../core";
 import { Post } from "../../../../models/post";
 import GridVideoHListItem from "../../ListItems/PostGrid/GridVideoHListItem";
 
-export const VideosHTab = ({ userId }: { userId: string }) => {
+export const JobsTab = ({ userId }: { userId: string }) => {
   const isFocused = useIsFocused();
   const { t } = useTranslation();
 
@@ -63,7 +63,7 @@ export const VideosHTab = ({ userId }: { userId: string }) => {
   };
 
   return (
-    <FlatList
+    <Animated.FlatList
       ListHeaderComponent={header}
       numColumns={2}
       data={posts}

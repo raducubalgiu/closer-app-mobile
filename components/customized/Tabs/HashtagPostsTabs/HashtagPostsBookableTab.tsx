@@ -1,4 +1,4 @@
-import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
+import { Animated, ListRenderItemInfo } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
@@ -8,7 +8,9 @@ import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { Spinner } from "../../../core";
 import { Post } from "../../../../models/post";
 
-export const HashtagPostsBookableTab = ({ name }: { name: string }) => {
+type IProps = { name: string; onScroll: () => void };
+
+export const HashtagPostsBookableTab = ({ name, onScroll }: IProps) => {
   const { t } = useTranslation();
   const isFocused = useIsFocused();
 
@@ -22,7 +24,7 @@ export const HashtagPostsBookableTab = ({ name }: { name: string }) => {
   } = useGetPaginate({
     model: "hBookable",
     uri: `/hashtags/${name}/posts/bookable`,
-    limit: "15",
+    limit: "30",
     enabled: isFocused,
   });
 
@@ -50,7 +52,7 @@ export const HashtagPostsBookableTab = ({ name }: { name: string }) => {
 
   const showSpinner = () => {
     if (isFetchingNextPage) {
-      return <Spinner sx={{ paddingVertical: 50 }} />;
+      return <Spinner sx={{ paddingVertical: 150 }} />;
     } else {
       return null;
     }
@@ -69,7 +71,7 @@ export const HashtagPostsBookableTab = ({ name }: { name: string }) => {
   return (
     <>
       {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
-      <FlashList
+      <Animated.FlatList
         ListHeaderComponent={header}
         numColumns={3}
         data={posts}
@@ -78,7 +80,8 @@ export const HashtagPostsBookableTab = ({ name }: { name: string }) => {
         ListFooterComponent={showSpinner}
         onEndReached={loadMore}
         onEndReachedThreshold={0.3}
-        estimatedItemSize={125}
+        onScroll={onScroll}
+        contentContainerStyle={{ paddingBottom: 15 }}
       />
     </>
   );

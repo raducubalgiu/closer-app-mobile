@@ -36,7 +36,7 @@ export { SearchVideoTab } from "./Tabs/SearchTabs/SearchVideoTab";
 export { SearchPopularTab } from "./Tabs/SearchTabs/SearchPopularTab";
 export { PostsProfileTab } from "./Tabs/ProfileTabs/PostsProfileTab";
 export { VideosVTab } from "./Tabs/ProfileTabs/VideosVTab";
-export { VideosHTab } from "./Tabs/ProfileTabs/VideosHTab";
+export { JobsTab } from "./Tabs/ProfileTabs/JobsTab";
 export { ProductsProfileTab } from "./Tabs/ProfileTabs/ProductsProfileTab";
 export { AboutProfileTab } from "./Tabs/ProfileTabs/AboutProfileTab";
 export { FollowersTab } from "./Tabs/ProfileStatsTabs/FollowersTab";

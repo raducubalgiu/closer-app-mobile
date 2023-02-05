@@ -1,4 +1,4 @@
-import { FlatList, ListRenderItemInfo } from "react-native";
+import { Animated, ListRenderItemInfo } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
@@ -8,7 +8,9 @@ import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { Spinner } from "../../../core";
 import { Post } from "../../../../models/post";
 
-export const HashtagPostsPopularTab = ({ name }: { name: string }) => {
+type IProps = { name: string; onScroll: () => void };
+
+export const HashtagPostsPopularTab = ({ name, onScroll }: IProps) => {
   const { t } = useTranslation();
   const isFocused = useIsFocused();
 
@@ -22,7 +24,7 @@ export const HashtagPostsPopularTab = ({ name }: { name: string }) => {
   } = useGetPaginate({
     model: "hPopular",
     uri: `/hashtags/${name}/posts/popular`,
-    limit: "21",
+    limit: "30",
     enabled: isFocused,
   });
 
@@ -69,7 +71,7 @@ export const HashtagPostsPopularTab = ({ name }: { name: string }) => {
   return (
     <>
       {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
-      <FlatList
+      <Animated.FlatList
         ListHeaderComponent={header}
         numColumns={3}
         data={posts}
@@ -78,6 +80,8 @@ export const HashtagPostsPopularTab = ({ name }: { name: string }) => {
         ListFooterComponent={showSpinner}
         onEndReached={loadMore}
         onEndReachedThreshold={0.3}
+        onScroll={onScroll}
+        contentContainerStyle={{ paddingBottom: 15 }}
       />
     </>
   );

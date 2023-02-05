@@ -13,6 +13,7 @@ type IProps = {
   subtitle?: string;
   actionBtn?: React.ReactElement<any>;
   divider?: boolean;
+  sx?: {};
 };
 
 export const Header = ({
@@ -21,12 +22,13 @@ export const Header = ({
   subtitle = "",
   actionBtn,
   divider = false,
+  sx,
 }: IProps) => {
   const navigation = useNavigation();
   const handleBack = () => navigation.goBack();
 
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, ...sx }}>
       <Stack direction="row">
         <TouchableOpacity onPress={handleBack}>
           <IconBackButton color={!hideBtnLeft ? black : "white"} />

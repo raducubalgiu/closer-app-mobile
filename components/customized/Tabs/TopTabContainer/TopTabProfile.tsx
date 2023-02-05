@@ -4,7 +4,7 @@ import { PostsProfileTab } from "../ProfileTabs/PostsProfileTab";
 import { MAIN_ROLE, SECOND_ROLE } from "@env";
 import { Icon } from "@rneui/themed";
 import { VideosVTab } from "../ProfileTabs/VideosVTab";
-import { VideosHTab } from "../ProfileTabs/VideosHTab";
+import { JobsTab } from "../ProfileTabs/JobsTab";
 import { ProductsProfileTab } from "../ProfileTabs/ProductsProfileTab";
 import { AboutProfileTab } from "../ProfileTabs/AboutProfileTab";
 import { TabBadge } from "../TabBadge/TabBadge";
@@ -74,7 +74,7 @@ export const TopTabProfile = ({ userId, service, option, user }: IProps) => {
   );
 
   const VideosHProfile = useCallback(
-    () => <VideosHTab userId={userId} />,
+    () => <JobsTab userId={userId} />,
     [userId]
   );
 
