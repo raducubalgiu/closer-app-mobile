@@ -1,4 +1,4 @@
-import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
+import { Animated, ListRenderItemInfo } from "react-native";
 import { useCallback } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import { useGetPaginate } from "../../../../hooks";
@@ -8,9 +8,13 @@ import { useTranslation } from "react-i18next";
 import { Spinner } from "../../../core";
 import { Post } from "../../../../models/post";
 
-type IProps = { serviceId: string };
+type IProps = { serviceId: string; onScroll: () => void; headerHeight: number };
 
-export const ServicePostsLastMinuteTab = ({ serviceId }: IProps) => {
+export const ServicePostsLastMinuteTab = ({
+  serviceId,
+  onScroll,
+  headerHeight,
+}: IProps) => {
   const { t } = useTranslation();
   const isFocused = useIsFocused();
 
@@ -61,9 +65,8 @@ export const ServicePostsLastMinuteTab = ({ serviceId }: IProps) => {
   const { pages } = data || {};
   const posts = pages?.map((page) => page.results).flat();
 
-  let header;
   if (!isLoading && !isFetchingNextPage && posts?.length === 0) {
-    header = (
+    return (
       <NoFoundMessage title={t("posts")} description={t("noFoundPosts")} />
     );
   }
@@ -71,8 +74,7 @@ export const ServicePostsLastMinuteTab = ({ serviceId }: IProps) => {
   return (
     <>
       {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
-      <FlashList
-        ListHeaderComponent={header}
+      <Animated.FlatList
         numColumns={3}
         data={posts}
         keyExtractor={keyExtractor}
@@ -80,7 +82,9 @@ export const ServicePostsLastMinuteTab = ({ serviceId }: IProps) => {
         ListFooterComponent={showSpinner}
         onEndReached={loadMore}
         onEndReachedThreshold={0.3}
-        estimatedItemSize={125}
+        onScroll={onScroll}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: headerHeight }}
       />
     </>
   );

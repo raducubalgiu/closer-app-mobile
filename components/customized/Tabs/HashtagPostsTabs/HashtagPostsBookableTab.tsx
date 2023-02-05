@@ -8,9 +8,13 @@ import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { Spinner } from "../../../core";
 import { Post } from "../../../../models/post";
 
-type IProps = { name: string; onScroll: () => void };
+type IProps = { name: string; onScroll: () => void; headerHeight: number };
 
-export const HashtagPostsBookableTab = ({ name, onScroll }: IProps) => {
+export const HashtagPostsBookableTab = ({
+  name,
+  onScroll,
+  headerHeight,
+}: IProps) => {
   const { t } = useTranslation();
   const isFocused = useIsFocused();
 
@@ -78,8 +82,9 @@ export const HashtagPostsBookableTab = ({ name, onScroll }: IProps) => {
         ListFooterComponent={showSpinner}
         onEndReached={loadMore}
         onEndReachedThreshold={0.3}
+        showsVerticalScrollIndicator={false}
         onScroll={onScroll}
-        contentContainerStyle={{ paddingBottom: 15 }}
+        contentContainerStyle={{ paddingBottom: headerHeight }}
       />
     </>
   );

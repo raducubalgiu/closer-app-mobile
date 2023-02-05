@@ -49,15 +49,33 @@ export const HashtagScreen = ({ route }: IProps) => {
   );
 
   const HashtagPostsBookable = useCallback(
-    () => <HashtagPostsBookableTab name={name} onScroll={onScroll} />,
+    () => (
+      <HashtagPostsBookableTab
+        name={name}
+        onScroll={onScroll}
+        headerHeight={HEADER_HEIGHT}
+      />
+    ),
     [name]
   );
   const HashtagPostsPopular = useCallback(
-    () => <HashtagPostsPopularTab name={name} onScroll={onScroll} />,
+    () => (
+      <HashtagPostsPopularTab
+        name={name}
+        onScroll={onScroll}
+        headerHeight={HEADER_HEIGHT}
+      />
+    ),
     [name]
   );
   const HashtagPostsRecent = useCallback(
-    () => <HashtagPostsRecentTab name={name} onScroll={onScroll} />,
+    () => (
+      <HashtagPostsRecentTab
+        name={name}
+        onScroll={onScroll}
+        headerHeight={HEADER_HEIGHT}
+      />
+    ),
     [name]
   );
 

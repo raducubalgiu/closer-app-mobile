@@ -8,9 +8,13 @@ import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import { Spinner } from "../../../core";
 import { Post } from "../../../../models/post";
 
-type IProps = { name: string; onScroll: () => void };
+type IProps = { name: string; onScroll: () => void; headerHeight: number };
 
-export const HashtagPostsPopularTab = ({ name, onScroll }: IProps) => {
+export const HashtagPostsPopularTab = ({
+  name,
+  onScroll,
+  headerHeight,
+}: IProps) => {
   const { t } = useTranslation();
   const isFocused = useIsFocused();
 
@@ -61,7 +65,6 @@ export const HashtagPostsPopularTab = ({ name, onScroll }: IProps) => {
   const { pages } = data || {};
   const posts = pages?.map((page) => page.results).flat();
 
-  let header;
   if (!isLoading && !isFetchingNextPage && posts?.length === 0) {
     return (
       <NoFoundMessage title={t("posts")} description={t("noFoundPosts")} />
@@ -72,7 +75,6 @@ export const HashtagPostsPopularTab = ({ name, onScroll }: IProps) => {
     <>
       {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
       <Animated.FlatList
-        ListHeaderComponent={header}
         numColumns={3}
         data={posts}
         keyExtractor={keyExtractor}
@@ -80,8 +82,9 @@ export const HashtagPostsPopularTab = ({ name, onScroll }: IProps) => {
         ListFooterComponent={showSpinner}
         onEndReached={loadMore}
         onEndReachedThreshold={0.3}
+        showsVerticalScrollIndicator={false}
         onScroll={onScroll}
-        contentContainerStyle={{ paddingBottom: 15 }}
+        contentContainerStyle={{ paddingBottom: headerHeight }}
       />
     </>
   );
