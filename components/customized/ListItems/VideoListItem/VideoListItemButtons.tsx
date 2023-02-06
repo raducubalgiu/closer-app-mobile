@@ -5,13 +5,14 @@ import { Stack, ShareIButton } from "../../../core";
 import { LikeButton } from "../../Buttons/LikeButton";
 import { VideoCommentButton } from "../../Buttons/VideoCommentButton";
 import { MoreVerticalButton } from "../../Buttons/MoreVerticalButton";
+import { BookmarkIconButton } from "../../Buttons/BookmarkIconButton";
 
 type IProps = {
   postId: string;
   onShowCommentsSheet: () => void;
   onShowMoreSheet: () => void;
   onShowLikesSheet: () => void;
-  reactions: string;
+  reactions: number;
 };
 
 const VideoListItemButtons = ({
@@ -47,7 +48,6 @@ const VideoListItemButtons = ({
           sx={styles.button}
           color="white"
         />
-
         <MoreVerticalButton
           sx={{ paddingHorizontal: 7.5, paddingVertical: 5 }}
           onPress={onShowMoreSheet}

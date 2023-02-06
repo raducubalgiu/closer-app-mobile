@@ -97,12 +97,11 @@ export const ProfileMenuList = ({ onCloseSheet }: IProps) => {
 };
 
 const styles = StyleSheet.create({
-  container: { marginHorizontal: 17.5, marginTop: 10, flex: 1 },
+  container: { margin: 20, flex: 1 },
   listItem: {
     paddingLeft: 0,
     backgroundColor: "white",
-    paddingTop: 5,
-    paddingBottom: 12.5,
+    marginBottom: 15,
   },
   text: {
     color: black,

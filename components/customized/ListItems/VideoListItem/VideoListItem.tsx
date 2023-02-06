@@ -36,6 +36,8 @@ const { width, height } = Dimensions.get("window");
 
 const VideoListItem = ({ post, isLoading, setScrollEnabled }: IProps) => {
   const { id, description, bookable, images, userId, product } = post;
+  const { likesCount, commentsCount, bookmarksCount } = post;
+  const reactions = likesCount + commentsCount + bookmarksCount;
   const video = useRef<any>(null);
   const [status, setStatus] = useState<Status>({
     positionMillis: 0,
@@ -54,30 +56,38 @@ const VideoListItem = ({ post, isLoading, setScrollEnabled }: IProps) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const VIDEO_HEIGHT = height - insets.bottom - 55;
-  const sheetHeight = height / 1.5;
+  const sheetSm = height / 1.5;
+  const sheetBig = height / 1.1;
 
   const handlePlay = useCallback(() => {
     setIsPlaying((isPlaying) => !isPlaying);
   }, [isPlaying]);
 
-  const likesSheet = <LikesSheet postId={id} />;
+  const likesSheet = (
+    <LikesSheet
+      postId={id}
+      likesCount={likesCount}
+      commentsCount={commentsCount}
+      bookmarksCount={bookmarksCount}
+    />
+  );
   const commentsSheet = <CommentsSheet postId={id} />;
   const moreSheet = <MoreSheet postId={id} />;
 
   const { BOTTOM_SHEET: LikesBSheet, SHOW_BS: showLikesSheet } = useSheet(
-    [1, sheetHeight],
+    [1, sheetSm, sheetBig],
     likesSheet,
     { duration: 400 }
   );
 
   const { BOTTOM_SHEET: CommSheet, SHOW_BS: showCommSheet } = useSheet(
-    [1, sheetHeight],
+    [1, sheetSm, sheetBig],
     commentsSheet,
     { duration: 400 }
   );
 
   const { BOTTOM_SHEET: VideoMoreSheet, SHOW_BS: showMore } = useSheet(
-    [1, sheetHeight],
+    [1, sheetSm],
     moreSheet,
     { duration: 400 }
   );
@@ -204,7 +214,7 @@ const VideoListItem = ({ post, isLoading, setScrollEnabled }: IProps) => {
           )}
           <VideoListItemButtons
             postId={id}
-            reactions="17.k"
+            reactions={reactions}
             onShowCommentsSheet={() => showCommSheet()}
             onShowMoreSheet={() => showMore()}
             onShowLikesSheet={() => showLikesSheet()}

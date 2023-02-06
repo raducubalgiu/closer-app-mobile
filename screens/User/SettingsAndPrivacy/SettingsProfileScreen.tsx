@@ -217,8 +217,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   icon: {
-    borderWidth: 1,
-    borderColor: "#ddd",
     padding: 6,
     borderRadius: 50,
   },

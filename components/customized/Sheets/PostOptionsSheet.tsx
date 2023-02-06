@@ -10,17 +10,13 @@ export const PostOptionsSheet = () => {
   const { t } = useTranslation();
 
   return (
-    <Stack sx={{ padding: 17.5 }}>
+    <Stack sx={styles.container}>
       <ListItem onPress={() => {}} align="center" sx={styles.listItem}>
-        <Stack sx={styles.iconContainer}>
-          <Icon name="camera" type="feather" color={black} size={22.5} />
-        </Stack>
+        <Icon name="camera" type="feather" color={black} size={22.5} />
         <Text style={styles.text}>{t("newPhoto")}</Text>
       </ListItem>
       <ListItem onPress={() => {}} align="center">
-        <Stack sx={styles.iconContainer}>
-          <Icon name="video" type="feather" color={black} size={22.5} />
-        </Stack>
+        <Icon name="video" type="feather" color={black} size={22.5} />
         <Text style={styles.text}>{t("newVideo")}</Text>
       </ListItem>
     </Stack>
@@ -28,17 +24,16 @@ export const PostOptionsSheet = () => {
 };
 
 const styles = StyleSheet.create({
+  container: { margin: 20 },
   heading: {
     fontSize: 17,
     fontWeight: "500",
-    marginVertical: 10,
   },
   listItem: {
     paddingLeft: 0,
     backgroundColor: "white",
-    marginBottom: 5,
+    marginBottom: 15,
   },
-  iconContainer: { backgroundColor: "#f1f1f1", padding: 10, borderRadius: 50 },
   text: {
     color: black,
     paddingVertical: 2.5,

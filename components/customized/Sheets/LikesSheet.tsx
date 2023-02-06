@@ -1,17 +1,40 @@
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useGetPaginate } from "../../../hooks";
 import UserListItem from "../ListItems/UserListItem";
 import { User } from "../../../models/user";
-import { Spinner, Stack } from "../../core";
+import { Heading, Spinner, Stack } from "../../core";
 import { NoFoundMessage } from "../NotFoundContent/NoFoundMessage";
 import { BottomSheetFlatList } from "@gorhom/bottom-sheet";
-import { Divider } from "@rneui/themed";
+import { Divider, Icon } from "@rneui/themed";
+import theme from "../../../assets/styles/theme";
 
-type IProps = { postId: string };
+const { black } = theme.lightColors || {};
 
-export const LikesSheet = ({ postId }: IProps) => {
+type StatsItem = { icon: string; counter: number };
+const StatsItem = ({ icon, counter }: StatsItem) => {
+  return (
+    <Stack>
+      <Icon name={icon} type="feather" color={"#ccc"} size={22.5} />
+      <Text style={styles.counter}>{counter}</Text>
+    </Stack>
+  );
+};
+
+type IProps = {
+  postId: string;
+  likesCount: number;
+  commentsCount: number;
+  bookmarksCount: number;
+};
+
+export const LikesSheet = ({
+  postId,
+  likesCount,
+  commentsCount,
+  bookmarksCount,
+}: IProps) => {
   const { t } = useTranslation();
 
   const {
@@ -51,9 +74,12 @@ export const LikesSheet = ({ postId }: IProps) => {
   const { pages } = data || {};
   const users = pages?.map((page) => page.results).flat();
 
-  let header;
+  const header = (
+    <Heading title={t("likes")} sx={{ marginLeft: 15, marginBottom: 20 }} />
+  );
+
   if (!isLoading && !isFetchingNextPage && users?.length === 0) {
-    header = (
+    return (
       <NoFoundMessage title={t("likes")} description={t("noFoundLikes")} />
     );
   }
@@ -61,13 +87,16 @@ export const LikesSheet = ({ postId }: IProps) => {
   return (
     <View style={{ flex: 1 }}>
       {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
-      <Stack sx={{ paddingVertical: 10 }}>
-        <Text style={{ fontWeight: "600", fontSize: 16 }}>{t("likes")}</Text>
+      <Stack direction="row" justify="around" sx={{ padding: 15 }}>
+        <StatsItem icon="play" counter={16.5} />
+        <StatsItem icon="heart" counter={likesCount} />
+        <StatsItem icon="message-circle" counter={commentsCount} />
+        <StatsItem icon="bookmark" counter={bookmarksCount} />
       </Stack>
       <Divider />
       <BottomSheetFlatList
         ListHeaderComponent={header}
-        contentContainerStyle={{ paddingVertical: 15 }}
+        contentContainerStyle={{ paddingVertical: 5 }}
         data={users}
         keyExtractor={keyExtractor}
         renderItem={renderPerson}
@@ -78,3 +107,12 @@ export const LikesSheet = ({ postId }: IProps) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  counter: {
+    marginTop: 10,
+    fontWeight: "600",
+    color: black,
+    fontSize: 13.5,
+  },
+});

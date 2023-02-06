@@ -7,7 +7,7 @@ import { PortalProvider } from "@gorhom/portal";
 import "../i18next";
 import { useTranslation } from "react-i18next";
 import theme from "../assets/styles/theme";
-import { useAuth } from "../hooks";
+import { useAuth, useGet } from "../hooks";
 import { RootStackParams } from "./rootStackParams";
 import {
   AccountScreen,
@@ -134,18 +134,25 @@ const FeedStack = () => {
 
 const TabsScreen = () => {
   const { user } = useAuth();
-  const schedules = 1;
 
-  const badgeOptions =
-    schedules > 0
-      ? {
-          tabBarBadge: schedules,
-          tabBarBadgeStyle: {
-            backgroundColor: error,
-            fontSize: 11,
-          },
-        }
-      : {};
+  let badgeOptions = {};
+
+  if (user) {
+    const { data } = useGet({
+      model: "currentSchedules",
+      uri: `/users/${user.id}/schedules/current-schedules`,
+    });
+
+    if (data?.currentSchedules > 0) {
+      badgeOptions = {
+        tabBarBadge: data?.currentSchedules,
+        tabBarBadgeStyle: {
+          backgroundColor: error,
+          fontSize: 11,
+        },
+      };
+    }
+  }
 
   return (
     <Tab.Navigator

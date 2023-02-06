@@ -6,7 +6,6 @@ import { useTranslation } from "react-i18next";
 import { useGetPaginate } from "../../../../hooks";
 import { Spinner } from "../../../core";
 import { Post } from "../../../../models/post";
-import GridVideoHListItem from "../../ListItems/PostGrid/GridVideoHListItem";
 
 export const JobsTab = ({ userId }: { userId: string }) => {
   const isFocused = useIsFocused();
@@ -25,13 +24,7 @@ export const JobsTab = ({ userId }: { userId: string }) => {
   const posts = pages?.map((page) => page.results).flat() || [];
 
   const renderPosts = useCallback(
-    ({ item, index }: ListRenderItemInfo<Post>) => (
-      <GridVideoHListItem
-        uri={item.images[0]?.url}
-        index={index}
-        onPress={() => {}}
-      />
-    ),
+    ({ item, index }: ListRenderItemInfo<Post>) => <></>,
     []
   );
 
