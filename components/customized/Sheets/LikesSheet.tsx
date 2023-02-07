@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { useGetPaginate } from "../../../hooks";
+import { useGetPaginate, usePaginateActions } from "../../../hooks";
 import UserListItem from "../ListItems/UserListItem";
 import { User } from "../../../models/user";
 import { Heading, Spinner, Stack } from "../../core";
@@ -11,6 +11,12 @@ import { Divider, Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 
 const { black } = theme.lightColors || {};
+type IProps = {
+  postId: string;
+  likesCount: number;
+  commentsCount: number;
+  bookmarksCount: number;
+};
 
 type StatsItem = { icon: string; counter: number };
 const StatsItem = ({ icon, counter }: StatsItem) => {
@@ -22,13 +28,6 @@ const StatsItem = ({ icon, counter }: StatsItem) => {
   );
 };
 
-type IProps = {
-  postId: string;
-  likesCount: number;
-  commentsCount: number;
-  bookmarksCount: number;
-};
-
 export const LikesSheet = ({
   postId,
   likesCount,
@@ -37,18 +36,14 @@ export const LikesSheet = ({
 }: IProps) => {
   const { t } = useTranslation();
 
-  const {
-    data,
-    hasNextPage,
-    fetchNextPage,
-    isFetchingNextPage,
-    isLoading,
-    isFetching,
-  } = useGetPaginate({
+  const options = useGetPaginate({
     model: "likes",
     uri: `/posts/${postId}/get-likes`,
     limit: "25",
   });
+
+  const { isLoading, isFetchingNextPage, isFetching } = options;
+  const { data: users, loadMore, showSpinner } = usePaginateActions(options);
 
   const renderPerson = useCallback(
     ({ item }: any) => <UserListItem user={item.userId} />,
@@ -56,27 +51,6 @@ export const LikesSheet = ({
   );
 
   const keyExtractor = useCallback((item: User) => item?.id, []);
-
-  const loadMore = () => {
-    if (hasNextPage) {
-      fetchNextPage();
-    }
-  };
-
-  const showSpinner = () => {
-    if (isFetchingNextPage) {
-      return <Spinner />;
-    } else {
-      return null;
-    }
-  };
-
-  const { pages } = data || {};
-  const users = pages?.map((page) => page.results).flat();
-
-  const header = (
-    <Heading title={t("likes")} sx={{ marginLeft: 15, marginBottom: 20 }} />
-  );
 
   if (!isLoading && !isFetchingNextPage && users?.length === 0) {
     return (
@@ -95,7 +69,7 @@ export const LikesSheet = ({
       </Stack>
       <Divider />
       <BottomSheetFlatList
-        ListHeaderComponent={header}
+        ListHeaderComponent={<Heading title={t("likes")} sx={styles.header} />}
         contentContainerStyle={{ paddingVertical: 5 }}
         data={users}
         keyExtractor={keyExtractor}
@@ -115,4 +89,5 @@ const styles = StyleSheet.create({
     color: black,
     fontSize: 13.5,
   },
+  header: { marginLeft: 15, marginBottom: 20 },
 });

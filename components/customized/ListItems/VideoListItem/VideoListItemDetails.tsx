@@ -24,6 +24,7 @@ type IProps = {
   description: string;
   onGoBack: () => void;
   onGoToCalendar: () => void;
+  onShowProductSheet: () => void;
 };
 
 const VideoListItemDetails = ({
@@ -35,6 +36,7 @@ const VideoListItemDetails = ({
   description,
   onGoBack,
   onGoToCalendar,
+  onShowProductSheet,
 }: IProps) => {
   const { priceWithDiscount, option, discount } = product || {};
   const { username, checkmark, avatar, ratingsAverage, profession } =
@@ -111,25 +113,27 @@ const VideoListItemDetails = ({
           sx={{ paddingHorizontal: 15, marginVertical: 15 }}
         >
           {bookable && (
-            <Stack direction="row">
-              <LinearGradient
-                colors={["rgba(51, 194, 255, 0.9)", "white"]}
-                start={{ x: 1.4, y: 0.75 }}
-                end={{ x: 1.75, y: 0.75 }}
-                style={styles.productContainer}
-              >
-                <Text style={styles.product}>{product?.name}</Text>
-              </LinearGradient>
-              <Stack sx={{ marginLeft: 10 }}>
-                <Text style={styles.option}>{option?.name}</Text>
+            <Pressable onPress={onShowProductSheet}>
+              <Stack direction="row">
+                <LinearGradient
+                  colors={["rgba(51, 194, 255, 0.9)", "white"]}
+                  start={{ x: 1.4, y: 0.75 }}
+                  end={{ x: 1.75, y: 0.75 }}
+                  style={styles.productContainer}
+                >
+                  <Text style={styles.product}>{product?.name}</Text>
+                </LinearGradient>
+                <Stack sx={{ marginLeft: 10 }}>
+                  <Text style={styles.option}>{option?.name}</Text>
+                </Stack>
+                <Stack direction="row" sx={{ marginLeft: 10 }}>
+                  <Text style={styles.price}>
+                    {priceWithDiscount} {t("lei")}
+                  </Text>
+                  <Text style={styles.discount}>(-{discount}%)</Text>
+                </Stack>
               </Stack>
-              <Stack direction="row" sx={{ marginLeft: 10 }}>
-                <Text style={styles.price}>
-                  {priceWithDiscount} {t("lei")}
-                </Text>
-                <Text style={styles.discount}>(-{discount}%)</Text>
-              </Stack>
-            </Stack>
+            </Pressable>
           )}
           {!bookable && (
             <Stack direction="row">

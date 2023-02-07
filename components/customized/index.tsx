@@ -110,6 +110,7 @@ export { LikesSheet } from "./Sheets/LikesSheet";
 export { CommentsSheet } from "./Sheets/CommentsSheet";
 export { MoreSheet } from "./Sheets/MoreSheet";
 export { PostOptionsSheet } from "./Sheets/PostOptionsSheet";
+export { ProductSheet } from "./Sheets/ProductSheet";
 
 export { FiltersContainer } from "./Containers/FiltersContainer";
 
