@@ -3,8 +3,23 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
+    "strictNullChecks": true,
+    "strictBindCallApply": true,
+    "noImplicitReturns": true,
+    "baseUrl": "./"
+    // "paths": {
+    //   "@navigation/*": ["./navigation/*"],
+    //   "@core/*": ["./components/core/*"],
+    //   "@customized/*": ["./components/customized/*"],
+    //   "@hooks/*": ["./hooks/*"],
+    //   "@assets/*": ["./assets/*"],
+    //   "@models/*": ["./models/*"],
+    //   "@constants/*": ["./constants/*"],
+    //   "@utils/*": ["./utils/*"]
+    // }
   },
+  "include": ["index.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"],
   "extends": "expo/tsconfig.base"
 }

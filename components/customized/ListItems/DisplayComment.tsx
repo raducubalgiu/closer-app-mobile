@@ -1,4 +1,5 @@
-import { Text, StyleSheet, Pressable } from "react-native";
+import { Text, StyleSheet, Pressable, View } from "react-native";
+import { memo } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Stack, Spinner } from "../../core";
 import CustomAvatar from "../../core/Avatars/CustomAvatar";
@@ -9,20 +10,18 @@ import { RelatedCommentsList } from "./RelatedCommentsList";
 import { DisplayText } from "../DisplayText/DisplayText";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/rootStackParams";
-import { UseMutateFunction } from "@tanstack/react-query";
-import { AxiosResponse } from "axios";
 
 const { black, grey0, grey1 } = theme.lightColors || {};
 type IProps = {
   item: any;
   creatorId: string;
-  onReply: (text: string, commentId: string, prevComment: any) => void;
-  onHandleRelated: UseMutateFunction<AxiosResponse<any>>;
-  relatedComments: any[];
-  loadingRelated: boolean;
+  onReply: (text: string, commentId: string) => void;
+  onHandleRelated?: () => void;
+  relatedComments?: any[];
+  loadingRelated?: boolean;
 };
 
-export const DisplayComment = ({
+const DisplayComment = ({
   item,
   creatorId,
   onReply,
@@ -34,7 +33,7 @@ export const DisplayComment = ({
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
   const { userId, comment, id, relatedCommentsCount } = item;
-  const { likesCount, previousComment, likedByCreator } = item;
+  const { likesCount, likedByCreator } = item;
   const { username, name, avatar, checkmark } = userId;
 
   const goToUserExtra = () =>
@@ -48,25 +47,8 @@ export const DisplayComment = ({
       option: null,
     });
 
-  let showMore;
-  if (
-    relatedCommentsCount > 0 &&
-    relatedComments.length < relatedCommentsCount &&
-    !loadingRelated
-  ) {
-    showMore = (
-      <Stack align="center">
-        <Pressable onPress={() => onHandleRelated} style={{ marginBottom: 15 }}>
-          <Text style={styles.seeAll}>
-            {t("seeReplies")} ({relatedCommentsCount})
-          </Text>
-        </Pressable>
-      </Stack>
-    );
-  }
-
   return (
-    <Stack align="start" direction="row" sx={styles.commentsCont}>
+    <View style={styles.commentsCont}>
       <Pressable onPress={goToUserExtra}>
         <CustomAvatar size={30} avatar={avatar} />
       </Pressable>
@@ -79,7 +61,7 @@ export const DisplayComment = ({
         />
         <Stack direction="row" align="center" sx={{ marginTop: 5 }}>
           <Text style={styles.date}>1z</Text>
-          <Pressable onPress={() => onReply(username, id, previousComment)}>
+          <Pressable onPress={() => onReply(username, id)}>
             <Text style={styles.reply}>{t("reply")}</Text>
           </Pressable>
           {likedByCreator && (
@@ -96,21 +78,33 @@ export const DisplayComment = ({
         {loadingRelated && (
           <Spinner sx={{ width: "100%", marginVertical: 25 }} />
         )}
-        {showMore}
+        {relatedCommentsCount > 0 && (
+          <Stack align="center">
+            <Pressable onPress={onHandleRelated} style={{ marginBottom: 15 }}>
+              <Text style={styles.seeAll}>
+                {t("seeReplies")} ({relatedCommentsCount})
+              </Text>
+            </Pressable>
+          </Stack>
+        )}
       </Stack>
       <LikeCommentButton
         commentId={id}
         creatorId={creatorId}
         likesCount={likesCount}
       />
-    </Stack>
+    </View>
   );
 };
+
+export default memo(DisplayComment);
 
 const styles = StyleSheet.create({
   commentsCont: {
     marginBottom: 5,
     paddingVertical: 5,
+    flexDirection: "row",
+    alignItems: "flex-start",
   },
   comment: {
     flexDirection: "row",

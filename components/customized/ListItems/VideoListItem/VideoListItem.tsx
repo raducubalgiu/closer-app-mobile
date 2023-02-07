@@ -71,8 +71,9 @@ const VideoListItem = ({ post, isLoading, setScrollEnabled }: IProps) => {
       bookmarksCount={bookmarksCount}
     />
   );
-  const commentsSheet = <CommentsSheet postId={id} />;
-  const moreSheet = <MoreSheet postId={id} />;
+
+  const commentsSheet = <CommentsSheet postId={id} creatorId={userId.id} />;
+  const moreSheet = <MoreSheet postId={id} userId={userId.id} />;
 
   const { BOTTOM_SHEET: LikesBSheet, SHOW_BS: showLikesSheet } = useSheet(
     [1, sheetSm, sheetBig],
@@ -87,7 +88,7 @@ const VideoListItem = ({ post, isLoading, setScrollEnabled }: IProps) => {
   );
 
   const { BOTTOM_SHEET: VideoMoreSheet, SHOW_BS: showMore } = useSheet(
-    [1, sheetSm],
+    [1, 300],
     moreSheet,
     { duration: 400 }
   );

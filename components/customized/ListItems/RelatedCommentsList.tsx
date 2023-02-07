@@ -1,10 +1,10 @@
 import { FlatList, ListRenderItemInfo } from "react-native";
 import { useCallback } from "react";
-import { DisplayComment } from "./DisplayComment";
+import DisplayComment from "./DisplayComment";
 
 type IProps = {
   relatedComments: any;
-  onReply: (a: any, b: any, c: any) => void;
+  onReply: (a: any, b: any) => void;
   creatorId: string;
 };
 
@@ -20,9 +20,7 @@ export const RelatedCommentsList = ({
       <DisplayComment
         item={item}
         creatorId={creatorId}
-        onReply={() =>
-          onReply(item.user.username, item.id, item.previousComment)
-        }
+        onReply={() => onReply(item.user.username, item.id)}
       />
     );
   }, []);
@@ -33,7 +31,7 @@ export const RelatedCommentsList = ({
       keyExtractor={keyExtractor}
       showsVerticalScrollIndicator={false}
       renderItem={renderComment}
-      style={{ width: "100%", marginTop: 15 }}
+      style={{ width: "100%", marginTop: 15, backgroundColor: "red" }}
     />
   );
 };

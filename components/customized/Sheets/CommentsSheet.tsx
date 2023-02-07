@@ -10,7 +10,12 @@ import {
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useAuth, useGetPaginate, usePost } from "../../../hooks";
+import {
+  useAuth,
+  useGetPaginate,
+  usePaginateActions,
+  usePost,
+} from "../../../hooks";
 import CustomAvatar from "../../core/Avatars/CustomAvatar";
 import { emoji } from "../../../assets/emojis/emoji-comm.json";
 import theme from "../../../assets/styles/theme";
@@ -19,60 +24,45 @@ import { NoFoundMessage } from "../NotFoundContent/NoFoundMessage";
 import { useTranslation } from "react-i18next";
 import { IconButton, Stack, Spinner } from "../../core";
 
-type IProps = { postId: string };
+type IProps = { postId: string; creatorId: string };
 const { primary, black } = theme.lightColors || {};
 
-export const CommentsSheet = ({ postId }: IProps) => {
+export const CommentsSheet = ({ postId, creatorId }: IProps) => {
   const insets = useSafeAreaInsets();
   const { user } = useAuth();
   const [comment, setComment] = useState("");
-  const [commentId, setCommentId] = useState("");
-  const [prevComment, setPrevComment] = useState(null);
+  const [commentId, setCommentId] = useState<string | null>(null);
   const { t } = useTranslation();
 
-  const {
-    data,
-    hasNextPage,
-    fetchNextPage,
-    isFetchingNextPage,
-    isLoading,
-    isFetching,
-    refetch,
-  } = useGetPaginate({
+  const options = useGetPaginate({
     model: "comments",
     uri: `/posts/${postId}/comments`,
     limit: "5",
   });
 
+  const { isLoading, isFetchingNextPage } = options;
+
+  const {
+    data: comments,
+    loadMore,
+    showSpinner,
+  } = usePaginateActions({ ...options });
+
   const { mutate } = usePost({ uri: `/posts/${postId}/comments` });
   const handleComment = () => {
-    mutate({ postId, comment, userId: user?.id });
+    mutate({
+      postId,
+      comment,
+      userId: user?.id,
+      previousComment: commentId,
+      creatorId,
+    });
     setComment("");
   };
 
-  const { pages } = data || {};
-  const comments = pages?.map((page) => page.results).flat();
-
-  const loadMore = () => {
-    if (hasNextPage) fetchNextPage();
-  };
-
-  const showSpinner = () => {
-    if (isFetchingNextPage) {
-      return <Spinner />;
-    } else {
-      return null;
-    }
-  };
-
-  const handleReply = (
-    text: string,
-    commentId: string,
-    previousComment: any
-  ) => {
+  const handleReply = (text: string, commentId: string) => {
     setComment(`@${text} `);
     setCommentId(commentId);
-    setPrevComment(previousComment);
   };
 
   const renderComment = useCallback(

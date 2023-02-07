@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { DisplayComment } from "./DisplayComment";
+import { useCallback, useState } from "react";
+import DisplayComment from "./DisplayComment";
 import { useGetMutate } from "../../../hooks";
 import { RelatedComments } from "../../../models/relatedComments";
 
 type IProps = {
   item: any;
-  onReply: (text: string, commentId: string, prevComment: any) => void;
+  onReply: (text: string, commentId: string) => void;
   creatorId: string;
 };
 
@@ -13,8 +13,10 @@ export const CommentListItem = ({ item, onReply, creatorId }: IProps) => {
   const [relatedComments, setRelatedComments] = useState<RelatedComments[]>([]);
 
   const { mutate, isLoading } = useGetMutate({
-    uri: `/comments/${item?.id}/related-comments?page=0&limit=20`,
-    onSuccess: (res) => setRelatedComments(res.data.data),
+    uri: `/comments/${item.id}/related-comments?page=1&limit=5`,
+    onSuccess: (res) => {
+      setRelatedComments(res.data.results);
+    },
   });
 
   return (
@@ -22,7 +24,7 @@ export const CommentListItem = ({ item, onReply, creatorId }: IProps) => {
       item={item}
       creatorId={creatorId}
       onReply={onReply}
-      onHandleRelated={mutate}
+      onHandleRelated={useCallback(() => mutate(), [])}
       relatedComments={relatedComments}
       loadingRelated={isLoading}
     />
