@@ -8,7 +8,7 @@ const { primary } = theme.lightColors || {};
 
 type IProps = {
   comment: string;
-  focus: boolean;
+  focus?: boolean;
   onChangeText: (text: string) => void;
   avatar: any;
   onHandleComment: () => void;

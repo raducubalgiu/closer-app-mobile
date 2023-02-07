@@ -9,6 +9,7 @@ type Props = {
   size?: number;
   color?: string | undefined;
   loading?: boolean;
+  disabled?: boolean;
   sx?: {};
   onPress?: () => void;
 };
@@ -19,12 +20,24 @@ export const IconButton = ({
   size = 24,
   color = black,
   loading = false,
+  disabled = false,
   sx = {},
   onPress,
 }: Props) => {
   return (
-    <Pressable onPress={onPress} style={[styles.container, sx]}>
-      {!loading && <Icon type={type} name={name} size={size} color={color} />}
+    <Pressable
+      disabled={disabled}
+      onPress={onPress}
+      style={[styles.container, sx]}
+    >
+      {!loading && (
+        <Icon
+          type={type}
+          name={name}
+          size={size}
+          color={disabled ? "#ddd" : color}
+        />
+      )}
       {loading && <ActivityIndicator />}
     </Pressable>
   );

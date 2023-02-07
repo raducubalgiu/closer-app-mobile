@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Pressable } from "react-native";
-import { ButtonLink, Checkmark } from "../../core";
+import { ButtonLink, Checkmark, Stack } from "../../core";
 import { useCallback, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";
@@ -91,29 +91,29 @@ export const DisplayText = ({
   }, [slicedArr]);
 
   return (
-    <View style={styles.container}>
+    <View>
       {username && (
-        <Pressable onPress={goToUserAllInfo}>
-          <Text style={styles.username}>{username} </Text>
+        <Stack direction="row" justify="start">
+          <Pressable onPress={goToUserAllInfo}>
+            <Text style={styles.username}>@{username} </Text>
+          </Pressable>
+          {checkmark && <Checkmark size={7.5} sx={styles.checkmark} />}
+        </Stack>
+      )}
+      <View style={styles.container}>{handleText()}</View>
+      {cutText && (
+        <Pressable onPress={() => setCutText((cutText) => !cutText)}>
+          <Text
+            style={{
+              color: postType === "video" ? "white" : grey0,
+              fontWeight: postType === "video" ? "600" : "500",
+            }}
+          >
+            ...mai mult
+          </Text>
         </Pressable>
       )}
-      {checkmark && <Checkmark size={7.5} sx={styles.checkmark} />}
-      {handleText()}
-      {cutText && (
-        <>
-          <Pressable onPress={() => setCutText((cutText) => !cutText)}>
-            <Text
-              style={{
-                color: postType === "video" ? "white" : grey0,
-                fontWeight: postType === "video" ? "600" : "500",
-              }}
-            >
-              ...mai mult
-            </Text>
-          </Pressable>
-        </>
-      )}
-      {!cutText && (
+      {/* {!cutText && (
         <Pressable onPress={() => setCutText((cutText) => !cutText)}>
           <Text
             style={{
@@ -124,7 +124,7 @@ export const DisplayText = ({
             ...mai putin
           </Text>
         </Pressable>
-      )}
+      )} */}
     </View>
   );
 };
@@ -134,11 +134,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     alignItems: "center",
+    marginVertical: 5,
   },
   username: {
     color: black,
     fontWeight: "500",
     fontSize: 15,
   },
-  checkmark: { marginHorizontal: 5 },
+  checkmark: { marginLeft: 5, marginRight: 10 },
 });

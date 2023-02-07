@@ -1,26 +1,25 @@
-import { StyleSheet } from "react-native";
-import React, { useCallback, useState } from "react";
-import { IconButton } from "../../core";
+import { Pressable, StyleSheet, Text } from "react-native";
+import { useCallback, useState } from "react";
 import theme from "../../../assets/styles/theme";
-import { useAuth, useGet, usePost, useDelete, usePatch } from "../../../hooks";
+import { useGet, usePost, useDelete, usePatch, useAuth } from "../../../hooks";
+import { Icon } from "@rneui/themed";
 
 const { grey0, error } = theme.lightColors || {};
 type IProps = {
-  userId: string;
   commentId: string;
-  onLikes: (no: number) => void;
   creatorId: string;
+  likesCount: number;
 };
 
 export const LikeCommentButton = ({
-  userId,
   commentId,
-  onLikes,
   creatorId,
+  likesCount,
 }: IProps) => {
-  const { user } = useAuth();
   const [liked, setLiked] = useState(false);
-  const likeEndpoints = `/users/${userId}/comments/${commentId}/likes`;
+  const [likesNo, setLikesNo] = useState(likesCount);
+  const { user } = useAuth();
+  const likeEndpoints = `/users/${user?.id}/comments/${commentId}/likes`;
 
   useGet({
     model: "checkLike",
@@ -36,25 +35,26 @@ export const LikeCommentButton = ({
     if (!liked) {
       setLiked(true);
       if (creatorId === user?.id) makePatch({ likedByCreator: true });
-      onLikes(1);
+      setLikesNo((likesNo) => likesNo + 1);
       makePost({});
     } else {
       setLiked(false);
       if (creatorId === user?.id) makePatch({ likedByCreator: false });
-      onLikes(-1);
+      setLikesNo((likesNo) => likesNo - 1);
       makeDelete();
     }
   }, [liked, likeEndpoints]);
 
   return (
-    <IconButton
-      onPress={handleLike}
-      sx={styles.btn}
-      name={liked ? "heart" : "hearto"}
-      type="antdesign"
-      size={12.5}
-      color={liked ? error : grey0}
-    />
+    <Pressable onPress={handleLike} style={styles.btn}>
+      <Icon
+        name={liked ? "heart" : "hearto"}
+        type="antdesign"
+        size={15}
+        color={liked ? error : grey0}
+      />
+      <Text style={styles.likesNumber}>{likesNo}</Text>
+    </Pressable>
   );
 };
 
@@ -62,10 +62,13 @@ const styles = StyleSheet.create({
   btn: {
     paddingVertical: 2.5,
     paddingHorizontal: 5,
+    flexDirection: "row",
+    alignItems: "center",
   },
-  likesNo: {
+  likesNumber: {
+    fontSize: 13.5,
     fontWeight: "500",
+    color: grey0,
     marginLeft: 5,
-    fontSize: 12.5,
   },
 });

@@ -81,7 +81,7 @@ const VideoListItem = ({ post, isLoading, setScrollEnabled }: IProps) => {
   );
 
   const { BOTTOM_SHEET: CommSheet, SHOW_BS: showCommSheet } = useSheet(
-    [1, sheetSm, sheetBig],
+    [1, height / 1.3],
     commentsSheet,
     { duration: 400 }
   );
@@ -215,6 +215,7 @@ const VideoListItem = ({ post, isLoading, setScrollEnabled }: IProps) => {
           <VideoListItemButtons
             postId={id}
             reactions={reactions}
+            commentsCount={commentsCount}
             onShowCommentsSheet={() => showCommSheet()}
             onShowMoreSheet={() => showMore()}
             onShowLikesSheet={() => showLikesSheet()}

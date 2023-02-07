@@ -5,7 +5,6 @@ import { Stack, ShareIButton } from "../../../core";
 import { LikeButton } from "../../Buttons/LikeButton";
 import { VideoCommentButton } from "../../Buttons/VideoCommentButton";
 import { MoreVerticalButton } from "../../Buttons/MoreVerticalButton";
-import { BookmarkIconButton } from "../../Buttons/BookmarkIconButton";
 
 type IProps = {
   postId: string;
@@ -13,6 +12,7 @@ type IProps = {
   onShowMoreSheet: () => void;
   onShowLikesSheet: () => void;
   reactions: number;
+  commentsCount: number;
 };
 
 const VideoListItemButtons = ({
@@ -21,6 +21,7 @@ const VideoListItemButtons = ({
   onShowMoreSheet,
   onShowLikesSheet,
   reactions,
+  commentsCount,
 }: IProps) => {
   return (
     <Stack direction="row" align="center">
@@ -41,7 +42,10 @@ const VideoListItemButtons = ({
           sx={styles.button}
           color="white"
         />
-        <VideoCommentButton onPress={onShowCommentsSheet} hasComments={true} />
+        <VideoCommentButton
+          onPress={onShowCommentsSheet}
+          hasComments={commentsCount > 0}
+        />
         <ShareIButton
           onPress={() => {}}
           size={27.5}

@@ -7,6 +7,8 @@ export { useSheet } from "./useSheet";
 export { useRefreshByUser } from "./useRefreshByUser";
 export { useRefreshOnFocus } from "./useRefreshOnFocus";
 
+export { usePaginateActions } from "./usePaginateActions";
+
 export {
   usePatch,
   useDelete,

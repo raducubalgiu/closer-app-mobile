@@ -56,13 +56,13 @@ export const CommentsScreen = ({ route }: IProps) => {
     mutate({
       comment,
       post: postId,
-      user: user?._id,
+      user: user?.id,
       previousComment: prevComment ? prevComment : commentId,
     });
 
   const goToUserExtra = () =>
     navigation.push("ProfileGeneral", {
-      userId: user?._id,
+      userId: user?.id,
       avatar,
       username,
       name,

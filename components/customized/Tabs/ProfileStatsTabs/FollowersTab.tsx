@@ -1,34 +1,35 @@
-import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
+import { FlashList } from "@shopify/flash-list";
 import { RefreshControl } from "react-native";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useIsFocused } from "@react-navigation/native";
-import { Spinner } from "../../../core";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
 import UserListItem from "../../ListItems/UserListItem";
-import { useGetPaginate, useRefreshByUser } from "../../../../hooks";
+import {
+  useGetPaginate,
+  usePaginateActions,
+  useRefreshByUser,
+} from "../../../../hooks";
 import { User } from "../../../../models/user";
 
-type Props = { userId: string };
+type IProps = { userId: string };
 
-export const FollowersTab = ({ userId }: Props): JSX.Element => {
+export const FollowersTab = ({ userId }: IProps) => {
   const { t } = useTranslation();
   const isFocused = useIsFocused();
-
-  const {
-    data,
-    hasNextPage,
-    fetchNextPage,
-    isFetchingNextPage,
-    isLoading,
-    isFetching,
-    refetch,
-  } = useGetPaginate({
+  const options = useGetPaginate({
     model: "followers",
     uri: `/users/${userId}/followers`,
     limit: "20",
     enabled: isFocused,
   });
+  const { isLoading, isFetchingNextPage, refetch } = options;
+
+  const {
+    data: followers,
+    loadMore,
+    showSpinner,
+  } = usePaginateActions({ ...options });
 
   const renderPerson = useCallback(
     ({ item }: any) => <UserListItem user={item.userId} />,
@@ -37,23 +38,13 @@ export const FollowersTab = ({ userId }: Props): JSX.Element => {
 
   const keyExtractor = useCallback((item: User) => item?.id, []);
 
-  const loadMore = () => {
-    if (hasNextPage) fetchNextPage();
-  };
+  const { refreshing, refetchByUser } = useRefreshByUser(refetch);
+  const refreshControl = (
+    <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
+  );
 
-  const showSpinner = () => {
-    if (isFetchingNextPage) {
-      return <Spinner />;
-    } else {
-      return null;
-    }
-  };
-  const { pages } = data || {};
-  const posts = pages?.map((page) => page.results).flat();
-
-  let header;
-  if (!isLoading && !isFetchingNextPage && posts?.length === 0) {
-    header = (
+  if (!isLoading && !isFetchingNextPage && followers?.length === 0) {
+    return (
       <NoFoundMessage
         title={t("followers")}
         description={t("noFoundFollowers")}
@@ -61,27 +52,17 @@ export const FollowersTab = ({ userId }: Props): JSX.Element => {
     );
   }
 
-  const { refreshing, refetchByUser } = useRefreshByUser(refetch);
-
-  const refreshControl = (
-    <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
-  );
-
   return (
-    <>
-      {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
-      <FlashList
-        ListHeaderComponent={header}
-        refreshControl={refreshControl}
-        contentContainerStyle={{ paddingVertical: 15 }}
-        data={posts}
-        keyExtractor={keyExtractor}
-        renderItem={renderPerson}
-        ListFooterComponent={showSpinner}
-        onEndReached={loadMore}
-        onEndReachedThreshold={0.3}
-        estimatedItemSize={75}
-      />
-    </>
+    <FlashList
+      refreshControl={refreshControl}
+      contentContainerStyle={{ paddingVertical: 15 }}
+      data={followers}
+      keyExtractor={keyExtractor}
+      renderItem={renderPerson}
+      ListFooterComponent={showSpinner}
+      onEndReached={loadMore}
+      onEndReachedThreshold={0.3}
+      estimatedItemSize={75}
+    />
   );
 };
