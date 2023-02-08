@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import CustomAvatar from "../../core/Avatars/CustomAvatar";
-import { DisplayText } from "../DisplayText/DisplayText";
+import { DisplayText } from "../Typography/DisplayText/DisplayText";
 import { Divider } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 

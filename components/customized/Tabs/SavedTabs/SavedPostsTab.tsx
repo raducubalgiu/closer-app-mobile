@@ -5,7 +5,7 @@ import GridImageListItem from "../../ListItems/PostGrid/GridImageListItem";
 import GridVideoVListItem from "../../ListItems/PostGrid/GridVideoVListItem";
 import { useGetPaginate } from "../../../../hooks";
 import { Spinner } from "../../../core";
-import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
+import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import {
   FlashList,
   ListRenderItemInfo,

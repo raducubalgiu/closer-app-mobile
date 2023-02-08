@@ -2,7 +2,7 @@ import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { useCallback } from "react";
 import { useAuth } from "../../../../hooks";
 import { HashtagListItem } from "../../ListItems/HashtagListItem";
-import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
+import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { useTranslation } from "react-i18next";
 import { Spinner } from "../../../core";
 import { useIsFocused, useNavigation } from "@react-navigation/native";

@@ -1,7 +1,7 @@
 import { Service } from "../../../../models/service";
 import { TopTabServices } from "../TopTabContainer/TopTabServices";
 import { useGet } from "../../../../hooks";
-import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
+import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { useTranslation } from "react-i18next";
 
 type IProps = {

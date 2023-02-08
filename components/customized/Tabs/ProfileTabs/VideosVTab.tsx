@@ -1,7 +1,7 @@
 import { Dimensions, ListRenderItemInfo, Animated } from "react-native";
 import { useCallback } from "react";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
-import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
+import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { useTranslation } from "react-i18next";
 import { useGetPaginate } from "../../../../hooks";
 import { Spinner } from "../../../core";

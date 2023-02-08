@@ -2,7 +2,7 @@ import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { useCallback } from "react";
 import { useAuth } from "../../../../hooks";
 import { useTranslation } from "react-i18next";
-import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
+import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { Spinner } from "../../../core";
 import UserListItem from "../../ListItems/UserListItem";
 import { useInfiniteQuery } from "@tanstack/react-query";

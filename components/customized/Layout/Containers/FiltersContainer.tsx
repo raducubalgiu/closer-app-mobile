@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, Dimensions, SafeAreaView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 import { Icon } from "@rneui/themed";
-import { Stack, Button, IconBackButton, IconButton } from "../../core";
+import { Stack, Button, IconBackButton, IconButton } from "../../../core";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 

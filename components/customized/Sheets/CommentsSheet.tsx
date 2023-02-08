@@ -20,7 +20,7 @@ import CustomAvatar from "../../core/Avatars/CustomAvatar";
 import { emoji } from "../../../assets/emojis/emoji-comm.json";
 import theme from "../../../assets/styles/theme";
 import { CommentListItem } from "../ListItems/CommentListItem";
-import { NoFoundMessage } from "../NotFoundContent/NoFoundMessage";
+import { NoFoundMessage } from "../NoFoundMessage/NoFoundMessage";
 import { useTranslation } from "react-i18next";
 import { IconButton, Stack, Spinner } from "../../core";
 

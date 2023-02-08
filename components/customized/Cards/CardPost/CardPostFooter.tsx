@@ -7,7 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import theme from "../../../../assets/styles/theme";
 import { useAuth } from "../../../../hooks";
-import { DisplayText } from "../../DisplayText/DisplayText";
+import { DisplayText } from "../../Typography/DisplayText/DisplayText";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
 

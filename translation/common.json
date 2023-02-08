@@ -365,5 +365,7 @@
   "lastMinuteOffer": "Ofertă Last Minute",
   "expire": "Expiră",
   "freeSeat": "Loc liber",
-  "available": "Disponibil"
+  "available": "Disponibil",
+  "bookableOffer": "Ofertă rezervabilă",
+  "checkCalendar": "Consultă calendarul"
 }

@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useIsFocused } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useForm, FormProvider } from "react-hook-form";
-import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
+import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { FormInputSelect, Spinner, Stack } from "../../../core";
 import { useGet, useGetPaginate, useRefreshByUser } from "../../../../hooks";
 import { CardReviewSummary } from "../../Cards/CardReviewSummary";

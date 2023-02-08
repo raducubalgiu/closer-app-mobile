@@ -9,12 +9,15 @@ import { Product } from "../../../../models/product";
 import { User } from "../../../../models/user";
 import theme from "../../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
-import { DisplayText } from "../../DisplayText/DisplayText";
+import { DisplayText } from "../../Typography/DisplayText/DisplayText";
 import { FollowOutlinedButton } from "../../Buttons/FollowOutlinedButton";
 import { VideoDetailsSkeleton } from "../../Skeletons/VideoDetailsSkeleton";
+import { BookableLabel } from "../../Typography/Labels/BookableLabel";
+import { LastMinuteLabel } from "../../Typography/Labels/LastMinuteLabel";
+import { trimFunc } from "../../../../utils";
 
 const { width } = Dimensions.get("window");
-const { error } = theme.lightColors || {};
+const { error, secondary, black } = theme.lightColors || {};
 type IProps = {
   status: any;
   isLoading: boolean;
@@ -22,6 +25,7 @@ type IProps = {
   userDetails: User;
   bookable: boolean;
   description: string;
+  expirationTime: string;
   onGoBack: () => void;
   onGoToCalendar: () => void;
   onShowProductSheet: () => void;
@@ -34,6 +38,7 @@ const VideoListItemDetails = ({
   userDetails,
   bookable,
   description,
+  expirationTime,
   onGoBack,
   onGoToCalendar,
   onShowProductSheet,
@@ -48,7 +53,7 @@ const VideoListItemDetails = ({
     <Stack direction="row" sx={styles.content}>
       <Stack sx={{ flex: 1, width: "100%" }}>
         <Stack direction="row" align="start" sx={styles.userDetails}>
-          <Stack direction="row">
+          <Stack direction="row" sx={{ flex: 1 }}>
             <Stack direction="row">
               <Stack align="start">
                 <Stack direction="row">
@@ -61,7 +66,9 @@ const VideoListItemDetails = ({
                     <Text style={styles.profession}>{profession?.name}</Text>
                     <Stack direction="row">
                       <IconStar />
-                      <Text style={styles.rating}>{ratingsAverage}</Text>
+                      <Text style={styles.rating}>
+                        {ratingsAverage?.toFixed(1)}
+                      </Text>
                     </Stack>
                   </Stack>
                 </Stack>
@@ -108,36 +115,35 @@ const VideoListItemDetails = ({
         end={{ x: 0, y: 0 }}
       >
         {isLoading ? <VideoDetailsSkeleton width={width} /> : details}
-        <Stack
-          direction="row"
-          sx={{ paddingHorizontal: 15, marginVertical: 15 }}
-        >
+        <Stack direction="row" sx={{ paddingHorizontal: 15, marginBottom: 15 }}>
           {bookable && (
-            <Pressable onPress={onShowProductSheet}>
-              <Stack direction="row">
-                <LinearGradient
-                  colors={["rgba(51, 194, 255, 0.9)", "white"]}
-                  start={{ x: 1.4, y: 0.75 }}
-                  end={{ x: 1.75, y: 0.75 }}
-                  style={styles.productContainer}
-                >
-                  <Text style={styles.product}>{product?.name}</Text>
-                </LinearGradient>
-                <Stack sx={{ marginLeft: 10 }}>
-                  <Text style={styles.option}>{option?.name}</Text>
+            <Pressable onPress={onShowProductSheet} style={{ marginRight: 10 }}>
+              <Stack direction="row" justify="between">
+                <Stack direction="row">
+                  {!expirationTime && <BookableLabel text={product?.name} />}
+                  {expirationTime && <LastMinuteLabel text={product?.name} />}
+                  <Stack sx={{ marginLeft: 10 }}>
+                    <Text style={styles.option}>
+                      {trimFunc(option?.name, 12)}
+                    </Text>
+                  </Stack>
+                  <Stack direction="row" sx={{ marginLeft: 10 }}>
+                    <Text style={styles.price}>
+                      {priceWithDiscount} {t("lei")}
+                    </Text>
+                    {discount > 0 && (
+                      <Text style={styles.discount}>(-{discount}%)</Text>
+                    )}
+                  </Stack>
                 </Stack>
-                <Stack direction="row" sx={{ marginLeft: 10 }}>
-                  <Text style={styles.price}>
-                    {priceWithDiscount} {t("lei")}
-                  </Text>
-                  <Text style={styles.discount}>(-{discount}%)</Text>
+                <Stack>
+                  <Icon
+                    name="keyboard-arrow-right"
+                    color="white"
+                    size={20}
+                    style={{ marginLeft: 5 }}
+                  />
                 </Stack>
-                <Icon
-                  name="keyboard-arrow-right"
-                  color="white"
-                  size={20}
-                  style={{ marginLeft: 5 }}
-                />
               </Stack>
             </Pressable>
           )}
@@ -198,7 +204,6 @@ const styles = StyleSheet.create({
   },
   userDetails: {
     width: "100%",
-    marginBottom: 7.5,
     height: 50,
   },
   username: {
@@ -235,6 +240,7 @@ const styles = StyleSheet.create({
     color: "white",
     marginLeft: 5,
     fontSize: 12.5,
+    fontWeight: "500",
   },
   rating: {
     marginLeft: 2.5,

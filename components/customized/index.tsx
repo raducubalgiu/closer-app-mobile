@@ -89,7 +89,7 @@ export { FixedPeriodListItem } from "./ListItems/FixedPeriodListItem";
 export { OptionListItem } from "./ListItems/OptionListItem";
 export { ScheduleOverviewListItem } from "./ListItems/ScheduleOverviewListItem";
 
-export { NoFoundMessage } from "./NotFoundContent/NoFoundMessage";
+export { NoFoundMessage } from "./NoFoundMessage/NoFoundMessage";
 
 export { Map } from "./Map/Map";
 export { MapPreviewModal } from "./Modals/MapPreviewModal";
@@ -109,9 +109,11 @@ export { SheetService } from "./Sheets/SheetService";
 export { FollowUserSheet } from "./Sheets/FollowUserSheet";
 export { PostOptionsSheet } from "./Sheets/PostOptionsSheet";
 
-export { FiltersContainer } from "./Containers/FiltersContainer";
+export { FiltersContainer } from "./Layout/Containers/FiltersContainer";
 
-export { DisplayText } from "./DisplayText/DisplayText";
+export { BookableLabel } from "./Typography/Labels/BookableLabel";
+export { LastMinuteLabel } from "./Typography/Labels/LastMinuteLabel";
+export { DisplayText } from "./Typography/DisplayText/DisplayText";
 
 export { CloseIconButton } from "./IconButtons/CloseIconButton";
 export { DownloadIconButton } from "./IconButtons/DownloadIconButton";

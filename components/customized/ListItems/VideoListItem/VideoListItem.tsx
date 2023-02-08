@@ -207,6 +207,7 @@ const VideoListItem = ({ post, isLoading, setScrollEnabled }: IProps) => {
               product={product}
               description={description}
               bookable={bookable}
+              expirationTime={expirationTime}
               onGoBack={() => navigation.goBack()}
               onGoToCalendar={goToCalendar}
               onShowProductSheet={() => showProductSheet()}

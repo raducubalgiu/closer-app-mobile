@@ -14,7 +14,7 @@ import ProductListItem from "../../ListItems/ProductListItem";
 import { Product } from "../../../../models/product";
 import theme from "../../../../assets/styles/theme";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
+import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 
 type IProps = {
   userId: string;

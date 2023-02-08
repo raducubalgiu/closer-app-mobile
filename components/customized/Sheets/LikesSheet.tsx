@@ -5,7 +5,7 @@ import { useGetPaginate, usePaginateActions } from "../../../hooks";
 import UserListItem from "../ListItems/UserListItem";
 import { User } from "../../../models/user";
 import { Heading, Spinner, Stack } from "../../core";
-import { NoFoundMessage } from "../NotFoundContent/NoFoundMessage";
+import { NoFoundMessage } from "../NoFoundMessage/NoFoundMessage";
 import { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import { Divider, Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";

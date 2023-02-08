@@ -1,5 +1,5 @@
 import React from "react";
-import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
+import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 
 export const DashboardJobsTab = () => {
   return (

@@ -1,7 +1,7 @@
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { useCallback } from "react";
 import { Spinner } from "../../../core";
-import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
+import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { ServiceListItem } from "../../ListItems/ServiceListItem";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../../hooks";

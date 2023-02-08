@@ -1,71 +1,74 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { memo } from "react";
-import { Button, Stack } from "../../core";
+import { Stack } from "../../core";
 import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { useTranslation } from "react-i18next";
 import { Product } from "../../../models/product";
 import theme from "../../../assets/styles/theme";
-import { LinearGradient } from "expo-linear-gradient";
 import dayjs from "dayjs";
+import { LastMinuteLabel } from "../Typography/Labels/LastMinuteLabel";
+import { BookableLabel } from "../Typography/Labels/BookableLabel";
 
 type IProps = { product: Product; expirationTime: any };
-const { secondary, black, error, grey0 } = theme.lightColors || {};
+const { black, error, grey0 } = theme.lightColors || {};
 
 const ProductSheet = ({ product, expirationTime }: IProps) => {
   const { t } = useTranslation();
-  const { priceWithDiscount, price, name, discount, option, duration } =
-    product;
+  const {
+    priceWithDiscount,
+    price,
+    name,
+    discount,
+    option,
+    duration,
+    serviceId,
+  } = product;
   const expire = dayjs(expirationTime).utc().format("DD MMMM, HH:mm");
 
   return (
     <BottomSheetScrollView style={styles.container} bounces={false}>
       <Stack>
-        <LinearGradient
-          colors={["rgba(51, 194, 255, 0.9)", "white"]}
-          start={{ x: 1.4, y: 0.75 }}
-          end={{ x: 1.75, y: 0.75 }}
-          style={styles.productContainer}
-        >
-          <Text style={styles.product}>{t("lastMinuteOffer")}</Text>
-        </LinearGradient>
+        {expirationTime && (
+          <LastMinuteLabel size="md" text={t("lastMinuteOffer")} />
+        )}
+        {!expirationTime && (
+          <BookableLabel size="md" text={t("bookableOffer")} />
+        )}
       </Stack>
-      <Stack sx={{ marginVertical: 5 }}>
+      <Stack sx={{ marginTop: 5 }}>
         <Text style={styles.name}>{name}</Text>
-        <Text style={styles.price}>
-          {price} {t("lei")}
-        </Text>
-        <Stack direction="row">
+        {discount > 0 && (
+          <Text style={styles.price}>
+            {price} {t("lei")}
+          </Text>
+        )}
+        <Stack direction="row" sx={{ marginTop: 5 }}>
           <Text style={styles.priceDiscount}>
             {priceWithDiscount} {t("lei")}
           </Text>
-          <Text style={styles.discount}>(-{discount}%)</Text>
+          {discount > 0 && <Text style={styles.discount}>(-{discount}%)</Text>}
         </Stack>
       </Stack>
       <Stack align="start">
         <Stack sx={styles.service}>
-          <Text style={styles.serviceText}>Tuns</Text>
+          <Text style={styles.serviceText}>{serviceId?.name}</Text>
         </Stack>
       </Stack>
       <Stack align="start">
-        <Stack
-          direction="row"
-          justify="start"
-          sx={{ marginTop: 1.5, marginBottom: 5 }}
-        >
-          <Text style={styles.option}>{option.name}</Text>
-          <Text style={styles.point}>{"\u2B24"}</Text>
-          <Text style={{ color: grey0, fontSize: 16 }}>30 min</Text>
+        <Stack direction="row" justify="start" sx={{ marginBottom: 10 }}>
+          <Text style={styles.label}>{t("category")}:</Text>
+          <Text style={styles.labelText}>{option?.name}</Text>
         </Stack>
-        <Stack direction="row" justify="start" sx={{ marginBottom: 5 }}>
+        <Stack direction="row" justify="start" sx={{ marginBottom: 10 }}>
+          <Text style={styles.label}>{t("duration")}:</Text>
+          <Text style={styles.labelText}>30 min</Text>
+        </Stack>
+        <Stack direction="row" justify="start" sx={{ marginBottom: 10 }}>
           <Text style={styles.label}>{t("available")}:</Text>
-          <Text style={styles.availableText}>{expire}</Text>
+          <Text style={styles.availableText}>
+            {expirationTime ? expire : t("checkCalendar")}
+          </Text>
         </Stack>
-        {expirationTime && (
-          <Stack direction="row" justify="start">
-            <Text style={styles.label}>{t("expire")}:</Text>
-            <Text style={styles.expireText}>{expire}</Text>
-          </Stack>
-        )}
       </Stack>
     </BottomSheetScrollView>
   );
@@ -76,16 +79,6 @@ export default memo(ProductSheet);
 const styles = StyleSheet.create({
   container: { flex: 1, margin: 20 },
   point: { fontSize: 3, color: grey0, marginHorizontal: 5 },
-  productContainer: {
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderRadius: 1.5,
-  },
-  product: {
-    color: "white",
-    marginLeft: 5,
-    fontWeight: "500",
-  },
   name: {
     color: black,
     fontWeight: "500",
@@ -115,7 +108,7 @@ const styles = StyleSheet.create({
   service: {
     borderWidth: 1,
     borderColor: "#ddd",
-    marginVertical: 10,
+    marginVertical: 15,
     borderRadius: 5,
     paddingVertical: 5,
     paddingHorizontal: 10,
@@ -127,7 +120,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontSize: 15,
   },
-  option: {
+  labelText: {
     color: grey0,
     fontSize: 18,
   },
@@ -135,17 +128,12 @@ const styles = StyleSheet.create({
     color: black,
     fontSize: 16,
     fontWeight: "500",
+    marginRight: 5,
   },
   availableText: {
-    marginLeft: 5,
-    fontSize: 15,
+    fontSize: 16,
     color: black,
     fontWeight: "600",
-  },
-  expireText: {
-    marginLeft: 5,
-    color: error,
-    fontWeight: "600",
-    fontSize: 15,
+    flex: 1,
   },
 });

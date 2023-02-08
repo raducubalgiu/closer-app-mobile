@@ -110,14 +110,18 @@ export const ScheduleConfirmScreen = ({ route }: IProps) => {
               <Text style={styles.heading}>{t("payment")}</Text>
               <Text style={styles.description}>{t("paymentDetails")}</Text>
               <Stack align="start" sx={{ marginTop: 15 }}>
-                <Text style={styles.price}>
-                  {price} {t("lei")}
-                </Text>
+                {discount > 0 && (
+                  <Text style={styles.price}>
+                    {price} {t("lei")}
+                  </Text>
+                )}
                 <Stack direction="row">
                   <Text style={styles.priceWithDiscount}>
                     {priceWithDiscount} {t("lei")}
                   </Text>
-                  <Text style={styles.discount}>(-{discount}%)</Text>
+                  {discount > 0 && (
+                    <Text style={styles.discount}>(-{discount}%)</Text>
+                  )}
                 </Stack>
               </Stack>
             </Stack>

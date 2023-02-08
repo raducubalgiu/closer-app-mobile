@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View, Pressable } from "react-native";
-import { ButtonLink, Checkmark, Stack } from "../../core";
+import { ButtonLink, Checkmark, Stack } from "../../../core";
 import { useCallback, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../navigation/rootStackParams";
+import { RootStackParams } from "../../../../navigation/rootStackParams";
 
 const { grey0, black } = theme.lightColors || {};
 

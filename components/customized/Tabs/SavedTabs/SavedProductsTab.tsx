@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { RefreshControl } from "react-native";
-import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
+import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { useTranslation } from "react-i18next";
 import { Spinner } from "../../../core";
 import ProductListItem from "../../ListItems/ProductListItem";
