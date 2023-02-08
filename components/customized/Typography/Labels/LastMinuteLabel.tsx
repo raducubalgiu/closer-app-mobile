@@ -22,8 +22,8 @@ export const LastMinuteLabel = ({ text, sx, sxTxt, size = "sm" }: IProps) => {
   return (
     <LinearGradient
       colors={["#33C2FF", "#b3e8ff"]}
-      start={{ x: 1, y: 1 }}
-      end={{ x: 1, y: 1 }}
+      start={{ x: 0.4, y: 1 }}
+      end={{ x: 1.3, y: 1 }}
       style={[styles.container, sx]}
     >
       <Text style={[styles.text, sxTxt]}>{text}</Text>

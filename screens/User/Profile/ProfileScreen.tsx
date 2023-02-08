@@ -34,15 +34,15 @@ export const ProfileScreen = () => {
 
   const closeSheet = useCallback(() => CLOSE_BS(), []);
   const profileMenu = <ProfileMenuList onCloseSheet={closeSheet} />;
-  const { BOTTOM_SHEET, SHOW_BS, CLOSE_BS } = useSheet(
-    ["1%", isBusiness ? 235 : 200],
-    profileMenu
-  );
+  const { BOTTOM_SHEET, SHOW_BS, CLOSE_BS } = useSheet([1, 200], profileMenu, {
+    duration: 200,
+  });
 
   const postSheet = <PostOptionsSheet />;
   const { BOTTOM_SHEET: postOptions, SHOW_BS: showPostOptions } = useSheet(
-    [1, 230],
-    postSheet
+    [1, 200],
+    postSheet,
+    { duration: 200 }
   );
 
   useRefreshOnFocus(refetch);

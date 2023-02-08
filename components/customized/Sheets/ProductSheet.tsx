@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   },
   labelText: {
     color: grey0,
-    fontSize: 18,
+    fontSize: 16.5,
   },
   label: {
     color: black,

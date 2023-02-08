@@ -8,7 +8,7 @@ import {
 import { Portal } from "@gorhom/portal";
 import { useBottomSheetTimingConfigs } from "@gorhom/bottom-sheet";
 
-const animation = { duration: 200 };
+const animation = { duration: 400 };
 
 export const useSheet = (
   intervals: any,

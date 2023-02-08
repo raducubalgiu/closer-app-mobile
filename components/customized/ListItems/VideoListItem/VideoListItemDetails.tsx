@@ -15,6 +15,9 @@ import { VideoDetailsSkeleton } from "../../Skeletons/VideoDetailsSkeleton";
 import { BookableLabel } from "../../Typography/Labels/BookableLabel";
 import { LastMinuteLabel } from "../../Typography/Labels/LastMinuteLabel";
 import { trimFunc } from "../../../../utils";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../../navigation/rootStackParams";
 
 const { width } = Dimensions.get("window");
 const { error, secondary, black } = theme.lightColors || {};
@@ -48,6 +51,19 @@ const VideoListItemDetails = ({
     userDetails;
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+
+  const goToProfile = () => {
+    navigation.push("ProfileGeneral", {
+      username,
+      name: userDetails?.name,
+      avatar,
+      checkmark,
+      service: null,
+      option: null,
+    });
+  };
 
   const details = (
     <Stack direction="row" sx={styles.content}>
@@ -56,11 +72,13 @@ const VideoListItemDetails = ({
           <Stack direction="row" sx={{ flex: 1 }}>
             <Stack direction="row">
               <Stack align="start">
-                <Stack direction="row">
-                  <CustomAvatar avatar={avatar} size={20} />
-                  <Text style={styles.username}>@{username}</Text>
-                  {checkmark && <Checkmark />}
-                </Stack>
+                <Pressable onPress={goToProfile}>
+                  <Stack direction="row">
+                    <CustomAvatar avatar={avatar} size={20} />
+                    <Text style={styles.username}>@{username}</Text>
+                    {checkmark && <Checkmark />}
+                  </Stack>
+                </Pressable>
                 <Stack sx={styles.professionCont}>
                   <Stack direction="row">
                     <Text style={styles.profession}>{profession?.name}</Text>
@@ -115,10 +133,20 @@ const VideoListItemDetails = ({
         end={{ x: 0, y: 0 }}
       >
         {isLoading ? <VideoDetailsSkeleton width={width} /> : details}
-        <Stack direction="row" sx={{ paddingHorizontal: 15, marginBottom: 15 }}>
+        <Stack
+          direction="row"
+          sx={{
+            paddingHorizontal: 15,
+            marginBottom: 5,
+          }}
+        >
           {bookable && (
             <Pressable onPress={onShowProductSheet} style={{ marginRight: 10 }}>
-              <Stack direction="row" justify="between">
+              <Stack
+                direction="row"
+                justify="between"
+                sx={{ paddingVertical: 10 }}
+              >
                 <Stack direction="row">
                   {!expirationTime && <BookableLabel text={product?.name} />}
                   {expirationTime && <LastMinuteLabel text={product?.name} />}
@@ -136,40 +164,30 @@ const VideoListItemDetails = ({
                     )}
                   </Stack>
                 </Stack>
-                <Stack>
-                  <Icon
-                    name="keyboard-arrow-right"
-                    color="white"
-                    size={20}
-                    style={{ marginLeft: 5 }}
-                  />
-                </Stack>
+                <Icon
+                  name="keyboard-arrow-right"
+                  color="white"
+                  size={20}
+                  style={{ marginLeft: 5 }}
+                />
               </Stack>
             </Pressable>
           )}
           {!bookable && (
-            <Stack direction="row">
+            <Stack direction="row" sx={{ paddingVertical: 10 }}>
               <Icon
                 name="music"
                 type="font-awesome-5"
                 size={15}
                 color="#f2f2f2"
               />
-              <Text style={{ color: "#f2f2f2", fontSize: 13, marginLeft: 10 }}>
-                Continut Original
-              </Text>
+              <Text style={styles.soundOwner}>{t("originalContent")}</Text>
             </Stack>
           )}
           <Pressable>
             <Image
               source={{ uri: userDetails?.avatar[0]?.url }}
-              style={{
-                width: 27.5,
-                height: 27.5,
-                borderWidth: 1,
-                borderColor: "white",
-                borderRadius: 5,
-              }}
+              style={styles.soundImage}
             />
           </Pressable>
         </Stack>
@@ -256,4 +274,12 @@ const styles = StyleSheet.create({
     textTransform: "lowercase",
   },
   discount: { fontSize: 12, marginLeft: 5, color: error },
+  soundImage: {
+    width: 27.5,
+    height: 27.5,
+    borderWidth: 1,
+    borderColor: "white",
+    borderRadius: 5,
+  },
+  soundOwner: { color: "#f2f2f2", fontSize: 13, marginLeft: 10 },
 });
