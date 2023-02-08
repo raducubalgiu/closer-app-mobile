@@ -61,6 +61,16 @@ const ProductListItem = ({
       onPress={() => navigation.navigate("Product", { id: product.id })}
     >
       <Stack sx={styles.card} align="start">
+        {ownerInfo && (
+          <UserListItemSimple
+            name={ownerId?.name}
+            profession={ownerId?.profession.name}
+            avatar={ownerId?.avatar}
+            checkmark={ownerId?.checkmark}
+            onGoToUser={goToOwner}
+            sx={{ marginBottom: 20 }}
+          />
+        )}
         <Stack direction="row" align="start">
           <Stack align="start" sx={styles.descriptionCont}>
             <Stack direction="row" align="start" sx={{ width: "100%" }}>
@@ -85,16 +95,6 @@ const ProductListItem = ({
             </Text>
           </Stack>
         </Stack>
-        {ownerInfo && (
-          <UserListItemSimple
-            name={ownerId?.name}
-            profession={ownerId?.profession.name}
-            avatar={ownerId?.avatar}
-            checkmark={ownerId?.checkmark}
-            onGoToUser={goToOwner}
-            sx={{ marginTop: 15 }}
-          />
-        )}
         <Protected
           userRole={userContext?.role}
           roles={[SECOND_ROLE, THIRD_ROLE, SUPERADMIN_ROLE]}

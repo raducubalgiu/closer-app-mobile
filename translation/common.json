@@ -248,6 +248,7 @@
   "noFoundLocations": "Nu au fost găsite locaţii",
   "noFoundSavedHashtags": "Încă nu ai salvat hashtaguri",
   "noFoundSavedServices": "Încă nu ai salvat servicii",
+  "noFoundSavedVideo": "Încă nu ai salvat videoclipuri",
   "noFoundServiceProducts": "Nu am găsit produse pentru acest serviciu",
   "noFoundProducts": "Încă nu au fost adăugate produse",
   "noFoundSavedProducts": "Încă nu ai salvat produse",
@@ -359,5 +360,10 @@
   "newVideo": "Videoclip nou",
   "getLink": "Obţine linkul",
   "report": "Raportează",
-  "downloadPost": "Salvează în telefon"
+  "downloadPost": "Salvează în telefon",
+  "videoclips": "Videoclipuri",
+  "lastMinuteOffer": "Ofertă Last Minute",
+  "expire": "Expiră",
+  "freeSeat": "Loc liber",
+  "available": "Disponibil"
 }

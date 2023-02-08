@@ -132,6 +132,12 @@ const VideoListItemDetails = ({
                   </Text>
                   <Text style={styles.discount}>(-{discount}%)</Text>
                 </Stack>
+                <Icon
+                  name="keyboard-arrow-right"
+                  color="white"
+                  size={20}
+                  style={{ marginLeft: 5 }}
+                />
               </Stack>
             </Pressable>
           )}

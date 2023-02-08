@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Animated } from "react-native";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, memo } from "react";
 import { Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 import { ListItem, Spinner } from "../../core";
@@ -10,7 +10,7 @@ import { useIsFocused } from "@react-navigation/native";
 const { black } = theme.lightColors || {};
 type IProps = { postId: string; userId: string };
 
-export const MoreSheet = ({ postId, userId }: IProps) => {
+const MoreSheet = ({ postId, userId }: IProps) => {
   const { t } = useTranslation();
   const isFocused = useIsFocused();
   const [bookmarked, setBookmarked] = useState(false);
@@ -91,6 +91,8 @@ export const MoreSheet = ({ postId, userId }: IProps) => {
     </>
   );
 };
+
+export default memo(MoreSheet);
 
 const styles = StyleSheet.create({
   container: {

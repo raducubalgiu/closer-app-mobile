@@ -2,10 +2,15 @@ import { useCallback } from "react";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import GridImageListItem from "../../ListItems/PostGrid/GridImageListItem";
+import GridVideoVListItem from "../../ListItems/PostGrid/GridVideoVListItem";
 import { useGetPaginate } from "../../../../hooks";
 import { Spinner } from "../../../core";
 import { NoFoundMessage } from "../../NotFoundContent/NoFoundMessage";
-import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
+import {
+  FlashList,
+  ListRenderItemInfo,
+  MasonryFlashList,
+} from "@shopify/flash-list";
 import { Post } from "../../../../models/post";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
@@ -42,21 +47,37 @@ export const SavedPostsTab = ({ user }: { user: User }) => {
       const { postId, userId } = item;
       const { bookable, postType } = postId || {};
 
-      return (
-        <GridImageListItem
-          onPress={() =>
-            navigation.navigate("AllBookmarks", {
-              postId: postId?.id,
-              userId: userId,
-            })
-          }
-          index={index}
-          image={postId?.images[0]?.url}
-          bookable={bookable}
-          fixed={null}
-          postType={postType}
-        />
-      );
+      if (postType === "video") {
+        return (
+          <GridVideoVListItem
+            onPress={() =>
+              navigation.navigate("AllBookmarks", {
+                postId: postId?.id,
+                userId: userId,
+              })
+            }
+            index={index}
+            uri={postId?.images[0]?.url}
+            bookable={bookable}
+          />
+        );
+      } else {
+        return (
+          <GridImageListItem
+            onPress={() =>
+              navigation.navigate("AllBookmarks", {
+                postId: postId?.id,
+                userId: userId,
+              })
+            }
+            index={index}
+            image={postId?.images[0]?.url}
+            bookable={bookable}
+            fixed={null}
+            postType={postType}
+          />
+        );
+      }
     },
     []
   );
@@ -90,7 +111,7 @@ export const SavedPostsTab = ({ user }: { user: User }) => {
   return (
     <>
       {isFetching && isLoading && !isFetchingNextPage && <Spinner />}
-      <FlashList
+      <MasonryFlashList
         ListHeaderComponent={header}
         data={posts}
         keyExtractor={keyExtractor}

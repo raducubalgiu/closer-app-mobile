@@ -5,7 +5,10 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useSheet } from "../../../../hooks";
-import { LikesSheet, CommentsSheet, MoreSheet, ProductSheet } from "../..";
+import ProductSheet from "../../Sheets/ProductSheet";
+import MoreSheet from "../../Sheets/MoreSheet";
+import LikesSheet from "../../Sheets/LikesSheet";
+import CommentsSheet from "../../Sheets/CommentsSheet";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
 import VisibilitySensor from "@svanboxel/visibility-sensor-react-native";
 import { Post } from "../../../../models/post";
@@ -36,7 +39,7 @@ const { width, height } = Dimensions.get("window");
 
 const VideoListItem = ({ post, isLoading, setScrollEnabled }: IProps) => {
   const { id, description, bookable, images, userId, product } = post;
-  const { likesCount, commentsCount, bookmarksCount } = post;
+  const { likesCount, commentsCount, bookmarksCount, expirationTime } = post;
   const reactions = likesCount + commentsCount + bookmarksCount;
   const video = useRef<any>(null);
   const [status, setStatus] = useState<Status>({
@@ -74,7 +77,9 @@ const VideoListItem = ({ post, isLoading, setScrollEnabled }: IProps) => {
 
   const commentsSheet = <CommentsSheet postId={id} creatorId={userId.id} />;
   const moreSheet = <MoreSheet postId={id} userId={userId.id} />;
-  const productSheet = <ProductSheet />;
+  const productSheet = (
+    <ProductSheet product={product} expirationTime={expirationTime} />
+  );
 
   const { BOTTOM_SHEET: LikesBSheet, SHOW_BS: showLikesSheet } = useSheet(
     [1, sheetSm, sheetBig],
@@ -95,7 +100,7 @@ const VideoListItem = ({ post, isLoading, setScrollEnabled }: IProps) => {
   );
 
   const { BOTTOM_SHEET: ProdSheet, SHOW_BS: showProductSheet } = useSheet(
-    [1, 300],
+    [1, 400],
     productSheet,
     { duration: 400 }
   );
@@ -133,6 +138,7 @@ const VideoListItem = ({ post, isLoading, setScrollEnabled }: IProps) => {
   );
 
   const goToCalendar = () => {
+    video.current.pauseAsync();
     navigation.push("CalendarBig", {
       product: { ...product, ownerId: userId },
       serviceId: product?.serviceId,

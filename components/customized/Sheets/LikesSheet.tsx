@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from "react-native";
-import { useCallback } from "react";
+import { useCallback, memo } from "react";
 import { useTranslation } from "react-i18next";
 import { useGetPaginate, usePaginateActions } from "../../../hooks";
 import UserListItem from "../ListItems/UserListItem";
@@ -28,7 +28,7 @@ const StatsItem = ({ icon, counter }: StatsItem) => {
   );
 };
 
-export const LikesSheet = ({
+const LikesSheet = ({
   postId,
   likesCount,
   commentsCount,
@@ -81,6 +81,8 @@ export const LikesSheet = ({
     </View>
   );
 };
+
+export default memo(LikesSheet);
 
 const styles = StyleSheet.create({
   counter: {

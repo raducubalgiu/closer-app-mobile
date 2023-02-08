@@ -8,6 +8,7 @@ import {
   SavedProductsTab,
   SavedPostsTab,
   SavedServicesTab,
+  SavedVideoTab,
 } from "../../../components/customized/index";
 import { Header } from "../../../components/core";
 import theme from "../../../assets/styles/theme";
@@ -26,6 +27,7 @@ export const BookmarksScreen = ({ route }: IProps) => {
   const SavedServices = useCallback(() => <SavedServicesTab user={user} />, []);
   const SavedProducts = useCallback(() => <SavedProductsTab user={user} />, []);
   const SavedHashtags = useCallback(() => <SavedHashtagsTab user={user} />, []);
+  const SavedVideo = useCallback(() => <SavedVideoTab user={user} />, []);
 
   return (
     <View style={styles.screen}>
@@ -41,6 +43,11 @@ export const BookmarksScreen = ({ route }: IProps) => {
           name="SavedPosts"
           component={SavedPosts}
           options={{ tabBarLabel: t("posts") }}
+        />
+        <Tab.Screen
+          name="SavedVideo"
+          component={SavedVideo}
+          options={{ tabBarLabel: t("video") }}
         />
         <Tab.Screen
           name="SavedServices"

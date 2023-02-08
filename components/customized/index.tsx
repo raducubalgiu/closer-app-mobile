@@ -25,6 +25,7 @@ export { FollowOutlinedButton } from "./Buttons/FollowOutlinedButton";
 export { TopTabContainer } from "./Tabs/TopTabContainer/TopTabContainer";
 export { TopTabProfile } from "./Tabs/TopTabContainer/TopTabProfile";
 export { SavedPostsTab } from "./Tabs/SavedTabs/SavedPostsTab";
+export { SavedVideoTab } from "./Tabs/SavedTabs/SavedVideoTab";
 export { SavedHashtagsTab } from "./Tabs/SavedTabs/SavedHashtagsTab";
 export { SavedProductsTab } from "./Tabs/SavedTabs/SavedProductsTab";
 export { SavedServicesTab } from "./Tabs/SavedTabs/SavedServicesTab";
@@ -106,11 +107,7 @@ export { DashboardCalendarSheet } from "./Sheets/DashboardCalendarSheet";
 export { PostInfoSheet } from "./Sheets/PostInfoSheet";
 export { SheetService } from "./Sheets/SheetService";
 export { FollowUserSheet } from "./Sheets/FollowUserSheet";
-export { LikesSheet } from "./Sheets/LikesSheet";
-export { CommentsSheet } from "./Sheets/CommentsSheet";
-export { MoreSheet } from "./Sheets/MoreSheet";
 export { PostOptionsSheet } from "./Sheets/PostOptionsSheet";
-export { ProductSheet } from "./Sheets/ProductSheet";
 
 export { FiltersContainer } from "./Containers/FiltersContainer";
 

@@ -6,8 +6,8 @@
     "strictPropertyInitialization": false,
     "strictNullChecks": true,
     "strictBindCallApply": true,
-    "noImplicitReturns": true,
-    "baseUrl": "./"
+    "noImplicitReturns": true
+    //"baseUrl": "./"
     // "paths": {
     //   "@navigation/*": ["./navigation/*"],
     //   "@core/*": ["./components/core/*"],

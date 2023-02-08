@@ -14,7 +14,7 @@ import dayjs from "dayjs";
 import { RootStackParams } from "../navigation/rootStackParams";
 import { showToast } from "../utils";
 
-const { black, grey0 } = theme.lightColors || {};
+const { black, grey0, error } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "ScheduleConfirm">;
 
 export const ScheduleConfirmScreen = ({ route }: IProps) => {
@@ -109,7 +109,17 @@ export const ScheduleConfirmScreen = ({ route }: IProps) => {
             <Stack align="start" sx={{ marginLeft: 15, flex: 1 }}>
               <Text style={styles.heading}>{t("payment")}</Text>
               <Text style={styles.description}>{t("paymentDetails")}</Text>
-              <Text style={styles.price}>{priceWithDiscount} LEI</Text>
+              <Stack align="start" sx={{ marginTop: 15 }}>
+                <Text style={styles.price}>
+                  {price} {t("lei")}
+                </Text>
+                <Stack direction="row">
+                  <Text style={styles.priceWithDiscount}>
+                    {priceWithDiscount} {t("lei")}
+                  </Text>
+                  <Text style={styles.discount}>(-{discount}%)</Text>
+                </Stack>
+              </Stack>
             </Stack>
           </Stack>
         </Stack>
@@ -153,9 +163,23 @@ const styles = StyleSheet.create({
   },
   duration: { marginTop: 5, color: grey0, fontSize: 16 },
   price: {
-    marginTop: 15,
+    color: grey0,
+    fontSize: 18,
+    fontWeight: "500",
+    textDecorationLine: "line-through",
+    textDecorationStyle: "solid",
+    textTransform: "lowercase",
+  },
+  priceWithDiscount: {
+    marginTop: 1,
     color: black,
     fontSize: 27.5,
     fontWeight: "700",
+  },
+  discount: {
+    marginLeft: 5,
+    color: error,
+    fontWeight: "500",
+    fontSize: 12,
   },
 });

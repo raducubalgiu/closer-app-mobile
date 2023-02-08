@@ -1,5 +1,5 @@
 import { BottomSheetFlatList } from "@gorhom/bottom-sheet";
-import { useCallback, useState } from "react";
+import { useCallback, useState, memo } from "react";
 import {
   StyleSheet,
   Text,
@@ -27,7 +27,7 @@ import { IconButton, Stack, Spinner } from "../../core";
 type IProps = { postId: string; creatorId: string };
 const { primary, black } = theme.lightColors || {};
 
-export const CommentsSheet = ({ postId, creatorId }: IProps) => {
+const CommentsSheet = ({ postId, creatorId }: IProps) => {
   const insets = useSafeAreaInsets();
   const { user } = useAuth();
   const [comment, setComment] = useState("");
@@ -157,6 +157,8 @@ export const CommentsSheet = ({ postId, creatorId }: IProps) => {
     </View>
   );
 };
+
+export default memo(CommentsSheet);
 
 const styles = StyleSheet.create({
   container: {

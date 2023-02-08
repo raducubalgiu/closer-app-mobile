@@ -1,11 +1,16 @@
-import { StyleSheet, Dimensions, Pressable } from "react-native";
+import { StyleSheet, Dimensions, Pressable, View } from "react-native";
+import { Icon } from "@rneui/themed";
 import { memo } from "react";
 import { ResizeMode, Video } from "expo-av";
 import { SharedElement } from "react-navigation-shared-element";
 
 const { width } = Dimensions.get("window");
 
-type IProps = { uri: string; id: string; onPress: () => void };
+type IProps = {
+  uri: string;
+  id: string;
+  onPress: () => void;
+};
 
 const PostVideoOverviewListItem = ({ uri, id, onPress }: IProps) => {
   return (
