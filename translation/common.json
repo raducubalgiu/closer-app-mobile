@@ -368,5 +368,12 @@
   "available": "Disponibil",
   "bookableOffer": "Ofertă rezervabilă",
   "checkCalendar": "Consultă calendarul",
-  "originalContent": "Conţinut Original"
+  "originalContent": "Conţinut Original",
+  "changePassword": "Schimbă parola",
+  "currentPassword": "Parola actuală",
+  "newPassword": "Parola nouă",
+  "confirmNewPassword": "Confirmă noua parolă",
+  "updatePasswordSuccess": "Ai modificat parola cu success",
+  "wrongPassword": "Parola este greşită",
+  "tooManyAttempsToChangePassword": "Ai depăşit numărul de încercări"
 }

@@ -7,7 +7,7 @@ import {
   Pressable,
   ListRenderItemInfo,
 } from "react-native";
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";

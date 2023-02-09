@@ -2,21 +2,20 @@ import { StyleSheet, Text, Pressable, Dimensions, Image } from "react-native";
 import { Icon } from "@rneui/themed";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
 import { memo } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import CustomAvatar from "../../../core/Avatars/CustomAvatar";
 import { Stack, Checkmark, Button, IconStar } from "../../../core";
-import { Product } from "../../../../models/product";
-import { User } from "../../../../models/user";
+import { Product, User } from "../../../../models";
 import theme from "../../../../assets/styles/theme";
-import { useTranslation } from "react-i18next";
 import { DisplayText } from "../../Typography/DisplayText/DisplayText";
 import { FollowOutlinedButton } from "../../Buttons/FollowOutlinedButton";
 import { VideoDetailsSkeleton } from "../../Skeletons/VideoDetailsSkeleton";
 import { BookableLabel } from "../../Typography/Labels/BookableLabel";
 import { LastMinuteLabel } from "../../Typography/Labels/LastMinuteLabel";
 import { trimFunc } from "../../../../utils";
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
 
 const { width } = Dimensions.get("window");
@@ -122,7 +121,10 @@ const VideoListItemDetails = ({
           <Pressable onPress={onGoBack} style={styles.back}>
             <Icon name="close" type="antdesign" size={26} color="white" />
           </Pressable>
-          <Pressable style={styles.search}>
+          <Pressable
+            style={styles.search}
+            onPress={() => navigation.navigate("SearchPosts", { search: "" })}
+          >
             <Icon name="search" type="feather" size={25} color="white" />
           </Pressable>
         </Stack>

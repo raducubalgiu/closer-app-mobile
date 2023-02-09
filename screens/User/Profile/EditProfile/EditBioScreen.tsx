@@ -18,7 +18,8 @@ const { grey0 } = theme.lightColors || {};
 
 export const EditBioScreen = () => {
   const { user, setUser } = useAuth();
-  const [bio, setBio] = useState(user?.description);
+  const { description } = user || {};
+  const [bio, setBio] = useState(description ? description : "");
   const navigation = useNavigation();
   const { t } = useTranslation();
 
@@ -29,6 +30,7 @@ export const EditBioScreen = () => {
       navigation.goBack();
     },
   });
+
   const updateBio = () => {
     Keyboard.dismiss();
     mutate({ description: bio });
