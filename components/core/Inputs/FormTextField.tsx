@@ -47,7 +47,7 @@ export const FormTextField = ({
   const message: string = get(errors, name)?.message as string;
 
   const errMsg = (
-    <Stack direction="row" sx={{ marginBottom: 10 }}>
+    <Stack direction="row" sx={{ marginBottom: 15 }}>
       <Icon name="alert-circle" type="feather" size={20} color={error} />
       <Text style={styles.errMsg}>{message}</Text>
     </Stack>
@@ -63,6 +63,7 @@ export const FormTextField = ({
 
   return (
     <>
+      {has(errors, name) && errMsg}
       {label?.length > 0 && <Text style={styles.label}>{label}</Text>}
       <Controller
         control={control}
@@ -106,7 +107,6 @@ export const FormTextField = ({
         )}
         name={name}
       />
-      {has(errors, name) && errMsg}
     </>
   );
 };

@@ -15,6 +15,7 @@ import theme from "../../../../assets/styles/theme";
 import { useAuth } from "../../../../hooks";
 import { showToast } from "../../../../utils";
 import { useNavigation } from "@react-navigation/native";
+import { required } from "../../../../constants/validation";
 
 const defaultValues = {
   currentPass: "",
@@ -36,6 +37,7 @@ export const AccountPasswordScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
   const newPassword = watch("newPass");
   const confirmNewPass = watch("confirmNewPass");
+  const isRequired = required(t);
 
   const handleUpdatePassword = (data: any) => {
     setIsLoading(true);
@@ -125,6 +127,7 @@ export const AccountPasswordScreen = () => {
               name="currentPass"
               placeholder=""
               secureTextEntry
+              rules={{ ...isRequired }}
             />
             <FormTextField
               label={t("newPassword")}
@@ -139,6 +142,7 @@ export const AccountPasswordScreen = () => {
               }}
               disableRightIcon={returnBoolean(!newPassword)}
               onRightIconPress={handleShowNewPass}
+              rules={{ ...isRequired }}
             />
             <FormTextField
               label={t("confirmNewPassword")}
@@ -153,6 +157,7 @@ export const AccountPasswordScreen = () => {
               }}
               disableRightIcon={returnBoolean(!confirmNewPass)}
               onRightIconPress={handleShowConfirmPass}
+              rules={{ ...isRequired }}
             />
           </FormProvider>
         </Stack>
