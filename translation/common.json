@@ -383,5 +383,10 @@
   "male": "Bărbaţi",
   "female": "Femei",
   "none": "Niciunul",
-  "preferToNotSay": "Prefer să nu spun"
+  "preferToNotSay": "Prefer să nu spun",
+  "deleteAccount": "Şterge contul",
+  "disableAccount": "Dezactivează contul",
+  "deleteAccountPermanently": "Şterge contul definitiv",
+  "disableAccountDescription": "Prin dezactivarea contului, fotografiile, comentariile şi aprecierile tale nu vor mai putea fi vizibile. Poţi reactiva oricând contul reconectându-te",
+  "deleteAccountPermanentlyDescription": "Profilul, fotografiile, clipurile video, comentariile, aprecierile şi urmăritorii tăi vor fi şterşi definitiv"
 }

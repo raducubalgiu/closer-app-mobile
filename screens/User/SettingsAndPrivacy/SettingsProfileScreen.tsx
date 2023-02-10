@@ -28,7 +28,7 @@ export const SettingsProfileScreen = () => {
   return (
     <View style={styles.screen}>
       <SafeAreaView>
-        <Header title={t("settingsAndPrivacy")} divider={true} />
+        <Header title={t("settingsAndPrivacy")} />
       </SafeAreaView>
       <ScrollView style={styles.container}>
         <Stack align="start">
@@ -193,7 +193,15 @@ export const SettingsProfileScreen = () => {
             </Stack>
           </ListItem>
         </Stack>
-        <View style={{ marginBottom: 50 }} />
+        <View
+          style={{
+            paddingVertical: 50,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text style={{ fontWeight: "500", color: grey0 }}>v1.0.0</Text>
+        </View>
       </ScrollView>
     </View>
   );

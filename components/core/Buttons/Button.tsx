@@ -106,7 +106,7 @@ export const Button = ({
       disabled={loading || disabled ? true : false}
     >
       {loading ? (
-        <ActivityIndicator color="white" />
+        <ActivityIndicator color={disabled ? grey0 : "white"} />
       ) : (
         <Text style={styles.text}>{title}</Text>
       )}

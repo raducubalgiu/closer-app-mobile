@@ -1,6 +1,6 @@
 import { FormProvider } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { SafeAreaView, StyleSheet, Text } from "react-native";
+import { Keyboard, SafeAreaView, StyleSheet, Text } from "react-native";
 import { useForm } from "react-hook-form";
 import { FormTextField, Header, Stack } from "../../../../../components/core";
 import theme from "../../../../../assets/styles/theme";
@@ -10,6 +10,7 @@ import {
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../../navigation/rootStackParams";
+import { useEffect } from "react";
 
 const { grey0 } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "AccountInfo">;
