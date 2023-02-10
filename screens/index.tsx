@@ -75,6 +75,9 @@ export { AccountInfoEmailScreen } from "./User/SettingsAndPrivacy/Account/Accoun
 export { AccountInfoGenderScreen } from "./User/SettingsAndPrivacy/Account/AccountInfoScreen/AccountInfoGenderScreen";
 export { AccountPasswordScreen } from "./User/SettingsAndPrivacy/Account/AccountPasswordScreen";
 export { DeleteAccountScreen } from "./User/SettingsAndPrivacy/Account/DeleteAccountScreen";
+export { DeleteAccountPermanentlyScreen } from "./User/SettingsAndPrivacy/Account/DeleteAccountPermanentlyScreen";
+export { DisableAccountScreen } from "./User/SettingsAndPrivacy/Account/DisableAccountScreen";
+export { HideAccountScreen } from "./User/SettingsAndPrivacy/Account/HideAccountScreen";
 export { PrivacyScreen } from "./User/SettingsAndPrivacy/Privacy/PrivacyScreen";
 export { ClearCacheScreen } from "./User/SettingsAndPrivacy/Cache/ClearCacheScreen";
 export { SavingDataScreen } from "./User/SettingsAndPrivacy/Cache/SavingDataScreen";

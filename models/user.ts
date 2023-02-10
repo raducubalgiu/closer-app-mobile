@@ -22,4 +22,5 @@ export interface User {
   hours: any;
   phone: any;
   gender: string;
+  status: string;
 }

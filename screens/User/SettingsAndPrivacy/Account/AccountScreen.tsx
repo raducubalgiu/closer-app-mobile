@@ -41,7 +41,7 @@ export const AccountScreen = () => {
           between
           onPress={() => navigation.navigate("DeleteAccount")}
         >
-          <Text style={styles.text}>{t("deleteOrDisableAccount")}</Text>
+          <Text style={styles.text}>{t("deleteHideOrDisableAccount")}</Text>
           <Icon name="keyboard-arrow-right" color={grey0} />
         </ListItem>
       </Stack>

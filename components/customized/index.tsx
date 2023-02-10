@@ -114,6 +114,7 @@ export { FiltersContainer } from "./Layout/Containers/FiltersContainer";
 export { BookableLabel } from "./Typography/Labels/BookableLabel";
 export { LastMinuteLabel } from "./Typography/Labels/LastMinuteLabel";
 export { DisplayText } from "./Typography/DisplayText/DisplayText";
+export { TextWithBullet } from "./Typography/TextWithBullet";
 
 export { CloseIconButton } from "./IconButtons/CloseIconButton";
 export { DownloadIconButton } from "./IconButtons/DownloadIconButton";

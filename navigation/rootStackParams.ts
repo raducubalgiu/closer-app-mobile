@@ -44,6 +44,8 @@ export type RootStackParams = {
   CameraPreview: { photo: { uri: string }; avatar: any; name: string };
   ClearCache: any;
   DeleteAccount: any;
+  DeleteAccountPermanently: any;
+  DisableAccount: any;
   Discounts: any;
   EditProfile: { user: User };
   EditBio: any;
@@ -68,6 +70,7 @@ export type RootStackParams = {
   FeedLastMinute: any;
   FeedVideoExplore: { initialIndex: number };
   Hashtag: { name: string };
+  HideAccount: any;
   Login: any;
   Locations: {
     service: Service;

@@ -1,4 +1,4 @@
-import { StyleSheet, SafeAreaView, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { MAIN_ROLE, SECOND_ROLE } from "@env";
@@ -14,7 +14,7 @@ import { useSheet, useAuth, useGet, useRefreshOnFocus } from "../../../hooks";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/rootStackParams";
 import { FAB } from "@rneui/themed";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
 
 const { primary } = theme.lightColors || {};
 
@@ -22,7 +22,7 @@ export const ProfileScreen = () => {
   const { user: userContext } = useAuth();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const insets = useSafeAreaInsets();
+  const { t } = useTranslation();
 
   const { data: user, refetch } = useGet({
     model: "fetchUser",
@@ -58,6 +58,13 @@ export const ProfileScreen = () => {
           onOpenPostOptions={showPostOptions}
         />
       </View>
+      {userContext?.status === "hidden" && (
+        <View style={styles.hidden}>
+          <Text style={{ color: "white", fontWeight: "500" }}>
+            {t("yourAccountIsHidden")}
+          </Text>
+        </View>
+      )}
       <TopTabProfile
         userId={user?.id}
         service={null}
@@ -82,5 +89,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
+  },
+  hidden: {
+    marginHorizontal: 15,
+    marginBottom: 15,
+    height: 25,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#ccc",
   },
 });

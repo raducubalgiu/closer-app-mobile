@@ -20,6 +20,8 @@ import {
   AuthScreen,
   ClearCacheScreen,
   DeleteAccountScreen,
+  DeleteAccountPermanentlyScreen,
+  DisableAccountScreen,
   EditProfileScreen,
   EditBioScreen,
   EditNameScreen,
@@ -60,6 +62,7 @@ import {
   FiltersServiceScreen,
   HashtagScreen,
   HomeScreen,
+  HideAccountScreen,
   LikesScreen,
   LocationsScreen,
   LocationFiltersScreen,
@@ -362,6 +365,18 @@ const CloserNavigation = () => {
               <RootStack.Screen
                 name="DeleteAccount"
                 component={DeleteAccountScreen}
+              />
+              <RootStack.Screen
+                name="DeleteAccountPermanently"
+                component={DeleteAccountPermanentlyScreen}
+              />
+              <RootStack.Screen
+                name="DisableAccount"
+                component={DisableAccountScreen}
+              />
+              <RootStack.Screen
+                name="HideAccount"
+                component={HideAccountScreen}
               />
               <RootStack.Screen name="Privacy" component={PrivacyScreen} />
               <RootStack.Screen
