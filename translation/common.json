@@ -375,5 +375,13 @@
   "confirmNewPassword": "Confirmă noua parolă",
   "updatePasswordSuccess": "Ai modificat parola cu success",
   "wrongPassword": "Parola este greşită",
-  "tooManyAttempsToChangePassword": "Ai depăşit numărul de încercări"
+  "tooManyAttempsToChangePassword": "Ai depăşit numărul de încercări",
+  "passwordInfo": "Parola trebuie să conţină cel puţin şase caractere şi să includă o combinaţie de cifre, litere şi caractere speciale (!$@%).",
+  "accountInfoDescription": "Informaţiile personale ne ajută să îţi oferim cele mai bune oferte în funcţie de preferinţele tale. Acestea nu vor fi afişate in profil.",
+  "phone": "Telefon",
+  "gender": "Gen",
+  "male": "Bărbaţi",
+  "female": "Femei",
+  "none": "Niciunul",
+  "preferToNotSay": "Prefer să nu spun"
 }

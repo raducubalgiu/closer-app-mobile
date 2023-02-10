@@ -12,6 +12,8 @@ import { RootStackParams } from "./rootStackParams";
 import {
   AccountScreen,
   AccountInfoScreen,
+  AccountInfoEmailScreen,
+  AccountInfoGenderScreen,
   AccountPasswordScreen,
   AssistanceScreen,
   AddScheduleScreen,
@@ -344,6 +346,14 @@ const CloserNavigation = () => {
               <RootStack.Screen
                 name="AccountInfo"
                 component={AccountInfoScreen}
+              />
+              <RootStack.Screen
+                name="AccountInfoEmail"
+                component={AccountInfoEmailScreen}
+              />
+              <RootStack.Screen
+                name="AccountInfoGender"
+                component={AccountInfoGenderScreen}
               />
               <RootStack.Screen
                 name="AccountPassword"

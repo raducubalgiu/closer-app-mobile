@@ -91,7 +91,6 @@ export const SettingsProfileScreen = () => {
               />
               <Text style={styles.text}>{t("shareProfile")}</Text>
             </Stack>
-            <Icon name="keyboard-arrow-right" color={grey0} />
           </ListItem>
         </Stack>
         <Divider color="#ddd" style={{ marginTop: 20, marginBottom: 10 }} />

@@ -20,4 +20,6 @@ export interface User {
   ratingsAverage: number;
   locationId: string;
   hours: any;
+  phone: any;
+  gender: string;
 }

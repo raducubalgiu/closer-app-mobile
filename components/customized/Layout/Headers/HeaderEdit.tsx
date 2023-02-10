@@ -10,14 +10,16 @@ const { grey0, primary } = theme.lightColors || {};
 type IProps = {
   onSave: (data: any) => void;
   title: string;
-  disabled?: boolean;
+  disabledSave?: boolean;
+  disabledBack?: boolean;
   divider?: boolean;
 };
 
 export const HeaderEdit = ({
   onSave,
   title,
-  disabled = false,
+  disabledSave = false,
+  disabledBack = false,
   divider = false,
 }: IProps) => {
   const navigation = useNavigation();
@@ -26,12 +28,14 @@ export const HeaderEdit = ({
   return (
     <>
       <Stack direction="row" sx={styles.headerCont}>
-        <Pressable onPress={() => navigation.goBack()} disabled={disabled}>
+        <Pressable onPress={() => navigation.goBack()} disabled={disabledBack}>
           <Text style={styles.cancel}>{t("cancel")}</Text>
         </Pressable>
         <Text style={styles.title}>{title}</Text>
-        <Pressable onPress={onSave} disabled={disabled}>
-          <Text style={{ ...styles.save, color: disabled ? "#ccc" : primary }}>
+        <Pressable onPress={onSave} disabled={disabledSave}>
+          <Text
+            style={{ ...styles.save, color: disabledSave ? "#ccc" : primary }}
+          >
             {t("save")}
           </Text>
         </Pressable>

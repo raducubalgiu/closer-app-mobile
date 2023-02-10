@@ -7,7 +7,15 @@ import { User } from "../models/user";
 
 export type RootStackParams = {
   Account: any;
-  AccountInfo: any;
+  AccountInfo: {
+    email: string | undefined;
+    phone: any | undefined;
+    gender: string | undefined;
+  };
+  AccountInfoEmail: any;
+  AccountInfoGender: {
+    gender: string | undefined;
+  };
   AccountPassword: any;
   App: any;
   Assistance: any;

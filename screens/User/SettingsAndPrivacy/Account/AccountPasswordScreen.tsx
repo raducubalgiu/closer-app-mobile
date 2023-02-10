@@ -1,13 +1,13 @@
 import { FormProvider } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import {
   getAuth,
   reauthenticateWithCredential,
   EmailAuthProvider,
   updatePassword,
 } from "firebase/auth";
-import { Keyboard, SafeAreaView, StyleSheet } from "react-native";
+import { Keyboard, SafeAreaView, StyleSheet, Text } from "react-native";
 import { useForm } from "react-hook-form";
 import { FormTextField, Spinner, Stack } from "../../../../components/core";
 import { HeaderEdit } from "../../../../components/customized";
@@ -22,7 +22,7 @@ const defaultValues = {
   newPass: "",
   confirmNewPass: "",
 };
-const { black, error: errorStyle } = theme.lightColors || {};
+const { black, error: errorStyle, grey0 } = theme.lightColors || {};
 
 export const AccountPasswordScreen = () => {
   const { t } = useTranslation();
@@ -111,16 +111,29 @@ export const AccountPasswordScreen = () => {
   const handleShowConfirmPass = () =>
     setShowConfirmNewPass((showConfirmPass) => !showConfirmPass);
 
+  const iconProps = useCallback((showPass: boolean, pass: string) => {
+    return {
+      name: showPass ? "eye" : "eye-off",
+      type: "feather",
+      size: 22.5,
+      color: pass ? black : "#ddd",
+    };
+  }, []);
+
   return (
     <SafeAreaView style={styles.screen}>
       <HeaderEdit
         title={t("changePassword")}
         onSave={handleSubmit(handleUpdatePassword)}
-        disabled={isLoading}
+        disabledSave={isLoading}
+        disabledBack={isLoading}
         divider
       />
       {!isLoading && (
-        <Stack align="start" sx={{ marginHorizontal: 15, marginTop: 30 }}>
+        <Stack align="start" sx={{ marginHorizontal: 15, marginVertical: 15 }}>
+          <Text style={{ marginBottom: 30, color: grey0 }}>
+            {t("passwordInfo")}
+          </Text>
           <FormProvider {...methods}>
             <FormTextField
               label={t("currentPassword")}
@@ -134,12 +147,7 @@ export const AccountPasswordScreen = () => {
               name="newPass"
               placeholder=""
               secureTextEntry={returnBoolean(!showNewPass)}
-              rightIconProps={{
-                name: showNewPass ? "eye" : "eye-off",
-                type: "feather",
-                size: 22.5,
-                color: newPassword ? black : "#ddd",
-              }}
+              rightIconProps={iconProps(showNewPass, newPassword)}
               disableRightIcon={returnBoolean(!newPassword)}
               onRightIconPress={handleShowNewPass}
               rules={{ ...isRequired }}
@@ -149,12 +157,7 @@ export const AccountPasswordScreen = () => {
               name="confirmNewPass"
               placeholder=""
               secureTextEntry={returnBoolean(!showConfirmPass)}
-              rightIconProps={{
-                name: showConfirmPass ? "eye" : "eye-off",
-                type: "feather",
-                size: 22.5,
-                color: confirmNewPass ? black : "#ddd",
-              }}
+              rightIconProps={iconProps(showConfirmPass, confirmNewPass)}
               disableRightIcon={returnBoolean(!confirmNewPass)}
               onRightIconPress={handleShowConfirmPass}
               rules={{ ...isRequired }}

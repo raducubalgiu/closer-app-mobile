@@ -22,6 +22,7 @@ type Props = {
   rightIconProps?: any;
   rightText?: string;
   onChangeInput?: (event: string) => void;
+  onPressIn?: () => void;
   onRightIconPress?: () => void;
 };
 
@@ -40,6 +41,7 @@ export const FormTextField = ({
   rightIconProps,
   onRightIconPress,
   onChangeInput,
+  onPressIn,
   ...props
 }: Props) => {
   const { formState, control } = useFormContext();
@@ -86,6 +88,7 @@ export const FormTextField = ({
               keyboardType={keyboardType}
               onBlur={onBlur}
               onChangeText={onChangeInput ? onChangeInput : onChange}
+              onPressIn={onPressIn}
               value={initialValue ? initialValue : value}
               placeholderTextColor="#9EA0A4"
               secureTextEntry={secureTextEntry}
