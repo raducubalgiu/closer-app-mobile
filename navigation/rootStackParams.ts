@@ -47,7 +47,7 @@ export type RootStackParams = {
   DeleteAccountPermanently: any;
   DisableAccount: any;
   Discounts: any;
-  EditProfile: { user: User };
+  EditProfile: { user: User | null };
   EditBio: any;
   EditName: any;
   EditWebsite: any;

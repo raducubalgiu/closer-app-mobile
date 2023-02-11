@@ -23,4 +23,5 @@ export interface User {
   phone: any;
   gender: string;
   status: string;
+  profile: string;
 }

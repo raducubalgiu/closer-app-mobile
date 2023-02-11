@@ -3,13 +3,15 @@ import { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { MAIN_ROLE, SECOND_ROLE } from "@env";
 import theme from "../../../assets/styles/theme";
-import { Protected } from "../../../components/core";
+import { Protected, Button } from "../../../components/core";
 import {
   ProfileMenuList,
   HeaderProfile,
   TopTabProfile,
   PostOptionsSheet,
+  ProfileIconButton,
 } from "../../../components/customized";
+import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
 import { useSheet, useAuth, useGet, useRefreshOnFocus } from "../../../hooks";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/rootStackParams";
@@ -30,7 +32,6 @@ export const ProfileScreen = () => {
   });
 
   const { username, checkmark, role } = user || {};
-  const isBusiness = role === MAIN_ROLE || role === SECOND_ROLE;
 
   const closeSheet = useCallback(() => CLOSE_BS(), []);
   const profileMenu = <ProfileMenuList onCloseSheet={closeSheet} />;
@@ -46,6 +47,14 @@ export const ProfileScreen = () => {
   );
 
   useRefreshOnFocus(refetch);
+
+  const navigateBookmarks = () =>
+    navigation.navigate("Bookmarks", { user: userContext });
+  const navigateProfile = () =>
+    navigation.navigate("EditProfile", { user: userContext });
+  const navigateInstagram = () => navigation.navigate("ExploreVideoPortrait");
+  const navigateYoutube = () =>
+    navigation.navigate("Test", { user: userContext });
 
   return (
     <View style={styles.container}>
@@ -65,6 +74,22 @@ export const ProfileScreen = () => {
           </Text>
         </View>
       )}
+      <ProfileOverview
+        user={user}
+        name={user?.name}
+        username={user?.username}
+        avatar={user?.avatar}
+      >
+        <Button
+          title={t("editProfile")}
+          onPress={navigateProfile}
+          variant="outlined"
+          sxBtn={{ width: 150 }}
+        />
+        <ProfileIconButton name="bookmark" onPress={navigateBookmarks} />
+        <ProfileIconButton name="instagram" onPress={navigateInstagram} />
+        <ProfileIconButton name="youtube" onPress={navigateYoutube} />
+      </ProfileOverview>
       <TopTabProfile
         userId={user?.id}
         service={null}

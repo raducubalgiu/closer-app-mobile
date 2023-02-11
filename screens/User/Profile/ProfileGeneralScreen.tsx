@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
@@ -18,9 +18,10 @@ import {
   TopTabProfile,
   ProfileIconButton,
   FollowProfileButton,
+  CardAccountPrivate,
 } from "../../../components/customized";
-import SuggestedUsersList from "../../../components/customized/Lists/SuggestedUsersList";
 import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
+import SuggestedUsersList from "../../../components/customized/Lists/SuggestedUsersList";
 import { RootStackParams } from "../../../navigation/rootStackParams";
 import { Protected } from "../../../components/core";
 import { MAIN_ROLE, SECOND_ROLE } from "@env";
@@ -70,7 +71,6 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
   });
 
   const handleFollow = () => (isFollow ? unfollow() : follow({}));
-
   const goToMessage = () => {
     // navigation.navigate("MessageItem", {
     //   user: {
@@ -90,18 +90,22 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
     });
   };
 
+  const isPrivate = isFollow && userDetails?.profile === "private";
+
   return (
     <View style={styles.container}>
-      <HeaderProfileGeneral
-        username={username}
-        checkmark={checkmark}
-        onOpenSettings={() => {}}
-      />
-      {/* <ProfileOverview
+      <View style={{ height: 100, zIndex: 10000 }}>
+        <HeaderProfileGeneral
+          username={username}
+          checkmark={checkmark}
+          onOpenSettings={() => {}}
+        />
+      </View>
+      <ProfileOverview
         user={userDetails}
-        name={name ? name : userDetails?.name}
+        name={name}
         username={username}
-        avatar={avatar ? avatar : userDetails?.avatar}
+        avatar={avatar}
       >
         <FollowProfileButton isFollow={isFollow} onPress={handleFollow} />
         {isFollow && (
@@ -120,16 +124,19 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
           onPress={handleSuggested}
           loading={isLoading}
         />
-      </ProfileOverview> */}
+      </ProfileOverview>
+      {isPrivate && <CardAccountPrivate />}
       {suggested && (
         <SuggestedUsersList suggested={suggested?.data} userId={userId} />
       )}
-      <TopTabProfile
-        user={userDetails}
-        userId={userId || userDetails?.id}
-        service={service}
-        option={option}
-      />
+      {!isPrivate && (
+        <TopTabProfile
+          user={userDetails}
+          userId={userId || userDetails?.id}
+          service={service}
+          option={option}
+        />
+      )}
     </View>
   );
 };

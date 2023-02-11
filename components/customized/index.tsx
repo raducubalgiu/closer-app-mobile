@@ -63,6 +63,7 @@ export { CardServiceOverview } from "./Cards/CardServiceOverview";
 export { CardMessageUser } from "./Cards/CardMessageUser";
 export { CardPostDescription } from "./Cards/CardPostDescription";
 export { CardReviewSummary } from "./Cards/CardReviewSummary";
+export { CardAccountPrivate } from "./Cards/CardAccountPrivate";
 
 export { HeaderServices } from "./Layout/Headers/HeaderServices";
 export { HeaderEdit } from "./Layout/Headers/HeaderEdit";

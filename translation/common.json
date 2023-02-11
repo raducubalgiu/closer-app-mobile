@@ -405,5 +405,7 @@
   "yourAccountIsHidden": "Contul tău este ascuns",
   "forYourSafetyDontIncludePersonalData": "Pentru siguranţa ta, nu include date personale",
   "whichIsTheProblem": "Care este problema",
-  "youSentReportSuccesfully": "Ai trimis cu succes raportul"
+  "youSentReportSuccesfully": "Ai trimis cu succes raportul",
+  "thisAccountIsPrivate": "Acest cont este privat",
+  "followThisAccountForSeeContent": "Urmăreşte acest cont pentru a-i vedea fotografiile şi clipurile video"
 }
