@@ -90,7 +90,7 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
     });
   };
 
-  const isPrivate = isFollow && userDetails?.profile === "private";
+  const isPrivate = !isFollow && userDetails?.private;
 
   return (
     <View style={styles.container}>

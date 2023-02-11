@@ -8,11 +8,16 @@ const { black } = theme.lightColors || {};
 type IProps = {
   message: string;
   bgColor?: string;
-  short?: string;
+  short?: boolean;
   position?: any;
 };
 
-export const showToast = ({ message, bgColor, short, position }: IProps) => {
+export const showToast = ({
+  message,
+  bgColor,
+  short = false,
+  position,
+}: IProps) => {
   return Toast.show(message, {
     duration: short ? Toast.durations.SHORT : Toast.durations.LONG,
     position: position ? position : 50,

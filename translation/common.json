@@ -407,5 +407,13 @@
   "whichIsTheProblem": "Care este problema",
   "youSentReportSuccesfully": "Ai trimis cu succes raportul",
   "thisAccountIsPrivate": "Acest cont este privat",
-  "followThisAccountForSeeContent": "Urmăreşte acest cont pentru a-i vedea fotografiile şi clipurile video"
+  "followThisAccountForSeeContent": "Urmăreşte acest cont pentru a-i vedea fotografiile şi clipurile video",
+  "accountPrivateDescription": "Având un cont privat, doar utilizatorii care te urmăresc îţi pot vedea conţinutul",
+  "interaction": "Interacţiuni",
+  "postViews": "Vizualizări postare",
+  "blockedAccounts": "Conturi blocate",
+  "followersList": "Lista de urmăriri",
+  "postLikes": "Aprecierile postării",
+  "mentionsAndTags": "Menţiuni şi etichete",
+  "youChangedAccountStatus": "Ai schimbat starea contului"
 }
