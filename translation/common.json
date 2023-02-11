@@ -402,5 +402,8 @@
   "youWillBeLoggedInAppAndBookServices": "Vei rămâne logat in aplicaţie şi vei putea folosi în continuare serviciile de rezervare",
   "hide": "Ascunde",
   "deactivate": "Dezactivare",
-  "yourAccountIsHidden": "Contul tău este ascuns"
+  "yourAccountIsHidden": "Contul tău este ascuns",
+  "forYourSafetyDontIncludePersonalData": "Pentru siguranţa ta, nu include date personale",
+  "whichIsTheProblem": "Care este problema",
+  "youSentReportSuccesfully": "Ai trimis cu succes raportul"
 }

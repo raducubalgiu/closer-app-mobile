@@ -1,20 +1,36 @@
 import { FormProvider } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Keyboard, SafeAreaView, StyleSheet } from "react-native";
 import {
   Button,
-  FormInput,
   FormTextField,
   Header,
   Stack,
 } from "../../../../components/core";
 import { useForm } from "react-hook-form";
+import { useAuth, usePost } from "../../../../hooks";
+import { showToast } from "../../../../utils";
 
 export const ReportAProblemScreen = () => {
-  const methods = useForm({ defaultValues: { problem: "" } });
-  const { handleSubmit, watch } = methods;
-  const problem = watch("problem");
+  const { user } = useAuth();
+  const methods = useForm({ defaultValues: { text: "" } });
+  const { handleSubmit, watch, setValue } = methods;
+  const problem = watch("text");
   const { t } = useTranslation();
+
+  const { mutate, isLoading } = usePost({
+    uri: `/problems`,
+    onSuccess: () => {
+      showToast({ message: t("youSentReportSuccesfully") });
+      setValue("text", "");
+      Keyboard.dismiss();
+    },
+  });
+
+  const handleReport = (data: { text: string }) => {
+    const { text } = data;
+    mutate({ text, userId: user?.id });
+  };
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -22,15 +38,17 @@ export const ReportAProblemScreen = () => {
       <Stack align="start" sx={{ margin: 15 }}>
         <FormProvider {...methods}>
           <FormTextField
-            placeholder="Pentru siguranta ta nu include date personale"
-            label="Care este problema?"
-            name="problem"
+            placeholder={t("forYourSafetyDontIncludePersonalData")}
+            label={`${t("whichIsTheProblem")}?`}
+            name="text"
+            sx={{ height: 150, textAlignVertical: "top" }}
           />
           <Button
             title={t("send")}
             sxBtn={{ width: "100%" }}
-            disabled={problem?.length === 0}
-            onPress={() => {}}
+            disabled={problem?.length === 0 || isLoading}
+            loading={isLoading}
+            onPress={handleSubmit(handleReport)}
           />
         </FormProvider>
       </Stack>
