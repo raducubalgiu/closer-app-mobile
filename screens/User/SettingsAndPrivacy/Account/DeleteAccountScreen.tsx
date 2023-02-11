@@ -7,7 +7,10 @@ import {
   Text,
 } from "react-native";
 import { Divider, Icon } from "@rneui/themed";
-import { useNavigation } from "@react-navigation/native";
+import {
+  UNSTABLE_usePreventRemove,
+  useNavigation,
+} from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Header, Stack } from "../../../../components/core";
 import CustomAvatar from "../../../../components/core/Avatars/CustomAvatar";
@@ -15,10 +18,11 @@ import { useAuth } from "../../../../hooks";
 import theme from "../../../../assets/styles/theme";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
 
-const { black, grey0 } = theme.lightColors || {};
+const { black, grey0, error } = theme.lightColors || {};
 
 export const DeleteAccountScreen = () => {
   const { user } = useAuth();
+  const { status } = user || {};
   const { t } = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -38,9 +42,20 @@ export const DeleteAccountScreen = () => {
         <Pressable onPress={goToHideAccount}>
           <Stack direction="row">
             <Stack align="start" sx={{ flex: 1 }}>
-              <Text style={styles.title}>{t("hideAccount")}</Text>
+              <Text
+                style={{
+                  ...styles.title,
+                  color: status === "hidden" ? error : black,
+                }}
+              >
+                {status === "hidden"
+                  ? t("yourAccountIsHidden")
+                  : t("hideAccount")}
+              </Text>
               <Text style={{ color: grey0 }}>
-                {t("hideAccountDescription")}
+                {status === "hidden"
+                  ? t("yourAccountIsHiddenDescription")
+                  : t("hideAccountDescription")}
               </Text>
             </Stack>
             <Icon

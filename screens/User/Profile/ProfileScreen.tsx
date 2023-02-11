@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { MAIN_ROLE, SECOND_ROLE } from "@env";
 import theme from "../../../assets/styles/theme";
-import { Protected, Button } from "../../../components/core";
+import { Protected, Button, Stack } from "../../../components/core";
 import {
   ProfileMenuList,
   HeaderProfile,
@@ -15,7 +15,7 @@ import ProfileOverview from "../../../components/customized/ProfileOverview/Prof
 import { useSheet, useAuth, useGet, useRefreshOnFocus } from "../../../hooks";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/rootStackParams";
-import { FAB } from "@rneui/themed";
+import { FAB, Icon } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
 
 const { primary } = theme.lightColors || {};
@@ -68,11 +68,11 @@ export const ProfileScreen = () => {
         />
       </View>
       {userContext?.status === "hidden" && (
-        <View style={styles.hidden}>
+        <Stack sx={styles.hidden}>
           <Text style={{ color: "white", fontWeight: "500" }}>
             {t("yourAccountIsHidden")}
           </Text>
-        </View>
+        </Stack>
       )}
       <ProfileOverview
         user={user}
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   hidden: {
     marginHorizontal: 15,
     marginBottom: 15,
-    height: 25,
+    height: 32.5,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#ccc",

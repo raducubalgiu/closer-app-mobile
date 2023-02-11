@@ -12,6 +12,7 @@ const { black } = theme.lightColors || {};
 
 export const HideAccountScreen = () => {
   const { user, setUser } = useAuth();
+  const { status } = user || {};
   const { t } = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -19,35 +20,53 @@ export const HideAccountScreen = () => {
   const { mutate, isLoading } = usePatch({
     uri: `/users/${user?.id}`,
     onSuccess: () => {
-      setUser({ ...user, status: "hidden" });
+      setUser({ ...user, status: status === "hidden" ? "active" : "hidden" });
       navigation.navigate("Profile");
     },
   });
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Header title={t("hideAccount")} />
+      <Header
+        title={
+          status === "hidden" ? t("yourAccountIsHidden") : t("hideAccount")
+        }
+      />
       <View style={{ flex: 1, justifyContent: "space-between" }}>
         <ScrollView bounces={false} style={{ margin: 20 }}>
           <Heading
-            title={t("areYouSure")}
+            title={status === "hidden" ? t("cancelHiding") : t("areYouSure")}
             sx={{ fontWeight: "500", fontSize: 19 }}
           />
-          <Text style={styles.title}>{t("byHidingTheAccount")}:</Text>
-          <TextWithBullet text={t("nobodyCanSeeYourAccountAndContent")} />
-          <TextWithBullet text={t("youCannotEngageWithOtherUsers")} />
-          <TextWithBullet text={t("youCanCancelHidingAccountAnytime")} />
-          <TextWithBullet
-            text={t("youWillBeLoggedInAppAndBookServices")}
-            sxText={{ color: black, fontWeight: "500" }}
-          />
+          <Text style={styles.title}>
+            {status === "hidden"
+              ? t("byCancelHidingTheAccount")
+              : t("byHidingTheAccount")}
+            :
+          </Text>
+          {status !== "hidden" && (
+            <>
+              <TextWithBullet text={t("nobodyCanSeeYourAccountAndContent")} />
+              <TextWithBullet text={t("youCannotEngageWithOtherUsers")} />
+              <TextWithBullet text={t("youCanCancelHidingAccountAnytime")} />
+              <TextWithBullet
+                text={t("youWillBeLoggedInAppAndBookServices")}
+                sxText={{ color: black, fontWeight: "500" }}
+              />
+            </>
+          )}
+          {status === "hidden" && (
+            <TextWithBullet text={t("byCancelHidingTheAccountDescription")} />
+          )}
         </ScrollView>
         <Button
-          title={t("hide")}
+          title={status === "hidden" ? t("cancel") : t("hide")}
           sxBtn={{ marginHorizontal: 20 }}
           loading={isLoading}
           disabled={isLoading}
-          onPress={() => mutate({ status: "hidden" })}
+          onPress={() =>
+            mutate({ status: status === "hidden" ? "active" : "hidden" })
+          }
         />
       </View>
     </SafeAreaView>

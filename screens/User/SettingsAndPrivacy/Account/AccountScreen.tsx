@@ -29,7 +29,7 @@ export const AccountScreen = () => {
           <Icon name="keyboard-arrow-right" color={grey0} />
         </ListItem>
         <ListItem
-          mt={25}
+          mt={30}
           between
           onPress={() => navigation.navigate("AccountPassword")}
         >
@@ -37,7 +37,7 @@ export const AccountScreen = () => {
           <Icon name="keyboard-arrow-right" color={grey0} />
         </ListItem>
         <ListItem
-          mt={25}
+          mt={30}
           between
           onPress={() => navigation.navigate("DeleteAccount")}
         >
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   },
   container: {
     marginHorizontal: 15,
-    marginVertical: 5,
+    marginVertical: 10,
   },
   text: {
     color: black,
