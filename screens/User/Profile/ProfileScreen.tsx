@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Pressable } from "react-native";
 import { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { MAIN_ROLE, SECOND_ROLE } from "@env";
@@ -15,7 +15,7 @@ import ProfileOverview from "../../../components/customized/ProfileOverview/Prof
 import { useSheet, useAuth, useGet, useRefreshOnFocus } from "../../../hooks";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/rootStackParams";
-import { FAB, Icon } from "@rneui/themed";
+import { FAB } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
 
 const { primary } = theme.lightColors || {};
@@ -68,11 +68,13 @@ export const ProfileScreen = () => {
         />
       </View>
       {userContext?.status === "hidden" && (
-        <Stack sx={styles.hidden}>
-          <Text style={{ color: "white", fontWeight: "500" }}>
-            {t("yourAccountIsHidden")}
-          </Text>
-        </Stack>
+        <Pressable onPress={() => navigation.navigate("HideAccount")}>
+          <Stack sx={styles.hidden}>
+            <Text style={{ color: "white", fontWeight: "500" }}>
+              {t("yourAccountIsHidden")}
+            </Text>
+          </Stack>
+        </Pressable>
       )}
       <ProfileOverview
         user={user}

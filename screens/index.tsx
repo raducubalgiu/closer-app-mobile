@@ -35,6 +35,7 @@ export { FeedFollowingsScreen } from "./Feed/FeedFollowingsScreen";
 export { FeedBookablesScreen } from "./Feed/FeedBookablesScreen";
 export { FeedLastMinuteScreen } from "./Feed/FeedLastMinuteScreen";
 export { FeedVideoExploreScreen } from "./Feed/FeedVideoExploreScreen";
+export { SoundScreen } from "./SoundScreen";
 export { FiltersDateScreen } from "./FilterDateScreen";
 export { FiltersServiceScreen } from "./FiltersServiceScreen";
 export { HashtagScreen } from "./HashtagScreen";

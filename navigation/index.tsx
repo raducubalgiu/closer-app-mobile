@@ -51,6 +51,7 @@ import {
   ProfileGeneralScreen,
   ProfileStatsScreen,
   SettingsProfileScreen,
+  SoundScreen,
   CalendarScreen,
   CommentsScreen,
   FeedExploreScreen,
@@ -435,6 +436,7 @@ const CloserNavigation = () => {
             <RootStack.Screen name="Hashtag" component={HashtagScreen} />
             <RootStack.Screen name="Service" component={ServiceScreen} />
             <RootStack.Screen name="Product" component={ProductScreen} />
+            <RootStack.Screen name="Sound" component={SoundScreen} />
             <RootStack.Screen
               name="ProductReviews"
               component={ProductReviewsScreen}

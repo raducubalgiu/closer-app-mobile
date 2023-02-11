@@ -34,7 +34,7 @@ export const DeleteAccountScreen = () => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Header title="" />
+      <Header title={`@${user?.username}`} />
       <ScrollView style={{ margin: 20 }} bounces={false}>
         <Stack align="center" sx={{ width: "100%", marginBottom: 50 }}>
           <CustomAvatar avatar={user?.avatar} size={100} />

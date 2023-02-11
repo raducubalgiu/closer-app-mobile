@@ -156,6 +156,7 @@ export type RootStackParams = {
   ScheduleCancel: { scheduleId: string };
   SearchPosts: { search: string };
   Service: { service: Service };
+  Sound: any;
   Test: any;
   Username: { idTokenResult: any; role: string };
   SharedList: any;
