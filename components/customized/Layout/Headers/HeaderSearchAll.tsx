@@ -1,19 +1,28 @@
 import { StyleSheet, Text, Pressable } from "react-native";
 import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
-import { Stack, IconBackButton } from "../../../core";
+import { Stack, IconButton } from "../../../core";
 import theme from "../../../../assets/styles/theme";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../../navigation/rootStackParams";
 
 const { black, grey0 } = theme.lightColors || {};
 
 type IProps = { search: string };
 
 export const HeaderSearchAll = ({ search }: IProps) => {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   return (
     <Stack direction="row" justify="start" sx={styles.container}>
-      <IconBackButton sx={{ marginRight: 10 }} />
+      <IconButton
+        name="arrow-back-ios"
+        type="material"
+        size={21}
+        onPress={() => navigation.navigate("SearchPosts", { search })}
+        sx={{ padding: 5 }}
+      />
       <Pressable
         style={styles.fakeSearchbar}
         onPress={() => navigation.goBack()}

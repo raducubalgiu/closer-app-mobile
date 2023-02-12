@@ -23,13 +23,16 @@ import theme from "../assets/styles/theme";
 import { useAuth, useDelete, useGet } from "../hooks";
 import { trimFunc } from "../utils";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParams } from "../navigation/rootStackParams";
 
 const { grey0, primary, black } = theme.lightColors || {};
+type IProps = NativeStackScreenProps<RootStackParams, "SearchPosts">;
 
-export const SearchPostsScreen = () => {
+export const SearchPostsScreen = ({ route }: IProps) => {
+  const { search: initialSearch } = route.params;
   const { user } = useAuth();
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(initialSearch);
   const [results, setResults] = useState([]);
   const [words, setWords] = useState([]);
   const [searchedUsers, setSearchedUsers] = useState([]);
@@ -223,7 +226,7 @@ export const SearchPostsScreen = () => {
     <SafeAreaView style={styles.screen}>
       <View>
         <Stack direction="row" justify="start" sx={{ paddingHorizontal: 15 }}>
-          <IconBackButton sx={{ marginRight: 10 }} />
+          <IconBackButton />
           <SearchBarInput
             autoFocus={true}
             placeholder={t("search")}

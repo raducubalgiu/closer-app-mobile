@@ -513,6 +513,7 @@ const CloserNavigation = () => {
             <RootStack.Screen
               name="SearchPosts"
               component={SearchPostsScreen}
+              options={{ animation: "simple_push" }}
             />
             <RootStack.Screen
               name="UserLocationPermission"
