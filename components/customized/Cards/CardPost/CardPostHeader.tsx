@@ -67,7 +67,7 @@ const CardPostHeader = ({
                   <Icon
                     name="star"
                     type="antdesign"
-                    size={12}
+                    size={12.5}
                     color={primary}
                   />
                   <Text style={styles.ratingsAverage}>
@@ -96,14 +96,14 @@ const styles = StyleSheet.create({
   profession: {
     marginLeft: 10,
     color: grey0,
-    fontSize: 12.5,
+    fontSize: 13,
     textTransform: "capitalize",
     fontWeight: "500",
   },
   point: { fontSize: 3, color: grey0, marginHorizontal: 5 },
   ratingsAverage: {
     color: black,
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: "700",
     marginLeft: 2.5,
   },

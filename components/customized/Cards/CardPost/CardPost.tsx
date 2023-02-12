@@ -1,12 +1,15 @@
-import { StyleSheet, View, Image } from "react-native";
+import { StyleSheet, View, Dimensions } from "react-native";
 import { SharedElement } from "react-navigation-shared-element";
-import React, { memo } from "react";
+import { memo } from "react";
+import { Image } from "@rneui/themed";
 import CardPostHeader from "./CardPostHeader";
 import CardPostButtons from "./CardPostButtons";
 import CardPostFooter from "./CardPostFooter";
+import PostGradient from "../../Gradients/PostGradient";
 import { FROM_NOW } from "../../../../utils/date-utils";
 import { Post } from "../../../../models/post";
 
+const { width } = Dimensions.get("window");
 type IProps = { post: Post; onShowDetails: () => void };
 
 const CardPost = ({ post, onShowDetails }: IProps) => {
@@ -38,7 +41,9 @@ const CardPost = ({ post, onShowDetails }: IProps) => {
       <SharedElement id={id}>
         <Image
           source={{ uri: `${post?.images[0]?.url}` }}
-          style={[{ width: "100%", height: 400 }]}
+          containerStyle={{ width, height: 400 }}
+          transition={true}
+          PlaceholderContent={<PostGradient width={width} height={400} />}
         />
       </SharedElement>
       <CardPostButtons
