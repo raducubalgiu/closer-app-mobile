@@ -1,38 +1,53 @@
 import {
   SafeAreaView,
   StyleSheet,
-  ActivityIndicator,
-  Pressable,
+  FlatList,
+  ListRenderItemInfo,
+  View,
+  Text,
 } from "react-native";
-import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { useCallback, useState } from "react";
-import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import {
-  FormInputRadio,
-  Header,
-  SearchBarInput,
-  Stack,
-} from "../../../../components/core";
 import theme from "../../../../assets/styles/theme";
-import { useAuth, useGet, usePatch } from "../../../../hooks";
+import {
+  useAuth,
+  useGetPaginate,
+  usePaginateActions,
+  usePatch,
+} from "../../../../hooks";
 import { Profession } from "../../../../models/profession";
+import { HeaderEdit } from "../../../../components/customized";
+import { MAIN_ROLE, SECOND_ROLE, THIRD_ROLE } from "@env";
+import { FormInputRadio, Heading, Spinner } from "../../../../components/core";
+import { Divider } from "@rneui/themed";
 
-const { primary, grey0 } = theme.lightColors || {};
+const { grey0 } = theme.lightColors || {};
 
 export const EditProfessionScreen = () => {
   const { user, setUser } = useAuth();
-  const [selected, setSelected] = useState<Profession>();
+  const [selected, setSelected] = useState(user?.profession);
   const navigation = useNavigation();
   const { t } = useTranslation();
 
-  const { data: businesses } = useGet({
-    model: "businesses",
-    uri: `/businesses`,
+  const professionOptions = useGetPaginate({
+    model: "professions",
+    uri: `/professions`,
+    limit: "20",
+    enabled: user?.role === THIRD_ROLE,
   });
 
-  const { isLoading: loadingPatch, mutate } = usePatch({
+  const businessOptions = useGetPaginate({
+    model: "businesses",
+    uri: `/businesses`,
+    limit: "20",
+    enabled: user?.role === MAIN_ROLE || user?.role === SECOND_ROLE,
+  });
+
+  const { data: professions } = usePaginateActions(professionOptions);
+  const { data: businesses } = usePaginateActions(businessOptions);
+
+  const { isLoading, mutate } = usePatch({
     uri: `/users/${user?.id}`,
     onSuccess: (res) => {
       setUser({ ...user, profession: res.data.profession });
@@ -40,62 +55,42 @@ export const EditProfessionScreen = () => {
     },
   });
 
-  const handleProfession = () => {
-    if (selected) {
-      mutate({
-        profession: {
-          _id: selected?.id,
-          category: selected?.category,
-          name: selected?.name,
-        },
-      });
-    }
-  };
-
-  const actionBtn = (
-    <Pressable disabled={!selected || loadingPatch} onPress={handleProfession}>
-      <Icon
-        name="checkcircle"
-        type="antdesign"
-        color={!selected ? "#ccc" : primary}
-        size={25}
-      />
-    </Pressable>
-  );
-
-  const renderBusiness = useCallback(
-    ({ item }: ListRenderItemInfo<Profession>) => (
-      <FormInputRadio
-        text={item.name}
-        checked={item.name === selected?.name}
-        onPress={() => setSelected(item)}
-      />
-    ),
+  const renderProfession = useCallback(
+    ({ item }: ListRenderItemInfo<Profession>) => {
+      return (
+        <FormInputRadio
+          text={t(`${item?.name}`)}
+          checked={item?.id === selected?.id}
+          onPress={() => setSelected(item)}
+        />
+      );
+    },
     [selected]
   );
 
-  const keyExtractor = useCallback((item: Profession) => item.id, []);
-
-  let data;
-  if (user?.role === "admin") data = businesses;
-
   return (
     <SafeAreaView style={styles.screen}>
-      <Header
-        title={t("addCategory")}
-        divider
-        actionBtn={!loadingPatch ? actionBtn : <ActivityIndicator />}
+      <HeaderEdit
+        iconBack
+        title=""
+        onSave={() => mutate({ profession: selected })}
+        disabledSave={isLoading || user?.profession?.id === selected?.id}
       />
-      <Stack sx={styles.searchbar}>
-        <SearchBarInput placeholder={t("search")} />
-      </Stack>
-      <FlashList
-        data={data}
-        keyExtractor={keyExtractor}
-        renderItem={renderBusiness}
-        contentContainerStyle={{ paddingVertical: 15 }}
-        estimatedItemSize={57}
-      />
+      {!isLoading && (
+        <View style={{ margin: 15, flex: 1 }}>
+          <Heading title={t("chooseCategory")} sx={styles.title} />
+          <Text style={{ color: grey0, fontSize: 15 }}>
+            {t("categoryDescription")}
+          </Text>
+          <Divider color="#ddd" style={{ marginTop: 10, paddingBottom: 7.5 }} />
+          <FlatList
+            data={user?.role === THIRD_ROLE ? professions : businesses}
+            keyExtractor={(item) => item?.id}
+            renderItem={renderProfession}
+          />
+        </View>
+      )}
+      {isLoading && <Spinner />}
     </SafeAreaView>
   );
 };
@@ -105,20 +100,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
   },
-  textAreaContainer: {
-    borderColor: "#ddd",
-    borderWidth: 1,
-    padding: 5,
+  title: {
+    fontSize: 18,
+    fontWeight: "500",
+    marginTop: 0,
+    marginBottom: 5,
   },
-  textArea: {
-    height: 100,
-    justifyContent: "flex-start",
-    padding: 10,
-  },
-  strokeLength: {
-    paddingHorizontal: 10,
-    color: grey0,
-    marginTop: 10,
-  },
-  searchbar: { marginHorizontal: 15, marginTop: 10, height: 50 },
 });

@@ -141,9 +141,9 @@ export const FeedExploreScreen = () => {
 
   const header = (
     <>
-      <Stack direction="row" sx={{ paddingLeft: 10, marginBottom: 5 }}>
+      <Stack direction="row" sx={{ paddingLeft: 10, marginVertical: 5 }}>
         <Text style={{ color: black, fontWeight: "600", fontSize: 14.5 }}>
-          Videoclipuri
+          Clipuri video
         </Text>
         <Pressable
           onPress={() =>

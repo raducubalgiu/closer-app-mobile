@@ -1,7 +1,7 @@
 import { StyleSheet, Text, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { Stack } from "../../../core";
+import { IconBackButton, Stack } from "../../../core";
 import theme from "../../../../assets/styles/theme";
 import { Divider } from "@rneui/themed";
 
@@ -10,6 +10,7 @@ const { grey0, primary } = theme.lightColors || {};
 type IProps = {
   onSave: (data: any) => void;
   title: string;
+  iconBack?: boolean;
   disabledSave?: boolean;
   disabledBack?: boolean;
   divider?: boolean;
@@ -18,6 +19,7 @@ type IProps = {
 export const HeaderEdit = ({
   onSave,
   title,
+  iconBack = false,
   disabledSave = false,
   disabledBack = false,
   divider = false,
@@ -28,9 +30,15 @@ export const HeaderEdit = ({
   return (
     <>
       <Stack direction="row" sx={styles.headerCont}>
-        <Pressable onPress={() => navigation.goBack()} disabled={disabledBack}>
-          <Text style={styles.cancel}>{t("cancel")}</Text>
-        </Pressable>
+        {iconBack && <IconBackButton sx={{ padding: 15 }} />}
+        {!iconBack && (
+          <Pressable
+            onPress={() => navigation.goBack()}
+            disabled={disabledBack}
+          >
+            <Text style={styles.cancel}>{t("cancel")}</Text>
+          </Pressable>
+        )}
         <Text style={styles.title}>{title}</Text>
         <Pressable onPress={onSave} disabled={disabledSave}>
           <Text

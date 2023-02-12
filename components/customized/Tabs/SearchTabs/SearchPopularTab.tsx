@@ -35,7 +35,7 @@ export const SearchPopularTab = ({ search }: { search: string }) => {
 
   const options = useGetPaginate({
     model: "searchPosts",
-    uri: `/posts`,
+    uri: `/posts/search`,
     limit: "42",
     queries: `search=${search}&postType=photo`,
     enabled: isFocused,

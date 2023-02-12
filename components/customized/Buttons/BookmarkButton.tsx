@@ -5,6 +5,7 @@ import { Icon } from "@rneui/themed";
 import { Stack } from "../../core";
 import { useAuth, useDelete, usePost, useGet } from "../../../hooks";
 import theme from "../../../assets/styles/theme";
+import { showToast } from "../../../utils";
 
 const { black } = theme.lightColors || {};
 type IProps = {
@@ -31,8 +32,14 @@ export const BookmarkButton = ({
     uri: endoints,
     onSuccess: (res) => setBookmarked(res.data.status),
   });
-  const { mutate: makePost } = usePost({ uri: endoints });
-  const { mutate: makeDelete } = useDelete({ uri: endoints });
+  const { mutate: makePost } = usePost({
+    uri: endoints,
+    onSuccess: () => showToast({ message: t("youAddedToBookmarks") }),
+  });
+  const { mutate: makeDelete } = useDelete({
+    uri: endoints,
+    onSuccess: () => showToast({ message: t("youRemovedFromBookmarks") }),
+  });
 
   const handleBookmark = () => {
     animatedScale.setValue(0.8);

@@ -420,5 +420,17 @@
   "followersList": "Lista de urmăriri",
   "postLikes": "Aprecierile postării",
   "mentionsAndTags": "Menţiuni şi etichete",
-  "youChangedAccountStatus": "Ai schimbat starea contului"
+  "youChangedAccountStatus": "Ai schimbat starea contului",
+  "chooseCategory": "Alege Categoria",
+  "categoryDescription": "Categoriile ajută utilizatorii să găsească mai uşor conturi ca al tău. O poţi schimba oricând.",
+  "youAddedToBookmarks": "Ai adăugat la salvate",
+  "youRemovedFromBookmarks": "Ai eliminat de la salvate",
+  "artist": "Artist",
+  "musician": "Musician",
+  "blogger": "Blogger",
+  "entrepreneur": "Antreprenor",
+  "writer": "Scriitor",
+  "gamer": "Gamer",
+  "photographer": "Fotograf",
+  "softwareEngineer": "Inginer Software"
 }

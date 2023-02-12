@@ -64,7 +64,7 @@ export const CardHashtagOverview = ({
 };
 
 const styles = StyleSheet.create({
-  container: { padding: 15, marginBottom: 10 },
+  container: { padding: 15 },
   hashtagCont: {
     paddingVertical: 20,
     paddingHorizontal: 40,

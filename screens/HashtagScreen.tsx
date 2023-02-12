@@ -24,7 +24,7 @@ export const HashtagScreen = ({ route }: IProps) => {
   const insets = useSafeAreaInsets();
   const { data } = useGet({ model: "hashtag", uri: `/hashtags/${name}` });
 
-  const HEADER_HEIGHT = 144;
+  const HEADER_HEIGHT = 145;
   const HEADER_PADDING_TOP = insets.top + 10;
 
   const value = useRef(new Animated.Value(0)).current;

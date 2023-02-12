@@ -65,7 +65,7 @@ export const HeaderFeed = ({ indexLabel }: IProps) => {
   const goToNotifications = () => navigation.navigate("Notifications");
 
   return (
-    <Stack justify="start" align="start">
+    <View>
       <Stack direction="row" sx={styles.list}>
         <IconButton
           name="search"
@@ -92,7 +92,8 @@ export const HeaderFeed = ({ indexLabel }: IProps) => {
           renderItem={renderLabel}
         />
       </Stack>
-    </Stack>
+      <Divider color="#ddd" />
+    </View>
   );
 };
 

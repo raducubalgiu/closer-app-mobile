@@ -5,6 +5,8 @@ import { useAuth } from "../../../hooks/auth";
 import theme from "../../../assets/styles/theme";
 import * as Haptics from "expo-haptics";
 import { usePost, useDelete, useGet } from "../../../hooks";
+import { showToast } from "../../../utils";
+import { useTranslation } from "react-i18next";
 
 const { black } = theme.lightColors || {};
 type IProps = { sx?: {}; size?: number; type: string; typeId: string };
@@ -19,14 +21,25 @@ export const BookmarkIconButton = ({
   const [bookmarked, setBookmarked] = useState(false);
   const animatedScale = useRef(new Animated.Value(0)).current;
   const bookmarkEndpoints = `/users/${user?.id}/${type}/${typeId}/bookmarks`;
+  const { t } = useTranslation();
 
   useGet({
     model: "checkBookmark",
     uri: bookmarkEndpoints,
     onSuccess: (res) => setBookmarked(res.data.status),
   });
-  const { mutate: makePost } = usePost({ uri: bookmarkEndpoints });
-  const { mutate: makeDelete } = useDelete({ uri: bookmarkEndpoints });
+  const { mutate: makePost } = usePost({
+    uri: bookmarkEndpoints,
+    onSuccess: () => {
+      showToast({ message: t("youAddedToBookmarks") });
+    },
+  });
+  const { mutate: makeDelete } = useDelete({
+    uri: bookmarkEndpoints,
+    onSuccess: () => {
+      showToast({ message: t("youRemovedFromBookmarks") });
+    },
+  });
 
   const handleBookmark = useCallback(() => {
     animatedScale.setValue(0.8);
