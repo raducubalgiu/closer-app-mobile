@@ -6,6 +6,7 @@ import {
   SearchHashtagsTab,
   SearchUsersTab,
   SearchPopularTab,
+  SearchLastMinuteTab,
   TopTabContainer,
   SearchBookablesTab,
   SearchServicesTab,
@@ -23,6 +24,10 @@ export const SearchAllScreen = ({ route }: IProps) => {
 
   const Populars = useCallback(
     () => <SearchPopularTab search={search} />,
+    [search]
+  );
+  const LastMinute = useCallback(
+    () => <SearchLastMinuteTab search={search} />,
     [search]
   );
   const SearchUsers = useCallback(
@@ -56,6 +61,11 @@ export const SearchAllScreen = ({ route }: IProps) => {
           name="SearchPopular"
           component={Populars}
           options={{ tabBarLabel: t("populars") }}
+        />
+        <Tab.Screen
+          name="SearchLastMinute"
+          component={LastMinute}
+          options={{ tabBarLabel: t("lastMinute") }}
         />
         <Tab.Screen
           name="SearchUsers"

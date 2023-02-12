@@ -1,65 +1,31 @@
-import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
+import { FlatList, ListRenderItemInfo } from "react-native";
 import { useCallback } from "react";
-import { useAuth } from "../../../../hooks";
+import { useGetPaginate, usePaginateActions } from "../../../../hooks";
 import { HashtagListItem } from "../../ListItems/HashtagListItem";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { useTranslation } from "react-i18next";
 import { Spinner } from "../../../core";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { Hashtag } from "../../../../models/hashtag";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
 
 export const SearchHashtagsTab = ({ search }: { search: string }) => {
-  const { user } = useAuth();
   const isFocused = useIsFocused();
   const { t } = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
-  const fetchData = async (page: number, search: string) => {
-    const { data } = await axios.get(
-      `${process.env.BASE_ENDPOINT}/hashtags/search?search=${search}&page=${page}&limit=25`,
-      { headers: { Authorization: `Bearer ${user?.token}` } }
-    );
-    return data;
-  };
+  const options = useGetPaginate({
+    model: "searchHashtags",
+    uri: `/hashtags/search`,
+    queries: `search=${search}`,
+    limit: "25",
+    enabled: isFocused,
+  });
 
-  const {
-    data,
-    hasNextPage,
-    fetchNextPage,
-    isFetchingNextPage,
-    isLoading,
-    isFetching,
-  } = useInfiniteQuery(
-    ["searchHashtags", search],
-    ({ pageParam = 1 }) => fetchData(pageParam, search),
-    {
-      getNextPageParam: (lastPage) => {
-        if (lastPage.next !== null) {
-          return lastPage.next;
-        }
-      },
-      enabled: isFocused,
-    }
-  );
-
-  const loadMore = () => {
-    if (hasNextPage) fetchNextPage();
-  };
-  const showSpinner = () => {
-    if (isFetchingNextPage) {
-      return <Spinner />;
-    } else {
-      return null;
-    }
-  };
-
-  const { pages } = data || {};
-  const hashtags = pages?.map((page) => page.results).flat();
+  const { isLoading, isFetchingNextPage } = options;
+  const { data: hashtags, loadMore, showSpinner } = usePaginateActions(options);
 
   const renderHashtags = useCallback(
     ({ item }: ListRenderItemInfo<Hashtag>) => (
@@ -71,9 +37,10 @@ export const SearchHashtagsTab = ({ search }: { search: string }) => {
     ),
     []
   );
+
   const keyExtractor = useCallback((item: Hashtag) => item.id, []);
 
-  if (!isLoading && !isFetchingNextPage && hashtags?.length) {
+  if (!isLoading && !isFetchingNextPage && hashtags?.length === 0) {
     return (
       <NoFoundMessage
         title={t("hashtags")}
@@ -84,8 +51,8 @@ export const SearchHashtagsTab = ({ search }: { search: string }) => {
 
   return (
     <>
-      {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
-      <FlashList
+      {isLoading && !isFetchingNextPage && <Spinner />}
+      <FlatList
         data={hashtags}
         keyExtractor={keyExtractor}
         renderItem={renderHashtags}
@@ -93,7 +60,6 @@ export const SearchHashtagsTab = ({ search }: { search: string }) => {
         ListFooterComponent={showSpinner}
         onEndReached={loadMore}
         onEndReachedThreshold={0.3}
-        estimatedItemSize={62}
       />
     </>
   );

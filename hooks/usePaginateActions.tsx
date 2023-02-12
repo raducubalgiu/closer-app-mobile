@@ -15,7 +15,7 @@ export const usePaginateActions = ({
 
   const showSpinner = () => {
     if (isFetchingNextPage) {
-      return <Spinner />;
+      return <Spinner sx={{ paddingVertical: 30 }} />;
     } else {
       return null;
     }

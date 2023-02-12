@@ -24,46 +24,30 @@ export const SearchPopularTab = ({ search }: { search: string }) => {
     model: "users",
     uri: `/users/search?search=${search}&page=1&limit=2`,
     enabled: isFocused,
+    enableId: search,
   });
   const { data: hashtags, isLoading: isLoadingHashtags } = useGet({
     model: "users",
     uri: `/hashtags/search?search=${search}&page=1&limit=3`,
     enabled: isFocused,
+    enableId: search,
   });
 
   const options = useGetPaginate({
     model: "searchPosts",
     uri: `/posts`,
     limit: "42",
-    queries: `search=${search}`,
+    queries: `search=${search}&postType=photo`,
     enabled: isFocused,
   });
 
+  const { isLoading: isLoadingPosts, isFetchingNextPage } = options;
+
   const {
-    isLoading: isLoadingPosts,
-    isFetchingNextPage,
-    refetch,
-    hasNextPage,
-    fetchNextPage,
-  } = options;
-
-  const loading =
-    (isLoadingHashtags || isLoadingUsers || isLoadingPosts) &&
-    !isFetchingNextPage;
-
-  const { data: posts } = usePaginateActions({ ...options });
-
-  const loadMore = () => {
-    if (hasNextPage) fetchNextPage();
-  };
-
-  const showSpinner = () => {
-    if (isFetchingNextPage) {
-      return <Spinner sx={{ paddingVertical: 30 }} />;
-    } else {
-      return null;
-    }
-  };
+    data: posts,
+    loadMore,
+    showSpinner,
+  } = usePaginateActions({ ...options });
 
   const goToUsers = () => {
     navigation.navigate("SearchAll", {
@@ -152,7 +136,7 @@ export const SearchPopularTab = ({ search }: { search: string }) => {
     <FlatList
       ListHeaderComponent={
         <>
-          {/* {hashtagsList} */}
+          {hashtagsList}
           <HeadingWithAction heading={t("populars")} collection={posts} />
         </>
       }
@@ -163,7 +147,7 @@ export const SearchPopularTab = ({ search }: { search: string }) => {
       renderItem={renderPopularPosts}
       ListFooterComponent={showSpinner}
       onEndReached={loadMore}
-      onEndReachedThreshold={0.7}
+      onEndReachedThreshold={0}
     />
   );
 };
