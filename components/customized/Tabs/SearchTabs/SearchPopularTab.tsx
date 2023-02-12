@@ -1,61 +1,57 @@
-import { FlatList, ListRenderItemInfo } from "react-native";
+import { FlatList, ListRenderItemInfo, Text } from "react-native";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
-import { useAuth, useGet } from "../../../../hooks";
+import { useGet, useGetPaginate } from "../../../../hooks";
 import { HashtagListItem } from "../../ListItems/HashtagListItem";
-import { Spinner, HeadingWithAction } from "../../../core";
+import { HeadingWithAction, Spinner } from "../../../core";
 import UserListItem from "../../ListItems/UserListItem";
 import GridImageListItem from "../../ListItems/PostGrid/GridImageListItem";
-import axios from "axios";
-import { useInfiniteQuery } from "@tanstack/react-query";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
 import { User } from "../../../../models/user";
 import { Hashtag } from "../../../../models/hashtag";
 import { Post } from "../../../../models/post";
+import { usePaginateActions } from "../../../../hooks";
 
 export const SearchPopularTab = ({ search }: { search: string }) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
-  const { user } = useAuth();
   const isFocused = useIsFocused();
 
-  const { data: users } = useGet({
+  const { data: users, isLoading: isLoadingUsers } = useGet({
     model: "users",
     uri: `/users/search?search=${search}&page=1&limit=2`,
+    enabled: isFocused,
   });
-  const { data: hashtags } = useGet({
+  const { data: hashtags, isLoading: isLoadingHashtags } = useGet({
     model: "users",
     uri: `/hashtags/search?search=${search}&page=1&limit=3`,
+    enabled: isFocused,
   });
 
-  const fetchData = async (page: number, search: string) => {
-    const { data } = await axios.get(
-      `${process.env.BASE_ENDPOINT}/posts/get-all-posts?search=${search}&page=${page}&limit=12`,
-      { headers: { Authorization: `Bearer ${user?.token}` } }
-    );
-    return data;
-  };
+  const options = useGetPaginate({
+    model: "searchPosts",
+    uri: `/posts`,
+    limit: "42",
+    queries: `search=${search}`,
+    enabled: isFocused,
+  });
 
   const {
-    data: popularPosts,
+    isLoading: isLoadingPosts,
+    isFetchingNextPage,
+    refetch,
     hasNextPage,
     fetchNextPage,
-    isFetchingNextPage,
-  } = useInfiniteQuery(
-    ["popularPosts", search],
-    ({ pageParam = 1 }) => fetchData(pageParam, search),
-    {
-      getNextPageParam: (lastPage) => {
-        if (lastPage.next !== null) {
-          return lastPage.next;
-        }
-      },
-      enabled: isFocused,
-    }
-  );
+  } = options;
+
+  const loading =
+    (isLoadingHashtags || isLoadingUsers || isLoadingPosts) &&
+    !isFetchingNextPage;
+
+  const { data: posts } = usePaginateActions({ ...options });
 
   const loadMore = () => {
     if (hasNextPage) fetchNextPage();
@@ -63,12 +59,11 @@ export const SearchPopularTab = ({ search }: { search: string }) => {
 
   const showSpinner = () => {
     if (isFetchingNextPage) {
-      return <Spinner sx={{ paddingVertical: 50 }} />;
+      return <Spinner sx={{ paddingVertical: 30 }} />;
     } else {
       return null;
     }
   };
-  const { pages } = popularPosts || {};
 
   const goToUsers = () => {
     navigation.navigate("SearchAll", {
@@ -118,48 +113,7 @@ export const SearchPopularTab = ({ search }: { search: string }) => {
     []
   );
 
-  const popularPostsList = useCallback(
-    () => (
-      <FlatList
-        ListHeaderComponent={
-          <HeadingWithAction
-            heading={t("populars")}
-            collection={pages?.map((page) => page.results)}
-          />
-        }
-        numColumns={3}
-        data={pages?.map((page) => page.results).flat()}
-        keyExtractor={useCallback((item: Post) => item.id, [])}
-        renderItem={renderPopularPosts}
-        ListFooterComponent={showSpinner}
-        onEndReached={loadMore}
-        onEndReachedThreshold={0.3}
-      />
-    ),
-    [renderPopularPosts, popularPosts]
-  );
-
-  const hashtagsList = useCallback(
-    () => (
-      <FlatList
-        ListHeaderComponent={
-          <HeadingWithAction
-            heading={t("hashtags")}
-            seeAll
-            collection={hashtags?.results}
-            onSeeAll={goToHashtags}
-          />
-        }
-        data={hashtags?.results}
-        keyExtractor={(item) => item.id}
-        renderItem={renderHashtags}
-        ListFooterComponent={popularPostsList}
-      />
-    ),
-    [hashtags, popularPostsList]
-  );
-
-  return (
+  const usersList = (
     <FlatList
       ListHeaderComponent={
         <HeadingWithAction
@@ -171,9 +125,45 @@ export const SearchPopularTab = ({ search }: { search: string }) => {
       }
       data={users?.results}
       keyExtractor={(item) => item.id}
-      showsVerticalScrollIndicator={false}
       renderItem={renderUsers}
-      ListFooterComponent={hashtagsList}
+    />
+  );
+
+  const hashtagsList = (
+    <FlatList
+      ListHeaderComponent={
+        <>
+          {usersList}
+          <HeadingWithAction
+            heading={t("hashtags")}
+            seeAll
+            collection={hashtags?.results}
+            onSeeAll={goToHashtags}
+          />
+        </>
+      }
+      data={hashtags?.results}
+      keyExtractor={(item) => item.id}
+      renderItem={renderHashtags}
+    />
+  );
+
+  return (
+    <FlatList
+      ListHeaderComponent={
+        <>
+          {/* {hashtagsList} */}
+          <HeadingWithAction heading={t("populars")} collection={posts} />
+        </>
+      }
+      numColumns={3}
+      data={posts}
+      keyExtractor={(item) => item.id}
+      showsVerticalScrollIndicator={false}
+      renderItem={renderPopularPosts}
+      ListFooterComponent={showSpinner}
+      onEndReached={loadMore}
+      onEndReachedThreshold={0.7}
     />
   );
 };

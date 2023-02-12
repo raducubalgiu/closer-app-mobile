@@ -31,6 +31,7 @@ type IProps = {
   onGoBack: () => void;
   onGoToCalendar: () => void;
   onShowProductSheet: () => void;
+  uri?: string;
 };
 
 const VideoListItemDetails = ({
@@ -44,6 +45,7 @@ const VideoListItemDetails = ({
   onGoBack,
   onGoToCalendar,
   onShowProductSheet,
+  uri,
 }: IProps) => {
   const { priceWithDiscount, option, discount } = product || {};
   const { username, checkmark, avatar, ratingsAverage, profession } =
@@ -62,6 +64,10 @@ const VideoListItemDetails = ({
       service: null,
       option: null,
     });
+  };
+
+  const goToSound = () => {
+    navigation.push("Sound", { uri });
   };
 
   const details = (
@@ -176,17 +182,19 @@ const VideoListItemDetails = ({
             </Pressable>
           )}
           {!bookable && (
-            <Stack direction="row" sx={{ paddingVertical: 10 }}>
-              <Icon
-                name="music"
-                type="font-awesome-5"
-                size={15}
-                color="#f2f2f2"
-              />
-              <Text style={styles.soundOwner}>{t("originalContent")}</Text>
-            </Stack>
+            <Pressable onPress={goToSound}>
+              <Stack direction="row" sx={{ paddingVertical: 10 }}>
+                <Icon
+                  name="music"
+                  type="font-awesome-5"
+                  size={15}
+                  color="#f2f2f2"
+                />
+                <Text style={styles.soundOwner}>{t("originalContent")}</Text>
+              </Stack>
+            </Pressable>
           )}
-          <Pressable>
+          <Pressable onPress={goToSound}>
             <Image
               source={{ uri: userDetails?.avatar[0]?.url }}
               style={styles.soundImage}

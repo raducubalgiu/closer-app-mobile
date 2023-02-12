@@ -73,9 +73,8 @@ export const SearchHashtagsTab = ({ search }: { search: string }) => {
   );
   const keyExtractor = useCallback((item: Hashtag) => item.id, []);
 
-  let header;
   if (!isLoading && !isFetchingNextPage && hashtags?.length) {
-    header = (
+    return (
       <NoFoundMessage
         title={t("hashtags")}
         description={t("noFoundHashtags")}
@@ -87,7 +86,6 @@ export const SearchHashtagsTab = ({ search }: { search: string }) => {
     <>
       {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
       <FlashList
-        ListHeaderComponent={header}
         data={hashtags}
         keyExtractor={keyExtractor}
         renderItem={renderHashtags}

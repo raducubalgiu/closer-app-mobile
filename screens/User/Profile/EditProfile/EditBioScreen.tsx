@@ -38,7 +38,12 @@ export const EditBioScreen = () => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <HeaderEdit title={t("name")} onSave={updateBio} disabled={isLoading} />
+      <HeaderEdit
+        title={t("name")}
+        onSave={updateBio}
+        disabledBack={isLoading}
+        disabledSave={isLoading}
+      />
       <View style={styles.textAreaContainer}>
         <TextInput
           value={bio}

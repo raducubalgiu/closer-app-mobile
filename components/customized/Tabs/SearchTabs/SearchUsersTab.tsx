@@ -63,7 +63,9 @@ export const SearchUsersTab = ({ search }: { search: string }) => {
 
   let header;
   if (!isLoading && !isFetchingNextPage && users?.length === 0) {
-    header = <NoFoundMessage title="Users" description={t("noFoundUsers")} />;
+    header = (
+      <NoFoundMessage title={t("users")} description={t("noFoundUsers")} />
+    );
   }
 
   const keyExtractor = useCallback((item: User) => item?.id, []);

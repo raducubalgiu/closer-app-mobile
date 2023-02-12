@@ -45,15 +45,21 @@ export const FeedExploreScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
-  const { data, hasNextPage, fetchNextPage, isFetchingNextPage, refetch } =
-    useGetPaginate({
-      model: "allPosts",
-      uri: `/posts/get-all-posts`,
-      limit: "10",
-      queries: "postType=photo",
-    });
+  const {
+    data,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    refetch,
+    isLoading: isLoadingPosts,
+  } = useGetPaginate({
+    model: "allPosts",
+    uri: `/posts/get-all-posts`,
+    limit: "10",
+    queries: "postType=photo",
+  });
 
-  const { data: videos } = useGetPaginate({
+  const { data: videos, isLoading: isLoadingVideos } = useGetPaginate({
     model: "allPosts",
     uri: `/posts/get-all-posts`,
     limit: "5",
@@ -65,6 +71,8 @@ export const FeedExploreScreen = () => {
   const { pages } = data || {};
   const allPosts = pages?.map((page) => page.results).flat();
   const allVideos = videos?.pages?.map((page) => page.results).flat();
+
+  const loading = (isLoadingPosts || isLoadingVideos) && !isFetchingNextPage;
 
   const showConfirm = useCallback(() => {
     CLOSE_BS();
@@ -183,18 +191,23 @@ export const FeedExploreScreen = () => {
   return (
     <SafeAreaView style={styles.screen}>
       <HeaderFeed indexLabel={0} />
-      <FlatList
-        ref={ref}
-        ListHeaderComponent={header}
-        refreshControl={refreshControl}
-        data={allPosts}
-        renderItem={renderPost}
-        keyExtractor={keyExtractor}
-        showsVerticalScrollIndicator={false}
-        ListFooterComponent={showSpinner}
-        onEndReached={loadMore}
-        onEndReachedThreshold={0.3}
-      />
+      <>
+        {!loading && (
+          <FlatList
+            ref={ref}
+            ListHeaderComponent={header}
+            refreshControl={refreshControl}
+            data={allPosts}
+            renderItem={renderPost}
+            keyExtractor={keyExtractor}
+            showsVerticalScrollIndicator={false}
+            ListFooterComponent={showSpinner}
+            onEndReached={loadMore}
+            onEndReachedThreshold={0.3}
+          />
+        )}
+        {loading && <Spinner />}
+      </>
       {BOTTOM_SHEET}
       <ConfirmModal
         title={t("deletePost")}

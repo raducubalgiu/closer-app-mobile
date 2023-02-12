@@ -3,6 +3,7 @@ import { Icon } from "@rneui/themed";
 import { memo } from "react";
 import { ResizeMode, Video } from "expo-av";
 import { SharedElement } from "react-navigation-shared-element";
+import { LinearGradient } from "expo-linear-gradient";
 
 const { width } = Dimensions.get("window");
 
@@ -12,10 +13,15 @@ type IProps = {
   onPress: () => void;
 };
 
-const PostVideoOverviewListItem = ({ uri, id, onPress }: IProps) => {
+const PostVideoOverviewListItem = ({ uri, onPress }: IProps) => {
   return (
-    <SharedElement id={id} style={styles.container}>
-      <Pressable onPress={onPress}>
+    <Pressable onPress={onPress} style={styles.container}>
+      <LinearGradient
+        colors={["#f1f1f1", "#d9d9d9"]}
+        start={{ x: 1, y: 0.4 }}
+        end={{ x: 1, y: 0.9 }}
+        style={{ width: width / 3, height: width / 1.75, marginRight: 6 }}
+      >
         <Video
           style={styles.video}
           source={{ uri }}
@@ -25,8 +31,8 @@ const PostVideoOverviewListItem = ({ uri, id, onPress }: IProps) => {
           isLooping={true}
           resizeMode={ResizeMode.COVER}
         />
-      </Pressable>
-    </SharedElement>
+      </LinearGradient>
+    </Pressable>
   );
 };
 
@@ -39,6 +45,5 @@ const styles = StyleSheet.create({
     height: width / 1.75,
     marginRight: 6,
     borderRadius: 5,
-    backgroundColor: "#f1f1f1",
   },
 });

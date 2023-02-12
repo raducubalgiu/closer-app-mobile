@@ -35,26 +35,13 @@ const ProductSheet = ({ product, expirationTime }: IProps) => {
           <BookableLabel size="md" text={t("bookableOffer")} />
         )}
       </Stack>
-      <Stack sx={{ marginTop: 5 }}>
-        <Text style={styles.name}>{name}</Text>
-        {discount > 0 && (
-          <Text style={styles.price}>
-            {price} {t("lei")}
-          </Text>
-        )}
-        <Stack direction="row" sx={{ marginTop: 5 }}>
-          <Text style={styles.priceDiscount}>
-            {priceWithDiscount} {t("lei")}
-          </Text>
-          {discount > 0 && <Text style={styles.discount}>(-{discount}%)</Text>}
-        </Stack>
-      </Stack>
+      <Text style={styles.name}>{name}</Text>
       <Stack align="start">
         <Stack sx={styles.service}>
           <Text style={styles.serviceText}>{serviceId?.name}</Text>
         </Stack>
       </Stack>
-      <Stack align="start">
+      <Stack align="start" sx={{ marginBottom: 10 }}>
         <Stack direction="row" justify="start" sx={{ marginBottom: 10 }}>
           <Text style={styles.label}>{t("category")}:</Text>
           <Text style={styles.labelText}>{option?.name}</Text>
@@ -68,6 +55,20 @@ const ProductSheet = ({ product, expirationTime }: IProps) => {
           <Text style={styles.availableText}>
             {expirationTime ? expire : t("checkCalendar")}
           </Text>
+        </Stack>
+      </Stack>
+      <Text style={styles.priceLabel}>{t("price")}:</Text>
+      <Stack align="start" sx={{ marginTop: 7.5 }}>
+        {discount > 0 && (
+          <Text style={styles.price}>
+            {price} {t("lei")}
+          </Text>
+        )}
+        <Stack direction="row">
+          <Text style={styles.priceDiscount}>
+            {priceWithDiscount} {t("lei")}
+          </Text>
+          {discount > 0 && <Text style={styles.discount}>(-{discount}%)</Text>}
         </Stack>
       </Stack>
     </BottomSheetScrollView>
@@ -84,6 +85,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     fontSize: 20,
     marginTop: 10,
+    textAlign: "center",
   },
   price: {
     color: grey0,
@@ -95,7 +97,7 @@ const styles = StyleSheet.create({
   },
   priceDiscount: {
     color: black,
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "700",
     textTransform: "lowercase",
   },
@@ -103,7 +105,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     color: error,
     fontWeight: "500",
-    fontSize: 12,
+    fontSize: 15,
   },
   service: {
     borderWidth: 1,
@@ -129,6 +131,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
     marginRight: 5,
+  },
+  priceLabel: {
+    color: black,
+    fontSize: 17,
+    fontWeight: "600",
   },
   availableText: {
     fontSize: 16,

@@ -71,15 +71,7 @@ export const FormTextField = ({
         control={control}
         rules={{ ...rules }}
         render={({ field: { onChange, onBlur, value } }) => (
-          <Stack
-            direction="row"
-            align="center"
-            sx={{
-              borderBottomWidth: 1,
-              borderBottomColor: "#ddd",
-              marginBottom: 15,
-            }}
-          >
+          <Stack direction="row" align="center" sx={styles.inputContainer}>
             <TextInput
               {...props}
               placeholder={placeholder}
@@ -97,12 +89,7 @@ export const FormTextField = ({
             <Pressable
               onPress={onRightIconPress}
               disabled={disableRightIcon}
-              style={{
-                alignItems: "center",
-                justifyContent: "center",
-                marginBottom: 10,
-                paddingHorizontal: 10,
-              }}
+              style={styles.rightIconBtn}
             >
               <Icon {...rightIconProps} />
             </Pressable>
@@ -125,5 +112,16 @@ const styles = StyleSheet.create({
   errMsg: {
     color: error,
     marginLeft: 5,
+  },
+  inputContainer: {
+    borderBottomWidth: 1,
+    borderBottomColor: "#ddd",
+    marginBottom: 15,
+  },
+  rightIconBtn: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+    paddingHorizontal: 10,
   },
 });

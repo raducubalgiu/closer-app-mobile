@@ -1,9 +1,13 @@
-import { StyleSheet, Dimensions, Pressable, View } from "react-native";
+import { StyleSheet, Dimensions, Pressable, View, Text } from "react-native";
 import { memo } from "react";
 import { Icon } from "@rneui/themed";
 import { ResizeMode, Video } from "expo-av";
+import { LinearGradient } from "expo-linear-gradient";
+import theme from "../../../../assets/styles/theme";
+import { Stack } from "../../../core";
 
 const { width } = Dimensions.get("window");
+const { secondary, error } = theme.lightColors || {};
 
 type IProps = {
   index: number;
@@ -30,32 +34,36 @@ const GridVideoVLitemItem = ({ index = 0, uri, bookable, onPress }: IProps) => {
   });
 
   return (
-    <Pressable style={{ ...imageBox.box, ...borderBox }} onPress={onPress}>
-      <Video
-        style={{
-          width: undefined,
-          height: undefined,
-          flex: 1,
-          backgroundColor: "#f1f1f1",
-        }}
-        source={{ uri }}
-        useNativeControls={false}
-        shouldPlay={true}
-        isMuted={true}
-        isLooping={false}
-        resizeMode={ResizeMode.COVER}
-      />
-      {bookable && (
+    <Pressable style={borderBox} onPress={onPress}>
+      <LinearGradient
+        colors={["#f1f1f1", "#d9d9d9"]}
+        start={{ x: 1, y: 0.4 }}
+        end={{ x: 1, y: 0.9 }}
+        style={imageBox.box}
+      >
+        <Video
+          style={{
+            width: undefined,
+            height: undefined,
+            flex: 1,
+          }}
+          source={{ uri }}
+          useNativeControls={false}
+          shouldPlay={true}
+          isMuted={true}
+          isLooping={true}
+          resizeMode={ResizeMode.COVER}
+        />
         <View style={styles.bookable}>
           <Icon
-            name="bolt"
-            type="font-awesome-5"
+            name="shopping"
+            type="material-community"
             color="white"
             size={20}
             style={{ marginLeft: 5 }}
           />
         </View>
-      )}
+      </LinearGradient>
     </Pressable>
   );
 };
@@ -72,15 +80,5 @@ const styles = StyleSheet.create({
     shadowOffset: { width: -2, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
-  },
-  type: {
-    position: "absolute",
-    zIndex: 10000,
-    bottom: 5,
-    left: 5,
-    shadowColor: "#171717",
-    shadowOffset: { width: -2, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 1,
   },
 });

@@ -1,7 +1,8 @@
 import { StyleSheet, Dimensions, View, Text, Pressable } from "react-native";
 import { memo } from "react";
-import { Image, Icon } from "@rneui/themed";
+import { Icon, Image, Skeleton } from "@rneui/themed";
 import theme from "../../../../assets/styles/theme";
+import { LinearGradient } from "expo-linear-gradient";
 
 const { width } = Dimensions.get("window");
 const { black } = theme.lightColors || {};
@@ -23,11 +24,10 @@ const GridImageListItem = ({
   fixed = false,
   postType = "photo",
   onPress,
-  col = 3,
 }: IProps) => {
   let borderBox;
 
-  if (index % col !== 0) {
+  if (index % 3 !== 0) {
     borderBox = { paddingLeft: 1.25 };
   } else {
     borderBox = { paddingLeft: 0 };
@@ -35,15 +35,27 @@ const GridImageListItem = ({
 
   const imageBox = StyleSheet.create({
     box: {
-      width: width / col,
-      height: width / col,
+      width: width / 3,
+      height: width / 3,
       paddingBottom: 1.25,
     },
   });
 
   return (
     <Pressable style={{ ...imageBox.box, ...borderBox }} onPress={onPress}>
-      <Image source={{ uri: `${image}` }} containerStyle={styles.image} />
+      <Image
+        source={{ uri: `${image}` }}
+        containerStyle={{ width: undefined, height: undefined, flex: 1 }}
+        transition={true}
+        PlaceholderContent={
+          <LinearGradient
+            colors={["#f1f1f1", "#d9d9d9"]}
+            start={{ x: 1, y: 0.4 }}
+            end={{ x: 1, y: 0.9 }}
+            style={{ width: width / 3, height: width / 3 }}
+          />
+        }
+      />
       {bookable && (
         <View style={styles.bookable}>
           <Icon
