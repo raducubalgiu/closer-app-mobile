@@ -16,7 +16,7 @@ import { Stack, Header, ListItem } from "../../../../components/core";
 import { EditProfileSheet } from "../../../../components/customized";
 import CustomAvatar from "../../../../components/core/Avatars/CustomAvatar";
 import { trimFunc } from "../../../../utils";
-import { useSheet } from "../../../../hooks";
+import { useAuth, useSheet } from "../../../../hooks";
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
@@ -28,8 +28,8 @@ const { grey0, black } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "EditProfile">;
 
 export const EditProfileScreen = ({ route }: IProps) => {
-  const { user } = route.params;
-  const { name, username, profession, website, description } = user;
+  const { user } = useAuth();
+  const { name, username, profession, website, description } = user || {};
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
@@ -37,15 +37,19 @@ export const EditProfileScreen = ({ route }: IProps) => {
   const list = [
     { label: "name", val: name, nav: "EditName" },
     { label: "username", val: username, nav: "EditUsername" },
-    { label: "profession", val: profession?.name, nav: "EditProfession" },
+    {
+      label: "profession",
+      val: t(`${profession?.name}`),
+      nav: "EditProfession",
+    },
     {
       label: "website",
-      val: website ? website : "Adauga website",
+      val: website ? website : t("addWebsite"),
       nav: "EditWebsite",
     },
     {
       label: "biography",
-      val: description ? description : "Adauga biografia",
+      val: description ? description : t("addBiography"),
       nav: "EditBio",
     },
   ];

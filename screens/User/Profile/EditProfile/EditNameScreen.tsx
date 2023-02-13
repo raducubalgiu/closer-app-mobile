@@ -27,12 +27,17 @@ export const EditNameScreen = () => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <HeaderEdit title={t("name")} onSave={updateName} disabled={isLoading} />
+      <HeaderEdit
+        title={t("name")}
+        onSave={updateName}
+        disabledSave={isLoading}
+        disabledBack={isLoading}
+      />
       <InputEdit
         placeholder={t("addName")}
         value={name ? name : ""}
-        fieldLength={30}
-        updateValue={(name: string) => setName(name)}
+        maxLength={30}
+        onChange={(name: string) => setName(name)}
         withDetails
       />
       {isLoading && <Spinner />}

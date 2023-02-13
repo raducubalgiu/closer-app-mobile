@@ -11,6 +11,7 @@ import {
   useRefreshByUser,
 } from "../../../../hooks";
 import { User } from "../../../../models/user";
+import { Spinner } from "../../../core";
 
 type IProps = { userId: string };
 
@@ -29,7 +30,7 @@ export const FollowersTab = ({ userId }: IProps) => {
     data: followers,
     loadMore,
     showSpinner,
-  } = usePaginateActions({ ...options });
+  } = usePaginateActions(options);
 
   const renderPerson = useCallback(
     ({ item }: any) => <UserListItem user={item.userId} />,
@@ -43,6 +44,8 @@ export const FollowersTab = ({ userId }: IProps) => {
     <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
   );
 
+  const loading = isLoading && !isFetchingNextPage;
+
   if (!isLoading && !isFetchingNextPage && followers?.length === 0) {
     return (
       <NoFoundMessage
@@ -53,16 +56,21 @@ export const FollowersTab = ({ userId }: IProps) => {
   }
 
   return (
-    <FlashList
-      refreshControl={refreshControl}
-      contentContainerStyle={{ paddingVertical: 15 }}
-      data={followers}
-      keyExtractor={keyExtractor}
-      renderItem={renderPerson}
-      ListFooterComponent={showSpinner}
-      onEndReached={loadMore}
-      onEndReachedThreshold={0.3}
-      estimatedItemSize={75}
-    />
+    <>
+      {!loading && (
+        <FlashList
+          refreshControl={refreshControl}
+          contentContainerStyle={{ paddingVertical: 15 }}
+          data={followers}
+          keyExtractor={keyExtractor}
+          renderItem={renderPerson}
+          ListFooterComponent={showSpinner}
+          onEndReached={loadMore}
+          onEndReachedThreshold={0.3}
+          estimatedItemSize={75}
+        />
+      )}
+      {loading && <Spinner />}
+    </>
   );
 };

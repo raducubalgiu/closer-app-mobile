@@ -7,7 +7,12 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useForm, FormProvider } from "react-hook-form";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { FormInputSelect, Spinner, Stack } from "../../../core";
-import { useGet, useGetPaginate, useRefreshByUser } from "../../../../hooks";
+import {
+  useGet,
+  useGetPaginate,
+  usePaginateActions,
+  useRefreshByUser,
+} from "../../../../hooks";
 import { CardReviewSummary } from "../../Cards/CardReviewSummary";
 import RatingListItem from "../../ListItems/RatingListItem";
 import { Review } from "../../../../models/review";
@@ -32,21 +37,16 @@ export const ReviewsTab = ({ userId }: IProps) => {
     uri: `/users/${userId}/reviews/summary?productId=${productId}`,
   });
 
-  const {
-    data,
-    hasNextPage,
-    fetchNextPage,
-    isFetchingNextPage,
-    isLoading,
-    isFetching,
-    refetch,
-  } = useGetPaginate({
+  const options = useGetPaginate({
     model: "ratings",
     uri: `/users/${userId}/reviews`,
     queries: `productId=${productId}`,
     limit: "10",
     enabled: isFocused,
   });
+
+  const { isLoading, isFetchingNextPage, refetch } = options;
+  const { data: reviews, showSpinner, loadMore } = usePaginateActions(options);
 
   const renderRatings = useCallback(({ item }: ListRenderItemInfo<Review>) => {
     const { id, reviewerId, productId, rating, review, createdAt, likesCount } =
@@ -66,20 +66,6 @@ export const ReviewsTab = ({ userId }: IProps) => {
   }, []);
 
   const keyExtractor = useCallback((item: Review) => item?.id, []);
-
-  const loadMore = () => {
-    if (hasNextPage) fetchNextPage();
-  };
-
-  const showSpinner = () => {
-    if (isFetchingNextPage) {
-      return <Spinner />;
-    } else {
-      return null;
-    }
-  };
-  const { pages } = data || {};
-  const reviews = pages?.map((page) => page.results).flat() || [];
 
   const header = (
     <>
@@ -110,6 +96,8 @@ export const ReviewsTab = ({ userId }: IProps) => {
     </>
   );
 
+  const loading = isLoading && !isFetchingNextPage;
+
   const { refreshing, refetchByUser } = useRefreshByUser(refetch);
 
   const refreshControl = (
@@ -118,19 +106,24 @@ export const ReviewsTab = ({ userId }: IProps) => {
 
   return (
     <>
-      {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
-      <FlashList
-        ListHeaderComponent={header}
-        refreshControl={refreshControl}
-        contentContainerStyle={{ paddingTop: 15, paddingBottom: insets.bottom }}
-        data={reviews}
-        keyExtractor={keyExtractor}
-        renderItem={renderRatings}
-        ListFooterComponent={showSpinner}
-        onEndReached={loadMore}
-        onEndReachedThreshold={0.3}
-        estimatedItemSize={100}
-      />
+      {!loading && (
+        <FlashList
+          ListHeaderComponent={header}
+          refreshControl={refreshControl}
+          contentContainerStyle={{
+            paddingTop: 15,
+            paddingBottom: insets.bottom,
+          }}
+          data={reviews}
+          keyExtractor={keyExtractor}
+          renderItem={renderRatings}
+          ListFooterComponent={showSpinner}
+          onEndReached={loadMore}
+          onEndReachedThreshold={0.3}
+          estimatedItemSize={100}
+        />
+      )}
+      {loading && <Spinner />}
     </>
   );
 };

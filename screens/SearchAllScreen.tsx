@@ -11,6 +11,7 @@ import {
   SearchBookablesTab,
   SearchServicesTab,
   HeaderSearchAll,
+  SearchVideoTab,
 } from "../components/customized";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParams } from "../navigation/rootStackParams";
@@ -26,6 +27,7 @@ export const SearchAllScreen = ({ route }: IProps) => {
     () => <SearchPopularTab search={search} />,
     [search]
   );
+  const Video = useCallback(() => <SearchVideoTab search={search} />, [search]);
   const LastMinute = useCallback(
     () => <SearchLastMinuteTab search={search} />,
     [search]
@@ -61,6 +63,11 @@ export const SearchAllScreen = ({ route }: IProps) => {
           name="SearchPopular"
           component={Populars}
           options={{ tabBarLabel: t("populars") }}
+        />
+        <Tab.Screen
+          name="SearchVideo"
+          component={Video}
+          options={{ tabBarLabel: t("video") }}
         />
         <Tab.Screen
           name="SearchLastMinute"

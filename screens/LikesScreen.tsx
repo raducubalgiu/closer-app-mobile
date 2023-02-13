@@ -1,11 +1,11 @@
-import { SafeAreaView, StyleSheet, RefreshControl } from "react-native";
+import { SafeAreaView, StyleSheet, RefreshControl, View } from "react-native";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Header, Spinner } from "../components/core";
 import { NoFoundMessage } from "../components/customized";
 import UserListItem from "../components/customized/ListItems/UserListItem";
-import { useRefreshByUser } from "../hooks";
+import { usePaginateActions, useRefreshByUser } from "../hooks";
 import { useGetPaginate } from "../hooks";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParams } from "../navigation/rootStackParams";
@@ -17,19 +17,14 @@ export const LikesScreen = ({ route }: IProps) => {
   const { postId } = route.params;
   const { t } = useTranslation();
 
-  const {
-    data,
-    hasNextPage,
-    fetchNextPage,
-    isFetchingNextPage,
-    isLoading,
-    isFetching,
-    refetch,
-  } = useGetPaginate({
+  const options = useGetPaginate({
     model: "likes",
     uri: `/posts/${postId}/get-likes`,
     limit: "25",
   });
+
+  const { isLoading, isFetchingNextPage, refetch } = options;
+  const { data: users, loadMore, showSpinner } = usePaginateActions(options);
 
   const renderPerson = useCallback(
     ({ item }: ListRenderItemInfo<any>) => <UserListItem user={item.userId} />,
@@ -38,22 +33,10 @@ export const LikesScreen = ({ route }: IProps) => {
 
   const keyExtractor = useCallback((item: User) => item?.id, []);
 
-  const loadMore = () => {
-    if (hasNextPage) {
-      fetchNextPage();
-    }
-  };
-
-  const showSpinner = () => {
-    if (isFetchingNextPage) {
-      return <Spinner />;
-    } else {
-      return null;
-    }
-  };
-
-  const { pages } = data || {};
-  const users = pages?.map((page) => page.results).flat();
+  const { refreshing, refetchByUser } = useRefreshByUser(refetch);
+  const refreshControl = (
+    <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
+  );
 
   let header;
   if (!isLoading && !isFetchingNextPage && users?.length === 0) {
@@ -62,18 +45,15 @@ export const LikesScreen = ({ route }: IProps) => {
     );
   }
 
-  const { refreshing, refetchByUser } = useRefreshByUser(refetch);
-  const refreshControl = (
-    <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
-  );
-
   return (
-    <SafeAreaView style={styles.screen}>
-      <Header title={t("likes")} divider={true} />
-      {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
+    <View style={styles.screen}>
+      <SafeAreaView>
+        <Header title={t("likes")} />
+      </SafeAreaView>
+      {isLoading && !isFetchingNextPage && <Spinner />}
       <FlashList
-        ListHeaderComponent={header}
         refreshControl={refreshControl}
+        ListHeaderComponent={header}
         contentContainerStyle={{ paddingVertical: 15 }}
         data={users}
         keyExtractor={keyExtractor}
@@ -83,7 +63,7 @@ export const LikesScreen = ({ route }: IProps) => {
         onEndReached={loadMore}
         onEndReachedThreshold={0.3}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 

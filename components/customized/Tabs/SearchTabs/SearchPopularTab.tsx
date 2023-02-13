@@ -20,20 +20,23 @@ export const SearchPopularTab = ({ search }: { search: string }) => {
   const { t } = useTranslation();
   const isFocused = useIsFocused();
 
-  const { data: users, isLoading: isLoadingUsers } = useGet({
+  const usersOptions = useGetPaginate({
     model: "users",
-    uri: `/users/search?search=${search}&page=1&limit=2`,
+    uri: `/users/search`,
+    queries: `search=${search}`,
+    limit: "3",
     enabled: isFocused,
-    enableId: search,
-  });
-  const { data: hashtags, isLoading: isLoadingHashtags } = useGet({
-    model: "users",
-    uri: `/hashtags/search?search=${search}&page=1&limit=3`,
-    enabled: isFocused,
-    enableId: search,
   });
 
-  const options = useGetPaginate({
+  const hashtagsOptions = useGetPaginate({
+    model: "users",
+    uri: `/hashtags/search`,
+    queries: `search=${search}`,
+    limit: "3",
+    enabled: isFocused,
+  });
+
+  const postsOptions = useGetPaginate({
     model: "searchPosts",
     uri: `/posts/search`,
     limit: "42",
@@ -41,13 +44,13 @@ export const SearchPopularTab = ({ search }: { search: string }) => {
     enabled: isFocused,
   });
 
-  const { isLoading: isLoadingPosts, isFetchingNextPage } = options;
-
   const {
     data: posts,
     loadMore,
     showSpinner,
-  } = usePaginateActions({ ...options });
+  } = usePaginateActions(postsOptions);
+  const { data: users } = usePaginateActions(usersOptions);
+  const { data: hashtags } = usePaginateActions(hashtagsOptions);
 
   const goToUsers = () => {
     navigation.navigate("SearchAll", {
@@ -103,11 +106,11 @@ export const SearchPopularTab = ({ search }: { search: string }) => {
         <HeadingWithAction
           heading={t("users")}
           seeAll
-          collection={users?.results}
+          collection={users}
           onSeeAll={goToUsers}
         />
       }
-      data={users?.results}
+      data={users}
       keyExtractor={(item) => item.id}
       renderItem={renderUsers}
     />
@@ -121,12 +124,12 @@ export const SearchPopularTab = ({ search }: { search: string }) => {
           <HeadingWithAction
             heading={t("hashtags")}
             seeAll
-            collection={hashtags?.results}
+            collection={hashtags}
             onSeeAll={goToHashtags}
           />
         </>
       }
-      data={hashtags?.results}
+      data={hashtags}
       keyExtractor={(item) => item.id}
       renderItem={renderHashtags}
     />

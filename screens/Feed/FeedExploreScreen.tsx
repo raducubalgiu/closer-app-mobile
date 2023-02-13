@@ -56,7 +56,6 @@ export const FeedExploreScreen = () => {
     model: "allPosts",
     uri: `/posts/get-all-posts`,
     limit: "10",
-    queries: "postType=photo",
   });
 
   const { data: videos, isLoading: isLoadingVideos } = useGetPaginate({

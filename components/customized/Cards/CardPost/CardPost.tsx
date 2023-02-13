@@ -8,6 +8,7 @@ import CardPostFooter from "./CardPostFooter";
 import PostGradient from "../../Gradients/PostGradient";
 import { FROM_NOW } from "../../../../utils/date-utils";
 import { Post } from "../../../../models/post";
+import { ResizeMode, Video } from "expo-av";
 
 const { width } = Dimensions.get("window");
 type IProps = { post: Post; onShowDetails: () => void };
@@ -22,6 +23,7 @@ const CardPost = ({ post, onShowDetails }: IProps) => {
     createdAt,
     userId,
     product,
+    postType,
   } = post || {};
   const { name, username, avatar, checkmark, profession, role } = userId || {};
 
@@ -39,12 +41,26 @@ const CardPost = ({ post, onShowDetails }: IProps) => {
         ratingsAverage={userId?.ratingsAverage}
       />
       <SharedElement id={id}>
-        <Image
-          source={{ uri: `${post?.images[0]?.url}` }}
-          containerStyle={{ width, height: 400 }}
-          transition={true}
-          PlaceholderContent={<PostGradient width={width} height={400} />}
-        />
+        {postType === "photo" && (
+          <Image
+            source={{ uri: `${post?.images[0]?.url}` }}
+            containerStyle={{ width, height: 400 }}
+            transition={true}
+            PlaceholderContent={<PostGradient width={width} height={400} />}
+          />
+        )}
+        {postType === "video" && (
+          <Video
+            source={{ uri: `${post?.images[0]?.url}` }}
+            useNativeControls={false}
+            onPlaybackStatusUpdate={(status) => {}}
+            shouldPlay={true}
+            isMuted={true}
+            isLooping={true}
+            style={{ width, height: 500 }}
+            resizeMode={ResizeMode.COVER}
+          />
+        )}
       </SharedElement>
       <CardPostButtons
         bookable={bookable}

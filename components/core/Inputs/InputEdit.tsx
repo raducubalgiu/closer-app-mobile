@@ -1,71 +1,68 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
-import { SearchBar } from "@rneui/themed";
+import { StyleSheet, Text, View, TextInput } from "react-native";
+import { Stack } from "../Stack/Stack";
 import theme from "../../../assets/styles/theme";
 
-const { grey0 } = theme.lightColors || {};
+const { grey0, error, black } = theme.lightColors || {};
 
 type IProps = {
-  value: string;
-  fieldLength: number;
+  value: any;
+  maxLength: number;
   placeholder: string;
-  updateValue: (text: string) => void;
+  onChange: (text: string) => void;
   withDetails?: boolean;
+  editable?: boolean;
 };
 
 export const InputEdit = ({
   value = "",
-  fieldLength,
+  maxLength,
   placeholder,
-  updateValue,
+  onChange,
   withDetails = false,
+  editable,
 }: IProps) => {
+  const valColor = value?.length >= maxLength ? { color: error } : {};
+
   return (
-    <>
-      <View style={{ marginVertical: 10 }}>
-        <SearchBar
+    <View style={{ marginHorizontal: 15 }}>
+      <Stack direction="row" sx={styles.inputContainer}>
+        <TextInput
           placeholder={placeholder}
-          onChangeText={updateValue}
+          style={styles.input}
+          maxLength={maxLength}
+          onChangeText={onChange}
           value={value}
-          containerStyle={styles.containerStyle}
-          inputContainerStyle={styles.inputContainer}
-          inputStyle={styles.input}
-          searchIcon={undefined}
-          lightTheme={true}
-          autoFocus={true}
-          cancelButtonTitle=""
-          showCancel={false}
-          maxLength={fieldLength}
+          placeholderTextColor="#9EA0A4"
+          editable={editable}
+          clearButtonMode="while-editing"
         />
-      </View>
+      </Stack>
       {withDetails && (
-        <Text
-          style={
-            value?.length < fieldLength
-              ? styles.strokeLength
-              : { ...styles.strokeLength, color: "#F72A50" }
-          }
-        >
-          {value?.length ? value?.length : 0} / {fieldLength}
-        </Text>
+        <Stack direction="row" justify="start">
+          <Text style={[styles.strokeLength, valColor]}>{value?.length}</Text>
+          <Text style={styles.strokeLength}>/</Text>
+          <Text style={styles.strokeLength}>{maxLength}</Text>
+        </Stack>
       )}
-    </>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  containerStyle: {
-    backgroundColor: "transparent",
-    padding: 0,
-  },
   inputContainer: {
-    backgroundColor: "transparent",
+    borderBottomWidth: 0.5,
+    borderColor: "#ddd",
+    marginBottom: 10,
   },
   input: {
+    paddingVertical: 20,
     fontSize: 15,
+    flex: 1,
+    color: black,
   },
+  rightIcon: { paddingVertical: 15, paddingHorizontal: 5 },
   strokeLength: {
-    paddingHorizontal: 10,
     color: grey0,
+    fontSize: 13,
   },
 });

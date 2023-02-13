@@ -29,13 +29,14 @@ export const EditWebsiteScreen = () => {
       <HeaderEdit
         title={t("website")}
         onSave={updateWebsite}
-        disabled={isLoading}
+        disabledBack={isLoading}
+        disabledSave={isLoading}
       />
       <InputEdit
         placeholder={t("addWebsite")}
         value={website}
-        fieldLength={40}
-        updateValue={(website: string) => setWebsite(website)}
+        maxLength={40}
+        onChange={(website: string) => setWebsite(website)}
         withDetails
       />
       {isLoading && <Spinner />}
