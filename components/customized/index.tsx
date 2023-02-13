@@ -71,7 +71,6 @@ export { HeaderEdit } from "./Layout/Headers/HeaderEdit";
 export { HeaderMap } from "./Layout/Headers/HeaderMap";
 
 export { ServicesList } from "./Lists/ServicesList";
-export { ProfileMenuList } from "./Lists/ProfileMenuList";
 export { FixedPeriodList } from "./Lists/FixedPeriodList";
 
 export { MessageListItem } from "./ListItems/MessageListItem";
@@ -112,6 +111,7 @@ export { PostInfoSheet } from "./Sheets/PostInfoSheet";
 export { SheetService } from "./Sheets/SheetService";
 export { FollowUserSheet } from "./Sheets/FollowUserSheet";
 export { PostOptionsSheet } from "./Sheets/PostOptionsSheet";
+export { ProfileMenuSheet } from "./Sheets/ProfileMenuSheet";
 
 export { FiltersContainer } from "./Layout/Containers/FiltersContainer";
 

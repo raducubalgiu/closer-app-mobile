@@ -1,5 +1,4 @@
 import { ListRenderItemInfo, StyleSheet } from "react-native";
-import { getAuth, signOut } from "firebase/auth";
 import { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
@@ -9,7 +8,6 @@ import { useAuth } from "../../../hooks/auth";
 import theme from "../../../assets/styles/theme";
 import { Protected } from "../../core";
 import { RootStackParams } from "../../../navigation/rootStackParams";
-import { showToast } from "../../../utils";
 import { SettingsListItem } from "../ListItems/SettingsListItem";
 
 const { black } = theme.lightColors || {};
@@ -23,18 +21,13 @@ type Item = {
   roles: string[];
 };
 
-export const ProfileMenuList = ({ onCloseSheet }: IProps) => {
+export const ProfileMenuSheet = ({ onCloseSheet }: IProps) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const { user, setUser } = useAuth();
-  const auth = getAuth();
+  const { user } = useAuth();
   const { t } = useTranslation();
 
-  const handleLogout = () => {
-    signOut(auth)
-      .then(() => setUser(null))
-      .catch(() => showToast({ message: t("somethingWentWrong") }));
-  };
+  const handleShareProfile = () => {};
 
   const items = [
     {
@@ -64,7 +57,7 @@ export const ProfileMenuList = ({ onCloseSheet }: IProps) => {
       navigation.navigate(item?.navigation);
       onCloseSheet();
     } else {
-      handleLogout();
+      handleShareProfile();
     }
   };
 

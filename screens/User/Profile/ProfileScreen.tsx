@@ -5,11 +5,11 @@ import { MAIN_ROLE, SECOND_ROLE } from "@env";
 import theme from "../../../assets/styles/theme";
 import { Protected, Button, Stack } from "../../../components/core";
 import {
-  ProfileMenuList,
   HeaderProfile,
   TopTabProfile,
   PostOptionsSheet,
   ProfileIconButton,
+  ProfileMenuSheet,
 } from "../../../components/customized";
 import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
 import { useSheet, useAuth, useGet, useRefreshOnFocus } from "../../../hooks";
@@ -34,7 +34,7 @@ export const ProfileScreen = () => {
   const { username, checkmark, role } = user || {};
 
   const closeSheet = useCallback(() => CLOSE_BS(), []);
-  const profileMenu = <ProfileMenuList onCloseSheet={closeSheet} />;
+  const profileMenu = <ProfileMenuSheet onCloseSheet={closeSheet} />;
   const { BOTTOM_SHEET, SHOW_BS, CLOSE_BS } = useSheet([1, 200], profileMenu, {
     duration: 200,
   });
