@@ -19,7 +19,12 @@ import {
 import { Profession } from "../../../../models/profession";
 import { HeaderEdit } from "../../../../components/customized";
 import { MAIN_ROLE, SECOND_ROLE, THIRD_ROLE } from "@env";
-import { FormInputRadio, Heading, Spinner } from "../../../../components/core";
+import {
+  FormInputRadio,
+  Heading,
+  SearchBarInput,
+  Spinner,
+} from "../../../../components/core";
 import { Divider } from "@rneui/themed";
 
 const { grey0 } = theme.lightColors || {};
@@ -27,6 +32,7 @@ const { grey0 } = theme.lightColors || {};
 export const EditProfessionScreen = () => {
   const { user, setUser } = useAuth();
   const [selected, setSelected] = useState(user?.profession);
+  const [search, setSearch] = useState("");
   const navigation = useNavigation();
   const { t } = useTranslation();
 
@@ -79,9 +85,15 @@ export const EditProfessionScreen = () => {
       {!isLoading && (
         <View style={{ margin: 15, flex: 1 }}>
           <Heading title={t("chooseCategory")} sx={styles.title} />
-          <Text style={{ color: grey0, fontSize: 15 }}>
+          <Text style={{ color: grey0, fontSize: 15, marginBottom: 15 }}>
             {t("categoryDescription")}
           </Text>
+          <SearchBarInput
+            placeholder={t("search")}
+            value={search}
+            showCancel={false}
+            onChangeText={(text) => setSearch(text)}
+          />
           <Divider color="#ddd" style={{ marginTop: 10, paddingBottom: 7.5 }} />
           <FlatList
             data={user?.role === THIRD_ROLE ? professions : businesses}
@@ -101,8 +113,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   title: {
-    fontSize: 18,
-    fontWeight: "500",
+    fontSize: 19,
+    fontWeight: "700",
     marginTop: 0,
     marginBottom: 5,
   },

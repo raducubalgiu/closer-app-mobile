@@ -4,13 +4,27 @@ import React from "react";
 import theme from "../../../assets/styles/theme";
 
 const { grey0, black, divider } = theme.lightColors || {};
+type IProps = {
+  onChangeText: (txt: string) => void;
+  onCancel?: () => void;
+  cancelButtonTitle?: string;
+  height?: number;
+  showCancel?: boolean;
+  placeholder?: string;
+  value: any;
+  autoFocus?: boolean;
+};
 
 export const SearchBarInput = ({
   cancelButtonTitle = "",
   height = 65,
   showCancel = true,
+  onChangeText,
+  placeholder,
+  value,
+  autoFocus,
   ...props
-}) => {
+}: IProps) => {
   let cancel = !showCancel
     ? {
         color: "gray",
@@ -22,6 +36,10 @@ export const SearchBarInput = ({
   return (
     <SearchBar
       {...props}
+      value={value}
+      onChangeText={onChangeText}
+      autoFocus={autoFocus}
+      placeholder={placeholder}
       cancelButtonTitle={cancelButtonTitle}
       cancelButtonProps={cancel}
       platform={Platform.OS === "ios" ? "ios" : "android"}
