@@ -1,16 +1,16 @@
-import { ListRenderItemInfo, StyleSheet, Text } from "react-native";
+import { ListRenderItemInfo, StyleSheet } from "react-native";
 import { getAuth, signOut } from "firebase/auth";
 import { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import { useNavigation } from "@react-navigation/native";
-import { Icon } from "@rneui/themed";
-import { useAuth } from "../../../hooks/auth";
-import theme from "../../../assets/styles/theme";
-import { MAIN_ROLE, SECOND_ROLE, SUPERADMIN_ROLE, THIRD_ROLE } from "@env";
-import { Protected, ListItem } from "../../core";
 import { useTranslation } from "react-i18next";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { MAIN_ROLE, SECOND_ROLE, SUPERADMIN_ROLE, THIRD_ROLE } from "@env";
+import { useAuth } from "../../../hooks/auth";
+import theme from "../../../assets/styles/theme";
+import { Protected } from "../../core";
 import { RootStackParams } from "../../../navigation/rootStackParams";
 import { showToast } from "../../../utils";
+import { SettingsListItem } from "../ListItems/SettingsListItem";
 
 const { black } = theme.lightColors || {};
 
@@ -19,7 +19,6 @@ type Item = {
   id: string;
   title: string;
   iconName: string;
-  iconType: string;
   navigation?: any;
   roles: string[];
 };
@@ -42,7 +41,6 @@ export const ProfileMenuList = ({ onCloseSheet }: IProps) => {
       id: "1",
       title: t("myBusiness"),
       iconName: "airplay",
-      iconType: "feather",
       navigation: "MyBusiness",
       roles: [MAIN_ROLE, SECOND_ROLE],
     },
@@ -50,7 +48,6 @@ export const ProfileMenuList = ({ onCloseSheet }: IProps) => {
       id: "2",
       title: t("settingsAndPrivacy"),
       iconName: "settings",
-      iconType: "feather",
       navigation: "Settings",
       roles: [MAIN_ROLE, SECOND_ROLE, THIRD_ROLE, SUPERADMIN_ROLE],
     },
@@ -58,7 +55,6 @@ export const ProfileMenuList = ({ onCloseSheet }: IProps) => {
       id: "6",
       title: t("shareProfile"),
       iconName: "share-2",
-      iconType: "feather",
       roles: [THIRD_ROLE, SUPERADMIN_ROLE],
     },
   ];
@@ -74,15 +70,12 @@ export const ProfileMenuList = ({ onCloseSheet }: IProps) => {
 
   const renderItem = ({ item }: ListRenderItemInfo<Item>) => (
     <Protected userRole={user?.role} roles={item?.roles}>
-      <ListItem onPress={() => handleNavigate(item)} sx={styles.listItem}>
-        <Icon
-          name={item?.iconName}
-          type={item?.iconType}
-          color={black}
-          size={22.5}
-        />
-        <Text style={styles.text}>{item?.title}</Text>
-      </ListItem>
+      <SettingsListItem
+        title={item?.title}
+        onPress={() => handleNavigate(item)}
+        iconLeftProps={{ name: item?.iconName, size: 22.5 }}
+        rightIcon={false}
+      />
     </Protected>
   );
 
@@ -97,7 +90,7 @@ export const ProfileMenuList = ({ onCloseSheet }: IProps) => {
 };
 
 const styles = StyleSheet.create({
-  container: { margin: 20, flex: 1 },
+  container: { marginHorizontal: 15, marginTop: 7.5, flex: 1 },
   listItem: {
     paddingLeft: 0,
     backgroundColor: "white",

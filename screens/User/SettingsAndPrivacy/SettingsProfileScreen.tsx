@@ -1,19 +1,20 @@
 import { StyleSheet, ScrollView, SafeAreaView, Text, View } from "react-native";
-import { Divider, Icon } from "@rneui/themed";
+import { Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { getAuth, signOut } from "firebase/auth";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { Header, Heading, ListItem, Stack } from "../../../components/core";
+import { Header, Heading, Stack } from "../../../components/core";
 import theme from "../../../assets/styles/theme";
 import { RootStackParams } from "../../../navigation/rootStackParams";
 import { useAuth } from "../../../hooks";
 import { showToast } from "../../../utils";
+import { SettingsListItem } from "../../../components/customized";
 
-const { black, grey0 } = theme.lightColors || {};
+const { grey0 } = theme.lightColors || {};
 
 export const SettingsProfileScreen = () => {
-  const { user, setUser } = useAuth();
+  const { setUser } = useAuth();
   const auth = getAuth();
   const { t } = useTranslation();
   const navigation =
@@ -32,175 +33,72 @@ export const SettingsProfileScreen = () => {
       </SafeAreaView>
       <ScrollView style={styles.container}>
         <Stack align="start">
-          <Heading title={t("account")} />
-          <ListItem between onPress={() => navigation.navigate("Account")}>
-            <Stack direction="row">
-              <Icon
-                name="user"
-                type="feather"
-                size={20}
-                color={black}
-                style={styles.icon}
-              />
-              <Text style={styles.text}>{t("account")}</Text>
-            </Stack>
-            <Icon name="keyboard-arrow-right" color={grey0} />
-          </ListItem>
-          <ListItem
-            between
-            mt={20}
+          <Heading title={t("account")} sx={{ marginBottom: 5 }} />
+          <SettingsListItem
+            onPress={() => navigation.navigate("Account")}
+            title={t("account")}
+            iconLeftProps={{ name: "user" }}
+          />
+          <SettingsListItem
             onPress={() => navigation.navigate("Privacy")}
-          >
-            <Stack direction="row">
-              <Icon
-                name="lock"
-                type="feather"
-                size={20}
-                color={black}
-                style={styles.icon}
-              />
-              <Text style={styles.text}>{t("privacy")}</Text>
-            </Stack>
-            <Icon name="keyboard-arrow-right" color={grey0} />
-          </ListItem>
-          <ListItem
-            between
-            mt={20}
+            title={t("privacy")}
+            iconLeftProps={{ name: "lock" }}
+          />
+          <SettingsListItem
             onPress={() => navigation.navigate("Discounts")}
-          >
-            <Stack direction="row">
-              <Icon
-                name="gift"
-                type="feather"
-                size={20}
-                color={black}
-                style={styles.icon}
-              />
-              <Text style={styles.text}>{t("discounts")}</Text>
-            </Stack>
-            <Icon name="keyboard-arrow-right" color={grey0} />
-          </ListItem>
-          <ListItem between mt={20}>
-            <Stack direction="row">
-              <Icon
-                name="share"
-                type="feather"
-                size={20}
-                color={black}
-                style={styles.icon}
-              />
-              <Text style={styles.text}>{t("shareProfile")}</Text>
-            </Stack>
-          </ListItem>
+            title={t("discounts")}
+            iconLeftProps={{ name: "gift" }}
+          />
+          <SettingsListItem
+            onPress={() => {}}
+            title={t("shareProfile")}
+            iconLeftProps={{ name: "share" }}
+          />
         </Stack>
-        <Divider color="#ddd" style={{ marginTop: 20, marginBottom: 10 }} />
+        <Divider color="#ddd" style={styles.divider} />
         <Stack align="start">
           <Heading title={t("cacheAndMobileData")} />
-          <ListItem between onPress={() => navigation.navigate("ClearCache")}>
-            <Stack direction="row">
-              <Icon
-                name="trash-2"
-                type="feather"
-                size={20}
-                color={black}
-                style={styles.icon}
-              />
-              <Text style={styles.text}>{t("eraseStorage")}</Text>
-            </Stack>
-            <Icon name="keyboard-arrow-right" color={grey0} />
-          </ListItem>
-          <ListItem
-            between
-            mt={20}
+          <SettingsListItem
+            onPress={() => navigation.navigate("ClearCache")}
+            title={t("eraseStorage")}
+            iconLeftProps={{ name: "trash-2" }}
+          />
+          <SettingsListItem
             onPress={() => navigation.navigate("SavingData")}
-          >
-            <Stack direction="row">
-              <Icon
-                name="wifi"
-                type="feather"
-                size={20}
-                color={black}
-                style={styles.icon}
-              />
-              <Text style={styles.text}>{t("savingData")}</Text>
-            </Stack>
-            <Icon name="keyboard-arrow-right" color={grey0} />
-          </ListItem>
+            title={t("savingData")}
+            iconLeftProps={{ name: "wifi" }}
+          />
         </Stack>
-        <Divider color="#ddd" style={{ marginTop: 20, marginBottom: 10 }} />
+        <Divider color="#ddd" style={styles.divider} />
         <Stack align="start">
           <Heading title={t("assistance")} />
-          <ListItem
-            between
+          <SettingsListItem
             onPress={() => navigation.navigate("ReportAProblem")}
-          >
-            <Stack direction="row">
-              <Icon
-                name="flag"
-                type="feather"
-                size={20}
-                color={black}
-                style={styles.icon}
-              />
-              <Text style={styles.text}>{t("reportAProblem")}</Text>
-            </Stack>
-            <Icon name="keyboard-arrow-right" color={grey0} />
-          </ListItem>
-          <ListItem
-            between
-            mt={20}
+            title={t("reportAProblem")}
+            iconLeftProps={{ name: "flag" }}
+          />
+          <SettingsListItem
             onPress={() => navigation.navigate("Assistance")}
-          >
-            <Stack direction="row">
-              <Icon
-                name="message-circle"
-                type="feather"
-                size={20}
-                color={black}
-                style={styles.icon}
-              />
-              <Text style={styles.text}>{t("assistance")}</Text>
-            </Stack>
-            <Icon name="keyboard-arrow-right" color={grey0} />
-          </ListItem>
-          <ListItem between mt={20}>
-            <Stack direction="row">
-              <Icon
-                name="info"
-                type="feather"
-                size={20}
-                color={black}
-                style={styles.icon}
-              />
-              <Text style={styles.text}>{t("about")}</Text>
-            </Stack>
-            <Icon name="keyboard-arrow-right" color={grey0} />
-          </ListItem>
+            title={t("assistance")}
+            iconLeftProps={{ name: "message-circle" }}
+          />
+          <SettingsListItem
+            onPress={() => {}}
+            title={t("about")}
+            iconLeftProps={{ name: "info" }}
+          />
         </Stack>
-        <Divider color="#ddd" style={{ marginTop: 20, marginBottom: 10 }} />
+        <Divider color="#ddd" style={styles.divider} />
         <Stack align="start">
           <Heading title={t("connecting")} />
-          <ListItem between onPress={handleLogout}>
-            <Stack direction="row">
-              <Icon
-                name="log-out"
-                type="feather"
-                size={20}
-                color={black}
-                style={styles.icon}
-              />
-              <Text style={styles.text}>{t("logout")}</Text>
-            </Stack>
-          </ListItem>
+          <SettingsListItem
+            onPress={handleLogout}
+            title={t("logout")}
+            iconLeftProps={{ name: "log-out" }}
+          />
         </Stack>
-        <View
-          style={{
-            paddingVertical: 50,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ fontWeight: "500", color: grey0 }}>v1.0.0</Text>
+        <View style={styles.version}>
+          <Text style={styles.versionTxt}>v1.0.0</Text>
         </View>
       </ScrollView>
     </View>
@@ -217,14 +115,11 @@ const styles = StyleSheet.create({
     paddingRight: 15,
     paddingLeft: 15,
   },
-  text: {
-    marginLeft: 10,
-    color: black,
-    fontWeight: "600",
-    fontSize: 13,
+  divider: { marginTop: 20, marginBottom: 10 },
+  version: {
+    paddingVertical: 50,
+    justifyContent: "center",
+    alignItems: "center",
   },
-  icon: {
-    padding: 6,
-    borderRadius: 50,
-  },
+  versionTxt: { fontWeight: "500", color: grey0 },
 });

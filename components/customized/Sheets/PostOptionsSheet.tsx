@@ -1,8 +1,8 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
-import { ListItem, Stack } from "../../core";
-import { Icon } from "@rneui/themed";
+import { Stack } from "../../core";
 import theme from "../../../assets/styles/theme";
+import { SettingsListItem } from "../ListItems/SettingsListItem";
 
 const { black } = theme.lightColors || {};
 
@@ -11,20 +11,24 @@ export const PostOptionsSheet = () => {
 
   return (
     <Stack sx={styles.container}>
-      <ListItem onPress={() => {}} align="center" sx={styles.listItem}>
-        <Icon name="camera" type="feather" color={black} size={22.5} />
-        <Text style={styles.text}>{t("newPhoto")}</Text>
-      </ListItem>
-      <ListItem onPress={() => {}} align="center">
-        <Icon name="video" type="feather" color={black} size={22.5} />
-        <Text style={styles.text}>{t("newVideo")}</Text>
-      </ListItem>
+      <SettingsListItem
+        title={t("newPhoto")}
+        iconLeftProps={{ name: "camera", size: 22.5 }}
+        onPress={() => {}}
+        rightIcon={false}
+      />
+      <SettingsListItem
+        title={t("newVideo")}
+        iconLeftProps={{ name: "video", size: 22.5 }}
+        onPress={() => {}}
+        rightIcon={false}
+      />
     </Stack>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { margin: 20 },
+  container: { marginHorizontal: 15, marginTop: 7.5 },
   heading: {
     fontSize: 17,
     fontWeight: "500",

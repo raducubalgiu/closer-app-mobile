@@ -1,24 +1,16 @@
 import { useTranslation } from "react-i18next";
-import {
-  Pressable,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-} from "react-native";
-import { Divider, Icon } from "@rneui/themed";
-import {
-  UNSTABLE_usePreventRemove,
-  useNavigation,
-} from "@react-navigation/native";
+import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { Divider } from "@rneui/themed";
+import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Header, Stack } from "../../../../components/core";
 import CustomAvatar from "../../../../components/core/Avatars/CustomAvatar";
 import { useAuth } from "../../../../hooks";
 import theme from "../../../../assets/styles/theme";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
+import { SettingsListItem } from "../../../../components/customized";
 
-const { black, grey0, error } = theme.lightColors || {};
+const { black, error } = theme.lightColors || {};
 
 export const DeleteAccountScreen = () => {
   const { user } = useAuth();
@@ -39,64 +31,35 @@ export const DeleteAccountScreen = () => {
         <Stack align="center" sx={{ width: "100%", marginBottom: 50 }}>
           <CustomAvatar avatar={user?.avatar} size={100} />
         </Stack>
-        <Pressable onPress={goToHideAccount}>
-          <Stack direction="row">
-            <Stack align="start" sx={{ flex: 1 }}>
-              <Text
-                style={{
-                  ...styles.title,
-                  color: status === "hidden" ? error : black,
-                }}
-              >
-                {status === "hidden"
-                  ? t("yourAccountIsHidden")
-                  : t("hideAccount")}
-              </Text>
-              <Text style={{ color: grey0 }}>
-                {status === "hidden"
-                  ? t("yourAccountIsHiddenDescription")
-                  : t("hideAccountDescription")}
-              </Text>
-            </Stack>
-            <Icon
-              name="keyboard-arrow-right"
-              color={grey0}
-              style={{ marginLeft: 10 }}
-            />
-          </Stack>
-        </Pressable>
-        <Divider style={{ marginVertical: 20 }} />
-        <Pressable onPress={goToDisableAccount}>
-          <Stack direction="row">
-            <Stack align="start" sx={{ flex: 1 }}>
-              <Text style={styles.title}>{t("disableAccount")}</Text>
-              <Text style={{ color: grey0 }}>
-                {t("disableAccountDescription")}
-              </Text>
-            </Stack>
-            <Icon
-              name="keyboard-arrow-right"
-              color={grey0}
-              style={{ marginLeft: 10 }}
-            />
-          </Stack>
-        </Pressable>
-        <Divider style={{ marginVertical: 20 }} />
-        <Pressable onPress={goToDeleteAccountPermanently}>
-          <Stack direction="row">
-            <Stack align="start" sx={{ flex: 1 }}>
-              <Text style={styles.title}>{t("deleteAccountPermanently")}</Text>
-              <Text style={{ color: grey0 }}>
-                {t("deleteAccountPermanentlyDescription")}
-              </Text>
-            </Stack>
-            <Icon
-              name="keyboard-arrow-right"
-              color={grey0}
-              style={{ marginLeft: 10 }}
-            />
-          </Stack>
-        </Pressable>
+        <SettingsListItem
+          onPress={goToHideAccount}
+          title={
+            status === "hidden" ? t("yourAccountIsHidden") : t("hideAccount")
+          }
+          sxTitle={{
+            ...styles.title,
+            color: status === "hidden" ? error : black,
+          }}
+          description={
+            status === "hidden"
+              ? t("yourAccountIsHiddenDescription")
+              : t("hideAccountDescription")
+          }
+        />
+        <Divider style={styles.divider} />
+        <SettingsListItem
+          onPress={goToDisableAccount}
+          title={t("disableAccount")}
+          sxTitle={styles.title}
+          description={t("disableAccountDescription")}
+        />
+        <Divider style={styles.divider} />
+        <SettingsListItem
+          onPress={goToDeleteAccountPermanently}
+          title={t("deleteAccountPermanently")}
+          sxTitle={styles.title}
+          description={t("deleteAccountPermanentlyDescription")}
+        />
       </ScrollView>
     </SafeAreaView>
   );
@@ -107,10 +70,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
   },
-  title: {
-    fontWeight: "500",
-    fontSize: 15,
-    marginBottom: 10,
-    color: black,
-  },
+  title: { fontSize: 15, marginBottom: 5 },
+  divider: { marginTop: 15, marginBottom: 5 },
 });
