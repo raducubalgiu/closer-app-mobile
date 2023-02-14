@@ -1,7 +1,6 @@
 import {
   SafeAreaView,
   StyleSheet,
-  View,
   Text,
   FlatList,
   Pressable,
@@ -10,98 +9,80 @@ import {
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
-import axios from "axios";
 import { Icon } from "@rneui/themed";
-import { Checkmark, IconButton } from "../components/core";
-import { IconBackButton, SearchBarInput, Stack } from "../components/core";
-import CustomAvatar from "../components/core/Avatars/CustomAvatar";
-import {
-  HashtagListItem,
-  RecentSearchListItem,
-} from "../components/customized";
-import theme from "../assets/styles/theme";
-import { useAuth, useDelete, useGet } from "../hooks";
-import { trimFunc } from "../utils";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParams } from "../navigation/rootStackParams";
+import { IconButton } from "../components/core";
+import { IconBackButton, SearchBarInput, Stack } from "../components/core";
+import theme from "../assets/styles/theme";
+import {
+  HashtagListItem,
+  RecentSearchListItem,
+  UserListItemSimple,
+} from "../components/customized";
+import {
+  useAuth,
+  useDelete,
+  useGet,
+  usePost,
+  useRefreshOnFocus,
+} from "../hooks";
 
 const { grey0, primary, black } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "SearchPosts">;
 
 export const SearchPostsScreen = ({ route }: IProps) => {
-  const { search: initialSearch } = route.params;
   const { user } = useAuth();
+  const { search: initialSearch } = route.params;
   const [search, setSearch] = useState(initialSearch);
-  const [results, setResults] = useState([]);
-  const [words, setWords] = useState([]);
-  const [searchedUsers, setSearchedUsers] = useState([]);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
 
-  const updateSearch = useCallback(
-    (search: string) => {
-      const controller = new AbortController();
-      setSearch(search);
+  const isHashtag = search.startsWith("#");
 
-      let endpoint = "";
-      if (search.startsWith("#")) {
-        const hash = search.split("#")[1];
-        endpoint = `${process.env.BASE_ENDPOINT}/hashtags/search?search=${hash}&page=1&limit=5`;
-      } else {
-        endpoint = `${process.env.BASE_ENDPOINT}/users/search?search=${search}&page=1&limit=5`;
-      }
+  const { data: users } = useGet({
+    model: "search",
+    uri: `/users/search?search=${search}&page=1&limit=5`,
+    enabled: !isHashtag && search?.length > 0,
+    enableId: search,
+  });
 
-      if (search) {
-        axios
-          .get(endpoint, {
-            signal: controller.signal,
-            headers: { Authorization: `Bearer ${user?.token}` },
-          })
-          .then((res) => {
-            setResults(res.data.results);
-          })
-          .catch(() => {});
-      } else {
-        setResults([]);
-      }
+  const { data: hashtags } = useGet({
+    model: "searchHashtags",
+    uri: `/hashtags/search?search=${search?.split("#")[1]}&page=1&limit=5`,
+    enabled: isHashtag && search?.length > 1,
+    enableId: search,
+  });
 
-      return () => {
-        controller.abort();
-      };
-    },
-    [search]
-  );
+  const { data: recents, refetch } = useGet({
+    model: "recentSearch",
+    uri: `/users/${user?.id}/searches?page=1&limit=10`,
+  });
 
-  const deleteSearch = (searchId: string) => {
-    axios
-      .delete(`${process.env.BASE_ENDPOINT}/searches/${searchId}`, {
-        headers: { Authorization: `Bearer ${user?.token}` },
-      })
-      .then(() =>
-        setWords((searches) => searches.filter((s: any) => s._id !== searchId))
-      )
-      .catch(() => {});
-  };
-
-  const renderRecent = useCallback(
-    ({ item }: ListRenderItemInfo<any>) => (
-      <RecentSearchListItem
-        onPress={() =>
-          navigation.navigate("SearchAll", { search: item.word, screen: null })
-        }
-        word={item?.word}
-      />
-    ),
-    []
-  );
+  const { mutate: handleCreateSearch } = usePost({ uri: "/searches" });
+  const { mutate: handleDeleteAllRecents } = useDelete({
+    uri: `/users/${user?.id}/searches`,
+    onSuccess: () => refetch(),
+  });
 
   const goToUser = (item: any) => {
-    const { _id, username, avatar, name, checkmark } = item;
+    const { id, username, avatar, name, checkmark } = item;
+
+    handleCreateSearch({
+      userId: user?.id,
+      user: {
+        id,
+        name,
+        username,
+        avatar: !!avatar ? avatar[0]?.url : [],
+        checkmark,
+      },
+    });
 
     navigation.navigate("ProfileGeneral", {
-      userId: _id,
+      userId: id,
       username,
       avatar,
       name,
@@ -113,38 +94,47 @@ export const SearchPostsScreen = ({ route }: IProps) => {
 
   const renderResults = useCallback(
     ({ item }: ListRenderItemInfo<any>) => {
-      if (search.startsWith("#")) {
+      if (isHashtag) {
         return (
           <HashtagListItem
             name={item.name}
             postsCount={item.postsCount}
-            onPress={() => navigation.navigate("Hashtag", { name: item.name })}
+            onPress={() => {
+              handleCreateSearch({
+                userId: user?.id,
+                hashtag: { id: item.id, name: item.name },
+              });
+              navigation.navigate("Hashtag", { name: item.name });
+            }}
+            sx={{ paddingHorizontal: 0 }}
           />
         );
       } else {
         return (
-          <Pressable onPress={() => goToUser(item)}>
-            <Stack direction="row" justify="start" sx={styles.searchItem}>
-              <CustomAvatar avatar={item?.avatar} />
-              <Stack align="start" sx={{ marginLeft: 10 }}>
-                <Stack direction="row">
-                  <Text style={styles.username}>{item.username}</Text>
-                  {item.checkmark && <Checkmark />}
-                </Stack>
-                <Text style={styles.name}>{item.name}</Text>
-              </Stack>
-            </Stack>
-          </Pressable>
+          <UserListItemSimple
+            name={item.name}
+            checkmark={item.checkmark}
+            avatar={item.avatar}
+            profession={item.username}
+            onGoToUser={() => goToUser(item)}
+            sx={{ marginBottom: 15 }}
+          />
         );
       }
     },
-    [search]
+    [isHashtag]
   );
 
   const goToSearchAll = useCallback(() => {
     if (search.length === 0) return;
+
+    handleCreateSearch({
+      userId: user?.id,
+      word: isHashtag ? search.split("#")[1] : search,
+    });
+
     navigation.navigate("SearchAll", {
-      search: search.startsWith("#") ? search.split("#")[1] : search,
+      search: isHashtag ? search.split("#")[1] : search,
       screen: null,
     });
   }, [search]);
@@ -160,109 +150,70 @@ export const SearchPostsScreen = ({ route }: IProps) => {
     </Pressable>
   );
 
-  const word = (
-    <Stack direction="row" justify="start" sx={{ margin: 15 }}>
-      <Icon
-        name="search"
-        type="feather"
-        size={25}
-        style={{
-          borderWidth: 1,
-          borderColor: "#ccc",
-          padding: 15,
-          borderRadius: 50,
-        }}
+  const header = (
+    <Stack direction="row" sx={{ marginVertical: 10 }}>
+      <Text style={{ fontWeight: "500", color: black, fontSize: 15 }}>
+        {t("recents")}
+      </Text>
+      <IconButton
+        name="close"
+        type="material"
+        color="white"
+        size={11}
+        sx={{ backgroundColor: "#ccc", borderRadius: 50, padding: 3 }}
+        onPress={() => handleDeleteAllRecents()}
       />
-      <Text style={{ marginLeft: 10 }}>{search}</Text>
     </Stack>
   );
 
-  const renderSearchedUsers = useCallback(
-    ({ item }: ListRenderItemInfo<any>) => {
-      const { username, avatar } = item?.searchedUser || {};
+  useRefreshOnFocus(refetch);
 
-      return (
-        <Pressable onPress={() => goToUser(item.searchedUser)}>
-          <Stack sx={{ marginRight: 10, minWidth: 80 }}>
-            <CustomAvatar size={70} avatar={avatar} sx={{ marginBottom: 5 }} />
-            <Text style={{ fontSize: 13 }}>{trimFunc(username, 15)}</Text>
-          </Stack>
-        </Pressable>
-      );
-    },
+  const renderRecent = useCallback(
+    ({ item }: ListRenderItemInfo<any>) => (
+      <RecentSearchListItem item={item} onDelete={() => refetch()} />
+    ),
     []
-  );
-
-  const header = (
-    <View>
-      <Stack direction="row" sx={{ marginVertical: 10, paddingHorizontal: 15 }}>
-        <Text style={{ fontWeight: "bold", color: black, fontSize: 17 }}>
-          {t("recentSearch")}
-        </Text>
-        <IconButton
-          name="close"
-          type="material"
-          color="white"
-          size={17}
-          sx={{ backgroundColor: "#ddd", borderRadius: 50, padding: 3 }}
-          onPress={() => {}}
-        />
-      </Stack>
-      {searchedUsers.length > 0 && (
-        <FlatList
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          data={searchedUsers}
-          keyExtractor={(item) => item._id}
-          contentContainerStyle={{ marginVertical: 15, paddingHorizontal: 15 }}
-          renderItem={renderSearchedUsers}
-          keyboardShouldPersistTaps={"handled"}
-        />
-      )}
-    </View>
   );
 
   return (
     <SafeAreaView style={styles.screen}>
-      <View>
-        <Stack direction="row" justify="start" sx={{ paddingHorizontal: 15 }}>
-          <IconBackButton />
-          <SearchBarInput
-            autoFocus={true}
-            placeholder={t("search")}
-            value={search}
-            onChangeText={updateSearch}
-            showCancel={false}
-            onCancel={goToSearchAll}
-            height={60}
-          />
-          <Pressable onPress={goToSearchAll} style={{ marginLeft: 10 }}>
-            <Text style={styles.cancelBtnText}>{t("search")}</Text>
-          </Pressable>
-        </Stack>
-        {results.length > 0 && (
-          <FlatList
-            data={results}
-            keyExtractor={(item) => item._id}
-            renderItem={renderResults}
-            keyboardShouldPersistTaps={"handled"}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingHorizontal: 15 }}
-          />
-        )}
-        {results.length === 0 && !search && (
-          <FlatList
-            ListHeaderComponent={header}
-            data={words}
-            keyExtractor={(item) => item._id}
-            renderItem={renderRecent}
-            keyboardShouldPersistTaps={"handled"}
-            showsVerticalScrollIndicator={false}
-          />
-        )}
-        {results.length === 0 && search.length > 0 && word}
-        {search.length > 0 && footer}
-      </View>
+      <Stack direction="row" justify="start" sx={{ paddingHorizontal: 15 }}>
+        <IconBackButton />
+        <SearchBarInput
+          autoFocus={true}
+          placeholder={t("search")}
+          value={search}
+          onChangeText={(text) => setSearch(text)}
+          showCancel={false}
+          onCancel={goToSearchAll}
+          height={60}
+        />
+        <Pressable onPress={goToSearchAll} style={{ marginLeft: 10 }}>
+          <Text style={styles.cancelBtnText}>{t("search")}</Text>
+        </Pressable>
+      </Stack>
+      {search?.length > 0 && (
+        <FlatList
+          data={isHashtag ? hashtags?.results : users?.results}
+          keyExtractor={(item) => item.id}
+          renderItem={renderResults}
+          keyboardShouldPersistTaps={"handled"}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingHorizontal: 15, marginTop: 10 }}
+          ListFooterComponent={footer}
+        />
+      )}
+      {search?.length === 0 && (
+        <FlatList
+          ListHeaderComponent={header}
+          data={recents?.results}
+          keyExtractor={(item) => item.id}
+          renderItem={renderRecent}
+          keyboardShouldPersistTaps={"handled"}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingHorizontal: 15 }}
+        />
+      )}
     </SafeAreaView>
   );
 };

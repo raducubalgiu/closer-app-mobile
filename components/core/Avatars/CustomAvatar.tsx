@@ -1,4 +1,4 @@
-import { Avatar } from "@rneui/themed";
+import { Avatar, Image } from "@rneui/themed";
 import { memo } from "react";
 import NoAvatar from "../../../assets/images/avatar.jpg";
 
@@ -18,7 +18,6 @@ const CustomAvatar = ({ avatar = [], size = 55, sx = {} }: Props) => {
       source={uri}
       avatarStyle={{ resizeMode: "cover" }}
       containerStyle={{
-        backgroundColor: "#ddd",
         borderWidth: 1,
         borderColor: "#ddd",
         ...sx,

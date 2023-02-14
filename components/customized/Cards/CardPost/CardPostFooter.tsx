@@ -125,14 +125,11 @@ const styles = StyleSheet.create({
   },
   addCommText: {
     color: grey0,
-    marginLeft: 5,
-    borderWidth: 0.5,
-    borderColor: "#ddd",
     paddingVertical: 6,
     paddingHorizontal: 10,
     flex: 1,
     borderRadius: 15,
-    fontSize: 13,
+    fontSize: 13.5,
   },
   distanceText: {
     fontSize: 13,
