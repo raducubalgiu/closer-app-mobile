@@ -1,10 +1,10 @@
+import { FlatList, ListRenderItemInfo } from "react-native";
 import { useCallback } from "react";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { useGetPaginate, usePaginateActions } from "../../../../hooks";
 import { Spinner } from "../../../core";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
-import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { Post } from "../../../../models/post";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
@@ -26,11 +26,13 @@ export const SavedVideoTab = ({ user }: { user: User }) => {
   const options = useGetPaginate({
     model: "posts",
     uri: `/users/${user?.id}/posts/bookmarks`,
+    queries: "postType=video",
     limit: "21",
     enabled: isFocused,
   });
 
-  const { isLoading, isFetchingNextPage, isFetching } = options;
+  const { isLoading, isFetchingNextPage } = options;
+  const loading = isLoading && !isFetchingNextPage;
   const { data: videos, loadMore, showSpinner } = usePaginateActions(options);
 
   const renderPosts = useCallback(
@@ -55,7 +57,7 @@ export const SavedVideoTab = ({ user }: { user: User }) => {
 
   const keyExtractor = useCallback((item: ListRenderItemPost) => item.id, []);
 
-  if (videos?.length === 0) {
+  if (!isLoading && !isFetchingNextPage && videos?.length === 0) {
     return (
       <NoFoundMessage
         title={t("videoclips")}
@@ -66,17 +68,18 @@ export const SavedVideoTab = ({ user }: { user: User }) => {
 
   return (
     <>
-      {isFetching && isLoading && !isFetchingNextPage && <Spinner />}
-      <FlashList
-        data={videos}
-        keyExtractor={keyExtractor}
-        numColumns={3}
-        renderItem={renderPosts}
-        ListFooterComponent={showSpinner}
-        onEndReached={loadMore}
-        onEndReachedThreshold={0.3}
-        estimatedItemSize={125}
-      />
+      {!loading && (
+        <FlatList
+          data={videos}
+          keyExtractor={keyExtractor}
+          numColumns={3}
+          renderItem={renderPosts}
+          ListFooterComponent={showSpinner}
+          onEndReached={loadMore}
+          onEndReachedThreshold={0.3}
+        />
+      )}
+      {loading && <Spinner />}
     </>
   );
 };

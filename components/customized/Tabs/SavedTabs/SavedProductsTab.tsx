@@ -1,12 +1,11 @@
 import { useCallback } from "react";
-import { RefreshControl } from "react-native";
+import { FlatList, ListRenderItemInfo } from "react-native";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { useTranslation } from "react-i18next";
 import { Spinner } from "../../../core";
 import ProductListItem from "../../ListItems/ProductListItem";
-import { useGetPaginate, useRefreshByUser } from "../../../../hooks";
+import { useGetPaginate, usePaginateActions } from "../../../../hooks";
 import { useIsFocused } from "@react-navigation/native";
-import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { Product } from "../../../../models/product";
 import { User } from "../../../../models/user";
 
@@ -20,20 +19,16 @@ export const SavedProductsTab = ({ user }: { user: User }) => {
   const { t } = useTranslation();
   const isFocused = useIsFocused();
 
-  const {
-    data,
-    hasNextPage,
-    fetchNextPage,
-    isFetchingNextPage,
-    isLoading,
-    refetch,
-    isFetching,
-  } = useGetPaginate({
+  const options = useGetPaginate({
     model: "products",
     uri: `/users/${user?.id}/products/bookmarks`,
     limit: "10",
     enabled: isFocused,
   });
+
+  const { isLoading, isFetchingNextPage } = options;
+  const loading = isLoading && !isFetchingNextPage;
+  const { data: products, showSpinner, loadMore } = usePaginateActions(options);
 
   const renderProduct = useCallback(
     ({ item }: ListRenderItemInfo<ListRenderItemProduct>) => {
@@ -56,26 +51,8 @@ export const SavedProductsTab = ({ user }: { user: User }) => {
     []
   );
 
-  const loadMore = () => {
-    if (hasNextPage) {
-      fetchNextPage();
-    }
-  };
-
-  const showSpinner = () => {
-    if (isFetchingNextPage) {
-      return <Spinner sx={{ paddingVertical: 50 }} />;
-    } else {
-      return null;
-    }
-  };
-
-  const { pages } = data || {};
-  const products = pages?.map((page) => page.results).flat();
-
-  let header;
   if (!isLoading && !isFetchingNextPage && products?.length === 0) {
-    header = (
+    return (
       <NoFoundMessage
         title={t("products")}
         description={t("noFoundSavedProducts")}
@@ -83,26 +60,19 @@ export const SavedProductsTab = ({ user }: { user: User }) => {
     );
   }
 
-  const { refreshing, refetchByUser } = useRefreshByUser(refetch);
-
-  const refreshControl = (
-    <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
-  );
-
   return (
     <>
-      {isFetching && isLoading && !isFetchingNextPage && <Spinner />}
-      <FlashList
-        ListHeaderComponent={header}
-        data={products}
-        refreshControl={refreshControl}
-        keyExtractor={keyExtractor}
-        renderItem={renderProduct}
-        ListFooterComponent={showSpinner}
-        onEndReached={loadMore}
-        onEndReachedThreshold={0.3}
-        estimatedItemSize={261}
-      />
+      {!loading && (
+        <FlatList
+          data={products}
+          keyExtractor={keyExtractor}
+          renderItem={renderProduct}
+          ListFooterComponent={showSpinner}
+          onEndReached={loadMore}
+          onEndReachedThreshold={0.3}
+        />
+      )}
+      {loading && <Spinner />}
     </>
   );
 };

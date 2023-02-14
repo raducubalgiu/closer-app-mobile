@@ -7,10 +7,13 @@ import {
   Text,
   Pressable,
 } from "react-native";
-import React, { useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useNavigation, useScrollToTop } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { Divider, Icon } from "@rneui/themed";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import PostVideoOverviewListItem from "../../components/customized/ListItems/Post/PostVideoOverviewListItem";
+import CardPost from "../../components/customized/Cards/CardPost/CardPost";
 import { Spinner, Stack } from "../../components/core";
 import {
   PostInfoSheet,
@@ -24,16 +27,13 @@ import {
   useRefreshByUser,
   useRefreshOnFocus,
   useDelete,
+  usePaginateActions,
 } from "../../hooks";
-import CardPost from "../../components/customized/Cards/CardPost/CardPost";
 import { Post } from "../../models/post";
-import PostVideoOverviewListItem from "../../components/customized/ListItems/Post/PostVideoOverviewListItem";
 import theme from "../../assets/styles/theme";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../navigation/rootStackParams";
-import { first } from "lodash";
 
-const { black, grey0 } = theme.lightColors || {};
+const { black } = theme.lightColors || {};
 
 export const FeedExploreScreen = () => {
   const { user } = useAuth();
@@ -45,81 +45,41 @@ export const FeedExploreScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
-  const {
-    data,
-    hasNextPage,
-    fetchNextPage,
-    isFetchingNextPage,
-    refetch,
-    isLoading: isLoadingPosts,
-  } = useGetPaginate({
+  const postsOptions = useGetPaginate({
     model: "allPosts",
     uri: `/posts/get-all-posts`,
+    queries: "postType=photo",
     limit: "10",
   });
 
-  const { data: videos, isLoading: isLoadingVideos } = useGetPaginate({
+  const videosOptions = useGetPaginate({
     model: "allPosts",
     uri: `/posts/get-all-posts`,
     limit: "5",
     queries: "postType=video&orientation=portrait",
   });
 
-  useRefreshOnFocus(refetch);
+  const {
+    refetch,
+    isLoading: isLoadingPosts,
+    isFetchingNextPage,
+  } = postsOptions;
 
-  const { pages } = data || {};
-  const allPosts = pages?.map((page) => page.results).flat();
-  const allVideos = videos?.pages?.map((page) => page.results).flat();
+  const {
+    data: posts,
+    loadMore,
+    showSpinner,
+  } = usePaginateActions(postsOptions);
 
+  const { isLoading: isLoadingVideos } = videosOptions;
+  const { data: videos } = usePaginateActions(videosOptions);
   const loading = (isLoadingPosts || isLoadingVideos) && !isFetchingNextPage;
 
-  const showConfirm = useCallback(() => {
-    CLOSE_BS();
-    setVisible(true);
-  }, []);
-
-  const sheetContent = <PostInfoSheet onShowConfirm={showConfirm} />;
-  const { BOTTOM_SHEET, SHOW_BS, CLOSE_BS } = useSheet(
-    ["10%", "30%"],
-    sheetContent
-  );
-  const showDetails = useCallback((item: any) => {
-    setPostId(item.id);
-    SHOW_BS();
-  }, []);
+  useRefreshOnFocus(refetch);
 
   const renderPost = useCallback(({ item }: ListRenderItemInfo<Post>) => {
     return <CardPost post={item} onShowDetails={() => showDetails(item)} />;
   }, []);
-
-  const keyExtractor = useCallback((item: Post) => item?.id, []);
-
-  const { mutate: handleDelete } = useDelete({
-    uri: `/users/${user?.id}/posts/${postId}`,
-    onSuccess: () => {
-      CLOSE_BS();
-      setVisible(false);
-    },
-  });
-
-  const loadMore = () => {
-    if (hasNextPage) {
-      fetchNextPage();
-    }
-  };
-
-  const showSpinner = () => {
-    if (isFetchingNextPage) {
-      return <Spinner />;
-    } else {
-      return null;
-    }
-  };
-
-  const { refreshing, refetchByUser } = useRefreshByUser(refetch);
-  const refreshControl = (
-    <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
-  );
 
   const renderVideo = useCallback(
     ({ item, index }: ListRenderItemInfo<Post>) => {
@@ -136,7 +96,32 @@ export const FeedExploreScreen = () => {
     []
   );
 
+  const keyExtractor = useCallback((item: Post) => item?.id, []);
   const keyExtractorVideo = useCallback((item: Post) => item?.id, []);
+
+  const showConfirm = useCallback(() => {
+    CLOSE_BS();
+    setVisible(true);
+  }, []);
+
+  const sheetContent = <PostInfoSheet onShowConfirm={showConfirm} />;
+  const { BOTTOM_SHEET, SHOW_BS, CLOSE_BS } = useSheet(
+    ["10%", "30%"],
+    sheetContent
+  );
+
+  const showDetails = useCallback((item: any) => {
+    setPostId(item.id);
+    SHOW_BS();
+  }, []);
+
+  const { mutate: handleDelete } = useDelete({
+    uri: `/users/${user?.id}/posts/${postId}`,
+    onSuccess: () => {
+      CLOSE_BS();
+      setVisible(false);
+    },
+  });
 
   const header = (
     <>
@@ -166,7 +151,7 @@ export const FeedExploreScreen = () => {
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
-        data={allVideos}
+        data={videos}
         keyExtractor={keyExtractorVideo}
         renderItem={renderVideo}
         contentContainerStyle={{
@@ -187,6 +172,11 @@ export const FeedExploreScreen = () => {
     </>
   );
 
+  const { refreshing, refetchByUser } = useRefreshByUser(refetch);
+  const refreshControl = (
+    <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
+  );
+
   return (
     <SafeAreaView style={styles.screen}>
       <HeaderFeed indexLabel={0} />
@@ -196,7 +186,7 @@ export const FeedExploreScreen = () => {
             ref={ref}
             ListHeaderComponent={header}
             refreshControl={refreshControl}
-            data={allPosts}
+            data={posts}
             renderItem={renderPost}
             keyExtractor={keyExtractor}
             showsVerticalScrollIndicator={false}

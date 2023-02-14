@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import { useIsFocused } from "@react-navigation/native";
 
 const { black } = theme.lightColors || {};
-type IProps = { postId: string; userId: string };
+type IProps = { postId: string; userId: string | undefined };
 
 const MoreSheet = ({ postId, userId }: IProps) => {
   const { t } = useTranslation();

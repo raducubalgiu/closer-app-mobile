@@ -1,11 +1,11 @@
+import { FlatList, ListRenderItemInfo } from "react-native";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
-import { useGetPaginate } from "../../../../hooks";
+import { useGetPaginate, usePaginateActions } from "../../../../hooks";
 import { Spinner } from "../../../core";
 import { HashtagListItem } from "../../ListItems/HashtagListItem";
-import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { Hashtag } from "../../../../models/hashtag";
 import { User } from "../../../../models/user";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -24,19 +24,16 @@ export const SavedHashtagsTab = ({ user }: { user: User }) => {
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const isFocused = useIsFocused();
 
-  const {
-    data,
-    hasNextPage,
-    fetchNextPage,
-    isFetchingNextPage,
-    isLoading,
-    isFetching,
-  } = useGetPaginate({
+  const options = useGetPaginate({
     model: "hashtags",
     uri: `/users/${user?.id}/hashtags/bookmarks`,
     limit: "25",
     enabled: isFocused,
   });
+
+  const { isLoading, isFetchingNextPage } = options;
+  const loading = isLoading && !isFetchingNextPage;
+  const { data: hashtags, showSpinner, loadMore } = usePaginateActions(options);
 
   const renderHashtags = useCallback(
     ({ item }: ListRenderItemInfo<ListRenderItemHashtag>) => {
@@ -58,25 +55,7 @@ export const SavedHashtagsTab = ({ user }: { user: User }) => {
     []
   );
 
-  const loadMore = () => {
-    if (hasNextPage) {
-      fetchNextPage();
-    }
-  };
-
-  const showSpinner = () => {
-    if (isFetchingNextPage) {
-      return <Spinner sx={{ paddingVertical: 20 }} />;
-    } else {
-      return null;
-    }
-  };
-
-  const { pages } = data || {};
-  const hashtags = pages?.map((page) => page.results).flat();
-
-  let header;
-  if (hashtags?.length === 0) {
+  if (!isLoading && !isFetchingNextPage && hashtags?.length === 0) {
     return (
       <NoFoundMessage
         title={t("hashtags")}
@@ -87,18 +66,18 @@ export const SavedHashtagsTab = ({ user }: { user: User }) => {
 
   return (
     <>
-      {isFetching && isLoading && !isFetchingNextPage && <Spinner />}
-      <FlashList
-        ListHeaderComponent={header}
-        contentContainerStyle={{ paddingVertical: 15 }}
-        data={hashtags}
-        keyExtractor={keyExtractor}
-        renderItem={renderHashtags}
-        ListFooterComponent={showSpinner}
-        onEndReached={loadMore}
-        onEndReachedThreshold={0.3}
-        estimatedItemSize={62}
-      />
+      {!loading && (
+        <FlatList
+          contentContainerStyle={{ paddingVertical: 15 }}
+          data={hashtags}
+          keyExtractor={keyExtractor}
+          renderItem={renderHashtags}
+          ListFooterComponent={showSpinner}
+          onEndReached={loadMore}
+          onEndReachedThreshold={0.3}
+        />
+      )}
+      {loading && <Spinner />}
     </>
   );
 };

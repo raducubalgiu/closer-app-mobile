@@ -5,7 +5,7 @@ import theme from "../../../assets/styles/theme";
 const { grey0, error, black } = theme.lightColors || {};
 
 type IProps = {
-  value: any;
+  value: string;
   maxLength: number;
   placeholder: string;
   onChange: (text: string) => void;

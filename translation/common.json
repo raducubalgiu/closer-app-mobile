@@ -426,6 +426,7 @@
   "categoryDescription": "Categoriile ajută utilizatorii să găsească mai uşor conturi ca al tău. O poţi schimba oricând.",
   "youAddedToBookmarks": "Ai adăugat la salvate",
   "youRemovedFromBookmarks": "Ai eliminat de la salvate",
+  "usernameHasAlreadyBeenTaken": "Acest nume de utilizator nu este disponibil deoarece aparţine deja altui utilizator. Încearcă altul nou.",
   "artist": "Artist",
   "musician": "Musician",
   "blogger": "Blogger",

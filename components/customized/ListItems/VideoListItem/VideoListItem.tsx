@@ -4,7 +4,7 @@ import { ResizeMode, Video } from "expo-av";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useSheet } from "../../../../hooks";
+import { useAuth, useSheet } from "../../../../hooks";
 import ProductSheet from "../../Sheets/ProductSheet";
 import MoreSheet from "../../Sheets/MoreSheet";
 import LikesSheet from "../../Sheets/LikesSheet";
@@ -37,6 +37,7 @@ type Status = {
 const { width, height } = Dimensions.get("window");
 
 const VideoListItem = ({ post, isLoading, setScrollEnabled }: IProps) => {
+  const { user } = useAuth();
   const { id, description, bookable, images, userId, product } = post;
   const { likesCount, commentsCount, bookmarksCount, expirationTime } = post;
   const reactions = likesCount + commentsCount + bookmarksCount;
@@ -70,7 +71,7 @@ const VideoListItem = ({ post, isLoading, setScrollEnabled }: IProps) => {
     />
   );
   const commentsSheet = <CommentsSheet postId={id} creatorId={userId.id} />;
-  const moreSheet = <MoreSheet postId={id} userId={userId.id} />;
+  const moreSheet = <MoreSheet postId={id} userId={user?.id} />;
   const productSheet = (
     <ProductSheet product={product} expirationTime={expirationTime} />
   );
