@@ -8,23 +8,36 @@ const { black, grey0 } = theme.lightColors || {};
 type IProps = {
   title?: string;
   description: string;
-  iconName?: string;
-  iconType?: string;
-  iconSize?: number;
+  defaultIconProps?: {
+    name: string;
+    type: string;
+    size: number;
+    color: string;
+  };
+  iconProps?: {
+    name: string;
+    type?: string;
+    size?: number;
+    color?: string;
+  };
   sx?: {};
 };
 
 export const NoFoundMessage = ({
   title,
   description,
-  iconName = "alert-circle",
-  iconType = "feather",
-  iconSize = 45,
   sx = {},
+  defaultIconProps = {
+    name: "alert-circle",
+    type: "feather",
+    size: 45,
+    color: "#ddd",
+  },
+  iconProps,
 }: IProps) => {
   return (
     <Stack align="center" justify="center" sx={{ ...styles.container, ...sx }}>
-      <Icon name={iconName} type={iconType} size={iconSize} color="#ddd" />
+      <Icon {...defaultIconProps} {...iconProps} />
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.description}>{description}</Text>
     </Stack>

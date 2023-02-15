@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { useTranslation } from "react-i18next";
-import { useGetPaginate } from "../../../../hooks";
+import { useGetPaginate, usePaginateActions } from "../../../../hooks";
 import { Spinner } from "../../../core";
 import { Post } from "../../../../models/post";
 import GridVideoVListItem from "../../ListItems/PostGrid/GridVideoVListItem";
@@ -19,22 +19,22 @@ export const VideosVTab = ({ userId, onScroll }: IProps) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
-  const { data, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
-    useGetPaginate({
-      model: "posts",
-      uri: `/users/${userId}/posts`,
-      limit: "6",
-      queries: "postType=video&orientation=portrait",
-      enabled: isFocused,
-    });
+  const options = useGetPaginate({
+    model: "posts",
+    uri: `/users/${userId}/posts`,
+    limit: "6",
+    queries: "postType=video&orientation=portrait",
+    enabled: isFocused,
+  });
 
-  const { pages } = data || {};
-  const videos = pages?.map((page) => page.results).flat() || [];
+  const { isLoading, isFetchingNextPage } = options;
+  const { data: videos, showSpinner, loadMore } = usePaginateActions(options);
 
   const renderPosts = useCallback(
     ({ item, index }: ListRenderItemInfo<Post>) => (
       <GridVideoVListItem
         uri={item.images[0]?.url}
+        bookable={item.bookable}
         index={index}
         onPress={() =>
           navigation.navigate("Videos", {
@@ -49,26 +49,13 @@ export const VideosVTab = ({ userId, onScroll }: IProps) => {
 
   const keyExtractor = useCallback((item: Post) => item?.id, []);
 
-  const loadMore = () => {
-    if (hasNextPage) {
-      fetchNextPage();
-    }
-  };
-
-  const showSpinner = () => {
-    if (isFetchingNextPage) {
-      return <Spinner sx={{ paddingVertical: 50 }} />;
-    } else {
-      return null;
-    }
-  };
-
   if (!isLoading && !isFetchingNextPage && videos?.length === 0) {
     return (
       <NoFoundMessage
         sx={{ marginTop: 50 }}
-        title={t("posts")}
-        description={t("noFoundPosts")}
+        title={t("videoclips")}
+        description={t("noFoundVideclips")}
+        iconProps={{ name: "video" }}
       />
     );
   }

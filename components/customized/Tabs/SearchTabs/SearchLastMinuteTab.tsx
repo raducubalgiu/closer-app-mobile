@@ -42,7 +42,10 @@ export const SearchLastMinuteTab = ({ search }: { search: string }) => {
 
   if (!isLoading && !isFetchingNextPage && posts?.length === 0) {
     return (
-      <NoFoundMessage title={t("posts")} description={t("noFoundPosts")} />
+      <NoFoundMessage
+        title={t("lastMinute")}
+        description={t("noFoundOffers")}
+      />
     );
   }
 
