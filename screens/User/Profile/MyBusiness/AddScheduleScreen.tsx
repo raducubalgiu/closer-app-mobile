@@ -5,9 +5,6 @@ import {
   Text,
   Platform,
   KeyboardAvoidingView,
-  View,
-  Pressable,
-  Keyboard,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import {
@@ -179,7 +176,7 @@ export const AddScheduleScreen = ({ route }: IProps) => {
               {dayjs(start).utc().format("D MMMM YY")}
             </Text>
             <Text style={styles.hour}>
-              Ora {dayjs(start).utc().format("HH:mm")}
+              {t("hour")} {dayjs(start).utc().format("HH:mm")}
             </Text>
           </Stack>
           <Divider color="#ddd" style={{ marginHorizontal: 15 }} />
@@ -187,35 +184,35 @@ export const AddScheduleScreen = ({ route }: IProps) => {
             <FormProvider {...methods}>
               <FormInput
                 name="name"
-                placeholder="Numele clientului"
-                label="Client"
+                placeholder={t("clientName")}
+                label={t("client")}
                 rules={{ ...isRequired }}
               />
               <FormInputSelect
                 name="serviceId"
-                placeholder="Alege serviciul"
-                label="Serviciu"
+                placeholder={t("chooseService")}
+                label={t("service")}
                 items={services}
                 rules={{ ...isRequired }}
               />
               <FormInputSelect
                 name="option"
-                placeholder="Alege categoria"
+                placeholder={t("chooseCategory")}
                 label={t("option")}
                 items={options}
                 rules={{ ...isRequired }}
               />
               <FormInputSelect
                 name="product"
-                placeholder="Alege produsul"
-                label="Produs"
+                placeholder={t("chooseProduct")}
+                label={t("product")}
                 items={products?.results}
                 onValueChange={(event: string) => setPrice(event)}
                 rules={{ ...isRequired }}
               />
               <FormInput
                 name="price"
-                placeholder="Pretul produsului"
+                placeholder={t("productPrice")}
                 label={t("price")}
                 editable={false}
                 rightText="lei"
@@ -242,9 +239,7 @@ export const AddScheduleScreen = ({ route }: IProps) => {
           onPress={handleSubmit(handleSchedule)}
           loading={isLoading}
           disabled={isLoading}
-          sxBtn={{
-            marginHorizontal: 15,
-          }}
+          sxBtn={{ marginHorizontal: 15 }}
         />
       </KeyboardAvoidingView>
     </SafeAreaView>
