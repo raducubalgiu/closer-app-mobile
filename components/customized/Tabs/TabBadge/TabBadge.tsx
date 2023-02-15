@@ -3,19 +3,12 @@ import { Icon, Badge } from "@rneui/themed";
 import theme from "../../../../assets/styles/theme";
 
 const { primary } = theme.lightColors || {};
+type IProps = { value?: number; iconProps?: any };
 
-export const TabBadge = ({
-  value,
-  color,
-  name,
-}: {
-  value: number;
-  color: any;
-  name: string;
-}) => {
+export const TabBadge = ({ value, iconProps }: IProps) => {
   return (
     <View>
-      <Icon name={name} type="feather" size={22} color={color} />
+      <Icon {...iconProps} />
       <Badge
         value={value}
         containerStyle={styles.containerStyle}

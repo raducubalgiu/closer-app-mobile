@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
-import { AirbnbRating } from "@rneui/themed";
 import { find } from "lodash";
-import { ListItem, Stack } from "../../core";
+import { ListItem, Rating, Stack } from "../../core";
 import theme from "../../../assets/styles/theme";
 
 const { primary, black, grey0 } = theme.lightColors || {};
@@ -36,14 +35,7 @@ const RatingItem = ({
 
   return (
     <ListItem between>
-      <AirbnbRating
-        count={5}
-        defaultRating={defRating}
-        isDisabled={true}
-        showRating={false}
-        selectedColor={primary}
-        size={15}
-      />
+      <Rating rating={defRating} sx={{ marginVertical: 0 }} />
       <View style={styles.barContainer}>
         <View style={styles.barProgress} />
       </View>
@@ -112,6 +104,7 @@ export const CardReviewSummary = ({
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 15,
+    marginTop: 15,
     padding: 15,
     borderRadius: 2.5,
     borderWidth: 1,

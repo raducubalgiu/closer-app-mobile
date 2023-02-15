@@ -21,9 +21,16 @@ type IProps = {
   service: any;
   option: any;
   user: User;
+  profileOverview: any;
 };
 
-export const TopTabProfile = ({ userId, service, option, user }: IProps) => {
+export const TopTabProfile = ({
+  userId,
+  service,
+  option,
+  user,
+  profileOverview,
+}: IProps) => {
   const Tab = createMaterialTopTabNavigator();
   const { role } = user || {};
   const insets = useSafeAreaInsets();
@@ -91,37 +98,31 @@ export const TopTabProfile = ({ userId, service, option, user }: IProps) => {
   );
   return (
     <Animated.View style={[{ transform: [{ translateY: headerTranslate }] }]}>
+      {profileOverview}
       <View style={{ height: TOP_TAB_HEIGHT }}>
         <Tab.Navigator
           screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, color }) => {
-              let iconName = "";
-              let iconType = "";
-              let size = 22;
+              let name = "";
+              let type = "material-community";
+              let size = 25;
 
               if (route.name === "Posts") {
-                iconType = "feather";
-                iconName = focused ? "grid" : "grid";
+                name = focused ? "grid-large" : "grid-large";
+                size = 24;
               } else if (route.name === "Products") {
-                iconType = "";
+                type = "";
               } else if (route.name === "VideoV") {
-                iconType = "feather";
-                iconName = focused ? "video" : "video";
+                name = focused
+                  ? "play-box-multiple-outline"
+                  : "play-box-multiple-outline";
               } else if (route.name === "VideoH") {
-                iconType = "feather";
-                iconName = focused ? "video" : "video";
               } else if (route.name === "About") {
-                iconType = "feather";
-                iconName = focused ? "user-check" : "user-check";
+                name = focused
+                  ? "account-circle-outline"
+                  : "account-circle-outline";
               }
-              return (
-                <Icon
-                  name={iconName}
-                  type={iconType}
-                  color={color}
-                  size={size}
-                />
-              );
+              return <Icon name={name} type={type} color={color} size={size} />;
             },
             tabBarActiveTintColor: black,
             tabBarInactiveTintColor: "#ccc",
@@ -144,8 +145,11 @@ export const TopTabProfile = ({ userId, service, option, user }: IProps) => {
                 tabBarIcon: ({ focused }) => (
                   <TabBadge
                     value={user?.productsCount}
-                    name="shopping-bag"
-                    color={focused ? black : "#ccc"}
+                    iconProps={{
+                      name: "shopping-outline",
+                      type: "material-community",
+                      color: focused ? black : "#ccc",
+                    }}
                   />
                 ),
               }}
@@ -159,9 +163,12 @@ export const TopTabProfile = ({ userId, service, option, user }: IProps) => {
               options={{
                 tabBarIcon: ({ focused }) => (
                   <TabBadge
-                    name="briefcase"
                     value={0}
-                    color={focused ? black : "#ccc"}
+                    iconProps={{
+                      name: "briefcase-outline",
+                      type: "material-community",
+                      color: focused ? black : "#ccc",
+                    }}
                   />
                 ),
               }}

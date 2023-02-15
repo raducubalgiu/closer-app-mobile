@@ -1,15 +1,14 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { memo, useState } from "react";
-import { AirbnbRating, Divider, Icon } from "@rneui/themed";
+import { Divider, Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
-import { Checkmark, Stack } from "../../core";
+import { Checkmark, Stack, Rating } from "../../core";
 import CustomAvatar from "../../core/Avatars/CustomAvatar";
 import dayjs from "dayjs";
 import { User } from "../../../models/user";
 import { useAuth, useDelete, useGet, usePost } from "../../../hooks";
-import { useTranslation } from "react-i18next";
 
-const { black, primary, grey0, error } = theme.lightColors || {};
+const { black, grey0, error } = theme.lightColors || {};
 
 type IProps = {
   id: string;
@@ -31,7 +30,6 @@ const RatingListItem = ({
   likesCount,
 }: IProps) => {
   const { user } = useAuth();
-  const { t } = useTranslation();
   const [liked, setLiked] = useState(false);
   const endpoint = `/users/${user?.id}/reviews/${id}/likes`;
 
@@ -70,23 +68,14 @@ const RatingListItem = ({
       </Stack>
       <Divider style={{ marginTop: 15 }} />
       <Stack align="start" sx={{ marginVertical: 5 }}>
-        <AirbnbRating
-          isDisabled={true}
-          count={5}
-          size={15}
-          defaultRating={rating}
-          reviewColor={black}
-          selectedColor={primary}
-          reviewSize={15}
-          showRating={false}
-        />
+        <Rating rating={rating} />
         <Text style={styles.product}>{product}</Text>
       </Stack>
       <Text style={styles.review}>{review}</Text>
       <Stack direction="row" sx={{ marginTop: 10 }}>
         <Pressable onPress={() => {}}>
           <Stack direction="row">
-            <CustomAvatar avatar={user?.avatar} size={27.5} />
+            <CustomAvatar avatar={user?.avatar} size={25} />
             <Text style={{ marginLeft: 7.5, color: grey0 }}>Răspunde...</Text>
           </Stack>
         </Pressable>

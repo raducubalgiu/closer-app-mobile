@@ -1,12 +1,18 @@
-import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
-import { RefreshControl } from "react-native";
-import { useCallback } from "react";
+import {
+  RefreshControl,
+  Text,
+  FlatList,
+  ListRenderItemInfo,
+  ScrollView,
+  Pressable,
+  StyleSheet,
+} from "react-native";
+import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useIsFocused } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useForm, FormProvider } from "react-hook-form";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
-import { FormInputSelect, Spinner, Stack } from "../../../core";
+import { Spinner, Stack } from "../../../core";
 import {
   useGet,
   useGetPaginate,
@@ -16,16 +22,19 @@ import {
 import { CardReviewSummary } from "../../Cards/CardReviewSummary";
 import RatingListItem from "../../ListItems/RatingListItem";
 import { Review } from "../../../../models/review";
+import { Divider, Icon, ListItem } from "@rneui/themed";
+import theme from "../../../../assets/styles/theme";
+import { Product } from "../../../../models";
 
 type IProps = { userId: string };
+const { black, success } = theme.lightColors || {};
 
 export const ReviewsTab = ({ userId }: IProps) => {
   const { t } = useTranslation();
   const isFocused = useIsFocused();
   const insets = useSafeAreaInsets();
-  const methods = useForm({ defaultValues: { productId: "" } });
-  const { watch } = methods;
-  const productId = watch("productId") ? watch("productId") : "";
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [expanded, setExpanded] = useState(false);
 
   const { data: products } = useGet({
     model: "products",
@@ -34,18 +43,21 @@ export const ReviewsTab = ({ userId }: IProps) => {
 
   const { data: summary } = useGet({
     model: "summary",
-    uri: `/users/${userId}/reviews/summary?productId=${productId}`,
+    uri: `/users/${userId}/reviews/summary?productId=${
+      selectedProduct ? selectedProduct?.id : ""
+    }`,
   });
 
   const options = useGetPaginate({
     model: "ratings",
     uri: `/users/${userId}/reviews`,
-    queries: `productId=${productId}`,
+    queries: `productId=${selectedProduct ? selectedProduct?.id : ""}`,
     limit: "10",
     enabled: isFocused,
   });
 
   const { isLoading, isFetchingNextPage, refetch } = options;
+  const loading = isLoading && !isFetchingNextPage;
   const { data: reviews, showSpinner, loadMore } = usePaginateActions(options);
 
   const renderRatings = useCallback(({ item }: ListRenderItemInfo<Review>) => {
@@ -67,27 +79,69 @@ export const ReviewsTab = ({ userId }: IProps) => {
 
   const keyExtractor = useCallback((item: Review) => item?.id, []);
 
+  const onHandleProduct = (prod: Product | null) => {
+    setSelectedProduct(prod);
+    setExpanded(false);
+  };
+
+  const accordionTitle = (
+    <ListItem.Content>
+      <Text style={{ fontWeight: "600", color: black }}>
+        {selectedProduct ? selectedProduct?.name : t("allServices")}
+      </Text>
+    </ListItem.Content>
+  );
+
   const header = (
     <>
-      {products?.length > 0 && (
-        <Stack sx={{ marginHorizontal: 15, marginBottom: 5 }}>
-          <FormProvider {...methods}>
-            <FormInputSelect
-              name="productId"
-              items={products}
-              placeholder={t("allServices")}
-            />
-          </FormProvider>
-        </Stack>
-      )}
-      {!isLoading && !isFetchingNextPage && reviews?.length > 0 && (
+      <ListItem.Accordion
+        content={accordionTitle}
+        onPress={() => setExpanded((expanded) => !expanded)}
+        isExpanded={expanded}
+        containerStyle={styles.accordion}
+      >
+        <ScrollView style={styles.accordionList}>
+          <Pressable onPress={() => onHandleProduct(null)}>
+            <Stack direction="row" sx={{ padding: 15 }}>
+              <Text style={{ color: black, fontWeight: "500" }}>
+                {t("allServices")}
+              </Text>
+              {!selectedProduct && (
+                <Icon name="check" type="feather" color={success} size={20} />
+              )}
+            </Stack>
+            <Divider color="#ddd" />
+          </Pressable>
+          {products?.map((prod: Product, i: number) => {
+            return (
+              <Pressable key={i} onPress={() => onHandleProduct(prod)}>
+                <Stack direction="row" sx={{ padding: 15 }}>
+                  <Text style={{ color: black, fontWeight: "500" }}>
+                    {prod.name}
+                  </Text>
+                  {selectedProduct?.id === prod?.id && (
+                    <Icon
+                      name="check"
+                      type="feather"
+                      color={success}
+                      size={20}
+                    />
+                  )}
+                </Stack>
+                <Divider color="#ddd" />
+              </Pressable>
+            );
+          })}
+        </ScrollView>
+      </ListItem.Accordion>
+      {!expanded && !loading && reviews?.length > 0 && (
         <CardReviewSummary
           ratings={summary?.ratings}
           ratingsQuantity={summary?.ratingsQuantity}
           ratingsAverage={summary?.ratingsAvg}
         />
       )}
-      {!isLoading && !isFetchingNextPage && reviews?.length === 0 && (
+      {!loading && reviews?.length === 0 && (
         <NoFoundMessage
           title={t("reviews")}
           description={t("noFoundReviews")}
@@ -95,8 +149,6 @@ export const ReviewsTab = ({ userId }: IProps) => {
       )}
     </>
   );
-
-  const loading = isLoading && !isFetchingNextPage;
 
   const { refreshing, refetchByUser } = useRefreshByUser(refetch);
 
@@ -107,7 +159,7 @@ export const ReviewsTab = ({ userId }: IProps) => {
   return (
     <>
       {!loading && (
-        <FlashList
+        <FlatList
           ListHeaderComponent={header}
           refreshControl={refreshControl}
           contentContainerStyle={{
@@ -120,10 +172,32 @@ export const ReviewsTab = ({ userId }: IProps) => {
           ListFooterComponent={showSpinner}
           onEndReached={loadMore}
           onEndReachedThreshold={0.3}
-          estimatedItemSize={100}
         />
       )}
       {loading && <Spinner />}
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  accordion: {
+    borderWidth: 1,
+    borderColor: "#ddd",
+    marginHorizontal: 15,
+    borderRadius: 2.5,
+    paddingVertical: 10,
+    marginTop: 0,
+  },
+  accordionList: {
+    height: 200,
+    borderLeftWidth: 1,
+    borderBottomWidth: 1,
+    borderRightWidth: 1,
+    borderLeftColor: "#ddd",
+    borderBottomColor: "#ddd",
+    borderRightColor: "#ddd",
+    marginHorizontal: 15,
+    borderRadius: 2.5,
+    flex: 1,
+  },
+});

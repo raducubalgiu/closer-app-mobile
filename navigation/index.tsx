@@ -164,22 +164,35 @@ const TabsScreen = () => {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color }) => {
-          let iconName = "";
+          let name = "";
+          let type = "feather";
+          let size = 24;
+          let style = {};
 
           if (route.name === "Home") {
-            iconName = focused ? "search" : "shopping-bag";
+            name = focused ? "search" : "shopping-outline";
+            type = focused ? "feather" : "material-community";
+            size = type === "material-community" ? 26 : 24;
           } else if (route.name === "Messages") {
-            iconName = focused ? "message-circle" : "message-circle";
+            name = focused ? "message-circle" : "message-circle";
           } else if (route.name === "FeedStack") {
-            iconName = focused ? "compass" : "compass";
+            name = focused ? "compass" : "compass";
           } else if (route.name === "Schedules") {
-            iconName = focused ? "calendar" : "calendar";
+            name = focused ? "calendar" : "calendar";
           } else if (route.name === "Profile") {
-            iconName = focused ? "user" : "user";
+            name = focused ? "user" : "user";
           } else if (route.name === "SharedStack") {
-            iconName = focused ? "user" : "user";
+            name = focused ? "user" : "user";
           }
-          return <Icon name={iconName} type="feather" color={color} />;
+          return (
+            <Icon
+              name={name}
+              type={type}
+              color={color}
+              size={size}
+              style={{ ...style }}
+            />
+          );
         },
         tabBarActiveTintColor: black,
         tabBarInactiveTintColor: "gray",
@@ -422,16 +435,7 @@ const CloserNavigation = () => {
               name="AllBookmarks"
               component={AllBookmarksScreen}
             />
-            <RootStack.Screen
-              name="Comments"
-              component={CommentsScreen}
-              options={{
-                headerShown: true,
-                headerTitle: t("comments"),
-                headerBackTitle: "",
-                headerTintColor: black,
-              }}
-            />
+            <RootStack.Screen name="Comments" component={CommentsScreen} />
             <RootStack.Screen name="SearchAll" component={SearchAllScreen} />
             <RootStack.Screen name="Hashtag" component={HashtagScreen} />
             <RootStack.Screen name="Service" component={ServiceScreen} />
@@ -513,7 +517,7 @@ const CloserNavigation = () => {
             <RootStack.Screen
               name="SearchPosts"
               component={SearchPostsScreen}
-              options={{ animation: "simple_push" }}
+              //options={{ animation: "simple_push" }}
             />
             <RootStack.Screen
               name="UserLocationPermission"

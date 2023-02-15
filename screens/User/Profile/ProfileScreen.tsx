@@ -76,27 +76,29 @@ export const ProfileScreen = () => {
           </Stack>
         </Pressable>
       )}
-      <ProfileOverview
-        user={user}
-        name={user?.name}
-        username={user?.username}
-        avatar={user?.avatar}
-      >
-        <Button
-          title={t("editProfile")}
-          onPress={navigateProfile}
-          variant="outlined"
-          sxBtn={{ width: 150 }}
-        />
-        <ProfileIconButton name="bookmark" onPress={navigateBookmarks} />
-        <ProfileIconButton name="instagram" onPress={navigateInstagram} />
-        <ProfileIconButton name="youtube" onPress={navigateYoutube} />
-      </ProfileOverview>
       <TopTabProfile
         userId={user?.id}
         service={null}
         option={null}
         user={user}
+        profileOverview={
+          <ProfileOverview
+            user={user}
+            name={user?.name}
+            username={user?.username}
+            avatar={user?.avatar}
+          >
+            <Button
+              title={t("editProfile")}
+              onPress={navigateProfile}
+              variant="outlined"
+              sxBtn={{ width: 150 }}
+            />
+            <ProfileIconButton name="bookmark" onPress={navigateBookmarks} />
+            <ProfileIconButton name="instagram" onPress={navigateInstagram} />
+            <ProfileIconButton name="youtube" onPress={navigateYoutube} />
+          </ProfileOverview>
+        }
       />
       <Protected roles={[MAIN_ROLE, SECOND_ROLE]} userRole={role}>
         <FAB

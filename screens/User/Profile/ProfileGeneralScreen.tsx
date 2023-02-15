@@ -101,40 +101,53 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
           onOpenSettings={() => {}}
         />
       </View>
-      <ProfileOverview
-        user={userDetails}
-        name={name}
-        username={username}
-        avatar={avatar}
-      >
-        <FollowProfileButton isFollow={isFollow} onPress={handleFollow} />
-        {isFollow && (
-          <ProfileIconButton name="message-circle" onPress={goToMessage} />
-        )}
-        <Protected
-          roles={[MAIN_ROLE, SECOND_ROLE]}
-          userRole={userDetails?.role}
-        >
-          <ProfileIconButton name="map-pin" onPress={goToMap} />
-        </Protected>
-        <ProfileIconButton name="bell" onPress={() => {}} />
-        <ProfileIconButton
-          name="adduser"
-          type="antdesign"
-          onPress={handleSuggested}
-          loading={isLoading}
-        />
-      </ProfileOverview>
-      {isPrivate && <CardAccountPrivate />}
-      {suggested && (
-        <SuggestedUsersList suggested={suggested?.data} userId={userId} />
-      )}
       {!isPrivate && (
         <TopTabProfile
           user={userDetails}
           userId={userId || userDetails?.id}
           service={service}
           option={option}
+          profileOverview={
+            <>
+              <ProfileOverview
+                user={userDetails}
+                name={name}
+                username={username}
+                avatar={avatar}
+              >
+                <FollowProfileButton
+                  isFollow={isFollow}
+                  onPress={handleFollow}
+                />
+                {isFollow && (
+                  <ProfileIconButton
+                    name="message-circle"
+                    onPress={goToMessage}
+                  />
+                )}
+                <Protected
+                  roles={[MAIN_ROLE, SECOND_ROLE]}
+                  userRole={userDetails?.role}
+                >
+                  <ProfileIconButton name="map-pin" onPress={goToMap} />
+                </Protected>
+                <ProfileIconButton name="bell" onPress={() => {}} />
+                <ProfileIconButton
+                  name="adduser"
+                  type="antdesign"
+                  onPress={handleSuggested}
+                  loading={isLoading}
+                />
+              </ProfileOverview>
+              {isPrivate && <CardAccountPrivate />}
+              {suggested && (
+                <SuggestedUsersList
+                  suggested={suggested?.data}
+                  userId={userId}
+                />
+              )}
+            </>
+          }
         />
       )}
     </View>

@@ -15,12 +15,13 @@ import {
 import { useAuth, useGet, usePost } from "../hooks";
 import { useNavigation } from "@react-navigation/native";
 import { useHeaderHeight } from "@react-navigation/elements";
-import { Spinner } from "../components/core";
+import { Header, Spinner } from "../components/core";
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
 import { RootStackParams } from "../navigation/rootStackParams";
+import { useTranslation } from "react-i18next";
 
 type IProps = NativeStackScreenProps<RootStackParams, "Comments">;
 
@@ -30,6 +31,7 @@ export const CommentsScreen = ({ route }: IProps) => {
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { postId, description, avatar, username } = route.params;
   const { name, date, focus, creatorId } = route.params;
+  const { t } = useTranslation();
   const [comments, setComments] = useState([]);
   const [next, setNext] = useState(null);
   const [page, setPage] = useState(1);
@@ -114,10 +116,11 @@ export const CommentsScreen = ({ route }: IProps) => {
 
   return (
     <SafeAreaView style={styles.screen}>
+      <Header title={t("comments")} />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "position" : "height"}
         style={styles.container}
-        keyboardVerticalOffset={headerHeight + 70}
+        //keyboardVerticalOffset={headerHeight + 70}
       >
         <FlatList
           ListHeaderComponent={renderHeader}

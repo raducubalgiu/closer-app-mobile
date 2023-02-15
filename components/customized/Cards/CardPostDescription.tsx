@@ -26,12 +26,16 @@ export const CardPostDescription = ({
       <View style={styles.headerCont}>
         <CustomAvatar size={32.5} avatar={avatar} />
         <View style={styles.textCont}>
-          <DisplayText
-            text={description}
-            maxWords={10}
-            username={username}
-            goToUserAllInfo={onGoToUserAllInfo}
-          />
+          {description ? (
+            <DisplayText
+              text={description}
+              maxWords={10}
+              username={username}
+              goToUserAllInfo={onGoToUserAllInfo}
+            />
+          ) : (
+            <Text>...</Text>
+          )}
           <Text style={styles.date}>{date}</Text>
         </View>
       </View>

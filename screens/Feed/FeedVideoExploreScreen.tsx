@@ -1,8 +1,11 @@
 import { FlatList, Dimensions, View, RefreshControl } from "react-native";
 import { useCallback, useState } from "react";
 import VideoListItem from "../../components/customized/ListItems/VideoListItem/VideoListItem";
-import { useGetPaginate, useRefreshByUser } from "../../hooks";
-import { Spinner } from "../../components/core";
+import {
+  useGetPaginate,
+  usePaginateActions,
+  useRefreshByUser,
+} from "../../hooks";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../navigation/rootStackParams";
 
@@ -13,50 +16,28 @@ export const FeedVideoExploreScreen = ({ route }: IProps) => {
   const { initialIndex } = route.params;
   const [scrollEnabled, setScrollEnabled] = useState(true);
 
-  const {
-    data,
-    hasNextPage,
-    fetchNextPage,
-    isFetchingNextPage,
-    isLoading,
-    isFetching,
-    refetch,
-  } = useGetPaginate({
+  const options = useGetPaginate({
     model: "videos",
     uri: `/posts/get-all-posts`,
     queries: `postType=video&orientation=portrait`,
     limit: "5",
   });
 
+  const { isLoading, isFetching, refetch } = options;
   const loading = isLoading || isFetching;
+  const { data: videos, loadMore, showSpinner } = usePaginateActions(options);
 
   const renderVideo = useCallback(
-    ({ item }: { item: any }) => {
-      return (
-        <VideoListItem
-          post={item}
-          isLoading={loading}
-          setScrollEnabled={setScrollEnabled}
-        />
-      );
-    },
+    ({ item }: { item: any }) => (
+      <VideoListItem
+        post={item}
+        isLoading={loading}
+        setScrollEnabled={setScrollEnabled}
+      />
+    ),
     [loading]
   );
 
-  const loadMore = () => {
-    if (hasNextPage) fetchNextPage();
-  };
-
-  const showSpinner = () => {
-    if (isFetchingNextPage) {
-      return <Spinner />;
-    } else {
-      return null;
-    }
-  };
-
-  const { pages } = data || {};
-  const videos = pages?.map((page) => page.results).flat();
   const keyExtractor = useCallback((item: any) => item?.id, []);
 
   const getItemLayout = useCallback(
@@ -80,11 +61,9 @@ export const FeedVideoExploreScreen = ({ route }: IProps) => {
         keyExtractor={keyExtractor}
         renderItem={renderVideo}
         refreshControl={refreshControl}
-        initialNumToRender={5}
-        bounces={false}
         showsVerticalScrollIndicator={false}
-        snapToInterval={height}
-        decelerationRate={0.5}
+        decelerationRate={0.0}
+        bounces={false}
         pagingEnabled={true}
         getItemLayout={getItemLayout}
         initialScrollIndex={initialIndex}
