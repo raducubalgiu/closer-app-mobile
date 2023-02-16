@@ -8,6 +8,7 @@ import { Icon } from "@rneui/themed";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
 import { MAIN_ROLE, SECOND_ROLE } from "@env";
+import { useTranslation } from "react-i18next";
 
 const { grey0, primary, black } = theme.lightColors || {};
 
@@ -36,6 +37,7 @@ const CardPostHeader = ({
 }: IProps) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
+  const { t } = useTranslation();
 
   const goToUser = (userId: string) => {
     navigation.push("ProfileGeneral", {
@@ -60,7 +62,7 @@ const CardPostHeader = ({
               {checkmark && <Checkmark sx={{ marginLeft: 5 }} size={8} />}
             </Stack>
             <Stack direction="row" sx={{ marginTop: 1 }}>
-              <Text style={styles.profession}>{profession?.name}</Text>
+              <Text style={styles.profession}>{t(`${profession?.name}`)}</Text>
               <Protected userRole={role} roles={[MAIN_ROLE, SECOND_ROLE]}>
                 <Text style={styles.point}>{"\u2B24"}</Text>
                 <Stack direction="row">

@@ -12,12 +12,14 @@ type IProps = {
   type: string;
   typeId: string;
   status?: boolean;
+  sx?: {};
   onBookmarksCount?: (no: number) => void;
 };
 
 export const BookmarkButton = ({
   type,
   typeId,
+  sx,
   status = false,
   onBookmarksCount,
 }: IProps) => {
@@ -67,7 +69,7 @@ export const BookmarkButton = ({
   }, []);
 
   return (
-    <Pressable style={styles.button} onPress={handleBookmark}>
+    <Pressable style={[styles.button, sx]} onPress={handleBookmark}>
       <Stack direction="row">
         <Animated.View style={[{ transform: [{ scale: animatedScale }] }]}>
           <Icon

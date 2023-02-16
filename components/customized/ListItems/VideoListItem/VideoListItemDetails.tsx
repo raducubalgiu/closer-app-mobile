@@ -67,7 +67,10 @@ const VideoListItemDetails = ({
   };
 
   const goToSound = () => {
-    navigation.push("Sound", { uri });
+    navigation.push("Sound", {
+      soundUri: uri,
+      avatar: userDetails?.avatar[0]?.url,
+    });
   };
 
   const details = (
