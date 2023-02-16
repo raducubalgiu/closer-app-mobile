@@ -19,6 +19,7 @@ import {
   ProfileIconButton,
   FollowProfileButton,
   CardAccountPrivate,
+  HeaderProfile,
 } from "../../../components/customized";
 import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
 import SuggestedUsersList from "../../../components/customized/Lists/SuggestedUsersList";
@@ -108,7 +109,7 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
           service={service}
           option={option}
           profileOverview={
-            <>
+            <View style={{ marginTop: 10 }}>
               <ProfileOverview
                 user={userDetails}
                 name={name}
@@ -131,7 +132,6 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
                 >
                   <ProfileIconButton name="map-pin" onPress={goToMap} />
                 </Protected>
-                <ProfileIconButton name="bell" onPress={() => {}} />
                 <ProfileIconButton
                   name="adduser"
                   type="antdesign"
@@ -146,7 +146,7 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
                   userId={userId}
                 />
               )}
-            </>
+            </View>
           }
         />
       )}

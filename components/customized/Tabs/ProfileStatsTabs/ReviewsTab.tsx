@@ -61,8 +61,16 @@ export const ReviewsTab = ({ userId }: IProps) => {
   const { data: reviews, showSpinner, loadMore } = usePaginateActions(options);
 
   const renderRatings = useCallback(({ item }: ListRenderItemInfo<Review>) => {
-    const { id, reviewerId, productId, rating, review, createdAt, likesCount } =
-      item || {};
+    const {
+      id,
+      reviewerId,
+      serviceId,
+      productId,
+      rating,
+      review,
+      createdAt,
+      likesCount,
+    } = item || {};
 
     return (
       <RatingListItem
@@ -72,6 +80,7 @@ export const ReviewsTab = ({ userId }: IProps) => {
         rating={rating}
         review={review}
         product={productId?.name}
+        service={serviceId?.name}
         likesCount={likesCount}
       />
     );

@@ -174,7 +174,7 @@ export const AddUserProgramScreen = () => {
             />
             <Button
               size="lg"
-              radius={10}
+              radius={5}
               title={t("save")}
               loading={isLoading}
               onPress={handleSubmit(onSubmit)}

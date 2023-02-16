@@ -16,6 +16,7 @@ type IProps = {
   date: string;
   rating: number;
   product: string;
+  service: string;
   review: string;
   likesCount: number;
 };
@@ -26,6 +27,7 @@ const RatingListItem = ({
   date,
   rating,
   product,
+  service,
   review,
   likesCount,
 }: IProps) => {
@@ -69,7 +71,10 @@ const RatingListItem = ({
       <Divider style={{ marginTop: 15 }} />
       <Stack align="start" sx={{ marginVertical: 5 }}>
         <Rating rating={rating} />
-        <Text style={styles.product}>{product}</Text>
+        <Stack direction="row">
+          <Text style={styles.product}>{service}</Text>
+          <Text style={styles.product}>{product}</Text>
+        </Stack>
       </Stack>
       <Text style={styles.review}>{review}</Text>
       <Stack direction="row" sx={{ marginTop: 10 }}>
@@ -123,6 +128,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingVertical: 5,
     paddingHorizontal: 15,
+    marginRight: 10,
     borderRadius: 5,
     fontWeight: "500",
   },

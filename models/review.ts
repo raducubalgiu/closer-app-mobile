@@ -1,4 +1,5 @@
 import { Product } from "./product";
+import { Service } from "./service";
 import { User } from "./user";
 
 export interface Review {
@@ -7,7 +8,7 @@ export interface Review {
   rating: number;
   userId: string;
   reviewerId: User;
-  serviceId: string;
+  serviceId: Service;
   productId: Product;
   likesCount: 0;
   createdAt: string;
