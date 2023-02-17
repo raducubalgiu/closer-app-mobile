@@ -1,15 +1,18 @@
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { Header, Heading } from "../../../../components/core";
-import theme from "../../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 import { Divider } from "@rneui/themed";
 import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { Header, Heading } from "../../../../components/core";
+import theme from "../../../../assets/styles/theme";
 import { useAuth, usePatch } from "../../../../hooks";
 import { showToast } from "../../../../utils";
 import {
   SettingsListItem,
   SettingsSwitchListItem,
 } from "../../../../components/customized";
+import { RootStackParams } from "../../../../navigation/rootStackParams";
 
 const { grey0, error } = theme.lightColors || {};
 
@@ -17,6 +20,8 @@ export const PrivacyScreen = () => {
   const { user, setUser } = useAuth();
   const [privateAccount, setPrivateAccount] = useState(user?.settings?.private);
   const { t } = useTranslation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const { mutate } = usePatch({
     uri: `/users/${user?.id}/settings`,
@@ -50,7 +55,7 @@ export const PrivacyScreen = () => {
         <SettingsListItem
           title={t("comments")}
           iconLeftProps={{ name: "message-circle", color: grey0 }}
-          onPress={() => {}}
+          onPress={() => navigation.navigate("PrivacyComments")}
         />
         <SettingsListItem
           title={t("mentionsAndTags")}
@@ -65,7 +70,7 @@ export const PrivacyScreen = () => {
         <SettingsListItem
           title={t("postLikes")}
           iconLeftProps={{ name: "heart", color: grey0 }}
-          onPress={() => {}}
+          onPress={() => navigation.navigate("PrivacyLikes")}
         />
         <SettingsListItem
           title={t("followersList")}

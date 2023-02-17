@@ -80,6 +80,8 @@ export { DeleteAccountPermanentlyScreen } from "./User/SettingsAndPrivacy/Accoun
 export { DisableAccountScreen } from "./User/SettingsAndPrivacy/Account/DisableAccountScreen";
 export { HideAccountScreen } from "./User/SettingsAndPrivacy/Account/HideAccountScreen";
 export { PrivacyScreen } from "./User/SettingsAndPrivacy/Privacy/PrivacyScreen";
+export { PrivacyCommentsScreen } from "./User/SettingsAndPrivacy/Privacy/PrivacyCommentsScreen";
+export { PrivacyLikesScreen } from "./User/SettingsAndPrivacy/Privacy/PrivacyLikesScreen";
 export { ClearCacheScreen } from "./User/SettingsAndPrivacy/Cache/ClearCacheScreen";
 export { SavingDataScreen } from "./User/SettingsAndPrivacy/Cache/SavingDataScreen";
 export { ReportAProblemScreen } from "./User/SettingsAndPrivacy/Assistance/ReportAProblemScreen";

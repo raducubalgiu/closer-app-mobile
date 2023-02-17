@@ -115,6 +115,8 @@ export type RootStackParams = {
     userId: string;
   };
   Privacy: any;
+  PrivacyComments: any;
+  PrivacyLikes: any;
   Profile: any;
   ProfileGeneral: {
     screen?: string;

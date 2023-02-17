@@ -9,36 +9,43 @@ type IProps = {
   onPress: () => void;
   sx?: {};
   color?: string;
+  variant?: string;
   checked: boolean;
 };
 
 export const FormInputRadio = ({
   text,
+  variant = "bold",
   color = primary,
   checked,
   onPress,
   sx,
 }: IProps) => {
   return (
-    <Stack direction="row" sx={styles.container}>
-      <Text style={styles.text}>{text}</Text>
+    <Stack direction="row">
+      <Text
+        style={{
+          ...styles.text,
+          fontWeight: variant === "normal" ? "400" : "500",
+        }}
+      >
+        {text}
+      </Text>
       <IconButton
         onPress={onPress}
         name={checked ? "radio-button-on" : "radio-button-off-sharp"}
         type="ionicon"
         size={30}
         color={color}
-        sx={{ paddingVertical: 12.5, paddingLeft: 10 }}
+        sx={{ paddingVertical: 12.5, paddingLeft: 10, ...sx }}
       />
     </Stack>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {},
   text: {
     color: black,
     fontSize: 15,
-    fontWeight: "500",
   },
 });
