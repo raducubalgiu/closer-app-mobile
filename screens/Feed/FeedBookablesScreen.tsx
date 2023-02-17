@@ -52,7 +52,7 @@ export const FeedBookablesScreen = () => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <HeaderFeed indexLabel={2} />
+      <HeaderFeed indexLabel={1} />
       <FlatList
         ref={ref}
         ListHeaderComponent={header}

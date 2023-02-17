@@ -31,7 +31,6 @@ export { SettingsProfileScreen } from "./User/SettingsAndPrivacy/SettingsProfile
 export { CalendarScreen } from "./CalendarScreen";
 export { CommentsScreen } from "./CommentsScreen";
 export { FeedExploreScreen } from "./Feed/FeedExploreScreen";
-export { FeedFollowingsScreen } from "./Feed/FeedFollowingsScreen";
 export { FeedBookablesScreen } from "./Feed/FeedBookablesScreen";
 export { FeedLastMinuteScreen } from "./Feed/FeedLastMinuteScreen";
 export { FeedVideoExploreScreen } from "./Feed/FeedVideoExploreScreen";

@@ -32,8 +32,11 @@ import {
 import { Post } from "../../models/post";
 import theme from "../../assets/styles/theme";
 import { RootStackParams } from "../../navigation/rootStackParams";
+import CustomAvatar from "../../components/core/Avatars/CustomAvatar";
+import { trimFunc } from "../../utils";
+import { LinearGradient } from "expo-linear-gradient";
 
-const { black } = theme.lightColors || {};
+const { black, primary } = theme.lightColors || {};
 
 export const FeedExploreScreen = () => {
   const { user } = useAuth();
@@ -59,6 +62,12 @@ export const FeedExploreScreen = () => {
     queries: "postType=video&orientation=portrait",
   });
 
+  const storiesOptions = useGetPaginate({
+    model: "followings",
+    uri: `/users/${user?.id}/followings`,
+    limit: "20",
+  });
+
   const {
     refetch,
     isLoading: isLoadingPosts,
@@ -73,6 +82,7 @@ export const FeedExploreScreen = () => {
 
   const { isLoading: isLoadingVideos } = videosOptions;
   const { data: videos } = usePaginateActions(videosOptions);
+  const { data: stories } = usePaginateActions(storiesOptions);
   const loading = (isLoadingPosts || isLoadingVideos) && !isFetchingNextPage;
 
   useRefreshOnFocus(refetch);
@@ -157,6 +167,54 @@ export const FeedExploreScreen = () => {
         contentContainerStyle={{
           paddingLeft: 10,
           paddingRight: 5,
+        }}
+      />
+      <Divider color="#ddd" style={{ marginTop: 15, marginBottom: 10 }} />
+      <Stack
+        direction="row"
+        sx={{ marginTop: 5, marginBottom: 15, marginLeft: 10 }}
+      >
+        <Text style={{ color: black, fontWeight: "600", fontSize: 15 }}>
+          {t("stories")}
+        </Text>
+        <Stack
+          direction="row"
+          sx={{
+            paddingVertical: 2.5,
+            paddingHorizontal: 15,
+          }}
+        >
+          <Icon name="arrow-right" />
+          <Text style={{ color: black, fontWeight: "600", fontSize: 13 }}>
+            Vezi tot
+          </Text>
+        </Stack>
+      </Stack>
+      <FlatList
+        data={stories}
+        horizontal
+        keyExtractor={(item) => item.id}
+        showsHorizontalScrollIndicator={false}
+        renderItem={({ item }: any) => {
+          return (
+            <Stack sx={{ paddingLeft: 10 }}>
+              <LinearGradient
+                colors={[`${primary}`, `#ffd9b3`]}
+                start={{ x: 1, y: 0.4 }}
+                end={{ x: 1.4, y: 3 }}
+                style={{ borderRadius: 200 }}
+              >
+                <CustomAvatar
+                  avatar={item?.followeeId?.avatar}
+                  size={65}
+                  sx={{ margin: 2.1, borderWidth: 1.5, borderColor: "white" }}
+                />
+              </LinearGradient>
+              <Text style={{ fontSize: 13, marginTop: 5 }}>
+                {trimFunc(item?.followeeId?.username, 10)}
+              </Text>
+            </Stack>
+          );
         }}
       />
       <Divider color="#ddd" style={{ marginTop: 15, marginBottom: 10 }} />

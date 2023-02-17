@@ -52,7 +52,7 @@ export const FeedLastMinuteScreen = () => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <HeaderFeed indexLabel={3} />
+      <HeaderFeed indexLabel={2} />
       <FlatList
         ref={ref}
         ListHeaderComponent={header}

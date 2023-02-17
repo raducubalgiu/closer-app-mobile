@@ -84,7 +84,9 @@ const ProfileOverview = ({
         </Pressable>
         <Text style={styles.name}>{name}</Text>
         <Stack direction="row" justify="start">
-          <Text style={styles.business}>{t(`${profession?.name}`)}</Text>
+          <Text style={styles.business}>
+            {displayDash(t(`${profession?.name}`))}
+          </Text>
           <Protected userRole={role} roles={[MAIN_ROLE, SECOND_ROLE]}>
             <IconStar sx={styles.star} />
             <Text style={styles.ratingsAverage}>

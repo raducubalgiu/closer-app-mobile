@@ -24,9 +24,8 @@ export const HeaderFeed = ({ indexLabel }: IProps) => {
 
   const LABELS = [
     { id: "1", title: t("explore"), isActive: true },
-    { id: "2", title: t("following"), isActive: false },
-    { id: "3", title: t("book"), isActive: false },
-    { id: "4", title: t("lastMinute"), isActive: false },
+    { id: "2", title: t("book"), isActive: false },
+    { id: "3", title: t("lastMinute"), isActive: false },
   ];
 
   const getItemLayout = useCallback((_: any, index: number) => {
@@ -46,10 +45,8 @@ export const HeaderFeed = ({ indexLabel }: IProps) => {
             if (index === 0) {
               navigation.replace("FeedExplore");
             } else if (index === 1) {
-              navigation.replace("FeedFollowings");
-            } else if (index === 2) {
               navigation.replace("FeedBookables");
-            } else if (index === 3) {
+            } else if (index === 2) {
               navigation.replace("FeedLastMinute");
             }
           }}

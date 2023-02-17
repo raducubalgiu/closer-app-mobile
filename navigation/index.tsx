@@ -55,7 +55,6 @@ import {
   CalendarScreen,
   CommentsScreen,
   FeedExploreScreen,
-  FeedFollowingsScreen,
   FeedBookablesScreen,
   FeedLastMinuteScreen,
   FeedVideoExploreScreen,
@@ -138,7 +137,6 @@ const FeedStack = () => {
       screenOptions={{ headerShown: false, animation: "fade" }}
     >
       <Stack.Screen name="FeedExplore" component={FeedExploreScreen} />
-      <Stack.Screen name="FeedFollowings" component={FeedFollowingsScreen} />
       <Stack.Screen name="FeedBookables" component={FeedBookablesScreen} />
       <Stack.Screen name="FeedLastMinute" component={FeedLastMinuteScreen} />
     </Stack.Navigator>

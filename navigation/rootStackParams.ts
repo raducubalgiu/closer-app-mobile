@@ -65,7 +65,6 @@ export type RootStackParams = {
     period: any;
   };
   FeedExplore: any;
-  FeedFollowings: any;
   FeedBookables: any;
   FeedLastMinute: any;
   FeedVideoExplore: { initialIndex: number };
