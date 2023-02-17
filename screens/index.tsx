@@ -84,6 +84,9 @@ export { PrivacyCommentsScreen } from "./User/SettingsAndPrivacy/Privacy/Privacy
 export { PrivacyLikesScreen } from "./User/SettingsAndPrivacy/Privacy/PrivacyLikesScreen";
 export { PrivacyFollowingsScreen } from "./User/SettingsAndPrivacy/Privacy/PrivacyFollowingsList";
 export { PrivacyBlockedAccounts } from "./User/SettingsAndPrivacy/Privacy/PrivacyBlockedAccounts";
+export { PrivacyTagsAndMentionsScreen } from "./User/SettingsAndPrivacy/Privacy/PrivacyTagsAndMentions/PrivacyTagsAndMentionsScreen";
+export { PrivacyMentionsScreen } from "./User/SettingsAndPrivacy/Privacy/PrivacyTagsAndMentions/PrivacyMentionsScreen";
+export { PrivacyTagsScreen } from "./User/SettingsAndPrivacy/Privacy/PrivacyTagsAndMentions/PrivacyTagsScreen";
 export { ClearCacheScreen } from "./User/SettingsAndPrivacy/Cache/ClearCacheScreen";
 export { SavingDataScreen } from "./User/SettingsAndPrivacy/Cache/SavingDataScreen";
 export { ReportAProblemScreen } from "./User/SettingsAndPrivacy/Assistance/ReportAProblemScreen";

@@ -61,7 +61,7 @@ export const PrivacyScreen = () => {
         <SettingsListItem
           title={t("mentionsAndTags")}
           iconLeftProps={{ name: "at-sign", color: grey0 }}
-          onPress={() => {}}
+          onPress={() => navigation.navigate("PrivacyTagsAndMentions")}
           sx={{ paddingVertical: 12.5 }}
         />
         <SettingsListItem

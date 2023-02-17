@@ -78,6 +78,9 @@ import {
   PrivacyLikesScreen,
   PrivacyFollowingsScreen,
   PrivacyBlockedAccounts,
+  PrivacyTagsAndMentionsScreen,
+  PrivacyMentionsScreen,
+  PrivacyTagsScreen,
   ProductReviewsScreen,
   ReportAProblemScreen,
   SchedulesScreen,
@@ -412,6 +415,18 @@ const CloserNavigation = () => {
               <RootStack.Screen
                 name="PrivacyBlockedAccounts"
                 component={PrivacyBlockedAccounts}
+              />
+              <RootStack.Screen
+                name="PrivacyTagsAndMentions"
+                component={PrivacyTagsAndMentionsScreen}
+              />
+              <RootStack.Screen
+                name="PrivacyMentions"
+                component={PrivacyMentionsScreen}
+              />
+              <RootStack.Screen
+                name="PrivacyTags"
+                component={PrivacyTagsScreen}
               />
               <RootStack.Screen
                 name="ClearCache"

@@ -124,11 +124,11 @@ const styles = StyleSheet.create({
   },
   labelText: {
     color: grey0,
-    fontSize: 16.5,
+    fontSize: 15,
   },
   label: {
     color: black,
-    fontSize: 16,
+    fontSize: 15.5,
     fontWeight: "500",
     marginRight: 5,
   },
