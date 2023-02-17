@@ -67,7 +67,7 @@ export const ProfileScreen = () => {
           onOpenPostOptions={showPostOptions}
         />
       </View>
-      {userContext?.status === "hidden" && (
+      {userContext?.settings?.status === "hidden" && (
         <Pressable onPress={() => navigation.navigate("HideAccount")}>
           <Stack sx={styles.hidden}>
             <Text style={{ color: "white", fontWeight: "500" }}>

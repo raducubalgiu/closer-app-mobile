@@ -91,7 +91,7 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
     });
   };
 
-  const isPrivate = !isFollow && userDetails?.private;
+  const isPrivate = !isFollow && userDetails?.settings?.private;
 
   return (
     <View style={styles.container}>
@@ -102,54 +102,46 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
           onOpenSettings={() => {}}
         />
       </View>
-      {!isPrivate && (
-        <TopTabProfile
-          user={userDetails}
-          userId={userId || userDetails?.id}
-          service={service}
-          option={option}
-          profileOverview={
-            <View style={{ marginTop: 10 }}>
-              <ProfileOverview
-                user={userDetails}
-                name={name}
-                username={username}
-                avatar={avatar}
-              >
-                <FollowProfileButton
-                  isFollow={isFollow}
-                  onPress={handleFollow}
-                />
-                {isFollow && (
-                  <ProfileIconButton
-                    name="message-circle"
-                    onPress={goToMessage}
-                  />
-                )}
-                <Protected
-                  roles={[MAIN_ROLE, SECOND_ROLE]}
-                  userRole={userDetails?.role}
-                >
-                  <ProfileIconButton name="map-pin" onPress={goToMap} />
-                </Protected>
+      <TopTabProfile
+        user={userDetails}
+        userId={userId || userDetails?.id}
+        service={service}
+        option={option}
+        profileOverview={
+          <View style={{ marginTop: 10 }}>
+            <ProfileOverview
+              user={userDetails}
+              name={name}
+              username={username}
+              avatar={avatar}
+            >
+              <FollowProfileButton isFollow={isFollow} onPress={handleFollow} />
+              {isFollow && (
                 <ProfileIconButton
-                  name="adduser"
-                  type="antdesign"
-                  onPress={handleSuggested}
-                  loading={isLoading}
-                />
-              </ProfileOverview>
-              {isPrivate && <CardAccountPrivate />}
-              {suggested && (
-                <SuggestedUsersList
-                  suggested={suggested?.data}
-                  userId={userId}
+                  name="message-circle"
+                  onPress={goToMessage}
                 />
               )}
-            </View>
-          }
-        />
-      )}
+              <Protected
+                roles={[MAIN_ROLE, SECOND_ROLE]}
+                userRole={userDetails?.role}
+              >
+                <ProfileIconButton name="map-pin" onPress={goToMap} />
+              </Protected>
+              <ProfileIconButton
+                name="adduser"
+                type="antdesign"
+                onPress={handleSuggested}
+                loading={isLoading}
+              />
+            </ProfileOverview>
+            {isPrivate && <CardAccountPrivate />}
+            {suggested && (
+              <SuggestedUsersList suggested={suggested?.data} userId={userId} />
+            )}
+          </View>
+        }
+      />
     </View>
   );
 };

@@ -23,7 +23,7 @@ export const AuthScreen = () => {
       <Button
         title={t("connect")}
         onPress={() => navigation.navigate("Login")}
-        radius={7.5}
+        radius={5}
         size="lg"
         sxBtn={{ margin: 15 }}
       />
@@ -48,7 +48,7 @@ export const AuthScreen = () => {
       </Stack>
       <Divider />
       <View style={{ marginTop: 20, marginHorizontal: 20 }}>
-        <ListItem sx={styles.listItem} onPress={() => {}}>
+        <ListItem align="center" sx={styles.listItem} onPress={() => {}}>
           <Icon
             name="settings-outline"
             type="ionicon"
@@ -57,7 +57,7 @@ export const AuthScreen = () => {
           />
           <Text style={styles.text}>{t("settings")}</Text>
         </ListItem>
-        <ListItem sx={styles.listItem} onPress={() => {}}>
+        <ListItem align="center" sx={styles.listItem} onPress={() => {}}>
           <Icon
             name="exclamationcircleo"
             type="antdesign"
@@ -66,7 +66,7 @@ export const AuthScreen = () => {
           />
           <Text style={styles.text}>{t("reportAProblem")}</Text>
         </ListItem>
-        <ListItem sx={styles.listItem} onPress={() => {}}>
+        <ListItem align="center" sx={styles.listItem} onPress={() => {}}>
           <Icon
             name="questioncircleo"
             type="antdesign"
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   secondHeading: {
     color: grey0,
     fontSize: 16,
-    marginTop: 2.5,
+    marginVertical: 2.5,
   },
   mainBtn: {
     backgroundColor: primary,

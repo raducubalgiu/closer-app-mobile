@@ -22,6 +22,15 @@ export interface User {
   hours: any;
   phone: any;
   gender: string;
-  status: string;
-  private: boolean;
+  settings: {
+    private: boolean;
+    status: string;
+    likesCount: string;
+    viewsCount: string;
+    viewComments: string;
+    viewFollowings: string;
+    tags: string;
+    mentions: string;
+    slot: number;
+  };
 }

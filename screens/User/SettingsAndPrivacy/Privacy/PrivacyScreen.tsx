@@ -15,13 +15,16 @@ const { grey0, error } = theme.lightColors || {};
 
 export const PrivacyScreen = () => {
   const { user, setUser } = useAuth();
-  const [privateAccount, setPrivateAccount] = useState(user?.private);
+  const [privateAccount, setPrivateAccount] = useState(user?.settings?.private);
   const { t } = useTranslation();
 
   const { mutate } = usePatch({
-    uri: `/users/${user?.id}`,
+    uri: `/users/${user?.id}/settings`,
     onSuccess: () => {
-      setUser({ ...user, private: !privateAccount });
+      setUser({
+        ...user,
+        settings: { ...user?.settings, private: !privateAccount },
+      });
       setPrivateAccount((privateAccount) => !privateAccount);
       showToast({ message: t("youChangedAccountStatus"), short: true });
     },

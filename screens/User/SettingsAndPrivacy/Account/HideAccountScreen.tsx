@@ -12,18 +12,29 @@ const { black } = theme.lightColors || {};
 
 export const HideAccountScreen = () => {
   const { user, setUser } = useAuth();
-  const { status } = user || {};
+  const { status } = user?.settings || {};
   const { t } = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const { mutate, isLoading } = usePatch({
-    uri: `/users/${user?.id}`,
+    uri: `/users/${user?.id}/settings`,
     onSuccess: () => {
-      setUser({ ...user, status: status === "hidden" ? "active" : "hidden" });
+      setUser({
+        ...user,
+        settings: {
+          ...user?.settings,
+          status: status === "active" ? "hidden" : "active",
+        },
+      });
       navigation.navigate("Profile");
     },
   });
+
+  const handleUpdate = () =>
+    mutate({
+      status: status === "active" ? "hidden" : "active",
+    });
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -64,9 +75,7 @@ export const HideAccountScreen = () => {
           sxBtn={{ marginHorizontal: 20 }}
           loading={isLoading}
           disabled={isLoading}
-          onPress={() =>
-            mutate({ status: status === "hidden" ? "active" : "hidden" })
-          }
+          onPress={handleUpdate}
         />
       </View>
     </SafeAreaView>
