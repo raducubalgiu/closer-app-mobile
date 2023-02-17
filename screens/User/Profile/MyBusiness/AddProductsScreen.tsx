@@ -7,27 +7,24 @@ import {
 } from "react-native";
 import { useForm, FormProvider } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
+import { useHeaderHeight } from "@react-navigation/elements";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useTranslation } from "react-i18next";
 import { useAuth, useGet, usePost } from "../../../../hooks";
 import { required, maxField, minField } from "../../../../constants/validation";
 import { Button, FormInput, Stack } from "../../../../components/core";
 import { FormInputSelect } from "../../../../components/core";
-import { useHeaderHeight } from "@react-navigation/elements";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
-import { Product } from "../../../../models/product";
 
 const defaultValues = {
-  service: "",
-  option: "",
+  serviceId: "",
+  optionId: "",
   name: "",
   description: "",
   price: "",
   discount: "",
   duration: "",
 };
-
-type Value = { _id: string; name: string };
 
 export const AddProductsScreen = () => {
   const { user } = useAuth();
@@ -36,11 +33,11 @@ export const AddProductsScreen = () => {
   const { t } = useTranslation();
   const methods = useForm({ defaultValues });
   const { handleSubmit, watch } = methods;
-  const service: any = watch("service");
+  const serviceId: any = watch("serviceId");
   const isRequired = required(t);
   const headerHeight = useHeaderHeight();
 
-  const { data: services, isLoading: loading } = useGet({
+  const { data: services, isLoading } = useGet({
     model: "services",
     uri: `/locations/${user?.locationId}/services`,
     enabled: !!user?.locationId,
@@ -49,9 +46,9 @@ export const AddProductsScreen = () => {
 
   const { data: filters } = useGet({
     model: "filters",
-    uri: `/services/${service?._id}/filters`,
-    enabled: !!service,
-    enableId: service?._id,
+    uri: `/services/${serviceId}/filters`,
+    enabled: !!serviceId,
+    enableId: serviceId,
   });
 
   const filtersArr = (filters && filters[0]) || [];
@@ -68,18 +65,33 @@ export const AddProductsScreen = () => {
     onSuccess: () => navigation.goBack(),
   });
 
+  const handlePriceDiscount = (discount: any, price: any) => {
+    if (discount > 0) {
+      return price - (discount / 100) * price;
+    } else {
+      return 0;
+    }
+  };
+
   const handleCreate = (data: any) => {
+    const { price, discount, optionId } = data;
+    const option = filtersArr.options.find((el: any) => el.id === optionId);
+
     makePost({
       ...data,
-      service: service?._id,
-      user: user?.id,
-      location: user?.locationId,
+      serviceId,
+      ownerId: user?.id,
+      locationId: user?.locationId,
+      discount,
+      price,
+      priceWithDiscount: handlePriceDiscount(discount, price),
+      option,
     });
   };
 
   return (
     <SafeAreaView style={styles.screen}>
-      {!loading && (
+      {!isLoading && (
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "position" : "height"}
           keyboardVerticalOffset={headerHeight}
@@ -89,14 +101,14 @@ export const AddProductsScreen = () => {
               <FormProvider {...methods}>
                 <FormInputSelect
                   label={t("service")}
-                  name="service"
+                  name="serviceId"
                   placeholder={t("selectProductService")}
                   items={services}
                   rules={{ ...isRequired }}
                 />
                 <FormInputSelect
                   label={t("category")}
-                  name="option"
+                  name="optionId"
                   placeholder={t("category")}
                   items={filtersArr?.options}
                   rules={{ ...isRequired }}
@@ -141,7 +153,7 @@ export const AddProductsScreen = () => {
           </ScrollView>
           <Button
             size="lg"
-            radius={10}
+            radius={5}
             title={t("add")}
             onPress={handleSubmit(handleCreate)}
             loading={loadingSubmit}

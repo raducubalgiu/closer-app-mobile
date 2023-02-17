@@ -11,7 +11,7 @@ import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
 import { Divider, Icon } from "@rneui/themed";
@@ -29,7 +29,7 @@ import { useAuth, useCalendarList, useGet, usePost } from "../../../../hooks";
 import theme from "../../../../assets/styles/theme";
 import { Product } from "../../../../models/product";
 import { showToast } from "../../../../utils";
-import { required, minField, maxField } from "../../../../constants/validation";
+import { required } from "../../../../constants/validation";
 
 const { black, grey0 } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "AddSchedule">;
