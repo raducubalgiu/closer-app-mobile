@@ -44,7 +44,7 @@ const UserListItem = ({ user, sx = {} }: IProps) => {
     });
   };
 
-  const { isLoading, isFetching } = useGet({
+  useGet({
     model: "checkFollow",
     uri: FOLLOW_ENDPOINT,
     onSuccess: (res) => setFollow(res.data.status),
@@ -87,9 +87,7 @@ const UserListItem = ({ user, sx = {} }: IProps) => {
           <Text style={styles.name}>{name}</Text>
         </Stack>
       </Pressable>
-      {(!isLoading || !isFetching) && (
-        <FollowButton isFollow={follow} onPress={followHandler} />
-      )}
+      <FollowButton isFollow={follow} onPress={followHandler} />
     </Stack>
   );
 };

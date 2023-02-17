@@ -15,10 +15,10 @@ import { showToast } from "../../../../utils";
 
 const { grey0, error } = theme.lightColors || {};
 
-export const PrivacyLikesScreen = () => {
+export const PrivacyFollowingsScreen = () => {
   const { user, setUser } = useAuth();
-  const { likesCount } = user?.settings || {};
-  const [showLikes, setShowLikes] = useState(likesCount);
+  const { viewFollowings } = user?.settings || {};
+  const [isSelected, setIsSelected] = useState(viewFollowings);
   const { t } = useTranslation();
   const navigation = useNavigation();
 
@@ -27,7 +27,7 @@ export const PrivacyLikesScreen = () => {
     onSuccess: () => {
       setUser({
         ...user,
-        settings: { ...user?.settings, likesCount: showLikes },
+        settings: { ...user?.settings, viewFollowings: isSelected },
       });
       showToast({ message: t("youChangedSettings"), short: true });
       navigation.goBack();
@@ -36,29 +36,26 @@ export const PrivacyLikesScreen = () => {
       showToast({ message: t("somethingWentWrong"), bgColor: error }),
   });
 
-  const handleUpdate = () => mutate({ likesCount: showLikes });
+  const handleUpdate = () => mutate({ viewFollowings: isSelected });
 
   return (
     <SafeAreaView style={styles.screen}>
       <Header title={t("likes")} />
       <View style={styles.container}>
         <View>
-          <Heading
-            title="Cine poate vedea postările apreciate de tine"
-            sx={styles.heading}
-          />
+          <Heading title={t("whoCanSeeYourFollowings")} sx={styles.heading} />
           <FormInputRadio
             title={t("allPeople")}
-            checked={showLikes === "all"}
-            onPress={() => setShowLikes("all")}
+            checked={isSelected === "all"}
+            onPress={() => setIsSelected("all")}
             sx={{ paddingVertical: 0 }}
             variant="normal"
           />
           <Divider color="#ddd" style={{ marginVertical: 10 }} />
           <FormInputRadio
             title={t("justMe")}
-            checked={showLikes === "me"}
-            onPress={() => setShowLikes("me")}
+            checked={isSelected === "me"}
+            onPress={() => setIsSelected("me")}
             sx={{ paddingVertical: 0 }}
             variant="normal"
           />
@@ -66,7 +63,7 @@ export const PrivacyLikesScreen = () => {
         <Button
           title={t("save")}
           onPress={handleUpdate}
-          disabled={likesCount === showLikes || isLoading}
+          disabled={viewFollowings === isSelected || isLoading}
           loading={isLoading}
         />
       </View>
@@ -79,7 +76,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
   },
-  container: { margin: 15, justifyContent: "space-between", flex: 1 },
   heading: { marginTop: 0, marginBottom: 25 },
+  container: { margin: 15, justifyContent: "space-between", flex: 1 },
   description: { color: grey0, marginBottom: 15 },
 });

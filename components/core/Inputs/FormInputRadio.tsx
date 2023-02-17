@@ -1,11 +1,12 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { Stack } from "../Stack/Stack";
 import theme from "../../../assets/styles/theme";
 import { IconButton } from "../IconButton/IconButton";
 
-const { black, primary } = theme.lightColors || {};
+const { black, primary, grey0 } = theme.lightColors || {};
 type IProps = {
-  text: string;
+  title: string;
+  description?: string | undefined;
   onPress: () => void;
   sx?: {};
   color?: string;
@@ -14,7 +15,8 @@ type IProps = {
 };
 
 export const FormInputRadio = ({
-  text,
+  title,
+  description,
   variant = "bold",
   color = primary,
   checked,
@@ -22,24 +24,27 @@ export const FormInputRadio = ({
   sx,
 }: IProps) => {
   return (
-    <Stack direction="row">
-      <Text
-        style={{
-          ...styles.text,
-          fontWeight: variant === "normal" ? "400" : "500",
-        }}
-      >
-        {text}
-      </Text>
-      <IconButton
-        onPress={onPress}
-        name={checked ? "radio-button-on" : "radio-button-off-sharp"}
-        type="ionicon"
-        size={30}
-        color={color}
-        sx={{ paddingVertical: 12.5, paddingLeft: 10, ...sx }}
-      />
-    </Stack>
+    <View>
+      <Stack direction="row">
+        <Text
+          style={{
+            ...styles.text,
+            fontWeight: variant === "normal" ? "400" : "500",
+          }}
+        >
+          {title}
+        </Text>
+        <IconButton
+          onPress={onPress}
+          name={checked ? "radio-button-on" : "radio-button-off-sharp"}
+          type="ionicon"
+          size={30}
+          color={color}
+          sx={{ paddingVertical: 12.5, paddingLeft: 10, ...sx }}
+        />
+      </Stack>
+      {description && <Text style={styles.description}>{description}</Text>}
+    </View>
   );
 };
 
@@ -48,4 +53,5 @@ const styles = StyleSheet.create({
     color: black,
     fontSize: 15,
   },
+  description: { color: grey0, marginBottom: 10 },
 });

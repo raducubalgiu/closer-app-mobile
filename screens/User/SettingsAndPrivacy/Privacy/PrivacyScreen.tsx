@@ -56,31 +56,37 @@ export const PrivacyScreen = () => {
           title={t("comments")}
           iconLeftProps={{ name: "message-circle", color: grey0 }}
           onPress={() => navigation.navigate("PrivacyComments")}
+          sx={{ paddingVertical: 12.5 }}
         />
         <SettingsListItem
           title={t("mentionsAndTags")}
           iconLeftProps={{ name: "at-sign", color: grey0 }}
           onPress={() => {}}
+          sx={{ paddingVertical: 12.5 }}
         />
         <SettingsListItem
           title={t("postViews")}
           iconLeftProps={{ name: "play", color: grey0 }}
           onPress={() => {}}
+          sx={{ paddingVertical: 12.5 }}
         />
         <SettingsListItem
           title={t("postLikes")}
           iconLeftProps={{ name: "heart", color: grey0 }}
           onPress={() => navigation.navigate("PrivacyLikes")}
+          sx={{ paddingVertical: 12.5 }}
         />
         <SettingsListItem
-          title={t("followersList")}
+          title={t("followingsList")}
           iconLeftProps={{ name: "users", color: grey0 }}
-          onPress={() => {}}
+          onPress={() => navigation.navigate("PrivacyFollowings")}
+          sx={{ paddingVertical: 12.5 }}
         />
         <SettingsListItem
           title={t("blockedAccounts")}
           iconLeftProps={{ name: "block", type: "entypo", color: grey0 }}
-          onPress={() => {}}
+          onPress={() => navigation.navigate("PrivacyBlockedAccounts")}
+          sx={{ paddingVertical: 12.5 }}
         />
       </ScrollView>
     </SafeAreaView>

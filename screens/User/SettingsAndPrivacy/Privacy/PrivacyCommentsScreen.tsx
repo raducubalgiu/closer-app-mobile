@@ -1,10 +1,16 @@
-import { SafeAreaView, StyleSheet, View, Text } from "react-native";
-import { Button, FormInputRadio, Header } from "../../../../components/core";
-import theme from "../../../../assets/styles/theme";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import { useTranslation } from "react-i18next";
 import { Divider } from "@rneui/themed";
 import { useState } from "react";
+import {
+  Button,
+  FormInputRadio,
+  Header,
+  Heading,
+} from "../../../../components/core";
+import theme from "../../../../assets/styles/theme";
 import { useAuth } from "../../../../hooks";
+import { displayNothing } from "../../../../utils";
 
 const { grey0 } = theme.lightColors || {};
 
@@ -19,41 +25,39 @@ export const PrivacyCommentsScreen = () => {
       <Header title={t("comments")} />
       <View style={styles.container}>
         <View>
+          <Heading title={t("whoCanCommentToYourPosts")} sx={styles.heading} />
           <FormInputRadio
-            text={t("allPeople")}
+            title={t("allPeople")}
+            description={displayNothing(
+              canAddComment === "all",
+              t("privacyCommentsAllDescription")
+            )}
             checked={canAddComment === "all"}
             onPress={() => setCanAddComment("all")}
             sx={{ paddingVertical: 0 }}
           />
-          {canAddComment === "all" && (
-            <Text style={styles.description}>
-              {t("privacyCommentsAllDescription")}
-            </Text>
-          )}
-          <Divider color="#ddd" style={{ marginVertical: 10 }} />
+          <Divider color="#ddd" style={styles.divider} />
           <FormInputRadio
-            text={t("followersThatYouAreFollowing")}
+            title={t("followersThatYouAreFollowing")}
+            description={displayNothing(
+              canAddComment === "followers",
+              t("privacyCommentsFollowersThatYouAreFollowingDescription")
+            )}
             checked={canAddComment === "followers"}
             onPress={() => setCanAddComment("followers")}
             sx={{ paddingVertical: 0 }}
           />
-          {canAddComment === "followers" && (
-            <Text style={styles.description}>
-              {t("privacyCommentsFollowersThatYouAreFollowingDescription")}
-            </Text>
-          )}
-          <Divider color="#ddd" style={{ marginVertical: 10 }} />
+          <Divider color="#ddd" style={styles.divider} />
           <FormInputRadio
-            text={t("nobody")}
+            title={t("nobody")}
+            description={displayNothing(
+              canAddComment === "me",
+              t("privacyCommentsNobodyDescription")
+            )}
             checked={canAddComment === "me"}
             onPress={() => setCanAddComment("me")}
             sx={{ paddingVertical: 0 }}
           />
-          {canAddComment === "me" && (
-            <Text style={styles.description}>
-              {t("privacyCommentsNobodyDescription")}
-            </Text>
-          )}
         </View>
         <Button
           title={t("save")}
@@ -70,6 +74,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
   },
+  heading: { marginTop: 0, marginBottom: 25 },
   container: { margin: 15, justifyContent: "space-between", flex: 1 },
+  divider: { marginVertical: 10 },
   description: { color: grey0, marginBottom: 15 },
 });

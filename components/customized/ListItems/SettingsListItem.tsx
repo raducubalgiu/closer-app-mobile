@@ -7,6 +7,7 @@ const { black, grey0 } = theme.lightColors || {};
 type IProps = {
   onPress: () => void;
   title: string;
+  sx?: {};
   sxTitle?: {};
   description?: string;
   sxDescription?: {};
@@ -28,6 +29,7 @@ type IProps = {
 export const SettingsListItem = ({
   onPress,
   title,
+  sx,
   sxTitle,
   description,
   sxDescription,
@@ -36,7 +38,12 @@ export const SettingsListItem = ({
   iconLeftProps,
 }: IProps) => {
   return (
-    <ListItem between align="center" onPress={onPress} sx={styles.container}>
+    <ListItem
+      between
+      align="center"
+      onPress={onPress}
+      sx={{ ...styles.container, ...sx }}
+    >
       <Stack justify="start" direction="row" sx={{ flex: 1 }}>
         {!!iconLeftProps && (
           <Icon
