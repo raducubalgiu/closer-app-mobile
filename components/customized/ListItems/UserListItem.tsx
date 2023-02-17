@@ -21,6 +21,7 @@ type IProps = {
     name: string;
     checkmark: boolean;
   };
+  isBlocked?: boolean;
   sx?: {};
 };
 

@@ -65,7 +65,7 @@ export const EditProfessionScreen = () => {
     ({ item }: ListRenderItemInfo<Profession>) => {
       return (
         <FormInputRadio
-          text={t(`${item?.name}`)}
+          title={t(`${item?.name}`)}
           checked={item?.id === selected?.id}
           onPress={() => setSelected(item)}
         />
@@ -73,6 +73,19 @@ export const EditProfessionScreen = () => {
     },
     [selected]
   );
+
+  const hasData = businesses?.length > 0 || professions?.length > 0;
+  let header;
+  if (hasData) {
+    header = (
+      <SearchBarInput
+        placeholder={t("search")}
+        value={search}
+        showCancel={false}
+        onChangeText={(text) => setSearch(text)}
+      />
+    );
+  }
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -88,14 +101,9 @@ export const EditProfessionScreen = () => {
           <Text style={{ color: grey0, fontSize: 15, marginBottom: 15 }}>
             {t("categoryDescription")}
           </Text>
-          <SearchBarInput
-            placeholder={t("search")}
-            value={search}
-            showCancel={false}
-            onChangeText={(text) => setSearch(text)}
-          />
           <Divider color="#ddd" style={{ marginTop: 10, paddingBottom: 7.5 }} />
           <FlatList
+            ListHeaderComponent={header}
             data={user?.role === THIRD_ROLE ? professions : businesses}
             keyExtractor={(item) => item?.id}
             renderItem={renderProfession}

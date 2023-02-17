@@ -19,7 +19,6 @@ import {
   ProfileIconButton,
   FollowProfileButton,
   CardAccountPrivate,
-  HeaderProfile,
 } from "../../../components/customized";
 import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
 import SuggestedUsersList from "../../../components/customized/Lists/SuggestedUsersList";

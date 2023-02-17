@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     textTransform: "capitalize",
     color: black,
     marginBottom: 2.5,
-    fontWeight: "500",
+    fontWeight: "600",
     fontSize: 14,
   },
   errMsg: {
