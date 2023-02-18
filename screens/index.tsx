@@ -91,3 +91,4 @@ export { SavingDataScreen } from "./User/SettingsAndPrivacy/Cache/SavingDataScre
 export { ReportAProblemScreen } from "./User/SettingsAndPrivacy/Assistance/ReportAProblemScreen";
 export { AssistanceScreen } from "./User/SettingsAndPrivacy/Assistance/AssistanceScreen";
 export { VideosScreen } from "./VideosScreen";
+export { StoryScreen } from "./StoryScreen";

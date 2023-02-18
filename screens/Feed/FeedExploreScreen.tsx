@@ -14,7 +14,7 @@ import { Divider, Icon } from "@rneui/themed";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import PostVideoOverviewListItem from "../../components/customized/ListItems/Post/PostVideoOverviewListItem";
 import CardPost from "../../components/customized/Cards/CardPost/CardPost";
-import { Spinner, Stack } from "../../components/core";
+import { HeadingAction, Spinner, Stack } from "../../components/core";
 import {
   PostInfoSheet,
   HeaderFeed,
@@ -35,6 +35,7 @@ import { RootStackParams } from "../../navigation/rootStackParams";
 import CustomAvatar from "../../components/core/Avatars/CustomAvatar";
 import { trimFunc } from "../../utils";
 import { LinearGradient } from "expo-linear-gradient";
+import AvatarBadge from "../../components/core/Avatars/AvatarBadge";
 
 const { black, primary } = theme.lightColors || {};
 
@@ -135,29 +136,12 @@ export const FeedExploreScreen = () => {
 
   const header = (
     <>
-      <Stack direction="row" sx={{ paddingLeft: 10, marginVertical: 5 }}>
-        <Text style={{ color: black, fontWeight: "600", fontSize: 14.5 }}>
-          Clipuri video
-        </Text>
-        <Pressable
-          onPress={() =>
-            navigation.navigate("FeedVideoExplore", { initialIndex: 0 })
-          }
-        >
-          <Stack
-            direction="row"
-            sx={{
-              paddingVertical: 2.5,
-              paddingHorizontal: 15,
-            }}
-          >
-            <Icon name="arrow-right" />
-            <Text style={{ color: black, fontWeight: "600", fontSize: 13 }}>
-              Vezi tot
-            </Text>
-          </Stack>
-        </Pressable>
-      </Stack>
+      <HeadingAction
+        title={t("videoclips")}
+        onPress={() =>
+          navigation.navigate("FeedVideoExplore", { initialIndex: 0 })
+        }
+      />
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -169,64 +153,52 @@ export const FeedExploreScreen = () => {
           paddingRight: 5,
         }}
       />
-      <Divider color="#ddd" style={{ marginTop: 15, marginBottom: 10 }} />
-      <Stack
-        direction="row"
-        sx={{ marginTop: 5, marginBottom: 15, marginLeft: 10 }}
-      >
-        <Text style={{ color: black, fontWeight: "600", fontSize: 15 }}>
-          {t("stories")}
-        </Text>
-        <Stack
-          direction="row"
-          sx={{
-            paddingVertical: 2.5,
-            paddingHorizontal: 15,
-          }}
-        >
-          <Icon name="arrow-right" />
-          <Text style={{ color: black, fontWeight: "600", fontSize: 13 }}>
-            Vezi tot
-          </Text>
-        </Stack>
-      </Stack>
+      <Divider color="#ddd" style={{ marginTop: 15 }} />
+      <HeadingAction title={t("stories")} onPress={() => {}} />
       <FlatList
+        ListHeaderComponent={
+          <Stack sx={{ paddingLeft: 10 }}>
+            <AvatarBadge
+              avatar={user?.avatar}
+              size={67}
+              sx={{ margin: 2.1, borderWidth: 1.5, borderColor: "white" }}
+            />
+            <Text style={{ fontSize: 12.5, marginTop: 5 }}>Povestea ta</Text>
+          </Stack>
+        }
         data={stories}
         horizontal
         keyExtractor={(item) => item.id}
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }: any) => {
           return (
-            <Stack sx={{ paddingLeft: 10 }}>
-              <LinearGradient
-                colors={[`${primary}`, `#ffd9b3`]}
-                start={{ x: 1, y: 0.4 }}
-                end={{ x: 1.4, y: 3 }}
-                style={{ borderRadius: 200 }}
-              >
-                <CustomAvatar
-                  avatar={item?.followeeId?.avatar}
-                  size={65}
-                  sx={{ margin: 2.1, borderWidth: 1.5, borderColor: "white" }}
-                />
-              </LinearGradient>
-              <Text style={{ fontSize: 13, marginTop: 5 }}>
-                {trimFunc(item?.followeeId?.username, 10)}
-              </Text>
-            </Stack>
+            <Pressable onPress={() => navigation.navigate("Story")}>
+              <Stack sx={{ paddingLeft: 10 }}>
+                <LinearGradient
+                  colors={[`${primary}`, `#ffd9b3`]}
+                  start={{ x: 1, y: 0.4 }}
+                  end={{ x: 1.4, y: 3 }}
+                  style={{ borderRadius: 200 }}
+                >
+                  <CustomAvatar
+                    avatar={item?.followeeId?.avatar}
+                    size={65}
+                    sx={{
+                      margin: 2.25,
+                      borderWidth: 1.5,
+                      borderColor: "white",
+                    }}
+                  />
+                </LinearGradient>
+                <Text style={{ fontSize: 12.5, marginTop: 5 }}>
+                  {trimFunc(item?.followeeId?.username, 10)}
+                </Text>
+              </Stack>
+            </Pressable>
           );
         }}
       />
       <Divider color="#ddd" style={{ marginTop: 15, marginBottom: 10 }} />
-      <Stack
-        direction="row"
-        justify="start"
-        sx={{ marginTop: 5, marginBottom: 10, marginLeft: 10 }}
-      >
-        <Text style={{ color: black, fontWeight: "600", fontSize: 15 }}>
-          În trending
-        </Text>
-      </Stack>
     </>
   );
 

@@ -94,6 +94,7 @@ import {
   RegisterBusinessScreen,
   RegisterScreen,
   SavingDataScreen,
+  StoryScreen,
   VideosScreen,
   UsernameScreen,
   CameraScreen,
@@ -474,6 +475,11 @@ const CloserNavigation = () => {
             <RootStack.Screen name="Service" component={ServiceScreen} />
             <RootStack.Screen name="Product" component={ProductScreen} />
             <RootStack.Screen name="Sound" component={SoundScreen} />
+            <RootStack.Screen
+              name="Story"
+              component={StoryScreen}
+              options={{ animation: "fade", animationDuration: 200 }}
+            />
             <RootStack.Screen
               name="ProductReviews"
               component={ProductReviewsScreen}

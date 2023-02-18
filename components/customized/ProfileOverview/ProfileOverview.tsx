@@ -10,6 +10,8 @@ import CustomAvatar from "../../core/Avatars/CustomAvatar";
 import { displayDash } from "../../../utils";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/rootStackParams";
+import AvatarBadge from "../../core/Avatars/AvatarBadge";
+import { useAuth } from "../../../hooks";
 
 const { black, primary } = theme.lightColors || {};
 
@@ -28,6 +30,7 @@ const ProfileOverview = ({
   children,
   user,
 }: IProps) => {
+  const { user: userContext } = useAuth();
   const { role, profession } = user || {};
   const {
     ratingsQuantity,
@@ -80,7 +83,16 @@ const ProfileOverview = ({
     <View style={styles.container}>
       <Stack justify="center" align="center">
         <Pressable>
-          <CustomAvatar size={95} avatar={avatar} />
+          {user?.id !== userContext?.id && (
+            <CustomAvatar size={95} avatar={avatar} />
+          )}
+          {user?.id === userContext?.id && (
+            <AvatarBadge
+              size={95}
+              avatar={avatar}
+              sxBadge={{ bottom: 2.5, left: 75 }}
+            />
+          )}
         </Pressable>
         <Text style={styles.name}>{name}</Text>
         <Stack direction="row" justify="start">

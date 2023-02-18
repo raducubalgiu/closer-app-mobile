@@ -1,4 +1,4 @@
-import { StyleSheet, Text, Pressable } from "react-native";
+import { StyleSheet, Text, Pressable, View } from "react-native";
 import React, { memo } from "react";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../../assets/styles/theme";
@@ -51,36 +51,46 @@ const CardPostHeader = ({
     });
   };
 
+  const goToStories = () => {
+    navigation.navigate("Story");
+  };
+
   return (
     <Stack direction="row">
-      <Pressable onPress={() => goToUser(userId)} style={{ paddingLeft: 15 }}>
+      <View style={{ paddingLeft: 15 }}>
         <Stack direction="row" sx={styles.avatarContainer}>
-          <CustomAvatar avatar={avatar} size={30} />
-          <Stack align="start">
-            <Stack direction="row">
-              <Text style={styles.name}>@{username}</Text>
-              {checkmark && <Checkmark sx={{ marginLeft: 5 }} size={8} />}
+          <Pressable onPress={goToStories}>
+            <CustomAvatar avatar={avatar} size={30} />
+          </Pressable>
+          <Pressable onPress={() => goToUser(userId)}>
+            <Stack align="start">
+              <Stack direction="row">
+                <Text style={styles.name}>@{username}</Text>
+                {checkmark && <Checkmark sx={{ marginLeft: 5 }} size={8} />}
+              </Stack>
+              <Stack direction="row" sx={{ marginTop: 1 }}>
+                <Text style={styles.profession}>
+                  {t(`${profession?.name}`)}
+                </Text>
+                <Protected userRole={role} roles={[MAIN_ROLE, SECOND_ROLE]}>
+                  <Text style={styles.point}>{"\u2B24"}</Text>
+                  <Stack direction="row">
+                    <Icon
+                      name="star"
+                      type="antdesign"
+                      size={12.5}
+                      color={primary}
+                    />
+                    <Text style={styles.ratingsAverage}>
+                      {ratingsAverage?.toFixed(1)}
+                    </Text>
+                  </Stack>
+                </Protected>
+              </Stack>
             </Stack>
-            <Stack direction="row" sx={{ marginTop: 1 }}>
-              <Text style={styles.profession}>{t(`${profession?.name}`)}</Text>
-              <Protected userRole={role} roles={[MAIN_ROLE, SECOND_ROLE]}>
-                <Text style={styles.point}>{"\u2B24"}</Text>
-                <Stack direction="row">
-                  <Icon
-                    name="star"
-                    type="antdesign"
-                    size={12.5}
-                    color={primary}
-                  />
-                  <Text style={styles.ratingsAverage}>
-                    {ratingsAverage?.toFixed(1)}
-                  </Text>
-                </Stack>
-              </Protected>
-            </Stack>
-          </Stack>
+          </Pressable>
         </Stack>
-      </Pressable>
+      </View>
       <Pressable onPress={onShowDetails} style={{ padding: 15 }}>
         <Icon name="more-horizontal" type="feather" size={20} />
       </Pressable>

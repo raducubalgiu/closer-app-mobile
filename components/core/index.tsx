@@ -46,5 +46,6 @@ export { CModal } from "./CModal/CModal";
 
 export { Heading } from "./Heading/Heading";
 export { HeadingWithAction } from "./Heading/HeadingWithAction";
+export { HeadingAction } from "./Heading/HeadingAction";
 
 export { Rating } from "./Rating/Rating";

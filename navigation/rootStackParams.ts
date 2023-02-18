@@ -163,7 +163,7 @@ export type RootStackParams = {
   SearchPosts: { search: string };
   Service: { service: Service };
   Sound: { soundUri: any; avatar: any };
-  Test: any;
+  Story: any;
   Username: { idTokenResult: any; role: string };
   SharedList: any;
   SharedDetail: any;
