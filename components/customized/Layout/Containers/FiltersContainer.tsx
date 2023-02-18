@@ -53,14 +53,8 @@ export const FiltersContainer = ({
               <Text style={styles.mainHeading}>{mainHeading}</Text>
               <Text style={styles.mainHeading}>{secondHeading}</Text>
             </View>
-            <View
-              style={
-                closeBtn
-                  ? { ...styles.body, alignItems: "center" }
-                  : styles.body
-              }
-            >
-              <Stack direction="row" sx={styles.sheetOverview}>
+            <View style={closeBtn ? { ...styles.body } : styles.body}>
+              <Stack direction="row" justify="center" sx={styles.sheetOverview}>
                 {!closeBtn && <IconBackButton size={20} />}
                 <Stack>
                   <Text style={styles.title}>{headerTitle}</Text>

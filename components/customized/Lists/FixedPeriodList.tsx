@@ -39,8 +39,7 @@ export const FixedPeriodList = ({ onSwitch }: IProps) => {
       keyExtractor={(item: ItemInterval) => item._id}
       renderItem={renderFixedPeriod}
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={{ margin: 15 }}
-      //bounces={false}
+      contentContainerStyle={{ marginHorizontal: 25, marginVertical: 15 }}
     />
   );
 };

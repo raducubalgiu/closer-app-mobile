@@ -1,7 +1,6 @@
 import { useCallback, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import * as Haptics from "expo-haptics";
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
@@ -9,15 +8,16 @@ import {
 import { ButtonGroup } from "../components/core";
 import {
   FiltersContainer,
-  DatePickerRange,
   PickerHoursModal,
   FixedPeriodList,
 } from "../components/customized";
+import DateRangePicker from "../components/customized/Calendars/DateRangePicker";
 import { RootStackParams } from "../navigation/rootStackParams";
 import { Period } from "../models/period";
 import { dayMonthFormat } from "../utils/date-utils";
-import { useMinutes } from "../hooks";
+import { useCalendarList, useMinutes } from "../hooks";
 import dayjs from "dayjs";
+import { View } from "react-native";
 
 type IProps = NativeStackScreenProps<RootStackParams, "FiltersDate">;
 
@@ -30,12 +30,13 @@ export const FiltersDateScreen = ({ route }: IProps) => {
   const [visible, setVisible] = useState(false);
   const [activeBtn, setActiveBtn] = useState(0);
   const [activeHours, setActiveHours] = useState(0);
+  const { MONTHS, DAYS_HEADER } = useCalendarList();
+  const now = dayjs().utc(true).startOf("day");
   const [period, setPeriod] = useState<Period>({
-    startDate: null,
-    endDate: null,
-    startMinutes: null,
-    endMinutes: null,
-    code: "CALENDAR",
+    id: "1",
+    startDate: now,
+    endDate: now.add(8, "day").startOf("day"),
+    monthIndex: 0,
   });
   const [pickHour, setPickHour] = useState(`${t("pickHour")}`);
 
@@ -46,11 +47,6 @@ export const FiltersDateScreen = ({ route }: IProps) => {
   const hoursButtons = [{ title: t("anyHour") }, { title: pickHour }];
 
   const handleDateBtns = useCallback((index: number) => {
-    setPeriod((period: Period) => ({
-      ...period,
-      startDate: null,
-      endDate: null,
-    }));
     setActiveBtn(index);
     setActiveHours(0);
     setPickHour(`${t("pickHour")}`);
@@ -65,57 +61,9 @@ export const FiltersDateScreen = ({ route }: IProps) => {
     }
   }, []);
 
-  const goNext = () => {
-    navigation.navigate("FiltersService", {
-      period: {
-        ...period,
-        startDate: dayjs(period.startDate).format(),
-        endDate: dayjs(period.endDate).format(),
-      },
-      service,
-    });
-  };
+  const goNext = () => {};
 
-  const handleDayPress = useCallback(
-    (item: any) => {
-      if (item.disabled) return;
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-
-      const { startDate, endDate } = period;
-
-      if (!startDate && !endDate && !item.prevDates) {
-        setPeriod((period: Period) => ({
-          ...period,
-          startDate: item.date,
-          endDate: null,
-        }));
-        return;
-      }
-      if (item.date.isBefore(startDate) && !item.prevDates) {
-        setPeriod((period: Period) => ({
-          ...period,
-          startDate: item.date,
-        }));
-        return;
-      }
-      if (startDate && endDate && !item.prevDates) {
-        setPeriod((period: Period) => ({
-          ...period,
-          startDate: item.date,
-          endDate: null,
-        }));
-        return;
-      }
-      if (startDate && !item.prevDates) {
-        setPeriod((period: Period) => ({
-          ...period,
-          endDate: item.date,
-        }));
-        return;
-      }
-    },
-    [period]
-  );
+  const handlePeriod = (per: Period) => setPeriod(per);
 
   const getMinutesName = (min: number) => {
     const minuteEl = minutes.find((el) => el?.id === min);
@@ -169,11 +117,15 @@ export const FiltersDateScreen = ({ route }: IProps) => {
           disableActiveBtn={true}
         />
         {activeBtn === 0 && (
-          <DatePickerRange
-            startDate={period.startDate}
-            endDate={period.endDate}
-            onDayPress={handleDayPress}
-          />
+          <View style={{ flex: 1 }}>
+            <DateRangePicker
+              period={period}
+              initialIndex={period?.monthIndex}
+              onSetPeriod={handlePeriod}
+              months={MONTHS}
+              daysHeader={DAYS_HEADER}
+            />
+          </View>
         )}
         {activeBtn === 1 && (
           <FixedPeriodList onSwitch={(checked: boolean) => {}} />

@@ -123,10 +123,7 @@ export const MyDashboardScreen = () => {
   );
 
   const keyExtractor = useCallback((item: Period) => item.id, []);
-  const handlePeriod = (per: Period) => {
-    console.log("PER!!", per);
-    setPeriod(per);
-  };
+  const handlePeriod = (per: Period) => setPeriod(per);
 
   const actionButton = (
     <Pressable onPress={() => SHOW_BS_INFO()}>

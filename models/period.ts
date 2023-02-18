@@ -1,7 +1,8 @@
+import { Dayjs } from "dayjs";
+
 export interface Period {
-  startDate: any;
-  endDate: any;
-  startMinutes: number | null;
-  endMinutes: number | null;
-  code: string;
+  id: string;
+  startDate: Dayjs;
+  endDate: Dayjs;
+  monthIndex: number;
 }

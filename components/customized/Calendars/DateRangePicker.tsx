@@ -235,6 +235,7 @@ const DateRangePicker = ({
         contentContainerStyle={{ alignItems: "center", marginTop: -15 }}
         getItemLayout={getItemLayout}
         initialScrollIndex={initialIndex}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );
