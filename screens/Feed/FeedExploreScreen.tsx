@@ -69,11 +69,7 @@ export const FeedExploreScreen = () => {
     limit: "20",
   });
 
-  const {
-    refetch,
-    isLoading: isLoadingPosts,
-    isFetchingNextPage,
-  } = postsOptions;
+  const { isLoading: isLoadingPosts, isFetchingNextPage } = postsOptions;
 
   const {
     data: posts,
@@ -85,8 +81,6 @@ export const FeedExploreScreen = () => {
   const { data: videos } = usePaginateActions(videosOptions);
   const { data: stories } = usePaginateActions(storiesOptions);
   const loading = (isLoadingPosts || isLoadingVideos) && !isFetchingNextPage;
-
-  useRefreshOnFocus(refetch);
 
   const renderPost = useCallback(({ item }: ListRenderItemInfo<Post>) => {
     return <CardPost post={item} onShowDetails={() => showDetails(item)} />;
@@ -199,9 +193,14 @@ export const FeedExploreScreen = () => {
     </>
   );
 
-  const { refreshing, refetchByUser } = useRefreshByUser(refetch);
+  const handleRefresh = () => {
+    postsOptions?.refetch();
+    videosOptions?.refetch();
+    storiesOptions?.refetch();
+  };
+
   const refreshControl = (
-    <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
+    <RefreshControl refreshing={loading} onRefresh={handleRefresh} />
   );
 
   return (

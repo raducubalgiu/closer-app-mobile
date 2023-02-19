@@ -1,10 +1,11 @@
 import { Pressable, StyleSheet, Dimensions, View, Text } from "react-native";
 import { memo, useCallback, useRef, useState, useEffect } from "react";
 import { ResizeMode, Video } from "expo-av";
+import VisibilitySensor from "@svanboxel/visibility-sensor-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useAuth, useSheet } from "../../../../hooks";
+import { useAuth, useSheet, usePatch } from "../../../../hooks";
 import ProductSheet from "../../Sheets/ProductSheet";
 import MoreSheet from "../../Sheets/MoreSheet";
 import LikesSheet from "../../Sheets/LikesSheet";
@@ -39,7 +40,13 @@ const { width, height } = Dimensions.get("window");
 const VideoListItem = ({ post, isLoading, setScrollEnabled }: IProps) => {
   const { user } = useAuth();
   const { id, description, bookable, images, userId, product } = post;
-  const { likesCount, commentsCount, bookmarksCount, expirationTime } = post;
+  const {
+    likesCount,
+    commentsCount,
+    bookmarksCount,
+    expirationTime,
+    viewsCount,
+  } = post;
   const reactions = likesCount + commentsCount + bookmarksCount;
   const video = useRef<any>(null);
   const [status, setStatus] = useState<Status>({
@@ -68,6 +75,7 @@ const VideoListItem = ({ post, isLoading, setScrollEnabled }: IProps) => {
       likesCount={likesCount}
       commentsCount={commentsCount}
       bookmarksCount={bookmarksCount}
+      viewsCount={viewsCount}
     />
   );
   const commentsSheet = <CommentsSheet postId={id} creatorId={userId.id} />;
@@ -78,26 +86,22 @@ const VideoListItem = ({ post, isLoading, setScrollEnabled }: IProps) => {
 
   const { BOTTOM_SHEET: LikesBSheet, SHOW_BS: showLikesSheet } = useSheet(
     [1, sheetSm, sheetBig],
-    likesSheet,
-    { duration: 400 }
+    likesSheet
   );
 
   const { BOTTOM_SHEET: CommSheet, SHOW_BS: showCommSheet } = useSheet(
     [1, height / 1.3],
-    commentsSheet,
-    { duration: 400 }
+    commentsSheet
   );
 
   const { BOTTOM_SHEET: VideoMoreSheet, SHOW_BS: showMore } = useSheet(
     [1, 300],
-    moreSheet,
-    { duration: 400 }
+    moreSheet
   );
 
   const { BOTTOM_SHEET: ProdSheet, SHOW_BS: showProductSheet } = useSheet(
     [1, 500],
-    productSheet,
-    { duration: 400 }
+    productSheet
   );
 
   const handlePlay = useCallback(() => {
@@ -164,86 +168,96 @@ const VideoListItem = ({ post, isLoading, setScrollEnabled }: IProps) => {
     return unsubscribe;
   }, [navigation]);
 
+  const { mutate } = usePatch({
+    uri: `/posts/${id}/views`,
+  });
+
+  const handleViews = useCallback((visible: boolean) => {
+    if (visible) mutate({});
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <Pressable style={styles.video} onPress={handlePlay}>
-        <Video
-          ref={video}
-          style={{ ...styles.video, height: VIDEO_HEIGHT }}
-          source={{ uri: images[0]?.url }}
-          useNativeControls={false}
-          onPlaybackStatusUpdate={updatePlaybackStatus}
-          shouldCorrectPitch={true}
-          shouldPlay={status.shouldPlay}
-          isMuted={false}
-          isLooping={true}
-          resizeMode={ResizeMode.COVER}
-        />
-        {pausePlay && (
-          <View style={[StyleSheet.absoluteFill, styles.isPlaying]}>
-            <Icon
-              name="play"
-              type="font-awesome-5"
-              color="#f1f1f1"
-              size={37.5}
-              style={{ opacity: 0.4 }}
+    <VisibilitySensor onChange={handleViews}>
+      <View style={styles.container}>
+        <Pressable style={styles.video} onPress={handlePlay}>
+          <Video
+            ref={video}
+            style={{ ...styles.video, height: VIDEO_HEIGHT }}
+            source={{ uri: images[0]?.url }}
+            useNativeControls={false}
+            onPlaybackStatusUpdate={updatePlaybackStatus}
+            shouldCorrectPitch={true}
+            shouldPlay={status.shouldPlay}
+            isMuted={false}
+            isLooping={true}
+            resizeMode={ResizeMode.COVER}
+          />
+          {pausePlay && (
+            <View style={[StyleSheet.absoluteFill, styles.isPlaying]}>
+              <Icon
+                name="play"
+                type="font-awesome-5"
+                color="#f1f1f1"
+                size={37.5}
+                style={{ opacity: 0.4 }}
+              />
+            </View>
+          )}
+          {isSliding && (
+            <View style={[StyleSheet.absoluteFill, styles.timer]}>
+              <Stack direction="row">
+                <Text style={styles.time}>{getTime(currentValue)}</Text>
+                <Text style={{ marginHorizontal: 5, ...styles.time }}>/</Text>
+                <Text style={{ ...styles.time, color: "#bbb" }}>
+                  {getTime(status?.durationMillis)}
+                </Text>
+              </Stack>
+            </View>
+          )}
+          {!isSliding && (
+            <VideoListItemDetails
+              isLoading={isLoading}
+              userDetails={userId}
+              product={product}
+              description={description}
+              bookable={bookable}
+              expirationTime={expirationTime}
+              onGoBack={() => navigation.goBack()}
+              onGoToCalendar={goToCalendar}
+              onShowProductSheet={() => showProductSheet()}
+              status={status}
+              uri={images[0]?.url}
             />
-          </View>
-        )}
-        {isSliding && (
-          <View style={[StyleSheet.absoluteFill, styles.timer]}>
-            <Stack direction="row">
-              <Text style={styles.time}>{getTime(currentValue)}</Text>
-              <Text style={{ marginHorizontal: 5, ...styles.time }}>/</Text>
-              <Text style={{ ...styles.time, color: "#bbb" }}>
-                {getTime(status?.durationMillis)}
-              </Text>
-            </Stack>
-          </View>
-        )}
-        {!isSliding && (
-          <VideoListItemDetails
-            isLoading={isLoading}
-            userDetails={userId}
-            product={product}
-            description={description}
-            bookable={bookable}
-            expirationTime={expirationTime}
-            onGoBack={() => navigation.goBack()}
-            onGoToCalendar={goToCalendar}
-            onShowProductSheet={() => showProductSheet()}
-            status={status}
-            uri={images[0]?.url}
+          )}
+        </Pressable>
+        <View style={{ height: 55 + insets.bottom }}>
+          {hasSlider ? (
+            <VideoListItemSlider
+              width={width}
+              onSlidingStart={onSlidingStart}
+              onSlidingComplete={onSlidingComplete}
+              value={status?.positionMillis}
+              maximumValue={status?.durationMillis}
+              onValueChange={handleValue}
+            />
+          ) : (
+            <View style={{ height: 10 }} />
+          )}
+          <VideoListItemButtons
+            postId={id}
+            reactions={reactions}
+            commentsCount={commentsCount}
+            onShowCommentsSheet={() => showCommSheet()}
+            onShowMoreSheet={() => showMore()}
+            onShowLikesSheet={() => showLikesSheet()}
           />
-        )}
-      </Pressable>
-      <View style={{ height: 55 + insets.bottom }}>
-        {hasSlider ? (
-          <VideoListItemSlider
-            width={width}
-            onSlidingStart={onSlidingStart}
-            onSlidingComplete={onSlidingComplete}
-            value={status?.positionMillis}
-            maximumValue={status?.durationMillis}
-            onValueChange={handleValue}
-          />
-        ) : (
-          <View style={{ height: 10 }} />
-        )}
-        <VideoListItemButtons
-          postId={id}
-          reactions={reactions}
-          commentsCount={commentsCount}
-          onShowCommentsSheet={() => showCommSheet()}
-          onShowMoreSheet={() => showMore()}
-          onShowLikesSheet={() => showLikesSheet()}
-        />
+        </View>
+        {LikesBSheet}
+        {CommSheet}
+        {VideoMoreSheet}
+        {ProdSheet}
       </View>
-      {LikesBSheet}
-      {CommSheet}
-      {VideoMoreSheet}
-      {ProdSheet}
-    </View>
+    </VisibilitySensor>
   );
 };
 

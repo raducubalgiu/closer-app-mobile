@@ -19,9 +19,16 @@ type IProps = {
   product: Product;
   postId: string;
   likesCount: number;
+  onShowSheetViews?: () => void;
 };
 
-const CardPostButtons = ({ bookable, product, postId, likesCount }: IProps) => {
+const CardPostButtons = ({
+  bookable,
+  product,
+  postId,
+  likesCount,
+  onShowSheetViews,
+}: IProps) => {
   const { name, price } = product || {};
   const [likes, setLikes] = useState(likesCount);
   const navigation =
@@ -90,7 +97,12 @@ const CardPostButtons = ({ bookable, product, postId, likesCount }: IProps) => {
           />
           <BookmarkIconButton type="posts" typeId={postId} sx={styles.button} />
           <ShareIButton onPress={onShare} sx={styles.button} />
-          <Icon name="bar-chart" type="feather" style={{ marginLeft: 15 }} />
+          <Pressable
+            style={{ paddingLeft: 15, paddingVertical: 5 }}
+            onPress={onShowSheetViews}
+          >
+            <Icon name="bar-chart" type="feather" />
+          </Pressable>
         </Stack>
       </Stack>
       <Divider color="#ddd" style={{ marginHorizontal: 15 }} />

@@ -21,6 +21,7 @@ export interface Post {
   bookmarksCount: number;
   bookablesCount: number;
   active: boolean;
+  viewsCount: number;
   expirationTime: string;
   createdAt: string;
 }

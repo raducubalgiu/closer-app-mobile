@@ -16,6 +16,7 @@ type IProps = {
   likesCount: number;
   commentsCount: number;
   bookmarksCount: number;
+  viewsCount: number;
 };
 
 type StatsItem = { icon: string; counter: number };
@@ -33,6 +34,7 @@ const LikesSheet = ({
   likesCount,
   commentsCount,
   bookmarksCount,
+  viewsCount,
 }: IProps) => {
   const { t } = useTranslation();
 
@@ -62,7 +64,7 @@ const LikesSheet = ({
     <View style={{ flex: 1 }}>
       {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
       <Stack direction="row" justify="around" sx={{ padding: 15 }}>
-        <StatsItem icon="play" counter={16.5} />
+        <StatsItem icon="play" counter={viewsCount} />
         <StatsItem icon="heart" counter={likesCount} />
         <StatsItem icon="message-circle" counter={commentsCount} />
         <StatsItem icon="bookmark" counter={bookmarksCount} />
