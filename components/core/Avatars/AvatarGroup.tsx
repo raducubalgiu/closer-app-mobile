@@ -1,9 +1,11 @@
 import { StyleSheet, View } from "react-native";
 import { Avatar } from "@rneui/themed";
 
-export const AvatarGroup = () => {
+type IProps = { sx?: {} };
+
+export const AvatarGroup = ({ sx }: IProps) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, sx]}>
       <Avatar
         rounded
         size={25}

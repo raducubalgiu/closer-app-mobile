@@ -56,7 +56,7 @@ export const ServiceTab = ({
     ({ item }: ListRenderItemInfo<Product>) => (
       <ProductListItem
         product={item}
-        ownerInfo={false}
+        ownerInfo={true}
         onDeleteProduct={() => {}}
         onEditProduct={() => {}}
       />

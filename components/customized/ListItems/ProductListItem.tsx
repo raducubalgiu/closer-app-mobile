@@ -3,7 +3,7 @@ import { memo } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import { SECOND_ROLE, THIRD_ROLE, SUPERADMIN_ROLE } from "@env";
-import { Stack, Protected } from "../../core";
+import { Stack, Protected, IconStar } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { trimFunc } from "../../../utils";
 import { useAuth, useDuration } from "../../../hooks";
@@ -33,7 +33,6 @@ const ProductListItem = ({
   const { t } = useTranslation();
   const { name, duration, description, price } = product || {};
   const { option, serviceId, ownerId } = product || {};
-  const currDuration = duration ? useDuration(duration) : "";
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
@@ -45,7 +44,7 @@ const ProductListItem = ({
   };
 
   const goToOwner = () => {
-    navigation.navigate("ProfileGeneral", {
+    navigation.push("ProfileGeneral", {
       userId: ownerId.id,
       username: ownerId?.username,
       avatar: ownerId?.avatar,
@@ -56,6 +55,25 @@ const ProductListItem = ({
     });
   };
 
+  const professionDescription = (
+    <Stack direction="row" sx={{ marginTop: 2.5 }}>
+      <Text style={{ color: grey0, marginRight: 5, fontWeight: "500" }}>
+        {ownerId?.profession.name}
+      </Text>
+      <IconStar />
+      <Text
+        style={{
+          color: black,
+          fontWeight: "700",
+          marginLeft: 2.5,
+          fontSize: 13,
+        }}
+      >
+        {ownerId?.ratingsAverage}
+      </Text>
+    </Stack>
+  );
+
   return (
     <Pressable
       onPress={() => navigation.navigate("Product", { id: product.id })}
@@ -64,7 +82,7 @@ const ProductListItem = ({
         {ownerInfo && (
           <UserListItemSimple
             name={ownerId?.name}
-            profession={ownerId?.profession.name}
+            profession={professionDescription}
             avatar={ownerId?.avatar}
             checkmark={ownerId?.checkmark}
             onGoToUser={goToOwner}

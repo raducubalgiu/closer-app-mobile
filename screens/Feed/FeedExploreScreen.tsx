@@ -148,10 +148,7 @@ export const FeedExploreScreen = () => {
         data={videos}
         keyExtractor={keyExtractorVideo}
         renderItem={renderVideo}
-        contentContainerStyle={{
-          paddingLeft: 10,
-          paddingRight: 5,
-        }}
+        contentContainerStyle={{ paddingLeft: 10, paddingRight: 5 }}
       />
       <Divider color="#ddd" style={{ marginTop: 15 }} />
       <HeadingAction title={t("stories")} onPress={() => {}} />
