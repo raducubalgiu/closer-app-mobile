@@ -17,6 +17,7 @@ import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import utc from "dayjs/plugin/utc";
 import weekday from "dayjs/plugin/weekday";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 dayjs.extend(weekday);
 dayjs.extend(isSameOrBefore);
 dayjs.extend(isSameOrAfter);
@@ -63,15 +64,17 @@ const App = () => {
 
   return (
     <AuthProvider>
-      <SafeAreaProvider>
-        <RootSiblingParent>
-          <QueryClientProvider client={queryClient}>
-            <ThemeProvider theme={theme}>
-              <CloserNavigation />
-            </ThemeProvider>
-          </QueryClientProvider>
-        </RootSiblingParent>
-      </SafeAreaProvider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <SafeAreaProvider>
+          <RootSiblingParent>
+            <QueryClientProvider client={queryClient}>
+              <ThemeProvider theme={theme}>
+                <CloserNavigation />
+              </ThemeProvider>
+            </QueryClientProvider>
+          </RootSiblingParent>
+        </SafeAreaProvider>
+      </GestureHandlerRootView>
     </AuthProvider>
   );
 };

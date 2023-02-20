@@ -1,47 +1,39 @@
 import { useNavigation } from "@react-navigation/native";
 import {
-  SafeAreaView,
   StyleSheet,
-  Text,
   View,
-  Image,
   Dimensions,
+  FlatList,
+  ListRenderItemInfo,
+  Animated,
 } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Slider } from "@rneui/themed";
-import { AvatarGroup, Checkmark, IconButton, Stack } from "../components/core";
-import CustomAvatar from "../components/core/Avatars/CustomAvatar";
-import { LikeButton, StoryLabel } from "../components/customized";
-import { ShareIButton } from "../components/core";
-import { MoreVerticalButton } from "../components/customized/Buttons/MoreVerticalButton";
-import { LinearGradient } from "expo-linear-gradient";
-import theme from "../assets/styles/theme";
+import { useGet } from "../hooks";
+import { useCallback, useRef } from "react";
+import StoryListItem from "../components/customized/ListItems/Story/StoryListItem";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParams } from "../navigation/rootStackParams";
 
-const STORIES = [
-  {
-    userId: "632bfff6a3f6330ea4b50842",
-    image:
-      "https://res.cloudinary.com/closer-app/image/upload/v1671877354/raducu-balgiu-18_vgrny7.jpg",
-    avatar: [
-      {
-        url: "https://res.cloudinary.com/closer-app/image/upload/v1671877352/raducu-balgiu-6_pjj18p.jpg",
-      },
-    ],
-  },
-];
-
-const { primary } = theme.lightColors || {};
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 const STORY_WIDTH = width - 20;
 const STORY_PADDING = 2.5;
 
-export const StoryScreen = () => {
-  const insets = useSafeAreaInsets();
-  const navigation = useNavigation();
-  let storiesCount = 5;
+type IProps = NativeStackScreenProps<RootStackParams, "Story">;
 
-  const sliders = [];
-  for (let i = 0; i < storiesCount; i++) {
+export const StoryScreen = ({ route }: IProps) => {
+  const { userId } = route?.params;
+  const navigation = useNavigation();
+  const ref = useRef<FlatList>(null);
+
+  const { data, isLoading } = useGet({
+    model: "userStories",
+    uri: `/users/${userId}/stories`,
+  });
+  const stories = data?.results;
+  const storiesCount = stories?.length;
+
+  const sliders: any = [];
+  stories?.forEach((el: any, i: number) => {
     sliders.push(
       <Slider
         key={i}
@@ -65,126 +57,54 @@ export const StoryScreen = () => {
         style={{ padding: 0 }}
       />
     );
-  }
+  });
+
+  const goToPreviousStory = (index: number) => {
+    if (index === 0) {
+      return;
+    } else {
+      ref.current?.scrollToIndex({
+        index: index - 1,
+        animated: false,
+      });
+    }
+  };
+
+  const goToNextStory = (index: number) => {
+    if (index === storiesCount - 1) {
+      navigation.goBack();
+    } else {
+      ref.current?.scrollToIndex({
+        index: index + 1,
+        animated: false,
+      });
+    }
+  };
+
+  const renderStory = useCallback(
+    ({ item, index }: ListRenderItemInfo<any>) => (
+      <StoryListItem
+        story={item}
+        sliders={sliders}
+        goToNextStory={() => goToNextStory(index)}
+        goToPreviousStory={() => goToPreviousStory(index)}
+      />
+    ),
+    []
+  );
+  const keyExtractor = useCallback((item: any) => item.id, []);
 
   return (
     <View style={styles.screen}>
-      <View
-        style={{
-          width,
-          height: height - 55 - insets.bottom,
-        }}
-      >
-        <Image
-          source={{
-            uri: "https://res.cloudinary.com/closer-app/image/upload/v1671877352/raducu-balgiu-47_sqbhav.jpg",
-          }}
-          style={{ width: undefined, height: undefined, flex: 1 }}
-          resizeMode="cover"
-        />
-
-        <SafeAreaView
-          style={[StyleSheet.absoluteFill, { justifyContent: "space-between" }]}
-        >
-          <Stack direction="row" sx={{ margin: 10 }}>
-            <Stack direction="row">
-              <CustomAvatar
-                avatar={[
-                  {
-                    url: "https://res.cloudinary.com/closer-app/image/upload/v1671877352/raducu-balgiu-6_pjj18p.jpg",
-                  },
-                ]}
-                size={30}
-                sx={{ borderWidth: 0 }}
-              />
-              <Stack align="start" sx={{ marginLeft: 10 }}>
-                <Stack direction="row">
-                  <Text
-                    style={{
-                      color: "white",
-                      fontWeight: "600",
-                      fontSize: 13.5,
-                      shadowColor: "#171717",
-                      shadowOffset: { width: -2, height: 2 },
-                      shadowOpacity: 0.2,
-                      shadowRadius: 3,
-                    }}
-                  >
-                    @raducubalgiu
-                  </Text>
-                  <Checkmark sx={{ marginLeft: 5 }} />
-                </Stack>
-                <Text
-                  style={{
-                    color: "white",
-                    fontSize: 13,
-                    shadowColor: "#171717",
-                    shadowOffset: { width: -2, height: 2 },
-                    shadowOpacity: 0.2,
-                    shadowRadius: 3,
-                  }}
-                >
-                  acum 2 ore
-                </Text>
-              </Stack>
-            </Stack>
-            <IconButton
-              name="close"
-              type="antdesign"
-              size={27.5}
-              color="white"
-              onPress={() => navigation.goBack()}
-              sx={{
-                shadowColor: "#171717",
-                shadowOffset: { width: -2, height: 2 },
-                shadowOpacity: 0.2,
-                shadowRadius: 3,
-              }}
-            />
-          </Stack>
-          <LinearGradient
-            colors={["rgba(0,0,0,0.5)", "transparent"]}
-            start={{ x: 0, y: 0.6 }}
-            end={{ x: 0, y: 0 }}
-          >
-            <StoryLabel text="Poveste" sx={{ marginLeft: 10 }} />
-            <Stack direction="row" sx={{ marginHorizontal: 10 }}>
-              {sliders}
-            </Stack>
-          </LinearGradient>
-        </SafeAreaView>
-      </View>
-      <View
-        style={{
-          height: 55 + insets.bottom,
-          justifyContent: "flex-start",
-          marginTop: 10,
-        }}
-      >
-        <Stack direction="row">
-          <AvatarGroup sx={{ marginLeft: 10 }} />
-          <Stack direction="row">
-            <LikeButton
-              size={27.5}
-              postId={""}
-              onAddLike={() => {}}
-              onRemoveLike={() => {}}
-              sx={styles.button}
-              color="white"
-            />
-            <ShareIButton
-              onPress={() => {}}
-              size={27.5}
-              sx={styles.button}
-              color="white"
-            />
-            <MoreVerticalButton
-              sx={{ paddingHorizontal: 7.5, paddingVertical: 5 }}
-              onPress={() => {}}
-            />
-          </Stack>
-        </Stack>
-      </View>
+      <Animated.FlatList
+        ref={ref}
+        horizontal
+        data={stories}
+        pagingEnabled={true}
+        keyExtractor={keyExtractor}
+        renderItem={renderStory}
+        scrollEnabled={false}
+      />
     </View>
   );
 };

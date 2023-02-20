@@ -51,15 +51,15 @@ const CardPostHeader = ({
     });
   };
 
-  const goToStories = () => {
-    navigation.navigate("Story");
+  const goToStories = (userId: string) => {
+    navigation.navigate("Story", { userId });
   };
 
   return (
     <Stack direction="row">
       <View style={{ paddingLeft: 15 }}>
         <Stack direction="row" sx={styles.avatarContainer}>
-          <Pressable onPress={goToStories}>
+          <Pressable onPress={() => goToStories(userId)}>
             <CustomAvatar avatar={avatar} size={30} />
           </Pressable>
           <Pressable onPress={() => goToUser(userId)}>

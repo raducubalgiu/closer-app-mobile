@@ -163,7 +163,11 @@ export const FeedExploreScreen = () => {
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }: any) => {
           return (
-            <Pressable onPress={() => navigation.navigate("Story")}>
+            <Pressable
+              onPress={() =>
+                navigation.navigate("Story", { userId: item?.followeeId?.id })
+              }
+            >
               <Stack sx={{ paddingLeft: 10 }}>
                 <LinearGradient
                   colors={[`${primary}`, `#ffd9b3`]}
