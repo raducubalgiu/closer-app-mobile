@@ -50,6 +50,7 @@ export const SettingsListItem = ({
             {...defaultIconProps}
             {...iconLeftProps}
             style={styles.iconLeft}
+            size={22}
           />
         )}
         <Stack align="start">

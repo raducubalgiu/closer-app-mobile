@@ -20,7 +20,7 @@ const VideoListItemSlider = ({
 }: IProps) => {
   return (
     <Slider
-      allowTouchTrack={true}
+      allowTouchTrack={false}
       onValueChange={onValueChange}
       onSlidingStart={onSlidingStart}
       onSlidingComplete={onSlidingComplete}

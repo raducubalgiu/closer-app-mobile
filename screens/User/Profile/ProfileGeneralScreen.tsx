@@ -98,6 +98,7 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
         <HeaderProfileGeneral
           username={username}
           checkmark={checkmark}
+          hours={userDetails?.hours}
           onOpenSettings={() => {}}
         />
       </View>

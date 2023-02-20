@@ -6,6 +6,7 @@ import { ListItem, Spinner } from "../../core";
 import { useGet, usePost, useDelete } from "../../../hooks";
 import { useTranslation } from "react-i18next";
 import { useIsFocused } from "@react-navigation/native";
+import { SettingsListItem } from "../ListItems/SettingsListItem";
 
 const { black } = theme.lightColors || {};
 type IProps = { postId: string; userId: string | undefined };
@@ -61,30 +62,32 @@ const MoreSheet = ({ postId, userId }: IProps) => {
                 name={bookmarked ? "bookmark" : "bookmark-o"}
                 type="font-awesome"
                 color={black}
-                size={22.5}
+                size={22}
+                style={{ paddingHorizontal: 5 }}
               />
             </Animated.View>
             <Text style={styles.text}>
               {bookmarked ? t("addedToBookmarks") : t("addToBookmarks")}
             </Text>
           </ListItem>
-          <ListItem onPress={() => {}} sx={styles.listItem}>
-            <Icon name="link" type="feather" color={black} size={22.5} />
-            <Text style={styles.text}>{t("getLink")}</Text>
-          </ListItem>
-          <ListItem onPress={handleDownload} sx={styles.listItem}>
-            <Icon name="download" type="feather" color={black} size={22.5} />
-            <Text style={styles.text}>{t("downloadPost")}</Text>
-          </ListItem>
-          <ListItem onPress={() => {}} sx={styles.listItem}>
-            <Icon
-              name="alert-triangle"
-              type="feather"
-              color={black}
-              size={22.5}
-            />
-            <Text style={styles.text}>{t("report")}</Text>
-          </ListItem>
+          <SettingsListItem
+            title={t("getLink")}
+            iconLeftProps={{ name: "link" }}
+            rightIcon={false}
+            onPress={() => {}}
+          />
+          <SettingsListItem
+            title={t("downloadPost")}
+            iconLeftProps={{ name: "download" }}
+            rightIcon={false}
+            onPress={() => {}}
+          />
+          <SettingsListItem
+            title={t("report")}
+            iconLeftProps={{ name: "alert-triangle" }}
+            rightIcon={false}
+            onPress={() => {}}
+          />
         </View>
       )}
       {isLoading && <Spinner />}
@@ -100,15 +103,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   listItem: {
-    paddingLeft: 0,
     backgroundColor: "white",
-    marginBottom: 15,
+    paddingBottom: 10,
   },
   text: {
     color: black,
-    paddingVertical: 2.5,
-    marginLeft: 15,
-    fontWeight: "500",
+    marginLeft: 10,
+    fontWeight: "600",
     fontSize: 14,
   },
 });
