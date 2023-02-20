@@ -24,10 +24,9 @@ import {
   useSheet,
   useAuth,
   useGetPaginate,
-  useRefreshByUser,
-  useRefreshOnFocus,
   useDelete,
   usePaginateActions,
+  usePost,
 } from "../../hooks";
 import { Post } from "../../models/post";
 import theme from "../../assets/styles/theme";
@@ -37,7 +36,7 @@ import { trimFunc } from "../../utils";
 import { LinearGradient } from "expo-linear-gradient";
 import AvatarBadge from "../../components/core/Avatars/AvatarBadge";
 
-const { black, primary } = theme.lightColors || {};
+const { primary } = theme.lightColors || {};
 
 export const FeedExploreScreen = () => {
   const { user } = useAuth();
@@ -207,6 +206,25 @@ export const FeedExploreScreen = () => {
     <RefreshControl refreshing={loading} onRefresh={handleRefresh} />
   );
 
+  const viewabilityConfig = {
+    waitForInteraction: true,
+    itemVisiblePercentThreshold: 75,
+    minimumViewTime: 2000,
+  };
+
+  const { mutate: handleViews } = usePost({ uri: `/posts/views` });
+
+  const trackItem = (item: Post) => {
+    handleViews({ postId: item.id, userId: user?.id, from: "explore" });
+  };
+
+  const onViewableItemsChanged = useCallback((info: { changed: any }): void => {
+    const visibleItems = info.changed.filter((entry: any) => entry.isViewable);
+    visibleItems.forEach((visible: any) => {
+      trackItem(visible.item);
+    });
+  }, []);
+
   return (
     <SafeAreaView style={styles.screen}>
       <HeaderFeed indexLabel={0} />
@@ -223,6 +241,8 @@ export const FeedExploreScreen = () => {
             ListFooterComponent={showSpinner}
             onEndReached={loadMore}
             onEndReachedThreshold={0.3}
+            viewabilityConfig={viewabilityConfig}
+            onViewableItemsChanged={onViewableItemsChanged}
           />
         )}
         {loading && <Spinner />}

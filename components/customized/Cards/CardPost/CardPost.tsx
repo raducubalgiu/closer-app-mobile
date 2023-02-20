@@ -1,6 +1,6 @@
 import { StyleSheet, View, Dimensions, Text } from "react-native";
 import { SharedElement } from "react-navigation-shared-element";
-import { memo, useCallback } from "react";
+import { memo } from "react";
 import theme from "../../../../assets/styles/theme";
 import { Image, Icon } from "@rneui/themed";
 import CardPostHeader from "./CardPostHeader";
@@ -10,8 +10,7 @@ import PostGradient from "../../Gradients/PostGradient";
 import { FROM_NOW } from "../../../../utils/date-utils";
 import { Post } from "../../../../models/post";
 import { ResizeMode, Video } from "expo-av";
-import VisibilitySensor from "@svanboxel/visibility-sensor-react-native";
-import { usePatch, useSheet } from "../../../../hooks";
+import { useSheet } from "../../../../hooks";
 import { Stack } from "../../../core";
 
 type StatsItem = { icon: string; counter: number };
@@ -53,16 +52,8 @@ const CardPost = ({ post, onShowDetails }: IProps) => {
   );
   const { BOTTOM_SHEET, SHOW_BS } = useSheet([1, 150], viewsSheet);
 
-  const { mutate } = usePatch({
-    uri: `/posts/${id}/views`,
-  });
-
-  const handleViews = useCallback((visible: boolean) => {
-    if (visible) mutate({});
-  }, []);
-
   return (
-    <VisibilitySensor onChange={handleViews}>
+    <>
       <View style={styles.container}>
         <CardPostHeader
           userId={userId?.id}
@@ -116,7 +107,7 @@ const CardPost = ({ post, onShowDetails }: IProps) => {
         />
       </View>
       {BOTTOM_SHEET}
-    </VisibilitySensor>
+    </>
   );
 };
 
