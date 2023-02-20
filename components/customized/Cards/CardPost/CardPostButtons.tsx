@@ -90,7 +90,8 @@ const CardPostButtons = ({
         </Pressable>
         <Stack direction="row">
           <LikeButton
-            postId={postId}
+            model="posts"
+            modelId={postId}
             onAddLike={() => setLikes((likes) => likes + 1)}
             onRemoveLike={() => setLikes((likes) => likes - 1)}
             sx={styles.button}

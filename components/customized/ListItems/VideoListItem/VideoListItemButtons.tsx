@@ -36,7 +36,8 @@ const VideoListItemButtons = ({
       <Stack direction="row">
         <LikeButton
           size={27.5}
-          postId={postId}
+          model="posts"
+          modelId={postId}
           onAddLike={() => {}}
           onRemoveLike={() => {}}
           sx={styles.button}

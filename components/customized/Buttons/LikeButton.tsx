@@ -8,7 +8,8 @@ import { useDelete, useGet, usePost } from "../../../hooks";
 
 const { error, black } = theme.lightColors || {};
 type IProps = {
-  postId: string;
+  model: string;
+  modelId: string;
   onAddLike: () => void;
   onRemoveLike: () => void;
   size?: number;
@@ -17,7 +18,8 @@ type IProps = {
 };
 
 export const LikeButton = ({
-  postId,
+  model,
+  modelId,
   onAddLike,
   onRemoveLike,
   size = 25,
@@ -26,7 +28,7 @@ export const LikeButton = ({
 }: IProps) => {
   const { user } = useAuth();
   const [liked, setLiked] = useState(false);
-  const endpoints = `/users/${user?.id}/posts/${postId}/likes`;
+  const endpoints = `/users/${user?.id}/${model}/${modelId}/likes`;
   const animatedScale = useRef(new Animated.Value(0)).current;
 
   useGet({
