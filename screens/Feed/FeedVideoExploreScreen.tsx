@@ -78,7 +78,6 @@ export const FeedVideoExploreScreen = ({ route }: IProps) => {
         refreshControl={refreshControl}
         showsVerticalScrollIndicator={false}
         decelerationRate={0.0}
-        bounces={false}
         pagingEnabled={true}
         getItemLayout={getItemLayout}
         initialScrollIndex={initialIndex}

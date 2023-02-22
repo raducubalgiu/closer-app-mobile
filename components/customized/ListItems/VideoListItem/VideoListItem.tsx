@@ -159,7 +159,7 @@ const VideoListItem = ({
   useFocusEffect(
     useCallback(() => {
       if (isVisible) {
-        video.current.playAsync();
+        video.current.playFromPositionAsync(0);
       } else {
         video.current.pauseAsync();
       }
