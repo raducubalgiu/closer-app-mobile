@@ -15,12 +15,13 @@ type IProps = NativeStackScreenProps<RootStackParams, "FeedVideoExplore">;
 export const FeedVideoExploreScreen = ({ route }: IProps) => {
   const { initialIndex } = route.params;
   const [scrollEnabled, setScrollEnabled] = useState(true);
+  const [visibleItem, setVisibleItem] = useState<any>(null);
 
   const options = useGetPaginate({
     model: "videos",
     uri: `/posts/get-all-posts`,
     queries: `postType=video&orientation=portrait`,
-    limit: "5",
+    limit: "20",
   });
 
   const { isLoading, isFetching, refetch } = options;
@@ -33,9 +34,10 @@ export const FeedVideoExploreScreen = ({ route }: IProps) => {
         post={item}
         isLoading={loading}
         setScrollEnabled={setScrollEnabled}
+        isVisible={visibleItem?.id === item?.id}
       />
     ),
-    [loading]
+    [loading, visibleItem]
   );
 
   const keyExtractor = useCallback((item: any) => item?.id, []);
@@ -54,6 +56,19 @@ export const FeedVideoExploreScreen = ({ route }: IProps) => {
     <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
   );
 
+  const viewabilityConfig = { itemVisiblePercentThreshold: 95 };
+
+  const trackItem = useCallback((item: any) => {
+    setVisibleItem(item);
+  }, []);
+
+  const onViewableItemsChanged = useCallback((info: { changed: any }): void => {
+    const visibleItems = info.changed.filter((entry: any) => entry.isViewable);
+    visibleItems.forEach((visible: any) => {
+      trackItem(visible.item);
+    });
+  }, []);
+
   return (
     <View style={{ backgroundColor: "black" }}>
       <FlatList
@@ -71,6 +86,8 @@ export const FeedVideoExploreScreen = ({ route }: IProps) => {
         onEndReachedThreshold={0.3}
         ListFooterComponent={showSpinner}
         scrollEnabled={scrollEnabled}
+        viewabilityConfig={viewabilityConfig}
+        onViewableItemsChanged={onViewableItemsChanged}
       />
     </View>
   );

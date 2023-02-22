@@ -8,7 +8,7 @@ import {
   Animated,
 } from "react-native";
 import { Slider } from "@rneui/themed";
-import { useGet } from "../hooks";
+import { useAuth, useGet, usePost } from "../hooks";
 import { useCallback, useRef } from "react";
 import StoryListItem from "../components/customized/ListItems/Story/StoryListItem";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -21,11 +21,12 @@ const STORY_PADDING = 2.5;
 type IProps = NativeStackScreenProps<RootStackParams, "Story">;
 
 export const StoryScreen = ({ route }: IProps) => {
+  const { user } = useAuth();
   const { userId } = route?.params;
   const navigation = useNavigation();
   const ref = useRef<FlatList>(null);
 
-  const { data, isLoading } = useGet({
+  const { data } = useGet({
     model: "userStories",
     uri: `/users/${userId}/stories`,
   });
@@ -94,6 +95,21 @@ export const StoryScreen = ({ route }: IProps) => {
   );
   const keyExtractor = useCallback((item: any) => item.id, []);
 
+  const { mutate } = usePost({ uri: `/stories/views` });
+
+  const viewabilityConfig = { itemVisiblePercentThreshold: 75 };
+
+  const trackItem = useCallback((item: any) => {
+    mutate({ storyId: item.id, userId: user?.id });
+  }, []);
+
+  const onViewableItemsChanged = useCallback((info: { changed: any }): void => {
+    const visibleItems = info.changed.filter((entry: any) => entry.isViewable);
+    visibleItems.forEach((visible: any) => {
+      trackItem(visible.item);
+    });
+  }, []);
+
   return (
     <View style={styles.screen}>
       <Animated.FlatList
@@ -104,6 +120,8 @@ export const StoryScreen = ({ route }: IProps) => {
         keyExtractor={keyExtractor}
         renderItem={renderStory}
         scrollEnabled={false}
+        viewabilityConfig={viewabilityConfig}
+        onViewableItemsChanged={onViewableItemsChanged}
       />
     </View>
   );

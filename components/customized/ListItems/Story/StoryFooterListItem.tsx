@@ -1,19 +1,24 @@
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { memo } from "react";
 import { AvatarGroup, Stack, ShareIButton } from "../../../core";
 import { LikeButton } from "../../Buttons/LikeButton";
 import { MoreVerticalButton } from "../../Buttons/MoreVerticalButton";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-type IProps = { storyId: string };
+type IProps = { storyId: string; onShowViews: () => void };
 
-const StoryFooterListItem = ({ storyId }: IProps) => {
+const StoryFooterListItem = ({ storyId, onShowViews }: IProps) => {
   const insets = useSafeAreaInsets();
 
   return (
     <View style={{ ...styles.container, height: 55 + insets.bottom }}>
       <Stack direction="row">
-        <AvatarGroup sx={{ marginLeft: 10 }} />
+        <Pressable
+          onPress={onShowViews}
+          style={{ paddingHorizontal: 10, paddingVertical: 5 }}
+        >
+          <AvatarGroup />
+        </Pressable>
         <Stack direction="row">
           <LikeButton
             size={27.5}

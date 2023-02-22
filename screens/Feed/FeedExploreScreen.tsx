@@ -5,45 +5,30 @@ import {
   ListRenderItemInfo,
   SafeAreaView,
   Text,
-  Pressable,
 } from "react-native";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useRef } from "react";
 import { useNavigation, useScrollToTop } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { Divider, Icon } from "@rneui/themed";
+import { Divider } from "@rneui/themed";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import PostVideoOverviewListItem from "../../components/customized/ListItems/Post/PostVideoOverviewListItem";
 import CardPost from "../../components/customized/Cards/CardPost/CardPost";
 import { HeadingAction, Spinner, Stack } from "../../components/core";
+import { HeaderFeed } from "../../components/customized";
 import {
-  PostInfoSheet,
-  HeaderFeed,
-  ConfirmModal,
-} from "../../components/customized";
-import {
-  useSheet,
   useAuth,
   useGetPaginate,
-  useDelete,
   usePaginateActions,
   usePost,
 } from "../../hooks";
 import { Post } from "../../models/post";
-import theme from "../../assets/styles/theme";
 import { RootStackParams } from "../../navigation/rootStackParams";
-import CustomAvatar from "../../components/core/Avatars/CustomAvatar";
-import { trimFunc } from "../../utils";
-import { LinearGradient } from "expo-linear-gradient";
 import AvatarBadge from "../../components/core/Avatars/AvatarBadge";
-
-const { primary } = theme.lightColors || {};
+import StoryAvatarListItem from "../../components/customized/ListItems/Story/StoryAvatarListItem";
 
 export const FeedExploreScreen = () => {
   const { user } = useAuth();
-  const [postId, setPostId] = useState(null);
-  const [visible, setVisible] = useState(false);
   const ref = useRef<FlatList>(null);
-  useScrollToTop(ref);
   const { t } = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -81,8 +66,15 @@ export const FeedExploreScreen = () => {
   const { data: stories } = usePaginateActions(storiesOptions);
   const loading = (isLoadingPosts || isLoadingVideos) && !isFetchingNextPage;
 
+  useScrollToTop(ref);
+  const handleRefresh = () => {};
+
+  const refreshControl = (
+    <RefreshControl refreshing={loading} onRefresh={handleRefresh} />
+  );
+
   const renderPost = useCallback(({ item }: ListRenderItemInfo<Post>) => {
-    return <CardPost post={item} onShowDetails={() => showDetails(item)} />;
+    return <CardPost post={item} onShowDetails={() => {}} />;
   }, []);
 
   const renderVideo = useCallback(
@@ -102,109 +94,25 @@ export const FeedExploreScreen = () => {
 
   const keyExtractor = useCallback((item: Post) => item?.id, []);
   const keyExtractorVideo = useCallback((item: Post) => item?.id, []);
+  const keyExtractorStory = useCallback((item: any) => item.id, []);
 
-  const showConfirm = useCallback(() => {
-    CLOSE_BS();
-    setVisible(true);
-  }, []);
-
-  const sheetContent = <PostInfoSheet onShowConfirm={showConfirm} />;
-  const { BOTTOM_SHEET, SHOW_BS, CLOSE_BS } = useSheet(
-    ["10%", "30%"],
-    sheetContent
-  );
-
-  const showDetails = useCallback((item: any) => {
-    setPostId(item.id);
-    SHOW_BS();
-  }, []);
-
-  const { mutate: handleDelete } = useDelete({
-    uri: `/users/${user?.id}/posts/${postId}`,
-    onSuccess: () => {
-      CLOSE_BS();
-      setVisible(false);
-    },
-  });
-
-  const header = (
-    <>
-      <HeadingAction
-        title={t("videoclips")}
+  const renderStoryAvatar = useCallback(
+    ({ item }: ListRenderItemInfo<any>) => (
+      <StoryAvatarListItem
+        username={item?.followeeId?.username}
+        avatar={item?.followeeId?.avatar}
         onPress={() =>
-          navigation.navigate("FeedVideoExplore", { initialIndex: 0 })
+          navigation.navigate("Story", { userId: item?.followeeId?.id })
         }
       />
-      <FlatList
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        data={videos}
-        keyExtractor={keyExtractorVideo}
-        renderItem={renderVideo}
-        contentContainerStyle={{ paddingLeft: 10, paddingRight: 5 }}
-      />
-      <Divider color="#ddd" style={{ marginTop: 15 }} />
-      <HeadingAction title={t("stories")} onPress={() => {}} />
-      <FlatList
-        ListHeaderComponent={
-          <Stack sx={{ paddingLeft: 10 }}>
-            <AvatarBadge
-              avatar={user?.avatar}
-              size={67}
-              sx={{ margin: 2.1, borderWidth: 1.5, borderColor: "white" }}
-            />
-            <Text style={{ fontSize: 12.5, marginTop: 5 }}>Povestea ta</Text>
-          </Stack>
-        }
-        data={stories}
-        horizontal
-        keyExtractor={(item) => item.id}
-        showsHorizontalScrollIndicator={false}
-        renderItem={({ item }: any) => {
-          return (
-            <Pressable
-              onPress={() =>
-                navigation.navigate("Story", { userId: item?.followeeId?.id })
-              }
-            >
-              <Stack sx={{ paddingLeft: 10 }}>
-                <LinearGradient
-                  colors={[`${primary}`, `#ffd9b3`]}
-                  start={{ x: 1, y: 0.4 }}
-                  end={{ x: 1.4, y: 3 }}
-                  style={{ borderRadius: 200 }}
-                >
-                  <CustomAvatar
-                    avatar={item?.followeeId?.avatar}
-                    size={65}
-                    sx={{
-                      margin: 2.25,
-                      borderWidth: 1.5,
-                      borderColor: "white",
-                    }}
-                  />
-                </LinearGradient>
-                <Text style={{ fontSize: 12.5, marginTop: 5 }}>
-                  {trimFunc(item?.followeeId?.username, 10)}
-                </Text>
-              </Stack>
-            </Pressable>
-          );
-        }}
-      />
-      <Divider color="#ddd" style={{ marginTop: 15, marginBottom: 10 }} />
-    </>
+    ),
+    []
   );
 
-  const handleRefresh = () => {
-    postsOptions?.refetch();
-    videosOptions?.refetch();
-    storiesOptions?.refetch();
-  };
-
-  const refreshControl = (
-    <RefreshControl refreshing={loading} onRefresh={handleRefresh} />
-  );
+  const goToVideos = () =>
+    navigation.navigate("FeedVideoExplore", {
+      initialIndex: 0,
+    });
 
   const viewabilityConfig = {
     waitForInteraction: true,
@@ -212,11 +120,11 @@ export const FeedExploreScreen = () => {
     minimumViewTime: 2000,
   };
 
-  const { mutate: handleViews } = usePost({ uri: `/posts/views` });
+  const { mutate } = usePost({ uri: `/posts/views` });
 
-  const trackItem = (item: Post) => {
-    handleViews({ postId: item.id, userId: user?.id, from: "explore" });
-  };
+  const trackItem = useCallback((item: Post) => {
+    mutate({ postId: item.id, userId: user?.id, from: "explore" });
+  }, []);
 
   const onViewableItemsChanged = useCallback((info: { changed: any }): void => {
     const visibleItems = info.changed.filter((entry: any) => entry.isViewable);
@@ -228,37 +136,66 @@ export const FeedExploreScreen = () => {
   return (
     <SafeAreaView style={styles.screen}>
       <HeaderFeed indexLabel={0} />
-      <>
-        {!loading && (
-          <FlatList
-            ref={ref}
-            ListHeaderComponent={header}
-            refreshControl={refreshControl}
-            data={posts}
-            renderItem={renderPost}
-            keyExtractor={keyExtractor}
-            showsVerticalScrollIndicator={false}
-            ListFooterComponent={showSpinner}
-            onEndReached={loadMore}
-            onEndReachedThreshold={0.3}
-            viewabilityConfig={viewabilityConfig}
-            onViewableItemsChanged={onViewableItemsChanged}
-          />
-        )}
-        {loading && <Spinner />}
-      </>
-      {BOTTOM_SHEET}
-      <ConfirmModal
-        title={t("deletePost")}
-        description={t("areYouSureDeletePost")}
-        visible={visible}
-        onDelete={handleDelete}
-        onCloseModal={() => setVisible(false)}
-      />
+      {!loading && (
+        <FlatList
+          ref={ref}
+          ListHeaderComponent={
+            <>
+              <HeadingAction title={t("videoclips")} onPress={goToVideos} />
+              <FlatList
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                data={videos}
+                keyExtractor={keyExtractorVideo}
+                renderItem={renderVideo}
+                contentContainerStyle={{ paddingLeft: 10, paddingRight: 5 }}
+              />
+              <Divider color="#ddd" style={{ marginTop: 15 }} />
+              <HeadingAction title={t("stories")} onPress={() => {}} />
+              <FlatList
+                ListHeaderComponent={
+                  <Stack sx={{ paddingLeft: 10 }}>
+                    <AvatarBadge
+                      avatar={user?.avatar}
+                      size={67}
+                      sx={styles.avatarBadge}
+                    />
+                    <Text style={styles.storyTxt}>Povestea ta</Text>
+                  </Stack>
+                }
+                data={stories}
+                horizontal
+                keyExtractor={keyExtractorStory}
+                showsHorizontalScrollIndicator={false}
+                renderItem={renderStoryAvatar}
+              />
+              <Divider
+                color="#ddd"
+                style={{ marginTop: 15, marginBottom: 10 }}
+              />
+            </>
+          }
+          refreshControl={refreshControl}
+          data={posts}
+          renderItem={renderPost}
+          keyExtractor={keyExtractor}
+          showsVerticalScrollIndicator={false}
+          ListFooterComponent={showSpinner}
+          onEndReached={loadMore}
+          onEndReachedThreshold={0.3}
+          viewabilityConfig={viewabilityConfig}
+          onViewableItemsChanged={onViewableItemsChanged}
+          maxToRenderPerBatch={5}
+          windowSize={5}
+        />
+      )}
+      {loading && <Spinner />}
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   screen: { backgroundColor: "white", flex: 1 },
+  avatarBadge: { margin: 2.1, borderWidth: 1.5, borderColor: "white" },
+  storyTxt: { fontSize: 12.5, marginTop: 5 },
 });

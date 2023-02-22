@@ -112,6 +112,7 @@ export { SheetService } from "./Sheets/SheetService";
 export { FollowUserSheet } from "./Sheets/FollowUserSheet";
 export { PostOptionsSheet } from "./Sheets/PostOptionsSheet";
 export { ProfileMenuSheet } from "./Sheets/ProfileMenuSheet";
+export { StoryViewsSheet } from "./Sheets/StoryViewsSheet";
 
 export { FiltersContainer } from "./Layout/Containers/FiltersContainer";
 

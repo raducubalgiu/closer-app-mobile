@@ -2,9 +2,9 @@ import { Pressable, StyleSheet, Dimensions, View, Text } from "react-native";
 import { memo, useCallback, useRef, useState, useEffect } from "react";
 import { ResizeMode, Video } from "expo-av";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useAuth, useSheet, usePatch } from "../../../../hooks";
+import { useAuth, useSheet } from "../../../../hooks";
 import ProductSheet from "../../Sheets/ProductSheet";
 import MoreSheet from "../../Sheets/MoreSheet";
 import LikesSheet from "../../Sheets/LikesSheet";
@@ -16,27 +16,34 @@ import VideoListItemDetails from "./VideoListItemDetails";
 import VideoListItemSlider from "./VideoListItemSlider";
 import { Icon } from "@rneui/themed";
 import { Stack } from "../../../core";
+import { VideoStatusType } from "../../../../models/videoStatus";
 
 type IProps = {
   post: Post;
   isLoading: boolean;
   setScrollEnabled: (scroll: boolean) => void;
+  isVisible: boolean;
 };
 
-type Status = {
-  positionMillis: number;
-  durationMillis: number;
-  shouldPlay: boolean;
-  rate: number;
-  shouldCorrectPitch: boolean;
-  volume: number;
-  isMuted: boolean;
-  isLooping: boolean;
+const defaultStatus = {
+  positionMillis: 0,
+  durationMillis: 0,
+  shouldPlay: false,
+  rate: 1.0,
+  shouldCorrectPitch: true,
+  volume: 1.0,
+  isMuted: false,
+  isLooping: false,
 };
 
 const { width, height } = Dimensions.get("window");
 
-const VideoListItem = ({ post, isLoading, setScrollEnabled }: IProps) => {
+const VideoListItem = ({
+  post,
+  isLoading,
+  setScrollEnabled,
+  isVisible,
+}: IProps) => {
   const { user } = useAuth();
   const { id, description, bookable, images, userId, product } = post;
   const {
@@ -48,16 +55,7 @@ const VideoListItem = ({ post, isLoading, setScrollEnabled }: IProps) => {
   } = post;
   const reactions = likesCount + commentsCount + bookmarksCount;
   const video = useRef<any>(null);
-  const [status, setStatus] = useState<Status>({
-    positionMillis: 0,
-    durationMillis: 0,
-    shouldPlay: false,
-    rate: 1.0,
-    shouldCorrectPitch: false,
-    volume: 1.0,
-    isMuted: false,
-    isLooping: false,
-  });
+  const [status, setStatus] = useState<VideoStatusType>(defaultStatus);
 
   const [isSliding, setIsSliding] = useState(false);
   const [currentValue, setCurrentValue] = useState(0);
@@ -111,10 +109,9 @@ const VideoListItem = ({ post, isLoading, setScrollEnabled }: IProps) => {
     }
   }, [status]);
 
-  const updatePlaybackStatus = useCallback(
-    (stat: any) => setStatus({ ...stat }),
-    []
-  );
+  const updatePlaybackStatus = useCallback((stat: any) => {
+    setStatus({ ...stat });
+  }, []);
 
   const onSlidingStart = useCallback(async () => {
     await video.current.pauseAsync();
@@ -157,6 +154,16 @@ const VideoListItem = ({ post, isLoading, setScrollEnabled }: IProps) => {
       setCurrentValue(value);
     },
     [currentValue]
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      if (isVisible) {
+        video.current.playAsync();
+      } else {
+        video.current.pauseAsync();
+      }
+    }, [isVisible, setStatus])
   );
 
   useEffect(() => {
