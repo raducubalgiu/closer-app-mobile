@@ -1,10 +1,12 @@
 import { FlatList, Dimensions, View, RefreshControl } from "react-native";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useRef } from "react";
 import VideoListItem from "../../components/customized/ListItems/VideoListItem/VideoListItem";
 import {
   useGetPaginate,
   usePaginateActions,
   useRefreshByUser,
+  usePost,
+  useAuth,
 } from "../../hooks";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../navigation/rootStackParams";
@@ -16,12 +18,55 @@ export const FeedVideoExploreScreen = ({ route }: IProps) => {
   const { initialIndex } = route.params;
   const [scrollEnabled, setScrollEnabled] = useState(true);
   const [visibleItem, setVisibleItem] = useState<any>(null);
+  const { user } = useAuth();
+
+  const { mutate } = usePost({ uri: `/posts/views` });
+
+  const viewabilityConfigPlayVideo = { itemVisiblePercentThreshold: 95 };
+  const viewabilityConfigSaveView = {
+    waitForInteraction: true,
+    itemVisiblePercentThreshold: 75,
+    minimumViewTime: 3000,
+  };
+
+  const trackItem = useCallback((item: any) => {
+    setVisibleItem(item);
+  }, []);
+
+  const onViewablePlayVideo = useCallback((info: { changed: any }): void => {
+    const visibleItems = info.changed.filter((entry: any) => entry.isViewable);
+    visibleItems.forEach((visible: any) => {
+      trackItem(visible.item);
+    });
+  }, []);
+
+  const saveView = useCallback((item: any) => {
+    mutate({ postId: item.id, userId: user?.id, from: "explore" });
+  }, []);
+
+  const onViewableSaveView = useCallback((info: { changed: any }): void => {
+    const visibleItems = info.changed.filter((entry: any) => entry.isViewable);
+    visibleItems.forEach((visible: any) => {
+      saveView(visible.item);
+    });
+  }, []);
+
+  const viewabilityConfigCallbackPairs = useRef([
+    {
+      viewabilityConfig: viewabilityConfigPlayVideo,
+      onViewableItemsChanged: onViewablePlayVideo,
+    },
+    {
+      viewabilityConfig: viewabilityConfigSaveView,
+      onViewableItemsChanged: onViewableSaveView,
+    },
+  ]);
 
   const options = useGetPaginate({
     model: "videos",
     uri: `/posts/get-all-posts`,
     queries: `postType=video&orientation=portrait`,
-    limit: "20",
+    limit: "5",
   });
 
   const { isLoading, isFetching, refetch } = options;
@@ -32,7 +77,6 @@ export const FeedVideoExploreScreen = ({ route }: IProps) => {
     ({ item }: { item: any }) => (
       <VideoListItem
         post={item}
-        isLoading={loading}
         setScrollEnabled={setScrollEnabled}
         isVisible={visibleItem?.id === item?.id}
       />
@@ -43,7 +87,7 @@ export const FeedVideoExploreScreen = ({ route }: IProps) => {
   const keyExtractor = useCallback((item: any) => item?.id, []);
 
   const getItemLayout = useCallback(
-    (data: any, index: number) => ({
+    (_: any, index: number) => ({
       length: height,
       offset: height * index,
       index,
@@ -56,19 +100,6 @@ export const FeedVideoExploreScreen = ({ route }: IProps) => {
     <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
   );
 
-  const viewabilityConfig = { itemVisiblePercentThreshold: 95 };
-
-  const trackItem = useCallback((item: any) => {
-    setVisibleItem(item);
-  }, []);
-
-  const onViewableItemsChanged = useCallback((info: { changed: any }): void => {
-    const visibleItems = info.changed.filter((entry: any) => entry.isViewable);
-    visibleItems.forEach((visible: any) => {
-      trackItem(visible.item);
-    });
-  }, []);
-
   return (
     <View style={{ backgroundColor: "black" }}>
       <FlatList
@@ -78,6 +109,7 @@ export const FeedVideoExploreScreen = ({ route }: IProps) => {
         refreshControl={refreshControl}
         showsVerticalScrollIndicator={false}
         decelerationRate={0.0}
+        bounces={false}
         pagingEnabled={true}
         getItemLayout={getItemLayout}
         initialScrollIndex={initialIndex}
@@ -85,8 +117,7 @@ export const FeedVideoExploreScreen = ({ route }: IProps) => {
         onEndReachedThreshold={0.3}
         ListFooterComponent={showSpinner}
         scrollEnabled={scrollEnabled}
-        viewabilityConfig={viewabilityConfig}
-        onViewableItemsChanged={onViewableItemsChanged}
+        viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
       />
     </View>
   );

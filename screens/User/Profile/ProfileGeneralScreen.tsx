@@ -51,6 +51,8 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
     model: "checkFollow",
     uri: `/users/${user?.id}/followings/${userId || userDetails?.id}/follows`,
     onSuccess: (res: any) => setIsFollow(res.data.status),
+    enabled: !!userDetails?.id,
+    enableId: userDetails?.id,
   });
 
   const { mutate: follow } = usePost({

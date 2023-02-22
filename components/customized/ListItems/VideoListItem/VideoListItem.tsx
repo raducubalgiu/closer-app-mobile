@@ -20,7 +20,6 @@ import { VideoStatusType } from "../../../../models/videoStatus";
 
 type IProps = {
   post: Post;
-  isLoading: boolean;
   setScrollEnabled: (scroll: boolean) => void;
   isVisible: boolean;
 };
@@ -38,12 +37,7 @@ const defaultStatus = {
 
 const { width, height } = Dimensions.get("window");
 
-const VideoListItem = ({
-  post,
-  isLoading,
-  setScrollEnabled,
-  isVisible,
-}: IProps) => {
+const VideoListItem = ({ post, setScrollEnabled, isVisible }: IProps) => {
   const { user } = useAuth();
   const { id, description, bookable, images, userId, product } = post;
   const {
@@ -69,10 +63,7 @@ const VideoListItem = ({
   const likesSheet = (
     <LikesSheet
       postId={id}
-      likesCount={likesCount}
-      commentsCount={commentsCount}
-      bookmarksCount={bookmarksCount}
-      viewsCount={viewsCount}
+      counter={{ likesCount, commentsCount, bookmarksCount, viewsCount }}
     />
   );
   const commentsSheet = <CommentsSheet postId={id} creatorId={userId.id} />;
@@ -213,7 +204,6 @@ const VideoListItem = ({
         )}
         {!isSliding && (
           <VideoListItemDetails
-            isLoading={isLoading}
             userDetails={userId}
             product={product}
             description={description}

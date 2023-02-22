@@ -1,4 +1,4 @@
-import { StyleSheet, Text, Pressable, Dimensions, Image } from "react-native";
+import { StyleSheet, Text, Pressable, Image } from "react-native";
 import { Icon } from "@rneui/themed";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -12,17 +12,14 @@ import { Product, User } from "../../../../models";
 import theme from "../../../../assets/styles/theme";
 import { DisplayText } from "../../Typography/DisplayText/DisplayText";
 import { FollowOutlinedButton } from "../../Buttons/FollowOutlinedButton";
-import { VideoDetailsSkeleton } from "../../Skeletons/VideoDetailsSkeleton";
 import { BookableLabel } from "../../Typography/Labels/BookableLabel";
 import { LastMinuteLabel } from "../../Typography/Labels/LastMinuteLabel";
 import { trimFunc } from "../../../../utils";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
 
-const { width } = Dimensions.get("window");
-const { error, secondary, black } = theme.lightColors || {};
+const { error } = theme.lightColors || {};
 type IProps = {
   status: any;
-  isLoading: boolean;
   product: Product;
   userDetails: User;
   bookable: boolean;
@@ -35,7 +32,6 @@ type IProps = {
 };
 
 const VideoListItemDetails = ({
-  isLoading,
   status,
   product,
   userDetails,
@@ -143,7 +139,7 @@ const VideoListItemDetails = ({
         start={{ x: 0, y: 0.5 }}
         end={{ x: 0, y: 0 }}
       >
-        {isLoading ? <VideoDetailsSkeleton width={width} /> : details}
+        {details}
         <Stack
           direction="row"
           sx={{
