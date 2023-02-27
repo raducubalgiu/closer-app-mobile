@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet, View } from "react-native";
 import { memo } from "react";
 import { AvatarGroup, Stack, ShareIButton } from "../../../core";
-import { LikeButton } from "../../Buttons/LikeButton";
+import LikeButton from "../../Buttons/LikeButton";
 import { MoreVerticalButton } from "../../Buttons/MoreVerticalButton";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 

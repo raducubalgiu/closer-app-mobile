@@ -1,6 +1,6 @@
 import { Animated, StyleSheet, Pressable } from "react-native";
 import { Icon } from "@rneui/themed";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "../../../hooks/auth";
 import * as Haptics from "expo-haptics";
 import theme from "../../../assets/styles/theme";
@@ -17,7 +17,7 @@ type IProps = {
   color?: any;
 };
 
-export const LikeButton = ({
+const LikeButton = ({
   model,
   modelId,
   onAddLike,
@@ -83,6 +83,8 @@ export const LikeButton = ({
     </Pressable>
   );
 };
+
+export default memo(LikeButton);
 
 const styles = StyleSheet.create({
   default: {

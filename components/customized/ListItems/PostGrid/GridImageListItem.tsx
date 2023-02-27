@@ -3,6 +3,7 @@ import { memo } from "react";
 import { Icon, Image } from "@rneui/themed";
 import theme from "../../../../assets/styles/theme";
 import PostGradient from "../../Gradients/PostGradient";
+import { SharedElement } from "react-navigation-shared-element";
 
 const { width } = Dimensions.get("window");
 const { black } = theme.lightColors || {};
@@ -15,6 +16,7 @@ type IProps = {
   postType?: string | null;
   onPress: () => void;
   col?: number;
+  id: string;
 };
 
 const GridImageListItem = ({
@@ -24,6 +26,7 @@ const GridImageListItem = ({
   fixed = false,
   postType = "photo",
   onPress,
+  id,
 }: IProps) => {
   let borderBox;
 
@@ -43,14 +46,16 @@ const GridImageListItem = ({
 
   return (
     <Pressable style={{ ...imageBox.box, ...borderBox }} onPress={onPress}>
-      <Image
-        source={{ uri: `${image}` }}
-        containerStyle={{ width: undefined, height: undefined, flex: 1 }}
-        transition={true}
-        PlaceholderContent={
-          <PostGradient width={width / 3} height={width / 3} />
-        }
-      />
+      <SharedElement id={id} style={{ flex: 1 }}>
+        <Image
+          source={{ uri: `${image}` }}
+          containerStyle={{ width: undefined, height: undefined, flex: 1 }}
+          transition={true}
+          PlaceholderContent={
+            <PostGradient width={width / 3} height={width / 3} />
+          }
+        />
+      </SharedElement>
       {bookable && (
         <View style={styles.bookable}>
           <Icon

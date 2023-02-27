@@ -2,6 +2,7 @@ import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 import { Icon } from "@rneui/themed";
 import { PortalProvider } from "@gorhom/portal";
 import "../i18next";
@@ -9,6 +10,7 @@ import { useTranslation } from "react-i18next";
 import theme from "../assets/styles/theme";
 import { useAuth, useGet } from "../hooks";
 import { RootStackParams } from "./rootStackParams";
+import { TransitionPresets } from "@react-navigation/stack";
 import {
   AccountScreen,
   AccountInfoScreen,
@@ -95,7 +97,6 @@ import {
   RegisterScreen,
   SavingDataScreen,
   StoryScreen,
-  VideosScreen,
   UsernameScreen,
   CameraScreen,
   CameraPreviewScreen,
@@ -104,11 +105,13 @@ import {
   PhotoAlbumsScreen,
   AddPostScreen,
   UserLocationPermissionScreen,
+  UserPostsScreen,
 } from "../screens";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const RootStack = createNativeStackNavigator<RootStackParams>();
+const SharedStack = createSharedElementStackNavigator<RootStackParams>();
 
 const { black, primary, error } = theme.lightColors || {};
 import CustomAvatar from "../components/core/Avatars/CustomAvatar";
@@ -141,6 +144,39 @@ const FeedStack = () => {
       <Stack.Screen name="FeedBookables" component={FeedBookablesScreen} />
       <Stack.Screen name="FeedLastMinute" component={FeedLastMinuteScreen} />
     </Stack.Navigator>
+  );
+};
+
+const ProfileStack = () => {
+  return (
+    <SharedStack.Navigator
+      initialRouteName="Profile"
+      screenOptions={{
+        gestureEnabled: false,
+        headerShown: false,
+        cardOverlayEnabled: true,
+        cardStyle: { backgroundColor: "transparent" },
+        // cardStyleInterpolator: ({ current: { progress } }) => {
+        //   return { cardStyle: { opacity: progress } };
+        // },
+        ...TransitionPresets.SlideFromRightIOS,
+        presentation: "transparentModal",
+      }}
+    >
+      <SharedStack.Screen name="Profile" component={ProfileScreen} />
+      <SharedStack.Screen
+        name="UserPosts"
+        component={UserPostsScreen}
+        sharedElements={(route) => {
+          return [
+            {
+              id: route.params.index,
+              posts: route.params,
+            },
+          ];
+        }}
+      />
+    </SharedStack.Navigator>
   );
 };
 
@@ -217,8 +253,8 @@ const TabsScreen = () => {
         options={badgeOptions}
       />
       <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
+        name="ProfileStack"
+        component={ProfileStack}
         options={{
           tabBarIcon: ({ focused }) => (
             <CustomAvatar
@@ -514,7 +550,6 @@ const CloserNavigation = () => {
                 animationDuration: 200,
               }}
             >
-              <RootStack.Screen name="Videos" component={VideosScreen} />
               <RootStack.Screen
                 name="FeedVideoExplore"
                 component={FeedVideoExploreScreen}

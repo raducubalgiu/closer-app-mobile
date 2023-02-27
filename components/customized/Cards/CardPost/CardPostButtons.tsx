@@ -5,12 +5,11 @@ import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { Stack, ShareIButton, AvatarGroup } from "../../../core";
 import theme from "../../../../assets/styles/theme";
-import { LikeButton } from "../../Buttons/LikeButton";
-import { BookmarkIconButton } from "../../Buttons/BookmarkIconButton";
+import LikeButton from "../../Buttons/LikeButton";
+import BookmarkIconButton from "../../Buttons/BookmarkIconButton";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
 import { Product } from "../../../../models/product";
-import { Service } from "../../../../models/service";
 
 const { black } = theme.lightColors || {};
 

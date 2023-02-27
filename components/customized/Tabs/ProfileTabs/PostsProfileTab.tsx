@@ -1,12 +1,14 @@
 import { ListRenderItemInfo, Animated, Dimensions } from "react-native";
 import { useCallback } from "react";
-import { useIsFocused } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import GridImageListItem from "../../ListItems/PostGrid/GridImageListItem";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { useTranslation } from "react-i18next";
 import { useGetPaginate } from "../../../../hooks";
 import { Spinner } from "../../../core";
 import { Post } from "../../../../models/post";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../../navigation/rootStackParams";
 
 type IProps = {
   userId: string;
@@ -17,6 +19,8 @@ const { height } = Dimensions.get("window");
 export const PostsProfileTab = ({ userId, onScroll }: IProps) => {
   const isFocused = useIsFocused();
   const { t } = useTranslation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
     useGetPaginate({
@@ -33,7 +37,8 @@ export const PostsProfileTab = ({ userId, onScroll }: IProps) => {
   const renderPosts = useCallback(
     ({ item, index }: ListRenderItemInfo<Post>) => (
       <GridImageListItem
-        onPress={() => {}}
+        id={item.id}
+        onPress={() => navigation.navigate("UserPosts", { id: index, posts })}
         index={index}
         image={item?.images[0]?.url}
         bookable={item.bookable}
@@ -41,7 +46,7 @@ export const PostsProfileTab = ({ userId, onScroll }: IProps) => {
         postType={item.postType}
       />
     ),
-    []
+    [posts]
   );
 
   const keyExtractor = useCallback((item: Post) => item?.id, []);

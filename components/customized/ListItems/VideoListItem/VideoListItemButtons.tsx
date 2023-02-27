@@ -2,7 +2,7 @@ import { StyleSheet, Text, Pressable } from "react-native";
 import { memo } from "react";
 import { Icon } from "@rneui/themed";
 import { Stack, ShareIButton } from "../../../core";
-import { LikeButton } from "../../Buttons/LikeButton";
+import LikeButton from "../../Buttons/LikeButton";
 import { VideoCommentButton } from "../../Buttons/VideoCommentButton";
 import { MoreVerticalButton } from "../../Buttons/MoreVerticalButton";
 

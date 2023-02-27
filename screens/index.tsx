@@ -90,5 +90,5 @@ export { ClearCacheScreen } from "./User/SettingsAndPrivacy/Cache/ClearCacheScre
 export { SavingDataScreen } from "./User/SettingsAndPrivacy/Cache/SavingDataScreen";
 export { ReportAProblemScreen } from "./User/SettingsAndPrivacy/Assistance/ReportAProblemScreen";
 export { AssistanceScreen } from "./User/SettingsAndPrivacy/Assistance/AssistanceScreen";
-export { VideosScreen } from "./VideosScreen";
 export { StoryScreen } from "./StoryScreen";
+export { UserPostsScreen } from "./User/Profile/UserPostsScreen";

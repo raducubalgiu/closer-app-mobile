@@ -1,3 +1,4 @@
+import { Post } from "../models";
 import { Option } from "../models/option";
 import { Product } from "../models/product";
 import { Schedule } from "../models/schedule";
@@ -169,8 +170,5 @@ export type RootStackParams = {
   SharedDetail: any;
   Shared: any;
   UserLocationPermission: any;
-  Videos: {
-    userId: string;
-    initialIndex: number;
-  };
+  UserPosts: { id: number; posts: Post[] };
 };

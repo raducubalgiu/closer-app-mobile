@@ -1,5 +1,5 @@
 import { StyleSheet, Animated, Pressable } from "react-native";
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef, useCallback, memo } from "react";
 import { Icon } from "@rneui/themed";
 import { useAuth } from "../../../hooks/auth";
 import theme from "../../../assets/styles/theme";
@@ -11,12 +11,7 @@ import { useTranslation } from "react-i18next";
 const { black } = theme.lightColors || {};
 type IProps = { sx?: {}; size?: number; type: string; typeId: string };
 
-export const BookmarkIconButton = ({
-  sx = {},
-  size = 24,
-  type,
-  typeId,
-}: IProps) => {
+const BookmarkIconButton = ({ sx = {}, size = 24, type, typeId }: IProps) => {
   const { user } = useAuth();
   const [bookmarked, setBookmarked] = useState(false);
   const animatedScale = useRef(new Animated.Value(0)).current;
@@ -82,6 +77,8 @@ export const BookmarkIconButton = ({
     </Pressable>
   );
 };
+
+export default memo(BookmarkIconButton);
 
 const styles = StyleSheet.create({
   default: {
