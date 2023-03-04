@@ -143,7 +143,6 @@ export const UserPostsScreen = ({ route }: IProps) => {
           renderItem={renderPost}
           initialScrollIndex={id}
           getItemLayout={getItemLayout}
-          //estimatedItemSize={height}
         />
       </Animated.View>
     </PanGestureHandler>

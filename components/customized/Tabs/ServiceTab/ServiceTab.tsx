@@ -22,6 +22,7 @@ type IProps = {
   option: any;
   initialRoute: string;
   onScroll: () => void;
+  onScrollEndDrag: (e: any) => void;
 };
 
 const { black } = theme.lightColors || {};
@@ -32,6 +33,7 @@ export const ServiceTab = ({
   option,
   initialRoute,
   onScroll,
+  onScrollEndDrag,
 }: IProps) => {
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
@@ -151,6 +153,7 @@ export const ServiceTab = ({
       onEndReachedThreshold={0.3}
       contentContainerStyle={{ paddingBottom: insets.bottom }}
       onScroll={onScroll}
+      onScrollEndDrag={onScrollEndDrag}
     />
   );
 };

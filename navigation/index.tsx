@@ -106,6 +106,7 @@ import {
   AddPostScreen,
   UserLocationPermissionScreen,
   UserPostsScreen,
+  UserVideosScreen,
 } from "../screens";
 
 const Stack = createNativeStackNavigator();
@@ -171,7 +172,19 @@ const ProfileStack = () => {
           return [
             {
               id: route.params.index,
-              posts: route.params,
+              posts: route.params.posts,
+            },
+          ];
+        }}
+      />
+      <SharedStack.Screen
+        name="UserVideos"
+        component={UserVideosScreen}
+        sharedElements={(route) => {
+          return [
+            {
+              id: route.params.index,
+              videos: route.params.videos,
             },
           ];
         }}

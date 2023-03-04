@@ -3,59 +3,51 @@ import { memo } from "react";
 import { Icon, Image } from "@rneui/themed";
 import theme from "../../../../assets/styles/theme";
 import PostGradient from "../../Gradients/PostGradient";
-import { SharedElement } from "react-navigation-shared-element";
 
 const { width } = Dimensions.get("window");
 const { black } = theme.lightColors || {};
 
 type IProps = {
   index: number;
-  image: string;
+  uri: string;
   bookable?: boolean;
+  orientation: string;
   fixed?: boolean | null;
   postType?: string | null;
   onPress: () => void;
-  col?: number;
-  id: string;
 };
 
 const GridImageListItem = ({
   index = 0,
-  image,
+  uri,
   bookable = false,
   fixed = false,
   postType = "photo",
+  orientation,
   onPress,
-  id,
 }: IProps) => {
-  let borderBox;
-
-  if (index % 3 !== 0) {
-    borderBox = { paddingLeft: 1.25 };
-  } else {
-    borderBox = { paddingLeft: 0 };
-  }
+  const PORTRAIT_WIDTH = width / 2;
+  const SQUARE_WIDTH = width / 3;
 
   const imageBox = StyleSheet.create({
     box: {
-      width: width / 3,
-      height: width / 3,
+      width: SQUARE_WIDTH,
+      height: orientation === "portrait" ? PORTRAIT_WIDTH : SQUARE_WIDTH,
       paddingBottom: 1.25,
+      paddingLeft: index % 3 !== 0 ? 1.25 : 0,
     },
   });
 
   return (
-    <Pressable style={{ ...imageBox.box, ...borderBox }} onPress={onPress}>
-      <SharedElement id={id} style={{ flex: 1 }}>
-        <Image
-          source={{ uri: `${image}` }}
-          containerStyle={{ width: undefined, height: undefined, flex: 1 }}
-          transition={true}
-          PlaceholderContent={
-            <PostGradient width={width / 3} height={width / 3} />
-          }
-        />
-      </SharedElement>
+    <Pressable style={imageBox.box} onPress={onPress}>
+      <Image
+        source={{ uri }}
+        containerStyle={{ width: undefined, height: undefined, flex: 1 }}
+        transition={true}
+        PlaceholderContent={
+          <PostGradient width={width / 3} height={width / 3} />
+        }
+      />
       {bookable && (
         <View style={styles.bookable}>
           <Icon

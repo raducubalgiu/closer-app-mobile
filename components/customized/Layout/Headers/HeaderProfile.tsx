@@ -73,7 +73,7 @@ export const HeaderProfile = ({
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 15,
-    marginVertical: 10,
+    marginVertical: 7.5,
   },
   name: { fontSize: 15.5, color: black, fontWeight: "600" },
 });

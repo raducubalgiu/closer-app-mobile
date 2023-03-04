@@ -3,6 +3,7 @@ import { TopTabServices } from "../TopTabContainer/TopTabServices";
 import { useGet } from "../../../../hooks";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { useTranslation } from "react-i18next";
+import { memo } from "react";
 
 type IProps = {
   userId: string;
@@ -10,14 +11,16 @@ type IProps = {
   option: string | null;
   locationId: string;
   onScroll: () => void;
+  onScrollEndDrag: (e: any) => void;
 };
 
-export const ProductsProfileTab = ({
+const ProductsProfileTab = ({
   userId,
   service,
   option,
   locationId,
   onScroll,
+  onScrollEndDrag,
 }: IProps) => {
   const { t } = useTranslation();
 
@@ -36,6 +39,7 @@ export const ProductsProfileTab = ({
           option={option}
           services={services}
           onScroll={onScroll}
+          onScrollEndDrag={onScrollEndDrag}
         />
       )}
       {services?.length === 0 && (
@@ -48,3 +52,5 @@ export const ProductsProfileTab = ({
     </>
   );
 };
+
+export default memo(ProductsProfileTab);
