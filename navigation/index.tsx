@@ -49,7 +49,6 @@ import {
   BookmarksScreen,
   DiscountsScreen,
   FindFriendsScreen,
-  ProfileScreen,
   ProfileGeneralScreen,
   ProfileStatsScreen,
   SettingsProfileScreen,
@@ -108,6 +107,7 @@ import {
   UserPostsScreen,
   UserVideosScreen,
 } from "../screens";
+import ProfileScreen from "../screens/User/Profile/ProfileScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -148,50 +148,50 @@ const FeedStack = () => {
   );
 };
 
-const ProfileStack = () => {
-  return (
-    <SharedStack.Navigator
-      initialRouteName="Profile"
-      screenOptions={{
-        gestureEnabled: false,
-        headerShown: false,
-        cardOverlayEnabled: true,
-        cardStyle: { backgroundColor: "transparent" },
-        // cardStyleInterpolator: ({ current: { progress } }) => {
-        //   return { cardStyle: { opacity: progress } };
-        // },
-        ...TransitionPresets.SlideFromRightIOS,
-        presentation: "transparentModal",
-      }}
-    >
-      <SharedStack.Screen name="Profile" component={ProfileScreen} />
-      <SharedStack.Screen
-        name="UserPosts"
-        component={UserPostsScreen}
-        sharedElements={(route) => {
-          return [
-            {
-              id: route.params.index,
-              posts: route.params.posts,
-            },
-          ];
-        }}
-      />
-      <SharedStack.Screen
-        name="UserVideos"
-        component={UserVideosScreen}
-        sharedElements={(route) => {
-          return [
-            {
-              id: route.params.index,
-              videos: route.params.videos,
-            },
-          ];
-        }}
-      />
-    </SharedStack.Navigator>
-  );
-};
+// const ProfileStack = () => {
+//   return (
+//     <SharedStack.Navigator
+//       initialRouteName="Profile"
+//       screenOptions={{
+//         gestureEnabled: false,
+//         headerShown: false,
+//         cardOverlayEnabled: true,
+//         cardStyle: { backgroundColor: "transparent" },
+//         // cardStyleInterpolator: ({ current: { progress } }) => {
+//         //   return { cardStyle: { opacity: progress } };
+//         // },
+//         ...TransitionPresets.SlideFromRightIOS,
+//         presentation: "transparentModal",
+//       }}
+//     >
+//       <SharedStack.Screen name="Profile" component={ProfileScreen} />
+//       <SharedStack.Screen
+//         name="UserPosts"
+//         component={UserPostsScreen}
+//         sharedElements={(route) => {
+//           return [
+//             {
+//               id: route.params.index,
+//               posts: route.params.posts,
+//             },
+//           ];
+//         }}
+//       />
+//       <SharedStack.Screen
+//         name="UserVideos"
+//         component={UserVideosScreen}
+//         sharedElements={(route) => {
+//           return [
+//             {
+//               id: route.params.index,
+//               videos: route.params.videos,
+//             },
+//           ];
+//         }}
+//       />
+//     </SharedStack.Navigator>
+//   );
+// };
 
 const TabsScreen = () => {
   const { user } = useAuth();
@@ -266,8 +266,8 @@ const TabsScreen = () => {
         options={badgeOptions}
       />
       <Tab.Screen
-        name="ProfileStack"
-        component={ProfileStack}
+        name="Profile"
+        component={ProfileScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <CustomAvatar
@@ -300,11 +300,18 @@ const CloserNavigation = () => {
               <RootStack.Screen
                 name="FiltersDate"
                 component={FiltersDateScreen}
-                options={{ animation: "fade_from_bottom" }}
+                options={{
+                  animation: "fade_from_bottom",
+                  animationDuration: 400,
+                }}
               />
               <RootStack.Screen
                 name="FiltersService"
                 component={FiltersServiceScreen}
+                options={{
+                  animation: "fade_from_bottom",
+                  animationDuration: 400,
+                }}
               />
               <RootStack.Screen name="Locations" component={LocationsScreen} />
               <RootStack.Screen

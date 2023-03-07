@@ -3,7 +3,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import { PostsProfileTab } from "../ProfileTabs/PostsProfileTab";
 import { MAIN_ROLE, SECOND_ROLE } from "@env";
 import { Icon } from "@rneui/themed";
-import { VideosVTab } from "../ProfileTabs/VideosVTab";
+import { VideosVTab } from "../ProfileTabs/VideosProfileTab";
 import { JobsTab } from "../ProfileTabs/JobsTab";
 import { ProductsProfileTab } from "../ProfileTabs/ProductsProfileTab";
 import { AboutProfileTab } from "../ProfileTabs/AboutProfileTab";

@@ -1,5 +1,5 @@
-export const displayDash = (field: number | string) => {
-  if (!field && field !== 0) {
+export const displayDash = (field: any) => {
+  if ((!field && field !== 0) || field?.length === 0) {
     return "-";
   } else {
     return field;

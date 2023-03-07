@@ -3,7 +3,6 @@ import {
   StyleSheet,
   Text,
   FlatList,
-  Pressable,
   ListRenderItemInfo,
 } from "react-native";
 import { useCallback, useState } from "react";
@@ -18,7 +17,7 @@ import {
 } from "@react-navigation/native-stack";
 import { RootStackParams } from "../navigation/rootStackParams";
 import { Service } from "../models/service";
-import { NoFoundMessage } from "../components/customized";
+import { NoFoundMessage, TapFeedbackButton } from "../components/customized";
 import { Icon } from "@rneui/themed";
 
 const { black, grey0 } = theme.lightColors || {};
@@ -54,9 +53,9 @@ export const SearchServicesScreen = ({ route }: IProps) => {
 
   const renderServices = useCallback(
     ({ item }: ListRenderItemInfo<Service>) => (
-      <Pressable onPress={() => goToFilters(item)} style={styles.item}>
-        <Stack direction="row" justify="start">
-          <Icon name="search" type="feather" size={15} style={styles.iconTag} />
+      <TapFeedbackButton onPress={() => goToFilters(item)}>
+        <Stack direction="row" justify="start" sx={{ paddingHorizontal: 15 }}>
+          <Icon name="search" type="ionicon" size={20} style={styles.iconTag} />
           <Stack align="start" sx={{ marginLeft: 10 }}>
             <Text style={styles.service}>{item.name}</Text>
             <Text style={styles.locationsCount}>
@@ -64,17 +63,12 @@ export const SearchServicesScreen = ({ route }: IProps) => {
             </Text>
           </Stack>
         </Stack>
-      </Pressable>
+      </TapFeedbackButton>
     ),
     []
   );
 
   const keyExtractor = useCallback((item: Service) => item.id, []);
-
-  let header;
-  if (!results?.length && search?.length === 0) {
-    header = <Text style={styles.heading}>{t("suggested")}</Text>;
-  }
 
   let footer;
   if (!results?.length && search.length > 0) {
@@ -88,21 +82,21 @@ export const SearchServicesScreen = ({ route }: IProps) => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Stack direction="row" justify="start" sx={{ marginHorizontal: 15 }}>
-        <IconBackButton sx={{ marginRight: 5 }} />
-        <SearchBarInput
-          autoFocus={true}
-          placeholder={t("searchService")}
-          value={search}
-          onChangeText={(text: string) => setSearch(text)}
-        />
+      <Stack direction="row" justify="start">
+        <Stack direction="row" sx={{ marginHorizontal: 15 }}>
+          <IconBackButton sx={{ marginRight: 5 }} />
+          <SearchBarInput
+            autoFocus={true}
+            placeholder={t("searchService")}
+            value={search}
+            onChangeText={(text: string) => setSearch(text)}
+          />
+        </Stack>
       </Stack>
       <FlatList
-        ListHeaderComponent={header}
         data={!results?.length && !search?.length ? suggested : results}
         keyExtractor={keyExtractor}
         renderItem={renderServices}
-        contentContainerStyle={{ paddingHorizontal: 15 }}
         keyboardShouldPersistTaps={"handled"}
         ListFooterComponent={footer}
       />
@@ -117,13 +111,11 @@ const styles = StyleSheet.create({
   },
   heading: {
     textTransform: "uppercase",
+    marginHorizontal: 15,
     paddingTop: 5,
     paddingBottom: 10,
     fontWeight: "600",
     fontSize: 15.5,
-  },
-  item: {
-    paddingVertical: 12.5,
   },
   service: {
     color: black,
@@ -137,8 +129,6 @@ const styles = StyleSheet.create({
   },
   iconTag: {
     padding: 7.5,
-    borderWidth: 1,
-    borderColor: "#ddd",
     borderRadius: 50,
   },
 });

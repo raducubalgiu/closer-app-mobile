@@ -1,246 +1,235 @@
 import {
+  createMaterialTopTabNavigator,
+  MaterialTopTabBarProps,
+} from "@react-navigation/material-top-tabs";
+import React, { FC, memo, useCallback, useMemo, useRef, useState } from "react";
+import {
+  FlatList,
+  FlatListProps,
+  StyleProp,
   StyleSheet,
   View,
-  Dimensions,
-  Animated,
-  Pressable,
-  Text,
-  Platform,
+  ViewStyle,
+  useWindowDimensions,
 } from "react-native";
-import { useCallback, useState, useRef } from "react";
-import { useNavigation } from "@react-navigation/native";
-import { Icon } from "@rneui/themed";
-import theme from "../../../assets/styles/theme";
-import { Protected, Button, Stack } from "../../../components/core";
-import {
-  HeaderProfile,
-  PostOptionsSheet,
-  ProfileIconButton,
-  ProfileMenuSheet,
-} from "../../../components/customized";
-import { MAIN_ROLE, SECOND_ROLE } from "@env";
-import PostsProfileTab from "../../../components/customized/Tabs/ProfileTabs/PostsProfileTab";
-import VideosVTab from "../../../components/customized/Tabs/ProfileTabs/VideosVTab";
+import Animated, {
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useDerivedValue,
+  useSharedValue,
+} from "react-native-reanimated";
+import TabBar from "../../../Test/src/components/TabBar";
+import useScrollSync from "../../../Test/src/hooks/useScrollSync";
+import { ScrollPair } from "../../../Test/src/types/ScrollPair";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { HeaderConfig } from "../../../Test/src/types/HeaderConfig";
+import { HeaderProfile } from "../../../components/customized";
 import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
-import { useSheet, useAuth, useGet } from "../../../hooks";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../navigation/rootStackParams";
-import { FAB } from "@rneui/themed";
-import { useTranslation } from "react-i18next";
-import { TabView, SceneMap, TabBar } from "react-native-tab-view";
+import { useAuth } from "../../../hooks";
+import { ProfileIconButton } from "../../../components/customized";
+import { Button } from "../../../components/core";
+import PostsProfileTab from "../../../components/customized/Tabs/ProfileTabs/PostsProfileTab";
+import VideosProfileTab from "../../../components/customized/Tabs/ProfileTabs/VideosProfileTab";
+import { Post } from "../../../models";
 
-const { width } = Dimensions.get("window");
-const { primary } = theme.lightColors || {};
+const TAB_BAR_HEIGHT = 42.5;
+const HEADER_HEIGHT = 240;
 
-const HEADER_HEIGHT = 300;
+const Tab = createMaterialTopTabNavigator();
 
-export const ProfileScreen = () => {
-  const { user: userContext } = useAuth();
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const { t } = useTranslation();
-  const scrollY = useRef<any>(new Animated.Value(0)).current;
+const Profile: FC = () => {
+  const { user } = useAuth();
+  const { top } = useSafeAreaInsets();
 
-  const [index, setIndex] = useState(0);
-  const [routes] = useState([
-    { key: "posts", icon: "grid-large" },
-    { key: "videos", icon: "play-box-multiple-outline" },
-  ]);
+  const { height, width } = useWindowDimensions();
 
-  const { data: user, refetch } = useGet({
-    model: "fetchUser",
-    uri: `/users/${userContext?.username}`,
-  });
+  const postsRef = useRef<FlatList>(null);
+  const videosRef = useRef<FlatList>(null);
 
-  const { username, checkmark, role } = user || {};
+  const [tabIndex, setTabIndex] = useState(0);
 
-  const closeSheet = useCallback(() => CLOSE_BS(), []);
-  const profileMenu = <ProfileMenuSheet onCloseSheet={closeSheet} />;
-  const { BOTTOM_SHEET, SHOW_BS, CLOSE_BS } = useSheet([1, 200], profileMenu, {
-    duration: 200,
-  });
-
-  const postSheet = <PostOptionsSheet />;
-  const { BOTTOM_SHEET: postOptions, SHOW_BS: showPostOptions } = useSheet(
-    [1, 200],
-    postSheet,
-    { duration: 200 }
+  const headerConfig = useMemo<HeaderConfig>(
+    () => ({
+      heightCollapsed: -TAB_BAR_HEIGHT,
+      heightExpanded: HEADER_HEIGHT,
+    }),
+    [HEADER_HEIGHT, TAB_BAR_HEIGHT]
   );
 
-  const navigateBookmarks = () =>
-    navigation.navigate("Bookmarks", { user: userContext });
-  const navigateProfile = () =>
-    navigation.navigate("EditProfile", { user: userContext });
-  const navigateInstagram = () => navigation.navigate("ExploreVideoPortrait");
-  const navigateYoutube = () => {};
+  const { heightCollapsed, heightExpanded } = headerConfig;
 
-  const Posts = useCallback(
+  const headerDiff = heightExpanded - heightCollapsed;
+
+  const postsScrollValue = useSharedValue(0);
+  const videosScrollValue = useSharedValue(0);
+
+  const postsScrollHandler = useAnimatedScrollHandler(
+    (event) => (postsScrollValue.value = event.contentOffset.y)
+  );
+
+  const videosScrollHandler = useAnimatedScrollHandler(
+    (event) => (videosScrollValue.value = event.contentOffset.y)
+  );
+
+  const scrollPairs = useMemo<ScrollPair[]>(
+    () => [
+      { list: postsRef, position: postsScrollValue },
+      { list: videosRef, position: videosScrollValue },
+    ],
+    [postsRef, postsScrollValue, videosRef, videosScrollValue]
+  );
+
+  const { sync } = useScrollSync(scrollPairs, headerConfig);
+
+  const сurrentScrollValue = useDerivedValue(
+    () => (tabIndex === 0 ? postsScrollValue.value : videosScrollValue.value),
+    [tabIndex, postsScrollValue, videosScrollValue]
+  );
+
+  const translateY = useDerivedValue(
+    () => -Math.min(сurrentScrollValue.value, headerDiff)
+  );
+
+  const tabBarAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: translateY.value }],
+  }));
+
+  const headerAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: translateY.value }],
+  }));
+
+  const contentContainerStyle = useMemo<StyleProp<ViewStyle>>(
+    () => ({
+      paddingTop: HEADER_HEIGHT + TAB_BAR_HEIGHT + top,
+    }),
+    [HEADER_HEIGHT, TAB_BAR_HEIGHT, top]
+  );
+
+  const sharedProps = useMemo<Partial<FlatListProps<Post>>>(
+    () => ({
+      contentContainerStyle,
+      onMomentumScrollEnd: sync,
+      onScrollEndDrag: sync,
+      scrollEventThrottle: 12,
+    }),
+    [contentContainerStyle, sync]
+  );
+
+  const renderPosts = useCallback(
     () => (
       <PostsProfileTab
+        ref={postsRef}
         userId={user?.id}
-        onScroll={Animated.event(
-          [
-            {
-              nativeEvent: { contentOffset: { y: scrollY } },
-            },
-          ],
-          { useNativeDriver: true }
-        )}
+        onScroll={postsScrollHandler}
+        {...sharedProps}
       />
     ),
-    [user]
+    [postsRef, postsScrollHandler, sharedProps, user]
   );
 
-  const Videos = useCallback(
+  const renderVideos = useCallback(
     () => (
-      <VideosVTab
+      <VideosProfileTab
+        ref={videosRef}
         userId={user?.id}
-        onScroll={Animated.event(
-          [
-            {
-              nativeEvent: { contentOffset: { y: scrollY } },
-            },
-          ],
-          { useNativeDriver: true }
-        )}
+        onScroll={videosScrollHandler}
+        {...sharedProps}
       />
     ),
-    [user]
+    [videosRef, videosScrollHandler, sharedProps, user]
   );
 
-  const renderScene = SceneMap({
-    posts: Posts,
-    videos: Videos,
-  });
-
-  const scrollHeader = scrollY.interpolate({
-    inputRange: [0, HEADER_HEIGHT],
-    outputRange: [0, -HEADER_HEIGHT],
-    extrapolateRight: "clamp",
-  });
-
-  const renderLabel = useCallback(
-    ({ route, focused }: any) => (
-      <Icon
-        name={route.icon}
-        type="material-community"
-        color={focused ? "black" : "#ddd"}
-      />
-    ),
-    []
+  const tabBarStyle = useMemo<StyleProp<ViewStyle>>(
+    () => [
+      styles.tabBarContainer,
+      { top: HEADER_HEIGHT + TAB_BAR_HEIGHT },
+      tabBarAnimatedStyle,
+    ],
+    [HEADER_HEIGHT, TAB_BAR_HEIGHT, tabBarAnimatedStyle]
   );
 
-  const renderTabBar = useCallback((props: any) => {
-    const y = scrollY.interpolate({
-      inputRange: [0, HEADER_HEIGHT],
-      outputRange: [HEADER_HEIGHT, 0],
-      extrapolateRight: "clamp",
-    });
-
-    return (
-      <Animated.View
-        style={{
-          top: 0,
-          zIndex: 1,
-          position: "absolute",
-          transform: [{ translateY: y }],
-          width: "100%",
-        }}
-      >
-        <TabBar
-          {...props}
-          style={styles.tab}
-          renderLabel={renderLabel}
-          indicatorStyle={styles.indicator}
-        />
+  const renderTabBar = useCallback<
+    (props: MaterialTopTabBarProps) => React.ReactElement
+  >(
+    (props) => (
+      <Animated.View style={tabBarStyle}>
+        <TabBar onIndexChange={setTabIndex} {...props} />
       </Animated.View>
-    );
-  }, []);
+    ),
+    [tabBarStyle, setTabIndex]
+  );
+
+  const headerContainerStyle = useMemo<StyleProp<ViewStyle>>(
+    () => [styles.headerContainer, headerAnimatedStyle],
+
+    [headerAnimatedStyle]
+  );
 
   return (
     <View style={styles.container}>
       <HeaderProfile
-        checkmark={checkmark}
-        onGoToFindFriends={() => navigation.navigate("FindFriends")}
-        username={username}
-        onOpenSettings={SHOW_BS}
-        onOpenPostOptions={showPostOptions}
+        username="raducubalgiu"
+        checkmark={true}
+        onGoToFindFriends={() => {}}
+        onOpenPostOptions={() => {}}
+        onOpenSettings={() => {}}
       />
       <View style={{ flex: 1 }}>
-        <TabView
-          lazy
-          navigationState={{ index, routes }}
-          renderScene={renderScene}
-          onIndexChange={(id) => setIndex(id)}
-          renderTabBar={renderTabBar}
-          initialLayout={{ width, height: 0 }}
-        />
-        <Animated.View
-          style={[styles.header, { transform: [{ translateY: scrollHeader }] }]}
-        >
-          {userContext?.settings?.status === "hidden" && (
-            <Pressable onPress={() => navigation.navigate("HideAccount")}>
-              <Stack sx={styles.hidden}>
-                <Text style={{ color: "white", fontWeight: "500" }}>
-                  {t("yourAccountIsHidden")}
-                </Text>
-              </Stack>
-            </Pressable>
-          )}
+        <Animated.View style={headerContainerStyle}>
           <ProfileOverview
-            name={userContext?.name}
-            username={userContext?.username}
-            avatar={userContext?.avatar}
+            name={user?.name}
+            username={user?.username}
+            avatar={user?.avatar}
             user={user}
           >
             <Button
-              title={t("editProfile")}
-              onPress={navigateProfile}
+              title="Editeaza Profilul"
+              onPress={() => {}}
               variant="outlined"
               sxBtn={{ width: 150 }}
             />
-            <ProfileIconButton name="bookmark" onPress={navigateBookmarks} />
-            <ProfileIconButton name="instagram" onPress={navigateInstagram} />
-            <ProfileIconButton name="youtube" onPress={navigateYoutube} />
+            <ProfileIconButton name="bookmark" onPress={() => {}} />
+            <ProfileIconButton name="instagram" onPress={() => {}} />
+            <ProfileIconButton name="youtube" onPress={() => {}} />
           </ProfileOverview>
         </Animated.View>
+        <Tab.Navigator
+          initialLayout={{ width, height }}
+          tabBar={renderTabBar}
+          sceneContainerStyle={{ backgroundColor: "white" }}
+          screenOptions={{ lazy: true }}
+        >
+          <Tab.Screen name="Posts">{renderPosts}</Tab.Screen>
+          <Tab.Screen name="Videos">{renderVideos}</Tab.Screen>
+        </Tab.Navigator>
       </View>
-      <Protected roles={[MAIN_ROLE, SECOND_ROLE]} userRole={role}>
-        <FAB
-          color={primary}
-          icon={{ name: "calendar", type: "feather", color: "white" }}
-          placement="right"
-          onPress={() => navigation.navigate("MyCalendar")}
-        />
-      </Protected>
-      {BOTTOM_SHEET}
-      {postOptions}
     </View>
   );
 };
+
+export default memo(Profile);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
   },
-  hidden: {
-    marginHorizontal: 15,
-    marginBottom: 15,
-    height: 32.5,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#ccc",
-  },
-  header: {
-    height: HEADER_HEIGHT,
+  tabBarContainer: {
+    top: 0,
+    left: 0,
+    right: 0,
     position: "absolute",
-  },
-  tab: {
-    elevation: 0,
-    shadowOpacity: 0,
-    height: 45,
+    zIndex: 1,
     backgroundColor: "white",
+    height: TAB_BAR_HEIGHT,
+    justifyContent: "center",
   },
-  indicator: { backgroundColor: "#222" },
+  headerContainer: {
+    top: 0,
+    left: 0,
+    right: 0,
+    position: "absolute",
+    zIndex: 1,
+    height: HEADER_HEIGHT,
+  },
 });

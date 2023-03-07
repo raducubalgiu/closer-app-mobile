@@ -61,7 +61,8 @@ export const FiltersDateScreen = ({ route }: IProps) => {
     }
   }, []);
 
-  const goNext = () => {};
+  const goNext = () =>
+    navigation.navigate("FiltersService", { service, period });
 
   const handlePeriod = (per: Period) => setPeriod(per);
 

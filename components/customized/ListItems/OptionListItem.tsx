@@ -1,10 +1,11 @@
+import { memo } from "react";
 import { StyleSheet, Text, Pressable } from "react-native";
 import theme from "../../../assets/styles/theme";
 
 const { black } = theme.lightColors || {};
 type IProps = { isActive: boolean; name: string; onPress: () => void };
 
-export const OptionListItem = ({ isActive, name, onPress }: IProps) => {
+const OptionListItem = ({ isActive, name, onPress }: IProps) => {
   return (
     <Pressable
       onPress={onPress}
@@ -18,6 +19,8 @@ export const OptionListItem = ({ isActive, name, onPress }: IProps) => {
     </Pressable>
   );
 };
+
+export default memo(OptionListItem);
 
 const styles = StyleSheet.create({
   btn: {

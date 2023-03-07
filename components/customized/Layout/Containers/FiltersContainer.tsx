@@ -15,7 +15,7 @@ type IProps = {
   mainHeading: string;
   secondHeading: string;
   headerTitle: string;
-  headerDescription: string;
+  headerDescription: any;
   footerExtraBtns?: any;
   btnTitle: string;
   disabled?: boolean;
@@ -53,10 +53,10 @@ export const FiltersContainer = ({
               <Text style={styles.mainHeading}>{mainHeading}</Text>
               <Text style={styles.mainHeading}>{secondHeading}</Text>
             </View>
-            <View style={closeBtn ? { ...styles.body } : styles.body}>
+            <View style={styles.body}>
               <Stack direction="row" justify="center" sx={styles.sheetOverview}>
                 {!closeBtn && <IconBackButton size={20} />}
-                <Stack>
+                <Stack sx={{ flex: 1 }}>
                   <Text style={styles.title}>{headerTitle}</Text>
                   <Text style={styles.description}>{headerDescription}</Text>
                 </Stack>

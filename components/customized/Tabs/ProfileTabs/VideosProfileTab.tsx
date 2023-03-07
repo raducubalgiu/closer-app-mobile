@@ -1,70 +1,76 @@
-import { View } from "react-native";
+import { FlatList, ListRenderItemInfo, View } from "react-native";
 import { forwardRef, memo, useCallback } from "react";
+import Animated from "react-native-reanimated";
 import { useIsFocused } from "@react-navigation/native";
-import GridImageListItem from "../../ListItems/PostGrid/GridImageListItem";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { useTranslation } from "react-i18next";
 import { useGetPaginate, usePaginateActions } from "../../../../hooks";
 import { Post } from "../../../../models/post";
-import Animated from "react-native-reanimated";
-import { MasonryFlashList, ListRenderItemInfo } from "@shopify/flash-list";
+import GridImageListItem from "../../ListItems/PostGrid/GridImageListItem";
 
-export const AnimatedMasonryFlashList: any =
-  Animated.createAnimatedComponent(MasonryFlashList);
+export const AnimatedFlatList: any = Animated.createAnimatedComponent(FlatList);
 
-const PostsProfileTab = forwardRef((props: any, ref) => {
+const VideosProfileTab = forwardRef((props: any, ref) => {
   const isFocused = useIsFocused();
   const { t } = useTranslation();
 
   const options = useGetPaginate({
     model: "posts",
     uri: `/users/${props?.userId}/posts`,
-    limit: "24",
-    queries: "postType=photo",
+    limit: "6",
+    queries: "postType=photo&orientation=portrait",
     enabled: isFocused && !!props?.userId,
   });
 
   const { isLoading, isFetching, isFetchingNextPage } = options;
   const loading = (isLoading || isFetching) && !isFetchingNextPage;
-  const { data: posts, showSpinner, loadMore } = usePaginateActions(options);
+  const { data: videos, showSpinner, loadMore } = usePaginateActions(options);
 
   const renderPosts = useCallback(
-    ({ item, index }: ListRenderItemInfo<Post>) => {
-      return <GridImageListItem onPress={() => {}} index={index} item={item} />;
-    },
-    [posts]
+    ({ item, index }: ListRenderItemInfo<Post>) => (
+      <GridImageListItem
+        onPress={() => {}}
+        index={index}
+        uri={item?.images[0]?.url}
+        orientation={item?.orientation}
+        bookable={item.bookable}
+        fixed={null}
+        postType={item.postType}
+      />
+    ),
+    []
   );
 
   const keyExtractor = useCallback((item: Post) => item?.id, []);
 
-  if (!isLoading && !isFetchingNextPage && posts?.length === 0) {
+  if (!isLoading && !isFetchingNextPage && videos?.length === 0) {
     return (
       <NoFoundMessage
         sx={{ marginTop: 50 }}
-        title={t("posts")}
-        description={t("noFoundPosts")}
+        title={t("videoclips")}
+        description={t("noFoundVideclips")}
+        iconProps={{ name: "video" }}
       />
     );
   }
 
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
-      <AnimatedMasonryFlashList
-        {...props}
+      <AnimatedFlatList
         ref={ref}
-        scrollEnabled={!loading}
         numColumns={3}
+        scrollEnabled={!loading}
+        data={videos}
         keyExtractor={keyExtractor}
         renderItem={renderPosts}
         ListFooterComponent={showSpinner}
         onEndReached={loadMore}
         onEndReachedThreshold={0.3}
         showsVerticalScrollIndicator={false}
-        data={posts}
-        estimatedItemSize={155}
+        {...props}
       />
     </View>
   );
 });
 
-export default memo(PostsProfileTab);
+export default memo(VideosProfileTab);

@@ -8,10 +8,12 @@ import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import { FiltersContainer, OptionListItem } from "../components/customized";
+import { FiltersContainer } from "../components/customized";
+import OptionListItem from "../components/customized/ListItems/OptionListItem";
 import { RootStackParams } from "../navigation/rootStackParams";
 import { Option } from "../models/option";
 import { useGet } from "../hooks";
+import { displayDash } from "../utils";
 
 type IProps = NativeStackScreenProps<RootStackParams, "FiltersService">;
 
@@ -62,12 +64,14 @@ export const FiltersServiceScreen = ({ route }: IProps) => {
     [option]
   );
 
+  const keyExtractor = useCallback((item: Option) => item._id, []);
+
   return (
     <FiltersContainer
       mainHeading={t("filter")}
       secondHeading={t("correspondingServices")}
       headerTitle={service?.name}
-      headerDescription={option ? option?.name : "-"}
+      headerDescription={displayDash(option?.name)}
       onNext={goToLocations}
       btnTitle={t("search")}
       disabled={!option || loading}
@@ -76,7 +80,7 @@ export const FiltersServiceScreen = ({ route }: IProps) => {
       <FlatList
         bounces={false}
         data={data?.options}
-        keyExtractor={(item) => item._id}
+        keyExtractor={keyExtractor}
         renderItem={renderOption}
       />
     </FiltersContainer>

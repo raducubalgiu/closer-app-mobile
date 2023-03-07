@@ -1,13 +1,10 @@
-import { StyleSheet, Dimensions, Pressable, View, Text } from "react-native";
+import { StyleSheet, Dimensions, Pressable, View } from "react-native";
 import { memo } from "react";
 import { Icon } from "@rneui/themed";
 import { ResizeMode, Video } from "expo-av";
 import { LinearGradient } from "expo-linear-gradient";
-import theme from "../../../../assets/styles/theme";
-import { Stack } from "../../../core";
 
 const { width } = Dimensions.get("window");
-const { secondary, error } = theme.lightColors || {};
 
 type IProps = {
   index: number;

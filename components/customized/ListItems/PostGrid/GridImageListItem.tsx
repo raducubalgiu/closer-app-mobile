@@ -1,5 +1,5 @@
 import { StyleSheet, Dimensions, View, Text, Pressable } from "react-native";
-import { memo } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { Icon, Image } from "@rneui/themed";
 import theme from "../../../../assets/styles/theme";
 import PostGradient from "../../Gradients/PostGradient";
@@ -9,25 +9,20 @@ const { black } = theme.lightColors || {};
 
 type IProps = {
   index: number;
-  uri: string;
-  bookable?: boolean;
-  orientation: string;
-  fixed?: boolean | null;
-  postType?: string | null;
   onPress: () => void;
+  item: any;
 };
 
-const GridImageListItem = ({
-  index = 0,
-  uri,
-  bookable = false,
-  fixed = false,
-  postType = "photo",
-  orientation,
-  onPress,
-}: IProps) => {
+const GridImageListItem = ({ index = 0, onPress, item }: IProps) => {
+  const { orientation, postType, bookable, fixed } = item;
   const PORTRAIT_WIDTH = width / 2;
   const SQUARE_WIDTH = width / 3;
+
+  const lastItemId = useRef(item.id);
+
+  if (item.id !== lastItemId.current) {
+    lastItemId.current = item.id;
+  }
 
   const imageBox = StyleSheet.create({
     box: {
@@ -41,7 +36,7 @@ const GridImageListItem = ({
   return (
     <Pressable style={imageBox.box} onPress={onPress}>
       <Image
-        source={{ uri }}
+        source={{ uri: item.images[0].url }}
         containerStyle={{ width: undefined, height: undefined, flex: 1 }}
         transition={true}
         PlaceholderContent={
