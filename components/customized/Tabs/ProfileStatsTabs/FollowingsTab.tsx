@@ -14,6 +14,7 @@ import { User } from "../../../../models/user";
 import { Spinner } from "../../../core";
 
 type IProps = { userId: string };
+type UseListItem = { id: string; user: User; isFollow: boolean };
 
 export const FollowingsTab = ({ userId }: IProps) => {
   const isFocused = useIsFocused();
@@ -34,12 +35,12 @@ export const FollowingsTab = ({ userId }: IProps) => {
   } = usePaginateActions(options);
 
   const renderPerson = useCallback(
-    ({ item }: ListRenderItemInfo<any>) => (
-      <UserListItem user={item.followeeId} />
+    ({ item }: ListRenderItemInfo<UseListItem>) => (
+      <UserListItem user={item.user} isFollow={item.isFollow} />
     ),
     []
   );
-  const keyExtractor = useCallback((item: User) => item?.id, []);
+  const keyExtractor = useCallback((item: UseListItem) => item?.id, []);
 
   const { refreshing, refetchByUser } = useRefreshByUser(refetch);
   const refreshControl = (

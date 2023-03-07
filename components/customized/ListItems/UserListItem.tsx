@@ -21,16 +21,16 @@ type IProps = {
     name: string;
     checkmark: boolean;
   };
-  isBlocked?: boolean;
+  isFollow?: boolean;
   sx?: {};
 };
 
-const UserListItem = ({ user, sx = {} }: IProps) => {
+const UserListItem = ({ user, isFollow, sx = {} }: IProps) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { user: userContext } = useAuth();
   const { avatar, id, username, name, checkmark } = user;
-  const [follow, setFollow] = useState(false);
+  const [follow, setFollow] = useState(isFollow);
   const FOLLOW_ENDPOINT = `/users/${userContext?.id}/followings/${id}/follows`;
 
   const goToUser = (userId: string) => {
@@ -44,12 +44,6 @@ const UserListItem = ({ user, sx = {} }: IProps) => {
       option: null,
     });
   };
-
-  useGet({
-    model: "checkFollow",
-    uri: FOLLOW_ENDPOINT,
-    onSuccess: (res) => setFollow(res.data.status),
-  });
 
   const { mutate: makePost } = usePost({
     uri: FOLLOW_ENDPOINT,
@@ -88,7 +82,7 @@ const UserListItem = ({ user, sx = {} }: IProps) => {
           <Text style={styles.name}>{name}</Text>
         </Stack>
       </Pressable>
-      <FollowButton isFollow={follow} onPress={followHandler} />
+      <FollowButton isFollow={isFollow} onPress={followHandler} />
     </Stack>
   );
 };

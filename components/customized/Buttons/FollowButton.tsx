@@ -6,7 +6,7 @@ import theme from "../../../assets/styles/theme";
 const { primary, black } = theme.lightColors || {};
 type IProps = {
   onPress: () => void;
-  isFollow: boolean;
+  isFollow: boolean | undefined;
   sxBtn?: {};
   sxBtnText?: {};
   fullWidth?: boolean;
