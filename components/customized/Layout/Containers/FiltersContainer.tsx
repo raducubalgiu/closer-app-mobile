@@ -92,7 +92,9 @@ export const FiltersContainer = ({
           title={btnTitle}
           disabled={disabled}
           loading={loading}
-          sxBtn={{ width: 120 }}
+          sxBtn={{
+            width: footerExtraBtns ? 120 : "100%",
+          }}
         />
       </Stack>
     </>

@@ -1,10 +1,15 @@
-import { StyleSheet, Dimensions, View, Text, Pressable } from "react-native";
-import { memo, useEffect, useRef, useState } from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Pressable,
+  useWindowDimensions,
+} from "react-native";
+import { memo } from "react";
 import { Icon, Image } from "@rneui/themed";
 import theme from "../../../../assets/styles/theme";
 import PostGradient from "../../Gradients/PostGradient";
 
-const { width } = Dimensions.get("window");
 const { black } = theme.lightColors || {};
 
 type IProps = {
@@ -14,20 +19,14 @@ type IProps = {
 };
 
 const GridImageListItem = ({ index = 0, onPress, item }: IProps) => {
-  const { orientation, postType, bookable, fixed } = item;
-  const PORTRAIT_WIDTH = width / 2;
-  const SQUARE_WIDTH = width / 3;
+  const { postType, bookable, fixed } = item;
 
-  const lastItemId = useRef(item.id);
-
-  if (item.id !== lastItemId.current) {
-    lastItemId.current = item.id;
-  }
+  const { width } = useWindowDimensions();
 
   const imageBox = StyleSheet.create({
     box: {
-      width: SQUARE_WIDTH,
-      height: orientation === "portrait" ? PORTRAIT_WIDTH : SQUARE_WIDTH,
+      width: width / 3,
+      height: width / 2.25,
       paddingBottom: 1.25,
       paddingLeft: index % 3 !== 0 ? 1.25 : 0,
     },
@@ -40,7 +39,7 @@ const GridImageListItem = ({ index = 0, onPress, item }: IProps) => {
         containerStyle={{ width: undefined, height: undefined, flex: 1 }}
         transition={true}
         PlaceholderContent={
-          <PostGradient width={width / 3} height={width / 3} />
+          <PostGradient width={width / 3} height={width / 2.25} />
         }
       />
       {bookable && (

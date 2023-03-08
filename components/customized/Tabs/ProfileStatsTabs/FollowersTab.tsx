@@ -1,4 +1,4 @@
-import { FlashList } from "@shopify/flash-list";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { RefreshControl } from "react-native";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
@@ -14,6 +14,7 @@ import { User } from "../../../../models/user";
 import { Spinner } from "../../../core";
 
 type IProps = { userId: string };
+type UserListItem = { id: string; user: User; isFollow: boolean };
 
 export const FollowersTab = ({ userId }: IProps) => {
   const { t } = useTranslation();
@@ -33,11 +34,13 @@ export const FollowersTab = ({ userId }: IProps) => {
   } = usePaginateActions(options);
 
   const renderPerson = useCallback(
-    ({ item }: any) => <UserListItem user={item.userId} />,
+    ({ item }: ListRenderItemInfo<UserListItem>) => (
+      <UserListItem user={item.user} isFollow={item.isFollow} />
+    ),
     []
   );
 
-  const keyExtractor = useCallback((item: User) => item?.id, []);
+  const keyExtractor = useCallback((item: UserListItem) => item?.id, []);
 
   const { refreshing, refetchByUser } = useRefreshByUser(refetch);
   const refreshControl = (

@@ -9,7 +9,7 @@ import CustomAvatar from "../../core/Avatars/CustomAvatar";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/rootStackParams";
 import * as Haptics from "expo-haptics";
-import { usePost, useDelete, useGet } from "../../../hooks";
+import { usePost, useDelete } from "../../../hooks";
 
 const { grey0, black } = theme.lightColors || {};
 

@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { View, ListRenderItemInfo } from "react-native";
 import { forwardRef, memo, useCallback } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import GridImageListItem from "../../ListItems/PostGrid/GridImageListItem";
@@ -7,10 +7,6 @@ import { useTranslation } from "react-i18next";
 import { useGetPaginate, usePaginateActions } from "../../../../hooks";
 import { Post } from "../../../../models/post";
 import Animated from "react-native-reanimated";
-import { MasonryFlashList, ListRenderItemInfo } from "@shopify/flash-list";
-
-export const AnimatedMasonryFlashList: any =
-  Animated.createAnimatedComponent(MasonryFlashList);
 
 const PostsProfileTab = forwardRef((props: any, ref) => {
   const isFocused = useIsFocused();
@@ -49,7 +45,7 @@ const PostsProfileTab = forwardRef((props: any, ref) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
-      <AnimatedMasonryFlashList
+      <Animated.FlatList
         {...props}
         ref={ref}
         scrollEnabled={!loading}

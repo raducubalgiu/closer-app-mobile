@@ -80,12 +80,7 @@ export const FiltersDateScreen = ({ route }: IProps) => {
     setVisible(false);
   }, []);
 
-  let disabled;
-  if (period.startDate && period.endDate) {
-    disabled = false;
-  } else {
-    disabled = true;
-  }
+  let disabled = period.startDate && period.endDate ? false : true;
 
   const footerBtns = (
     <ButtonGroup
