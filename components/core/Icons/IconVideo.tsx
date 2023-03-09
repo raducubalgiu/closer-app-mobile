@@ -1,5 +1,4 @@
 import { Icon } from "@rneui/themed";
-import React from "react";
 
 export const IconVideo = ({ sx = {} }) => {
   return (

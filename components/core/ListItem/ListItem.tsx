@@ -1,5 +1,5 @@
 import { Pressable } from "react-native";
-import { Stack } from "../Stack/Stack";
+import Stack from "../Stack/Stack";
 
 type IProps = {
   between?: boolean;

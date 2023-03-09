@@ -3,7 +3,8 @@ import { Divider, Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";
-import { Stack, ListItem, Button } from "../../../components/core";
+import { ListItem, Button } from "../../../components/core";
+import Stack from "../../../components/core/Stack/Stack";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/rootStackParams";
 

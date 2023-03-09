@@ -2,7 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Icon, Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../assets/styles/theme";
-import { Stack } from "../Stack/Stack";
+import Stack from "../Stack/Stack";
 import { IconBackButton } from "../IconButton/IconBackButton";
 
 const { black, grey0 } = theme.lightColors || {};

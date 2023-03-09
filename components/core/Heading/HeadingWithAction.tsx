@@ -1,6 +1,6 @@
 import { StyleSheet, Text, Pressable } from "react-native";
 import { Icon } from "@rneui/themed";
-import { Stack } from "../../core";
+import Stack from "../Stack/Stack";
 import theme from "../../../assets/styles/theme";
 
 const { black, grey0 } = theme.lightColors || {};

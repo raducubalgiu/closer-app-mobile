@@ -4,25 +4,32 @@ import { Icon } from "@rneui/themed";
 import { useAuth } from "../../../hooks/auth";
 import theme from "../../../assets/styles/theme";
 import * as Haptics from "expo-haptics";
-import { usePost, useDelete, useGet } from "../../../hooks";
+import { usePost, useDelete } from "../../../hooks";
 import { showToast } from "../../../utils";
 import { useTranslation } from "react-i18next";
 
 const { black } = theme.lightColors || {};
-type IProps = { sx?: {}; size?: number; type: string; typeId: string };
+type IProps = {
+  sx?: {};
+  size?: number;
+  type: string;
+  typeId: string;
+  isBookmarked: boolean;
+};
 
-const BookmarkIconButton = ({ sx = {}, size = 24, type, typeId }: IProps) => {
+const BookmarkIconButton = ({
+  sx = {},
+  size = 24,
+  type,
+  typeId,
+  isBookmarked,
+}: IProps) => {
   const { user } = useAuth();
-  const [bookmarked, setBookmarked] = useState(false);
+  const [bookmarked, setBookmarked] = useState(isBookmarked);
   const animatedScale = useRef(new Animated.Value(0)).current;
   const bookmarkEndpoints = `/users/${user?.id}/${type}/${typeId}/bookmarks`;
   const { t } = useTranslation();
 
-  useGet({
-    model: "checkBookmark",
-    uri: bookmarkEndpoints,
-    onSuccess: (res) => setBookmarked(res.data.status),
-  });
   const { mutate: makePost } = usePost({
     uri: bookmarkEndpoints,
     onSuccess: () => {

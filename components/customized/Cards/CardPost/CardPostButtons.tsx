@@ -19,6 +19,8 @@ type IProps = {
   postId: string;
   likesCount: number;
   onShowSheetViews?: () => void;
+  isLiked: boolean;
+  isBookmarked: boolean;
 };
 
 const CardPostButtons = ({
@@ -27,6 +29,8 @@ const CardPostButtons = ({
   postId,
   likesCount,
   onShowSheetViews,
+  isLiked,
+  isBookmarked,
 }: IProps) => {
   const { name, price } = product || {};
   const [likes, setLikes] = useState(likesCount);
@@ -64,7 +68,6 @@ const CardPostButtons = ({
     <Pressable onPress={goToCalendar}>
       <Stack direction="row" sx={styles.bookable}>
         <Stack direction="row">
-          {/* <Text style={styles.book}>{t("book")}</Text> */}
           <Text style={styles.productName}>{name}</Text>
         </Stack>
         <Stack direction="row">
@@ -91,11 +94,17 @@ const CardPostButtons = ({
           <LikeButton
             model="posts"
             modelId={postId}
+            isLiked={isLiked}
             onAddLike={() => setLikes((likes) => likes + 1)}
             onRemoveLike={() => setLikes((likes) => likes - 1)}
             sx={styles.button}
           />
-          <BookmarkIconButton type="posts" typeId={postId} sx={styles.button} />
+          <BookmarkIconButton
+            isBookmarked={isBookmarked}
+            type="posts"
+            typeId={postId}
+            sx={styles.button}
+          />
           <ShareIButton onPress={onShare} sx={styles.button} />
           <Pressable
             style={{ paddingLeft: 15, paddingVertical: 5 }}

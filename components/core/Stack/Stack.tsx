@@ -1,14 +1,24 @@
+import { memo } from "react";
 import { StyleSheet, View } from "react-native";
-export const Stack = ({
+
+type IProps = {
+  children: any;
+  direction?: string;
+  align?: string;
+  justify?: string;
+  sx?: {};
+};
+
+const Stack = ({
   children,
   direction = "column",
   align = "center",
   justify = "between",
   sx = {},
-}) => {
-  let justifyContent;
-  let alignItems;
-  let flexDirection;
+}: IProps) => {
+  let justifyContent: any;
+  let alignItems: any;
+  let flexDirection: any;
 
   switch (justify) {
     case "center":
@@ -80,3 +90,5 @@ export const Stack = ({
 
   return <View style={{ ...styles.container, ...sx }}>{children}</View>;
 };
+
+export default memo(Stack);

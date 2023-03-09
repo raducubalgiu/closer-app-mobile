@@ -9,7 +9,7 @@ import {
   Pressable,
 } from "react-native";
 import Modal from "react-native-modal";
-import { Stack } from "../Stack/Stack";
+import Stack from "../Stack/Stack";
 import theme from "../../../assets/styles/theme";
 
 const { width, height } = Dimensions.get("window");

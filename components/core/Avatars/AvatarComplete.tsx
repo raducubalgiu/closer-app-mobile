@@ -1,6 +1,5 @@
 import { StyleSheet, View } from "react-native";
 import { Avatar, Badge, Icon } from "@rneui/themed";
-import React from "react";
 import theme from "../../../assets/styles/theme";
 
 const { black, success } = theme.lightColors || {};

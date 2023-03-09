@@ -13,7 +13,8 @@ import { Divider } from "@rneui/themed";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import PostVideoOverviewListItem from "../../components/customized/ListItems/Post/PostVideoOverviewListItem";
 import CardPost from "../../components/customized/Cards/CardPost/CardPost";
-import { HeadingAction, Spinner, Stack } from "../../components/core";
+import { HeadingAction, Spinner } from "../../components/core";
+import Stack from "../../components/core/Stack/Stack";
 import { HeaderFeed } from "../../components/customized";
 import {
   useAuth,
@@ -25,6 +26,9 @@ import { Post } from "../../models/post";
 import { RootStackParams } from "../../navigation/rootStackParams";
 import AvatarBadge from "../../components/core/Avatars/AvatarBadge";
 import StoryAvatarListItem from "../../components/customized/ListItems/Story/StoryAvatarListItem";
+import PostListItem from "../../components/customized/ListItems/Post/PostListItem";
+
+type PostListItem = { post: Post; isLiked: boolean; isBookmarked: boolean };
 
 export const FeedExploreScreen = () => {
   const { user } = useAuth();
@@ -35,9 +39,9 @@ export const FeedExploreScreen = () => {
 
   const postsOptions = useGetPaginate({
     model: "allPosts",
-    uri: `/posts/get-all-posts`,
+    uri: `/users/${user?.id}/posts/get-all-posts`,
     queries: "postType=photo",
-    limit: "10",
+    limit: "20",
   });
 
   const videosOptions = useGetPaginate({
@@ -73,9 +77,18 @@ export const FeedExploreScreen = () => {
     <RefreshControl refreshing={loading} onRefresh={handleRefresh} />
   );
 
-  const renderPost = useCallback(({ item }: ListRenderItemInfo<Post>) => {
-    return <CardPost post={item} onShowDetails={() => {}} />;
-  }, []);
+  const renderPost = useCallback(
+    ({ item }: ListRenderItemInfo<PostListItem>) => {
+      return (
+        <PostListItem
+          post={item?.post}
+          isLiked={item?.isLiked}
+          isBookmarked={item?.isBookmarked}
+        />
+      );
+    },
+    []
+  );
 
   const renderVideo = useCallback(
     ({ item, index }: ListRenderItemInfo<Post>) => {
@@ -92,7 +105,7 @@ export const FeedExploreScreen = () => {
     []
   );
 
-  const keyExtractor = useCallback((item: Post) => item?.id, []);
+  const keyExtractor = useCallback((item: PostListItem) => item?.post?.id, []);
   const keyExtractorVideo = useCallback((item: Post) => item?.id, []);
   const keyExtractorStory = useCallback((item: any) => item.id, []);
 
@@ -122,8 +135,9 @@ export const FeedExploreScreen = () => {
 
   const { mutate } = usePost({ uri: `/posts/views` });
 
-  const trackItem = useCallback((item: Post) => {
-    mutate({ postId: item.id, userId: user?.id, from: "explore" });
+  const trackItem = useCallback((item: PostListItem) => {
+    const { post } = item;
+    mutate({ postId: post.id, userId: user?.id, from: "explore" });
   }, []);
 
   const onViewableItemsChanged = useCallback((info: { changed: any }): void => {
@@ -139,42 +153,42 @@ export const FeedExploreScreen = () => {
       {!loading && (
         <FlatList
           ref={ref}
-          ListHeaderComponent={
-            <>
-              <HeadingAction title={t("videoclips")} onPress={goToVideos} />
-              <FlatList
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                data={videos}
-                keyExtractor={keyExtractorVideo}
-                renderItem={renderVideo}
-                contentContainerStyle={{ paddingLeft: 10, paddingRight: 5 }}
-              />
-              <Divider color="#ddd" style={{ marginTop: 15 }} />
-              <HeadingAction title={t("stories")} onPress={() => {}} />
-              <FlatList
-                ListHeaderComponent={
-                  <Stack sx={{ paddingLeft: 10 }}>
-                    <AvatarBadge
-                      avatar={user?.avatar}
-                      size={67}
-                      sx={styles.avatarBadge}
-                    />
-                    <Text style={styles.storyTxt}>Povestea ta</Text>
-                  </Stack>
-                }
-                data={stories}
-                horizontal
-                keyExtractor={keyExtractorStory}
-                showsHorizontalScrollIndicator={false}
-                renderItem={renderStoryAvatar}
-              />
-              <Divider
-                color="#ddd"
-                style={{ marginTop: 15, marginBottom: 10 }}
-              />
-            </>
-          }
+          // ListHeaderComponent={
+          //   <>
+          //     <HeadingAction title={t("videoclips")} onPress={goToVideos} />
+          //     <FlatList
+          //       horizontal
+          //       showsHorizontalScrollIndicator={false}
+          //       data={videos}
+          //       keyExtractor={keyExtractorVideo}
+          //       renderItem={renderVideo}
+          //       contentContainerStyle={{ paddingLeft: 10, paddingRight: 5 }}
+          //     />
+          //     <Divider color="#ddd" style={{ marginTop: 15 }} />
+          //     <HeadingAction title={t("stories")} onPress={() => {}} />
+          //     <FlatList
+          //       ListHeaderComponent={
+          //         <Stack sx={{ paddingLeft: 10 }}>
+          //           <AvatarBadge
+          //             avatar={user?.avatar}
+          //             size={67}
+          //             sx={styles.avatarBadge}
+          //           />
+          //           <Text style={styles.storyTxt}>Povestea ta</Text>
+          //         </Stack>
+          //       }
+          //       data={stories}
+          //       horizontal
+          //       keyExtractor={keyExtractorStory}
+          //       showsHorizontalScrollIndicator={false}
+          //       renderItem={renderStoryAvatar}
+          //     />
+          //     <Divider
+          //       color="#ddd"
+          //       style={{ marginTop: 15, marginBottom: 10 }}
+          //     />
+          //   </>
+          // }
           refreshControl={refreshControl}
           data={posts}
           renderItem={renderPost}
@@ -185,8 +199,6 @@ export const FeedExploreScreen = () => {
           onEndReachedThreshold={0.3}
           viewabilityConfig={viewabilityConfig}
           onViewableItemsChanged={onViewableItemsChanged}
-          maxToRenderPerBatch={5}
-          windowSize={5}
         />
       )}
       {loading && <Spinner />}

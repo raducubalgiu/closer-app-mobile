@@ -25,9 +25,14 @@ const StatsItem = ({ icon, counter }: StatsItem) => {
 
 const { width } = Dimensions.get("window");
 const { black } = theme.lightColors || {};
-type IProps = { post: Post; onShowDetails: () => void };
+type IProps = {
+  post: Post;
+  onShowDetails: () => void;
+  isLiked: boolean;
+  isBookmarked: boolean;
+};
 
-const CardPost = ({ post, onShowDetails }: IProps) => {
+const CardPost = ({ post, onShowDetails, isLiked, isBookmarked }: IProps) => {
   const {
     id,
     bookable,
@@ -94,6 +99,8 @@ const CardPost = ({ post, onShowDetails }: IProps) => {
           postId={id}
           likesCount={likesCount}
           onShowSheetViews={() => SHOW_BS()}
+          isLiked={isLiked}
+          isBookmarked={isBookmarked}
         />
         <CardPostFooter
           postId={id}

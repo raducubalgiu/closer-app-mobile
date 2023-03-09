@@ -4,7 +4,7 @@ import { useFormContext, Controller } from "react-hook-form";
 import RNPickerSelect from "react-native-picker-select";
 import theme from "../../../assets/styles/theme";
 import { has, get } from "lodash";
-import { Stack } from "../Stack/Stack";
+import Stack from "../Stack/Stack";
 import { Icon } from "@rneui/themed";
 
 const { black, error } = theme.lightColors || {};

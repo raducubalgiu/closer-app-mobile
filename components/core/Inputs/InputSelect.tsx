@@ -1,5 +1,4 @@
 import { StyleSheet } from "react-native";
-import React from "react";
 import RNPickerSelect from "react-native-picker-select";
 import theme from "../../../assets/styles/theme";
 

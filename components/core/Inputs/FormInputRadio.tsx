@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import { Stack } from "../Stack/Stack";
+import Stack from "../Stack/Stack";
 import theme from "../../../assets/styles/theme";
 import { IconButton } from "../IconButton/IconButton";
 
