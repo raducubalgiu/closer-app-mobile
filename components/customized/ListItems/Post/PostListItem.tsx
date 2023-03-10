@@ -1,46 +1,36 @@
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-  useWindowDimensions,
-  View,
-} from "react-native";
+import { StyleSheet, View } from "react-native";
 import { memo } from "react";
 import { Post } from "../../../../models";
-import { Icon, Image } from "@rneui/themed";
-import PostGradient from "../../Gradients/PostGradient";
-import PostHeaderListItem from "./PostHeaderListItem";
-
-const PostImage = memo(({ uri }: { uri: string }) => {
-  const { width } = useWindowDimensions();
-  return (
-    <View style={{ width, height: 400 }}>
-      <Image
-        source={{ uri }}
-        containerStyle={{
-          width: undefined,
-          height: undefined,
-          flex: 1,
-        }}
-        resizeMode="cover"
-        transition={true}
-        PlaceholderContent={<PostGradient width={width} height={400} />}
-      />
-    </View>
-  );
-});
+import { FROM_NOW } from "../../../../utils/date-utils";
+import PostHeader from "./PostHeader";
+import PostImage from "./PostImage";
+import PostBookable from "./PostBookable";
+import PostActions from "./PostActions";
+import PostDescription from "./PostDescription";
 
 type IProps = { post: Post; isLiked: boolean; isBookmarked: boolean };
 
 const PostListItem = ({ post, isLiked, isBookmarked }: IProps) => {
-  const { width } = useWindowDimensions();
-  const { userId, bookable } = post;
-  const { avatar, username } = userId;
+  const { id, userId, bookable, images, product, orientation } = post;
+  const { likesCount, commentsCount, createdAt, description } = post;
+  const { avatar, username, checkmark } = userId;
 
   return (
     <View style={styles.container}>
-      <PostHeaderListItem avatar={avatar} username={username} />
-      <PostImage uri={post?.images[0]?.url} />
+      <PostHeader avatar={avatar} username={username} checkmark={checkmark} />
+      <PostImage uri={images[0]?.url} orientation={orientation} />
+      {bookable && <PostBookable product={product} />}
+      <PostActions
+        postId={id}
+        likesCount={likesCount}
+        isLiked={isLiked}
+        isBookmarked={isBookmarked}
+      />
+      <PostDescription
+        description={description}
+        commentsCount={commentsCount}
+        date={FROM_NOW(createdAt)}
+      />
     </View>
   );
 };

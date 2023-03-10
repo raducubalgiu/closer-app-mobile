@@ -1,3 +1,9 @@
+import Rating from "./Rating/Rating";
+import Stack from "./Stack/Stack";
+import LikeButton from "../customized/Buttons/LikeButton";
+import BookmarkIconButton from "../customized/Buttons/BookmarkIconButton";
+import PostGradient from "../customized/Gradients/PostGradient";
+
 export { ShareIButton } from "./Buttons/ShareIButton";
 export { ButtonLink } from "./Buttons/ButtonLink";
 export { Button } from "./Buttons/Button";
@@ -37,8 +43,6 @@ export { Textarea } from "./Inputs/Textarea";
 
 export { Protected } from "./Protected/Protected";
 
-export { ImageSlider } from "./ImageSlider/ImageSlider";
-
 export { CSwitch } from "./CSwitch/CSwitch";
 
 export { CModal } from "./CModal/CModal";
@@ -47,4 +51,4 @@ export { Heading } from "./Heading/Heading";
 export { HeadingWithAction } from "./Heading/HeadingWithAction";
 export { HeadingAction } from "./Heading/HeadingAction";
 
-export { Rating } from "./Rating/Rating";
+export { Stack, Rating, LikeButton, BookmarkIconButton, PostGradient };

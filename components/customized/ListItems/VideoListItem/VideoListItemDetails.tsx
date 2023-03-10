@@ -10,7 +10,7 @@ import CustomAvatar from "../../../core/Avatars/CustomAvatar";
 import { Stack, Checkmark, Button, IconStar } from "../../../core";
 import { Product, User } from "../../../../models";
 import theme from "../../../../assets/styles/theme";
-import { DisplayText } from "../../Typography/DisplayText/DisplayText";
+import DisplayText from "../../Typography/DisplayText/DisplayText";
 import { FollowOutlinedButton } from "../../Buttons/FollowOutlinedButton";
 import { BookableLabel } from "../../Typography/Labels/BookableLabel";
 import { LastMinuteLabel } from "../../Typography/Labels/LastMinuteLabel";

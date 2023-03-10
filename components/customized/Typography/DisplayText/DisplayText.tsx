@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import { ButtonLink, Checkmark, Stack } from "../../../core";
-import { useCallback, useState } from "react";
+import { memo, useCallback, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../../assets/styles/theme";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -17,7 +17,7 @@ type IProps = {
   goToUserAllInfo?: () => void;
 };
 
-export const DisplayText = ({
+const DisplayText = ({
   text = "",
   maxWords = 200,
   username = null,
@@ -128,6 +128,8 @@ export const DisplayText = ({
     </View>
   );
 };
+
+export default memo(DisplayText);
 
 const styles = StyleSheet.create({
   container: {

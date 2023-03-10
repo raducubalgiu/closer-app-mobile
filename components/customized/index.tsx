@@ -1,3 +1,5 @@
+import DisplayText from "./Typography/DisplayText/DisplayText";
+
 export { AutocompleteGoogle } from "./Forms/AutocompleteGoogle";
 
 export { HeaderProfile } from "./Layout/Headers/HeaderProfile";
@@ -114,7 +116,6 @@ export { FiltersContainer } from "./Layout/Containers/FiltersContainer";
 export { BookableLabel } from "./Typography/Labels/BookableLabel";
 export { LastMinuteLabel } from "./Typography/Labels/LastMinuteLabel";
 export { StoryLabel } from "./Typography/Labels/StoryLabel";
-export { DisplayText } from "./Typography/DisplayText/DisplayText";
 export { TextWithBullet } from "./Typography/TextWithBullet";
 
 export { CloseIconButton } from "./IconButtons/CloseIconButton";
@@ -125,3 +126,5 @@ export { InfoIconButton } from "./IconButtons/InfoIconButton";
 export { ProfileIconButton } from "./IconButtons/ProfileIconButton";
 
 export { VideoDetailsSkeleton } from "./Skeletons/VideoDetailsSkeleton";
+
+export { DisplayText };

@@ -1,5 +1,5 @@
 import { StyleSheet, Text, Pressable } from "react-native";
-import React, { memo, useState } from "react";
+import { memo, useState } from "react";
 import { Icon } from "@rneui/themed";
 import { Stack } from "../../../core";
 import CustomAvatar from "../../../core/Avatars/CustomAvatar";
@@ -7,7 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import theme from "../../../../assets/styles/theme";
 import { useAuth } from "../../../../hooks";
-import { DisplayText } from "../../Typography/DisplayText/DisplayText";
+import DisplayText from "../../Typography/DisplayText/DisplayText";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
 
