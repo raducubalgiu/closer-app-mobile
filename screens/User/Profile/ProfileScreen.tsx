@@ -2,7 +2,15 @@ import {
   createMaterialTopTabNavigator,
   MaterialTopTabBarProps,
 } from "@react-navigation/material-top-tabs";
-import React, { FC, memo, useCallback, useMemo, useRef, useState } from "react";
+import React, {
+  FC,
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
   FlatList,
   FlatListProps,
@@ -23,7 +31,11 @@ import useScrollSync from "../../../Test/src/hooks/useScrollSync";
 import { ScrollPair } from "../../../Test/src/types/ScrollPair";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { HeaderConfig } from "../../../Test/src/types/HeaderConfig";
-import { HeaderProfile } from "../../../components/customized";
+import {
+  HeaderProfile,
+  PostOptionsSheet,
+  ProfileMenuSheet,
+} from "../../../components/customized";
 import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
 import { useAuth } from "../../../hooks";
 import { ProfileIconButton } from "../../../components/customized";
@@ -31,6 +43,8 @@ import { Button } from "../../../components/core";
 import PostsProfileTab from "../../../components/customized/Tabs/ProfileTabs/PostsProfileTab";
 import VideosProfileTab from "../../../components/customized/Tabs/ProfileTabs/VideosProfileTab";
 import { Post } from "../../../models";
+import SheetModal from "../../../components/core/SheetModal/SheetModal";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
 const TAB_BAR_HEIGHT = 42.5;
 const HEADER_HEIGHT = 240;
@@ -43,8 +57,12 @@ const Profile: FC = () => {
 
   const { height, width } = useWindowDimensions();
 
+  const settingsRef = useRef<BottomSheetModal>(null);
+  const addPostRef = useRef<BottomSheetModal>(null);
   const postsRef = useRef<FlatList>(null);
   const videosRef = useRef<FlatList>(null);
+
+  const snapPoints = useMemo(() => [1, 200], []);
 
   const [tabIndex, setTabIndex] = useState(0);
 
@@ -171,8 +189,8 @@ const Profile: FC = () => {
         username="raducubalgiu"
         checkmark={true}
         onGoToFindFriends={() => {}}
-        onOpenPostOptions={() => {}}
-        onOpenSettings={() => {}}
+        onOpenPostOptions={() => addPostRef.current?.present()}
+        onOpenSettings={() => settingsRef.current?.present()}
       />
       <View style={{ flex: 1 }}>
         <Animated.View style={headerContainerStyle}>
@@ -203,6 +221,20 @@ const Profile: FC = () => {
           <Tab.Screen name="Videos">{renderVideos}</Tab.Screen>
         </Tab.Navigator>
       </View>
+      <SheetModal
+        ref={settingsRef}
+        snapPoints={snapPoints}
+        animationConfig={{ duration: 150 }}
+      >
+        <ProfileMenuSheet onCloseSheet={() => settingsRef.current?.close()} />
+      </SheetModal>
+      <SheetModal
+        ref={addPostRef}
+        snapPoints={snapPoints}
+        animationConfig={{ duration: 150 }}
+      >
+        <PostOptionsSheet />
+      </SheetModal>
     </View>
   );
 };

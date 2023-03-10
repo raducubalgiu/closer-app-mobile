@@ -29,7 +29,9 @@ const LikeButton = ({
   isLiked,
 }: IProps) => {
   const { user } = useAuth();
+
   const [liked, setLiked] = useState(isLiked);
+
   const endpoints = `/users/${user?.id}/${model}/${modelId}/likes`;
   const animatedScale = useRef(new Animated.Value(0)).current;
 
@@ -45,7 +47,7 @@ const LikeButton = ({
       useNativeDriver: true,
     }).start();
 
-    if (!isLiked) {
+    if (!liked) {
       setLiked(true);
       onAddLike();
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
@@ -55,7 +57,7 @@ const LikeButton = ({
       onRemoveLike();
       makeDelete();
     }
-  }, [isLiked, endpoints]);
+  }, [liked, endpoints]);
 
   useEffect(() => {
     animatedScale.setValue(1);
@@ -70,10 +72,10 @@ const LikeButton = ({
         ]}
       >
         <Icon
-          type={isLiked ? "antdesign" : "feather"}
+          type={liked ? "antdesign" : "feather"}
           name="heart"
           size={size}
-          color={isLiked ? error : color}
+          color={liked ? error : color}
         />
       </Animated.View>
     </Pressable>
