@@ -104,7 +104,7 @@ export const MyBusinessScreen = () => {
           iconName={item?.iconName}
           iconType={item?.iconType}
           description={item?.description}
-          onPress={() => navigation.navigate(item.navigation)}
+          onPress={() => navigation.navigate<any>(item.navigation)}
         />
       </Protected>
     ),

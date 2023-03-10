@@ -1,10 +1,10 @@
 import { Pressable, StyleSheet, Dimensions, View, Text } from "react-native";
-import { memo, useCallback, useRef, useState, useEffect } from "react";
+import { memo, useCallback, useRef, useState, useEffect, useMemo } from "react";
 import { ResizeMode, Video } from "expo-av";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useAuth, useSheet } from "../../../../hooks";
+import { useAuth } from "../../../../hooks";
 import ProductSheet from "../../Sheets/ProductSheet";
 import MoreSheet from "../../Sheets/MoreSheet";
 import LikesSheet from "../../Sheets/LikesSheet";
@@ -17,6 +17,8 @@ import VideoListItemSlider from "./VideoListItemSlider";
 import { Icon } from "@rneui/themed";
 import { Stack } from "../../../core";
 import { VideoStatusType } from "../../../../models/videoStatus";
+import SheetModal from "../../../core/SheetModal/SheetModal";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
 type IProps = {
   post: Post;
@@ -60,37 +62,15 @@ const VideoListItem = ({ post, setScrollEnabled, isVisible }: IProps) => {
   const sheetSm = height / 1.5;
   const sheetBig = height / 1.1;
 
-  const likesSheet = (
-    <LikesSheet
-      postId={id}
-      counter={{ likesCount, commentsCount, bookmarksCount, viewsCount }}
-    />
-  );
-  const commentsSheet = <CommentsSheet postId={id} creatorId={userId.id} />;
-  const moreSheet = <MoreSheet postId={id} userId={user?.id} />;
-  const productSheet = (
-    <ProductSheet product={product} expirationTime={expirationTime} />
-  );
+  const likesRef = useRef<BottomSheetModal>(null);
+  const commentsRef = useRef<BottomSheetModal>(null);
+  const moreRef = useRef<BottomSheetModal>(null);
+  const productRef = useRef<BottomSheetModal>(null);
 
-  const { BOTTOM_SHEET: LikesBSheet, SHOW_BS: showLikesSheet } = useSheet(
-    [1, sheetSm, sheetBig],
-    likesSheet
-  );
-
-  const { BOTTOM_SHEET: CommSheet, SHOW_BS: showCommSheet } = useSheet(
-    [1, height / 1.3],
-    commentsSheet
-  );
-
-  const { BOTTOM_SHEET: VideoMoreSheet, SHOW_BS: showMore } = useSheet(
-    [1, 300],
-    moreSheet
-  );
-
-  const { BOTTOM_SHEET: ProdSheet, SHOW_BS: showProductSheet } = useSheet(
-    [1, 500],
-    productSheet
-  );
+  const likesSnapPoints = useMemo(() => [1, sheetSm, sheetBig], []);
+  const commentsSnapPoints = useMemo(() => [1, height / 1.3], []);
+  const moreSnapPoints = useMemo(() => [1, 300], []);
+  const productSnapPoints = useMemo(() => [1, 500], []);
 
   const handlePlay = useCallback(() => {
     if (status.shouldPlay) {
@@ -211,7 +191,7 @@ const VideoListItem = ({ post, setScrollEnabled, isVisible }: IProps) => {
             expirationTime={expirationTime}
             onGoBack={() => navigation.goBack()}
             onGoToCalendar={goToCalendar}
-            onShowProductSheet={() => showProductSheet()}
+            onShowProductSheet={() => {}}
             status={status}
             uri={images[0]?.url}
           />
@@ -234,15 +214,26 @@ const VideoListItem = ({ post, setScrollEnabled, isVisible }: IProps) => {
           postId={id}
           reactions={reactions}
           commentsCount={commentsCount}
-          onShowCommentsSheet={() => showCommSheet()}
-          onShowMoreSheet={() => showMore()}
-          onShowLikesSheet={() => showLikesSheet()}
+          onShowCommentsSheet={() => {}}
+          onShowMoreSheet={() => {}}
+          onShowLikesSheet={() => {}}
         />
       </View>
-      {LikesBSheet}
-      {CommSheet}
-      {VideoMoreSheet}
-      {ProdSheet}
+      <SheetModal ref={likesRef} snapPoints={likesSnapPoints}>
+        <LikesSheet
+          postId={id}
+          counter={{ likesCount, commentsCount, bookmarksCount, viewsCount }}
+        />
+      </SheetModal>
+      <SheetModal ref={commentsRef} snapPoints={commentsSnapPoints}>
+        <CommentsSheet postId={id} creatorId={userId.id} />
+      </SheetModal>
+      <SheetModal ref={moreRef} snapPoints={moreSnapPoints}>
+        <MoreSheet postId={id} userId={user?.id} />
+      </SheetModal>
+      <SheetModal ref={productRef} snapPoints={productSnapPoints}>
+        <ProductSheet product={product} expirationTime={expirationTime} />
+      </SheetModal>
     </View>
   );
 };

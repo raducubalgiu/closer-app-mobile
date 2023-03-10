@@ -3,6 +3,7 @@ import Stack from "./Stack/Stack";
 import LikeButton from "../customized/Buttons/LikeButton";
 import BookmarkIconButton from "../customized/Buttons/BookmarkIconButton";
 import PostGradient from "../customized/Gradients/PostGradient";
+import SheetModal from "./SheetModal/SheetModal";
 
 export { ShareIButton } from "./Buttons/ShareIButton";
 export { ButtonLink } from "./Buttons/ButtonLink";
@@ -51,4 +52,11 @@ export { Heading } from "./Heading/Heading";
 export { HeadingWithAction } from "./Heading/HeadingWithAction";
 export { HeadingAction } from "./Heading/HeadingAction";
 
-export { Stack, Rating, LikeButton, BookmarkIconButton, PostGradient };
+export {
+  Stack,
+  Rating,
+  LikeButton,
+  BookmarkIconButton,
+  PostGradient,
+  SheetModal,
+};

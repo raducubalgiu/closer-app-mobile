@@ -9,7 +9,7 @@ const { black, grey0 } = theme.lightColors || {};
 
 type IProps = {
   hideBtnLeft?: boolean;
-  title: string;
+  title: any;
   subtitle?: string;
   actionBtn?: React.ReactElement<any>;
   divider?: boolean;

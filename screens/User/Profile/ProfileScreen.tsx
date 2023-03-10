@@ -2,15 +2,7 @@ import {
   createMaterialTopTabNavigator,
   MaterialTopTabBarProps,
 } from "@react-navigation/material-top-tabs";
-import React, {
-  FC,
-  memo,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { FC, memo, useCallback, useMemo, useRef, useState } from "react";
 import {
   FlatList,
   FlatListProps,
@@ -45,6 +37,9 @@ import VideosProfileTab from "../../../components/customized/Tabs/ProfileTabs/Vi
 import { Post } from "../../../models";
 import SheetModal from "../../../components/core/SheetModal/SheetModal";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../navigation/rootStackParams";
 
 const TAB_BAR_HEIGHT = 42.5;
 const HEADER_HEIGHT = 240;
@@ -61,7 +56,8 @@ const Profile: FC = () => {
   const addPostRef = useRef<BottomSheetModal>(null);
   const postsRef = useRef<FlatList>(null);
   const videosRef = useRef<FlatList>(null);
-
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const snapPoints = useMemo(() => [1, 200], []);
 
   const [tabIndex, setTabIndex] = useState(0);
@@ -179,7 +175,6 @@ const Profile: FC = () => {
 
   const headerContainerStyle = useMemo<StyleProp<ViewStyle>>(
     () => [styles.headerContainer, headerAnimatedStyle],
-
     [headerAnimatedStyle]
   );
 
@@ -202,7 +197,7 @@ const Profile: FC = () => {
           >
             <Button
               title="Editeaza Profilul"
-              onPress={() => {}}
+              onPress={() => navigation.navigate("EditProfile")}
               variant="outlined"
               sxBtn={{ width: 150 }}
             />

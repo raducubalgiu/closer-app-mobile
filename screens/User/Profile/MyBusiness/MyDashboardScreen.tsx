@@ -7,20 +7,21 @@ import {
   Pressable,
   View,
 } from "react-native";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { Divider, Icon, ListItem } from "@rneui/themed";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import theme from "../../../../assets/styles/theme";
 import dayjs from "dayjs";
-import { Button, Header, Stack } from "../../../../components/core";
+import { Button, Header, Stack, SheetModal } from "../../../../components/core";
 import {
   DashboardInfoSheet,
   TopTabContainer,
   DashboardScheduleTab,
 } from "../../../../components/customized";
-import { useCalendarList, useSheet } from "../../../../hooks";
+import { useCalendarList } from "../../../../hooks";
 import { useTranslation } from "react-i18next";
 import DateRangePicker from "../../../../components/customized/Calendars/DateRangePicker";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
 const { primary, black } = theme.lightColors || {};
 type Period = {
@@ -35,6 +36,8 @@ export const MyDashboardScreen = () => {
   const { t } = useTranslation();
   const Tab = createMaterialTopTabNavigator();
   const ref = useRef<FlatList>(null);
+  const sheetRef = useRef<BottomSheetModal>(null);
+  const snapPoints = useMemo(() => [1, "90%"], []);
   const [expanded, setExpanded] = useState(false);
   const now = dayjs().utc(true).startOf("day");
   const { MONTHS, DAYS_HEADER } = useCalendarList({
@@ -49,12 +52,6 @@ export const MyDashboardScreen = () => {
     endDate: now.add(1, "day").startOf("day"),
     monthIndex: 0,
   });
-
-  const dashboardInfo = <DashboardInfoSheet />;
-  const { BOTTOM_SHEET: BS_INFO, SHOW_BS: SHOW_BS_INFO } = useSheet(
-    ["1%", "90%"],
-    dashboardInfo
-  );
 
   const buttons = [
     {
@@ -126,7 +123,7 @@ export const MyDashboardScreen = () => {
   const handlePeriod = (per: Period) => setPeriod(per);
 
   const actionButton = (
-    <Pressable onPress={() => SHOW_BS_INFO()}>
+    <Pressable onPress={() => sheetRef.current?.present()}>
       <Icon name="alert-circle" type="feather" />
     </Pressable>
   );
@@ -181,7 +178,9 @@ export const MyDashboardScreen = () => {
           </View>
         </View>
       )}
-      {BS_INFO}
+      <SheetModal ref={sheetRef} snapPoints={snapPoints}>
+        <DashboardInfoSheet />
+      </SheetModal>
     </SafeAreaView>
   );
 };

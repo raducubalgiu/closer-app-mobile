@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useMemo, useRef } from "react";
 import {
   StyleSheet,
   Text,
@@ -12,27 +12,31 @@ import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import theme from "../../../../assets/styles/theme";
 import { Icon } from "@rneui/themed";
-import { Stack, Header, ListItem } from "../../../../components/core";
+import {
+  Stack,
+  Header,
+  ListItem,
+  SheetModal,
+} from "../../../../components/core";
 import { EditProfileSheet } from "../../../../components/customized";
 import CustomAvatar from "../../../../components/core/Avatars/CustomAvatar";
 import { trimFunc } from "../../../../utils";
-import { useAuth, useSheet } from "../../../../hooks";
-import {
-  NativeStackNavigationProp,
-  NativeStackScreenProps,
-} from "@react-navigation/native-stack";
+import { useAuth } from "../../../../hooks";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
 const { grey0, black } = theme.lightColors || {};
+type ListItem = { label: string; val: any; nav: string };
 
-type IProps = NativeStackScreenProps<RootStackParams, "EditProfile">;
-
-export const EditProfileScreen = ({ route }: IProps) => {
+export const EditProfileScreen = () => {
   const { user } = useAuth();
   const { name, username, profession, website, description } = user || {};
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
+  const sheetRef = useRef<BottomSheetModal>(null);
+  const snapPoints = useMemo(() => [1, 300], []);
 
   const list = [
     { label: "name", val: name, nav: "EditName" },
@@ -54,28 +58,23 @@ export const EditProfileScreen = ({ route }: IProps) => {
     },
   ];
 
-  const closeModal = useCallback(() => CLOSE_BS(), []);
-  const editProfileSheet = <EditProfileSheet onCloseSheet={closeModal} />;
-
-  const { BOTTOM_SHEET, SHOW_BS, CLOSE_BS } = useSheet(
-    [10, 300],
-    editProfileSheet
-  );
-
   return (
     <>
       <SafeAreaView style={styles.screen}>
         <Header title={user?.name} />
         <ScrollView>
           <Stack sx={{ marginVertical: 20 }}>
-            <Pressable style={{ alignItems: "center" }} onPress={SHOW_BS}>
+            <Pressable
+              style={{ alignItems: "center" }}
+              onPress={() => sheetRef.current?.present()}
+            >
               <CustomAvatar avatar={user?.avatar} size={95} />
               <Text style={styles.text}>{t("changePhoto")}</Text>
             </Pressable>
           </Stack>
           <View style={styles.sectionContainer}>
             <Text style={styles.sectionHeading}>{t("aboutYou")}</Text>
-            {list.map((item, i) => (
+            {list.map((item: ListItem, i: number) => (
               <ListItem
                 key={i}
                 between
@@ -112,7 +111,13 @@ export const EditProfileScreen = ({ route }: IProps) => {
           </View>
         </ScrollView>
       </SafeAreaView>
-      {BOTTOM_SHEET}
+      <SheetModal
+        ref={sheetRef}
+        snapPoints={snapPoints}
+        animationConfig={{ duration: 150 }}
+      >
+        <EditProfileSheet onCloseSheet={() => sheetRef.current?.close()} />
+      </SheetModal>
     </>
   );
 };
