@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import { useCallback, useRef } from "react";
 import { useScrollToTop } from "@react-navigation/native";
-import CardPost from "../../components/customized/Cards/CardPost/CardPost";
+import PostListItem from "../../components/customized/ListItems/Post/PostListItem";
 import { HeaderFeed, NoFoundMessage } from "../../components/customized";
 import {
   useGetPaginate,
@@ -16,6 +16,13 @@ import {
 } from "../../hooks";
 import { Post } from "../../models/post";
 import { useTranslation } from "react-i18next";
+
+type PostListItem = {
+  id: string;
+  post: Post;
+  isLiked: boolean;
+  isBookmarked: boolean;
+};
 
 export const FeedBookablesScreen = () => {
   const ref = useRef<FlatList>(null);
@@ -32,11 +39,20 @@ export const FeedBookablesScreen = () => {
   const { isLoading, isFetchingNextPage } = options;
   const { data: posts, showSpinner, loadMore } = usePaginateActions(options);
 
-  const renderPost = useCallback(({ item }: ListRenderItemInfo<Post>) => {
-    return <CardPost post={item} onShowDetails={() => {}} />;
-  }, []);
+  const renderPost = useCallback(
+    ({ item }: ListRenderItemInfo<PostListItem>) => {
+      return (
+        <PostListItem
+          post={item?.post}
+          isLiked={item?.isLiked}
+          isBookmarked={item?.isBookmarked}
+        />
+      );
+    },
+    []
+  );
 
-  const keyExtractor = useCallback((item: Post) => item?.id, []);
+  const keyExtractor = useCallback((item: PostListItem) => item?.post?.id, []);
 
   const { refreshing, refetchByUser } = useRefreshByUser(options?.refetch);
   const refreshControl = (

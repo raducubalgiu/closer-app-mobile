@@ -4,17 +4,13 @@ import {
   FlatList,
   ListRenderItemInfo,
   SafeAreaView,
-  Text,
 } from "react-native";
 import { useCallback, useRef } from "react";
 import { useNavigation, useScrollToTop } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { Divider } from "@rneui/themed";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import PostVideoOverviewListItem from "../../components/customized/ListItems/Post/PostVideoOverviewListItem";
-import CardPost from "../../components/customized/Cards/CardPost/CardPost";
-import { HeadingAction, Spinner } from "../../components/core";
-import Stack from "../../components/core/Stack/Stack";
+import { Spinner } from "../../components/core";
 import { HeaderFeed } from "../../components/customized";
 import {
   useAuth,
@@ -24,7 +20,6 @@ import {
 } from "../../hooks";
 import { Post } from "../../models/post";
 import { RootStackParams } from "../../navigation/rootStackParams";
-import AvatarBadge from "../../components/core/Avatars/AvatarBadge";
 import StoryAvatarListItem from "../../components/customized/ListItems/Story/StoryAvatarListItem";
 import PostListItem from "../../components/customized/ListItems/Post/PostListItem";
 
