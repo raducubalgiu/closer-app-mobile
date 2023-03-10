@@ -2,7 +2,7 @@ import { FlatList, ListRenderItemInfo } from "react-native";
 import { useCallback } from "react";
 import { useGetPaginate, usePaginateActions } from "../../../../hooks";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
-import GridImageListItem from "../../ListItems/PostGrid/GridImageListItem";
+import GridImageListItem from "../../ListItems/Grid/GridImage/GridImageListItem";
 import { Post } from "../../../../models";
 import { Spinner } from "../../../core";
 import { useTranslation } from "react-i18next";

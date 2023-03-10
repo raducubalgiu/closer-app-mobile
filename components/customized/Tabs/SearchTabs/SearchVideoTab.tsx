@@ -2,7 +2,7 @@ import { FlatList, StyleSheet, ListRenderItemInfo } from "react-native";
 import { useCallback } from "react";
 import { useGetPaginate, usePaginateActions } from "../../../../hooks";
 import { Post } from "../../../../models";
-import GridVideoVListItem from "../../ListItems/PostGrid/GridVideoVListItem";
+import GridVideoVListItem from "../../ListItems/Grid/GridVideoVListItem";
 import { Spinner } from "../../../core";
 import { useIsFocused } from "@react-navigation/native";
 

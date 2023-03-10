@@ -6,7 +6,7 @@ import { useGetPaginate } from "../../../../hooks";
 import { HashtagListItem } from "../../ListItems/HashtagListItem";
 import { HeadingWithAction } from "../../../core";
 import UserListItem from "../../ListItems/UserListItem";
-import GridImageListItem from "../../ListItems/PostGrid/GridImageListItem";
+import GridImageListItem from "../../ListItems/Grid/GridImage/GridImageListItem";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
 import { User } from "../../../../models/user";

@@ -3,7 +3,7 @@ import { useIsFocused } from "@react-navigation/native";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useGetPaginate } from "../../../../hooks";
-import GridImageListItem from "../../ListItems/PostGrid/GridImageListItem";
+import GridImageListItem from "../../ListItems/Grid/GridImage/GridImageListItem";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { Spinner } from "../../../core";
 import { Post } from "../../../../models/post";

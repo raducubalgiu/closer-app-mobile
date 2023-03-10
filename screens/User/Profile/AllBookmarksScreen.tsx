@@ -10,7 +10,7 @@ import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useAuth, useGet } from "../../../hooks";
 import { Header } from "../../../components/core";
-import CardPost from "../../../components/customized/Cards/CardPost/CardPost";
+import PostListItem from "../../../components/customized/ListItems/Post/PostListItem";
 import { Post } from "../../../models/post";
 
 const { width, height } = Dimensions.get("window");
@@ -21,12 +21,12 @@ export const AllBookmarksScreen = () => {
 
   const { data: bookmarks } = useGet({
     model: "allBookmarks",
-    uri: `/users/${user?._id}/bookmarks/posts`,
+    uri: `/users/${user?.id}/bookmarks/posts`,
   });
 
   const renderUserBookmarks = useCallback(
     ({ item }: ListRenderItemInfo<any>) => (
-      <CardPost post={item?.post} onShowDetails={() => {}} />
+      <PostListItem post={item?.post} isLiked={false} isBookmarked={false} />
     ),
     []
   );
@@ -38,7 +38,7 @@ export const AllBookmarksScreen = () => {
     }),
     []
   );
-  const keyExtractor = useCallback((item: Post) => item?._id, []);
+  const keyExtractor = useCallback((item: Post) => item?.id, []);
 
   return (
     <View style={styles.screen}>

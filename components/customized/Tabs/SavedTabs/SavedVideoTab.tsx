@@ -9,7 +9,7 @@ import { Post } from "../../../../models/post";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
 import { User } from "../../../../models/user";
-import GridVideoVListItem from "../../ListItems/PostGrid/GridVideoVListItem";
+import GridVideoVListItem from "../../ListItems/Grid/GridVideoVListItem";
 
 type ListRenderItemPost = {
   id: string;

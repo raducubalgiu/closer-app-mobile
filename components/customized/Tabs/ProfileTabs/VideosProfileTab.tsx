@@ -6,7 +6,7 @@ import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { useTranslation } from "react-i18next";
 import { useGetPaginate, usePaginateActions } from "../../../../hooks";
 import { Post } from "../../../../models/post";
-import GridImageListItem from "../../ListItems/PostGrid/GridImageListItem";
+import GridImageListItem from "../../ListItems/Grid/GridImage/GridImageListItem";
 
 export const AnimatedFlatList: any = Animated.createAnimatedComponent(FlatList);
 

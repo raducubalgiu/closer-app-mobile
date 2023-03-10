@@ -1,7 +1,7 @@
 import { View, ListRenderItemInfo } from "react-native";
 import { forwardRef, memo, useCallback } from "react";
 import { useIsFocused } from "@react-navigation/native";
-import GridImageListItem from "../../ListItems/PostGrid/GridImageListItem";
+import GridImageListItem from "../../ListItems/Grid/GridImage/GridImageListItem";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { useTranslation } from "react-i18next";
 import { useGetPaginate, usePaginateActions } from "../../../../hooks";
@@ -21,12 +21,19 @@ const PostsProfileTab = forwardRef((props: any, ref) => {
   });
 
   const { isLoading, isFetching, isFetchingNextPage } = options;
-  const loading = (isLoading || isFetching) && !isFetchingNextPage;
   const { data: posts, showSpinner, loadMore } = usePaginateActions(options);
 
   const renderPosts = useCallback(
     ({ item, index }: ListRenderItemInfo<Post>) => {
-      return <GridImageListItem onPress={() => {}} index={index} item={item} />;
+      return (
+        <GridImageListItem
+          onPress={() => {}}
+          index={index}
+          item={item}
+          expirationTime={item.expirationTime}
+          discount={item?.product?.discount}
+        />
+      );
     },
     [posts]
   );
@@ -48,7 +55,6 @@ const PostsProfileTab = forwardRef((props: any, ref) => {
       <Animated.FlatList
         {...props}
         ref={ref}
-        scrollEnabled={!loading}
         numColumns={3}
         keyExtractor={keyExtractor}
         renderItem={renderPosts}

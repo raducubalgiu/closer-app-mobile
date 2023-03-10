@@ -12,10 +12,10 @@ const PostImage = ({ uri, orientation }: IProps) => {
 
   switch (orientation) {
     case "portrait":
-      height = 400;
+      height = 500;
       break;
     case "square":
-      height = 300;
+      height = 350;
       break;
     default:
       height = 300;

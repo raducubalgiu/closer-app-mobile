@@ -22,6 +22,7 @@ import { Post } from "../../models/post";
 import { RootStackParams } from "../../navigation/rootStackParams";
 import StoryAvatarListItem from "../../components/customized/ListItems/Story/StoryAvatarListItem";
 import PostListItem from "../../components/customized/ListItems/Post/PostListItem";
+import { Video } from "expo-av";
 
 type PostListItem = { post: Post; isLiked: boolean; isBookmarked: boolean };
 
@@ -31,11 +32,11 @@ export const FeedExploreScreen = () => {
   const { t } = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
+  const video = useRef<Video>(null);
 
   const postsOptions = useGetPaginate({
     model: "allPosts",
     uri: `/users/${user?.id}/posts/get-all-posts`,
-    queries: "postType=photo",
     limit: "20",
   });
 
@@ -79,6 +80,7 @@ export const FeedExploreScreen = () => {
           post={item?.post}
           isLiked={item?.isLiked}
           isBookmarked={item?.isBookmarked}
+          ref={video}
         />
       );
     },
@@ -124,15 +126,15 @@ export const FeedExploreScreen = () => {
 
   const viewabilityConfig = {
     waitForInteraction: true,
-    itemVisiblePercentThreshold: 75,
-    minimumViewTime: 2000,
+    itemVisiblePercentThreshold: 65,
+    //minimumViewTime: 2000,
   };
 
   const { mutate } = usePost({ uri: `/posts/views` });
 
   const trackItem = useCallback((item: PostListItem) => {
-    const { post } = item;
-    mutate({ postId: post.id, userId: user?.id, from: "explore" });
+    // const { post } = item;
+    // mutate({ postId: post.id, userId: user?.id, from: "explore" });
   }, []);
 
   const onViewableItemsChanged = useCallback((info: { changed: any }): void => {

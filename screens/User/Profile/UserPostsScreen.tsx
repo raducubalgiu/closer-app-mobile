@@ -1,14 +1,6 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useCallback } from "react";
-import {
-  Text,
-  View,
-  FlatList,
-  ListRenderItemInfo,
-  Image,
-  Dimensions,
-} from "react-native";
-import { SharedElement } from "react-navigation-shared-element";
+import { FlatList, ListRenderItemInfo, Dimensions } from "react-native";
 import { Header } from "../../../components/core";
 import { RootStackParams } from "../../../navigation/rootStackParams";
 import { Post } from "../../../models";
@@ -27,10 +19,16 @@ import Animated, {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useVector, snapPoint } from "react-native-redash";
 import { useNavigation } from "@react-navigation/native";
-import CardPost from "../../../components/customized/Cards/CardPost/CardPost";
+import PostListItem from "../../../components/customized/ListItems/Post/PostListItem";
 
 const { width, height } = Dimensions.get("window");
 type IProps = NativeStackScreenProps<RootStackParams, "UserPosts">;
+type PostListItem = {
+  id: string;
+  post: Post;
+  isLiked: boolean;
+  isBookmarked: boolean;
+};
 
 export const UserPostsScreen = ({ route }: IProps) => {
   const { id, posts } = route.params;
@@ -90,39 +88,17 @@ export const UserPostsScreen = ({ route }: IProps) => {
   });
 
   const renderPost = useCallback(
-    ({ item }: ListRenderItemInfo<Post>) => (
-      <CardPost post={item} onShowDetails={() => {}} />
-      //   <View style={{ height }}>
-      //     <SharedElement id={item.id}>
-      //       {item.postType === "photo" && (
-      //         <Image
-      //           source={{ uri: item.images[0]?.url }}
-      //           style={{ width, height: height / 2 }}
-      //         />
-      //       )}
-      //       {item.postType === "video" && (
-      //         <Video
-      //           source={{ uri: item.images[0]?.url }}
-      //           style={{ width, height: height / 1.5 }}
-      //           resizeMode={ResizeMode.COVER}
-      //           shouldPlay={true}
-      //           isMuted={false}
-      //           isLooping={true}
-      //         />
-      //       )}
-      //     </SharedElement>
-      //     <Text>
-      //       Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
-      //       voluptatum, eveniet sint corrupti, ex tempora ducimus ipsum modi
-      //       recusandae iste suscipit eaque in numquam, blanditiis officiis
-      //       eligendi a nobis temporibus!
-      //     </Text>
-      //   </View>
+    ({ item }: ListRenderItemInfo<PostListItem>) => (
+      <PostListItem
+        post={item.post}
+        isLiked={item.isLiked}
+        isBookmarked={item.isBookmarked}
+      />
     ),
     []
   );
 
-  const keyExtractor = useCallback((item: Post) => item.id, []);
+  const keyExtractor = useCallback((item: PostListItem) => item.id, []);
 
   const getItemLayout = useCallback(
     (_: any, index: number) => ({
