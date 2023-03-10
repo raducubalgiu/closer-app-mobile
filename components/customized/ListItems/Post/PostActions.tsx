@@ -9,6 +9,9 @@ import {
 } from "../../../core";
 import theme from "../../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../../navigation/rootStackParams";
 
 const { black } = theme.lightColors || {};
 type IProps = {
@@ -20,6 +23,8 @@ type IProps = {
 
 const PostActions = ({ likesCount, postId, isLiked, isBookmarked }: IProps) => {
   const { t } = useTranslation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const onShare = async () => {
     try {
@@ -40,11 +45,15 @@ const PostActions = ({ likesCount, postId, isLiked, isBookmarked }: IProps) => {
     }
   };
 
+  const goToLikes = () => {
+    navigation.navigate("Likes", { postId });
+  };
+
   return (
     <>
       <Divider color="#ddd" style={styles.divider} />
       <Stack direction="row" sx={styles.container}>
-        <Pressable onPress={() => {}}>
+        <Pressable onPress={goToLikes}>
           <Stack direction="row">
             <Text style={styles.likesCount}>
               {likesCount} {t("likes")}
