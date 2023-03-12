@@ -34,7 +34,7 @@ import { ProfileIconButton } from "../../../components/customized";
 import { Button } from "../../../components/core";
 import PostsProfileTab from "../../../components/customized/Tabs/ProfileTabs/PostsProfileTab";
 import VideosProfileTab from "../../../components/customized/Tabs/ProfileTabs/VideosProfileTab";
-import { Post } from "../../../models";
+import AboutProfileTab from "../../../components/customized/Tabs/ProfileTabs/AboutProfileTab/AboutProfileTab";
 import SheetModal from "../../../components/core/SheetModal/SheetModal";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useNavigation } from "@react-navigation/native";
@@ -54,11 +54,13 @@ const Profile: FC = () => {
 
   const settingsRef = useRef<BottomSheetModal>(null);
   const addPostRef = useRef<BottomSheetModal>(null);
-  const postsRef = useRef<FlatList>(null);
-  const videosRef = useRef<FlatList>(null);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const snapPoints = useMemo(() => [1, 200], []);
+
+  const postsRef = useRef<FlatList>(null);
+  const videosRef = useRef<FlatList>(null);
+  const aboutRef = useRef<FlatList>(null);
 
   const [tabIndex, setTabIndex] = useState(0);
 
@@ -71,11 +73,11 @@ const Profile: FC = () => {
   );
 
   const { heightCollapsed, heightExpanded } = headerConfig;
-
   const headerDiff = heightExpanded - heightCollapsed;
 
   const postsScrollValue = useSharedValue(0);
   const videosScrollValue = useSharedValue(0);
+  const aboutScrollValue = useSharedValue(0);
 
   const postsScrollHandler = useAnimatedScrollHandler(
     (event) => (postsScrollValue.value = event.contentOffset.y)
@@ -85,20 +87,37 @@ const Profile: FC = () => {
     (event) => (videosScrollValue.value = event.contentOffset.y)
   );
 
+  const aboutScrollHandler = useAnimatedScrollHandler(
+    (event) => (aboutScrollValue.value = event.contentOffset.y)
+  );
+
   const scrollPairs = useMemo<ScrollPair[]>(
     () => [
       { list: postsRef, position: postsScrollValue },
       { list: videosRef, position: videosScrollValue },
+      { list: aboutRef, position: aboutScrollValue },
     ],
-    [postsRef, postsScrollValue, videosRef, videosScrollValue]
+    [
+      postsRef,
+      videosRef,
+      aboutRef,
+      postsScrollValue,
+      videosScrollValue,
+      aboutScrollValue,
+    ]
   );
 
   const { sync } = useScrollSync(scrollPairs, headerConfig);
 
-  const сurrentScrollValue = useDerivedValue(
-    () => (tabIndex === 0 ? postsScrollValue.value : videosScrollValue.value),
-    [tabIndex, postsScrollValue, videosScrollValue]
-  );
+  const сurrentScrollValue = useDerivedValue(() => {
+    if (tabIndex === 0) {
+      return postsScrollValue.value;
+    } else if (tabIndex === 1) {
+      return videosScrollValue.value;
+    } else {
+      return aboutScrollValue.value;
+    }
+  }, [tabIndex, postsScrollValue, videosScrollValue]);
 
   const translateY = useDerivedValue(
     () => -Math.min(сurrentScrollValue.value, headerDiff)
@@ -119,7 +138,7 @@ const Profile: FC = () => {
     [HEADER_HEIGHT, TAB_BAR_HEIGHT, top]
   );
 
-  const sharedProps = useMemo<Partial<FlatListProps<Post>>>(
+  const sharedProps = useMemo<Partial<FlatListProps<any>>>(
     () => ({
       contentContainerStyle,
       onMomentumScrollEnd: sync,
@@ -135,7 +154,7 @@ const Profile: FC = () => {
         ref={postsRef}
         userId={user?.id}
         onScroll={postsScrollHandler}
-        {...sharedProps}
+        sharedProps={sharedProps}
       />
     ),
     [postsRef, postsScrollHandler, sharedProps, user]
@@ -147,10 +166,22 @@ const Profile: FC = () => {
         ref={videosRef}
         userId={user?.id}
         onScroll={videosScrollHandler}
-        {...sharedProps}
+        sharedProps={sharedProps}
       />
     ),
     [videosRef, videosScrollHandler, sharedProps, user]
+  );
+
+  const renderAbout = useCallback(
+    () => (
+      <AboutProfileTab
+        ref={aboutRef}
+        user={user}
+        onScroll={aboutScrollHandler}
+        sharedProps={sharedProps}
+      />
+    ),
+    [aboutRef, aboutScrollHandler, sharedProps, user]
   );
 
   const tabBarStyle = useMemo<StyleProp<ViewStyle>>(
@@ -214,6 +245,7 @@ const Profile: FC = () => {
         >
           <Tab.Screen name="Posts">{renderPosts}</Tab.Screen>
           <Tab.Screen name="Videos">{renderVideos}</Tab.Screen>
+          <Tab.Screen name="About">{renderAbout}</Tab.Screen>
         </Tab.Navigator>
       </View>
       <SheetModal
@@ -227,6 +259,7 @@ const Profile: FC = () => {
         ref={addPostRef}
         snapPoints={snapPoints}
         animationConfig={{ duration: 150 }}
+        showIndicator={false}
       >
         <PostOptionsSheet />
       </SheetModal>
@@ -247,7 +280,6 @@ const styles = StyleSheet.create({
     right: 0,
     position: "absolute",
     zIndex: 1,
-    backgroundColor: "white",
     height: TAB_BAR_HEIGHT,
     justifyContent: "center",
   },

@@ -6,20 +6,22 @@ import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { useTranslation } from "react-i18next";
 import { useGetPaginate, usePaginateActions } from "../../../../hooks";
 import { Post } from "../../../../models/post";
-import GridImageListItem from "../../ListItems/Grid/GridImage/GridImageListItem";
+import GridVideoListItem from "../../ListItems/Grid/GridVideo/GridVideoListItem";
 
 export const AnimatedFlatList: any = Animated.createAnimatedComponent(FlatList);
+type IProps = { userId: string | undefined; onScroll: any; sharedProps: any };
 
-const VideosProfileTab = forwardRef((props: any, ref) => {
+const VideosProfileTab = forwardRef((props: IProps, ref) => {
+  const { userId, onScroll, sharedProps } = props;
   const isFocused = useIsFocused();
   const { t } = useTranslation();
 
   const options = useGetPaginate({
     model: "posts",
-    uri: `/users/${props?.userId}/posts`,
+    uri: `/users/${userId}/posts`,
     limit: "6",
-    queries: "postType=photo&orientation=portrait",
-    enabled: isFocused && !!props?.userId,
+    queries: "postType=video&orientation=portrait",
+    enabled: isFocused && !!userId,
   });
 
   const { isLoading, isFetching, isFetchingNextPage } = options;
@@ -28,15 +30,7 @@ const VideosProfileTab = forwardRef((props: any, ref) => {
 
   const renderPosts = useCallback(
     ({ item, index }: ListRenderItemInfo<Post>) => (
-      <GridImageListItem
-        onPress={() => {}}
-        index={index}
-        uri={item?.images[0]?.url}
-        orientation={item?.orientation}
-        bookable={item.bookable}
-        fixed={null}
-        postType={item.postType}
-      />
+      <GridVideoListItem onPress={() => {}} index={index} post={item} />
     ),
     []
   );
@@ -55,9 +49,11 @@ const VideosProfileTab = forwardRef((props: any, ref) => {
   }
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <View style={{ flex: 1 }}>
       <AnimatedFlatList
         ref={ref}
+        {...sharedProps}
+        onScroll={onScroll}
         numColumns={3}
         scrollEnabled={!loading}
         data={videos}
@@ -67,7 +63,6 @@ const VideosProfileTab = forwardRef((props: any, ref) => {
         onEndReached={loadMore}
         onEndReachedThreshold={0.3}
         showsVerticalScrollIndicator={false}
-        {...props}
       />
     </View>
   );

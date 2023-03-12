@@ -13,7 +13,11 @@ const GridImage = ({ uri }: IProps) => {
   return (
     <Image
       source={{ uri }}
-      containerStyle={{ width: undefined, height: undefined, flex: 1 }}
+      containerStyle={{
+        width: undefined,
+        height: undefined,
+        flex: 1,
+      }}
       transition={true}
       PlaceholderContent={
         <PostGradient width={IMAGE_WIDTH} height={IMAGE_HEIGHT} />

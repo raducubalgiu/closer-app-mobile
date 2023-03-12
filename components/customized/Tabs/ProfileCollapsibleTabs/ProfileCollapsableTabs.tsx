@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { Tabs } from "react-native-collapsible-tab-view";
 import { PostsProfileTab } from "../ProfileTabs/PostsProfileTab";
 import { ProductsProfileTab } from "../ProfileTabs/ProductsProfileTab";
-import { AboutProfileTab } from "../ProfileTabs/AboutProfileTab";
+import { AboutProfileTab } from "../ProfileTabs/AboutProfileTab/AboutProfileTab";
 import { useTranslation } from "react-i18next";
 import { ProfileOverview } from "../../ProfileOverview/ProfileOverview";
 import { MAIN_ROLE } from "@env";

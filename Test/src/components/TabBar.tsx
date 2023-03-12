@@ -1,15 +1,19 @@
-import { MaterialTopTabBarProps } from "@react-navigation/material-top-tabs";
+import {
+  MaterialTopTabBarProps,
+  MaterialTopTabBar,
+} from "@react-navigation/material-top-tabs";
 import { useNavigation } from "@react-navigation/native";
 import { Icon } from "@rneui/themed";
 import { FC, useEffect, memo } from "react";
 import { View, TouchableOpacity } from "react-native";
+import Animated from "react-native-reanimated";
 
 type Props = MaterialTopTabBarProps & {
   onIndexChange?: (index: number) => void;
 };
 
 const TabBar: FC<Props> = ({ onIndexChange, ...props }) => {
-  const { state, descriptors } = props;
+  const { state, descriptors, position } = props;
   const { index, routes } = state;
   const navigation = useNavigation<any>();
 
@@ -21,7 +25,6 @@ const TabBar: FC<Props> = ({ onIndexChange, ...props }) => {
     <View style={{ flexDirection: "row" }}>
       {routes.map((route, index) => {
         const { options } = descriptors[route.key];
-
         const isFocused = state.index === index;
 
         const onPress = () => {
@@ -37,9 +40,18 @@ const TabBar: FC<Props> = ({ onIndexChange, ...props }) => {
           case "Videos":
             name = "play-box-multiple-outline";
             break;
+          case "About":
+            name = "account-circle-outline";
+            break;
           default:
             name = "grid-large";
         }
+
+        // const inputRange = state.routes.map((_, i) => i);
+        // const opacity = Animated.interpolate(position, {
+        //   inputRange,
+        //   outputRange: inputRange.map((i) => (i === index ? 1 : 0)),
+        // });
 
         return (
           <TouchableOpacity
@@ -49,14 +61,29 @@ const TabBar: FC<Props> = ({ onIndexChange, ...props }) => {
             accessibilityLabel={options.tabBarAccessibilityLabel}
             testID={options.tabBarTestID}
             onPress={onPress}
-            style={{ flex: 1 }}
+            style={{
+              height: 43,
+              alignItems: "center",
+              justifyContent: "center",
+              flex: 1,
+              backgroundColor: "white",
+            }}
           >
-            <Icon
-              name={name}
-              type="material-community"
-              color={isFocused ? "black" : "#ccc"}
-              size={22.5}
-            />
+            <Animated.View
+              style={{
+                height: 42.5,
+                alignItems: "center",
+                justifyContent: "center",
+                paddingHorizontal: 30,
+              }}
+            >
+              <Icon
+                name={name}
+                type="material-community"
+                color={isFocused ? "black" : "#ccc"}
+                size={22.5}
+              />
+            </Animated.View>
           </TouchableOpacity>
         );
       })}

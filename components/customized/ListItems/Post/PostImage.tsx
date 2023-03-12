@@ -27,7 +27,6 @@ const PostImage = ({ uri, orientation }: IProps) => {
         source={{ uri }}
         containerStyle={styles.image}
         resizeMode="cover"
-        transition={true}
         PlaceholderContent={<PostGradient width={width} height={400} />}
       />
     </View>

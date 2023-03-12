@@ -8,16 +8,19 @@ import { useGetPaginate, usePaginateActions } from "../../../../hooks";
 import { Post } from "../../../../models/post";
 import Animated from "react-native-reanimated";
 
-const PostsProfileTab = forwardRef((props: any, ref) => {
+type IProps = { userId: string | undefined; onScroll: any; sharedProps: any };
+
+const PostsProfileTab = forwardRef((props: IProps, ref) => {
+  const { onScroll, userId, sharedProps } = props;
   const isFocused = useIsFocused();
   const { t } = useTranslation();
 
   const options = useGetPaginate({
     model: "posts",
-    uri: `/users/${props?.userId}/posts`,
+    uri: `/users/${userId}/posts`,
     limit: "24",
     queries: "postType=photo",
-    enabled: isFocused && !!props?.userId,
+    enabled: isFocused && !!userId,
   });
 
   const { isLoading, isFetching, isFetchingNextPage } = options;
@@ -51,9 +54,10 @@ const PostsProfileTab = forwardRef((props: any, ref) => {
   }
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <View style={{ flex: 1 }}>
       <Animated.FlatList
-        {...props}
+        {...sharedProps}
+        onScroll={onScroll}
         ref={ref}
         numColumns={3}
         keyExtractor={keyExtractor}

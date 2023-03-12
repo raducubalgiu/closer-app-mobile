@@ -6,7 +6,7 @@ import { Icon } from "@rneui/themed";
 import { VideosVTab } from "../ProfileTabs/VideosProfileTab";
 import { JobsTab } from "../ProfileTabs/JobsTab";
 import { ProductsProfileTab } from "../ProfileTabs/ProductsProfileTab";
-import { AboutProfileTab } from "../ProfileTabs/AboutProfileTab";
+import { AboutProfileTab } from "../ProfileTabs/AboutProfileTab/AboutProfileTab";
 import { TabBadge } from "../TabBadge/TabBadge";
 import theme from "../../../../assets/styles/theme";
 import { User } from "../../../../models/user";

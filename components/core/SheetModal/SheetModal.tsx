@@ -13,11 +13,19 @@ type IProps = {
   children: any;
   snapPoints: any;
   animationConfig?: any;
+  showIndicator?: boolean;
+  enableContentPanningGesture?: boolean;
 };
 
 const SheetModal = forwardRef(
   (
-    { children, snapPoints, animationConfig = defAnimation }: IProps,
+    {
+      children,
+      snapPoints,
+      enableContentPanningGesture = true,
+      showIndicator = true,
+      animationConfig = defAnimation,
+    }: IProps,
     ref: any
   ) => {
     const renderBackdrop = useCallback(
@@ -37,6 +45,15 @@ const SheetModal = forwardRef(
       }
     }, []);
 
+    const styles = StyleSheet.create({
+      indicatorStyle: {
+        display: showIndicator ? "flex" : "none",
+        backgroundColor: "#ddd",
+        width: 45,
+        height: 5,
+      },
+    });
+
     return (
       <Portal>
         <BottomSheetModalProvider>
@@ -48,6 +65,8 @@ const SheetModal = forwardRef(
             handleIndicatorStyle={styles.indicatorStyle}
             onChange={handleSheetChange}
             animationConfigs={animationConfig}
+            enableContentPanningGesture={enableContentPanningGesture}
+            handleStyle={{ padding: showIndicator ? 10 : 0 }}
           >
             {children}
           </BottomSheetModal>
@@ -58,11 +77,3 @@ const SheetModal = forwardRef(
 );
 
 export default memo(SheetModal);
-
-const styles = StyleSheet.create({
-  indicatorStyle: {
-    backgroundColor: "#ddd",
-    width: 45,
-    height: 5,
-  },
-});

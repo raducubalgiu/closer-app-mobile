@@ -38,7 +38,6 @@ export { SearchVideoTab } from "./Tabs/SearchTabs/SearchVideoTab";
 export { SearchPopularTab } from "./Tabs/SearchTabs/SearchPopularTab";
 export { SearchLastMinuteTab } from "./Tabs/SearchTabs/SearchLastMinuteTab";
 export { JobsTab } from "./Tabs/ProfileTabs/JobsTab";
-export { AboutProfileTab } from "./Tabs/ProfileTabs/AboutProfileTab";
 export { FollowersTab } from "./Tabs/ProfileStatsTabs/FollowersTab";
 export { FollowingsTab } from "./Tabs/ProfileStatsTabs/FollowingsTab";
 export { ReviewsTab } from "./Tabs/ProfileStatsTabs/ReviewsTab";
