@@ -1,20 +1,20 @@
 import {
-  SafeAreaView,
   StyleSheet,
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  View,
 } from "react-native";
 import { useForm, FormProvider } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
-import { useHeaderHeight } from "@react-navigation/elements";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useTranslation } from "react-i18next";
 import { useAuth, useGet, usePost } from "../../../../hooks";
 import { required, maxField, minField } from "../../../../constants/validation";
-import { Button, FormInput, Stack } from "../../../../components/core";
+import { Button, FormInput, Header, Stack } from "../../../../components/core";
 import { FormInputSelect } from "../../../../components/core";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const defaultValues = {
   serviceId: "",
@@ -35,7 +35,7 @@ export const AddProductsScreen = () => {
   const { handleSubmit, watch } = methods;
   const serviceId: any = watch("serviceId");
   const isRequired = required(t);
-  const headerHeight = useHeaderHeight();
+  const insets = useSafeAreaInsets();
 
   const { data: services, isLoading } = useGet({
     model: "services",
@@ -90,11 +90,12 @@ export const AddProductsScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.screen}>
+    <View style={styles.screen}>
+      <Header title={t("addProduct")} sx={{ paddingTop: insets.top }} divider />
       {!isLoading && (
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "position" : "height"}
-          keyboardVerticalOffset={headerHeight}
+          keyboardVerticalOffset={insets.top}
         >
           <ScrollView>
             <Stack align="start" sx={{ margin: 15 }}>
@@ -161,7 +162,7 @@ export const AddProductsScreen = () => {
           />
         </KeyboardAvoidingView>
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 

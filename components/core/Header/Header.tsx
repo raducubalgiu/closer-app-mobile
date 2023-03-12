@@ -28,7 +28,7 @@ export const Header = ({
   const handleBack = () => navigation.goBack();
 
   return (
-    <View style={{ ...styles.container, ...sx }}>
+    <View style={[styles.container, sx]}>
       <Stack direction="row">
         <TouchableOpacity onPress={handleBack}>
           <IconBackButton color={!hideBtnLeft ? black : "white"} />

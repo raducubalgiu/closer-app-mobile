@@ -1,3 +1,5 @@
+import ProfileScreen from "./User/Profile/ProfileScreen";
+
 export { AllBookmarksScreen } from "./User/Profile/AllBookmarksScreen";
 export { EditBioScreen } from "./User/Profile/EditProfile/EditBioScreen";
 export { EditNameScreen } from "./User/Profile/EditProfile/EditNameScreen";
@@ -25,7 +27,6 @@ export { BookmarksScreen } from "./User/Profile/BookmarksScreen";
 export { DiscountsScreen } from "./User/SettingsAndPrivacy/DiscountsScreen";
 export { FindFriendsScreen } from "./User/Profile/FindFriendsScreen";
 export { ProfileGeneralScreen } from "./User/Profile/ProfileGeneralScreen";
-export { ProfileScreen } from "./User/Profile/ProfileScreen";
 export { ProfileStatsScreen } from "./User/Profile/ProfileStatsScreen";
 export { SettingsProfileScreen } from "./User/SettingsAndPrivacy/SettingsProfileScreen";
 export { CalendarScreen } from "./CalendarScreen";
@@ -93,3 +94,5 @@ export { AssistanceScreen } from "./User/SettingsAndPrivacy/Assistance/Assistanc
 export { StoryScreen } from "./StoryScreen";
 export { UserPostsScreen } from "./User/Profile/UserPostsScreen";
 export { UserVideosScreen } from "./User/Profile/UserVideosScreen";
+
+export { ProfileScreen };
