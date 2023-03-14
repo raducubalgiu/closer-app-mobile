@@ -10,18 +10,13 @@ import {
 import { useCallback } from "react";
 import { Header } from "../components/core";
 import { useTranslation } from "react-i18next";
-import {
-  useAuth,
-  useGet,
-  useRefreshOnFocus,
-  useRefreshByUser,
-} from "../src/hooks";
+import { useAuth, useGet, useRefreshOnFocus, useRefreshByUser } from "../hooks";
 import {
   ScheduleOverviewListItem,
   NoFoundMessage,
 } from "../components/customized";
-import theme from "../assets/styles/theme";
-import { yearMonthFormat } from "../src/utils/date-utils";
+import theme from "../../assets/styles/theme";
+import { yearMonthFormat } from "../utils/date-utils";
 import { Divider } from "@rneui/themed";
 
 const { black } = theme.lightColors || {};

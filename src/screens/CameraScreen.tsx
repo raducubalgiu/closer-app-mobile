@@ -7,7 +7,7 @@ import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { IconButton, Stack } from "../components/core";
 import CustomAvatar from "../components/core/Avatars/CustomAvatar";
-import theme from "../assets/styles/theme";
+import theme from "../../assets/styles/theme";
 import { CloseIconButton, RevertIconButton } from "../components/customized";
 import { PhotoLibraryButton } from "../components/customized/Buttons/PhotoLibraryButton";
 import {

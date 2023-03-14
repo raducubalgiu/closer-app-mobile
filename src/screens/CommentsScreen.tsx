@@ -12,7 +12,7 @@ import {
   FooterComments,
   CardPostDescription,
 } from "../components/customized";
-import { useAuth, useGet, usePost } from "../src/hooks";
+import { useAuth, useGet, usePost } from "../hooks";
 import { useNavigation } from "@react-navigation/native";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { Header, Spinner } from "../components/core";

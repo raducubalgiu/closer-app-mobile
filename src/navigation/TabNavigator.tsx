@@ -2,8 +2,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 import { Icon } from "@rneui/themed";
 import CustomAvatar from "../components/core/Avatars/CustomAvatar";
-import { useAuth, useGet } from "../src/hooks";
-import theme from "../assets/styles/theme";
+import { useAuth, useGet } from "../hooks";
+import theme from "../../assets/styles/theme";
 import {
   SchedulesScreen,
   HomeScreen,
@@ -13,7 +13,6 @@ import {
   UserAllPostsScreen,
 } from "../screens";
 import FeedNavigator from "./FeedNavigator";
-import { TransitionPresets } from "@react-navigation/stack";
 
 const Tab = createBottomTabNavigator();
 const Stack = createSharedElementStackNavigator();

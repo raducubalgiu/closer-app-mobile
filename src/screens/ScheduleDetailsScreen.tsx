@@ -17,12 +17,12 @@ import {
 import CustomAvatar from "../components/core/Avatars/CustomAvatar";
 import { useTranslation } from "react-i18next";
 import { Icon } from "@rneui/base";
-import theme from "../assets/styles/theme";
+import theme from "../../assets/styles/theme";
 import { Divider } from "@rneui/themed";
-import { AddressFormat, showToast } from "../src/utils";
+import { AddressFormat, showToast } from "../utils";
 import { useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
-import { useAuth, useGet } from "../src/hooks";
+import { useAuth, useGet } from "../hooks";
 import MapStatic from "../components/customized/Map/MapStatic";
 import {
   NativeStackNavigationProp,

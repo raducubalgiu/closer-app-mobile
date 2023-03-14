@@ -18,10 +18,10 @@ import {
 } from "@react-navigation/native-stack";
 import { Button, Textarea } from "../components/core";
 import { MAIN_ROLE } from "@env";
-import theme from "../assets/styles/theme";
-import { useAuth, usePatch } from "../src/hooks";
+import theme from "../../assets/styles/theme";
+import { useAuth, usePatch } from "../hooks";
 import { RootStackParams } from "../navigation/rootStackParams";
-import { showToast } from "../src/utils";
+import { showToast } from "../utils";
 import { useHeaderHeight } from "@react-navigation/elements";
 
 const { error, black, grey0 } = theme.lightColors || {};

@@ -8,9 +8,9 @@ import {
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
-import theme from "../assets/styles/theme";
+import theme from "../../assets/styles/theme";
 import { IconBackButton, SearchBarInput, Stack } from "../components/core";
-import { useGet } from "../src/hooks";
+import { useGet } from "../hooks";
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,

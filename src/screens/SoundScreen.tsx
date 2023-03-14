@@ -8,7 +8,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParams } from "../navigation/rootStackParams";
 import CustomAvatar from "../components/core/Avatars/CustomAvatar";
 import { BookmarkButton } from "../components/customized";
-import theme from "../assets/styles/theme";
+import theme from "../../assets/styles/theme";
 
 type IProps = NativeStackScreenProps<RootStackParams, "Sound">;
 const { black } = theme.lightColors || {};

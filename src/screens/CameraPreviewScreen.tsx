@@ -11,7 +11,7 @@ import { Stack } from "../components/core";
 import CustomAvatar from "../components/core/Avatars/CustomAvatar";
 import { CloseIconButton, DownloadIconButton } from "../components/customized";
 import * as MediaLibrary from "expo-media-library";
-import theme from "../assets/styles/theme";
+import theme from "../../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParams } from "../navigation/rootStackParams";

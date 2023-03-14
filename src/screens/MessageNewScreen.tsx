@@ -9,7 +9,7 @@ import { useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import { Header, SearchBarInput, Heading, Spinner } from "../components/core";
-import { useAuth, useGet } from "../src/hooks";
+import { useAuth, useGet } from "../hooks";
 import { UserListItemSimple } from "../components/customized";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../navigation/rootStackParams";

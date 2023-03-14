@@ -15,7 +15,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParams } from "../navigation/rootStackParams";
 import { IconButton } from "../components/core";
 import { IconBackButton, SearchBarInput, Stack } from "../components/core";
-import theme from "../assets/styles/theme";
+import theme from "../../assets/styles/theme";
 import {
   HashtagListItem,
   RecentSearchListItem,
@@ -27,7 +27,7 @@ import {
   useGet,
   usePost,
   useRefreshOnFocus,
-} from "../src/hooks";
+} from "../hooks";
 
 const { grey0, primary, black } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "SearchPosts">;

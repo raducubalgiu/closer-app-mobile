@@ -3,11 +3,11 @@ import { Icon } from "@rneui/themed";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView, StyleSheet, Text, Pressable } from "react-native";
-import theme from "../assets/styles/theme";
+import theme from "../../assets/styles/theme";
 import { Checkmark, Header, Heading, Stack } from "../components/core";
 import CustomAvatar from "../components/core/Avatars/CustomAvatar";
 import { SettingListItem } from "../components/customized";
-import { useAuth, useDelete } from "../src/hooks";
+import { useAuth, useDelete } from "../hooks";
 import { ConfirmModal } from "../components/customized/Modals/ConfirmModal";
 import {
   NativeStackNavigationProp,

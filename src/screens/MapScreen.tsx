@@ -16,16 +16,16 @@ import {
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
 import { Stack } from "../components/core";
-import { useGet, useRefreshOnFocus } from "../src/hooks";
+import { useGet, useRefreshOnFocus } from "../hooks";
 import { RootStackParams } from "../navigation/rootStackParams";
 import { HeaderMap } from "../components/customized";
 import BusinessButton from "../components/customized/Buttons/BusinessButton";
 import CardLocationMap from "../components/customized/Cards/CardLocationMap";
 import MapMarkerProfile from "../components/customized/Map/MapMarkerProfile";
-import { trimFunc } from "../src/utils";
+import { trimFunc } from "../utils";
 import * as Location from "expo-location";
 import CustomAvatar from "../components/core/Avatars/CustomAvatar";
-import theme from "../assets/styles/theme";
+import theme from "../../assets/styles/theme";
 import { User } from "../models/user";
 
 const { primary } = theme.lightColors || {};

@@ -9,13 +9,13 @@ import React, { useState, useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { MessageListItem, NoFoundMessage } from "../components/customized";
-import theme from "../assets/styles/theme";
+import theme from "../../assets/styles/theme";
 import {
   useAuth,
   useGetPaginate,
   useRefreshByUser,
   useRefreshOnFocus,
-} from "../src/hooks";
+} from "../hooks";
 import {
   SearchBarInput,
   Header,

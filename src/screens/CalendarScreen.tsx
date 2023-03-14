@@ -17,12 +17,12 @@ import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import theme from "../assets/styles/theme";
+import theme from "../../assets/styles/theme";
 import { Header, Heading, Spinner, Stack } from "../components/core";
 import { NoFoundMessage } from "../components/customized";
-import { useGet, useRefreshOnFocus, useRefreshByUser } from "../src/hooks";
+import { useGet, useRefreshOnFocus, useRefreshByUser } from "../hooks";
 import { RootStackParams } from "../navigation/rootStackParams";
-import { SHORT_DATE } from "../src/utils/date-utils";
+import { SHORT_DATE } from "../utils/date-utils";
 import CalendarAgenda from "../components/customized/Calendars/CalendarAgenda";
 
 const { black, grey0 } = theme.lightColors || {};

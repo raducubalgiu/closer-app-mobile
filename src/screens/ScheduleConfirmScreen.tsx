@@ -3,8 +3,8 @@ import { useNavigation } from "@react-navigation/native";
 import { Icon } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
 import { Header, Button, Stack } from "../components/core";
-import { useAuth, usePost } from "../src/hooks";
-import theme from "../assets/styles/theme";
+import { useAuth, usePost } from "../hooks";
+import theme from "../../assets/styles/theme";
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
@@ -12,7 +12,7 @@ import {
 
 import dayjs from "dayjs";
 import { RootStackParams } from "../navigation/rootStackParams";
-import { showToast } from "../src/utils";
+import { showToast } from "../utils";
 
 const { black, grey0, error } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "ScheduleConfirm">;

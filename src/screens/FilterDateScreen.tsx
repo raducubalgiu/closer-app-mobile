@@ -14,8 +14,8 @@ import {
 import DateRangePicker from "../components/customized/Calendars/DateRangePicker";
 import { RootStackParams } from "../navigation/rootStackParams";
 import { Period } from "../models/period";
-import { dayMonthFormat } from "../src/utils/date-utils";
-import { useCalendarList, useMinutes } from "../src/hooks";
+import { dayMonthFormat } from "../utils/date-utils";
+import { useCalendarList, useMinutes } from "../hooks";
 import dayjs from "dayjs";
 import { View } from "react-native";
 

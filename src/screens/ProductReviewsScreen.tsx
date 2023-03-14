@@ -7,11 +7,11 @@ import {
 } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import theme from "../assets/styles/theme";
+import theme from "../../assets/styles/theme";
 import { Header, Spinner, Stack } from "../components/core";
 import { NoFoundMessage, CardReviewSummary } from "../components/customized";
 import RatingListItem from "../components/customized/ListItems/RatingListItem";
-import { useGet, useGetPaginate, useRefreshByUser } from "../src/hooks";
+import { useGet, useGetPaginate, useRefreshByUser } from "../hooks";
 import { Review } from "../models/review";
 import { RootStackParams } from "../navigation/rootStackParams";
 

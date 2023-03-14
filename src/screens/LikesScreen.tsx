@@ -5,8 +5,12 @@ import { useTranslation } from "react-i18next";
 import { Header, Spinner } from "../components/core";
 import { NoFoundMessage } from "../components/customized";
 import UserListItem from "../components/customized/ListItems/UserListItem";
-import { useAuth, usePaginateActions, useRefreshByUser } from "../src/hooks";
-import { useGetPaginate } from "../src/hooks";
+import {
+  useAuth,
+  usePaginateActions,
+  useRefreshByUser,
+  useGetPaginate,
+} from "../hooks";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParams } from "../navigation/rootStackParams";
 import { User } from "../models/user";

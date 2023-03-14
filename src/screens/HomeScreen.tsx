@@ -12,10 +12,10 @@ import {
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import FakeSearchBar from "../components/customized/FakeSearchBar/FakeSearchBar";
-import theme from "../assets/styles/theme";
+import theme from "../../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
 import { ServicesList, CardRecommended } from "../components/customized";
-import { useGet, useRefreshByUser } from "../src/hooks";
+import { useGet, useRefreshByUser } from "../hooks";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../navigation/rootStackParams";
 import { RecommendedLocation } from "../models/recommendedLocation";

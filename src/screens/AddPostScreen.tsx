@@ -10,7 +10,7 @@ import {
 import React, { useCallback, useState } from "react";
 import { IconButton, Stack } from "../components/core";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import theme from "../assets/styles/theme";
+import theme from "../../assets/styles/theme";
 import * as MediaLibrary from "expo-media-library";
 import { useTranslation } from "react-i18next";
 import { PresetListItem } from "../components/customized";

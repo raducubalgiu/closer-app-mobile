@@ -6,7 +6,7 @@ import * as MediaLibrary from "expo-media-library";
 import { AlbumListItem } from "../components/customized/ListItems/AlbumListItem";
 import { Stack } from "../components/core";
 import { CloseIconButton } from "../components/customized/IconButtons/CloseIconButton";
-import theme from "../assets/styles/theme";
+import theme from "../../assets/styles/theme";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../navigation/rootStackParams";
 

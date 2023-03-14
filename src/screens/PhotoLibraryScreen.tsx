@@ -6,9 +6,9 @@ import { useFocusEffect } from "@react-navigation/native";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { Stack } from "../components/core";
 import { CloseIconButton } from "../components/customized";
-import theme from "../assets/styles/theme";
+import theme from "../../assets/styles/theme";
 import { Icon } from "@rneui/themed";
-import { CardPostImage } from "../components/customized";
+import PostListItem from "../components/customized/ListItems/Post/PostListItem";
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
@@ -52,7 +52,7 @@ export const PhotoLibraryScreen = ({ route }: IProps) => {
 
   const renderPhoto = useCallback(
     ({ item, index }: ListRenderItemInfo<any>) => (
-      <CardPostImage
+      <PostListItem
         index={index}
         image={item.uri}
         col={4}

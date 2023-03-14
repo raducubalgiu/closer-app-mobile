@@ -8,7 +8,7 @@ import {
   Animated,
 } from "react-native";
 import { Slider } from "@rneui/themed";
-import { useAuth, useGet, usePost } from "../src/hooks";
+import { useAuth, useGet, usePost } from "../hooks";
 import { useCallback, useRef } from "react";
 import StoryListItem from "../components/customized/ListItems/Story/StoryListItem";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
