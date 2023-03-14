@@ -13,7 +13,7 @@ const { black, primary, grey0 } = theme.lightColors || {};
 export const AuthScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   return (
     <SafeAreaView style={styles.screen}>

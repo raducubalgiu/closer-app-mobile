@@ -48,7 +48,7 @@ export const AddUserProgramScreen = () => {
   const { user, setUser } = useAuth();
   const { mon, tue, wed, thu, fri, sat, sun } = user?.hours || {};
   const { minutes } = useMinutes();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const navigation = useNavigation();
 
   const getStart = (day: any, def: number) => {

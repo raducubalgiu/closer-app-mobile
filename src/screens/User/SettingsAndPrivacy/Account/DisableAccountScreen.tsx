@@ -12,7 +12,7 @@ const { black } = theme.lightColors || {};
 export const DisableAccountScreen = () => {
   const auth = getAuth();
   const { user, setUser } = useAuth();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const { mutate, isLoading } = usePatch({
     uri: `/users/${user?.id}/settings`,

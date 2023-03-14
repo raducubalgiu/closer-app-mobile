@@ -41,7 +41,7 @@ const ProfileOverview = ({
   } = user || {};
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const goToFollowers = () =>
     navigation.push("ProfileStats", {

@@ -19,7 +19,7 @@ import { User } from "../../../../models";
 
 export const PrivacyBlockedAccounts = () => {
   const { user } = useAuth();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const options = useGetPaginate({
     model: "blockedUsers",

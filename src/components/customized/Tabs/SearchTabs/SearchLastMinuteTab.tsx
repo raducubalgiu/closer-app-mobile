@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 import { useIsFocused } from "@react-navigation/native";
 
 export const SearchLastMinuteTab = ({ search }: { search: string }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const isFocused = useIsFocused();
 
   const options = useGetPaginate({

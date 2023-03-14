@@ -20,7 +20,7 @@ const { grey0 } = theme.lightColors || {};
 
 export const MyLocationScreen = () => {
   const { user } = useAuth();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const [visible, setVisible] = useState(false);
 
   const { data, isLoading, isFetching } = useGet({

@@ -16,7 +16,7 @@ const { grey0 } = theme.lightColors || {};
 export const SettingsProfileScreen = () => {
   const { setUser } = useAuth();
   const auth = getAuth();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 

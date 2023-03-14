@@ -10,7 +10,7 @@ export const EditWebsiteScreen = () => {
   const { user, setUser } = useAuth();
   const [website, setWebsite] = useState(user?.website);
   const navigation = useNavigation();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const { mutate, isLoading } = usePatch({
     uri: `/users/${user?.id}`,

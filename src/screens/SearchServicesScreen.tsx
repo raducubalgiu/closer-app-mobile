@@ -25,7 +25,7 @@ type IProps = NativeStackScreenProps<RootStackParams, "SearchServices">;
 
 export const SearchServicesScreen = ({ route }: IProps) => {
   const [search, setSearch] = useState<string>("");
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { period } = route.params || {};

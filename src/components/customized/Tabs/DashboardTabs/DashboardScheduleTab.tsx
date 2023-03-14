@@ -31,7 +31,7 @@ const ListItemSummary = ({ label, counter, percentage }: IListItem) => {
 
 export const DashboardScheduleTab = ({ start, end }: IProps) => {
   const { user } = useAuth();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const hasPayment = false;
 
   const {

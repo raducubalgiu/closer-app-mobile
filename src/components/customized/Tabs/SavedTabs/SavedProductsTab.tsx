@@ -16,7 +16,7 @@ type ListRenderItemProduct = {
 };
 
 export const SavedProductsTab = ({ user }: { user: User }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const isFocused = useIsFocused();
 
   const options = useGetPaginate({

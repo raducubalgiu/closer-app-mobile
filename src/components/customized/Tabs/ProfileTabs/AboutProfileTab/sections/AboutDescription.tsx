@@ -9,7 +9,7 @@ const { black, grey0 } = theme.lightColors || {};
 type IProps = { description: string };
 
 const AboutDescription = ({ description }: IProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   return (
     <Stack align="start" sx={styles.section}>

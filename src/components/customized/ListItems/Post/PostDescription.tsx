@@ -12,7 +12,7 @@ const { grey0 } = theme.lightColors || {};
 
 const PostDescription = ({ commentsCount, date, description }: IProps) => {
   const { user } = useAuth();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   return (
     <View style={styles.container}>

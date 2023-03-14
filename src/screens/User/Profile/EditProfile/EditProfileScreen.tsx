@@ -34,7 +34,7 @@ export const EditProfileScreen = () => {
   const { name, username, profession, website, description } = user || {};
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const sheetRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => [1, 300], []);
 

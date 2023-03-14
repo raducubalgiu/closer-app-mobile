@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 export const useMinutes = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   return {
     minutes: [

@@ -8,7 +8,7 @@ const { black } = theme.lightColors || {};
 type IProps = { title: string; onPress: () => void; sx?: {} };
 
 export const HeadingAction = ({ title, onPress, sx }: IProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   return (
     <Stack direction="row" sx={{ ...styles.container, ...sx }}>

@@ -31,7 +31,7 @@ const DisplayComment = ({
 }: IProps) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const { userId, comment, id, relatedCommentsCount } = item;
   const { likesCount, likedByCreator } = item;
   const { username, name, avatar, checkmark } = userId;

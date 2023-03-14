@@ -36,7 +36,7 @@ export const LocationsScreen = ({ route }: IProps) => {
   const [maxPrice, setMaxPrice] = useState(10000);
   const [minDistance, setMinDistance] = useState(0);
   const [maxDistance, setMaxDistance] = useState(50000);
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const {
     data: locations,

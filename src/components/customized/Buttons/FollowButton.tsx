@@ -19,7 +19,7 @@ const FollowButton = ({
   sxBtnText = {},
   fullWidth = false,
 }: IProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const styles = StyleSheet.create({
     btn: {

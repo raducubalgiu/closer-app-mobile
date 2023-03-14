@@ -14,7 +14,7 @@ const { black, success, error, primary } = theme.lightColors || {};
 type IProps = { item: any };
 
 const SlotDetailsListItem = ({ item }: IProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const { hour, bookable, schedule, start, end } = item;
   const { channel, customerId, product, serviceId, status } = schedule || {};
   const { name, username, avatar, checkmark } = customerId || {};

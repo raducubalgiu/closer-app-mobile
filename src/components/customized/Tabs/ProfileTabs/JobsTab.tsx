@@ -9,7 +9,7 @@ import { Post } from "../../../../models/post";
 
 export const JobsTab = ({ userId }: { userId: string }) => {
   const isFocused = useIsFocused();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } =
     useGetPaginate({

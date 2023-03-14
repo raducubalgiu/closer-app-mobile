@@ -25,7 +25,7 @@ export const FiltersDateScreen = ({ route }: IProps) => {
   const { service } = route.params;
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const { minutes } = useMinutes();
   const [visible, setVisible] = useState(false);
   const [activeBtn, setActiveBtn] = useState(0);

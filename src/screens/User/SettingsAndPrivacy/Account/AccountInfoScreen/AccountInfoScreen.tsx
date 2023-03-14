@@ -17,7 +17,7 @@ type IProps = NativeStackScreenProps<RootStackParams, "AccountInfo">;
 
 export const AccountInfoScreen = ({ route }: IProps) => {
   const { email, phone, gender } = route.params || {};
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const methods = useForm({
     defaultValues: { email, phone, gender: t(`${gender}`) },
   });

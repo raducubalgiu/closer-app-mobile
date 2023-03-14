@@ -8,9 +8,7 @@ const { black, grey0 } = theme.lightColors || {};
 type IProps = { visible: boolean; onCloseModal: () => void; start: any };
 
 export const AddScheduleModal = ({ visible, onCloseModal, start }: IProps) => {
-  const { t } = useTranslation();
-
-  console.log("START!!!", start);
+  const { t } = useTranslation("common");
 
   return (
     <CModal

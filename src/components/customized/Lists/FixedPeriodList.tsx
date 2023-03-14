@@ -8,7 +8,7 @@ type IProps = { onSwitch: (checked: boolean) => void };
 
 export const FixedPeriodList = ({ onSwitch }: IProps) => {
   const [checked, setChecked] = useState(false);
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const fixedPeriods = [
     { _id: "1", title: t("now"), description: t("nowDescription") },

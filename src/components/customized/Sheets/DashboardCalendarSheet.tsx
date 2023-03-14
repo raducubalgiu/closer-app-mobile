@@ -14,7 +14,7 @@ import { Stack } from "../../core";
 const { primary, black } = theme.lightColors || {};
 
 export const DashboardCalendarSheet = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const buttons = [
     { _id: "1", title: "Ultimele 7 zile" },

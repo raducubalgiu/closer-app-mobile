@@ -31,7 +31,7 @@ export const CommentsScreen = ({ route }: IProps) => {
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { postId, description, avatar, username } = route.params;
   const { name, date, focus, creatorId } = route.params;
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const [comments, setComments] = useState([]);
   const [next, setNext] = useState(null);
   const [page, setPage] = useState(1);

@@ -11,7 +11,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
 
 export const SearchServicesTab = ({ search }: { search: string }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const isFocused = useIsFocused();

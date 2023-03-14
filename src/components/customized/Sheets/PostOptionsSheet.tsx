@@ -7,7 +7,7 @@ import { SettingsListItem } from "../ListItems/SettingsListItem";
 const { black } = theme.lightColors || {};
 
 export const PostOptionsSheet = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   return (
     <Stack sx={styles.container}>

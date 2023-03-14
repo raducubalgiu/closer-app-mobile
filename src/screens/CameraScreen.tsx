@@ -27,7 +27,7 @@ export const CameraScreen = ({ route }: IProps) => {
   let cameraRef = useRef<any>();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   useFocusEffect(
     useCallback(() => {

@@ -20,7 +20,7 @@ type IProps = NativeStackScreenProps<RootStackParams, "SearchAll">;
 
 export const SearchAllScreen = ({ route }: IProps) => {
   const { search } = route.params;
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const Tab = createMaterialTopTabNavigator();
 
   const Populars = useCallback(

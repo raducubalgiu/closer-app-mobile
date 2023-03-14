@@ -33,7 +33,7 @@ export const ScheduleCancelScreen = ({ route }: IProps) => {
   const [textarea, setTextarea] = useState(false);
   const [textareaVal, setTextareaVal] = useState("");
   const [active, setActive] = useState<any>(null);
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const headerHeight = useHeaderHeight();

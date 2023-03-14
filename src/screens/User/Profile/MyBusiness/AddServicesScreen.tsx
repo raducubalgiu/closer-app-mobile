@@ -30,7 +30,7 @@ export const AddServicesScreen = () => {
   const { user } = useAuth();
   const [services, setServices] = useState<Service[]>([]);
   const [visible, setVisible] = useState(false);
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const methods = useForm({ defaultValues: { serviceId: "" } });
   const { handleSubmit, watch, setValue } = methods;
   const serviceId = watch("serviceId");

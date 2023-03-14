@@ -16,7 +16,7 @@ export const ReportAProblemScreen = () => {
   const methods = useForm({ defaultValues: { text: "" } });
   const { handleSubmit, watch, setValue } = methods;
   const problem = watch("text");
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const { mutate, isLoading } = usePost({
     uri: `/problems`,

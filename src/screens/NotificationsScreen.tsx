@@ -6,13 +6,11 @@ import { useTranslation } from "react-i18next";
 import { Video, AVPlaybackStatus } from "expo-av";
 
 export const NotificationsScreen = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const video = useRef(null);
   const [status, setStatus] = useState({});
   const [play, setPlay] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-
-  //console.log("VIDEO STATUS", status);
 
   const handlePlay = () => {
     if (!status.isPlaying) {

@@ -37,7 +37,7 @@ export const MyCalendarScreen = () => {
   const [selectedDay, setSelectedDay] = useState(now);
   const [monthIndex, setMonthIndex] = useState(0);
 
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const insets = useSafeAreaInsets();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();

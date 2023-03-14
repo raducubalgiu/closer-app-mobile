@@ -10,7 +10,7 @@ const { black, grey0 } = theme.lightColors || {};
 type MessageInfo = { id: string; title: string; message: string };
 
 export const DashboardInfoSheet = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const MESSAGES = [
     {

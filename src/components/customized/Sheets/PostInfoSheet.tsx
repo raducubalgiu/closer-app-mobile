@@ -8,7 +8,7 @@ const { error, black } = theme.lightColors || {};
 type IProps = { onShowConfirm: () => void };
 
 export const PostInfoSheet = ({ onShowConfirm }: IProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   return (
     <ScrollView

@@ -21,7 +21,7 @@ export const CardHashtagOverview = ({
   bookmarksCount,
 }: IProps) => {
   const { user } = useAuth();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const { data } = useGet({
     model: "hCheck",

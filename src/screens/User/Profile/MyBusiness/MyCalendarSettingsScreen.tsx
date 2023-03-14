@@ -9,7 +9,7 @@ import theme from "../../../../../assets/styles/theme";
 const { black, grey0 } = theme.lightColors || {};
 
 export const MyCalendarSettingsScreen = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const [slot, setSlot] = useState(29);
 
   const items = [

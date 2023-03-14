@@ -17,7 +17,7 @@ type IProps = {
 const { black } = theme.lightColors || {};
 
 const SheetMap = ({ latitude, longitude, height, width, onClose }: IProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const mapStyle = [
     {

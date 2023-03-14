@@ -34,7 +34,7 @@ export const EditProfessionScreen = () => {
   const [selected, setSelected] = useState(user?.profession);
   const [search, setSearch] = useState("");
   const navigation = useNavigation();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const professionOptions = useGetPaginate({
     model: "professions",

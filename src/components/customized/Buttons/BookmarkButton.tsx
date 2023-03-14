@@ -25,7 +25,7 @@ export const BookmarkButton = ({
 }: IProps) => {
   const { user } = useAuth();
   const [bookmarked, setBookmarked] = useState(status);
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const animatedScale = useRef(new Animated.Value(0)).current;
   const endoints = `/users/${user?.id}/${type}/${typeId}/bookmarks`;
 

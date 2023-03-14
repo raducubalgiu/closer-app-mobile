@@ -21,7 +21,7 @@ type IProps = NativeStackScreenProps<RootStackParams, "Bookmarks">;
 export const BookmarksScreen = ({ route }: IProps) => {
   const { user } = route.params;
   const Tab = createMaterialTopTabNavigator();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const SavedPosts = useCallback(() => <SavedPostsTab user={user} />, []);
   const SavedServices = useCallback(() => <SavedServicesTab user={user} />, []);

@@ -15,7 +15,7 @@ export const HashtagPostsBookableTab = ({
   onScroll,
   headerHeight,
 }: IProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const isFocused = useIsFocused();
 
   const {
@@ -35,7 +35,6 @@ export const HashtagPostsBookableTab = ({
   const renderPosts = useCallback(
     ({ item, index }: ListRenderItemInfo<any>) => (
       <GridImageListItem
-        onPress={() => {}}
         index={index}
         image={item?.images[0]?.url}
         bookable={item.bookable}

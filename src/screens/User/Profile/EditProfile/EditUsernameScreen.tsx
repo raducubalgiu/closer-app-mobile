@@ -15,7 +15,7 @@ type Available = { status: boolean; message: string };
 export const EditUsernameScreen = () => {
   const { user, setUser } = useAuth();
   const navigation = useNavigation();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const [username, setUsername] = useState(user?.username);
   const [isAvailable, setIsAvailable] = useState<Available>({
     status: true,

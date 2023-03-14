@@ -21,7 +21,7 @@ const { black, grey0 } = theme.lightColors || {};
 export const ProductReviewsScreen = ({ route }: IProps) => {
   const { productId, productName, ownerId } = route.params;
   const insets = useSafeAreaInsets();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const { data: summary } = useGet({
     model: "summary",

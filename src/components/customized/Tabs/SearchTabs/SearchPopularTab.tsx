@@ -16,7 +16,7 @@ import { Post } from "../../../../models/post";
 export const SearchPopularTab = ({ search }: { search: string }) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const isFocused = useIsFocused();
 
   const usersOptions = useGetPaginate({

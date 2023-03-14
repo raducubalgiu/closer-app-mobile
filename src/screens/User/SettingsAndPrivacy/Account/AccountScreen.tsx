@@ -13,7 +13,7 @@ const { black } = theme.lightColors || {};
 export const AccountScreen = () => {
   const { user } = useAuth();
   const { email, phone, gender } = user || {};
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 

@@ -12,7 +12,7 @@ const { black } = theme.lightColors || {};
 type IProps = { postId: string; userId: string | undefined };
 
 const MoreSheet = ({ postId, userId }: IProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const isFocused = useIsFocused();
   const [bookmarked, setBookmarked] = useState(false);
   const animatedScale = useRef(new Animated.Value(0)).current;

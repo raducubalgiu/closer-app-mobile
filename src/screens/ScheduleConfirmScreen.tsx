@@ -25,7 +25,7 @@ export const ScheduleConfirmScreen = ({ route }: IProps) => {
   const { price, priceWithDiscount, discount } = product;
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const { mutate, isLoading, isSuccess } = usePost({
     uri: "/schedules",

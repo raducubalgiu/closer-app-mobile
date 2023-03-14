@@ -23,7 +23,7 @@ const UserProgramListItem = ({
   disabled,
 }: IProps) => {
   const [checked, setChecked] = useState(defaultChecked);
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   return (
     <Stack direction="row" sx={styles.dayCont}>

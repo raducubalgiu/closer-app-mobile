@@ -18,7 +18,7 @@ export const CardServiceOverview = ({
   serviceId,
 }: IProps) => {
   const { user } = useAuth();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const { data } = useGet({
     model: "service",

@@ -13,7 +13,7 @@ export const UsernameScreen = ({ route }: any) => {
   const { displayName, photoURL } = idTokenResult;
   const [loading, setLoading] = useState(false);
   const { setUser } = useAuth();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const handleSubmit = async (data: any) => {
     try {

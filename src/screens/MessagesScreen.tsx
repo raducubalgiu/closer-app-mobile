@@ -36,7 +36,7 @@ export const MessagesScreen = () => {
   const [search, setSearch] = useState("");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const {
     data,

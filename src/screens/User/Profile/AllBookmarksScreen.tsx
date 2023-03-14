@@ -17,7 +17,7 @@ const { width, height } = Dimensions.get("window");
 
 export const AllBookmarksScreen = () => {
   const { user } = useAuth();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const { data: bookmarks } = useGet({
     model: "allBookmarks",

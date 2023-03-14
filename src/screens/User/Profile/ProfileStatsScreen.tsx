@@ -18,7 +18,7 @@ type IProps = NativeStackScreenProps<RootStackParams, "ProfileStats">;
 export const ProfileStatsScreen = ({ route }: IProps) => {
   const { initialRoute, username, userId, role } = route.params;
   const { ratingsQuantity, followersCount, followingsCount } = route.params;
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const Tab = createMaterialTopTabNavigator();
 
   const Ratings = useCallback(() => <ReviewsTab userId={userId} />, [userId]);

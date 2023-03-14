@@ -25,7 +25,7 @@ export const MessageSettingsScreen = ({ route }: IProps) => {
     route.params;
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const goToUser = () => {
     navigation.push("ProfileGeneral", {

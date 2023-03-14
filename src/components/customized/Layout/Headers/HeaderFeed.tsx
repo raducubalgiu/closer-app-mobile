@@ -20,7 +20,7 @@ export const HeaderFeed = ({ indexLabel }: IProps) => {
   const ref = useRef<FlatList>(null);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const LABELS = [
     { id: "1", title: t("explore"), isActive: true },

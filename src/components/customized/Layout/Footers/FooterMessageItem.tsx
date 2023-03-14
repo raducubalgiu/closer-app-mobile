@@ -19,7 +19,7 @@ export const FooterMessageItem = ({
   onSendMessage,
   onOpenCamera,
 }: IProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   return (
     <Stack direction="row" sx={styles.inputContainer}>

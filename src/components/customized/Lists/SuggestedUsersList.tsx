@@ -10,7 +10,7 @@ const { black } = theme.lightColors || {};
 type IProps = { suggested: any; userId: string | undefined };
 
 const SuggestedUsersList = ({ suggested, userId }: IProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const renderSuggested = useCallback(({ item }: ListRenderItemInfo<any>) => {
     return <RecommendedUserListItem item={item} onRemoveCard={() => {}} />;

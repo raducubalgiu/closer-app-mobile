@@ -22,7 +22,7 @@ export const Map = ({
   initialLatitude,
   initialLongitude,
 }: IProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 

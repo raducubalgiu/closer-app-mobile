@@ -14,7 +14,7 @@ import { User } from "../../../../models/user";
 export const SavedServicesTab = ({ user }: { user: User }) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const isFocused = useIsFocused();
 
   const options = useGetPaginate({

@@ -34,7 +34,7 @@ export const LoginRegisterForm = ({
   const [disabled, setDisabled] = useState(true);
   const methods = useForm({ defaultValues });
   const { handleSubmit, watch } = methods;
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const emailInput = watch("email");
   const passwordInput = watch("password");
 

@@ -22,7 +22,7 @@ const ProductsProfileTab = ({
   onScroll,
   onScrollEndDrag,
 }: IProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const { data: services } = useGet({
     model: "services",

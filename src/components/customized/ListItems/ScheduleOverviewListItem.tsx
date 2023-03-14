@@ -17,7 +17,7 @@ type IProps = { schedule: Schedule };
 export const ScheduleOverviewListItem = ({ schedule }: IProps) => {
   const { ownerId, status, product, start } = schedule;
   const { name, avatar, checkmark, profession } = ownerId || {};
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 

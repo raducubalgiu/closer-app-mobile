@@ -19,7 +19,7 @@ const { height } = Dimensions.get("window");
 
 export const HashtagScreen = ({ route }: IProps) => {
   const { name } = route.params;
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const Tab = createMaterialTopTabNavigator();
   const insets = useSafeAreaInsets();
   const { data } = useGet({ model: "hashtag", uri: `/hashtags/${name}` });

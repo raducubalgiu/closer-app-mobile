@@ -19,7 +19,7 @@ export const PrivacyMentionsScreen = () => {
   const { user, setUser } = useAuth();
   const { mentions } = user?.settings || {};
   const [isSelected, setIsSelected] = useState(mentions);
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const navigation = useNavigation();
 
   const { mutate, isLoading } = usePatch({

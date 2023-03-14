@@ -46,7 +46,7 @@ export const AddPostScreen = ({ route }: IProps) => {
   const { uri } = route.params || {};
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   useFocusEffect(
     useCallback(() => {

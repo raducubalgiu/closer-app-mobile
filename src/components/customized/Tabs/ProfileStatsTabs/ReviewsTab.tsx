@@ -30,7 +30,7 @@ type IProps = { userId: string };
 const { black, success } = theme.lightColors || {};
 
 export const ReviewsTab = ({ userId }: IProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const isFocused = useIsFocused();
   const insets = useSafeAreaInsets();
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);

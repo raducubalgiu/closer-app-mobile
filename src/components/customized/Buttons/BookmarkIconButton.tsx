@@ -27,7 +27,7 @@ const BookmarkIconButton = ({
   const [bookmarked, setBookmarked] = useState(isBookmarked);
   const animatedScale = useRef(new Animated.Value(0)).current;
   const bookmarkEndpoints = `/users/${user?.id}/${type}/${typeId}/bookmarks`;
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const { mutate: makePost } = usePost({
     uri: bookmarkEndpoints,

@@ -18,7 +18,7 @@ export const AccountInfoGenderScreen = ({ route }: IProps) => {
   const { user, setUser } = useAuth();
   const { gender } = route.params || {};
   const [checkboxGender, setCheckboxGender] = useState(gender);
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const navigation = useNavigation();
 
   const handleMale = () => setCheckboxGender("male");

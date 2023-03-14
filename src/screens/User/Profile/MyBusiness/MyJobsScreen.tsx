@@ -9,7 +9,7 @@ import { RootStackParams } from "../../../../navigation/rootStackParams";
 
 export const MyJobsScreen = () => {
   const [jobs, setJobs] = useState([]);
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 

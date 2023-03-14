@@ -7,7 +7,7 @@ import { SettingsListItem } from "../../../../../components/customized";
 import { RootStackParams } from "../../../../../navigation/rootStackParams";
 
 export const PrivacyTagsAndMentionsScreen = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 

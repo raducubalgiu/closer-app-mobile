@@ -33,7 +33,7 @@ const StatsItem = ({ icon, counter }: StatsItem) => {
 };
 
 const LikesSheet = ({ postId, counter }: IProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const { likesCount, commentsCount, bookmarksCount, viewsCount } = counter;
 
   const options = useGetPaginate({

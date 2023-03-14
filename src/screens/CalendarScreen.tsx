@@ -40,7 +40,7 @@ export const CalendarScreen = ({ route }: IProps) => {
   const { ownerId } = product;
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const now = dayjs().format("YYYY-MM-DD");
   const [selectedDay, setSelectedDay] = useState(now);
   const [monthIndex, setMonthIndex] = useState(0);

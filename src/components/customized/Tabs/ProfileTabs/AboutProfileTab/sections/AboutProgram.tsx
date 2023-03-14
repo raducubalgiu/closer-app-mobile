@@ -10,7 +10,7 @@ type IProps = { hours: any };
 const { black, grey0 } = theme.lightColors || {};
 
 const AboutProgram = ({ hours }: IProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const dateFormat = (minutes: number) => {
     if (minutes === -1) return t("closed");

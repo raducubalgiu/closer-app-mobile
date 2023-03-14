@@ -37,7 +37,7 @@ const LocationListItem = ({
   const { name, username, avatar, checkmark } = ownerId;
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const goToUser = () =>
     navigation.push("ProfileGeneral", {

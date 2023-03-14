@@ -14,7 +14,7 @@ import { RootStackParams } from "../../../navigation/rootStackParams";
 export const LoginScreen = () => {
   const { setUser } = useAuth();
   const [loading, setLoading] = useState(false);
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 

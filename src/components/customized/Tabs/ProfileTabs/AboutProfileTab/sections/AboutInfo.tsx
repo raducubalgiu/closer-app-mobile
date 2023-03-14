@@ -15,7 +15,7 @@ type IProps = { website: string; email: string; owner: User };
 const { black, grey0, primary } = theme.lightColors || {};
 
 const AboutInfo = ({ website, email, owner }: IProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 

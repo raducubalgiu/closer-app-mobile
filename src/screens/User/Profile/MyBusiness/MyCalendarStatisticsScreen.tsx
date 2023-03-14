@@ -73,7 +73,7 @@ const ItemSummary = ({
 export const MyCalendarStatisticsScreen = ({ route }: IProps) => {
   const { user } = useAuth();
   const { day } = route.params;
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const { BOTTOM_SHEET, SHOW_BS } = useSheet(
     ["1%", 200],
     <Stack align="center" sx={{ flex: 1, padding: 20, marginTop: 10 }}>

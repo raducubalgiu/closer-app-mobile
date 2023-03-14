@@ -21,7 +21,7 @@ type IProps = NativeStackScreenProps<RootStackParams, "Product">;
 
 export const ProductScreen = ({ route }: IProps) => {
   const { user } = useAuth();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 

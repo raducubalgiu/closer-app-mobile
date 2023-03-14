@@ -20,7 +20,7 @@ export const ServiceScreen = ({ route }: IProps) => {
   const { service } = route.params;
   const { id, name, postsCount } = service;
   const Tab = createMaterialTopTabNavigator();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const insets = useSafeAreaInsets();
   const HEADER_HEIGHT = 144;
   const HEADER_PADDING_TOP = insets.top + 10;

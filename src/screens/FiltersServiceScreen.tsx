@@ -23,7 +23,7 @@ export const FiltersServiceScreen = ({ route }: IProps) => {
   const { service, period } = route.params;
   const [loading, setLoading] = useState<boolean>(false);
   const [option, setOption] = useState<Option | null>(null);
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const filter = first(service?.filters);
 
   const { data } = useGet({

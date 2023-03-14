@@ -21,7 +21,7 @@ export const useCalendarList = (others: Config = { ...config }) => {
 
   let month = calendarStart.month();
   let year = calendarStart.year();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const displayMonth = (month: any, year: any) => {
     return dayjs().month(month).year(year).format("MMMM YYYY");

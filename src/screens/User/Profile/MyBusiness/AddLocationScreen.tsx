@@ -38,7 +38,7 @@ export const AddLocationScreen = () => {
   const [blockApartment, setBlockApartment] = useState("");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const handleSetLocation = (location: any) => setLocation(location);
 

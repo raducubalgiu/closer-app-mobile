@@ -22,7 +22,7 @@ type IProps = {
 };
 
 const PostActions = ({ likesCount, postId, isLiked, isBookmarked }: IProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 

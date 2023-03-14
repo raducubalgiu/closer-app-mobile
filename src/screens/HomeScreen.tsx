@@ -23,7 +23,7 @@ import { RecommendedLocation } from "../models/recommendedLocation";
 const { black } = theme.lightColors || {};
 
 export const HomeScreen = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 

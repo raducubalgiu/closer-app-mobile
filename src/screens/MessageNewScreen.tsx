@@ -16,7 +16,7 @@ import { RootStackParams } from "../navigation/rootStackParams";
 
 export const MessageNewScreen = () => {
   const { user } = useAuth();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const [search, setSearch] = useState("");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();

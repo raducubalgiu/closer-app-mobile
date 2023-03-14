@@ -22,7 +22,7 @@ export const ConfirmModal = ({
   title,
   description,
 }: IProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const footer = (
     <>

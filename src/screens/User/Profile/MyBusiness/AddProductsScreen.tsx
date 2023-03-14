@@ -30,7 +30,7 @@ export const AddProductsScreen = () => {
   const { user } = useAuth();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const methods = useForm({ defaultValues });
   const { handleSubmit, watch } = methods;
   const serviceId: any = watch("serviceId");

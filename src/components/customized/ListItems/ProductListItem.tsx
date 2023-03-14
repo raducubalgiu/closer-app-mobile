@@ -30,7 +30,7 @@ const ProductListItem = ({
   onEditProduct,
 }: IProps) => {
   const { user: userContext } = useAuth();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const { name, duration, description, price } = product || {};
   const { option, serviceId, ownerId } = product || {};
   const navigation =

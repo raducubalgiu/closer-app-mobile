@@ -22,7 +22,7 @@ type IProps = NativeStackScreenProps<RootStackParams, "CameraPreview">;
 export const CameraPreviewScreen = ({ route }: IProps) => {
   const { photo, avatar } = route.params;
   const navigation = useNavigation();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const handleClosePreview = () => navigation.goBack();
   const handleDownload = () => MediaLibrary.saveToLibraryAsync(photo.uri);

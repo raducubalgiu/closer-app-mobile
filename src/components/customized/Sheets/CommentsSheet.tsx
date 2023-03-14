@@ -32,7 +32,7 @@ const CommentsSheet = ({ postId, creatorId }: IProps) => {
   const { user } = useAuth();
   const [comment, setComment] = useState("");
   const [commentId, setCommentId] = useState<string | null>(null);
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const options = useGetPaginate({
     model: "comments",

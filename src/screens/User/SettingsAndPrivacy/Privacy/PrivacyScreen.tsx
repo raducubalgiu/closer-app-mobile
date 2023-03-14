@@ -19,7 +19,7 @@ const { grey0, error } = theme.lightColors || {};
 export const PrivacyScreen = () => {
   const { user, setUser } = useAuth();
   const [privateAccount, setPrivateAccount] = useState(user?.settings?.private);
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 

@@ -23,7 +23,7 @@ const RecommendedUserListItem = ({ item, onRemoveCard }: IProps) => {
     checkmark,
     role,
   } = item;
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const [isFollow, setIsFollow] = useState(false);
 
   return (

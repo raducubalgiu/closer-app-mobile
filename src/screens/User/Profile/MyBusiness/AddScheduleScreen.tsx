@@ -50,7 +50,7 @@ export const AddScheduleScreen = ({ route }: IProps) => {
   const [priceWithDiscount, setPriceWithDiscount] = useState("");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const { DAYS_NAMES } = useCalendarList();
   const isRequired = required(t);
 

@@ -19,7 +19,7 @@ export const HeaderProfileGeneral = ({
   onOpenSettings,
   checkmark,
 }: IProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   let open = true;
 
   return (

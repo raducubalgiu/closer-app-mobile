@@ -39,7 +39,7 @@ export const EditProductScreen = ({ route }) => {
   });
   const { handleSubmit, watch } = methods;
   const selectedService = watch("service");
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const isRequired = required(t);

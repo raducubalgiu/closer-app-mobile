@@ -15,7 +15,7 @@ export const ServicePostsLastMinuteTab = ({
   onScroll,
   headerHeight,
 }: IProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const isFocused = useIsFocused();
 
   const {

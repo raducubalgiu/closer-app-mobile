@@ -20,7 +20,7 @@ type ListRenderItemPost = {
 export const SavedVideoTab = ({ user }: { user: User }) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const isFocused = useIsFocused();
 
   const options = useGetPaginate({

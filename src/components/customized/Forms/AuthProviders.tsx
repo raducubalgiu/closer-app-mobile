@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 const { black } = theme.lightColors || {};
 
 export const AuthProviders = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   return (
     <>

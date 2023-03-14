@@ -36,7 +36,7 @@ export const ServiceTab = ({
   onScrollEndDrag,
 }: IProps) => {
   const insets = useSafeAreaInsets();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const ref = useRef<FlatList>(null);
   const [initialOption, setInitialOption] = useState(
     option ? option : service.filters[0].options[0]._id

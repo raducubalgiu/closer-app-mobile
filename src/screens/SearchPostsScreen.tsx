@@ -38,7 +38,7 @@ export const SearchPostsScreen = ({ route }: IProps) => {
   const [search, setSearch] = useState(initialSearch);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const isHashtag = search.startsWith("#");
 

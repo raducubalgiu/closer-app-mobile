@@ -21,7 +21,7 @@ type UserListItem = { id: string; user: User; isFollow: boolean };
 export const LikesScreen = ({ route }: IProps) => {
   const { user } = useAuth();
   const { postId } = route.params;
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const options = useGetPaginate({
     model: "likes",

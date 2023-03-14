@@ -18,7 +18,7 @@ export const PrivacyCommentsScreen = () => {
   const { user } = useAuth();
   const { viewComments } = user?.settings || {};
   const [canAddComment, setCanAddComment] = useState(viewComments);
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   return (
     <SafeAreaView style={styles.screen}>

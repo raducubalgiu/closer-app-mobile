@@ -6,7 +6,7 @@ const { black, primary } = theme.lightColors || {};
 type IProps = { isFollow: boolean; onPress: () => void };
 
 export const FollowProfileButton = ({ isFollow = false, onPress }: IProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const styles = StyleSheet.create({
     container: {

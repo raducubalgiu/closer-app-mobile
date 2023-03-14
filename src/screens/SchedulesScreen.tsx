@@ -23,7 +23,7 @@ const { black } = theme.lightColors || {};
 
 export const SchedulesScreen = () => {
   const { user } = useAuth();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const {
     data: schedules,

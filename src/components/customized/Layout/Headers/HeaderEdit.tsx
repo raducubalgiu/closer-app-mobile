@@ -25,7 +25,7 @@ export const HeaderEdit = ({
   divider = false,
 }: IProps) => {
   const navigation = useNavigation();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   return (
     <>

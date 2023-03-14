@@ -11,7 +11,7 @@ import { useIsFocused } from "@react-navigation/native";
 import { User } from "../../../../models/user";
 
 export const SearchUsersTab = ({ search }: { search: string }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const { user } = useAuth();
   const isFocused = useIsFocused();
 

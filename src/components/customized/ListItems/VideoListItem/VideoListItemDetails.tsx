@@ -47,7 +47,7 @@ const VideoListItemDetails = ({
   const { username, checkmark, avatar, ratingsAverage, profession } =
     userDetails;
   const insets = useSafeAreaInsets();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 

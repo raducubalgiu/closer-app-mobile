@@ -14,7 +14,7 @@ type IProps = { userId: string | undefined; onScroll: any; sharedProps: any };
 const VideosProfileTab = forwardRef((props: IProps, ref) => {
   const { userId, onScroll, sharedProps } = props;
   const isFocused = useIsFocused();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const options = useGetPaginate({
     model: "posts",

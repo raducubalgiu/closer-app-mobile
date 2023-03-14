@@ -19,7 +19,7 @@ export const PrivacyTagsScreen = () => {
   const { user, setUser } = useAuth();
   const { tags } = user?.settings || {};
   const [isSelected, setIsSelected] = useState(tags);
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const navigation = useNavigation();
 
   const { mutate, isLoading } = usePatch({

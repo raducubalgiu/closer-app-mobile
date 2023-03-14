@@ -27,7 +27,7 @@ type PostListItem = {
 export const FeedBookablesScreen = () => {
   const ref = useRef<FlatList>(null);
   useScrollToTop(ref);
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const options = useGetPaginate({
     model: "bookablePosts",

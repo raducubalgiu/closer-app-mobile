@@ -14,7 +14,7 @@ export const RegisterBusinessScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const [loading, setLoading] = useState(false);
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const onSubmit = async (data: any) => {
     setLoading(true);

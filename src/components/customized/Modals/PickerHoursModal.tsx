@@ -34,7 +34,7 @@ export const PickerHoursModal = ({
     },
   });
   const { handleSubmit, watch } = methods;
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const startMinutes = watch("startMinutes");
   const endMinutes = watch("endMinutes");
   const { isGreater } = isGreaterThan(startMinutes, endMinutes, t);

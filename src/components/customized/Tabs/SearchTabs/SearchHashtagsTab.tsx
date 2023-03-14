@@ -12,7 +12,7 @@ import { RootStackParams } from "../../../../navigation/rootStackParams";
 
 export const SearchHashtagsTab = ({ search }: { search: string }) => {
   const isFocused = useIsFocused();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 

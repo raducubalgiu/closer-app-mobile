@@ -3,7 +3,7 @@ import { SafeAreaView, StyleSheet, Text } from "react-native";
 import { Header } from "../../../../components/core";
 
 export const DeleteAccountPermanentlyScreen = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   return (
     <SafeAreaView style={styles.screen}>

@@ -7,7 +7,7 @@ import { Stack } from "../../core";
 const { black, grey0 } = theme.lightColors || {};
 
 export const CardAccountPrivate = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   return (
     <Stack direction="row" sx={styles.container} justify="start">

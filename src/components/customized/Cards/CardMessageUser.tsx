@@ -24,7 +24,7 @@ export const CardMessageUser = ({
   followersCount,
   sx,
 }: IProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   return (
     <Stack sx={{ marginVertical: 40, ...sx }}>

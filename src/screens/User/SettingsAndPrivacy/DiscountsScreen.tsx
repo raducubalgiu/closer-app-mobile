@@ -5,7 +5,7 @@ import { NoFoundMessage } from "../../../components/customized";
 import { useTranslation } from "react-i18next";
 
 export const DiscountsScreen = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   return (
     <SafeAreaView style={styles.screen}>

@@ -13,7 +13,7 @@ type IProps = { product: Product; expirationTime: any };
 const { black, error, grey0 } = theme.lightColors || {};
 
 const ProductSheet = ({ product, expirationTime }: IProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const {
     priceWithDiscount,
     price,

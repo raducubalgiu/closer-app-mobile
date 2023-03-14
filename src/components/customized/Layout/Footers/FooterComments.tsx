@@ -21,7 +21,7 @@ export const FooterComments = ({
   avatar,
   onHandleComment,
 }: IProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   return (
     <Stack direction="row" sx={styles.inputCont}>

@@ -18,7 +18,7 @@ type UseListItem = { id: string; user: User; isFollow: boolean };
 
 export const FollowingsTab = ({ userId }: IProps) => {
   const isFocused = useIsFocused();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const options = useGetPaginate({
     model: "followings",
     uri: `/users/${userId}/followings`,

@@ -19,7 +19,7 @@ export const PrivacyFollowingsScreen = () => {
   const { user, setUser } = useAuth();
   const { viewFollowings } = user?.settings || {};
   const [isSelected, setIsSelected] = useState(viewFollowings);
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const navigation = useNavigation();
 
   const { mutate, isLoading } = usePatch({

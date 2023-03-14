@@ -19,7 +19,7 @@ type ListRenderItemHashtag = {
 };
 
 export const SavedHashtagsTab = ({ user }: { user: User }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const isFocused = useIsFocused();

@@ -29,7 +29,7 @@ type PostListItem = { post: Post; isLiked: boolean; isBookmarked: boolean };
 export const FeedExploreScreen = () => {
   const { user } = useAuth();
   const ref = useRef<FlatList>(null);
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const video = useRef<Video>(null);

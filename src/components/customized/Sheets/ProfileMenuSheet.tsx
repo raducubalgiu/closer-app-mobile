@@ -25,7 +25,7 @@ export const ProfileMenuSheet = ({ onCloseSheet }: IProps) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { user } = useAuth();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const handleShareProfile = () => {};
 

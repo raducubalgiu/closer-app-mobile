@@ -19,7 +19,7 @@ export const PrivacyLikesScreen = () => {
   const { user, setUser } = useAuth();
   const { likesCount } = user?.settings || {};
   const [showLikes, setShowLikes] = useState(likesCount);
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const navigation = useNavigation();
 
   const { mutate, isLoading } = usePatch({

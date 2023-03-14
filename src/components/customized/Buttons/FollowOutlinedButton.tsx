@@ -2,7 +2,7 @@ import { StyleSheet, Text, Pressable } from "react-native";
 import { useTranslation } from "react-i18next";
 
 export const FollowOutlinedButton = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   return (
     <Pressable style={styles.button}>

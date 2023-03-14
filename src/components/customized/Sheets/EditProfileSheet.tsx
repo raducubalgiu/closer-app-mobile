@@ -15,7 +15,7 @@ type IProps = { onCloseSheet: () => void };
 export const EditProfileSheet = ({ onCloseSheet }: IProps) => {
   const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
   const [modal, setModal] = useState<boolean>(false);
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 

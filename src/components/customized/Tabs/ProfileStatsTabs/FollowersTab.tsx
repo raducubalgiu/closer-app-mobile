@@ -17,7 +17,7 @@ type IProps = { userId: string };
 type UserListItem = { id: string; user: User; isFollow: boolean };
 
 export const FollowersTab = ({ userId }: IProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const isFocused = useIsFocused();
   const options = useGetPaginate({
     model: "followers",

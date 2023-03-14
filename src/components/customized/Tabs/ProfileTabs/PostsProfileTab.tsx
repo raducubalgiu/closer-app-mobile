@@ -13,7 +13,7 @@ type IProps = { userId: string | undefined; onScroll: any; sharedProps: any };
 const PostsProfileTab = forwardRef((props: IProps, ref) => {
   const { onScroll, userId, sharedProps } = props;
   const isFocused = useIsFocused();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const options = useGetPaginate({
     model: "posts",

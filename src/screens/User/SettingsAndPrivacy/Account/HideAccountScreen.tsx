@@ -13,7 +13,7 @@ const { black } = theme.lightColors || {};
 export const HideAccountScreen = () => {
   const { user, setUser } = useAuth();
   const { status } = user?.settings || {};
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 

@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 export const useDuration = (duration: any) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   switch (true) {
     case duration.length === 1:

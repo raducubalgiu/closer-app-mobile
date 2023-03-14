@@ -47,7 +47,7 @@ export const ScheduleDetailsScreen = ({ route }: IProps) => {
     customerId,
   } = route.params.schedule;
   const { name, username, avatar, checkmark } = ownerId;
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 

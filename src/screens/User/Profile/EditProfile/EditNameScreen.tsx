@@ -10,7 +10,7 @@ export const EditNameScreen = () => {
   const { user, setUser } = useAuth();
   const [name, setName] = useState(user?.name);
   const navigation = useNavigation();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const { mutate, isLoading } = usePatch({
     uri: `/users/${user?.id}`,

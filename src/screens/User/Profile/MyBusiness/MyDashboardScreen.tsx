@@ -33,7 +33,7 @@ type Period = {
 };
 
 export const MyDashboardScreen = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const Tab = createMaterialTopTabNavigator();
   const ref = useRef<FlatList>(null);
   const sheetRef = useRef<BottomSheetModal>(null);

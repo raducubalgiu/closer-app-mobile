@@ -19,7 +19,7 @@ export const ServiceListItem = ({
   onPress,
   sx = {},
 }: IProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   return (
     <Pressable onPress={onPress} style={{ ...styles.container, ...sx }}>

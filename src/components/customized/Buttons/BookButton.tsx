@@ -6,7 +6,7 @@ const { primary } = theme.lightColors || {};
 type IProps = { bookAgain?: boolean; onPress: () => void };
 
 export const BookButton = ({ bookAgain = false, onPress }: IProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const styles = StyleSheet.create({
     container: {

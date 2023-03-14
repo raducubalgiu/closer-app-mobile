@@ -21,7 +21,7 @@ export const EditBioScreen = () => {
   const { description } = user || {};
   const [bio, setBio] = useState(description ? description : "");
   const navigation = useNavigation();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const { mutate, isLoading } = usePatch({
     uri: `/users/${user?.id}`,

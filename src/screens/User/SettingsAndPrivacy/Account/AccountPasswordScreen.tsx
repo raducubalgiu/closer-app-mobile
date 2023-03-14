@@ -25,7 +25,7 @@ const defaultValues = {
 const { black, error: errorStyle, grey0 } = theme.lightColors || {};
 
 export const AccountPasswordScreen = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
   const auth = getAuth();
   const { user } = useAuth();
   const firebaseUser: any = auth.currentUser;
