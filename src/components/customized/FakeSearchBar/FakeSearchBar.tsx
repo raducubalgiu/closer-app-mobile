@@ -9,7 +9,7 @@ const { black, grey0 } = theme.lightColors || {};
 type IProps = { onGoAnytime: () => void; onGoNow: () => void };
 
 const FakeSearchBar = ({ onGoAnytime, onGoNow }: IProps) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   return (
     <View style={styles.container}>

@@ -20,7 +20,7 @@ export const CardRecommended = ({ location, index }: IProps) => {
     owner || {};
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const goToUser = () => {
     navigation.push("ProfileGeneral", {
