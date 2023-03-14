@@ -2,7 +2,7 @@ import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 import "../i18next";
-import { useAuth } from "../src/hooks";
+import { useAuth } from "../hooks";
 import { RootStackParams } from "./rootStackParams";
 import {
   AccountScreen,
@@ -87,14 +87,14 @@ import {
   AddPostScreen,
   UserLocationPermissionScreen,
   UserPostsScreen,
-} from "../screens";
+} from "../../screens";
 
 const Stack = createSharedElementStackNavigator<RootStackParams>();
 import AuthNavigator from "./AuthNavigator";
 import TabNavigator from "./TabNavigator";
 import { PortalProvider } from "@gorhom/portal";
 
-const CloserNavigation = () => {
+const AppNavigation = () => {
   const { user } = useAuth();
 
   return (
@@ -295,4 +295,4 @@ const CloserNavigation = () => {
   );
 };
 
-export default CloserNavigation;
+export default AppNavigation;

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { enableScreens } from "react-native-screens";
-import CloserNavigation from "./navigation";
+import AppNavigation from "./src/navigation";
 import { AuthProvider } from "./src/hooks/auth";
 import { ThemeProvider } from "@rneui/themed";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -69,7 +69,7 @@ const App = () => {
           <RootSiblingParent>
             <QueryClientProvider client={queryClient}>
               <ThemeProvider theme={theme}>
-                <CloserNavigation />
+                <AppNavigation />
               </ThemeProvider>
             </QueryClientProvider>
           </RootSiblingParent>
