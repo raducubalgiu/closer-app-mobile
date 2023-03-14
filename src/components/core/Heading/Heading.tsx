@@ -1,5 +1,5 @@
 import { StyleSheet, Text } from "react-native";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 
 const { black } = theme.lightColors || {};
 

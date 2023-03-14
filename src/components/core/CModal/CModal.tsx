@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import Modal from "react-native-modal";
 import Stack from "../Stack/Stack";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 
 const { width, height } = Dimensions.get("window");
 const { black } = theme.lightColors || {};

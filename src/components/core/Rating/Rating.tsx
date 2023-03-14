@@ -1,6 +1,6 @@
 import { Icon } from "@rneui/themed";
 import Stack from "../Stack/Stack";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 import { View } from "react-native";
 
 const { primary } = theme.lightColors || {};

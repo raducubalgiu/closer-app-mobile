@@ -2,7 +2,7 @@ import { View, StyleSheet } from "react-native";
 import { Avatar, Icon } from "@rneui/themed";
 import { memo } from "react";
 import NoAvatar from "../../../assets/images/avatar.jpg";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 
 type Props = {
   avatar: any;

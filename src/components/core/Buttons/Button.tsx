@@ -1,5 +1,5 @@
 import { ActivityIndicator, Pressable, StyleSheet, Text } from "react-native";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 
 const { primary, black, grey0 } = theme.lightColors || {};
 

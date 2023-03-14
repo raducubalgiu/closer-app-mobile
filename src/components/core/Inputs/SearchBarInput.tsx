@@ -1,6 +1,6 @@
 import { StyleSheet, Platform } from "react-native";
 import { SearchBar } from "@rneui/themed";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 
 const { grey0, black, divider } = theme.lightColors || {};
 type IProps = {

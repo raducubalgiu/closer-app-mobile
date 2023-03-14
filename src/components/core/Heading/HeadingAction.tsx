@@ -1,7 +1,7 @@
 import { StyleSheet, Text, Pressable } from "react-native";
 import { Icon } from "@rneui/themed";
 import Stack from "../Stack/Stack";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 
 const { black } = theme.lightColors || {};

@@ -1,7 +1,7 @@
 import { ActivityIndicator, Animated, Pressable } from "react-native";
 import { useRef, useEffect } from "react";
 import { Icon } from "@rneui/themed";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 
 const { black } = theme.lightColors || {};
 

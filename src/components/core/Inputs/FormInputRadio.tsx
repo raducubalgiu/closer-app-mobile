@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import Stack from "../Stack/Stack";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 import { IconButton } from "../IconButton/IconButton";
 
 const { black, primary, grey0 } = theme.lightColors || {};

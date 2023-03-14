@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 
 const { black } = theme.lightColors || {};
 

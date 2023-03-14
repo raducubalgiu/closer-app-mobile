@@ -1,6 +1,6 @@
 import React from "react";
 import { Icon } from "@rneui/themed";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 
 const { grey0 } = theme.lightColors || {};
 

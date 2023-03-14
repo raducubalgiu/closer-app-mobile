@@ -1,4 +1,4 @@
-import { Spinner } from "../../components/core";
+import { Spinner } from "../components/core";
 
 export const usePaginateActions = ({
   data,

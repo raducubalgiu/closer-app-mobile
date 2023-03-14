@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { Icon } from "@rneui/themed";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 
 const { secondary } = theme.lightColors || {};
 

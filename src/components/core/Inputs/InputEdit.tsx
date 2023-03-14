@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, TextInput } from "react-native";
 import Stack from "../Stack/Stack";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 
 const { grey0, error, black } = theme.lightColors || {};
 

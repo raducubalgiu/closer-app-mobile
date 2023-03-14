@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Switch } from "@rneui/themed";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 
 const { primary } = theme.lightColors || {};
 

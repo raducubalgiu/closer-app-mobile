@@ -1,6 +1,6 @@
 import { FlatListProps } from "react-native";
-import { HeaderConfig } from "../../models/HeaderConfig";
-import { ScrollPair } from "../../models/ScrollPair";
+import { HeaderConfig } from "../models/HeaderConfig";
+import { ScrollPair } from "../models/ScrollPair";
 
 const useScrollSync = (
   scrollPairs: ScrollPair[],

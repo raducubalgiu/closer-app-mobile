@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet } from "react-native";
 import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 
 const { black } = theme.lightColors || {};
 type IProps = { size?: number; color?: any; sx?: {}; disabled?: boolean };

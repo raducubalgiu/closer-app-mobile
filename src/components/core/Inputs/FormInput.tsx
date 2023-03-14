@@ -2,7 +2,7 @@ import { StyleSheet, TextInput, Text } from "react-native";
 import { useFormContext, Controller } from "react-hook-form";
 import { has, get } from "lodash";
 import { Icon } from "@rneui/themed";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 import Stack from "../Stack/Stack";
 
 const { error, black } = theme.lightColors || {};
