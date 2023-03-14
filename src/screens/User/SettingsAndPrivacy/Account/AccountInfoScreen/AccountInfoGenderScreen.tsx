@@ -6,9 +6,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { FormInputRadio, Spinner } from "../../../../../components/core";
 import { HeaderEdit } from "../../../../../components/customized";
 import { RootStackParams } from "../../../../../navigation/rootStackParams";
-import theme from "../../../../../assets/styles/theme";
+import theme from "../../../../../../assets/styles/theme";
 import { GenderEnum } from "../../../../../models/enums/genderEnum";
-import { useAuth, usePatch } from "../../../../../src/hooks";
+import { useAuth, usePatch } from "../../../../../hooks";
 import { useNavigation } from "@react-navigation/native";
 
 const { grey0 } = theme.lightColors || {};

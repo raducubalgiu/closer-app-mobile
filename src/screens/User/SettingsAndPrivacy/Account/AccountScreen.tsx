@@ -2,10 +2,10 @@ import { SafeAreaView, StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import { Header, Stack } from "../../../../components/core";
-import theme from "../../../../assets/styles/theme";
+import theme from "../../../../../assets/styles/theme";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
-import { useAuth } from "../../../../src/hooks";
+import { useAuth } from "../../../../hooks";
 import { SettingsListItem } from "../../../../components/customized";
 
 const { black } = theme.lightColors || {};

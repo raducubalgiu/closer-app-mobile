@@ -8,9 +8,9 @@ import {
   Header,
   Heading,
 } from "../../../../components/core";
-import theme from "../../../../assets/styles/theme";
-import { useAuth } from "../../../../src/hooks";
-import { displayNothing } from "../../../../src/utils";
+import theme from "../../../../../assets/styles/theme";
+import { useAuth } from "../../../../hooks";
+import { displayNothing } from "../../../../utils";
 
 const { grey0 } = theme.lightColors || {};
 

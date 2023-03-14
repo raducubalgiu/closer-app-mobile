@@ -2,10 +2,10 @@ import { useTranslation } from "react-i18next";
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
 import { getAuth, signOut } from "firebase/auth";
 import { Button, Header, Heading } from "../../../../components/core";
-import theme from "../../../../assets/styles/theme";
+import theme from "../../../../../assets/styles/theme";
 import { TextWithBullet } from "../../../../components/customized";
-import { useAuth, usePatch } from "../../../../src/hooks";
-import { showToast } from "../../../../src/utils";
+import { useAuth, usePatch } from "../../../../hooks";
+import { showToast } from "../../../../utils";
 
 const { black } = theme.lightColors || {};
 

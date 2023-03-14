@@ -11,11 +11,11 @@ import { Keyboard, SafeAreaView, StyleSheet, Text } from "react-native";
 import { useForm } from "react-hook-form";
 import { FormTextField, Spinner, Stack } from "../../../../components/core";
 import { HeaderEdit } from "../../../../components/customized";
-import theme from "../../../../assets/styles/theme";
-import { useAuth } from "../../../../src/hooks";
-import { showToast } from "../../../../src/utils";
+import theme from "../../../../../assets/styles/theme";
+import { useAuth } from "../../../../hooks";
+import { showToast } from "../../../../utils";
 import { useNavigation } from "@react-navigation/native";
-import { required } from "../../../../src/utils/validation";
+import { required } from "../../../../utils/validation";
 
 const defaultValues = {
   currentPass: "",

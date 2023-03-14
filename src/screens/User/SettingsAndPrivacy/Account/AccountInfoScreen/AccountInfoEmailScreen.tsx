@@ -1,5 +1,4 @@
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import { Stack } from "../../../../../components/core";
+import { SafeAreaView, StyleSheet } from "react-native";
 import { HeaderEdit } from "../../../../../components/customized";
 
 export const AccountInfoEmailScreen = () => {

@@ -5,8 +5,8 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Header, Stack } from "../../../../components/core";
 import CustomAvatar from "../../../../components/core/Avatars/CustomAvatar";
-import { useAuth } from "../../../../src/hooks";
-import theme from "../../../../assets/styles/theme";
+import { useAuth } from "../../../../hooks";
+import theme from "../../../../../assets/styles/theme";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
 import { SettingsListItem } from "../../../../components/customized";
 

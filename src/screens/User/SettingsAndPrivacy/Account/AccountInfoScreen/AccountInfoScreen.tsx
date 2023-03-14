@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Keyboard, SafeAreaView, StyleSheet, Text } from "react-native";
 import { useForm } from "react-hook-form";
 import { FormTextField, Header, Stack } from "../../../../../components/core";
-import theme from "../../../../../assets/styles/theme";
+import theme from "../../../../../../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
 import {
   NativeStackNavigationProp,
