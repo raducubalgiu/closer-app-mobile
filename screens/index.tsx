@@ -93,6 +93,7 @@ export { ReportAProblemScreen } from "./User/SettingsAndPrivacy/Assistance/Repor
 export { AssistanceScreen } from "./User/SettingsAndPrivacy/Assistance/AssistanceScreen";
 export { StoryScreen } from "./StoryScreen";
 export { UserPostsScreen } from "./User/Profile/UserPostsScreen";
+export { UserAllPostsScreen } from "./User/Profile/UserAllPostsScreen";
 export { UserVideosScreen } from "./User/Profile/UserVideosScreen";
 
 export { ProfileScreen };

@@ -86,6 +86,7 @@ import {
   PhotoAlbumsScreen,
   AddPostScreen,
   UserLocationPermissionScreen,
+  UserPostsScreen,
 } from "../screens";
 
 const Stack = createSharedElementStackNavigator<RootStackParams>();

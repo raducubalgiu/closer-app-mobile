@@ -1,4 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 import { Icon } from "@rneui/themed";
 import CustomAvatar from "../components/core/Avatars/CustomAvatar";
 import { useAuth, useGet } from "../hooks";
@@ -8,11 +9,64 @@ import {
   HomeScreen,
   MessagesScreen,
   ProfileScreen,
+  UserPostsScreen,
+  UserAllPostsScreen,
 } from "../screens";
 import FeedNavigator from "./FeedNavigator";
+import { TransitionPresets } from "@react-navigation/stack";
 
 const Tab = createBottomTabNavigator();
+const Stack = createSharedElementStackNavigator();
 const { error, black, primary } = theme.lightColors || {};
+
+const ProfileNavigator = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        gestureEnabled: false,
+        headerShown: false,
+        cardStyle: { backgroundColor: "rgba(0,0,0, 0.4)" },
+        presentation: "card",
+        detachPreviousScreen: false,
+        cardStyleInterpolator: ({ current: { progress } }) => {
+          return {
+            cardStyle: {
+              opacity: progress,
+            },
+          };
+        },
+      }}
+    >
+      <Stack.Screen name="Profile" component={ProfileScreen} />
+      <Stack.Screen
+        name="UserPosts"
+        component={UserPostsScreen}
+        sharedElements={(route, otherRoute, showing) => {
+          const { post } = route.params;
+          return [
+            {
+              id: post.id,
+            },
+          ];
+        }}
+      />
+      <Stack.Screen
+        name="UserAllPosts"
+        component={UserAllPostsScreen}
+        sharedElements={(route, otherRoute, showing) => {
+          const { post, posts, index } = route.params;
+          return [
+            {
+              id: post.id,
+              posts,
+              index,
+            },
+          ];
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
 
 const TabNavigator = () => {
   const { user } = useAuth();
@@ -87,8 +141,8 @@ const TabNavigator = () => {
         options={badgeOptions}
       />
       <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
+        name="ProfileStack"
+        component={ProfileNavigator}
         options={{
           tabBarIcon: ({ focused }) => (
             <CustomAvatar

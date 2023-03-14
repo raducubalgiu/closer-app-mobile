@@ -170,6 +170,7 @@ export type RootStackParams = {
   SharedDetail: any;
   Shared: any;
   UserLocationPermission: any;
-  UserPosts: { id: number; posts: Post[] };
+  UserPosts: { post: Post };
   UserVideos: { id: number; videos: Post[] };
+  UserAllPosts: { post: Post; posts: Post[]; index: number };
 };

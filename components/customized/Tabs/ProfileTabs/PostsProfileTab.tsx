@@ -30,9 +30,9 @@ const PostsProfileTab = forwardRef((props: IProps, ref) => {
     ({ item, index }: ListRenderItemInfo<Post>) => {
       return (
         <GridImageListItem
-          onPress={() => {}}
           index={index}
-          item={item}
+          post={item}
+          posts={posts}
           expirationTime={item.expirationTime}
           discount={item?.product?.discount}
         />

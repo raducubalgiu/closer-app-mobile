@@ -1,6 +1,12 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useCallback } from "react";
-import { FlatList, ListRenderItemInfo, Dimensions } from "react-native";
+import {
+  FlatList,
+  ListRenderItemInfo,
+  Image,
+  useWindowDimensions,
+  StyleSheet,
+} from "react-native";
 import { Header } from "../../../components/core";
 import { RootStackParams } from "../../../navigation/rootStackParams";
 import { Post } from "../../../models";
@@ -20,20 +26,15 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useVector, snapPoint } from "react-native-redash";
 import { useNavigation } from "@react-navigation/native";
 import PostListItem from "../../../components/customized/ListItems/Post/PostListItem";
+import { SharedElement } from "react-navigation-shared-element";
 
-const { width, height } = Dimensions.get("window");
 type IProps = NativeStackScreenProps<RootStackParams, "UserPosts">;
-type PostListItem = {
-  id: string;
-  post: Post;
-  isLiked: boolean;
-  isBookmarked: boolean;
-};
 
 export const UserPostsScreen = ({ route }: IProps) => {
-  const { id, posts } = route.params;
+  const { post } = route.params;
   const insets = useSafeAreaInsets();
   const navigation = useNavigation();
+  const { width, height } = useWindowDimensions();
 
   const translation = useVector();
   const AnimatedVideo = Animated.createAnimatedComponent(Video);
@@ -63,9 +64,11 @@ export const UserPostsScreen = ({ route }: IProps) => {
     },
   });
 
-  const borderStyle = useAnimatedStyle(() => ({
-    borderRadius: withTiming(isGestureActive.value ? 24 : 0),
-  }));
+  const borderStyle = useAnimatedStyle(() => {
+    return {
+      borderRadius: withTiming(isGestureActive.value ? 24 : 0),
+    };
+  });
 
   const style = useAnimatedStyle(() => {
     const scale = interpolate(
@@ -87,39 +90,21 @@ export const UserPostsScreen = ({ route }: IProps) => {
     };
   });
 
-  const renderPost = useCallback(
-    ({ item }: ListRenderItemInfo<PostListItem>) => (
-      <PostListItem
-        post={item.post}
-        isLiked={item.isLiked}
-        isBookmarked={item.isBookmarked}
-      />
-    ),
-    []
-  );
-
-  const keyExtractor = useCallback((item: PostListItem) => item.id, []);
-
-  const getItemLayout = useCallback(
-    (_: any, index: number) => ({
-      length: 540,
-      offset: 540 * index,
-      index,
-    }),
-    []
-  );
-
   return (
     <PanGestureHandler onGestureEvent={onGestureEvent}>
       <Animated.View style={[style, borderStyle]}>
         <Header title="Postari" />
-        <FlatList
-          data={posts}
-          keyExtractor={keyExtractor}
-          renderItem={renderPost}
-          initialScrollIndex={id}
-          getItemLayout={getItemLayout}
-        />
+        {/* <SharedElement id={post.id} style={{ flex: 1 }}>
+          <Image
+            source={{ uri: post?.images[0]?.url }}
+            style={{
+              width: undefined,
+              height: 500,
+              resizeMode: "cover",
+            }}
+          />
+        </SharedElement> */}
+        <PostListItem post={post} isLiked={false} isBookmarked={false} />
       </Animated.View>
     </PanGestureHandler>
   );
