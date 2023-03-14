@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Icon } from "@rneui/themed";
 import { HeaderEdit } from "../../../../components/customized";
 import { Spinner, Stack } from "../../../../components/core";
-import { useAuth, usePatch, useGetMutate } from "../../../../hooks";
+import { useAuth, usePatch, useGetMutate } from "../../../../src/hooks";
 import InputCheck from "../../../../components/core/Inputs/InputCheck";
 import theme from "../../../../assets/styles/theme";
 

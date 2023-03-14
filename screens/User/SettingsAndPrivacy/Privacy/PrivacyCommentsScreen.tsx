@@ -9,7 +9,7 @@ import {
   Heading,
 } from "../../../../components/core";
 import theme from "../../../../assets/styles/theme";
-import { useAuth } from "../../../../hooks";
+import { useAuth } from "../../../../src/hooks";
 import { displayNothing } from "../../../../utils";
 
 const { grey0 } = theme.lightColors || {};

@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Spinner } from "../../../core";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { ServiceListItem } from "../../ListItems/ServiceListItem";
-import { useGetPaginate, usePaginateActions } from "../../../../hooks";
+import { useGetPaginate, usePaginateActions } from "../../../../src/hooks";
 import { Service } from "../../../../models/service";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";

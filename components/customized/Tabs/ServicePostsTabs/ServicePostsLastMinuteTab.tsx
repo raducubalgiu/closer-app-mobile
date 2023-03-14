@@ -1,7 +1,7 @@
 import { Animated, ListRenderItemInfo } from "react-native";
 import { useCallback } from "react";
 import { useIsFocused } from "@react-navigation/native";
-import { useGetPaginate } from "../../../../hooks";
+import { useGetPaginate } from "../../../../src/hooks";
 import GridImageListItem from "../../ListItems/Grid/GridImage/GridImageListItem";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { useTranslation } from "react-i18next";

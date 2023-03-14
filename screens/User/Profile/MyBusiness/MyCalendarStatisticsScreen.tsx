@@ -19,7 +19,7 @@ import {
   Stack,
 } from "../../../../components/core";
 import theme from "../../../../assets/styles/theme";
-import { useAuth, useGet, useSheet } from "../../../../hooks";
+import { useAuth, useGet, useSheet } from "../../../../src/hooks";
 import { numberWithComma } from "../../../../utils";
 
 type IProps = NativeStackScreenProps<RootStackParams, "MyCalendarStatistics">;

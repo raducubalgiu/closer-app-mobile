@@ -4,7 +4,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { Button, Header, Heading } from "../../../../components/core";
 import theme from "../../../../assets/styles/theme";
 import { TextWithBullet } from "../../../../components/customized";
-import { useAuth, usePatch } from "../../../../hooks";
+import { useAuth, usePatch } from "../../../../src/hooks";
 import { showToast } from "../../../../utils";
 
 const { black } = theme.lightColors || {};

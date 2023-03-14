@@ -9,7 +9,7 @@ import {
   Heading,
 } from "../../../../../components/core";
 import theme from "../../../../../assets/styles/theme";
-import { useAuth, usePatch } from "../../../../../hooks";
+import { useAuth, usePatch } from "../../../../../src/hooks";
 import { showToast } from "../../../../../utils";
 import { useNavigation } from "@react-navigation/native";
 

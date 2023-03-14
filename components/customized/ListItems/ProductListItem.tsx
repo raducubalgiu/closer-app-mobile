@@ -6,7 +6,7 @@ import { SECOND_ROLE, THIRD_ROLE, SUPERADMIN_ROLE } from "@env";
 import { Stack, Protected, IconStar } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { trimFunc } from "../../../utils";
-import { useAuth, useDuration } from "../../../hooks";
+import { useAuth, useDuration } from "../../../src/hooks";
 import { BookmarkButton } from "../Buttons/BookmarkButton";
 import { BookButton } from "../Buttons/BookButton";
 import { UserListItemSimple } from "./UserListItemSimple";

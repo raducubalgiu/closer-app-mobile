@@ -1,10 +1,10 @@
 import { Animated, StyleSheet, Pressable } from "react-native";
 import { Icon } from "@rneui/themed";
 import { memo, useCallback, useEffect, useRef, useState } from "react";
-import { useAuth } from "../../../hooks/auth";
+import { useAuth } from "../../../src/hooks/auth";
 import * as Haptics from "expo-haptics";
 import theme from "../../../assets/styles/theme";
-import { useDelete, usePost } from "../../../hooks";
+import { useDelete, usePost } from "../../../src/hooks";
 
 const { error, black } = theme.lightColors || {};
 type IProps = {

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { enableScreens } from "react-native-screens";
 import CloserNavigation from "./navigation";
-import { AuthProvider } from "./hooks/auth";
+import { AuthProvider } from "./src/hooks/auth";
 import { ThemeProvider } from "@rneui/themed";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import theme from "./assets/styles/theme";

@@ -9,7 +9,7 @@ import {
   useGetPaginate,
   usePaginateActions,
   useRefreshByUser,
-} from "../../../../hooks";
+} from "../../../../src/hooks";
 import { User } from "../../../../models/user";
 import { Spinner } from "../../../core";
 

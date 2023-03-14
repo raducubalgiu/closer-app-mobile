@@ -9,7 +9,7 @@ import theme from "../../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 import { Divider } from "@rneui/themed";
 import { useState } from "react";
-import { useAuth, usePatch } from "../../../../hooks";
+import { useAuth, usePatch } from "../../../../src/hooks";
 import { useNavigation } from "@react-navigation/native";
 import { showToast } from "../../../../utils";
 

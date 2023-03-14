@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { InputEdit, Spinner } from "../../../../components/core";
 import { HeaderEdit } from "../../../../components/customized";
-import { usePatch, useAuth } from "../../../../hooks";
+import { usePatch, useAuth } from "../../../../src/hooks";
 
 export const EditWebsiteScreen = () => {
   const { user, setUser } = useAuth();

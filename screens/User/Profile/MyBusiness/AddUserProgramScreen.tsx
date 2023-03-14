@@ -9,7 +9,7 @@ import { useCallback } from "react";
 import { Header, Stack, Button } from "../../../../components/core";
 import { useTranslation } from "react-i18next";
 import { useForm, FormProvider } from "react-hook-form";
-import { useAuth, usePatch, useMinutes } from "../../../../hooks";
+import { useAuth, usePatch, useMinutes } from "../../../../src/hooks";
 import { useNavigation } from "@react-navigation/native";
 import UserProgramListItem from "../../../../components/customized/ListItems/UserProgramListItem";
 import { showToast } from "../../../../utils";

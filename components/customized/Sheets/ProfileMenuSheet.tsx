@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { MAIN_ROLE, SECOND_ROLE, SUPERADMIN_ROLE, THIRD_ROLE } from "@env";
-import { useAuth } from "../../../hooks/auth";
+import { useAuth } from "../../../src/hooks/auth";
 import theme from "../../../assets/styles/theme";
 import { Protected } from "../../core";
 import { RootStackParams } from "../../../navigation/rootStackParams";

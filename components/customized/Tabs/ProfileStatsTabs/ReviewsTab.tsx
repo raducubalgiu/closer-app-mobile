@@ -18,7 +18,7 @@ import {
   useGetPaginate,
   usePaginateActions,
   useRefreshByUser,
-} from "../../../../hooks";
+} from "../../../../src/hooks";
 import { CardReviewSummary } from "../../Cards/CardReviewSummary";
 import RatingListItem from "../../ListItems/RatingListItem";
 import { Review } from "../../../../models/review";

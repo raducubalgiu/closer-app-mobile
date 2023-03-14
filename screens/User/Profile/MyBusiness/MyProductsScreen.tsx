@@ -8,8 +8,8 @@ import {
   Header,
 } from "../../../../components/core";
 import { NoFoundMessage } from "../../../../components/customized";
-import { useAuth } from "../../../../hooks/auth";
-import { useGet } from "../../../../hooks";
+import { useAuth } from "../../../../src/hooks/auth";
+import { useGet } from "../../../../src/hooks";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
 

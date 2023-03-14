@@ -18,18 +18,18 @@ import Animated, {
   useDerivedValue,
   useSharedValue,
 } from "react-native-reanimated";
-import TabBar from "../../../Test/src/components/TabBar";
-import useScrollSync from "../../../Test/src/hooks/useScrollSync";
-import { ScrollPair } from "../../../Test/src/types/ScrollPair";
+import TabBar from "../../../components/customized/Tabs/TabBar";
+import useScrollSync from "../../../src/hooks/useScrollSync";
+import { ScrollPair } from "../../../models/ScrollPair";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { HeaderConfig } from "../../../Test/src/types/HeaderConfig";
+import { HeaderConfig } from "../../../models/HeaderConfig";
 import {
   HeaderProfile,
   PostOptionsSheet,
   ProfileMenuSheet,
 } from "../../../components/customized";
 import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
-import { useAuth } from "../../../hooks";
+import { useAuth } from "../../../src/hooks";
 import { ProfileIconButton } from "../../../components/customized";
 import { Button } from "../../../components/core";
 import PostsProfileTab from "../../../components/customized/Tabs/ProfileTabs/PostsProfileTab";

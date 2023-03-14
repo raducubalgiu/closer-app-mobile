@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import React, { useCallback, useState } from "react";
 import { Camera } from "expo-camera";
-import { usePost, useAuth, useGet, useGetPaginate } from "../hooks";
+import { usePost, useAuth, useGet, useGetPaginate } from "../src/hooks";
 import {
   FooterMessageItem,
   MessReceivedItem,

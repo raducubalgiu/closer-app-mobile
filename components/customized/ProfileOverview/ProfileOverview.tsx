@@ -11,7 +11,7 @@ import { displayDash } from "../../../utils";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/rootStackParams";
 import AvatarBadge from "../../core/Avatars/AvatarBadge";
-import { useAuth } from "../../../hooks";
+import { useAuth } from "../../../src/hooks";
 
 const { black, primary } = theme.lightColors || {};
 

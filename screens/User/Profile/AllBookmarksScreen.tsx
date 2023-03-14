@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { useAuth, useGet } from "../../../hooks";
+import { useAuth, useGet } from "../../../src/hooks";
 import { Header } from "../../../components/core";
 import PostListItem from "../../../components/customized/ListItems/Post/PostListItem";
 import { Post } from "../../../models/post";

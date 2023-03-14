@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 import { useForm, FormProvider } from "react-hook-form";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { useAuth, useHttpGet, useHttpPatch } from "../../../../hooks";
+import { useAuth, useHttpGet, useHttpPatch } from "../../../../src/hooks";
 import { required, minField, maxField } from "../../../../constants/validation";
 import {
   Feedback,

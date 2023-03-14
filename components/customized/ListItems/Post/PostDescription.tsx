@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import DisplayText from "../../Typography/DisplayText/DisplayText";
 import CustomAvatar from "../../../core/Avatars/CustomAvatar";
 import { Stack } from "../../../core";
-import { useAuth } from "../../../../hooks";
+import { useAuth } from "../../../../src/hooks";
 import theme from "../../../../assets/styles/theme";
 
 type IProps = { commentsCount: number; date: string; description: string };

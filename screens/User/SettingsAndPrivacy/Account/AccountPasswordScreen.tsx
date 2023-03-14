@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import { FormTextField, Spinner, Stack } from "../../../../components/core";
 import { HeaderEdit } from "../../../../components/customized";
 import theme from "../../../../assets/styles/theme";
-import { useAuth } from "../../../../hooks";
+import { useAuth } from "../../../../src/hooks";
 import { showToast } from "../../../../utils";
 import { useNavigation } from "@react-navigation/native";
 import { required } from "../../../../constants/validation";

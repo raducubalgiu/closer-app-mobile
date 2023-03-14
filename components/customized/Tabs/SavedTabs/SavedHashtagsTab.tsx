@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
-import { useGetPaginate, usePaginateActions } from "../../../../hooks";
+import { useGetPaginate, usePaginateActions } from "../../../../src/hooks";
 import { Spinner } from "../../../core";
 import { HashtagListItem } from "../../ListItems/HashtagListItem";
 import { Hashtag } from "../../../../models/hashtag";

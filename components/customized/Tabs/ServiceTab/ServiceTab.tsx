@@ -9,7 +9,7 @@ import {
 import { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Spinner } from "../../../core";
-import { useGetPaginate } from "../../../../hooks";
+import { useGetPaginate } from "../../../../src/hooks";
 import ProductListItem from "../../ListItems/ProductListItem";
 import { Product } from "../../../../models/product";
 import theme from "../../../../assets/styles/theme";

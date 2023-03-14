@@ -21,7 +21,7 @@ import {
 import { EditProfileSheet } from "../../../../components/customized";
 import CustomAvatar from "../../../../components/core/Avatars/CustomAvatar";
 import { trimFunc } from "../../../../utils";
-import { useAuth } from "../../../../hooks";
+import { useAuth } from "../../../../src/hooks";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";

@@ -6,7 +6,7 @@ import { Stack } from "../../core";
 import { displayCount } from "../../../utils";
 import theme from "../../../assets/styles/theme";
 import { BookmarkButton } from "../Buttons/BookmarkButton";
-import { useAuth, useGet } from "../../../hooks";
+import { useAuth, useGet } from "../../../src/hooks";
 
 const { grey0 } = theme.lightColors || {};
 

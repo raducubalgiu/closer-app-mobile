@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
-import { Month } from "../models/month";
-import { Day } from "../models/day";
+import { Month } from "../../models/month";
+import { Day } from "../../models/day";
 
 type Config = {
   pastMonths?: number;

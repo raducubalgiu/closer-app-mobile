@@ -9,7 +9,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useTranslation } from "react-i18next";
-import { useAuth, useGet, usePost } from "../../../../hooks";
+import { useAuth, useGet, usePost } from "../../../../src/hooks";
 import { required, maxField, minField } from "../../../../constants/validation";
 import { Button, FormInput, Header, Stack } from "../../../../components/core";
 import { FormInputSelect } from "../../../../components/core";

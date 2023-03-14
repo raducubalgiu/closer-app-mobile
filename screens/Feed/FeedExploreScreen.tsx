@@ -17,7 +17,7 @@ import {
   useGetPaginate,
   usePaginateActions,
   usePost,
-} from "../../hooks";
+} from "../../src/hooks";
 import { Post } from "../../models/post";
 import { RootStackParams } from "../../navigation/rootStackParams";
 import StoryAvatarListItem from "../../components/customized/ListItems/Story/StoryAvatarListItem";

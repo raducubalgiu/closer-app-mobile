@@ -16,7 +16,7 @@ import {
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
 import { Stack } from "../components/core";
-import { useGet, useRefreshOnFocus } from "../hooks";
+import { useGet, useRefreshOnFocus } from "../src/hooks";
 import { RootStackParams } from "../navigation/rootStackParams";
 import { HeaderMap } from "../components/customized";
 import BusinessButton from "../components/customized/Buttons/BusinessButton";

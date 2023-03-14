@@ -3,7 +3,7 @@ import { Avatar, Icon } from "@rneui/themed";
 import { Checkmark, IconButton, Stack } from "../../core";
 import theme from "../../../assets/styles/theme";
 import NoAvatar from "../../../assets/images/avatar.jpg";
-import { useDelete } from "../../../hooks";
+import { useDelete } from "../../../src/hooks";
 
 const { black, grey0 } = theme.lightColors || {};
 type IProps = { item: any; onDelete: () => void };

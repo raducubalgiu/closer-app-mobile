@@ -4,7 +4,7 @@ import { Icon } from "@rneui/themed";
 import { Stack } from "../../core";
 import CustomAvatar from "../../core/Avatars/CustomAvatar";
 import theme from "../../../assets/styles/theme";
-import { useAuth, usePatch } from "../../../hooks";
+import { useAuth, usePatch } from "../../../src/hooks";
 import { MessDateItem } from "./MessDateItem";
 
 const width = Dimensions.get("window").width;

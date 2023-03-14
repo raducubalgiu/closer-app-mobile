@@ -13,7 +13,7 @@ import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { HeaderServices, Map, NoFoundMessage } from "../components/customized";
 import LocationListItem from "../components/customized/ListItems/LocationListItem";
-import { useGet } from "../hooks";
+import { useGet } from "../src/hooks";
 import theme from "../assets/styles/theme";
 import { RootStackParams } from "../navigation/rootStackParams";
 import { Location } from "../models/location";

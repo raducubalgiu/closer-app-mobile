@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { CardHashtagOverview, TopTabContainer } from "../components/customized";
 import { Header } from "../components/core";
-import { useGet } from "../hooks";
+import { useGet } from "../src/hooks";
 import {
   HashtagPostsPopularTab,
   HashtagPostsRecentTab,

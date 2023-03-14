@@ -12,7 +12,7 @@ import {
 } from "../../../../components/core";
 import { MapStatic } from "../../../../components/customized";
 import theme from "../../../../assets/styles/theme";
-import { useAuth, useGet } from "../../../../hooks";
+import { useAuth, useGet } from "../../../../src/hooks";
 import { AddressFormat, showToast } from "../../../../utils";
 import { useState } from "react";
 

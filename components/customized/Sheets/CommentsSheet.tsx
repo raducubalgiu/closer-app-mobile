@@ -15,7 +15,7 @@ import {
   useGetPaginate,
   usePaginateActions,
   usePost,
-} from "../../../hooks";
+} from "../../../src/hooks";
 import CustomAvatar from "../../core/Avatars/CustomAvatar";
 import { emoji } from "../../../assets/emojis/emoji-comm.json";
 import theme from "../../../assets/styles/theme";

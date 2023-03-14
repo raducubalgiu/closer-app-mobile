@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Icon } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
 import { Header, Button, Stack } from "../components/core";
-import { useAuth, usePost } from "../hooks";
+import { useAuth, usePost } from "../src/hooks";
 import theme from "../assets/styles/theme";
 import {
   NativeStackNavigationProp,

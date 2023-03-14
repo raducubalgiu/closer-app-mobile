@@ -3,7 +3,7 @@ import { SafeAreaView, StyleSheet, Text, View, ScrollView } from "react-native";
 import { Header, Heading, Button } from "../../../../components/core";
 import { TextWithBullet } from "../../../../components/customized";
 import theme from "../../../../assets/styles/theme";
-import { useAuth, usePatch } from "../../../../hooks";
+import { useAuth, usePatch } from "../../../../src/hooks";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";

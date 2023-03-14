@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Icon } from "@rneui/themed";
 import { Stack } from "../../core";
-import { useAuth, useDelete, usePost, useGet } from "../../../hooks";
+import { useAuth, useDelete, usePost, useGet } from "../../../src/hooks";
 import theme from "../../../assets/styles/theme";
 import { showToast } from "../../../utils";
 

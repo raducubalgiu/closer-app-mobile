@@ -17,7 +17,7 @@ import {
   FormInputSelect,
 } from "../../../../components/core";
 import theme from "../../../../assets/styles/theme";
-import { useAuth, usePatch, useGet } from "../../../../hooks";
+import { useAuth, usePatch, useGet } from "../../../../src/hooks";
 import { ConfirmModal } from "../../../../components/customized/Modals/ConfirmModal";
 import { Service } from "../../../../models/service";
 import { FormProvider, useForm } from "react-hook-form";

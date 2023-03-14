@@ -25,7 +25,12 @@ import {
   Stack,
 } from "../../../../components/core";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
-import { useAuth, useCalendarList, useGet, usePost } from "../../../../hooks";
+import {
+  useAuth,
+  useCalendarList,
+  useGet,
+  usePost,
+} from "../../../../src/hooks";
 import theme from "../../../../assets/styles/theme";
 import { Product } from "../../../../models/product";
 import { showToast } from "../../../../utils";

@@ -27,7 +27,7 @@ import {
   useGet,
   usePost,
   useRefreshOnFocus,
-} from "../hooks";
+} from "../src/hooks";
 
 const { grey0, primary, black } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "SearchPosts">;

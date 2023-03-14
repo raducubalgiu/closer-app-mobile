@@ -22,7 +22,7 @@ import { Divider } from "@rneui/themed";
 import { AddressFormat, showToast } from "../utils";
 import { useNavigation } from "@react-navigation/native";
 import dayjs from "dayjs";
-import { useAuth, useGet } from "../hooks";
+import { useAuth, useGet } from "../src/hooks";
 import MapStatic from "../components/customized/Map/MapStatic";
 import {
   NativeStackNavigationProp,

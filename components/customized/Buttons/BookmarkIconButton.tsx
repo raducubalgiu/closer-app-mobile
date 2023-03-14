@@ -1,10 +1,10 @@
 import { StyleSheet, Animated, Pressable } from "react-native";
 import { useEffect, useState, useRef, useCallback, memo } from "react";
 import { Icon } from "@rneui/themed";
-import { useAuth } from "../../../hooks/auth";
+import { useAuth } from "../../../src/hooks/auth";
 import theme from "../../../assets/styles/theme";
 import * as Haptics from "expo-haptics";
-import { usePost, useDelete } from "../../../hooks";
+import { usePost, useDelete } from "../../../src/hooks";
 import { showToast } from "../../../utils";
 import { useTranslation } from "react-i18next";
 

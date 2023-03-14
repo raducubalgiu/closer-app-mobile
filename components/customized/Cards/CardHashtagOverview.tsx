@@ -5,7 +5,7 @@ import { Stack } from "../../core";
 import { BookmarkButton } from "../Buttons/BookmarkButton";
 import theme from "../../../assets/styles/theme";
 import { displayCount } from "../../../utils";
-import { useAuth, useGet } from "../../../hooks";
+import { useAuth, useGet } from "../../../src/hooks";
 
 const { black, grey0 } = theme.lightColors || {};
 

@@ -12,10 +12,10 @@ import theme from "../../../../assets/styles/theme";
 import { AutocompleteGoogle } from "../../../../components/customized";
 import { Stack, Header, Button } from "../../../../components/core";
 import { Icon, Avatar, Badge } from "@rneui/themed";
-import { useAuth } from "../../../../hooks/auth";
+import { useAuth } from "../../../../src/hooks/auth";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { usePost } from "../../../../hooks";
+import { usePost } from "../../../../src/hooks";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
 

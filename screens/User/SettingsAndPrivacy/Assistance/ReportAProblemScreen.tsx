@@ -8,7 +8,7 @@ import {
   Stack,
 } from "../../../../components/core";
 import { useForm } from "react-hook-form";
-import { useAuth, usePost } from "../../../../hooks";
+import { useAuth, usePost } from "../../../../src/hooks";
 import { showToast } from "../../../../utils";
 
 export const ReportAProblemScreen = () => {

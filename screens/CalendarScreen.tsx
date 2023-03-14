@@ -20,7 +20,7 @@ import {
 import theme from "../assets/styles/theme";
 import { Header, Heading, Spinner, Stack } from "../components/core";
 import { NoFoundMessage } from "../components/customized";
-import { useGet, useRefreshOnFocus, useRefreshByUser } from "../hooks";
+import { useGet, useRefreshOnFocus, useRefreshByUser } from "../src/hooks";
 import { RootStackParams } from "../navigation/rootStackParams";
 import { SHORT_DATE } from "../utils/date-utils";
 import CalendarAgenda from "../components/customized/Calendars/CalendarAgenda";

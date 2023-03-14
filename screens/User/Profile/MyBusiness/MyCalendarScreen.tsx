@@ -23,7 +23,7 @@ import {
   useGet,
   useRefreshByUser,
   useRefreshOnFocus,
-} from "../../../../hooks";
+} from "../../../../src/hooks";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";

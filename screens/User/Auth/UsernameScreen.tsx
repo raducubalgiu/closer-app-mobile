@@ -2,7 +2,7 @@ import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import axios from "axios";
 import React, { useState } from "react";
 import theme from "../../../assets/styles/theme";
-import { useAuth } from "../../../hooks/auth";
+import { useAuth } from "../../../src/hooks/auth";
 import InputCheck from "../../../components/core/Inputs/InputCheck";
 import { useTranslation } from "react-i18next";
 

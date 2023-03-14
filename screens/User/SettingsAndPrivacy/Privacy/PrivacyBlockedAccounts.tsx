@@ -14,7 +14,7 @@ import {
   useGetPaginate,
   usePaginateActions,
   useRefreshByUser,
-} from "../../../../hooks";
+} from "../../../../src/hooks";
 import { User } from "../../../../models";
 
 export const PrivacyBlockedAccounts = () => {

@@ -3,7 +3,7 @@ import { useCallback, memo } from "react";
 import { useTranslation } from "react-i18next";
 import { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import { Divider, Icon } from "@rneui/themed";
-import { useGetPaginate, usePaginateActions } from "../../../hooks";
+import { useGetPaginate, usePaginateActions } from "../../../src/hooks";
 import UserListItem from "../ListItems/UserListItem";
 import { User } from "../../../models/user";
 import { Heading, Spinner, Stack } from "../../core";

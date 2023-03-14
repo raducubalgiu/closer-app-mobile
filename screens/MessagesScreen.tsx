@@ -15,7 +15,7 @@ import {
   useGetPaginate,
   useRefreshByUser,
   useRefreshOnFocus,
-} from "../hooks";
+} from "../src/hooks";
 import {
   SearchBarInput,
   Header,

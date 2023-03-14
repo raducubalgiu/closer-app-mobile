@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import DisplayComment from "./DisplayComment";
-import { useGetMutate } from "../../../hooks";
+import { useGetMutate } from "../../../src/hooks";
 import { RelatedComments } from "../../../models/relatedComments";
 
 type IProps = {

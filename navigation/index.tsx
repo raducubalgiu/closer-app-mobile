@@ -2,7 +2,7 @@ import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 import "../i18next";
-import { useAuth } from "../hooks";
+import { useAuth } from "../src/hooks";
 import { RootStackParams } from "./rootStackParams";
 import {
   AccountScreen,

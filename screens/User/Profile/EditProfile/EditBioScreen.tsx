@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 import { HeaderEdit } from "../../../../components/customized";
 import { Spinner } from "../../../../components/core";
 import theme from "../../../../assets/styles/theme";
-import { useAuth, usePatch } from "../../../../hooks";
+import { useAuth, usePatch } from "../../../../src/hooks";
 
 const { grey0 } = theme.lightColors || {};
 

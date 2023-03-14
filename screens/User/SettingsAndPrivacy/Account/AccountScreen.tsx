@@ -5,7 +5,7 @@ import { Header, Stack } from "../../../../components/core";
 import theme from "../../../../assets/styles/theme";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
-import { useAuth } from "../../../../hooks";
+import { useAuth } from "../../../../src/hooks";
 import { SettingsListItem } from "../../../../components/customized";
 
 const { black } = theme.lightColors || {};

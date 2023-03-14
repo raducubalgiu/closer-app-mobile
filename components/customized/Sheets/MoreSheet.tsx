@@ -3,7 +3,7 @@ import { useState, useRef, useEffect, memo } from "react";
 import { Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 import { ListItem, Spinner } from "../../core";
-import { useGet, usePost, useDelete } from "../../../hooks";
+import { useGet, usePost, useDelete } from "../../../src/hooks";
 import { useTranslation } from "react-i18next";
 import { useIsFocused } from "@react-navigation/native";
 import { SettingsListItem } from "../ListItems/SettingsListItem";

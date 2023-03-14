@@ -15,7 +15,7 @@ import {
   useGetPaginate,
   usePaginateActions,
   usePatch,
-} from "../../../../hooks";
+} from "../../../../src/hooks";
 import { Profession } from "../../../../models/profession";
 import { HeaderEdit } from "../../../../components/customized";
 import { MAIN_ROLE, SECOND_ROLE, THIRD_ROLE } from "@env";

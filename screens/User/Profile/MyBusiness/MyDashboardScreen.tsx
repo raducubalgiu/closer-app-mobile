@@ -18,7 +18,7 @@ import {
   TopTabContainer,
   DashboardScheduleTab,
 } from "../../../../components/customized";
-import { useCalendarList } from "../../../../hooks";
+import { useCalendarList } from "../../../../src/hooks";
 import { useTranslation } from "react-i18next";
 import DateRangePicker from "../../../../components/customized/Calendars/DateRangePicker";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";

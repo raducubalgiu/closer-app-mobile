@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext, createContext, useMemo } from "react";
 import { getAuth } from "firebase/auth";
-import { getCurrentUser } from "../utils/auth-middleware";
-import { User } from "../models/user";
+import { getCurrentUser } from "../../utils/auth-middleware";
+import { User } from "../../models/user";
 
 interface UserContext {
   user: User | null;

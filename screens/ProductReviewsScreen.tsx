@@ -11,7 +11,7 @@ import theme from "../assets/styles/theme";
 import { Header, Spinner, Stack } from "../components/core";
 import { NoFoundMessage, CardReviewSummary } from "../components/customized";
 import RatingListItem from "../components/customized/ListItems/RatingListItem";
-import { useGet, useGetPaginate, useRefreshByUser } from "../hooks";
+import { useGet, useGetPaginate, useRefreshByUser } from "../src/hooks";
 import { Review } from "../models/review";
 import { RootStackParams } from "../navigation/rootStackParams";
 

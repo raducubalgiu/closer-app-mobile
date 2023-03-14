@@ -2,7 +2,7 @@ import { FlatList, ListRenderItemInfo } from "react-native";
 import { useCallback } from "react";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { useGetPaginate, usePaginateActions } from "../../../../hooks";
+import { useGetPaginate, usePaginateActions } from "../../../../src/hooks";
 import { Spinner } from "../../../core";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { Post } from "../../../../models/post";

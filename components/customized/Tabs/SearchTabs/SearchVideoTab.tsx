@@ -1,6 +1,6 @@
 import { FlatList, StyleSheet, ListRenderItemInfo } from "react-native";
 import { useCallback } from "react";
-import { useGetPaginate, usePaginateActions } from "../../../../hooks";
+import { useGetPaginate, usePaginateActions } from "../../../../src/hooks";
 import { Post } from "../../../../models";
 import GridVideoVListItem from "../../ListItems/Grid/GridVideoVListItem";
 import { Spinner } from "../../../core";

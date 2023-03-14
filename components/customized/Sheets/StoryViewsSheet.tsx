@@ -3,7 +3,7 @@ import { useIsFocused } from "@react-navigation/native";
 import { Divider, Icon } from "@rneui/themed";
 import { useCallback } from "react";
 import { StyleSheet, ListRenderItemInfo, Text } from "react-native";
-import { useGetPaginate, usePaginateActions } from "../../../hooks";
+import { useGetPaginate, usePaginateActions } from "../../../src/hooks";
 import { Spinner, Stack } from "../../core";
 import theme from "../../../assets/styles/theme";
 import { UserListItemSimple } from "../ListItems/UserListItemSimple";

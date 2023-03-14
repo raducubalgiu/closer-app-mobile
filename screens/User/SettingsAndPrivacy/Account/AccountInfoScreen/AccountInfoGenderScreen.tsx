@@ -8,7 +8,7 @@ import { HeaderEdit } from "../../../../../components/customized";
 import { RootStackParams } from "../../../../../navigation/rootStackParams";
 import theme from "../../../../../assets/styles/theme";
 import { GenderEnum } from "../../../../../models/enums/genderEnum";
-import { useAuth, usePatch } from "../../../../../hooks";
+import { useAuth, usePatch } from "../../../../../src/hooks";
 import { useNavigation } from "@react-navigation/native";
 
 const { grey0 } = theme.lightColors || {};

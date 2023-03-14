@@ -10,7 +10,12 @@ import {
 import { useCallback } from "react";
 import { Header } from "../components/core";
 import { useTranslation } from "react-i18next";
-import { useAuth, useGet, useRefreshOnFocus, useRefreshByUser } from "../hooks";
+import {
+  useAuth,
+  useGet,
+  useRefreshOnFocus,
+  useRefreshByUser,
+} from "../src/hooks";
 import {
   ScheduleOverviewListItem,
   NoFoundMessage,

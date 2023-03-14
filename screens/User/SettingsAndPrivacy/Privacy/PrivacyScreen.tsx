@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Header, Heading } from "../../../../components/core";
 import theme from "../../../../assets/styles/theme";
-import { useAuth, usePatch } from "../../../../hooks";
+import { useAuth, usePatch } from "../../../../src/hooks";
 import { showToast } from "../../../../utils";
 import {
   SettingsListItem,

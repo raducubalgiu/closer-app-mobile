@@ -7,7 +7,7 @@ import {
   useRefreshByUser,
   usePost,
   useAuth,
-} from "../../hooks";
+} from "../../src/hooks";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../navigation/rootStackParams";
 
