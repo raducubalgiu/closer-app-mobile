@@ -9,7 +9,7 @@ import { Header, Protected } from "../../../../components/core";
 import MyBusinessCard from "../../../../components/customized/Cards/MyBusinessCard";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "../../../../src/hooks";
+import { useAuth } from "../../../../hooks";
 import { MAIN_ROLE, SECOND_ROLE } from "@env";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";

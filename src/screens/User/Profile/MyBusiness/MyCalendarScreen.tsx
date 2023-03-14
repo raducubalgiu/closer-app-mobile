@@ -13,17 +13,17 @@ import { useTranslation } from "react-i18next";
 import { Icon } from "@rneui/themed";
 import dayjs from "dayjs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import theme from "../../../../assets/styles/theme";
+import theme from "../../../../../assets/styles/theme";
 import { NoFoundMessage } from "../../../../components/customized";
 import SlotDetailsListItem from "../../../../components/customized/ListItems/SlotDetailsListItem";
 import { Header, Spinner, Stack } from "../../../../components/core";
-import { SHORT_DATE } from "../../../../src/utils/date-utils";
+import { SHORT_DATE } from "../../../../utils/date-utils";
 import {
   useAuth,
   useGet,
   useRefreshByUser,
   useRefreshOnFocus,
-} from "../../../../src/hooks";
+} from "../../../../hooks";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";

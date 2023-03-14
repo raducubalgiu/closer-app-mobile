@@ -13,7 +13,7 @@ import {
   useGetPaginate,
   usePaginateActions,
   useRefreshByUser,
-} from "../../src/hooks";
+} from "../../hooks";
 import { Post } from "../../models/post";
 import { useTranslation } from "react-i18next";
 

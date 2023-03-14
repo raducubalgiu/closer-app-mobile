@@ -9,13 +9,13 @@ import {
 import { useCallback, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import theme from "../../../../assets/styles/theme";
+import theme from "../../../../../assets/styles/theme";
 import {
   useAuth,
   useGetPaginate,
   usePaginateActions,
   usePatch,
-} from "../../../../src/hooks";
+} from "../../../../hooks";
 import { Profession } from "../../../../models/profession";
 import { HeaderEdit } from "../../../../components/customized";
 import { MAIN_ROLE, SECOND_ROLE, THIRD_ROLE } from "@env";

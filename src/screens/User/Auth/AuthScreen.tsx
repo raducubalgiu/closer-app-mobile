@@ -2,7 +2,7 @@ import { StyleSheet, View, Text, SafeAreaView, Pressable } from "react-native";
 import { Divider, Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 import { ListItem, Button } from "../../../components/core";
 import Stack from "../../../components/core/Stack/Stack";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";

@@ -1,6 +1,6 @@
 import { SafeAreaView, StyleSheet } from "react-native";
 import { useState } from "react";
-import { AuthService } from "../../../services/AuthService";
+import { AuthService } from "../../../../services/AuthService";
 import { useNavigation } from "@react-navigation/native";
 import { IconBackButton } from "../../../components/core";
 import Stack from "../../../components/core/Stack/Stack";

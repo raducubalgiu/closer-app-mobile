@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Switch } from "@rneui/themed";
 import RNPickerSelect from "react-native-picker-select";
 import { Header, ListItem, Stack } from "../../../../components/core";
-import theme from "../../../../assets/styles/theme";
+import theme from "../../../../../assets/styles/theme";
 
 const { black, grey0 } = theme.lightColors || {};
 

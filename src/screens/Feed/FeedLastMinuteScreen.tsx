@@ -14,7 +14,7 @@ import {
   useGetPaginate,
   usePaginateActions,
   useRefreshByUser,
-} from "../../src/hooks";
+} from "../../hooks";
 import { useTranslation } from "react-i18next";
 
 type PostListItem = {

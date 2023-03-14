@@ -18,9 +18,9 @@ import {
   Spinner,
   Stack,
 } from "../../../../components/core";
-import theme from "../../../../assets/styles/theme";
-import { useAuth, useGet, useSheet } from "../../../../src/hooks";
-import { numberWithComma } from "../../../../src/utils";
+import theme from "../../../../../assets/styles/theme";
+import { useAuth, useGet } from "../../../../hooks";
+import { numberWithComma } from "../../../../utils";
 
 type IProps = NativeStackScreenProps<RootStackParams, "MyCalendarStatistics">;
 const { success, black, grey0 } = theme.lightColors || {};

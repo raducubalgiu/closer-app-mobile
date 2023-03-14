@@ -10,10 +10,10 @@ import {
   Spinner,
   Stack,
 } from "../../../../components/core";
-import { MapStatic } from "../../../../components/customized";
-import theme from "../../../../assets/styles/theme";
-import { useAuth, useGet } from "../../../../src/hooks";
-import { AddressFormat, showToast } from "../../../../src/utils";
+import MapStatic from "../../../../components/customized/Map/MapStatic";
+import theme from "../../../../../assets/styles/theme";
+import { useAuth, useGet } from "../../../../hooks";
+import { AddressFormat, showToast } from "../../../../utils";
 import { useState } from "react";
 
 const { grey0 } = theme.lightColors || {};

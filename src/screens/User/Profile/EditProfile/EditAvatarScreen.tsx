@@ -3,7 +3,7 @@ import { Avatar } from "@rneui/themed";
 import { Button, Stack } from "../../../../components/core";
 import { useNavigation } from "@react-navigation/native";
 import { CloseIconButton } from "../../../../components/customized";
-import theme from "../../../../assets/styles/theme";
+import theme from "../../../../../assets/styles/theme";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
 const { black } = theme.lightColors || {};

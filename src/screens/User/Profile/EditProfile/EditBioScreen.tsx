@@ -11,8 +11,8 @@ import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { HeaderEdit } from "../../../../components/customized";
 import { Spinner } from "../../../../components/core";
-import theme from "../../../../assets/styles/theme";
-import { useAuth, usePatch } from "../../../../src/hooks";
+import theme from "../../../../../assets/styles/theme";
+import { useAuth, usePatch } from "../../../../hooks";
 
 const { grey0 } = theme.lightColors || {};
 

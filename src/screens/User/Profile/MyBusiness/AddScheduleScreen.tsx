@@ -25,16 +25,11 @@ import {
   Stack,
 } from "../../../../components/core";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
-import {
-  useAuth,
-  useCalendarList,
-  useGet,
-  usePost,
-} from "../../../../src/hooks";
-import theme from "../../../../assets/styles/theme";
-import { Product } from "../../../../models/product";
-import { showToast } from "../../../../src/utils";
-import { required } from "../../../../src/utils/validation";
+import { useAuth, useCalendarList, useGet, usePost } from "../../../../hooks";
+import theme from "../../../../../assets/styles/theme";
+import { Product } from "../../../../models";
+import { showToast } from "../../../../utils";
+import { required } from "../../../../utils/validation";
 
 const { black, grey0 } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "AddSchedule">;

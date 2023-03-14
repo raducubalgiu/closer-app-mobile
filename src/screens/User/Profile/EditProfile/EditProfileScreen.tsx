@@ -10,7 +10,7 @@ import {
 import { Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import theme from "../../../../assets/styles/theme";
+import theme from "../../../../../assets/styles/theme";
 import { Icon } from "@rneui/themed";
 import {
   Stack,
@@ -20,8 +20,8 @@ import {
 } from "../../../../components/core";
 import { EditProfileSheet } from "../../../../components/customized";
 import CustomAvatar from "../../../../components/core/Avatars/CustomAvatar";
-import { trimFunc } from "../../../../src/utils";
-import { useAuth } from "../../../../src/hooks";
+import { trimFunc } from "../../../../utils";
+import { useAuth } from "../../../../hooks";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";

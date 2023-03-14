@@ -1,10 +1,10 @@
 import { SafeAreaView, StyleSheet } from "react-native";
 import { useState } from "react";
 import axios from "axios";
-import { AuthService } from "../../../services/AuthService";
+import { AuthService } from "../../../../services/AuthService";
 import { IconBackButton } from "../../../components/core";
 import Stack from "../../../components/core/Stack/Stack";
-import { useAuth } from "../../../src/hooks/auth";
+import { useAuth } from "../../../hooks";
 import { LoginRegisterForm } from "../../../components/customized";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
