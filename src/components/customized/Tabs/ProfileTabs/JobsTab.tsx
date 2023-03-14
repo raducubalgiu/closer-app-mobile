@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { useTranslation } from "react-i18next";
-import { useGetPaginate } from "../../../../src/hooks";
+import { useGetPaginate } from "../../../../hooks";
 import { Spinner } from "../../../core";
 import { Post } from "../../../../models/post";
 

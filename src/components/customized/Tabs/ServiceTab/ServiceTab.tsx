@@ -9,10 +9,10 @@ import {
 import { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Spinner } from "../../../core";
-import { useGetPaginate } from "../../../../src/hooks";
+import { useGetPaginate } from "../../../../hooks";
 import ProductListItem from "../../ListItems/ProductListItem";
 import { Product } from "../../../../models/product";
-import theme from "../../../../assets/styles/theme";
+import theme from "../../../../../assets/styles/theme";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 

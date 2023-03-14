@@ -2,7 +2,7 @@ import { FlatList, ListRenderItemInfo, Text } from "react-native";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
-import { useGetPaginate } from "../../../../src/hooks";
+import { useGetPaginate, usePaginateActions } from "../../../../hooks";
 import { HashtagListItem } from "../../ListItems/HashtagListItem";
 import { HeadingWithAction } from "../../../core";
 import UserListItem from "../../ListItems/UserListItem";
@@ -12,7 +12,6 @@ import { RootStackParams } from "../../../../navigation/rootStackParams";
 import { User } from "../../../../models/user";
 import { Hashtag } from "../../../../models/hashtag";
 import { Post } from "../../../../models/post";
-import { usePaginateActions } from "../../../../src/hooks";
 
 export const SearchPopularTab = ({ search }: { search: string }) => {
   const navigation =

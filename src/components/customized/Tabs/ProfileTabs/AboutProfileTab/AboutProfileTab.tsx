@@ -2,7 +2,7 @@ import { View, useWindowDimensions } from "react-native";
 import { forwardRef, useCallback, memo, useRef } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import { SheetModal } from "../../../../core";
-import { useGet } from "../../../../../src/hooks";
+import { useGet } from "../../../../../hooks";
 import Animated from "react-native-reanimated";
 import { User } from "../../../../../models";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";

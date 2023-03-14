@@ -1,6 +1,6 @@
 import { Service } from "../../../../models/service";
 import { TopTabServices } from "../TopTabContainer/TopTabServices";
-import { useGet } from "../../../../src/hooks";
+import { useGet } from "../../../../hooks";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { useTranslation } from "react-i18next";
 import { memo } from "react";

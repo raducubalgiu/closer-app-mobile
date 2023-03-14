@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import { Icon, Badge } from "@rneui/themed";
-import theme from "../../../../assets/styles/theme";
+import theme from "../../../../../assets/styles/theme";
 
 const { primary } = theme.lightColors || {};
 type IProps = { value?: number; iconProps?: any };

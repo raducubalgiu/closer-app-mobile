@@ -1,7 +1,7 @@
 import { Dimensions, StyleSheet } from "react-native";
 import React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import theme from "../../../../assets/styles/theme";
+import theme from "../../../../../assets/styles/theme";
 
 const { width } = Dimensions.get("window");
 const { black } = theme.lightColors || {};

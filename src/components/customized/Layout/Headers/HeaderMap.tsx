@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Dimensions } from "react-native";
 import { Stack, IconButton } from "../../../core";
-import theme from "../../../../assets/styles/theme";
+import theme from "../../../../../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
 
 const { width } = Dimensions.get("window");

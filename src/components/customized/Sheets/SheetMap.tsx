@@ -74,7 +74,7 @@ const SheetMap = ({ latitude, longitude, height, width, onClose }: IProps) => {
       >
         <Marker
           coordinate={{ latitude, longitude }}
-          image={require("../../../assets/images/map_marker.png")}
+          image={require("../../../../assets/images/map_marker.png")}
         />
       </MapView>
     </BottomSheetView>

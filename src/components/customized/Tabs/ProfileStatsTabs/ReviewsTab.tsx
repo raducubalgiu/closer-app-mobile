@@ -18,12 +18,12 @@ import {
   useGetPaginate,
   usePaginateActions,
   useRefreshByUser,
-} from "../../../../src/hooks";
+} from "../../../../hooks";
 import { CardReviewSummary } from "../../Cards/CardReviewSummary";
 import RatingListItem from "../../ListItems/RatingListItem";
 import { Review } from "../../../../models/review";
 import { Divider, Icon, ListItem } from "@rneui/themed";
-import theme from "../../../../assets/styles/theme";
+import theme from "../../../../../assets/styles/theme";
 import { Product } from "../../../../models";
 
 type IProps = { userId: string };

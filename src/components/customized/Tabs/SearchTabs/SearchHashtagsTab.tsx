@@ -1,6 +1,6 @@
 import { FlatList, ListRenderItemInfo } from "react-native";
 import { useCallback } from "react";
-import { useGetPaginate, usePaginateActions } from "../../../../src/hooks";
+import { useGetPaginate, usePaginateActions } from "../../../../hooks";
 import { HashtagListItem } from "../../ListItems/HashtagListItem";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { useTranslation } from "react-i18next";

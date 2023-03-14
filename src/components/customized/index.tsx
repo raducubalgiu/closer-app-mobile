@@ -47,7 +47,6 @@ export { DashboardJobsTab } from "./Tabs/DashboardTabs/DashboardJobsTab";
 export { ServiceTab } from "./Tabs/ServiceTab/ServiceTab";
 export { TabBadge } from "./Tabs/TabBadge/TabBadge";
 export { SearchBookablesTab } from "./Tabs/SearchTabs/SearchBookablesTab";
-export { ProfileCollapsableTabs } from "./Tabs/ProfileCollapsibleTabs/ProfileCollapsableTabs";
 export { HashtagPostsPopularTab } from "./Tabs/HashtagPostsTabs/HashtagPostsPopularTab";
 export { HashtagPostsRecentTab } from "./Tabs/HashtagPostsTabs/HashtagPostsRecentTab";
 export { HashtagPostsBookableTab } from "./Tabs/HashtagPostsTabs/HashtagPostsBookableTab";
@@ -123,7 +122,5 @@ export { PhotoIconButton } from "./IconButtons/PhotoIconButton";
 export { RevertIconButton } from "./IconButtons/RevertIconButton";
 export { InfoIconButton } from "./IconButtons/InfoIconButton";
 export { ProfileIconButton } from "./IconButtons/ProfileIconButton";
-
-export { VideoDetailsSkeleton } from "./Skeletons/VideoDetailsSkeleton";
 
 export { DisplayText };

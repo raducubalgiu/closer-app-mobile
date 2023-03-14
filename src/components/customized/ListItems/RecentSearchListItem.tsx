@@ -2,7 +2,7 @@ import { StyleSheet, Text, Pressable, View } from "react-native";
 import { Avatar, Icon } from "@rneui/themed";
 import { Checkmark, IconButton, Stack } from "../../core";
 import theme from "../../../../assets/styles/theme";
-import NoAvatar from "../../../assets/images/avatar.jpg";
+import NoAvatar from "../../../../assets/images/avatar.jpg";
 import { useDelete } from "../../../hooks";
 
 const { black, grey0 } = theme.lightColors || {};

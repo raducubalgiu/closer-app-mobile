@@ -4,7 +4,7 @@ import Animated from "react-native-reanimated";
 import { useIsFocused } from "@react-navigation/native";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { useTranslation } from "react-i18next";
-import { useGetPaginate, usePaginateActions } from "../../../../src/hooks";
+import { useGetPaginate, usePaginateActions } from "../../../../hooks";
 import { Post } from "../../../../models/post";
 import GridVideoListItem from "../../ListItems/Grid/GridVideo/GridVideoListItem";
 

@@ -2,7 +2,7 @@ import { StyleSheet, Text } from "react-native";
 import React, { memo } from "react";
 import { Stack } from "../../../../../core";
 import { useTranslation } from "react-i18next";
-import theme from "../../../../../../assets/styles/theme";
+import theme from "../../../../../../../assets/styles/theme";
 import { ListItem } from "../../../../../core";
 import dayjs from "dayjs";
 

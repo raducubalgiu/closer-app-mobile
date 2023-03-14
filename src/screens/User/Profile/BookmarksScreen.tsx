@@ -11,7 +11,7 @@ import {
   SavedVideoTab,
 } from "../../../components/customized/index";
 import { Header } from "../../../components/core";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/rootStackParams";
 

@@ -1,14 +1,14 @@
 import { useCallback, useRef } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { PostsProfileTab } from "../ProfileTabs/PostsProfileTab";
+import PostsProfileTab from "../ProfileTabs/PostsProfileTab";
 import { MAIN_ROLE, SECOND_ROLE } from "@env";
 import { Icon } from "@rneui/themed";
 import { VideosVTab } from "../ProfileTabs/VideosProfileTab";
 import { JobsTab } from "../ProfileTabs/JobsTab";
-import { ProductsProfileTab } from "../ProfileTabs/ProductsProfileTab";
-import { AboutProfileTab } from "../ProfileTabs/AboutProfileTab/AboutProfileTab";
+import ProductsProfileTab from "../ProfileTabs/ProductsProfileTab";
+import AboutProfileTab from "../ProfileTabs/AboutProfileTab/AboutProfileTab";
 import { TabBadge } from "../TabBadge/TabBadge";
-import theme from "../../../../assets/styles/theme";
+import theme from "../../../../../assets/styles/theme";
 import { User } from "../../../../models/user";
 import { Animated, Dimensions, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";

@@ -1,7 +1,7 @@
 import { StyleSheet, SafeAreaView, FlatList, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import UserListItem from "../../../components/customized/ListItems/UserListItem";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 import * as Contacts from "expo-contacts";
 import { Header, SearchBarInput } from "../../../components/core";
 

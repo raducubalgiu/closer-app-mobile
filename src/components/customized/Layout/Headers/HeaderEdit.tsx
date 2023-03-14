@@ -2,7 +2,7 @@ import { StyleSheet, Text, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { IconBackButton, Stack } from "../../../core";
-import theme from "../../../../assets/styles/theme";
+import theme from "../../../../../assets/styles/theme";
 import { Divider } from "@rneui/themed";
 
 const { grey0, primary } = theme.lightColors || {};

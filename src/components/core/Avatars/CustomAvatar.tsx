@@ -1,6 +1,6 @@
 import { Avatar, Image } from "@rneui/themed";
 import { memo } from "react";
-import NoAvatar from "../../../assets/images/avatar.jpg";
+import NoAvatar from "../../../../assets/images/avatar.jpg";
 import { LinearGradient } from "expo-linear-gradient";
 import theme from "../../../../assets/styles/theme";
 

@@ -1,9 +1,9 @@
 import { StyleSheet, Text } from "react-native";
 import { memo } from "react";
 import { Stack } from "../../../../../core";
-import { trimFunc } from "../../../../../../src/utils";
+import { trimFunc } from "../../../../../../utils";
 import { useTranslation } from "react-i18next";
-import theme from "../../../../../../assets/styles/theme";
+import theme from "../../../../../../../assets/styles/theme";
 
 const { black, grey0 } = theme.lightColors || {};
 type IProps = { description: string };

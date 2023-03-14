@@ -4,7 +4,7 @@ import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { useTranslation } from "react-i18next";
 import { Spinner } from "../../../core";
 import ProductListItem from "../../ListItems/ProductListItem";
-import { useGetPaginate, usePaginateActions } from "../../../../src/hooks";
+import { useGetPaginate, usePaginateActions } from "../../../../hooks";
 import { useIsFocused } from "@react-navigation/native";
 import { Product } from "../../../../models/product";
 import { User } from "../../../../models/user";

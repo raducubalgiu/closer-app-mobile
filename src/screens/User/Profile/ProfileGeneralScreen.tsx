@@ -12,7 +12,7 @@ import {
   useGetMutate,
   usePost,
   useDelete,
-} from "../../../src/hooks";
+} from "../../../hooks";
 import {
   HeaderProfileGeneral,
   TopTabProfile,

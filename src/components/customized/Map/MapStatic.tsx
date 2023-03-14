@@ -68,7 +68,7 @@ const MapStatic = ({
       >
         <Marker
           coordinate={{ latitude, longitude }}
-          image={require("../../../assets/images/map_marker.png")}
+          image={require("../../../../assets/images/map_marker.png")}
         />
       </MapView>
       <FAB
