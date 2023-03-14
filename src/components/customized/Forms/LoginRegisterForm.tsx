@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { Divider } from "@rneui/themed";
 import { Button, FormInput, Stack } from "../../core";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 import { AuthProviders } from "./AuthProviders";
 

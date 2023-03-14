@@ -1,5 +1,5 @@
 import { IconButton } from "../../core";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 
 const { black } = theme.lightColors || {};
 

@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from "react-native";
 import CustomAvatar from "../../core/Avatars/CustomAvatar";
-import { DisplayText } from "../Typography/DisplayText/DisplayText";
+import DisplayText from "../Typography/DisplayText/DisplayText";
 import { Divider } from "@rneui/themed";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 
 const { grey0 } = theme.lightColors || {};
 

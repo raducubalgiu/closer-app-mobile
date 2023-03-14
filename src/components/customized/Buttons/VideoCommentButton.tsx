@@ -1,6 +1,6 @@
 import { StyleSheet, Pressable } from "react-native";
 import { Icon, Badge } from "@rneui/themed";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 
 const { error } = theme.lightColors || {};
 type IProps = { onPress: () => void; sx?: {}; hasComments: boolean };

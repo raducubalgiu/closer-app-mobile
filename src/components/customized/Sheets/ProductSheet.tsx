@@ -4,7 +4,7 @@ import { Stack } from "../../core";
 import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { useTranslation } from "react-i18next";
 import { Product } from "../../../models/product";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 import dayjs from "dayjs";
 import { LastMinuteLabel } from "../Typography/Labels/LastMinuteLabel";
 import { BookableLabel } from "../Typography/Labels/BookableLabel";

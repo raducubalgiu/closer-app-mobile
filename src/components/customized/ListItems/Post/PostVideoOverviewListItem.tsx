@@ -1,8 +1,6 @@
 import { StyleSheet, Dimensions, Pressable, View } from "react-native";
-import { Icon } from "@rneui/themed";
 import { memo } from "react";
 import { ResizeMode, Video } from "expo-av";
-import { SharedElement } from "react-navigation-shared-element";
 import { LinearGradient } from "expo-linear-gradient";
 
 const { width } = Dimensions.get("window");

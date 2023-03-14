@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
 import { Stack } from "../../core";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 import { SettingsListItem } from "../ListItems/SettingsListItem";
 
 const { black } = theme.lightColors || {};

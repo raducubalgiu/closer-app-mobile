@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, Text } from "react-native";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 
 const { black, primary } = theme.lightColors || {};
 type IProps = { isFollow: boolean; onPress: () => void };

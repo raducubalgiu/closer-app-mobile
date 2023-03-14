@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { ScrollView, StyleSheet, Text } from "react-native";
 import { Button, CModal, Stack } from "../../core";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 import { Icon } from "@rneui/themed";
 
 const { black, grey0 } = theme.lightColors || {};

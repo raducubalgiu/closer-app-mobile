@@ -12,7 +12,7 @@ import { Video } from "expo-av";
 import { Icon } from "@rneui/themed";
 import { Stack } from "../../core";
 import CustomAvatar from "../../core/Avatars/CustomAvatar";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
 import Toast from "react-native-root-toast";
 import { Slider } from "@rneui/themed";

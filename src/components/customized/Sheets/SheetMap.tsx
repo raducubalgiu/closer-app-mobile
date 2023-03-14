@@ -4,7 +4,7 @@ import { StyleSheet, Text, Pressable } from "react-native";
 import { Icon } from "@rneui/themed";
 import { Stack } from "../../core";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 
 type IProps = {

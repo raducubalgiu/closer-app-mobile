@@ -3,13 +3,13 @@ import { useCallback, useState, memo } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Stack, Checkmark } from "../../core";
 import FollowButton from "../Buttons/FollowButton";
-import theme from "../../../assets/styles/theme";
-import { useAuth } from "../../../src/hooks/auth";
+import theme from "../../../../assets/styles/theme";
+import { useAuth } from "../../../hooks/auth";
 import CustomAvatar from "../../core/Avatars/CustomAvatar";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/rootStackParams";
 import * as Haptics from "expo-haptics";
-import { usePost, useDelete } from "../../../src/hooks";
+import { usePost, useDelete } from "../../../hooks";
 
 const { grey0, black } = theme.lightColors || {};
 

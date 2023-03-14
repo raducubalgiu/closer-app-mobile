@@ -1,5 +1,5 @@
 import { ButtonProvider } from "../Buttons/ButtonProvider";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 
 const { black } = theme.lightColors || {};

@@ -3,8 +3,8 @@ import { memo } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { Stack } from "../../../core";
 import CustomAvatar from "../../../core/Avatars/CustomAvatar";
-import theme from "../../../../assets/styles/theme";
-import { trimFunc } from "../../../../src/utils";
+import theme from "../../../../../assets/styles/theme";
+import { trimFunc } from "../../../../utils";
 
 type IProps = { onPress: () => void; avatar: any; username: string };
 const { primary } = theme.lightColors || {};

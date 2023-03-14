@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text } from "react-native";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 
 const { primary } = theme.lightColors || {};

@@ -3,10 +3,10 @@ import React from "react";
 import { Icon } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
 import { Stack } from "../../core";
-import { displayCount } from "../../../src/utils";
-import theme from "../../../assets/styles/theme";
+import { displayCount } from "../../../utils";
+import theme from "../../../../assets/styles/theme";
 import { BookmarkButton } from "../Buttons/BookmarkButton";
-import { useAuth, useGet } from "../../../src/hooks";
+import { useAuth, useGet } from "../../../hooks";
 
 const { grey0 } = theme.lightColors || {};
 

@@ -1,6 +1,6 @@
 import { StyleSheet, Text, Pressable } from "react-native";
 import { memo } from "react";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 
 const { primary, black } = theme.lightColors || {};
 

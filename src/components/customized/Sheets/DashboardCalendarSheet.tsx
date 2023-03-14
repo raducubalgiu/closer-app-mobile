@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { Divider } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 import { Stack } from "../../core";
 
 const { primary, black } = theme.lightColors || {};

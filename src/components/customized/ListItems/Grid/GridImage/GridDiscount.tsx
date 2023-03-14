@@ -1,8 +1,7 @@
 import { memo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import theme from "../../../../../assets/styles/theme";
-import { trimFunc } from "../../../../../src/utils";
+import theme from "../../../../../../assets/styles/theme";
 
 type IProps = { discount: number; expirationTime: string | null };
 const { error, secondary } = theme.lightColors || {};

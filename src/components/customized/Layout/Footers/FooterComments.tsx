@@ -2,7 +2,7 @@ import { StyleSheet, TextInput } from "react-native";
 import { useTranslation } from "react-i18next";
 import { Stack, IconButton } from "../../../core";
 import CustomAvatar from "../../../core/Avatars/CustomAvatar";
-import theme from "../../../../assets/styles/theme";
+import theme from "../../../../../assets/styles/theme";
 
 const { primary } = theme.lightColors || {};
 

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, FlatList, ListRenderItemInfo } from "react-native";
 import { memo, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 import { Stack } from "../../core";
 import RecommendedUserListItem from "../ListItems/RecommendedUserListItem";
 

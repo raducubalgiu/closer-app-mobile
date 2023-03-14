@@ -4,7 +4,7 @@ import { ResizeMode, Video } from "expo-av";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useAuth } from "../../../../src/hooks";
+import { useAuth } from "../../../../hooks";
 import ProductSheet from "../../Sheets/ProductSheet";
 import MoreSheet from "../../Sheets/MoreSheet";
 import LikesSheet from "../../Sheets/LikesSheet";

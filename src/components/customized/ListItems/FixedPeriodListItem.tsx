@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import { Switch } from "@rneui/themed";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 
 const { black, grey0 } = theme.lightColors || {};
 

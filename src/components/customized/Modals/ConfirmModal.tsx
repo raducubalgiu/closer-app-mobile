@@ -2,7 +2,7 @@ import { StyleSheet, Text, Dimensions, Pressable } from "react-native";
 import { useTranslation } from "react-i18next";
 import { Divider } from "@rneui/base";
 import { CModal, Stack } from "../../core";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 
 const { black, error, grey0 } = theme.lightColors || {};
 const { width, height } = Dimensions.get("window");

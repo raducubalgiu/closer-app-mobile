@@ -1,7 +1,7 @@
 import { StyleSheet, Text, Pressable } from "react-native";
 import { Stack, Checkmark } from "../../core";
 import CustomAvatar from "../../core/Avatars/CustomAvatar";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 
 const { grey0, black } = theme.lightColors || {};
 

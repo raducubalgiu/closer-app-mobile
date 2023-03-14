@@ -12,7 +12,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Stack } from "../../../core";
 import { StoryLabel } from "../../Typography/Labels/StoryLabel";
 import { LinearGradient } from "expo-linear-gradient";
-import { useAuth, useSheet } from "../../../../src/hooks";
+import { useAuth } from "../../../../hooks";
 import PostGradient from "../../Gradients/PostGradient";
 import StoryFooterListItem from "./StoryFooterListItem";
 import StoryHeaderListItem from "./StoryHeaderListItem";

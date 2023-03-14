@@ -3,7 +3,7 @@ import { memo } from "react";
 import { Icon } from "@rneui/themed";
 import { Stack } from "../../../core";
 import { Product } from "../../../../models";
-import theme from "../../../../assets/styles/theme";
+import theme from "../../../../../assets/styles/theme";
 
 type IProps = { product: Product };
 const { black } = theme.lightColors || {};

@@ -1,13 +1,7 @@
 import { Pressable, StyleSheet, Text } from "react-native";
 import { useCallback, useState } from "react";
-import theme from "../../../assets/styles/theme";
-import {
-  useGet,
-  usePost,
-  useDelete,
-  usePatch,
-  useAuth,
-} from "../../../src/hooks";
+import theme from "../../../../assets/styles/theme";
+import { useGet, usePost, useDelete, usePatch, useAuth } from "../../../hooks";
 import { Icon } from "@rneui/themed";
 
 const { grey0, error } = theme.lightColors || {};

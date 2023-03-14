@@ -7,7 +7,7 @@ import {
   BookmarkIconButton,
   ShareIButton,
 } from "../../../core";
-import theme from "../../../../assets/styles/theme";
+import theme from "../../../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";

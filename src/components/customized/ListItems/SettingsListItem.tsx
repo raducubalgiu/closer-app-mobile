@@ -1,7 +1,7 @@
 import { StyleSheet, Text } from "react-native";
 import { Icon } from "@rneui/themed";
 import { ListItem, Stack } from "../../core";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 
 const { black, grey0 } = theme.lightColors || {};
 type IProps = {

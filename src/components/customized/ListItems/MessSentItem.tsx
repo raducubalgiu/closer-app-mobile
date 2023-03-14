@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Dimensions, Image } from "react-native";
 import { Icon } from "@rneui/themed";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 import { Stack } from "../../core";
 import { MessDateItem } from "./MessDateItem";
 

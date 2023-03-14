@@ -1,4 +1,4 @@
-import { StyleSheet, Text, useWindowDimensions, View } from "react-native";
+import { StyleSheet, useWindowDimensions } from "react-native";
 import { forwardRef, memo } from "react";
 import { ResizeMode, Video } from "expo-av";
 

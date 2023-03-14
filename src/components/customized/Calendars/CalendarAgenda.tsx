@@ -12,9 +12,9 @@ import { useCallback, useState, memo, useRef } from "react";
 import dayjs from "dayjs";
 import { Divider, ListItem } from "@rneui/themed";
 import * as Haptics from "expo-haptics";
-import { useCalendarList } from "../../../src/hooks";
-import theme from "../../../assets/styles/theme";
-import { SHORT_DATE } from "../../../src/utils/date-utils";
+import { useCalendarList } from "../../../hooks";
+import theme from "../../../../assets/styles/theme";
+import { SHORT_DATE } from "../../../utils/date-utils";
 import { Month } from "../../../models/month";
 import { Day } from "../../../models/day";
 

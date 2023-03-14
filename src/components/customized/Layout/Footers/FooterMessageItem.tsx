@@ -2,7 +2,7 @@ import { StyleSheet, Text, TextInput, Pressable } from "react-native";
 import * as Haptics from "expo-haptics";
 import { useTranslation } from "react-i18next";
 import { Stack, IconButton } from "../../../core";
-import theme from "../../../../assets/styles/theme";
+import theme from "../../../../../assets/styles/theme";
 
 const { primary } = theme.lightColors || {};
 

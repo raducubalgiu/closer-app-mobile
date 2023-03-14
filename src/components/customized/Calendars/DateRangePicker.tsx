@@ -8,7 +8,7 @@ import {
   Pressable,
 } from "react-native";
 import { useCallback, memo, useRef } from "react";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 import * as Haptics from "expo-haptics";
 import { Dayjs } from "dayjs";
 import { Month } from "../../../models/month";

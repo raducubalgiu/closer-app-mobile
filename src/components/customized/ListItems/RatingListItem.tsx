@@ -1,12 +1,12 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { memo, useState } from "react";
 import { Divider, Icon } from "@rneui/themed";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 import { Checkmark, Stack, Rating } from "../../core";
 import CustomAvatar from "../../core/Avatars/CustomAvatar";
 import dayjs from "dayjs";
 import { User } from "../../../models/user";
-import { useAuth, useDelete, useGet, usePost } from "../../../src/hooks";
+import { useAuth, useDelete, useGet, usePost } from "../../../hooks";
 
 const { black, grey0, error } = theme.lightColors || {};
 

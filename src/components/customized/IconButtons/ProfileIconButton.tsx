@@ -1,6 +1,6 @@
 import { ActivityIndicator, Pressable, StyleSheet } from "react-native";
 import { Icon } from "@rneui/themed";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 
 const { black } = theme.lightColors || {};
 

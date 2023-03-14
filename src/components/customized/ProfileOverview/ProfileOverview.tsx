@@ -3,15 +3,15 @@ import { StyleSheet, Text, View, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { MAIN_ROLE, SECOND_ROLE, THIRD_ROLE } from "@env";
 import { useTranslation } from "react-i18next";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 import { Stack, IconStar, Protected } from "../../core";
 import { StatsButton } from "../Buttons/StatsButton";
 import CustomAvatar from "../../core/Avatars/CustomAvatar";
-import { displayDash } from "../../../src/utils";
+import { displayDash } from "../../../utils";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/rootStackParams";
 import AvatarBadge from "../../core/Avatars/AvatarBadge";
-import { useAuth } from "../../../src/hooks";
+import { useAuth } from "../../../hooks";
 
 const { black, primary } = theme.lightColors || {};
 

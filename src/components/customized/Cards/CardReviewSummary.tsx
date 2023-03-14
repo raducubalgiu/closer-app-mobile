@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import { find } from "lodash";
 import { ListItem, Rating, Stack } from "../../core";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 
 const { primary, black, grey0 } = theme.lightColors || {};
 

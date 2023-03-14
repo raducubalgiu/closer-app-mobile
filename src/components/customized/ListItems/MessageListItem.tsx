@@ -1,8 +1,8 @@
 import { StyleSheet, Text, Pressable } from "react-native";
 import { Stack, Checkmark } from "../../core";
 import CustomAvatar from "../../core/Avatars/CustomAvatar";
-import theme from "../../../assets/styles/theme";
-import { trimFunc } from "../../../src/utils";
+import theme from "../../../../assets/styles/theme";
+import { trimFunc } from "../../../utils";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/rootStackParams";

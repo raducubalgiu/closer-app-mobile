@@ -3,13 +3,13 @@ import { useCallback, memo } from "react";
 import { useTranslation } from "react-i18next";
 import { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import { Divider, Icon } from "@rneui/themed";
-import { useGetPaginate, usePaginateActions } from "../../../src/hooks";
+import { useGetPaginate, usePaginateActions } from "../../../hooks";
 import UserListItem from "../ListItems/UserListItem";
 import { User } from "../../../models/user";
 import { Heading, Spinner, Stack } from "../../core";
 import { NoFoundMessage } from "../NoFoundMessage/NoFoundMessage";
-import theme from "../../../assets/styles/theme";
-import { displayDash } from "../../../src/utils";
+import theme from "../../../../assets/styles/theme";
+import { displayDash } from "../../../utils";
 
 const { black } = theme.lightColors || {};
 type IProps = {

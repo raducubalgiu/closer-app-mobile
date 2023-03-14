@@ -1,7 +1,7 @@
 import { StyleSheet, Text, Pressable, Image } from "react-native";
 import { memo } from "react";
 import { Stack, IconStar, Spinner } from "../../core";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 
 const { black, grey0 } = theme.lightColors || {};
 

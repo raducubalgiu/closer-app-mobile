@@ -1,5 +1,5 @@
 import { StyleSheet, Text, Pressable } from "react-native";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 
 const { grey3 } = theme.lightColors || {};
 

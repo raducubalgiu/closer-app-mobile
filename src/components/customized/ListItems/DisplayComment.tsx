@@ -3,11 +3,11 @@ import { memo } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Stack, Spinner } from "../../core";
 import CustomAvatar from "../../core/Avatars/CustomAvatar";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 import { LikeCommentButton } from "../Buttons/LikeCommentButton";
 import { RelatedCommentsList } from "./RelatedCommentsList";
-import { DisplayText } from "../Typography/DisplayText/DisplayText";
+import DisplayText from "../Typography/DisplayText/DisplayText";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/rootStackParams";
 

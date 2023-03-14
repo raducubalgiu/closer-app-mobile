@@ -1,7 +1,7 @@
 import { StyleSheet, Text, Pressable } from "react-native";
 import { memo } from "react";
 import { useTranslation } from "react-i18next";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 
 const { primary, black } = theme.lightColors || {};
 type IProps = {

@@ -2,7 +2,7 @@ import { StyleSheet, Text } from "react-native";
 import { memo, useState } from "react";
 import { Switch } from "@rneui/themed";
 import { Stack, FormInputSelect } from "../../core";
-import theme from "../../../assets/styles/theme";
+import theme from "../../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 
 const { black } = theme.lightColors || {};
