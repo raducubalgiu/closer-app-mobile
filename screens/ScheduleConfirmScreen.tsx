@@ -12,7 +12,7 @@ import {
 
 import dayjs from "dayjs";
 import { RootStackParams } from "../navigation/rootStackParams";
-import { showToast } from "../utils";
+import { showToast } from "../src/utils";
 
 const { black, grey0, error } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "ScheduleConfirm">;

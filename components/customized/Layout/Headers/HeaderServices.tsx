@@ -5,7 +5,7 @@ import { Stack } from "../../../core";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
-import { trimFunc } from "../../../../utils";
+import { trimFunc } from "../../../../src/utils";
 
 const { grey0, black } = theme.lightColors || {};
 

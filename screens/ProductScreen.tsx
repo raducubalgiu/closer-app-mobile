@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next";
 import { Divider, Icon } from "@rneui/themed";
 import { BookmarkButton, UserListItemSimple } from "../components/customized";
 import theme from "../assets/styles/theme";
-import { trimFunc } from "../utils";
+import { trimFunc } from "../src/utils";
 import { useNavigation } from "@react-navigation/native";
 import { SECOND_ROLE, THIRD_ROLE } from "@env";
 import { useAuth, useGet } from "../src/hooks";

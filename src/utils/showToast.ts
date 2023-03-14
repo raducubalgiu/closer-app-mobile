@@ -1,6 +1,6 @@
 import Toast from "react-native-root-toast";
 import { Dimensions } from "react-native";
-import theme from "../assets/styles/theme";
+import theme from "../../assets/styles/theme";
 
 const { width } = Dimensions.get("window");
 const { black } = theme.lightColors || {};

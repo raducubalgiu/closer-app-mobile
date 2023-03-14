@@ -10,7 +10,7 @@ import {
 } from "../../../../../components/core";
 import theme from "../../../../../assets/styles/theme";
 import { useAuth, usePatch } from "../../../../../src/hooks";
-import { showToast } from "../../../../../utils";
+import { showToast } from "../../../../../src/utils";
 import { useNavigation } from "@react-navigation/native";
 
 const { error } = theme.lightColors || {};

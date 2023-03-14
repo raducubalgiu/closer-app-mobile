@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 import theme from "../../../../assets/styles/theme";
 import { Stack, ListItem, Spinner } from "../../../core";
 import { useAuth, useGet, useRefreshByUser } from "../../../../src/hooks";
-import { numberWithComma } from "../../../../utils";
+import { numberWithComma } from "../../../../src/utils";
 
 const { black, grey0, error, success, primary } = theme.lightColors || {};
 const { width } = Dimensions.get("window");

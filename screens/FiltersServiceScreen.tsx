@@ -13,7 +13,7 @@ import OptionListItem from "../components/customized/ListItems/OptionListItem";
 import { RootStackParams } from "../navigation/rootStackParams";
 import { Option } from "../models/option";
 import { useGet } from "../src/hooks";
-import { displayDash } from "../utils";
+import { displayDash } from "../src/utils";
 
 type IProps = NativeStackScreenProps<RootStackParams, "FiltersService">;
 

@@ -5,7 +5,7 @@ import { useAuth } from "../../../src/hooks/auth";
 import theme from "../../../assets/styles/theme";
 import * as Haptics from "expo-haptics";
 import { usePost, useDelete } from "../../../src/hooks";
-import { showToast } from "../../../utils";
+import { showToast } from "../../../src/utils";
 import { useTranslation } from "react-i18next";
 
 const { black } = theme.lightColors || {};

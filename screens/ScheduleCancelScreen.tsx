@@ -21,7 +21,7 @@ import { MAIN_ROLE } from "@env";
 import theme from "../assets/styles/theme";
 import { useAuth, usePatch } from "../src/hooks";
 import { RootStackParams } from "../navigation/rootStackParams";
-import { showToast } from "../utils";
+import { showToast } from "../src/utils";
 import { useHeaderHeight } from "@react-navigation/elements";
 
 const { error, black, grey0 } = theme.lightColors || {};

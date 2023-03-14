@@ -5,7 +5,7 @@ import { Button, Header, Heading } from "../../../../components/core";
 import theme from "../../../../assets/styles/theme";
 import { TextWithBullet } from "../../../../components/customized";
 import { useAuth, usePatch } from "../../../../src/hooks";
-import { showToast } from "../../../../utils";
+import { showToast } from "../../../../src/utils";
 
 const { black } = theme.lightColors || {};
 

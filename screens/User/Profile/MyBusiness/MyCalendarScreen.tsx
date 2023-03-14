@@ -17,7 +17,7 @@ import theme from "../../../../assets/styles/theme";
 import { NoFoundMessage } from "../../../../components/customized";
 import SlotDetailsListItem from "../../../../components/customized/ListItems/SlotDetailsListItem";
 import { Header, Spinner, Stack } from "../../../../components/core";
-import { SHORT_DATE } from "../../../../utils/date-utils";
+import { SHORT_DATE } from "../../../../src/utils/date-utils";
 import {
   useAuth,
   useGet,

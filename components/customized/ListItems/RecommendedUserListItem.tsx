@@ -4,7 +4,7 @@ import { Stack, IconStar, IconButton, Checkmark, Protected } from "../../core";
 import CustomAvatar from "../../core/Avatars/CustomAvatar";
 import theme from "../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
-import { trimFunc } from "../../../utils";
+import { trimFunc } from "../../../src/utils";
 import FollowButton from "../Buttons/FollowButton";
 import { MAIN_ROLE, SECOND_ROLE } from "@env";
 import { User } from "../../../models/user";

@@ -11,7 +11,7 @@ import { Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import theme from "../../../assets/styles/theme";
-import { trimFunc, AddressFormat } from "../../../utils";
+import { trimFunc, AddressFormat } from "../../../src/utils";
 import { IconLocation, IconStar, Stack } from "../../core";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/rootStackParams";

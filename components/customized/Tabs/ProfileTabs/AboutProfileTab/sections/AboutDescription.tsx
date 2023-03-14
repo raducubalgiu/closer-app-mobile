@@ -1,7 +1,7 @@
 import { StyleSheet, Text } from "react-native";
 import { memo } from "react";
 import { Stack } from "../../../../../core";
-import { trimFunc } from "../../../../../../utils";
+import { trimFunc } from "../../../../../../src/utils";
 import { useTranslation } from "react-i18next";
 import theme from "../../../../../../assets/styles/theme";
 

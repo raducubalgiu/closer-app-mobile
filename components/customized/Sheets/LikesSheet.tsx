@@ -9,7 +9,7 @@ import { User } from "../../../models/user";
 import { Heading, Spinner, Stack } from "../../core";
 import { NoFoundMessage } from "../NoFoundMessage/NoFoundMessage";
 import theme from "../../../assets/styles/theme";
-import { displayDash } from "../../../utils";
+import { displayDash } from "../../../src/utils";
 
 const { black } = theme.lightColors || {};
 type IProps = {

@@ -10,7 +10,7 @@ import {
 } from "../../../../components/core";
 import theme from "../../../../assets/styles/theme";
 import { useAuth } from "../../../../src/hooks";
-import { displayNothing } from "../../../../utils";
+import { displayNothing } from "../../../../src/utils";
 
 const { grey0 } = theme.lightColors || {};
 

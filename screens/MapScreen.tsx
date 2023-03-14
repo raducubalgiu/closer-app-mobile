@@ -22,7 +22,7 @@ import { HeaderMap } from "../components/customized";
 import BusinessButton from "../components/customized/Buttons/BusinessButton";
 import CardLocationMap from "../components/customized/Cards/CardLocationMap";
 import MapMarkerProfile from "../components/customized/Map/MapMarkerProfile";
-import { trimFunc } from "../utils";
+import { trimFunc } from "../src/utils";
 import * as Location from "expo-location";
 import CustomAvatar from "../components/core/Avatars/CustomAvatar";
 import theme from "../assets/styles/theme";

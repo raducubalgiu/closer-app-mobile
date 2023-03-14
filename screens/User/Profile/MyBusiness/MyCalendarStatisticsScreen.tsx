@@ -20,7 +20,7 @@ import {
 } from "../../../../components/core";
 import theme from "../../../../assets/styles/theme";
 import { useAuth, useGet, useSheet } from "../../../../src/hooks";
-import { numberWithComma } from "../../../../utils";
+import { numberWithComma } from "../../../../src/utils";
 
 type IProps = NativeStackScreenProps<RootStackParams, "MyCalendarStatistics">;
 const { success, black, grey0 } = theme.lightColors || {};

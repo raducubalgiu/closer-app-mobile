@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Stack } from "../../core";
 import { BookmarkButton } from "../Buttons/BookmarkButton";
 import theme from "../../../assets/styles/theme";
-import { displayCount } from "../../../utils";
+import { displayCount } from "../../../src/utils";
 import { useAuth, useGet } from "../../../src/hooks";
 
 const { black, grey0 } = theme.lightColors || {};

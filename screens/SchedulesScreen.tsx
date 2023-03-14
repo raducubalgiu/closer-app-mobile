@@ -21,7 +21,7 @@ import {
   NoFoundMessage,
 } from "../components/customized";
 import theme from "../assets/styles/theme";
-import { yearMonthFormat } from "../utils/date-utils";
+import { yearMonthFormat } from "../src/utils/date-utils";
 import { Divider } from "@rneui/themed";
 
 const { black } = theme.lightColors || {};

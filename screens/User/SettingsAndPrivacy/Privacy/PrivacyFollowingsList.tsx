@@ -11,7 +11,7 @@ import { Divider } from "@rneui/themed";
 import { useState } from "react";
 import { useAuth, usePatch } from "../../../../src/hooks";
 import { useNavigation } from "@react-navigation/native";
-import { showToast } from "../../../../utils";
+import { showToast } from "../../../../src/utils";
 
 const { grey0, error } = theme.lightColors || {};
 

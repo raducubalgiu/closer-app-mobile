@@ -33,8 +33,8 @@ import {
 } from "../../../../src/hooks";
 import theme from "../../../../assets/styles/theme";
 import { Product } from "../../../../models/product";
-import { showToast } from "../../../../utils";
-import { required } from "../../../../constants/validation";
+import { showToast } from "../../../../src/utils";
+import { required } from "../../../../src/utils/validation";
 
 const { black, grey0 } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "AddSchedule">;

@@ -9,7 +9,7 @@ import {
 } from "../../../../components/core";
 import { useForm } from "react-hook-form";
 import { useAuth, usePost } from "../../../../src/hooks";
-import { showToast } from "../../../../utils";
+import { showToast } from "../../../../src/utils";
 
 export const ReportAProblemScreen = () => {
   const { user } = useAuth();

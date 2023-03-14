@@ -1,7 +1,7 @@
 import { StyleSheet, View, Image, useWindowDimensions } from "react-native";
 import { forwardRef, memo } from "react";
 import { Post } from "../../../../models";
-import { FROM_NOW } from "../../../../utils/date-utils";
+import { FROM_NOW } from "../../../../src/utils/date-utils";
 import PostHeader from "./PostHeader";
 import PostImage from "./PostImage";
 import PostBookable from "./PostBookable";

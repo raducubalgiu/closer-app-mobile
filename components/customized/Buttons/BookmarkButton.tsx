@@ -5,7 +5,7 @@ import { Icon } from "@rneui/themed";
 import { Stack } from "../../core";
 import { useAuth, useDelete, usePost, useGet } from "../../../src/hooks";
 import theme from "../../../assets/styles/theme";
-import { showToast } from "../../../utils";
+import { showToast } from "../../../src/utils";
 
 const { black } = theme.lightColors || {};
 type IProps = {

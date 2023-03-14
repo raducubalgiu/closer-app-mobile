@@ -14,7 +14,7 @@ import DisplayText from "../../Typography/DisplayText/DisplayText";
 import { FollowOutlinedButton } from "../../Buttons/FollowOutlinedButton";
 import { BookableLabel } from "../../Typography/Labels/BookableLabel";
 import { LastMinuteLabel } from "../../Typography/Labels/LastMinuteLabel";
-import { trimFunc } from "../../../../utils";
+import { trimFunc } from "../../../../src/utils";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
 
 const { error } = theme.lightColors || {};

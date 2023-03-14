@@ -21,7 +21,7 @@ import { useAuth, usePatch, useGet } from "../../../../src/hooks";
 import { ConfirmModal } from "../../../../components/customized/Modals/ConfirmModal";
 import { Service } from "../../../../models/service";
 import { FormProvider, useForm } from "react-hook-form";
-import { showToast } from "../../../../utils";
+import { showToast } from "../../../../src/utils";
 import { NoFoundMessage } from "../../../../components/customized";
 
 const { primary, error } = theme.lightColors || {};

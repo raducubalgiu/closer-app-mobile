@@ -13,9 +13,9 @@ import { FormTextField, Spinner, Stack } from "../../../../components/core";
 import { HeaderEdit } from "../../../../components/customized";
 import theme from "../../../../assets/styles/theme";
 import { useAuth } from "../../../../src/hooks";
-import { showToast } from "../../../../utils";
+import { showToast } from "../../../../src/utils";
 import { useNavigation } from "@react-navigation/native";
-import { required } from "../../../../constants/validation";
+import { required } from "../../../../src/utils/validation";
 
 const defaultValues = {
   currentPass: "",

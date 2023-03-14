@@ -7,7 +7,7 @@ import theme from "../../../assets/styles/theme";
 import { Stack, IconStar, Protected } from "../../core";
 import { StatsButton } from "../Buttons/StatsButton";
 import CustomAvatar from "../../core/Avatars/CustomAvatar";
-import { displayDash } from "../../../utils";
+import { displayDash } from "../../../src/utils";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/rootStackParams";
 import AvatarBadge from "../../core/Avatars/AvatarBadge";

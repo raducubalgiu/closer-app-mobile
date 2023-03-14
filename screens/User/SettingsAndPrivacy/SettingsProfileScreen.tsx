@@ -8,7 +8,7 @@ import { Header, Heading, Stack } from "../../../components/core";
 import theme from "../../../assets/styles/theme";
 import { RootStackParams } from "../../../navigation/rootStackParams";
 import { useAuth } from "../../../src/hooks";
-import { showToast } from "../../../utils";
+import { showToast } from "../../../src/utils";
 import { SettingsListItem } from "../../../components/customized";
 
 const { grey0 } = theme.lightColors || {};

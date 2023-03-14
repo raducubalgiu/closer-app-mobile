@@ -2,7 +2,7 @@ import { StyleSheet, View } from "react-native";
 import { FormProvider, useForm } from "react-hook-form";
 import { CModal, FormInputSelect, Stack, Button } from "../../core";
 import { useTranslation } from "react-i18next";
-import { isGreaterThan } from "../../../constants/validation";
+import { isGreaterThan } from "../../../src/utils/validation";
 
 type Minutes = {
   id: string | number;

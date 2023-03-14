@@ -2,7 +2,7 @@ import { StyleSheet, Text } from "react-native";
 import theme from "../../../assets/styles/theme";
 import { Stack } from "../../core";
 import CustomAvatar from "../../core/Avatars/CustomAvatar";
-import { displayCount } from "../../../utils";
+import { displayCount } from "../../../src/utils";
 import { useTranslation } from "react-i18next";
 
 const { grey0 } = theme.lightColors || {};
