@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { useCallback, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { useTranslation } from "react-i18next";
+import { useTranslation, withTranslation } from "react-i18next";
 import theme from "../../../../../assets/styles/theme";
 import {
   useAuth,
@@ -18,7 +18,7 @@ import {
 } from "../../../../hooks";
 import { Profession } from "../../../../models/profession";
 import { HeaderEdit } from "../../../../components/customized";
-import { MAIN_ROLE, SECOND_ROLE, THIRD_ROLE } from "@env";
+import { SUPERADMIN_ROLE, THIRD_ROLE } from "@env";
 import {
   FormInputRadio,
   Heading,
@@ -34,20 +34,23 @@ export const EditProfessionScreen = () => {
   const [selected, setSelected] = useState(user?.profession);
   const [search, setSearch] = useState("");
   const navigation = useNavigation();
-  const { t } = useTranslation("common");
+  const { t } = useTranslation(["common", "professions", "businesses"]);
+
+  const isRegularUser =
+    user?.role === THIRD_ROLE || user?.role === SUPERADMIN_ROLE;
 
   const professionOptions = useGetPaginate({
     model: "professions",
     uri: `/professions`,
     limit: "20",
-    enabled: user?.role === THIRD_ROLE,
+    enabled: isRegularUser,
   });
 
   const businessOptions = useGetPaginate({
     model: "businesses",
     uri: `/businesses`,
     limit: "20",
-    enabled: user?.role === MAIN_ROLE || user?.role === SECOND_ROLE,
+    enabled: !isRegularUser,
   });
 
   const { data: professions } = usePaginateActions(professionOptions);
@@ -61,17 +64,15 @@ export const EditProfessionScreen = () => {
     },
   });
 
-  const renderProfession = useCallback(
-    ({ item }: ListRenderItemInfo<Profession>) => {
-      return (
-        <FormInputRadio
-          title={t(`${item?.name}`)}
-          checked={item?.id === selected?.id}
-          onPress={() => setSelected(item)}
-        />
-      );
-    },
-    [selected]
+  const renderItem = useCallback(
+    ({ item }: ListRenderItemInfo<Profession>) => (
+      <FormInputRadio
+        title={t(`${item?.name}`)}
+        checked={item?.id === selected?.id}
+        onPress={() => setSelected(item)}
+      />
+    ),
+    [selected, t]
   );
 
   const hasData = businesses?.length > 0 || professions?.length > 0;
@@ -96,17 +97,16 @@ export const EditProfessionScreen = () => {
         disabledSave={isLoading || user?.profession?.id === selected?.id}
       />
       {!isLoading && (
-        <View style={{ margin: 15, flex: 1 }}>
+        <View style={{ marginVertical: 15, flex: 1 }}>
           <Heading title={t("chooseCategory")} sx={styles.title} />
-          <Text style={{ color: grey0, fontSize: 15, marginBottom: 15 }}>
-            {t("categoryDescription")}
-          </Text>
+          <Text style={styles.description}>{t("categoryDescription")}</Text>
           <Divider color="#ddd" style={{ marginTop: 10, paddingBottom: 7.5 }} />
           <FlatList
             ListHeaderComponent={header}
-            data={user?.role === THIRD_ROLE ? professions : businesses}
+            data={isRegularUser ? professions : businesses}
             keyExtractor={(item) => item?.id}
-            renderItem={renderProfession}
+            renderItem={renderItem}
+            contentContainerStyle={{ paddingHorizontal: 15 }}
           />
         </View>
       )}
@@ -125,5 +125,12 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     marginTop: 0,
     marginBottom: 5,
+    paddingHorizontal: 15,
+  },
+  description: {
+    color: grey0,
+    fontSize: 15,
+    marginBottom: 15,
+    paddingHorizontal: 15,
   },
 });

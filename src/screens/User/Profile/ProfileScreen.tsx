@@ -40,8 +40,9 @@ import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/rootStackParams";
+import { Icon } from "@rneui/themed";
 
-const TAB_BAR_HEIGHT = 42.5;
+const TAB_BAR_HEIGHT = 45;
 const HEADER_HEIGHT = 240;
 
 const Tab = createMaterialTopTabNavigator();
@@ -241,7 +242,35 @@ const Profile: FC = () => {
           initialLayout={{ width, height }}
           tabBar={renderTabBar}
           sceneContainerStyle={{ backgroundColor: "white" }}
-          screenOptions={{ lazy: true }}
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused, color }) => {
+              let name = "";
+              let type = "material-community";
+              let size = 22.5;
+
+              if (route.name === "Posts") {
+                name = focused ? "grid-large" : "grid-large";
+              } else if (route.name === "Products") {
+                type = "";
+              } else if (route.name === "Videos") {
+                name = focused
+                  ? "play-box-multiple-outline"
+                  : "play-box-multiple-outline";
+              } else if (route.name === "VideoH") {
+              } else if (route.name === "About") {
+                name = focused
+                  ? "account-circle-outline"
+                  : "account-circle-outline";
+              }
+              return <Icon name={name} type={type} color={color} size={size} />;
+            },
+            tabBarActiveTintColor: "black",
+            tabBarInactiveTintColor: "#ccc",
+            headerShown: false,
+            tabBarShowLabel: false,
+            tabBarIndicatorStyle: { backgroundColor: "black" },
+            lazy: true,
+          })}
         >
           <Tab.Screen name="Posts">{renderPosts}</Tab.Screen>
           <Tab.Screen name="Videos">{renderVideos}</Tab.Screen>

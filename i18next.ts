@@ -9,14 +9,18 @@ i18next
     fallbackLng: "ro",
     supportedLngs: ["ro", "en"],
     ns: [],
-    defaultNS: undefined,
+    defaultNS: "common",
 
     resources: {
       ro: {
         common: require("./locales/ro/common.json"),
+        professions: require("./locales/ro/professions.json"),
+        businesses: require("./locales/ro/businesses.json"),
       },
       en: {
         common: require("./locales/en/common.json"),
+        professions: require("./locales/en/professions.json"),
+        businesses: require("./locales/en/businesses.json"),
       },
     },
 

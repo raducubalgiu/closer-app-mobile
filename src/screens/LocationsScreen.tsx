@@ -5,10 +5,9 @@ import {
   Text,
   ListRenderItemInfo,
   Dimensions,
-  Pressable,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useState, useCallback, useRef, useMemo } from "react";
+import { useState, useCallback, useRef, useMemo, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { HeaderServices, Map, NoFoundMessage } from "../components/customized";
@@ -18,7 +17,6 @@ import theme from "../../assets/styles/theme";
 import { RootStackParams } from "../navigation/rootStackParams";
 import { Location } from "../models/location";
 import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
-import { Icon } from "@rneui/themed";
 import { Spinner, Stack } from "../components/core";
 
 const { black, primary } = theme.lightColors || {};
@@ -27,7 +25,7 @@ type IProps = NativeStackScreenProps<RootStackParams, "Locations">;
 
 export const LocationsScreen = ({ route }: IProps) => {
   const { service, option, period, longitude, latitude } = route.params;
-  const sheetRef = useRef<any>(null);
+  const sheetRef = useRef<BottomSheet>(null);
   const insets = useSafeAreaInsets();
   const fullHeight = height - insets.top - insets.bottom + 40;
   const snapPoints = useMemo(() => [90, fullHeight], []);
@@ -73,12 +71,6 @@ export const LocationsScreen = ({ route }: IProps) => {
     );
   }
 
-  const handleDisplayMap = useCallback((index: number) => {
-    if (index === 0) {
-      sheetRef.current.snapToIndex(index);
-    }
-  }, []);
-
   const header = (
     <>
       <View style={{ height: 50, marginBottom: 20 }}>
@@ -106,9 +98,10 @@ export const LocationsScreen = ({ route }: IProps) => {
         ref={sheetRef}
         snapPoints={snapPoints}
         handleIndicatorStyle={styles.indicatorStyle}
-        enableOverDrag={true}
         animateOnMount={false}
         index={1}
+        animationConfigs={{ duration: 210 }}
+        containerStyle={{ flex: 1 }}
       >
         <BottomSheetFlatList
           ListHeaderComponent={header}
@@ -119,7 +112,7 @@ export const LocationsScreen = ({ route }: IProps) => {
           ListFooterComponent={footer}
         />
       </BottomSheet>
-      <View
+      {/* <Animated.View
         style={{
           position: "absolute",
           bottom: 75,
@@ -131,7 +124,9 @@ export const LocationsScreen = ({ route }: IProps) => {
         }}
       >
         <Pressable
-          onPress={() => handleDisplayMap(0)}
+          onPress={() => {
+            sheetRef?.current?.snapToIndex(0);
+          }}
           style={{
             backgroundColor: "#333333",
             paddingVertical: 11.5,
@@ -157,7 +152,7 @@ export const LocationsScreen = ({ route }: IProps) => {
             </Text>
           </Stack>
         </Pressable>
-      </View>
+      </Animated.View> */}
     </SafeAreaView>
   );
 };

@@ -82,7 +82,7 @@ const SheetMap = ({ latitude, longitude, height, width, onClose }: IProps) => {
 };
 
 const styles = StyleSheet.create({
-  icon: { paddingVertical: 10, paddingHorizontal: 15 },
+  icon: { paddingVertical: 12.5, paddingHorizontal: 15 },
   title: { fontWeight: "500", fontSize: 17, color: black },
 });
 

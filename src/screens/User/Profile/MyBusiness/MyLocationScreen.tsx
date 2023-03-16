@@ -1,36 +1,45 @@
-import { Divider, Icon } from "@rneui/themed";
+import { Divider } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
-import { SafeAreaView, StyleSheet, Text, ScrollView, View } from "react-native";
 import {
-  CModal,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  ScrollView,
+  View,
+  useWindowDimensions,
+} from "react-native";
+import {
   Header,
   Heading,
-  IconButton,
   IconButtonEdit,
-  Spinner,
+  SheetModal,
   Stack,
 } from "../../../../components/core";
 import MapStatic from "../../../../components/customized/Map/MapStatic";
 import theme from "../../../../../assets/styles/theme";
 import { useAuth, useGet } from "../../../../hooks";
 import { AddressFormat, showToast } from "../../../../utils";
-import { useState } from "react";
+import { useMemo, useRef } from "react";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import SheetMap from "../../../../components/customized/Sheets/SheetMap";
 
 const { grey0 } = theme.lightColors || {};
 
 export const MyLocationScreen = () => {
+  const { width, height } = useWindowDimensions();
+  const SHEET_HEIGHT = height / 1.2;
   const { user } = useAuth();
   const { t } = useTranslation("common");
-  const [visible, setVisible] = useState(false);
+  const sheetRef = useRef<BottomSheetModal>(null);
+  const snapPoints = useMemo(() => [1, SHEET_HEIGHT], []);
 
-  const { data, isLoading, isFetching } = useGet({
+  const { data } = useGet({
     model: "myLocation",
     uri: `/users/${user?.id}/locations/${user?.locationId}`,
     onError: () => showToast({ message: t("somethingWentWrong") }),
   });
 
   const { coordinates } = data?.address || {};
-  const isLoadingLoc = isLoading || isFetching;
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -40,58 +49,36 @@ export const MyLocationScreen = () => {
       />
       <Stack sx={{ flex: 1 }}>
         <View style={{ flex: 1, width: "100%" }}>
-          {!isLoadingLoc && (
-            <ScrollView>
-              <Stack sx={styles.map}>
-                <MapStatic
-                  height={200}
-                  longitude={coordinates && coordinates[1]}
-                  latitude={coordinates && coordinates[0]}
-                  minZoom={15}
-                  isModal={false}
-                />
-                <IconButton
-                  name="maximize-2"
-                  size={20}
-                  onPress={() => setVisible(true)}
-                  sx={{ ...styles.button, bottom: 15 }}
-                />
-              </Stack>
-              <View style={{ marginHorizontal: 15 }}>
-                <Heading title="Adresa" sx={{ fontSize: 15 }} />
-                <Text style={{ color: grey0, fontSize: 15 }}>
-                  {AddressFormat(data.address)}
-                </Text>
-                <Divider style={{ marginVertical: 15 }} />
-              </View>
-            </ScrollView>
-          )}
-          {isLoadingLoc && <Spinner />}
+          <ScrollView>
+            <MapStatic
+              longitude={coordinates[1]}
+              latitude={coordinates[0]}
+              onOpenModal={() => sheetRef.current?.present()}
+            />
+            <View style={{ marginHorizontal: 15 }}>
+              <Heading title="Adresa" sx={{ fontSize: 15 }} />
+              <Text style={{ color: grey0, fontSize: 15 }}>
+                {AddressFormat(data.address)}
+              </Text>
+              <Divider style={{ marginVertical: 15 }} />
+            </View>
+          </ScrollView>
         </View>
       </Stack>
-      <CModal
-        visible={visible}
-        size="xl"
-        onCloseModal={() => setVisible(false)}
-        header={false}
+      <SheetModal
+        snapPoints={snapPoints}
+        ref={sheetRef}
+        showIndicator={false}
+        enableContentPanningGesture={false}
       >
-        <MapStatic
-          height={"100%"}
-          longitude={coordinates && coordinates[1]}
-          latitude={coordinates && coordinates[0]}
-          zoomEnabled={true}
-          scrollEnabled={true}
-          sx={{ borderRadius: 5 }}
-          isModal={true}
+        <SheetMap
+          latitude={coordinates[0]}
+          longitude={coordinates[1]}
+          height={SHEET_HEIGHT}
+          width={width}
+          onClose={() => sheetRef.current?.close()}
         />
-        <IconButton
-          name="close"
-          type="material"
-          onPress={() => setVisible(false)}
-          size={20}
-          sx={{ top: 15, ...styles.button }}
-        />
-      </CModal>
+      </SheetModal>
     </SafeAreaView>
   );
 };
@@ -103,6 +90,7 @@ const styles = StyleSheet.create({
   },
   map: {
     marginTop: 10,
+    flex: 1,
   },
   button: {
     backgroundColor: "white",
