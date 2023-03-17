@@ -8,7 +8,7 @@ export const useRefreshByUser = (refetch: () => Promise<any>) => {
 
     setTimeout(() => {
       refetch().then(() => setRefreshing(false));
-    }, 1000);
+    }, 500);
   };
 
   return {

@@ -17,6 +17,7 @@ import {
   useGetPaginate,
   usePaginateActions,
   usePost,
+  useRefreshByUser,
 } from "../../hooks";
 import { Post } from "../../models/post";
 import { RootStackParams } from "../../navigation/rootStackParams";
@@ -53,7 +54,11 @@ export const FeedExploreScreen = () => {
     limit: "20",
   });
 
-  const { isLoading: isLoadingPosts, isFetchingNextPage } = postsOptions;
+  const {
+    isLoading: isLoadingPosts,
+    isFetchingNextPage,
+    refetch,
+  } = postsOptions;
 
   const {
     data: posts,
@@ -67,10 +72,11 @@ export const FeedExploreScreen = () => {
   const loading = (isLoadingPosts || isLoadingVideos) && !isFetchingNextPage;
 
   useScrollToTop(ref);
-  const handleRefresh = () => {};
+
+  const { refreshing, refetchByUser } = useRefreshByUser(refetch);
 
   const refreshControl = (
-    <RefreshControl refreshing={loading} onRefresh={handleRefresh} />
+    <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
   );
 
   const renderPost = useCallback(
