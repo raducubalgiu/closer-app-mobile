@@ -90,7 +90,6 @@ export { SettingsSwitchListItem } from "./ListItems/SettingsSwitchListItem";
 export { NoFoundMessage } from "./NoFoundMessage/NoFoundMessage";
 
 export { Map } from "./Map/Map";
-export { MapPreviewModal } from "./Modals/MapPreviewModal";
 
 export { LoginRegisterForm } from "./Forms/LoginRegisterForm";
 export { AuthProviders } from "./Forms/AuthProviders";

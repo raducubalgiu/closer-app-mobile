@@ -9,8 +9,8 @@ import { RootStackParams } from "../../../../navigation/rootStackParams";
 const { black } = theme.lightColors || {};
 
 type IProps = {
-  username: string;
-  checkmark: boolean;
+  username: string | undefined;
+  checkmark: boolean | undefined;
   onGoToFindFriends: () => void;
   onOpenSettings: () => void;
   onOpenPostOptions: () => void;
