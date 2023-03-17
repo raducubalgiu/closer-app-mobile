@@ -182,19 +182,6 @@ const Profile = ({ user, profileActions }: IProps) => {
     });
   };
 
-  const refresh = async () => {
-    console.log("-- start refresh");
-    refreshStatusRef.current = true;
-    await new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve("done");
-      }, 2000);
-    }).then((value) => {
-      console.log("-- refresh done!");
-      refreshStatusRef.current = false;
-    });
-  };
-
   const startRefreshAction = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     if (Platform.OS === "ios") {
@@ -229,6 +216,19 @@ const Profile = ({ user, profileActions }: IProps) => {
         }).start();
       });
     }
+  };
+
+  const refresh = async () => {
+    console.log("-- start refresh");
+    refreshStatusRef.current = true;
+    await new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve("done");
+      }, 2000);
+    }).then((value) => {
+      console.log("-- refresh done!");
+      refreshStatusRef.current = false;
+    });
   };
 
   const handlePanReleaseOrEnd = (evt: any, gestureState: any) => {
