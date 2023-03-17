@@ -25,6 +25,7 @@ import SuggestedUsersList from "../../../components/customized/Lists/SuggestedUs
 import { RootStackParams } from "../../../navigation/rootStackParams";
 import { Protected } from "../../../components/core";
 import { MAIN_ROLE, SECOND_ROLE } from "@env";
+import Profile from "../../../components/customized/Profile/Profile";
 
 type IProps = NativeStackScreenProps<RootStackParams, "ProfileGeneral">;
 
@@ -38,7 +39,8 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
 
   const { data: userDetails } = useGet({
     model: "fetchUser",
-    uri: `/users/${username}`,
+    uri: `/users/${user?.id}/user/${username}`,
+    onSuccess: (res) => setIsFollow(res.data.isFollow),
   });
 
   const {
@@ -46,14 +48,6 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
     mutate: handleSuggested,
     isLoading,
   } = useGetMutate({ uri: `/users/suggested` });
-
-  useGet({
-    model: "checkFollow",
-    uri: `/users/${user?.id}/followings/${userId || userDetails?.id}/follows`,
-    onSuccess: (res: any) => setIsFollow(res.data.status),
-    enabled: !!userDetails?.id,
-    enableId: userDetails?.id,
-  });
 
   const { mutate: follow } = usePost({
     uri: `/users/${user?.id}/followings/${userId}/follows`,
@@ -92,58 +86,45 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
     });
   };
 
-  const isPrivate = !isFollow && userDetails?.settings?.private;
+  const isPrivate = !isFollow && userDetails?.user?.settings?.private;
+
+  const profileActions = (
+    <>
+      <FollowProfileButton isFollow={isFollow} onPress={handleFollow} />
+      {isFollow && (
+        <ProfileIconButton name="message-circle" onPress={goToMessage} />
+      )}
+      <Protected
+        roles={[MAIN_ROLE, SECOND_ROLE]}
+        userRole={userDetails?.user?.role}
+      >
+        <ProfileIconButton name="map-pin" onPress={goToMap} />
+      </Protected>
+      <ProfileIconButton
+        name="adduser"
+        type="antdesign"
+        onPress={handleSuggested}
+        loading={isLoading}
+      />
+    </>
+  );
 
   return (
     <View style={styles.container}>
-      <View style={{ height: 100, zIndex: 10000 }}>
-        <HeaderProfileGeneral
-          username={username}
-          checkmark={checkmark}
-          hours={userDetails?.hours}
-          onOpenSettings={() => {}}
-        />
-      </View>
-      <TopTabProfile
-        user={userDetails}
-        userId={userId || userDetails?.id}
-        service={service}
-        option={option}
-        profileOverview={
-          <View style={{ marginTop: 10 }}>
-            <ProfileOverview
-              user={userDetails}
-              name={name}
-              username={username}
-              avatar={avatar}
-            >
-              <FollowProfileButton isFollow={isFollow} onPress={handleFollow} />
-              {isFollow && (
-                <ProfileIconButton
-                  name="message-circle"
-                  onPress={goToMessage}
-                />
-              )}
-              <Protected
-                roles={[MAIN_ROLE, SECOND_ROLE]}
-                userRole={userDetails?.role}
-              >
-                <ProfileIconButton name="map-pin" onPress={goToMap} />
-              </Protected>
-              <ProfileIconButton
-                name="adduser"
-                type="antdesign"
-                onPress={handleSuggested}
-                loading={isLoading}
-              />
-            </ProfileOverview>
-            {isPrivate && <CardAccountPrivate />}
-            {suggested && (
-              <SuggestedUsersList suggested={suggested?.data} userId={userId} />
-            )}
-          </View>
-        }
+      <HeaderProfileGeneral
+        username={username}
+        checkmark={checkmark}
+        hours={userDetails?.user?.hours}
+        onOpenSettings={() => {}}
       />
+      <Profile
+        user={userDetails?.user}
+        profileActions={profileActions}
+        isPrivate={isPrivate}
+      />
+      {/* {suggested && (
+        <SuggestedUsersList suggested={suggested?.data} userId={userId} />
+      )} */}
     </View>
   );
 };

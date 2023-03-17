@@ -7,11 +7,12 @@ type IProps = {
   onPress: any;
   statsNo: number | string;
   label: string;
+  sx?: {};
 };
 
-export const StatsButton = ({ onPress, statsNo, label }: IProps) => {
+export const StatsButton = ({ onPress, statsNo, label, sx }: IProps) => {
   return (
-    <Pressable style={styles.container} onPress={onPress}>
+    <Pressable style={[styles.container, sx]} onPress={onPress}>
       <Text style={styles.statsNumber}>{statsNo}</Text>
       <Text style={styles.statsText}>{label}</Text>
     </Pressable>
@@ -19,12 +20,13 @@ export const StatsButton = ({ onPress, statsNo, label }: IProps) => {
 };
 
 const styles = StyleSheet.create({
-  container: { alignItems: "center", minWidth: 75 },
+  container: { alignItems: "center" },
+  statsNumber: { fontSize: 16, fontWeight: "700", textAlign: "center" },
   statsText: {
     color: grey3,
-    fontSize: 13,
-    marginTop: 5,
+    marginTop: 7.5,
     fontWeight: "500",
+    minWidth: 100,
+    textAlign: "center",
   },
-  statsNumber: { fontSize: 16, fontWeight: "700" },
 });

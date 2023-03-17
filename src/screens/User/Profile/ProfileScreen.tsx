@@ -59,7 +59,6 @@ const ProfileScreen = () => {
         ref={addPostRef}
         snapPoints={snapPoints}
         animationConfig={{ duration: 150 }}
-        showIndicator={false}
       >
         <PostOptionsSheet />
       </SheetModal>

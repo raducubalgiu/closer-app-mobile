@@ -13,7 +13,7 @@ import { RootStackParams } from "../../../navigation/rootStackParams";
 import AvatarBadge from "../../core/Avatars/AvatarBadge";
 import { useAuth } from "../../../hooks";
 
-const { black, primary } = theme.lightColors || {};
+const { black, primary, grey0 } = theme.lightColors || {};
 
 type IProps = {
   name: any;
@@ -107,25 +107,27 @@ const ProfileOverview = ({
           </Protected>
         </Stack>
       </Stack>
-      <Stack direction="row" justify="between" sx={styles.statsContainer}>
-        <StatsButton
-          onPress={isBusiness ? goToReviews : null}
-          label={isBusiness ? t("reviews") : t("posts")}
-          statsNo={displayDash(isBusiness ? ratingsQuantity : postsCount)}
-        />
-        <StatsButton
-          onPress={goToFollowers}
-          label={t("followers")}
-          statsNo={displayDash(followersCount)}
-        />
-        <StatsButton
-          onPress={goToFollowings}
-          label={t("following")}
-          statsNo={displayDash(followingsCount)}
-        />
-      </Stack>
-      <Stack direction="row" justify="center" sx={styles.buttonsContainer}>
-        {children}
+      <Stack sx={{ marginTop: 20 }}>
+        <Stack direction="row" justify="center">
+          <StatsButton
+            onPress={isBusiness ? goToReviews : null}
+            label={isBusiness ? t("reviews") : t("posts")}
+            statsNo={displayDash(isBusiness ? ratingsQuantity : postsCount)}
+          />
+          <StatsButton
+            onPress={goToFollowers}
+            label={t("followers")}
+            statsNo={displayDash(followersCount)}
+          />
+          <StatsButton
+            onPress={goToFollowings}
+            label={t("following")}
+            statsNo={displayDash(followingsCount)}
+          />
+        </Stack>
+        <Stack direction="row" sx={styles.buttonsContainer}>
+          {children}
+        </Stack>
       </Stack>
     </View>
   );
@@ -136,12 +138,15 @@ export default memo(ProfileOverview);
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
+    justifyContent: "space-between",
+    flex: 1,
+    marginVertical: 15,
   },
   name: {
     color: black,
     fontSize: 16,
     marginTop: 5,
-    marginBottom: 5,
+    marginBottom: 7.5,
     fontWeight: "600",
   },
   business: {
@@ -167,14 +172,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: black,
   },
-  statsContainer: {
-    width: "100%",
-    paddingHorizontal: 60,
-    marginBottom: 2.5,
-    marginTop: 20,
-  },
   buttonsContainer: {
-    marginTop: 10,
+    marginTop: 20,
   },
   star: { marginLeft: 7.5 },
   text: {

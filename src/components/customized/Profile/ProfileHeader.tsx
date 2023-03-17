@@ -1,4 +1,4 @@
-import { StyleSheet, Text, Animated } from "react-native";
+import { StyleSheet, Animated } from "react-native";
 import { memo } from "react";
 import { User } from "../../../models";
 import ProfileOverview from "../ProfileOverview/ProfileOverview";

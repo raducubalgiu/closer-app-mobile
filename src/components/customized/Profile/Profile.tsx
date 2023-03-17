@@ -26,15 +26,16 @@ import ProfileTabBar from "./ProfileTabBar";
 import ProfilePostsTab from "./ProfilePostsTab";
 import ProfileVideosTab from "./ProfileVideosTab";
 import ProfileRefresh from "./ProfileRefresh";
+import { CardAccountPrivate } from "../Cards/CardAccountPrivate";
 
 const TabBarHeight = 48;
-const HeaderHeight = 300;
+const HeaderHeight = 320;
 const PullToRefreshDist = 80;
 
-type IProps = { user: User; profileActions: any };
+type IProps = { user: User; profileActions: any; isPrivate?: boolean };
 type ListRef = { key: string; value: RefObject<FlatList> };
 
-const Profile = ({ user, profileActions }: IProps) => {
+const Profile = ({ user, profileActions, isPrivate = false }: IProps) => {
   const { width, height } = useWindowDimensions();
 
   const [tabIndex, setIndex] = useState(0);
@@ -218,7 +219,7 @@ const Profile = ({ user, profileActions }: IProps) => {
     }
   };
 
-  const refresh = async () => {
+  const refresh = useCallback(async () => {
     console.log("-- start refresh");
     refreshStatusRef.current = true;
     await new Promise((resolve, reject) => {
@@ -229,49 +230,62 @@ const Profile = ({ user, profileActions }: IProps) => {
       console.log("-- refresh done!");
       refreshStatusRef.current = false;
     });
-  };
+  }, [refreshStatusRef]);
 
-  const handlePanReleaseOrEnd = (evt: any, gestureState: any) => {
-    syncScrollOffset();
-    headerScrollY.setValue(scrollY._value);
-    if (Platform.OS === "ios") {
-      if (scrollY._value < 0) {
-        if (scrollY._value < -PullToRefreshDist && !refreshStatusRef.current) {
-          startRefreshAction();
-        } else {
-          listRefArr.current.forEach((listRef) => {
-            listRef.value.current?.scrollToOffset({
-              offset: 0,
-              animated: true,
+  const handlePanReleaseOrEnd = useCallback(
+    (evt: any, gestureState: any) => {
+      syncScrollOffset();
+      headerScrollY.setValue(scrollY._value);
+      if (Platform.OS === "ios") {
+        if (scrollY._value < 0) {
+          if (
+            scrollY._value < -PullToRefreshDist &&
+            !refreshStatusRef.current
+          ) {
+            startRefreshAction();
+          } else {
+            listRefArr.current.forEach((listRef) => {
+              listRef.value.current?.scrollToOffset({
+                offset: 0,
+                animated: true,
+              });
             });
+          }
+        } else {
+          if (Math.abs(gestureState.vy) < 0.2) {
+            return;
+          }
+          Animated.decay(headerScrollY, {
+            velocity: -gestureState.vy,
+            useNativeDriver: true,
+          }).start(() => {
+            syncScrollOffset();
           });
         }
-      } else {
-        if (Math.abs(gestureState.vy) < 0.2) {
-          return;
+      } else if (Platform.OS === "android") {
+        if (
+          headerMoveScrollY._value < 0 &&
+          headerMoveScrollY._value / 1.5 < -PullToRefreshDist
+        ) {
+          startRefreshAction();
+        } else {
+          Animated.timing(headerMoveScrollY, {
+            toValue: 0,
+            duration: 300,
+            useNativeDriver: true,
+          }).start();
         }
-        Animated.decay(headerScrollY, {
-          velocity: -gestureState.vy,
-          useNativeDriver: true,
-        }).start(() => {
-          syncScrollOffset();
-        });
       }
-    } else if (Platform.OS === "android") {
-      if (
-        headerMoveScrollY._value < 0 &&
-        headerMoveScrollY._value / 1.5 < -PullToRefreshDist
-      ) {
-        startRefreshAction();
-      } else {
-        Animated.timing(headerMoveScrollY, {
-          toValue: 0,
-          duration: 300,
-          useNativeDriver: true,
-        }).start();
-      }
-    }
-  };
+    },
+    [
+      headerMoveScrollY,
+      headerScrollY,
+      scrollY,
+      PullToRefreshDist,
+      refreshStatusRef,
+      syncScrollOffset,
+    ]
+  );
 
   const onMomentumScrollBegin = () => {
     isListGliding.current = true;
@@ -401,13 +415,15 @@ const Profile = ({ user, profileActions }: IProps) => {
 
   return (
     <View style={styles.container}>
-      <TabView
-        onIndexChange={handleChangeIndex}
-        navigationState={{ index: tabIndex, routes }}
-        renderScene={renderScene}
-        renderTabBar={renderTabBar}
-        initialLayout={{ height: 0, width }}
-      />
+      {!isPrivate && (
+        <TabView
+          onIndexChange={handleChangeIndex}
+          navigationState={{ index: tabIndex, routes }}
+          renderScene={renderScene}
+          renderTabBar={renderTabBar}
+          initialLayout={{ height: 0, width }}
+        />
+      )}
       <ProfileHeader
         user={user}
         panHandlers={headerPanResponder.panHandlers}
@@ -415,6 +431,7 @@ const Profile = ({ user, profileActions }: IProps) => {
         scrollY={scrollY}
         profileActions={profileActions}
       />
+      {isPrivate && <CardAccountPrivate headerHeight={HeaderHeight} />}
       <ProfileRefresh scrollY={scrollY} headerMoveScrollY={headerMoveScrollY} />
     </View>
   );

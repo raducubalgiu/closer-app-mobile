@@ -13,7 +13,7 @@ const ProfileRefresh = ({ scrollY, headerMoveScrollY }: IProps) => {
 
   const tIos = scrollY.interpolate({
     inputRange: [-100, 0],
-    outputRange: [120, 0],
+    outputRange: [130, 0],
     extrapolate: "clamp",
   });
 
