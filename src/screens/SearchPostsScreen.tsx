@@ -28,6 +28,8 @@ import {
   usePost,
   useRefreshOnFocus,
 } from "../hooks";
+import { Hashtag, User } from "../models";
+import { SearchAll } from "../models/searchAll";
 
 const { grey0, primary, black } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "SearchPosts">;
@@ -67,7 +69,7 @@ export const SearchPostsScreen = ({ route }: IProps) => {
     onSuccess: () => refetch(),
   });
 
-  const goToUser = (item: any) => {
+  const goToUser = (item: User) => {
     const { id, username, avatar, name, checkmark } = item;
 
     handleCreateSearch({
@@ -92,6 +94,28 @@ export const SearchPostsScreen = ({ route }: IProps) => {
     });
   };
 
+  const goToSearchAll = useCallback((s: string) => {
+    if (s.length === 0) return;
+
+    handleCreateSearch({
+      userId: user?.id,
+      word: isHashtag ? s.split("#")[1] : s,
+    });
+
+    navigation.navigate("SearchAll", {
+      search: isHashtag ? s.split("#")[1] : s,
+      screen: null,
+    });
+  }, []);
+
+  const goToHashtag = (item: Hashtag) => {
+    handleCreateSearch({
+      userId: user?.id,
+      hashtag: { id: item.id, name: item.name },
+    });
+    navigation.navigate("Hashtag", { name: item.name });
+  };
+
   const renderResults = useCallback(
     ({ item }: ListRenderItemInfo<any>) => {
       if (isHashtag) {
@@ -99,13 +123,7 @@ export const SearchPostsScreen = ({ route }: IProps) => {
           <HashtagListItem
             name={item.name}
             postsCount={item.postsCount}
-            onPress={() => {
-              handleCreateSearch({
-                userId: user?.id,
-                hashtag: { id: item.id, name: item.name },
-              });
-              navigation.navigate("Hashtag", { name: item.name });
-            }}
+            onPress={() => goToHashtag(item)}
             sx={{ paddingHorizontal: 0 }}
           />
         );
@@ -125,25 +143,32 @@ export const SearchPostsScreen = ({ route }: IProps) => {
     [isHashtag]
   );
 
-  const goToSearchAll = useCallback(() => {
-    if (search.length === 0) return;
+  useRefreshOnFocus(refetch);
 
-    handleCreateSearch({
-      userId: user?.id,
-      word: isHashtag ? search.split("#")[1] : search,
-    });
+  const handleRecentToSearch = (item: SearchAll) => {
+    if (item.user) goToUser(item.user);
+    if (item.word) goToSearchAll(item.word);
+    if (item.hashtag) goToHashtag(item.hashtag);
+  };
 
-    navigation.navigate("SearchAll", {
-      search: isHashtag ? search.split("#")[1] : search,
-      screen: null,
-    });
-  }, [search]);
+  const renderRecent = useCallback(
+    ({ item }: ListRenderItemInfo<SearchAll>) => {
+      return (
+        <RecentSearchListItem
+          item={item}
+          onDelete={() => refetch()}
+          onGoToSearch={handleRecentToSearch}
+        />
+      );
+    },
+    []
+  );
 
   const footer = (
     <Pressable style={{ marginTop: 30 }}>
       <Stack direction="row" align="center" justify="center">
         <Icon name="search" type="feather" color={primary} />
-        <Pressable onPress={goToSearchAll}>
+        <Pressable onPress={() => goToSearchAll(search)}>
           <Text style={styles.searchAll}>{t("seeAllResults")}</Text>
         </Pressable>
       </Stack>
@@ -166,15 +191,6 @@ export const SearchPostsScreen = ({ route }: IProps) => {
     </Stack>
   );
 
-  useRefreshOnFocus(refetch);
-
-  const renderRecent = useCallback(
-    ({ item }: ListRenderItemInfo<any>) => (
-      <RecentSearchListItem item={item} onDelete={() => refetch()} />
-    ),
-    []
-  );
-
   return (
     <SafeAreaView style={styles.screen}>
       <Stack direction="row" justify="start" sx={{ paddingHorizontal: 15 }}>
@@ -185,10 +201,13 @@ export const SearchPostsScreen = ({ route }: IProps) => {
           value={search}
           onChangeText={(text) => setSearch(text)}
           showCancel={false}
-          onCancel={goToSearchAll}
+          onCancel={() => goToSearchAll(search)}
           height={60}
         />
-        <Pressable onPress={goToSearchAll} style={{ marginLeft: 10 }}>
+        <Pressable
+          onPress={() => goToSearchAll(search)}
+          style={{ marginLeft: 10 }}
+        >
           <Text style={styles.cancelBtnText}>{t("search")}</Text>
         </Pressable>
       </Stack>

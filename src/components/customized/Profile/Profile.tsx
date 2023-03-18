@@ -440,6 +440,8 @@ const Profile = ({
         headerHeight={HeaderHeight}
         scrollY={scrollY}
         profileActions={profileActions}
+        isBlocked={isBlocked}
+        isPrivate={isPrivate}
       />
       {(isPrivate || isBlocked) && (
         <CardAccountPrivate

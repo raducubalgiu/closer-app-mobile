@@ -7,12 +7,23 @@ type IProps = {
   onPress: any;
   statsNo: number | string;
   label: string;
+  disabled: boolean;
   sx?: {};
 };
 
-export const StatsButton = ({ onPress, statsNo, label, sx }: IProps) => {
+export const StatsButton = ({
+  onPress,
+  statsNo,
+  label,
+  disabled = false,
+  sx,
+}: IProps) => {
   return (
-    <Pressable style={[styles.container, sx]} onPress={onPress}>
+    <Pressable
+      style={[styles.container, sx]}
+      onPress={onPress}
+      disabled={disabled}
+    >
       <Text style={styles.statsNumber}>{statsNo}</Text>
       <Text style={styles.statsText}>{label}</Text>
     </Pressable>

@@ -8,6 +8,8 @@ type IProps = {
   panHandlers: any;
   headerHeight: number;
   scrollY: Animated.Value;
+  isBlocked: boolean;
+  isPrivate: boolean;
   profileActions: any;
 };
 
@@ -16,6 +18,8 @@ const ProfileHeader = ({
   panHandlers,
   headerHeight,
   scrollY,
+  isPrivate,
+  isBlocked,
   profileActions,
 }: IProps) => {
   const styles = StyleSheet.create({
@@ -45,6 +49,8 @@ const ProfileHeader = ({
         username={user?.username}
         name={user?.name}
         avatar={user?.avatar}
+        isBlocked={isBlocked}
+        isPrivate={isPrivate}
       >
         {profileActions}
       </ProfileOverview>

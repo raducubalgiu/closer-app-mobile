@@ -6,9 +6,17 @@ import NoAvatar from "../../../../assets/images/avatar.jpg";
 import { useDelete } from "../../../hooks";
 
 const { black, grey0 } = theme.lightColors || {};
-type IProps = { item: any; onDelete: () => void };
+type IProps = {
+  item: any;
+  onDelete: () => void;
+  onGoToSearch: (arg: any) => void;
+};
 
-export const RecentSearchListItem = ({ item, onDelete }: IProps) => {
+export const RecentSearchListItem = ({
+  item,
+  onDelete,
+  onGoToSearch,
+}: IProps) => {
   const { mutate } = useDelete({
     uri: `/searches/${item.id}`,
     onSuccess: () => onDelete(),
@@ -20,7 +28,7 @@ export const RecentSearchListItem = ({ item, onDelete }: IProps) => {
   switch (true) {
     case !!item.user:
       return (
-        <Pressable style={styles.item} onPress={() => {}}>
+        <Pressable style={styles.item} onPress={() => onGoToSearch(item)}>
           <Stack direction="row">
             <Stack direction="row">
               <Avatar source={displayAvatar} rounded size={35} />
@@ -39,7 +47,7 @@ export const RecentSearchListItem = ({ item, onDelete }: IProps) => {
       );
     case !!item.hashtag:
       return (
-        <Pressable style={styles.item} onPress={() => {}}>
+        <Pressable style={styles.item} onPress={() => onGoToSearch(item)}>
           <Stack direction="row">
             <Stack direction="row">
               <View style={styles.iconContainer}>
@@ -59,7 +67,7 @@ export const RecentSearchListItem = ({ item, onDelete }: IProps) => {
       );
     case !!item.word:
       return (
-        <Pressable style={styles.item} onPress={() => {}}>
+        <Pressable style={styles.item} onPress={() => onGoToSearch(item)}>
           <Stack direction="row">
             <Stack direction="row">
               <View style={styles.iconContainer}>
@@ -79,7 +87,7 @@ export const RecentSearchListItem = ({ item, onDelete }: IProps) => {
       );
     default:
       return (
-        <Pressable style={styles.item} onPress={() => {}}>
+        <Pressable style={styles.item} onPress={() => onGoToSearch(item)}>
           <Stack direction="row">
             <Stack direction="row">
               <View style={styles.iconContainer}>

@@ -21,6 +21,8 @@ type IProps = {
   avatar: any;
   children: any;
   user: any;
+  isBlocked: boolean;
+  isPrivate: boolean;
 };
 
 const ProfileOverview = ({
@@ -29,6 +31,8 @@ const ProfileOverview = ({
   avatar,
   children,
   user,
+  isBlocked,
+  isPrivate,
 }: IProps) => {
   const { user: userContext } = useAuth();
   const { role, profession } = user || {};
@@ -78,6 +82,7 @@ const ProfileOverview = ({
     });
 
   const isBusiness = role === MAIN_ROLE || role === SECOND_ROLE;
+  const disableStatsBtn = isBlocked || isPrivate;
 
   return (
     <View style={styles.container}>
@@ -110,16 +115,19 @@ const ProfileOverview = ({
       <Stack sx={{ marginTop: 20 }}>
         <Stack direction="row" justify="center">
           <StatsButton
+            disabled={disableStatsBtn}
             onPress={isBusiness ? goToReviews : null}
             label={isBusiness ? t("reviews") : t("posts")}
             statsNo={displayDash(isBusiness ? ratingsQuantity : postsCount)}
           />
           <StatsButton
+            disabled={disableStatsBtn}
             onPress={goToFollowers}
             label={t("followers")}
             statsNo={displayDash(followersCount)}
           />
           <StatsButton
+            disabled={disableStatsBtn}
             onPress={goToFollowings}
             label={t("following")}
             statsNo={displayDash(followingsCount)}
