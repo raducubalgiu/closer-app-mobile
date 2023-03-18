@@ -5,7 +5,7 @@ import theme from "../../../../assets/styles/theme";
 import dayjs from "dayjs";
 
 type IProps = { hours: any };
-const { black, grey0, primary } = theme.lightColors || {};
+const { black, grey0 } = theme.lightColors || {};
 
 const ProgramList = ({ hours }: IProps) => {
   const { t } = useTranslation("common");
