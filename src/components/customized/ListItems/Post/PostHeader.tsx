@@ -28,7 +28,11 @@ const PostHeader = ({ avatar, username, checkmark }: IProps) => {
           <Icon name="more-horizontal" type="feather" size={20} />
         </Pressable>
       </Stack>
-      <SheetModal ref={sheetRef} snapPoints={snapPoints}>
+      <SheetModal
+        ref={sheetRef}
+        snapPoints={snapPoints}
+        animationConfig={{ duration: 150 }}
+      >
         <PostInfoSheet onShowConfirm={() => {}} />
       </SheetModal>
     </>

@@ -32,10 +32,20 @@ const TabBarHeight = 48;
 const HeaderHeight = 320;
 const PullToRefreshDist = 80;
 
-type IProps = { user: User; profileActions: any; isPrivate?: boolean };
+type IProps = {
+  user: User;
+  profileActions: any;
+  isPrivate?: boolean;
+  isBlocked: boolean;
+};
 type ListRef = { key: string; value: RefObject<FlatList> };
 
-const Profile = ({ user, profileActions, isPrivate = false }: IProps) => {
+const Profile = ({
+  user,
+  profileActions,
+  isPrivate = false,
+  isBlocked = false,
+}: IProps) => {
   const { width, height } = useWindowDimensions();
 
   const [tabIndex, setIndex] = useState(0);
@@ -431,7 +441,13 @@ const Profile = ({ user, profileActions, isPrivate = false }: IProps) => {
         scrollY={scrollY}
         profileActions={profileActions}
       />
-      {isPrivate && <CardAccountPrivate headerHeight={HeaderHeight} />}
+      {(isPrivate || isBlocked) && (
+        <CardAccountPrivate
+          headerHeight={HeaderHeight}
+          isBlocked={isBlocked}
+          username={user?.username}
+        />
+      )}
       <ProfileRefresh scrollY={scrollY} headerMoveScrollY={headerMoveScrollY} />
     </View>
   );

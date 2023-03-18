@@ -32,9 +32,10 @@ const ProfileScreen = () => {
         variant="outlined"
         sxBtn={{ width: 150 }}
       />
-      <ProfileIconButton name="bookmark" onPress={() => {}} />
-      <ProfileIconButton name="instagram" onPress={() => {}} />
-      <ProfileIconButton name="youtube" onPress={() => {}} />
+      <ProfileIconButton
+        name="bookmark"
+        onPress={() => navigation.navigate("Bookmarks", { user })}
+      />
     </>
   );
 

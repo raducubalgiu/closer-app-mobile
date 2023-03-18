@@ -454,5 +454,7 @@
   "chooseWhoCanMentionYouDescription": "Alege cine te poate menţiona în descrieri, comentarii, postările lor",
   "chooseWhoCanTagYouDescription": "Alege cine te poate eticheta în postările lor",
   "youChangedSettings": "Ai modificat setările",
-  "map": "Hartă"
+  "map": "Hartă",
+  "unblock": "Deblochează",
+  "cannotSeeEachOtherContent": "Nu vă puteţi vedea reciproc conţinutul"
 }

@@ -37,22 +37,14 @@ export const SavedPostsTab = ({ user }: { user: User }) => {
 
   const renderPost = useCallback(
     ({ item, index }: ListRenderItemInfo<ListRenderItemPost>) => {
-      const { postId, userId } = item;
-      const { bookable, postType } = postId || {};
+      const { postId } = item;
 
       return (
         <GridImageListItem
-          onPress={() =>
-            navigation.navigate("AllBookmarks", {
-              postId: postId?.id,
-              userId: userId,
-            })
-          }
+          post={item}
+          posts={posts}
           index={index}
-          image={postId?.images[0]?.url}
-          bookable={bookable}
-          fixed={null}
-          postType={postType}
+          expirationTime={item?.expirationTime}
         />
       );
     },

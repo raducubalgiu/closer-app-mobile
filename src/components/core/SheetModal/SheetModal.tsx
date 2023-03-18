@@ -10,8 +10,8 @@ import {
 const defAnimation = { duration: 400 };
 
 type IProps = {
-  children: any;
-  snapPoints: any;
+  children: React.ReactNode;
+  snapPoints: string[] | number[];
   animationConfig?: any;
   showIndicator?: boolean;
   enableContentPanningGesture?: boolean;

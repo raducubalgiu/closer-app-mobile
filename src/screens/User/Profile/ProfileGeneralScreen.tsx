@@ -1,5 +1,5 @@
-import { StyleSheet, View } from "react-native";
-import { useState } from "react";
+import { StyleSheet, View, Text } from "react-native";
+import { useMemo, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
   NativeStackNavigationProp,
@@ -15,17 +15,14 @@ import {
 } from "../../../hooks";
 import {
   HeaderProfileGeneral,
-  TopTabProfile,
   ProfileIconButton,
   FollowProfileButton,
-  CardAccountPrivate,
 } from "../../../components/customized";
-import ProfileOverview from "../../../components/customized/ProfileOverview/ProfileOverview";
-import SuggestedUsersList from "../../../components/customized/Lists/SuggestedUsersList";
 import { RootStackParams } from "../../../navigation/rootStackParams";
-import { Protected } from "../../../components/core";
+import { Protected, SheetModal } from "../../../components/core";
 import { MAIN_ROLE, SECOND_ROLE } from "@env";
 import Profile from "../../../components/customized/Profile/Profile";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
 type IProps = NativeStackScreenProps<RootStackParams, "ProfileGeneral">;
 
@@ -34,13 +31,19 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
   const { userId, username, avatar, name, checkmark } = route.params;
   const { service, option } = route.params;
   const [isFollow, setIsFollow] = useState(false);
+  const [isBlocked, setIsBlocked] = useState(false);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
+  const snapPoints = useMemo(() => [1, 500], []);
+  const settingsRef = useRef<BottomSheetModal>(null);
 
   const { data: userDetails } = useGet({
     model: "fetchUser",
     uri: `/users/${user?.id}/user/${username}`,
-    onSuccess: (res) => setIsFollow(res.data.isFollow),
+    onSuccess: (res) => {
+      setIsFollow(res.data.isFollow);
+      setIsBlocked(res.data.isBlocked);
+    },
   });
 
   const {
@@ -66,18 +69,25 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
     },
   });
 
-  const handleFollow = () => (isFollow ? unfollow() : follow({}));
-  const goToMessage = () => {
-    // navigation.navigate("MessageItem", {
-    //   user: {
-    //     _id: userId,
-    //     username,
-    //     avatar,
-    //     name,
-    //     checkmark,
-    //   },
-    // });
+  const { mutate: unblock } = useDelete({
+    uri: `/users/${user?.id}/blocks/${userId}`,
+    onSuccess: () => {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      setIsBlocked(false);
+    },
+  });
+
+  const handleFollow = () => {
+    if (isFollow) {
+      unfollow();
+    } else if (isBlocked) {
+      unblock();
+    } else {
+      follow({});
+    }
   };
+
+  const goToMessage = () => {};
 
   const goToMap = () => {
     navigation.push("Map", {
@@ -86,11 +96,16 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
     });
   };
 
-  const isPrivate = !isFollow && userDetails?.user?.settings?.private;
+  const userSettings = userDetails?.user?.settings;
+  const isPrivate = !isFollow && userSettings?.private;
 
   const profileActions = (
     <>
-      <FollowProfileButton isFollow={isFollow} onPress={handleFollow} />
+      <FollowProfileButton
+        isFollow={isFollow}
+        isBlocked={isBlocked}
+        onPress={handleFollow}
+      />
       {isFollow && (
         <ProfileIconButton name="message-circle" onPress={goToMessage} />
       )}
@@ -115,13 +130,23 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
         username={username}
         checkmark={checkmark}
         hours={userDetails?.user?.hours}
-        onOpenSettings={() => {}}
+        onOpenSettings={() => settingsRef.current?.present()}
       />
       <Profile
         user={userDetails?.user}
         profileActions={profileActions}
         isPrivate={isPrivate}
+        isBlocked={isBlocked}
       />
+      <SheetModal
+        snapPoints={snapPoints}
+        ref={settingsRef}
+        animationConfig={{ duration: 300 }}
+      >
+        <View>
+          <Text>Hello World</Text>
+        </View>
+      </SheetModal>
       {/* {suggested && (
         <SuggestedUsersList suggested={suggested?.data} userId={userId} />
       )} */}
