@@ -1,5 +1,5 @@
 import { StyleSheet, View, Text } from "react-native";
-import { useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
   NativeStackNavigationProp,
@@ -18,11 +18,14 @@ import {
   ProfileIconButton,
   FollowProfileButton,
 } from "../../../components/customized";
+import ConfirmModal from "../../../components/customized/Modals/ConfirmModal";
 import { RootStackParams } from "../../../navigation/rootStackParams";
-import { Protected, SheetModal } from "../../../components/core";
+import { Button, Protected, SheetModal, Stack } from "../../../components/core";
 import { MAIN_ROLE, SECOND_ROLE } from "@env";
 import Profile from "../../../components/customized/Profile/Profile";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import ProfileSettingsSheet from "../../../components/customized/Sheets/ProfileSettingsSheet";
+import { useTranslation } from "react-i18next";
 
 type IProps = NativeStackScreenProps<RootStackParams, "ProfileGeneral">;
 
@@ -34,8 +37,10 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
   const [isBlocked, setIsBlocked] = useState(false);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const snapPoints = useMemo(() => [1, 500], []);
+  const snapPoints = useMemo(() => [1, 250], []);
   const settingsRef = useRef<BottomSheetModal>(null);
+  const blockRef = useRef<BottomSheetModal>(null);
+  const { t } = useTranslation();
 
   const { data: userDetails } = useGet({
     model: "fetchUser",
@@ -69,6 +74,11 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
     },
   });
 
+  const { mutate: block } = usePost({
+    uri: `/users/${user?.id}/blocks/${userId}`,
+    onSuccess: () => setIsBlocked(true),
+  });
+
   const { mutate: unblock } = useDelete({
     uri: `/users/${user?.id}/blocks/${userId}`,
     onSuccess: () => {
@@ -85,6 +95,11 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
     } else {
       follow({});
     }
+  };
+
+  const handleBlock = () => {
+    block({});
+    isFollow && unfollow();
   };
 
   const goToMessage = () => {};
@@ -141,15 +156,39 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
       <SheetModal
         snapPoints={snapPoints}
         ref={settingsRef}
-        animationConfig={{ duration: 300 }}
+        animationConfig={{ duration: 150 }}
       >
-        <View>
-          <Text>Hello World</Text>
+        <ProfileSettingsSheet
+          onHandleBlock={() => {
+            settingsRef.current?.close();
+            blockRef.current?.present();
+          }}
+        />
+      </SheetModal>
+      <SheetModal
+        snapPoints={snapPoints}
+        ref={blockRef}
+        animationConfig={{ duration: 150 }}
+      >
+        <View
+          style={{
+            margin: 20,
+            justifyContent: "space-between",
+            flex: 1,
+          }}
+        >
+          <View style={{ alignItems: "center" }}>
+            <Text style={{ fontSize: 17, fontWeight: "600", marginBottom: 10 }}>
+              Blochezi pe @raducubalgiu?
+            </Text>
+            <Text style={{ color: "gray" }}>
+              Acesta nu iti va mai putea trimite mesaje si nu va veti mai vedea
+              fotografiile si videoclipurile postate
+            </Text>
+          </View>
+          <Button title={t("block")} onPress={handleBlock} />
         </View>
       </SheetModal>
-      {/* {suggested && (
-        <SuggestedUsersList suggested={suggested?.data} userId={userId} />
-      )} */}
     </View>
   );
 };

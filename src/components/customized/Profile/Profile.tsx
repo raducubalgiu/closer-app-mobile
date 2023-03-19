@@ -425,7 +425,7 @@ const Profile = ({
 
   return (
     <View style={styles.container}>
-      {!isPrivate && (
+      {!isPrivate && !isBlocked && (
         <TabView
           onIndexChange={handleChangeIndex}
           navigationState={{ index: tabIndex, routes }}

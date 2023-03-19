@@ -12,6 +12,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/rootStackParams";
 import AvatarBadge from "../../core/Avatars/AvatarBadge";
 import { useAuth } from "../../../hooks";
+import { Divider } from "@rneui/themed";
 
 const { black, primary, grey0 } = theme.lightColors || {};
 
@@ -120,12 +121,14 @@ const ProfileOverview = ({
             label={isBusiness ? t("reviews") : t("posts")}
             statsNo={displayDash(isBusiness ? ratingsQuantity : postsCount)}
           />
+          <Divider orientation="vertical" color="#ddd" />
           <StatsButton
             disabled={disableStatsBtn}
             onPress={goToFollowers}
             label={t("followers")}
             statsNo={displayDash(followersCount)}
           />
+          <Divider orientation="vertical" color="#ddd" />
           <StatsButton
             disabled={disableStatsBtn}
             onPress={goToFollowings}

@@ -95,7 +95,6 @@ export { LoginRegisterForm } from "./Forms/LoginRegisterForm";
 export { AuthProviders } from "./Forms/AuthProviders";
 
 export { PickerHoursModal } from "./Modals/PickerHoursModal";
-export { ConfirmModal } from "./Modals/ConfirmModal";
 export { AddScheduleModal } from "./Modals/AddScheduleModal";
 
 export { EditProfileSheet } from "./Sheets/EditProfileSheet";

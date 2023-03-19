@@ -1,8 +1,8 @@
 import { StyleSheet, Text, Dimensions, Pressable } from "react-native";
 import { useTranslation } from "react-i18next";
-import { Divider } from "@rneui/base";
 import { CModal, Stack } from "../../core";
 import theme from "../../../../assets/styles/theme";
+import { memo } from "react";
 
 const { black, error, grey0 } = theme.lightColors || {};
 const { width, height } = Dimensions.get("window");
@@ -10,30 +10,31 @@ const { width, height } = Dimensions.get("window");
 type IProps = {
   visible: boolean;
   onCloseModal: () => void;
-  onDelete: () => void;
+  onAction: () => void;
+  action: string;
   title: string;
   description: string;
 };
 
-export const ConfirmModal = ({
+const ConfirmModal = ({
   visible,
   onCloseModal,
-  onDelete,
+  onAction,
+  action,
   title,
   description,
 }: IProps) => {
   const { t } = useTranslation("common");
 
   const footer = (
-    <>
-      <Pressable onPress={onDelete} style={styles.deleteBtn}>
-        <Text style={styles.deleteTxt}>{t("delete")}</Text>
-      </Pressable>
-      <Divider />
+    <Stack direction="row">
       <Pressable onPress={onCloseModal} style={styles.cancelBtn}>
         <Text style={styles.cancelTxt}>{t("cancel")}</Text>
       </Pressable>
-    </>
+      <Pressable onPress={onAction} style={styles.actionBtn}>
+        <Text style={styles.actionBtnTxt}>{action}</Text>
+      </Pressable>
+    </Stack>
   );
 
   return (
@@ -54,18 +55,32 @@ export const ConfirmModal = ({
   );
 };
 
+export default memo(ConfirmModal);
+
 const styles = StyleSheet.create({
   container: { marginHorizontal: width / 7, marginVertical: height / 2.8 },
-  deleteBtn: {
+  actionBtn: {
     alignItems: "center",
-    paddingTop: 2.5,
-    paddingBottom: 12.5,
+    justifyContent: "center",
+    padding: 12.5,
+    width: "50%",
+    borderTopWidth: 1,
+    borderTopColor: "#f1f1f1",
+    borderLeftWidth: 1,
+    borderLeftColor: "#f1f1f1",
   },
-  cancelBtn: { alignItems: "center", paddingTop: 12.5, paddingBottom: 2.5 },
-  deleteTxt: {
-    fontWeight: "bold",
+  cancelBtn: {
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 12.5,
+    width: "50%",
+    borderTopWidth: 1,
+    borderTopColor: "#f1f1f1",
+  },
+  actionBtnTxt: {
     color: error,
-    fontSize: 15.5,
+    fontSize: 15,
+    fontWeight: "500",
   },
   cancelTxt: {
     color: black,

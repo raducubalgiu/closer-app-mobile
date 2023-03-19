@@ -122,10 +122,5 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
   },
-  footer: {
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderTopWidth: 1,
-    borderTopColor: "#ddd",
-  },
+  footer: {},
 });

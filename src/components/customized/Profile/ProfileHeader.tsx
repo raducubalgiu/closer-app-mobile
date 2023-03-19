@@ -1,4 +1,4 @@
-import { StyleSheet, Animated } from "react-native";
+import { StyleSheet, Animated, useWindowDimensions } from "react-native";
 import { memo } from "react";
 import { User } from "../../../models";
 import ProfileOverview from "../ProfileOverview/ProfileOverview";
@@ -22,14 +22,13 @@ const ProfileHeader = ({
   isBlocked,
   profileActions,
 }: IProps) => {
+  const { width } = useWindowDimensions();
+
   const styles = StyleSheet.create({
     header: {
       height: headerHeight,
-      width: "100%",
-      alignItems: "center",
-      justifyContent: "center",
+      width,
       position: "absolute",
-      backgroundColor: "white",
     },
   });
 

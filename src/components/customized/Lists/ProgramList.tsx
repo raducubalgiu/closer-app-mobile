@@ -50,10 +50,11 @@ const styles = StyleSheet.create({
   heading: {
     color: black,
     fontWeight: "600",
-    fontSize: 16,
+    fontSize: 15,
   },
   text: {
     color: grey0,
     fontSize: 13.5,
+    fontWeight: "500",
   },
 });
