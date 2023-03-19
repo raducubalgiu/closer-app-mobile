@@ -71,6 +71,9 @@ export type RootStackParams = {
   FeedVideoExplore: { initialIndex: number };
   Hashtag: { name: string };
   HideAccount: any;
+  Language: any;
+  LanguageApp: any;
+  LanguageTranslation: any;
   Login: any;
   Locations: {
     service: Service;

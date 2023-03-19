@@ -52,6 +52,9 @@ import {
   FiltersServiceScreen,
   HashtagScreen,
   HideAccountScreen,
+  LanguageScreen,
+  LanguageAppScreen,
+  LanguageTranslationScreen,
   LikesScreen,
   LocationsScreen,
   LocationFiltersScreen,
@@ -213,6 +216,12 @@ const AppNavigation = () => {
               component={PrivacyMentionsScreen}
             />
             <Stack.Screen name="PrivacyTags" component={PrivacyTagsScreen} />
+            <Stack.Screen name="Language" component={LanguageScreen} />
+            <Stack.Screen name="LanguageApp" component={LanguageAppScreen} />
+            <Stack.Screen
+              name="LanguageTranslation"
+              component={LanguageTranslationScreen}
+            />
             <Stack.Screen name="ClearCache" component={ClearCacheScreen} />
             <Stack.Screen name="SavingData" component={SavingDataScreen} />
             <Stack.Screen name="Assistance" component={AssistanceScreen} />

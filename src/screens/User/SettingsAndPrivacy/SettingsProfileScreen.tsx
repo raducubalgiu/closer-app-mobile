@@ -57,6 +57,15 @@ export const SettingsProfileScreen = () => {
         </Stack>
         <Divider color="#ddd" style={styles.divider} />
         <Stack align="start">
+          <Heading title={t("contentAndDisplay")} />
+          <SettingsListItem
+            onPress={() => navigation.navigate("Language")}
+            title={t("language")}
+            iconLeftProps={{ name: "language", type: "material" }}
+          />
+        </Stack>
+        <Divider color="#ddd" style={styles.divider} />
+        <Stack align="start">
           <Heading title={t("cacheAndMobileData")} />
           <SettingsListItem
             onPress={() => navigation.navigate("ClearCache")}

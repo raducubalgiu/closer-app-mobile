@@ -70,6 +70,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
   },
-  title: { fontSize: 15, marginBottom: 5 },
+  title: { marginBottom: 5 },
   divider: { marginTop: 15, marginBottom: 5 },
 });
