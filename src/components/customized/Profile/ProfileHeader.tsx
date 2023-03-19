@@ -29,6 +29,7 @@ const ProfileHeader = ({
       height: headerHeight,
       width,
       position: "absolute",
+      backgroundColor: "white",
     },
   });
 

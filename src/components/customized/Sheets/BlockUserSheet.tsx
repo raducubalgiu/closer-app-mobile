@@ -5,7 +5,11 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 import { memo } from "react";
 
-type IProps = { username: string; onBlock: () => void; isBlocked: boolean };
+type IProps = {
+  username: string;
+  onBlock: () => void;
+  isBlocked: boolean;
+};
 
 const BlockUserSheet = ({ username, onBlock, isBlocked }: IProps) => {
   const insets = useSafeAreaInsets();

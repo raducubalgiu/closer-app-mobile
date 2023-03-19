@@ -12,6 +12,7 @@ import {
   useGetMutate,
   usePost,
   useDelete,
+  useRefreshOnFocus,
 } from "../../../hooks";
 import {
   HeaderProfileGeneral,
@@ -32,19 +33,17 @@ type IProps = NativeStackScreenProps<RootStackParams, "ProfileGeneral">;
 
 export const ProfileGeneralScreen = ({ route }: IProps) => {
   const { user } = useAuth();
-  const { userId, username, avatar, name, checkmark } = route.params;
-  const { service, option } = route.params;
+  const { userId, username, service, option } = route.params;
   const [isFollow, setIsFollow] = useState(false);
   const [isBlocked, setIsBlocked] = useState(false);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const snapPointsSettings = useMemo(() => [1, 250], []);
-  const snapPointsBlock = useMemo(() => [1, 250], []);
+  const snapPoints = useMemo(() => [1, 250], []);
   const settingsRef = useRef<BottomSheetModal>(null);
   const blockRef = useRef<BottomSheetModal>(null);
   const { t } = useTranslation("common");
 
-  const { data: userDetails } = useGet({
+  const { data: userDetails, refetch } = useGet({
     model: "fetchUser",
     uri: `/users/${user?.id}/user/${username}`,
     onSuccess: (res) => {
@@ -52,6 +51,8 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
       setIsBlocked(res.data.isBlocked);
     },
   });
+
+  useRefreshOnFocus(refetch);
 
   const {
     data: suggested,
@@ -158,8 +159,8 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
   return (
     <View style={styles.container}>
       <HeaderProfileGeneral
-        username={username}
-        checkmark={checkmark}
+        username={userDetails?.username}
+        checkmark={userDetails?.checkmark}
         hours={userDetails?.user?.hours}
         onOpenSettings={() => settingsRef.current?.present()}
       />
@@ -170,17 +171,21 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
         isBlocked={isBlocked}
       />
       <SheetModal
-        snapPoints={snapPointsSettings}
+        snapPoints={snapPoints}
         ref={settingsRef}
         animationConfig={{ duration: 150 }}
       >
         <ProfileSettingsSheet
           onHandleBlock={onHandleBlock}
+          onReport={() => {
+            settingsRef.current?.close();
+            navigation.navigate("ReportUser");
+          }}
           isBlocked={isBlocked}
         />
       </SheetModal>
       <SheetModal
-        snapPoints={snapPointsBlock}
+        snapPoints={snapPoints}
         ref={blockRef}
         animationConfig={{ duration: 150 }}
       >

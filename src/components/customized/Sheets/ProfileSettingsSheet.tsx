@@ -3,9 +3,17 @@ import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 import { SettingsListItem } from "../ListItems/SettingsListItem";
 
-type IProps = { onHandleBlock: () => void; isBlocked: boolean };
+type IProps = {
+  onHandleBlock: () => void;
+  onReport: () => void;
+  isBlocked: boolean;
+};
 
-const ProfileSettingsSheet = ({ onHandleBlock, isBlocked }: IProps) => {
+const ProfileSettingsSheet = ({
+  onHandleBlock,
+  onReport,
+  isBlocked,
+}: IProps) => {
   const { t } = useTranslation("common");
 
   return (
@@ -19,7 +27,7 @@ const ProfileSettingsSheet = ({ onHandleBlock, isBlocked }: IProps) => {
       <SettingsListItem
         title={t("report")}
         iconLeftProps={{ name: "flag", type: "feather", size: 22.5 }}
-        onPress={() => {}}
+        onPress={onReport}
         rightIcon={false}
       />
       <SettingsListItem

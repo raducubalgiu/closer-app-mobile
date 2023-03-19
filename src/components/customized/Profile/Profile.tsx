@@ -26,7 +26,6 @@ import ProfileTabBar from "./ProfileTabBar";
 import ProfilePostsTab from "./ProfilePostsTab";
 import ProfileVideosTab from "./ProfileVideosTab";
 import ProfileRefresh from "./ProfileRefresh";
-import { CardAccountPrivate } from "../Cards/CardAccountPrivate";
 
 const TabBarHeight = 48;
 const HeaderHeight = 320;
@@ -67,6 +66,8 @@ const Profile = ({
 
   const listRefArr = useRef<ListRef[]>([]);
   const listOffset = useRef<any>({});
+
+  console.log("LIST OFFSET!!", listOffset);
 
   const headerPanResponder = useRef(
     PanResponder.create({
@@ -306,23 +307,28 @@ const Profile = ({
     syncScrollOffset();
   };
 
-  const onScrollEndDrag = (e: any) => {
-    syncScrollOffset();
+  const onScrollEndDrag = useCallback(
+    (e: any) => {
+      syncScrollOffset();
 
-    const offsetY = e.nativeEvent.contentOffset.y;
-    if (Platform.OS === "ios") {
-      if (offsetY < -PullToRefreshDist && !refreshStatusRef.current) {
-        startRefreshAction();
+      const offsetY = e.nativeEvent.contentOffset.y;
+      if (Platform.OS === "ios") {
+        if (offsetY < -PullToRefreshDist && !refreshStatusRef.current) {
+          startRefreshAction();
+        }
       }
-    }
-  };
+    },
+    [syncScrollOffset, PullToRefreshDist, refreshStatusRef, startRefreshAction]
+  );
 
   const contentContainerStyle = useMemo<StyleProp<ViewStyle>>(
     () => ({
       paddingTop: HeaderHeight + TabBarHeight,
-      minHeight: height - HeaderHeight,
+      // paddingBottom:
+      //   scrollY._value >= HeaderHeight ? 0 : HeaderHeight + TabBarHeight,
+      paddingBottom: HeaderHeight - TabBarHeight,
     }),
-    [HeaderHeight, TabBarHeight, height]
+    [HeaderHeight, TabBarHeight, height, scrollY]
   );
 
   const sharedProps = useMemo(
@@ -361,13 +367,24 @@ const Profile = ({
         <ProfilePostsTab
           ref={postsRef}
           userId={user?.id}
+          isBlocked={isBlocked}
+          isPrivate={isPrivate}
           sharedProps={sharedProps}
           panHandlers={listPanResponder.panHandlers}
           onScroll={onScroll}
         />
       );
     },
-    [postsRef, routes, listRefArr, sharedProps, listPanResponder, user?.id]
+    [
+      postsRef,
+      routes,
+      listRefArr,
+      sharedProps,
+      listPanResponder,
+      user?.id,
+      isBlocked,
+      isPrivate,
+    ]
   );
 
   const Videos = useCallback(
@@ -386,13 +403,24 @@ const Profile = ({
         <ProfileVideosTab
           ref={videosRef}
           userId={user?.id}
+          isBlocked={isBlocked}
+          isPrivate={isPrivate}
           sharedProps={sharedProps}
           panHandlers={listPanResponder.panHandlers}
           onScroll={onScroll}
         />
       );
     },
-    [videosRef, routes, listRefArr, sharedProps, listPanResponder, user?.id]
+    [
+      videosRef,
+      routes,
+      listRefArr,
+      sharedProps,
+      listPanResponder,
+      user?.id,
+      isBlocked,
+      isPrivate,
+    ]
   );
 
   const renderScene = SceneMap({
@@ -425,15 +453,13 @@ const Profile = ({
 
   return (
     <View style={styles.container}>
-      {!isPrivate && !isBlocked && (
-        <TabView
-          onIndexChange={handleChangeIndex}
-          navigationState={{ index: tabIndex, routes }}
-          renderScene={renderScene}
-          renderTabBar={renderTabBar}
-          initialLayout={{ height: 0, width }}
-        />
-      )}
+      <TabView
+        onIndexChange={handleChangeIndex}
+        navigationState={{ index: tabIndex, routes }}
+        renderScene={renderScene}
+        renderTabBar={renderTabBar}
+        initialLayout={{ height: 0, width }}
+      />
       <ProfileHeader
         user={user}
         panHandlers={headerPanResponder.panHandlers}
@@ -443,13 +469,13 @@ const Profile = ({
         isBlocked={isBlocked}
         isPrivate={isPrivate}
       />
-      {(isPrivate || isBlocked) && (
+      {/* {(isPrivate || isBlocked) && (
         <CardAccountPrivate
           headerHeight={HeaderHeight}
           isBlocked={isBlocked}
           username={user?.username}
         />
-      )}
+      )} */}
       <ProfileRefresh scrollY={scrollY} headerMoveScrollY={headerMoveScrollY} />
     </View>
   );

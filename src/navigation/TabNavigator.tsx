@@ -27,6 +27,7 @@ const ProfileNavigator = () => {
         cardStyle: { backgroundColor: "rgba(0,0,0, 0.4)" },
         presentation: "card",
         detachPreviousScreen: false,
+        animationEnabled: false,
         cardStyleInterpolator: ({ current: { progress } }) => {
           return {
             cardStyle: {

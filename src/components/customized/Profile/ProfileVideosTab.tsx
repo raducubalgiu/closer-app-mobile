@@ -8,20 +8,26 @@ import {
 } from "react-native";
 import { ForwardedRef, forwardRef, useCallback, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
+import { NoFoundMessage } from "../NoFoundMessage/NoFoundMessage";
+import { useTranslation } from "react-i18next";
 
 type IProps = {
   userId: string;
   sharedProps: any;
   panHandlers: any;
   onScroll: any;
+  isBlocked: boolean;
+  isPrivate: boolean;
 };
 
 const ProfileVideosTab = forwardRef(
   (props: IProps, ref: ForwardedRef<FlatList>) => {
-    const { userId, sharedProps, panHandlers, onScroll } = props;
+    const { userId, isBlocked, isPrivate, sharedProps, panHandlers, onScroll } =
+      props;
     const [videos] = useState(Array(20).fill(0));
     const { width, height } = useWindowDimensions();
     const isFocused = useIsFocused();
+    const { t } = useTranslation();
 
     const renderPost = useCallback(({ item, index }: any) => {
       return (
@@ -48,13 +54,38 @@ const ProfileVideosTab = forwardRef(
       );
     }, []);
 
+    let header;
+    switch (true) {
+      case isPrivate:
+        header = (
+          <NoFoundMessage
+            iconProps={{ name: "eye-off" }}
+            title={t("thisAccountIsPrivate")}
+            description={t("followThisAccountForSeeContent")}
+          />
+        );
+        break;
+      case isBlocked:
+        header = (
+          <NoFoundMessage
+            iconProps={{ name: "eye-off" }}
+            title={`${t("youHaveBlocked")} @raducubalgiu`}
+            description={t("cannotSeeEachOtherContent")}
+          />
+        );
+        break;
+      default:
+        header = null;
+    }
+
     return (
       <Animated.FlatList
         ref={ref}
         {...sharedProps}
         {...panHandlers}
+        ListHeaderComponent={header}
         onScroll={isFocused ? onScroll : null}
-        data={videos}
+        data={isBlocked || isPrivate ? [] : videos}
         keyExtractor={(item, index) => index.toString()}
         renderItem={renderPost}
         numColumns={3}

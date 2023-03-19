@@ -70,6 +70,7 @@ import {
   PrivacyTagsScreen,
   ProductReviewsScreen,
   ReportAProblemScreen,
+  ReportUserScreen,
   ScheduleCancelScreen,
   ScheduleConfirmScreen,
   ScheduleDetailsScreen,
@@ -127,6 +128,7 @@ const AppNavigation = () => {
               name="EditProfession"
               component={EditProfessionScreen}
             />
+            <Stack.Screen name="ReportUser" component={ReportUserScreen} />
             <Stack.Screen name="MyBusiness" component={MyBusinessScreen} />
             <Stack.Screen name="MyDashboard" component={MyDashboardScreen} />
             <Stack.Screen name="MyCalendar" component={MyCalendarScreen} />

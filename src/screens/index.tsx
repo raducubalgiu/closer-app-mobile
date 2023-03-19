@@ -95,5 +95,6 @@ export { StoryScreen } from "./StoryScreen";
 export { UserPostsScreen } from "./User/Profile/UserPostsScreen";
 export { UserAllPostsScreen } from "./User/Profile/UserAllPostsScreen";
 export { UserVideosScreen } from "./User/Profile/UserVideosScreen";
+export { ReportUserScreen } from "./User/Profile/ReportUserScreen";
 
 export { ProfileScreen };

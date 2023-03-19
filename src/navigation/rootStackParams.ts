@@ -150,6 +150,7 @@ export type RootStackParams = {
   Register: any;
   RegisterBusiness: any;
   ReportAProblem: any;
+  ReportUser: any;
   SavingData: any;
   Settings: any;
   SearchAll: { screen: string | null; search: string };

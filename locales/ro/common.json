@@ -461,6 +461,7 @@
   "unblocked": "Deblocat",
   "doYouBlock": "Blochezi pe",
   "doYouUnblock": "Deblochezi pe",
+  "youHaveBlocked": "Ai blocat pe",
   "blockDescription": "Nu îţi va mai putea trimite mesaje şi nu vă veţi mai vedea fotografiile şi videoclipurile postate",
   "unblockDescription": "Vă veţi putea trimite mesaje şi vă veţi putea fotografiile şi videoclipurile postate"
 }
