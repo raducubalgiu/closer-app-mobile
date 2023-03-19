@@ -2,33 +2,23 @@ import { StyleSheet, useWindowDimensions, View } from "react-native";
 import { Image } from "@rneui/themed";
 import { memo } from "react";
 import PostGradient from "../../Gradients/PostGradient";
+import { SharedElement } from "react-navigation-shared-element";
 
-type IProps = { uri: string; orientation: string };
+type IProps = { uri: string; id: string };
 
-const PostImage = ({ uri, orientation }: IProps) => {
+const PostImage = ({ uri, id }: IProps) => {
   const { width } = useWindowDimensions();
 
-  let height;
-
-  switch (orientation) {
-    case "portrait":
-      height = 500;
-      break;
-    case "square":
-      height = 350;
-      break;
-    default:
-      height = 300;
-  }
-
   return (
-    <View style={{ width, height }}>
-      <Image
-        source={{ uri }}
-        containerStyle={styles.image}
-        resizeMode="cover"
-        PlaceholderContent={<PostGradient width={width} height={400} />}
-      />
+    <View style={{ width, height: 500 }}>
+      <SharedElement id={id} style={{ flex: 1 }}>
+        <Image
+          source={{ uri }}
+          containerStyle={styles.image}
+          resizeMode="cover"
+          PlaceholderContent={<PostGradient width={width} height={400} />}
+        />
+      </SharedElement>
     </View>
   );
 };
@@ -39,6 +29,6 @@ const styles = StyleSheet.create({
   image: {
     width: undefined,
     height: undefined,
-    flex: 1,
+    ...StyleSheet.absoluteFillObject,
   },
 });

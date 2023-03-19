@@ -125,11 +125,7 @@ export type RootStackParams = {
   Profile: any;
   ProfileGeneral: {
     screen?: string;
-    userId?: string;
     username: string;
-    avatar: any | null;
-    name: string;
-    checkmark: boolean;
     service: string | null;
     option: string | null;
   };

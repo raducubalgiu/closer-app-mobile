@@ -33,7 +33,7 @@ type IProps = NativeStackScreenProps<RootStackParams, "ProfileGeneral">;
 
 export const ProfileGeneralScreen = ({ route }: IProps) => {
   const { user } = useAuth();
-  const { userId, username, service, option } = route.params;
+  const { username, service, option } = route.params;
   const [isFollow, setIsFollow] = useState(false);
   const [isBlocked, setIsBlocked] = useState(false);
   const navigation =
@@ -61,7 +61,7 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
   } = useGetMutate({ uri: `/users/suggested` });
 
   const { mutate: follow } = usePost({
-    uri: `/users/${user?.id}/followings/${userId}/follows`,
+    uri: `/users/${user?.id}/followings/${userDetails?.user.id}/follows`,
     onSuccess: () => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       setIsFollow(true);
@@ -70,7 +70,7 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
   });
 
   const { mutate: unfollow } = useDelete({
-    uri: `/users/${user?.id}/followings/${userId}/follows`,
+    uri: `/users/${user?.id}/followings/${userDetails.user.id}/follows`,
     onSuccess: () => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       setIsFollow(false);
@@ -78,7 +78,7 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
   });
 
   const { mutate: block } = usePost({
-    uri: `/users/${user?.id}/blocks/${userId}`,
+    uri: `/users/${user?.id}/blocks/${userDetails.user.id}`,
     onSuccess: () => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       setIsBlocked(true);
@@ -87,7 +87,7 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
   });
 
   const { mutate: unblock } = useDelete({
-    uri: `/users/${user?.id}/blocks/${userId}`,
+    uri: `/users/${user?.id}/blocks/${userDetails.user.id}`,
     onSuccess: () => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       setIsBlocked(false);
@@ -123,8 +123,8 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
 
   const goToMap = () => {
     navigation.push("Map", {
-      profession: userDetails?.profession?._id,
-      userId: userDetails?._id,
+      profession: userDetails?.user.profession?.id,
+      userId: userDetails.user.id,
     });
   };
 
@@ -160,7 +160,7 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
     <View style={styles.container}>
       <HeaderProfileGeneral
         username={userDetails?.username}
-        checkmark={userDetails?.checkmark}
+        checkmark={userDetails?.user?.checkmark}
         hours={userDetails?.user?.hours}
         onOpenSettings={() => settingsRef.current?.present()}
       />
