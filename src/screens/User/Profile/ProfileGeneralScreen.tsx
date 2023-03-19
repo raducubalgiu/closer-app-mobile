@@ -1,5 +1,5 @@
-import { StyleSheet, View, Text } from "react-native";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { StyleSheet, View } from "react-native";
+import { useMemo, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
   NativeStackNavigationProp,
@@ -18,13 +18,14 @@ import {
   ProfileIconButton,
   FollowProfileButton,
 } from "../../../components/customized";
-import ConfirmModal from "../../../components/customized/Modals/ConfirmModal";
 import { RootStackParams } from "../../../navigation/rootStackParams";
-import { Button, Protected, SheetModal, Stack } from "../../../components/core";
+import { Protected, SheetModal } from "../../../components/core";
 import { MAIN_ROLE, SECOND_ROLE } from "@env";
 import Profile from "../../../components/customized/Profile/Profile";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import ProfileSettingsSheet from "../../../components/customized/Sheets/ProfileSettingsSheet";
+import BlockUserSheet from "../../../components/customized/Sheets/BlockUserSheet";
+import { showToast } from "../../../utils";
 import { useTranslation } from "react-i18next";
 
 type IProps = NativeStackScreenProps<RootStackParams, "ProfileGeneral">;
@@ -37,10 +38,11 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
   const [isBlocked, setIsBlocked] = useState(false);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const snapPoints = useMemo(() => [1, 250], []);
+  const snapPointsSettings = useMemo(() => [1, 250], []);
+  const snapPointsBlock = useMemo(() => [1, 250], []);
   const settingsRef = useRef<BottomSheetModal>(null);
   const blockRef = useRef<BottomSheetModal>(null);
-  const { t } = useTranslation();
+  const { t } = useTranslation("common");
 
   const { data: userDetails } = useGet({
     model: "fetchUser",
@@ -76,7 +78,11 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
 
   const { mutate: block } = usePost({
     uri: `/users/${user?.id}/blocks/${userId}`,
-    onSuccess: () => setIsBlocked(true),
+    onSuccess: () => {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      setIsBlocked(true);
+      showToast({ message: t("blocked") });
+    },
   });
 
   const { mutate: unblock } = useDelete({
@@ -84,6 +90,7 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
     onSuccess: () => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       setIsBlocked(false);
+      showToast({ message: t("unblocked") });
     },
   });
 
@@ -97,9 +104,18 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
     }
   };
 
+  const onHandleBlock = () => {
+    settingsRef.current?.close();
+    blockRef.current?.present();
+  };
+
   const handleBlock = () => {
-    block({});
-    isFollow && unfollow();
+    if (!isBlocked) {
+      block({});
+      isFollow && unfollow();
+    } else {
+      unblock();
+    }
   };
 
   const goToMessage = () => {};
@@ -154,40 +170,25 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
         isBlocked={isBlocked}
       />
       <SheetModal
-        snapPoints={snapPoints}
+        snapPoints={snapPointsSettings}
         ref={settingsRef}
         animationConfig={{ duration: 150 }}
       >
         <ProfileSettingsSheet
-          onHandleBlock={() => {
-            settingsRef.current?.close();
-            blockRef.current?.present();
-          }}
+          onHandleBlock={onHandleBlock}
+          isBlocked={isBlocked}
         />
       </SheetModal>
       <SheetModal
-        snapPoints={snapPoints}
+        snapPoints={snapPointsBlock}
         ref={blockRef}
         animationConfig={{ duration: 150 }}
       >
-        <View
-          style={{
-            margin: 20,
-            justifyContent: "space-between",
-            flex: 1,
-          }}
-        >
-          <View style={{ alignItems: "center" }}>
-            <Text style={{ fontSize: 17, fontWeight: "600", marginBottom: 10 }}>
-              Blochezi pe @raducubalgiu?
-            </Text>
-            <Text style={{ color: "gray" }}>
-              Acesta nu iti va mai putea trimite mesaje si nu va veti mai vedea
-              fotografiile si videoclipurile postate
-            </Text>
-          </View>
-          <Button title={t("block")} onPress={handleBlock} />
-        </View>
+        <BlockUserSheet
+          username={username}
+          onBlock={handleBlock}
+          isBlocked={isBlocked}
+        />
       </SheetModal>
     </View>
   );

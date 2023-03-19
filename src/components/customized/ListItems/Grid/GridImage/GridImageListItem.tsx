@@ -7,7 +7,6 @@ import GridImage from "./GridImage";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../../navigation/rootStackParams";
-import { SharedElement } from "react-navigation-shared-element";
 import { Post } from "../../../../../models";
 
 type IProps = {

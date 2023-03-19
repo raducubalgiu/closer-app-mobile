@@ -1,16 +1,17 @@
+import { memo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 import { SettingsListItem } from "../ListItems/SettingsListItem";
 
-type IProps = { onHandleBlock: () => void };
+type IProps = { onHandleBlock: () => void; isBlocked: boolean };
 
-const ProfileSettingsSheet = ({ onHandleBlock }: IProps) => {
+const ProfileSettingsSheet = ({ onHandleBlock, isBlocked }: IProps) => {
   const { t } = useTranslation("common");
 
   return (
     <View style={styles.container}>
       <SettingsListItem
-        title={t("block")}
+        title={!isBlocked ? t("block") : t("unblock")}
         iconLeftProps={{ name: "block-flipped", type: "material", size: 22.5 }}
         onPress={onHandleBlock}
         rightIcon={false}
@@ -31,7 +32,7 @@ const ProfileSettingsSheet = ({ onHandleBlock }: IProps) => {
   );
 };
 
-export default ProfileSettingsSheet;
+export default memo(ProfileSettingsSheet);
 
 const styles = StyleSheet.create({
   container: {
