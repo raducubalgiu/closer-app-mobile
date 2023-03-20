@@ -2,7 +2,11 @@ import { FlatList, ListRenderItemInfo, Text } from "react-native";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
-import { useGetPaginate, usePaginateActions } from "../../../../hooks";
+import {
+  useGetPaginate,
+  usePaginateActions,
+  useRefreshOnFocus,
+} from "../../../../hooks";
 import { HashtagListItem } from "../../ListItems/HashtagListItem";
 import { HeadingWithAction, Spinner } from "../../../core";
 import UserListItem from "../../ListItems/UserListItem";
@@ -51,8 +55,11 @@ export const SearchPopularTab = ({ search }: { search: string }) => {
   const { data: users } = usePaginateActions(usersOptions);
   const { data: hashtags } = usePaginateActions(hashtagsOptions);
 
-  const { isLoading, isFetchingNextPage } = hashtagsOptions;
-  const loading = isLoading && !isFetchingNextPage;
+  const { isLoading, isFetchingNextPage, refetch, isRefetching } =
+    hashtagsOptions;
+  const loading = (isLoading || isRefetching) && !isFetchingNextPage;
+
+  useRefreshOnFocus(refetch);
 
   const goToUsers = () => {
     navigation.navigate("SearchAll", {

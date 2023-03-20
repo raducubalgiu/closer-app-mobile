@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useCallback, useState } from "react";
 import { FlatList, StyleSheet, ListRenderItemInfo } from "react-native";
-import VideoListItem from "../../../components/customized/ListItems/VideoListItem/VideoListItem";
+import VideoListItem from "../../../components/customized/ListItems/Video/VideoListItem/VideoListItem";
 import { Post } from "../../../models";
 import { RootStackParams } from "../../../navigation/rootStackParams";
 

@@ -6,16 +6,16 @@ import { useTranslation } from "react-i18next";
 import { memo } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import CustomAvatar from "../../../core/Avatars/CustomAvatar";
-import { Stack, Checkmark, Button, IconStar } from "../../../core";
-import { Product, User } from "../../../../models";
-import theme from "../../../../../assets/styles/theme";
-import DisplayText from "../../Typography/DisplayText/DisplayText";
-import { FollowOutlinedButton } from "../../Buttons/FollowOutlinedButton";
-import { BookableLabel } from "../../Typography/Labels/BookableLabel";
-import { LastMinuteLabel } from "../../Typography/Labels/LastMinuteLabel";
-import { trimFunc } from "../../../../utils";
-import { RootStackParams } from "../../../../navigation/rootStackParams";
+import CustomAvatar from "../../../../core/Avatars/CustomAvatar";
+import { Stack, Checkmark, Button, IconStar } from "../../../../core";
+import { Product, User } from "../../../../../models";
+import theme from "../../../../../../assets/styles/theme";
+import DisplayText from "../../../Typography/DisplayText/DisplayText";
+import { FollowOutlinedButton } from "../../../Buttons/FollowOutlinedButton";
+import { BookableLabel } from "../../../Typography/Labels/BookableLabel";
+import { LastMinuteLabel } from "../../../Typography/Labels/LastMinuteLabel";
+import { trimFunc } from "../../../../../utils";
+import { RootStackParams } from "../../../../../navigation/rootStackParams";
 
 const { error } = theme.lightColors || {};
 type IProps = {

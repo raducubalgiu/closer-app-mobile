@@ -66,9 +66,9 @@ export type RootStackParams = {
     period: any;
   };
   FeedExplore: any;
+  FeedExploreVideo: { video: Post; videos: Post[]; index: number };
   FeedBookables: any;
   FeedLastMinute: any;
-  FeedVideoExplore: { initialIndex: number };
   Hashtag: { name: string };
   HideAccount: any;
   Language: any;

@@ -24,13 +24,14 @@ const GridImageListItem = ({
   discount,
   posts,
 }: IProps) => {
-  const { postType, bookable, fixed, images } = post;
+  const { postType, bookable, fixed } = post;
   const [opacity, setOpacity] = useState(1);
   const { width } = useWindowDimensions();
   const BOX_WIDTH = width / 3;
   const BOX_HEIGHT = width / 2.25;
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
+  const uri = post.images[0].url;
 
   const styles = StyleSheet.create({
     box: {
@@ -47,15 +48,14 @@ const GridImageListItem = ({
     }
   });
 
+  const goToPosts = () => {
+    navigation.navigate(`UserAllPosts`, { post, posts, index });
+    setOpacity(0);
+  };
+
   return (
-    <Pressable
-      style={styles.box}
-      onPress={() => {
-        navigation.navigate("UserAllPosts", { post, posts, index });
-        setOpacity(0);
-      }}
-    >
-      <GridImage id={post.id} uri={post.images[0].url} opacity={opacity} />
+    <Pressable style={styles.box} onPress={goToPosts}>
+      <GridImage id={post.id} uri={uri} opacity={opacity} />
       <GridIcon fixed={fixed} postType={postType} bookable={bookable} />
       {discount > 0 && (
         <GridDiscount discount={discount} expirationTime={expirationTime} />

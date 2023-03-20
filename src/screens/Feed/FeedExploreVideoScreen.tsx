@@ -1,21 +1,15 @@
 import { FlatList, Dimensions, View, RefreshControl } from "react-native";
 import { useCallback, useState, useRef } from "react";
-import VideoListItem from "../../components/customized/ListItems/VideoListItem/VideoListItem";
-import {
-  useGetPaginate,
-  usePaginateActions,
-  useRefreshByUser,
-  usePost,
-  useAuth,
-} from "../../hooks";
+import VideoListItem from "../../components/customized/ListItems/Video/VideoListItem/VideoListItem";
+import { usePost, useAuth } from "../../hooks";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../navigation/rootStackParams";
 
 const { height } = Dimensions.get("window");
-type IProps = NativeStackScreenProps<RootStackParams, "FeedVideoExplore">;
+type IProps = NativeStackScreenProps<RootStackParams, "FeedExploreVideo">;
 
-export const FeedVideoExploreScreen = ({ route }: IProps) => {
-  const { initialIndex } = route.params;
+export const FeedExploreVideoScreen = ({ route }: IProps) => {
+  const { index, videos, video } = route.params;
   const [scrollEnabled, setScrollEnabled] = useState(true);
   const [visibleItem, setVisibleItem] = useState<any>(null);
   const { user } = useAuth();
@@ -62,26 +56,17 @@ export const FeedVideoExploreScreen = ({ route }: IProps) => {
     },
   ]);
 
-  const options = useGetPaginate({
-    model: "videos",
-    uri: `/posts/get-all-posts`,
-    queries: `postType=video&orientation=portrait`,
-    limit: "5",
-  });
-
-  const { isLoading, isFetching, refetch } = options;
-  const loading = isLoading || isFetching;
-  const { data: videos, loadMore, showSpinner } = usePaginateActions(options);
-
   const renderVideo = useCallback(
-    ({ item }: { item: any }) => (
-      <VideoListItem
-        post={item}
-        setScrollEnabled={setScrollEnabled}
-        isVisible={visibleItem?.id === item?.id}
-      />
-    ),
-    [loading, visibleItem]
+    ({ item }: { item: any }) => {
+      return (
+        <VideoListItem
+          video={item.post}
+          setScrollEnabled={setScrollEnabled}
+          isVisible={visibleItem?.id === item?.post?.id}
+        />
+      );
+    },
+    [visibleItem]
   );
 
   const keyExtractor = useCallback((item: any) => item?.id, []);
@@ -95,27 +80,19 @@ export const FeedVideoExploreScreen = ({ route }: IProps) => {
     []
   );
 
-  const { refreshing, refetchByUser } = useRefreshByUser(refetch);
-  const refreshControl = (
-    <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
-  );
-
   return (
     <View style={{ backgroundColor: "black" }}>
       <FlatList
         data={videos}
         keyExtractor={keyExtractor}
         renderItem={renderVideo}
-        refreshControl={refreshControl}
         showsVerticalScrollIndicator={false}
         decelerationRate={0.0}
         bounces={false}
         pagingEnabled={true}
         getItemLayout={getItemLayout}
-        initialScrollIndex={initialIndex}
-        onEndReached={loadMore}
+        initialScrollIndex={index}
         onEndReachedThreshold={0.3}
-        ListFooterComponent={showSpinner}
         scrollEnabled={scrollEnabled}
         viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
       />

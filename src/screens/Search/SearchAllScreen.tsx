@@ -1,5 +1,5 @@
 import { SafeAreaView, StyleSheet, View } from "react-native";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import {
@@ -15,6 +15,9 @@ import {
 } from "../../components/customized";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../navigation/rootStackParams";
+import theme from "../../../assets/styles/theme";
+
+const { secondary, error } = theme.lightColors || {};
 
 type IProps = NativeStackScreenProps<RootStackParams, "SearchAll">;
 
@@ -72,12 +75,32 @@ export const SearchAllScreen = ({ route }: IProps) => {
         <Tab.Screen
           name="SearchBookable"
           component={SearchBookable}
-          options={{ tabBarLabel: t("bookables") }}
+          options={{
+            tabBarLabel: t("bookables"),
+            tabBarBadge: () => (
+              <View
+                style={{
+                  ...styles.badge,
+                  backgroundColor: secondary,
+                }}
+              />
+            ),
+          }}
         />
         <Tab.Screen
           name="SearchLastMinute"
           component={LastMinute}
-          options={{ tabBarLabel: t("lastMinute") }}
+          options={{
+            tabBarLabel: t("lastMinute"),
+            tabBarBadge: () => (
+              <View
+                style={{
+                  ...styles.badge,
+                  backgroundColor: error,
+                }}
+              />
+            ),
+          }}
         />
         <Tab.Screen
           name="SearchUsers"
@@ -103,5 +126,12 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: "white",
+  },
+  badge: {
+    width: 6.5,
+    height: 6.5,
+    borderRadius: 50,
+    top: 5,
+    right: 5,
   },
 });

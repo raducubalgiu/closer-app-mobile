@@ -1,16 +1,17 @@
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 import {
   FeedExploreScreen,
+  FeedExploreVideoScreen,
   FeedBookablesScreen,
   FeedLastMinuteScreen,
 } from "../screens";
+import { RootStackParams } from "./rootStackParams";
 
-const Stack = createSharedElementStackNavigator();
+const Stack = createSharedElementStackNavigator<RootStackParams>();
 
 const FeedNavigator = () => {
   return (
     <Stack.Navigator
-      initialRouteName="Feed"
       screenOptions={{
         gestureEnabled: false,
         headerShown: false,
@@ -30,6 +31,20 @@ const FeedNavigator = () => {
       <Stack.Screen name="FeedExplore" component={FeedExploreScreen} />
       <Stack.Screen name="FeedBookables" component={FeedBookablesScreen} />
       <Stack.Screen name="FeedLastMinute" component={FeedLastMinuteScreen} />
+      <Stack.Screen
+        name="FeedExploreVideo"
+        component={FeedExploreVideoScreen}
+        sharedElements={(route) => {
+          const { video, videos, index } = route.params;
+          return [
+            {
+              id: video.id,
+              videos,
+              index,
+            },
+          ];
+        }}
+      />
     </Stack.Navigator>
   );
 };

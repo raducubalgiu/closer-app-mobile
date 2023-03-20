@@ -34,7 +34,7 @@ export { CommentsScreen } from "./CommentsScreen";
 export { FeedExploreScreen } from "./Feed/FeedExploreScreen";
 export { FeedBookablesScreen } from "./Feed/FeedBookablesScreen";
 export { FeedLastMinuteScreen } from "./Feed/FeedLastMinuteScreen";
-export { FeedVideoExploreScreen } from "./Feed/FeedVideoExploreScreen";
+export { FeedExploreVideoScreen } from "./Feed/FeedExploreVideoScreen";
 export { SoundScreen } from "./SoundScreen";
 export { FiltersDateScreen } from "./FilterDateScreen";
 export { FiltersServiceScreen } from "./FiltersServiceScreen";

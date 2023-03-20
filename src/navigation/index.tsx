@@ -47,7 +47,6 @@ import {
   SoundScreen,
   CalendarScreen,
   CommentsScreen,
-  FeedVideoExploreScreen,
   FiltersDateScreen,
   FiltersServiceScreen,
   HashtagScreen,
@@ -313,10 +312,6 @@ const AppNavigation = () => {
             />
             <Stack.Screen name="AddProgram" component={AddUserProgramScreen} />
             <Stack.Screen name="AddPost" component={AddPostScreen} />
-            <Stack.Screen
-              name="FeedVideoExplore"
-              component={FeedVideoExploreScreen}
-            />
             <Stack.Screen
               options={{ presentation: "modal" }}
               name="PhotoLibrary"

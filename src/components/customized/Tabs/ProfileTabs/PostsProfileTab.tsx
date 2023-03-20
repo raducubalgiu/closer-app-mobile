@@ -51,7 +51,7 @@ const PostsProfileTab = forwardRef(
     const { showSpinner, loadMore } = usePaginateActions(options);
 
     const renderPosts = useCallback(
-      ({ item, index }: ListRenderItemInfo<Post>) => {
+      ({ item, index }: ListRenderItemInfo<any>) => {
         return (
           <GridImageListItem
             index={index}

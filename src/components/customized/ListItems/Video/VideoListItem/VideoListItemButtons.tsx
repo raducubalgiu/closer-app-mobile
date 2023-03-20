@@ -1,10 +1,10 @@
 import { StyleSheet, Text, Pressable } from "react-native";
 import { memo } from "react";
 import { Icon } from "@rneui/themed";
-import { Stack, ShareIButton } from "../../../core";
-import LikeButton from "../../Buttons/LikeButton";
-import { VideoCommentButton } from "../../Buttons/VideoCommentButton";
-import { MoreVerticalButton } from "../../Buttons/MoreVerticalButton";
+import { Stack, ShareIButton } from "../../../../core";
+import LikeButton from "../../../../core";
+import { VideoCommentButton } from "../../../Buttons/VideoCommentButton";
+import { MoreVerticalButton } from "../../../Buttons/MoreVerticalButton";
 
 type IProps = {
   postId: string;
@@ -34,7 +34,7 @@ const VideoListItemButtons = ({
         </Stack>
       </Pressable>
       <Stack direction="row">
-        <LikeButton
+        {/* <LikeButton
           size={27.5}
           model="posts"
           modelId={postId}
@@ -42,7 +42,7 @@ const VideoListItemButtons = ({
           onRemoveLike={() => {}}
           sx={styles.button}
           color="white"
-        />
+        /> */}
         <VideoCommentButton
           onPress={onShowCommentsSheet}
           hasComments={commentsCount > 0}

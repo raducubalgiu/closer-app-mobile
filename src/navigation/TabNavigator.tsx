@@ -13,6 +13,7 @@ import {
   UserAllPostsScreen,
 } from "../screens";
 import FeedNavigator from "./FeedNavigator";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 
 const Tab = createBottomTabNavigator();
 const Stack = createSharedElementStackNavigator();
@@ -66,6 +67,25 @@ const ProfileNavigator = () => {
       />
     </Stack.Navigator>
   );
+};
+
+const getTabStyle = (route: any) => {
+  const routeName = getFocusedRouteNameFromRoute(route) ?? "FeedStack";
+
+  switch (routeName) {
+    case "FeedExploreVideo":
+      return {
+        tabBarStyle: { backgroundColor: "black", borderTopColor: "black" },
+        tabBarActiveTintColor: "white",
+        tabBarInactiveTintColor: "gray",
+      };
+    default:
+      return {
+        tabBarStyle: { backgroundColor: "white" },
+        tabBarActiveTintColor: black,
+        tabBarInactiveTintColor: "gray",
+      };
+  }
 };
 
 const TabNavigator = () => {
@@ -124,11 +144,9 @@ const TabNavigator = () => {
             />
           );
         },
-        tabBarActiveTintColor: black,
-        tabBarInactiveTintColor: "gray",
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarStyle: { backgroundColor: "white" },
+        ...getTabStyle(route),
       })}
       sceneContainerStyle={{ backgroundColor: "white" }}
     >

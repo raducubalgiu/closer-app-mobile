@@ -4,24 +4,25 @@ import { ResizeMode, Video } from "expo-av";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useAuth } from "../../../../hooks";
-import ProductSheet from "../../Sheets/ProductSheet";
-import MoreSheet from "../../Sheets/MoreSheet";
-import LikesSheet from "../../Sheets/LikesSheet";
-import CommentsSheet from "../../Sheets/CommentsSheet";
-import { RootStackParams } from "../../../../navigation/rootStackParams";
-import { Post } from "../../../../models/post";
+import { useAuth } from "../../../../../hooks";
+import ProductSheet from "../../../Sheets/ProductSheet";
+import MoreSheet from "../../../Sheets/MoreSheet";
+import LikesSheet from "../../../Sheets/LikesSheet";
+import CommentsSheet from "../../../Sheets/CommentsSheet";
+import { RootStackParams } from "../../../../../navigation/rootStackParams";
+import { Post } from "../../../../../models/post";
 import VideoListItemButtons from "./VideoListItemButtons";
 import VideoListItemDetails from "./VideoListItemDetails";
 import VideoListItemSlider from "./VideoListItemSlider";
 import { Icon } from "@rneui/themed";
-import { Stack } from "../../../core";
-import { VideoStatusType } from "../../../../models/videoStatus";
-import SheetModal from "../../../core/SheetModal/SheetModal";
+import { Stack } from "../../../../core";
+import { VideoStatusType } from "../../../../../models/videoStatus";
+import SheetModal from "../../../../core/SheetModal/SheetModal";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { SharedElement } from "react-navigation-shared-element";
 
 type IProps = {
-  post: Post;
+  video: Post;
   setScrollEnabled: (scroll: boolean) => void;
   isVisible: boolean;
 };
@@ -39,18 +40,18 @@ const defaultStatus = {
 
 const { width, height } = Dimensions.get("window");
 
-const VideoListItem = ({ post, setScrollEnabled, isVisible }: IProps) => {
+const VideoListItem = ({ video, setScrollEnabled, isVisible }: IProps) => {
   const { user } = useAuth();
-  const { id, description, bookable, images, userId, product } = post;
+  const { id, description, bookable, images, userId, product } = video || {};
   const {
     likesCount,
     commentsCount,
     bookmarksCount,
     expirationTime,
     viewsCount,
-  } = post;
+  } = video;
   const reactions = likesCount + commentsCount + bookmarksCount;
-  const video = useRef<any>(null);
+  const videoRef = useRef<any>(null);
   const [status, setStatus] = useState<VideoStatusType>(defaultStatus);
 
   const [isSliding, setIsSliding] = useState(false);
@@ -74,9 +75,9 @@ const VideoListItem = ({ post, setScrollEnabled, isVisible }: IProps) => {
 
   const handlePlay = useCallback(() => {
     if (status.shouldPlay) {
-      video.current.pauseAsync();
+      videoRef.current.pauseAsync();
     } else {
-      video.current.playAsync();
+      videoRef.current.playAsync();
     }
   }, [status]);
 
@@ -85,22 +86,22 @@ const VideoListItem = ({ post, setScrollEnabled, isVisible }: IProps) => {
   }, []);
 
   const onSlidingStart = useCallback(async () => {
-    await video.current.pauseAsync();
+    await videoRef.current.pauseAsync();
     setScrollEnabled(false);
     setIsSliding(true);
-  }, [isSliding, video]);
+  }, [isSliding, videoRef]);
 
   const onSlidingComplete = useCallback(
     async (value: any) => {
-      await video.current.setStatusAsync({
+      await videoRef.current.setStatusAsync({
         ...status,
         positionMillis: value,
       });
-      await video.current.playAsync();
+      await videoRef.current.playAsync();
       setIsSliding(false);
       setScrollEnabled(true);
     },
-    [video, isSliding]
+    [videoRef, isSliding]
   );
 
   const goToCalendar = () => {
@@ -130,16 +131,16 @@ const VideoListItem = ({ post, setScrollEnabled, isVisible }: IProps) => {
   useFocusEffect(
     useCallback(() => {
       if (isVisible) {
-        video.current.playFromPositionAsync(0);
+        videoRef.current.playFromPositionAsync(0);
       } else {
-        video.current.pauseAsync();
+        videoRef.current.pauseAsync();
       }
     }, [isVisible, setStatus])
   );
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("blur", () => {
-      video.current.pauseAsync();
+      videoRef.current.pauseAsync();
     });
 
     return unsubscribe;
@@ -148,18 +149,26 @@ const VideoListItem = ({ post, setScrollEnabled, isVisible }: IProps) => {
   return (
     <View style={styles.container}>
       <Pressable style={styles.video} onPress={handlePlay}>
-        <Video
-          ref={video}
-          style={{ ...styles.video, height: VIDEO_HEIGHT }}
-          source={{ uri: images[0]?.url }}
-          useNativeControls={false}
-          onPlaybackStatusUpdate={updatePlaybackStatus}
-          shouldCorrectPitch={true}
-          shouldPlay={status.shouldPlay}
-          isMuted={false}
-          isLooping={true}
-          resizeMode={ResizeMode.COVER}
-        />
+        <SharedElement id={video?.id} style={{ flex: 1 }}>
+          <View style={{ width, height: VIDEO_HEIGHT }}>
+            <Video
+              ref={videoRef}
+              style={{
+                width: undefined,
+                height: undefined,
+                ...StyleSheet.absoluteFillObject,
+              }}
+              source={{ uri: video?.images[0]?.url }}
+              useNativeControls={false}
+              onPlaybackStatusUpdate={updatePlaybackStatus}
+              shouldCorrectPitch={true}
+              shouldPlay={status.shouldPlay}
+              isMuted={false}
+              isLooping={true}
+              resizeMode={ResizeMode.COVER}
+            />
+          </View>
+        </SharedElement>
         {pausePlay && (
           <View style={[StyleSheet.absoluteFill, styles.isPlaying]}>
             <Icon
