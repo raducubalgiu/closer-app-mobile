@@ -12,9 +12,9 @@ import {
   SearchServicesTab,
   HeaderSearchAll,
   SearchVideoTab,
-} from "../components/customized";
+} from "../../components/customized";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParams } from "../navigation/rootStackParams";
+import { RootStackParams } from "../../navigation/rootStackParams";
 
 type IProps = NativeStackScreenProps<RootStackParams, "SearchAll">;
 
@@ -28,6 +28,10 @@ export const SearchAllScreen = ({ route }: IProps) => {
     [search]
   );
   const Video = useCallback(() => <SearchVideoTab search={search} />, [search]);
+  const SearchBookable = useCallback(
+    () => <SearchBookablesTab search={search} />,
+    [search]
+  );
   const LastMinute = useCallback(
     () => <SearchLastMinuteTab search={search} />,
     [search]
@@ -42,10 +46,6 @@ export const SearchAllScreen = ({ route }: IProps) => {
   );
   const SearchHashtags = useCallback(
     () => <SearchHashtagsTab search={search} />,
-    [search]
-  );
-  const SearchBookable = useCallback(
-    () => <SearchBookablesTab search={search} />,
     [search]
   );
 
@@ -70,6 +70,11 @@ export const SearchAllScreen = ({ route }: IProps) => {
           options={{ tabBarLabel: t("video") }}
         />
         <Tab.Screen
+          name="SearchBookable"
+          component={SearchBookable}
+          options={{ tabBarLabel: t("bookables") }}
+        />
+        <Tab.Screen
           name="SearchLastMinute"
           component={LastMinute}
           options={{ tabBarLabel: t("lastMinute") }}
@@ -88,11 +93,6 @@ export const SearchAllScreen = ({ route }: IProps) => {
           name="SearchHashtags"
           component={SearchHashtags}
           options={{ tabBarLabel: t("hashtags") }}
-        />
-        <Tab.Screen
-          name="SearchBookable"
-          component={SearchBookable}
-          options={{ tabBarLabel: t("bookables") }}
         />
       </TopTabContainer>
     </View>

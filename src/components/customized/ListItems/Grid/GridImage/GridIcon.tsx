@@ -13,7 +13,7 @@ const GridIcon = ({ fixed, postType, bookable }: IProps) => {
       iconProps = { name: "pushpin", type: "antdesign" };
       break;
     case postType === "video":
-      iconProps = { name: "video" };
+      iconProps = { name: "play-box-multiple" };
       break;
     case bookable:
       iconProps = { name: "shopping" };

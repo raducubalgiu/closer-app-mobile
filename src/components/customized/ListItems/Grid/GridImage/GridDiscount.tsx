@@ -28,8 +28,8 @@ export default memo(GridDiscount);
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    bottom: 7.5,
-    left: 6.25,
+    top: 5,
+    left: 7.5,
   },
   gradient: {
     flexDirection: "row",

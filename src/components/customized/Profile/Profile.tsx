@@ -67,8 +67,6 @@ const Profile = ({
   const listRefArr = useRef<ListRef[]>([]);
   const listOffset = useRef<any>({});
 
-  console.log("LIST OFFSET!!", listOffset);
-
   const headerPanResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponderCapture: (evt, gestureState) => false,

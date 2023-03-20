@@ -90,13 +90,14 @@ import {
   PhotoAlbumsScreen,
   AddPostScreen,
   UserLocationPermissionScreen,
-  UserPostsScreen,
+  SearchPopularDetailScreen,
 } from "../screens";
 
 const Stack = createSharedElementStackNavigator<RootStackParams>();
 import AuthNavigator from "./AuthNavigator";
 import TabNavigator from "./TabNavigator";
 import { PortalProvider } from "@gorhom/portal";
+import { TransitionPresets } from "@react-navigation/stack";
 
 const AppNavigation = () => {
   const { user } = useAuth();
@@ -105,8 +106,52 @@ const AppNavigation = () => {
     <NavigationContainer>
       {user ? (
         <PortalProvider>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Navigator
+            screenOptions={{
+              gestureEnabled: false,
+              headerShown: false,
+              cardStyle: { backgroundColor: "rgba(0,0,0, 0.4)" },
+              presentation: "card",
+              // detachPreviousScreen: false,
+              // cardStyleInterpolator: ({ current: { progress } }) => {
+              //   return {
+              //     cardStyle: {
+              //       opacity: progress,
+              //     },
+              //   };
+              // },
+              // animationEnabled: true,
+            }}
+          >
             <Stack.Screen name="App" component={TabNavigator} />
+            <Stack.Screen
+              name="SearchPosts"
+              component={SearchPostsScreen}
+              options={{
+                animationEnabled: false,
+              }}
+            />
+            <Stack.Screen
+              name="SearchAll"
+              component={SearchAllScreen}
+              options={{
+                animationEnabled: false,
+              }}
+            />
+            <Stack.Screen
+              name="SearchPopular"
+              component={SearchPopularDetailScreen}
+              sharedElements={(route, otherRoute, showing) => {
+                const { post, posts, index } = route.params;
+                return [
+                  {
+                    id: post.id,
+                    posts,
+                    index,
+                  },
+                ];
+              }}
+            />
             <Stack.Screen
               name="SearchServices"
               component={SearchServicesScreen}
@@ -242,7 +287,6 @@ const AppNavigation = () => {
             <Stack.Screen name="Bookmarks" component={BookmarksScreen} />
             <Stack.Screen name="AllBookmarks" component={AllBookmarksScreen} />
             <Stack.Screen name="Comments" component={CommentsScreen} />
-            <Stack.Screen name="SearchAll" component={SearchAllScreen} />
             <Stack.Screen name="Hashtag" component={HashtagScreen} />
             <Stack.Screen name="Service" component={ServiceScreen} />
             <Stack.Screen name="Product" component={ProductScreen} />
@@ -292,7 +336,6 @@ const AppNavigation = () => {
               component={CameraPreviewScreen}
             />
             <Stack.Screen name="Likes" component={LikesScreen} />
-            <Stack.Screen name="SearchPosts" component={SearchPostsScreen} />
             <Stack.Screen
               name="UserLocationPermission"
               component={UserLocationPermissionScreen}

@@ -70,7 +70,7 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
   });
 
   const { mutate: unfollow } = useDelete({
-    uri: `/users/${user?.id}/followings/${userDetails.user.id}/follows`,
+    uri: `/users/${user?.id}/followings/${userDetails?.user?.id}/follows`,
     onSuccess: () => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       setIsFollow(false);
@@ -78,7 +78,7 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
   });
 
   const { mutate: block } = usePost({
-    uri: `/users/${user?.id}/blocks/${userDetails.user.id}`,
+    uri: `/users/${user?.id}/blocks/${userDetails?.user?.id}`,
     onSuccess: () => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       setIsBlocked(true);
@@ -87,7 +87,7 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
   });
 
   const { mutate: unblock } = useDelete({
-    uri: `/users/${user?.id}/blocks/${userDetails.user.id}`,
+    uri: `/users/${user?.id}/blocks/${userDetails?.user?.id}`,
     onSuccess: () => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       setIsBlocked(false);
@@ -124,7 +124,7 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
   const goToMap = () => {
     navigation.push("Map", {
       profession: userDetails?.user.profession?.id,
-      userId: userDetails.user.id,
+      userId: userDetails?.user?.id,
     });
   };
 

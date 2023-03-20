@@ -28,10 +28,10 @@ export const SearchLastMinuteTab = ({ search }: { search: string }) => {
       <GridImageListItem
         onPress={() => {}}
         index={index}
-        image={item?.images[0]?.url}
-        bookable={item.bookable}
-        fixed={null}
-        postType={item.postType}
+        post={item}
+        posts={posts}
+        discount={item?.product?.discount}
+        expirationTime={item?.expirationTime}
       />
     ),
     []

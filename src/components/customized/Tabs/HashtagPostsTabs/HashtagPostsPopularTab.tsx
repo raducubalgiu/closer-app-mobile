@@ -2,7 +2,7 @@ import { Animated, ListRenderItemInfo } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { useGetPaginate } from "../../../../hooks";
+import { useGetPaginate, usePaginateActions } from "../../../../hooks";
 import GridImageListItem from "../../ListItems/Grid/GridImage/GridImageListItem";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { Spinner } from "../../../core";
@@ -18,52 +18,15 @@ export const HashtagPostsPopularTab = ({
   const { t } = useTranslation("common");
   const isFocused = useIsFocused();
 
-  const {
-    data,
-    hasNextPage,
-    fetchNextPage,
-    isFetchingNextPage,
-    isLoading,
-    isFetching,
-  } = useGetPaginate({
+  const options = useGetPaginate({
     model: "hPopular",
     uri: `/hashtags/${name}/posts/popular`,
     limit: "30",
     enabled: isFocused,
   });
 
-  const renderPosts = useCallback(
-    ({ item, index }: ListRenderItemInfo<Post>) => (
-      <GridImageListItem
-        onPress={() => {}}
-        index={index}
-        image={item?.images[0]?.url}
-        bookable={item.bookable}
-        fixed={null}
-        postType={item.postType}
-      />
-    ),
-    []
-  );
-
-  const keyExtractor = useCallback((item: Post) => item.id, []);
-
-  const loadMore = () => {
-    if (hasNextPage) {
-      fetchNextPage();
-    }
-  };
-
-  const showSpinner = () => {
-    if (isFetchingNextPage) {
-      return <Spinner sx={{ paddingVertical: 50 }} />;
-    } else {
-      return null;
-    }
-  };
-
-  const { pages } = data || {};
-  const posts = pages?.map((page) => page.results).flat();
+  const { isLoading, isFetchingNextPage } = options;
+  const { data: posts, showSpinner, loadMore } = usePaginateActions(options);
 
   if (!isLoading && !isFetchingNextPage && posts?.length === 0) {
     return (
@@ -71,9 +34,25 @@ export const HashtagPostsPopularTab = ({
     );
   }
 
+  const renderPosts = useCallback(
+    ({ item, index }: ListRenderItemInfo<any>) => (
+      <GridImageListItem
+        onPress={() => {}}
+        index={index}
+        post={item}
+        discount={item?.product.discount}
+        expirationTime={item.expirationTime}
+        posts={posts}
+      />
+    ),
+    []
+  );
+
+  const keyExtractor = useCallback((item: Post) => item.id, []);
+
   return (
     <>
-      {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
+      {isLoading && !isFetchingNextPage && <Spinner />}
       <Animated.FlatList
         numColumns={3}
         data={posts}

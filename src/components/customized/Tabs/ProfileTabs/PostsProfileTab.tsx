@@ -1,11 +1,13 @@
 import { View, ListRenderItemInfo, Animated } from "react-native";
 import { forwardRef, useCallback, useEffect } from "react";
-import { useIsFocused } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import GridImageListItem from "../../ListItems/Grid/GridImage/GridImageListItem";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { useTranslation } from "react-i18next";
 import { useGetPaginate, usePaginateActions } from "../../../../hooks";
 import { Post } from "../../../../models/post";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../../navigation/rootStackParams";
 
 type IProps = {
   userId: string | undefined;
@@ -34,6 +36,8 @@ const PostsProfileTab = forwardRef(
   ) => {
     const isFocused = useIsFocused();
     const { t } = useTranslation("common");
+    const navigation =
+      useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
     const options = useGetPaginate({
       model: "posts",

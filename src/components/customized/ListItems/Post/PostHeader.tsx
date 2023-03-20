@@ -19,7 +19,7 @@ const PostHeader = ({ avatar, username, checkmark }: IProps) => {
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const onGoToUser = () => {
-    navigation.navigate("ProfileGeneral", {
+    navigation.push("ProfileGeneral", {
       username,
       service: null,
       option: null,

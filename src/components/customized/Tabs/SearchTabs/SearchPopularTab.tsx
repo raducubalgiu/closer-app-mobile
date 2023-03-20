@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useGetPaginate, usePaginateActions } from "../../../../hooks";
 import { HashtagListItem } from "../../ListItems/HashtagListItem";
-import { HeadingWithAction } from "../../../core";
+import { HeadingWithAction, Spinner } from "../../../core";
 import UserListItem from "../../ListItems/UserListItem";
 import GridImageListItem from "../../ListItems/Grid/GridImage/GridImageListItem";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -51,6 +51,9 @@ export const SearchPopularTab = ({ search }: { search: string }) => {
   const { data: users } = usePaginateActions(usersOptions);
   const { data: hashtags } = usePaginateActions(hashtagsOptions);
 
+  const { isLoading, isFetchingNextPage } = hashtagsOptions;
+  const loading = isLoading && !isFetchingNextPage;
+
   const goToUsers = () => {
     navigation.navigate("SearchAll", {
       screen: "SearchUsers",
@@ -88,12 +91,11 @@ export const SearchPopularTab = ({ search }: { search: string }) => {
   const renderPopularPosts = useCallback(
     ({ item, index }: ListRenderItemInfo<Post>) => (
       <GridImageListItem
-        onPress={() => {}}
         index={index}
-        image={item?.images[0]?.url}
-        bookable={item.bookable}
-        fixed={null}
-        postType={item.postType}
+        post={item}
+        expirationTime={item.expirationTime}
+        discount={item?.product?.discount}
+        posts={posts}
       />
     ),
     []
@@ -135,21 +137,26 @@ export const SearchPopularTab = ({ search }: { search: string }) => {
   );
 
   return (
-    <FlatList
-      ListHeaderComponent={
-        <>
-          {hashtagsList}
-          <HeadingWithAction heading={t("populars")} collection={posts} />
-        </>
-      }
-      numColumns={3}
-      data={posts}
-      keyExtractor={(item) => item.id}
-      showsVerticalScrollIndicator={false}
-      renderItem={renderPopularPosts}
-      ListFooterComponent={showSpinner}
-      onEndReached={loadMore}
-      onEndReachedThreshold={0}
-    />
+    <>
+      {!loading && (
+        <FlatList
+          ListHeaderComponent={
+            <>
+              {hashtagsList}
+              <HeadingWithAction heading={t("populars")} collection={posts} />
+            </>
+          }
+          numColumns={3}
+          data={posts}
+          keyExtractor={(item) => item.id}
+          showsVerticalScrollIndicator={false}
+          renderItem={renderPopularPosts}
+          ListFooterComponent={showSpinner}
+          onEndReached={loadMore}
+          onEndReachedThreshold={0}
+        />
+      )}
+      {loading && <Spinner />}
+    </>
   );
 };

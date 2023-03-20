@@ -2,7 +2,7 @@ import { Animated, ListRenderItemInfo } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { useGetPaginate } from "../../../../hooks";
+import { useGetPaginate, usePaginateActions } from "../../../../hooks";
 import GridImageListItem from "../../ListItems/Grid/GridImage/GridImageListItem";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { Spinner } from "../../../core";
@@ -18,52 +18,31 @@ export const HashtagPostsRecentTab = ({
   const { t } = useTranslation("common");
   const isFocused = useIsFocused();
 
-  const {
-    data,
-    hasNextPage,
-    fetchNextPage,
-    isFetchingNextPage,
-    isLoading,
-    isFetching,
-  } = useGetPaginate({
+  const options = useGetPaginate({
     model: "hRecent",
     uri: `/hashtags/${name}/posts/recent`,
     limit: "30",
     enabled: isFocused,
   });
 
+  const { isLoading, isFetchingNextPage } = options;
+  const { data: posts, showSpinner, loadMore } = usePaginateActions(options);
+
   const renderPosts = useCallback(
     ({ item, index }: ListRenderItemInfo<Post>) => (
       <GridImageListItem
         onPress={() => {}}
         index={index}
-        image={item?.images[0]?.url}
-        bookable={item.bookable}
-        fixed={null}
-        postType={item.postType}
+        post={item}
+        posts={posts}
+        discount={item?.product.discount}
+        expirationTime={item.expirationTime}
       />
     ),
     []
   );
 
   const keyExtractor = useCallback((item: Post) => item.id, []);
-
-  const loadMore = () => {
-    if (hasNextPage) {
-      fetchNextPage();
-    }
-  };
-
-  const showSpinner = () => {
-    if (isFetchingNextPage) {
-      return <Spinner sx={{ paddingVertical: 150 }} />;
-    } else {
-      return null;
-    }
-  };
-
-  const { pages } = data || {};
-  const posts = pages?.map((page) => page.results).flat();
 
   if (!isLoading && !isFetchingNextPage && posts?.length === 0) {
     return (
@@ -73,7 +52,7 @@ export const HashtagPostsRecentTab = ({
 
   return (
     <>
-      {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
+      {isLoading && !isFetchingNextPage && <Spinner />}
       <Animated.FlatList
         numColumns={3}
         data={posts}

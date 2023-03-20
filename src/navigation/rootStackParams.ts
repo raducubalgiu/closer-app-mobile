@@ -162,6 +162,7 @@ export type RootStackParams = {
   ScheduleDetails: { schedule: Schedule };
   ScheduleCancel: { scheduleId: string };
   SearchPosts: { search: string };
+  SearchPopular: { post: Post; posts: Post[]; index: number };
   Service: { service: Service };
   Sound: { soundUri: any; avatar: any };
   Story: { userId: string };

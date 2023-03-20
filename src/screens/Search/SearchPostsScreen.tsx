@@ -12,24 +12,24 @@ import { useNavigation } from "@react-navigation/native";
 import { Icon } from "@rneui/themed";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParams } from "../navigation/rootStackParams";
-import { IconButton } from "../components/core";
-import { IconBackButton, SearchBarInput, Stack } from "../components/core";
-import theme from "../../assets/styles/theme";
+import { RootStackParams } from "../../navigation/rootStackParams";
+import { IconButton } from "../../components/core";
+import { IconBackButton, SearchBarInput, Stack } from "../../components/core";
+import theme from "../../../assets/styles/theme";
 import {
   HashtagListItem,
   RecentSearchListItem,
   UserListItemSimple,
-} from "../components/customized";
+} from "../../components/customized";
 import {
   useAuth,
   useDelete,
   useGet,
   usePost,
   useRefreshOnFocus,
-} from "../hooks";
-import { Hashtag, User } from "../models";
-import { SearchAll } from "../models/searchAll";
+} from "../../hooks";
+import { Hashtag, User } from "../../models";
+import { SearchAll } from "../../models/searchAll";
 
 const { grey0, primary, black } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "SearchPosts">;
@@ -84,11 +84,7 @@ export const SearchPostsScreen = ({ route }: IProps) => {
     });
 
     navigation.navigate("ProfileGeneral", {
-      userId: id,
       username,
-      avatar,
-      name,
-      checkmark,
       service: null,
       option: null,
     });

@@ -52,8 +52,8 @@ export { ScheduleCancelScreen } from "./ScheduleCancelScreen";
 export { ScheduleConfirmScreen } from "./ScheduleConfirmScreen";
 export { ScheduleDetailsScreen } from "./ScheduleDetailsScreen";
 export { SchedulesScreen } from "./SchedulesScreen";
-export { SearchAllScreen } from "./SearchAllScreen";
-export { SearchPostsScreen } from "./SearchPostsScreen";
+export { SearchAllScreen } from "./Search/SearchAllScreen";
+export { SearchPostsScreen } from "./Search/SearchPostsScreen";
 export { SearchServicesScreen } from "./SearchServicesScreen";
 export { ServiceScreen } from "./ServiceScreen";
 export { AuthScreen } from "./User/Auth/AuthScreen";
@@ -99,5 +99,6 @@ export { ReportUserScreen } from "./User/Profile/ReportUserScreen";
 export { LanguageScreen } from "./User/SettingsAndPrivacy/Language/LanguageScreen";
 export { LanguageAppScreen } from "./User/SettingsAndPrivacy/Language/LanguageAppScreen";
 export { LanguageTranslationScreen } from "./User/SettingsAndPrivacy/Language/LanguageTranslationScreen";
+export { SearchPopularDetailScreen } from "./Search/SearchPopularDetailScreen";
 
 export { ProfileScreen };
