@@ -75,9 +75,11 @@ export const CalendarScreen = ({ route }: IProps) => {
     <NoFoundMessage
       title={t("noFoundAvailableSlots")}
       description={t("noFoundAvailableSlotsDescription")}
-      iconName="calendar-clock"
-      iconType="material-community"
-      iconSize={60}
+      iconProps={{
+        name: "calendar-clock",
+        type: "material-community",
+        size: 60,
+      }}
       sx={{ marginTop: 30 }}
     />
   );
@@ -85,9 +87,11 @@ export const CalendarScreen = ({ route }: IProps) => {
     <NoFoundMessage
       title={t("closed")}
       description={t("noFoundAvailableProgram")}
-      iconName="calendar-clock"
-      iconType="material-community"
-      iconSize={60}
+      iconProps={{
+        name: "calendar-clock",
+        type: "material-community",
+        size: 60,
+      }}
       sx={{ marginTop: 30 }}
     />
   );

@@ -2,7 +2,7 @@ import { StyleSheet, Text, Pressable } from "react-native";
 import { memo, useEffect } from "react";
 import { Icon } from "@rneui/themed";
 import { Stack } from "../../../core";
-import { Product } from "../../../../models";
+import { Product, User } from "../../../../models";
 import theme from "../../../../../assets/styles/theme";
 import Animated, {
   useAnimatedStyle,
@@ -10,18 +10,31 @@ import Animated, {
   interpolateColor,
   withTiming,
 } from "react-native-reanimated";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../../navigation/rootStackParams";
 
 type IProps = {
   product: Product;
+  serviceId: string;
+  ownerId: User;
   isVisible: boolean;
   expirationTime: string | null;
 };
 const { black, secondary, error } = theme.lightColors || {};
 
-const PostBookable = ({ product, isVisible, expirationTime }: IProps) => {
+const PostBookable = ({
+  product,
+  serviceId,
+  ownerId,
+  isVisible,
+  expirationTime,
+}: IProps) => {
   const { name, price } = product;
   const transitionColor = expirationTime ? "#f11263" : secondary;
   const animation = useSharedValue(0);
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const bgColor = useAnimatedStyle(() => {
     return {
@@ -53,8 +66,14 @@ const PostBookable = ({ product, isVisible, expirationTime }: IProps) => {
 
   animation.value = 0;
 
+  const goToCalendar = () =>
+    navigation.navigate("CalendarBig", {
+      product: { ...product, ownerId },
+      serviceId,
+    });
+
   return (
-    <Pressable onPress={() => {}}>
+    <Pressable onPress={goToCalendar}>
       <Animated.View style={[styles.container, bgColor]}>
         <Stack direction="row">
           <Animated.Text style={[styles.name, color]}>{name}</Animated.Text>

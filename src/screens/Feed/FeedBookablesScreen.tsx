@@ -79,7 +79,7 @@ export const FeedBookablesScreen = () => {
 
   const viewabilityConfig = {
     waitForInteraction: true,
-    itemVisiblePercentThreshold: 65,
+    itemVisiblePercentThreshold: 80,
     minimumViewTime: 2000,
   };
 

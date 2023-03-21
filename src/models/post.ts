@@ -1,6 +1,5 @@
 import { Hashtag } from "./hashtag";
 import { Product } from "./product";
-import { Service } from "./service";
 import { User } from "./user";
 
 export interface Post {
@@ -10,7 +9,7 @@ export interface Post {
   hashtags: Hashtag[];
   mentions: User[];
   product: Product;
-  serviceId: Service;
+  serviceId: string;
   userId: User;
   bookable: boolean;
   fixed: boolean;
