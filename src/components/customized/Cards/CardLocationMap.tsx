@@ -13,21 +13,21 @@ type IProps = {
 };
 
 const CardLocationMap = ({ onPress, sx = {}, item, isLoading }: IProps) => {
-  const { owner, images, address } = item;
+  const { ownerId, imageCover, address } = item;
 
   return (
     <Pressable onPress={onPress} style={{ ...styles.button, ...sx }}>
       {!isLoading && (
         <Stack direction="row" align="start" sx={{ width: "100%" }}>
-          <Image source={{ uri: images[0].url }} style={styles.image} />
+          <Image source={{ uri: imageCover.url }} style={styles.image} />
           <Stack align="start" sx={{ flex: 1, padding: 10 }}>
-            <Text style={styles.name}>{owner.name}</Text>
+            <Text style={styles.name}>{ownerId.name}</Text>
             <Text style={styles.address}>
               {address.street} {address.number}, {address.city}
             </Text>
             <Stack direction="row" sx={{ marginTop: 5 }}>
               <IconStar />
-              <Text style={styles.ratings}>{owner.ratingsAverage}</Text>
+              <Text style={styles.ratings}>{ownerId.ratingsAverage}</Text>
             </Stack>
           </Stack>
         </Stack>

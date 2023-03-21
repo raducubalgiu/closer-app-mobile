@@ -8,6 +8,13 @@ import { Spinner } from "../../../core";
 import { useTranslation } from "react-i18next";
 import { useIsFocused } from "@react-navigation/native";
 
+type PostListItem = {
+  id: string;
+  post: Post;
+  isLiked: boolean;
+  isBookmarked: boolean;
+};
+
 export const SearchLastMinuteTab = ({ search }: { search: string }) => {
   const { t } = useTranslation("common");
   const isFocused = useIsFocused();
@@ -16,7 +23,7 @@ export const SearchLastMinuteTab = ({ search }: { search: string }) => {
     model: "searchLastMinute",
     uri: `/posts/search`,
     queries: `search=${search}`,
-    limit: "42",
+    limit: "12",
     enabled: isFocused,
   });
 
@@ -24,21 +31,24 @@ export const SearchLastMinuteTab = ({ search }: { search: string }) => {
   const { data: posts, loadMore, showSpinner } = usePaginateActions(options);
 
   const renderPost = useCallback(
-    ({ item, index }: ListRenderItemInfo<Post>) => (
-      <GridImageListItem
-        onPress={() => {}}
-        index={index}
-        post={item}
-        posts={posts}
-        discount={item?.product?.discount}
-        expirationTime={item?.expirationTime}
-      />
-    ),
+    ({ item, index }: ListRenderItemInfo<PostListItem>) => {
+      const { post } = item;
+
+      return (
+        <GridImageListItem
+          index={index}
+          post={post}
+          posts={posts}
+          discount={post?.product?.discount}
+          expirationTime={post?.expirationTime}
+        />
+      );
+    },
     []
   );
 
   const loading = isLoading && !isFetchingNextPage;
-  const keyExtractor = useCallback((item: Post) => item.id, []);
+  const keyExtractor = useCallback((item: PostListItem) => item.id, []);
 
   if (!isLoading && !isFetchingNextPage && posts?.length === 0) {
     return (

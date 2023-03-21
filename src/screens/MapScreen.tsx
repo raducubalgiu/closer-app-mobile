@@ -18,17 +18,9 @@ import {
 import { Stack } from "../components/core";
 import { useGet, useRefreshOnFocus } from "../hooks";
 import { RootStackParams } from "../navigation/rootStackParams";
-import { HeaderMap } from "../components/customized";
-import BusinessButton from "../components/customized/Buttons/BusinessButton";
 import CardLocationMap from "../components/customized/Cards/CardLocationMap";
-import MapMarkerProfile from "../components/customized/Map/MapMarkerProfile";
-import { trimFunc } from "../utils";
-import * as Location from "expo-location";
-import CustomAvatar from "../components/core/Avatars/CustomAvatar";
-import theme from "../../assets/styles/theme";
 import { User } from "../models/user";
 
-const { primary } = theme.lightColors || {};
 const { width, height } = Dimensions.get("window");
 
 const mapStyle = [
@@ -97,7 +89,6 @@ type IProps = NativeStackScreenProps<RootStackParams, "Map">;
 export const MapScreen = ({ route }: IProps) => {
   const [userLocation, setUserLocation] = useState(null);
   const { userId, profession, initialCoordinates } = route.params;
-  const [professionId, setProfessionId] = useState(profession);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const insets = useSafeAreaInsets();
@@ -105,47 +96,47 @@ export const MapScreen = ({ route }: IProps) => {
   const locationsRef = useRef<FlatList>();
   const mapRef = useRef<any>();
 
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        // Do Something
-        return;
-      }
-      let location = await Location.getCurrentPositionAsync({});
-      setUserLocation(location);
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     let { status } = await Location.requestForegroundPermissionsAsync();
+  //     if (status !== "granted") {
+  //       // Do Something
+  //       return;
+  //     }
+  //     let location = await Location.getCurrentPositionAsync({});
+  //     setUserLocation(location);
+  //   })();
+  // }, []);
 
-  const { data: businesses } = useGet({
-    model: "businesses",
-    uri: "/businesses",
-  });
+  // const { data: businesses } = useGet({
+  //   model: "businesses",
+  //   uri: "/businesses",
+  // });
 
-  const changeBusiness = useCallback((item: any, index: number) => {
-    setProfessionId(item._id);
-    businessRef.current?.scrollToIndex({
-      index,
-    });
-  }, []);
+  // const changeBusiness = useCallback((item: any, index: number) => {
+  //   setProfessionId(item._id);
+  //   businessRef.current?.scrollToIndex({
+  //     index,
+  //   });
+  // }, []);
 
-  const getBusinessLayout = (data: any, index: number) => ({
-    length: BUSINESS_WIDTH,
-    offset: BUSINESS_WIDTH * index,
-    index,
-  });
+  // const getBusinessLayout = (data: any, index: number) => ({
+  //   length: BUSINESS_WIDTH,
+  //   offset: BUSINESS_WIDTH * index,
+  //   index,
+  // });
 
-  const renderBusiness = useCallback(
-    ({ item, index }: ListRenderItem<any>) => (
-      <BusinessButton
-        name={item.name}
-        isActive={item._id === professionId}
-        sx={{ width: BUSINESS_WIDTH, marginRight: BUSINESS_MR }}
-        onPress={() => changeBusiness(item, index)}
-      />
-    ),
-    [professionId, BUSINESS_MR, BUSINESS_WIDTH]
-  );
+  // const renderBusiness = useCallback(
+  //   ({ item, index }: ListRenderItem<any>) => (
+  //     <BusinessButton
+  //       name={item.name}
+  //       isActive={item._id === professionId}
+  //       sx={{ width: BUSINESS_WIDTH, marginRight: BUSINESS_MR }}
+  //       onPress={() => changeBusiness(item, index)}
+  //     />
+  //   ),
+  //   [professionId, BUSINESS_MR, BUSINESS_WIDTH]
+  // );
 
   const {
     data: locations,
@@ -154,7 +145,7 @@ export const MapScreen = ({ route }: IProps) => {
     refetch,
   } = useGet({
     model: "locations",
-    uri: `/locations/get-locations-map?latlng=26.100195,44.428286&professionId=${professionId}`,
+    uri: `/locations/map?latlng=26.100195,44.428286&professionId=${profession}`,
   });
 
   useRefreshOnFocus(refetch);
@@ -167,11 +158,7 @@ export const MapScreen = ({ route }: IProps) => {
 
   const goToUser = (user: User) => {
     navigation.push("ProfileGeneral", {
-      userId: user._id,
-      name: user.name,
       username: user.username,
-      avatar: user.avatar,
-      checkmark: user.avatar,
       service: null,
       option: null,
     });
@@ -183,7 +170,7 @@ export const MapScreen = ({ route }: IProps) => {
         <CardLocationMap
           item={item}
           sx={{ width: LOCATION_WIDTH, marginHorizontal: LOCATION_INSET }}
-          onPress={() => goToUser(item.owner)}
+          onPress={() => {}}
           isLoading={isLoading || isFetching}
         />
       );
@@ -192,10 +179,10 @@ export const MapScreen = ({ route }: IProps) => {
   );
 
   const locationsIndex = locations?.findIndex(
-    (el: any) => el.owner._id === userId
+    (el: any) => el.ownerId._id === userId
   );
-  const businessIndex = businesses?.findIndex((el: any) => el._id === userId);
-  const findLocation = locations && locations[locationsIndex];
+  // const businessIndex = businesses?.findIndex((el: any) => el._id === userId);
+  // const findLocation = locations && locations[locationsIndex];
 
   const [region, setRegion] = useState({
     latitude: locations && locations[locationsIndex]?.address?.coordinates[0],
@@ -209,7 +196,7 @@ export const MapScreen = ({ route }: IProps) => {
 
   useEffect(() => {
     mapAnimation.addListener(({ value }) => {
-      let index = Math.floor(value / LOCATION_WIDTH + 0.3); // animate 30% away from landing on the next item
+      let index = Math.floor(value / LOCATION_WIDTH + 0.3);
       if (index >= locations.length) {
         index = locations.length - 1;
       }
@@ -270,7 +257,7 @@ export const MapScreen = ({ route }: IProps) => {
           showsUserLocation={true}
         >
           {locations?.map((loc: any, index: number) => {
-            const { owner, address } = loc;
+            const { ownerId, address } = loc;
             const scaleStyle = {
               transform: [
                 {
@@ -290,7 +277,7 @@ export const MapScreen = ({ route }: IProps) => {
                 <Animated.View style={styles.markerWrap}>
                   <Animated.Image
                     source={{
-                      uri: owner.avatar.length > 0 ? owner.avatar[0].url : null,
+                      uri: ownerId.avatar[0].url,
                     }}
                     style={[styles.marker, scaleStyle]}
                   />
@@ -300,7 +287,7 @@ export const MapScreen = ({ route }: IProps) => {
           })}
         </MapView>
       )}
-      <Stack sx={{ ...styles.header, marginTop: insets.top }}>
+      {/* <Stack sx={{ ...styles.header, marginTop: insets.top }}>
         <HeaderMap
           onSetUserRegion={() => {}}
           name={trimFunc(findLocation?.owner?.name, 15)}
@@ -319,7 +306,7 @@ export const MapScreen = ({ route }: IProps) => {
           getItemLayout={getBusinessLayout}
           contentContainerStyle={{ margin: 15 }}
         />
-      </Stack>
+      </Stack> */}
       <Stack sx={{ ...styles.footer, marginBottom: insets.bottom }}>
         <Animated.FlatList
           ref={locationsRef}
@@ -330,7 +317,7 @@ export const MapScreen = ({ route }: IProps) => {
           initialScrollIndex={locationsIndex}
           pagingEnabled={true}
           scrollEventThrottle={1}
-          keyExtractor={(item) => item._id}
+          keyExtractor={(item) => item.id}
           renderItem={renderLocation}
           onScroll={Animated.event(
             [

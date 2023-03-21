@@ -125,6 +125,7 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
     navigation.push("Map", {
       profession: userDetails?.user.profession?.id,
       userId: userDetails?.user?.id,
+      initialCoordinates: userDetails?.user?.address?.coordinates,
     });
   };
 

@@ -5,17 +5,20 @@ import {
   ListRenderItemInfo,
   RefreshControl,
 } from "react-native";
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useScrollToTop } from "@react-navigation/native";
+import FeedExploreVideosList from "../../components/customized/Lists/FeedExploreVideosList";
 import PostListItem from "../../components/customized/ListItems/Post/PostListItem";
-import { HeaderFeed, NoFoundMessage } from "../../components/customized";
+import { HeaderFeed } from "../../components/customized";
 import {
+  useAuth,
   useGetPaginate,
   usePaginateActions,
   useRefreshByUser,
+  usePost,
 } from "../../hooks";
 import { Post } from "../../models/post";
-import { useTranslation } from "react-i18next";
+import { Spinner } from "../../components/core";
 
 type PostListItem = {
   id: string;
@@ -27,16 +30,28 @@ type PostListItem = {
 export const FeedBookablesScreen = () => {
   const ref = useRef<FlatList>(null);
   useScrollToTop(ref);
-  const { t } = useTranslation("common");
+  const { user } = useAuth();
+  const [visibleItem, setVisibleItem] = useState<PostListItem | null>(null);
+
+  const optionsVideo = useGetPaginate({
+    model: "bookablePosts",
+    uri: `/users/${user?.id}/posts/get-all-posts`,
+    limit: "10",
+    queries: "postType=video&bookable=true&orientation=portrait",
+  });
+
+  const { data: videos } = usePaginateActions(optionsVideo);
+  const { isLoading: isLoadingVideos } = optionsVideo;
 
   const options = useGetPaginate({
     model: "bookablePosts",
-    uri: `/posts/get-all-posts`,
+    uri: `/users/${user?.id}/posts/get-all-posts`,
     limit: "10",
     queries: "postType=photo&bookable=true",
   });
 
-  const { isLoading, isFetchingNextPage } = options;
+  const { isLoading: isLoadingPosts, isFetchingNextPage } = options;
+  const loading = (isLoadingPosts || isLoadingVideos) && !isFetchingNextPage;
   const { data: posts, showSpinner, loadMore } = usePaginateActions(options);
 
   const renderPost = useCallback(
@@ -46,10 +61,11 @@ export const FeedBookablesScreen = () => {
           post={item?.post}
           isLiked={item?.isLiked}
           isBookmarked={item?.isBookmarked}
+          isVisible={visibleItem?.post.id === item.post.id}
         />
       );
     },
-    []
+    [visibleItem]
   );
 
   const keyExtractor = useCallback((item: PostListItem) => item?.post?.id, []);
@@ -59,28 +75,50 @@ export const FeedBookablesScreen = () => {
     <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
   );
 
-  let header;
-  if (!isLoading && !isFetchingNextPage && posts?.length === 0) {
-    header = (
-      <NoFoundMessage title={t("posts")} description={t("noFoundPosts")} />
-    );
-  }
+  const header = <FeedExploreVideosList videos={videos} />;
+
+  const viewabilityConfig = {
+    waitForInteraction: true,
+    itemVisiblePercentThreshold: 65,
+  };
+
+  const { mutate } = usePost({ uri: `/posts/views` });
+
+  const trackItem = useCallback((item: PostListItem) => {
+    setVisibleItem(item);
+    const { post } = item;
+    mutate({ postId: post.id, userId: user?.id, from: "explore" });
+  }, []);
+
+  const onViewableItemsChanged = useCallback((info: { changed: any }): void => {
+    const visibleItems = info.changed.filter((entry: any) => entry.isViewable);
+    visibleItems.forEach((visible: any) => {
+      trackItem(visible.item);
+    });
+  }, []);
 
   return (
     <SafeAreaView style={styles.screen}>
       <HeaderFeed indexLabel={1} />
-      <FlatList
-        ref={ref}
-        ListHeaderComponent={header}
-        refreshControl={refreshControl}
-        data={posts}
-        renderItem={renderPost}
-        keyExtractor={keyExtractor}
-        showsVerticalScrollIndicator={false}
-        ListFooterComponent={showSpinner}
-        onEndReached={loadMore}
-        onEndReachedThreshold={0.3}
-      />
+      <>
+        {!loading && (
+          <FlatList
+            ref={ref}
+            ListHeaderComponent={header}
+            refreshControl={refreshControl}
+            data={posts}
+            renderItem={renderPost}
+            keyExtractor={keyExtractor}
+            showsVerticalScrollIndicator={false}
+            ListFooterComponent={showSpinner}
+            onEndReached={loadMore}
+            onEndReachedThreshold={0.3}
+            viewabilityConfig={viewabilityConfig}
+            onViewableItemsChanged={onViewableItemsChanged}
+          />
+        )}
+        {loading && <Spinner />}
+      </>
     </SafeAreaView>
   );
 };

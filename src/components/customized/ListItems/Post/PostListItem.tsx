@@ -8,11 +8,17 @@ import PostBookable from "./PostBookable";
 import PostActions from "./PostActions";
 import PostDescription from "./PostDescription";
 import PostVideo from "./PostVideo";
+import { TabItem } from "@rneui/base/dist/Tab/Tab.Item";
 
-type IProps = { post: Post; isLiked: boolean; isBookmarked: boolean };
+type IProps = {
+  post: Post;
+  isLiked: boolean;
+  isBookmarked: boolean;
+  isVisible: boolean;
+};
 
 const PostListItem = forwardRef(
-  ({ post, isLiked, isBookmarked }: IProps, ref: any) => {
+  ({ post, isLiked, isBookmarked, isVisible }: IProps, ref: any) => {
     const { id, userId, bookable, images, product } = post;
     const { likesCount, commentsCount, createdAt, description, postType } =
       post;
@@ -25,7 +31,13 @@ const PostListItem = forwardRef(
           <PostImage id={post.id} uri={images[0]?.url} />
         )}
         {postType === "video" && <PostVideo uri={images[0]?.url} ref={ref} />}
-        {bookable && <PostBookable product={product} />}
+        {bookable && (
+          <PostBookable
+            product={product}
+            isVisible={isVisible}
+            expirationTime={post.expirationTime}
+          />
+        )}
         <PostActions
           postId={id}
           likesCount={likesCount}

@@ -7,15 +7,19 @@ import {
 } from "react-native";
 import { useCallback, useRef } from "react";
 import { useScrollToTop } from "@react-navigation/native";
-import { HeaderFeed, NoFoundMessage } from "../../components/customized";
+import { HeaderFeed } from "../../components/customized";
 import PostListItem from "../../components/customized/ListItems/Post/PostListItem";
 import { Post } from "../../models";
+import { Divider } from "@rneui/themed";
 import {
+  useAuth,
   useGetPaginate,
   usePaginateActions,
   useRefreshByUser,
 } from "../../hooks";
 import { useTranslation } from "react-i18next";
+import { Spinner } from "../../components/core";
+import FeedExploreVideosList from "../../components/customized/Lists/FeedExploreVideosList";
 
 type PostListItem = {
   id: string;
@@ -28,16 +32,44 @@ export const FeedLastMinuteScreen = () => {
   const ref = useRef<FlatList>(null);
   useScrollToTop(ref);
   const { t } = useTranslation("common");
+  const { user } = useAuth();
 
-  const options = useGetPaginate({
-    model: "lastMinutePosts",
-    uri: `/posts/get-all-posts`,
-    queries: "postType=photo&orientation=random",
+  const optionsVideos = useGetPaginate({
+    model: "lastMinuteVideos",
+    uri: `/users/${user?.id}/posts/get-all-posts`,
+    queries: "postType=video&orientation=portrait",
     limit: "10",
   });
 
-  const { isLoading, isFetchingNextPage } = options;
-  const { data: posts, showSpinner, loadMore } = usePaginateActions(options);
+  const optionsPosts = useGetPaginate({
+    model: "lastMinutePosts",
+    uri: `/users/${user?.id}/posts/get-all-posts`,
+    queries: "postType=photo",
+    limit: "10",
+  });
+
+  const {
+    isLoading: isLoadingPosts,
+    isRefetching: isRefetchingPosts,
+    refetch,
+    isFetchingNextPage,
+  } = optionsPosts;
+  const {
+    data: posts,
+    showSpinner,
+    loadMore,
+  } = usePaginateActions(optionsPosts);
+
+  const { isLoading: isLoadingVideos, isRefetching: isRefetchingVideos } =
+    optionsVideos;
+  const { data: videos } = usePaginateActions(optionsVideos);
+
+  const loading =
+    (isLoadingPosts ||
+      isLoadingVideos ||
+      isRefetchingPosts ||
+      isRefetchingVideos) &&
+    !isFetchingNextPage;
 
   const renderPost = useCallback(
     ({ item }: ListRenderItemInfo<PostListItem>) => {
@@ -52,35 +84,35 @@ export const FeedLastMinuteScreen = () => {
     []
   );
 
-  const keyExtractor = useCallback((item: PostListItem) => item.id, []);
+  const keyExtractor = useCallback((item: PostListItem) => item.post.id, []);
 
-  const { refreshing, refetchByUser } = useRefreshByUser(options?.refetch);
+  const { refreshing, refetchByUser } = useRefreshByUser(refetch);
   const refreshControl = (
     <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
   );
 
-  let header;
-  if (!isLoading && !isFetchingNextPage && posts?.length === 0) {
-    header = (
-      <NoFoundMessage title={t("posts")} description={t("noFoundPosts")} />
-    );
-  }
+  const header = <FeedExploreVideosList videos={videos} />;
 
   return (
     <SafeAreaView style={styles.screen}>
       <HeaderFeed indexLabel={2} />
-      <FlatList
-        ref={ref}
-        ListHeaderComponent={header}
-        refreshControl={refreshControl}
-        data={posts}
-        renderItem={renderPost}
-        keyExtractor={keyExtractor}
-        showsVerticalScrollIndicator={false}
-        ListFooterComponent={showSpinner}
-        onEndReached={loadMore}
-        onEndReachedThreshold={0.3}
-      />
+      <>
+        {!loading && (
+          <FlatList
+            ref={ref}
+            ListHeaderComponent={header}
+            refreshControl={refreshControl}
+            data={posts}
+            renderItem={renderPost}
+            keyExtractor={keyExtractor}
+            showsVerticalScrollIndicator={false}
+            ListFooterComponent={showSpinner}
+            onEndReached={loadMore}
+            onEndReachedThreshold={0.3}
+          />
+        )}
+        {loading && <Spinner />}
+      </>
     </SafeAreaView>
   );
 };

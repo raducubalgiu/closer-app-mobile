@@ -4,6 +4,7 @@ import VideoListItem from "../../components/customized/ListItems/Video/VideoList
 import { usePost, useAuth } from "../../hooks";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../navigation/rootStackParams";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 
 const { height } = Dimensions.get("window");
 type IProps = NativeStackScreenProps<RootStackParams, "FeedExploreVideo">;
@@ -13,6 +14,7 @@ export const FeedExploreVideoScreen = ({ route }: IProps) => {
   const [scrollEnabled, setScrollEnabled] = useState(true);
   const [visibleItem, setVisibleItem] = useState<any>(null);
   const { user } = useAuth();
+  const tabBarHeight = useBottomTabBarHeight();
 
   const { mutate } = usePost({ uri: `/posts/views` });
 
@@ -73,8 +75,8 @@ export const FeedExploreVideoScreen = ({ route }: IProps) => {
 
   const getItemLayout = useCallback(
     (_: any, index: number) => ({
-      length: height,
-      offset: height * index,
+      length: height - tabBarHeight,
+      offset: height - tabBarHeight * index,
       index,
     }),
     []

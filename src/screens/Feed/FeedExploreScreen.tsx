@@ -5,11 +5,10 @@ import {
   ListRenderItemInfo,
   SafeAreaView,
 } from "react-native";
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useNavigation, useScrollToTop } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import VideoOverviewListItem from "../../components/customized/ListItems/Video/VideoOverviewListItem/VideoOverviewListItem";
 import { Spinner } from "../../components/core";
 import { HeaderFeed } from "../../components/customized";
 import {
@@ -24,8 +23,6 @@ import { RootStackParams } from "../../navigation/rootStackParams";
 import StoryAvatarListItem from "../../components/customized/ListItems/Story/StoryAvatarListItem";
 import PostListItem from "../../components/customized/ListItems/Post/PostListItem";
 import { Video } from "expo-av";
-import { HeadingAction } from "../../components/core";
-import { Divider } from "@rneui/themed";
 import FeedExploreVideosList from "../../components/customized/Lists/FeedExploreVideosList";
 
 type PostListItem = { post: Post; isLiked: boolean; isBookmarked: boolean };
@@ -37,6 +34,7 @@ export const FeedExploreScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const video = useRef<Video>(null);
+  const [visibleItem, setVisibleItem] = useState<PostListItem | null>(null);
 
   const postsOptions = useGetPaginate({
     model: "allPosts",
@@ -90,10 +88,11 @@ export const FeedExploreScreen = () => {
           isLiked={item?.isLiked}
           isBookmarked={item?.isBookmarked}
           ref={video}
+          isVisible={visibleItem?.post.id === item.post.id}
         />
       );
     },
-    []
+    [visibleItem]
   );
 
   const keyExtractor = useCallback((item: PostListItem) => item?.post?.id, []);
@@ -117,14 +116,14 @@ export const FeedExploreScreen = () => {
   const viewabilityConfig = {
     waitForInteraction: true,
     itemVisiblePercentThreshold: 65,
-    //minimumViewTime: 2000,
   };
 
   const { mutate } = usePost({ uri: `/posts/views` });
 
   const trackItem = useCallback((item: PostListItem) => {
-    // const { post } = item;
-    // mutate({ postId: post.id, userId: user?.id, from: "explore" });
+    setVisibleItem(item);
+    const { post } = item;
+    mutate({ postId: post.id, userId: user?.id, from: "explore" });
   }, []);
 
   const onViewableItemsChanged = useCallback((info: { changed: any }): void => {
@@ -134,40 +133,43 @@ export const FeedExploreScreen = () => {
     });
   }, []);
 
+  const header = <FeedExploreVideosList videos={videos} />;
+
   return (
     <SafeAreaView style={styles.screen}>
       <HeaderFeed indexLabel={0} />
       {!loading && (
         <FlatList
           ref={ref}
-          ListHeaderComponent={
-            <>
-              <FeedExploreVideosList videos={videos} />
-              <Divider color="#ddd" style={{ marginTop: 15 }} />
-              {/* <HeadingAction title={t("stories")} onPress={() => {}} />
-              <FlatList
-                ListHeaderComponent={
-                  <Stack sx={{ paddingLeft: 10 }}>
-                    <AvatarBadge
-                      avatar={user?.avatar}
-                      size={67}
-                      sx={styles.avatarBadge}
-                    />
-                    <Text style={styles.storyTxt}>Povestea ta</Text>
-                  </Stack>
-                }
-                data={stories}
-                horizontal
-                keyExtractor={keyExtractorStory}
-                showsHorizontalScrollIndicator={false}
-                renderItem={renderStoryAvatar}
-              />
-              <Divider
-                color="#ddd"
-                style={{ marginTop: 15, marginBottom: 10 }}
-              /> */}
-            </>
-          }
+          // ListHeaderComponent={
+          //   <>
+          //     <FeedExploreVideosList videos={videos} />
+          //     <Divider color="#ddd" style={{ marginTop: 15 }} />
+          //     {/* <HeadingAction title={t("stories")} onPress={() => {}} />
+          //     <FlatList
+          //       ListHeaderComponent={
+          //         <Stack sx={{ paddingLeft: 10 }}>
+          //           <AvatarBadge
+          //             avatar={user?.avatar}
+          //             size={67}
+          //             sx={styles.avatarBadge}
+          //           />
+          //           <Text style={styles.storyTxt}>Povestea ta</Text>
+          //         </Stack>
+          //       }
+          //       data={stories}
+          //       horizontal
+          //       keyExtractor={keyExtractorStory}
+          //       showsHorizontalScrollIndicator={false}
+          //       renderItem={renderStoryAvatar}
+          //     />
+          //     <Divider
+          //       color="#ddd"
+          //       style={{ marginTop: 15, marginBottom: 10 }}
+          //     /> */}
+          //   </>
+          // }
+          // ListHeaderComponent={header}
           refreshControl={refreshControl}
           data={posts}
           renderItem={renderPost}

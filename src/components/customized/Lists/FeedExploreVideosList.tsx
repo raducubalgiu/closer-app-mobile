@@ -1,7 +1,8 @@
-import { StyleSheet, FlatList, ListRenderItemInfo } from "react-native";
-import { useCallback } from "react";
+import { StyleSheet, FlatList, ListRenderItemInfo, View } from "react-native";
+import { memo, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { HeadingAction } from "../../core";
+import { Divider } from "@rneui/themed";
+import HeadingAction from "../../core/Heading/HeadingAction";
 import VideoOverviewListItem from "../ListItems/Video/VideoOverviewListItem/VideoOverviewListItem";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -46,7 +47,7 @@ const FeedExploreVideosList = ({ videos }: IProps) => {
   const keyExtractorVideo = useCallback((item: VideoListItem) => item?.id, []);
 
   return (
-    <>
+    <View>
       <HeadingAction title={t("videoclips")} onPress={() => {}} />
       <FlatList
         horizontal
@@ -56,11 +57,12 @@ const FeedExploreVideosList = ({ videos }: IProps) => {
         renderItem={renderVideo}
         contentContainerStyle={styles.flatList}
       />
-    </>
+      <Divider color="#ddd" style={{ marginTop: 15 }} />
+    </View>
   );
 };
 
-export default FeedExploreVideosList;
+export default memo(FeedExploreVideosList);
 
 const styles = StyleSheet.create({
   flatList: { paddingLeft: 10, paddingRight: 5 },

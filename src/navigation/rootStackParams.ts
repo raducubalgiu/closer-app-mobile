@@ -85,6 +85,11 @@ export type RootStackParams = {
   LocationItem: { locationId: string };
   LocationFilters: any;
   Likes: { postId: string };
+  Map: {
+    profession: string;
+    userId: string;
+    initialCoordinates: any;
+  };
   MyBusiness: any;
   MyDashboard: any;
   MyCalendar: any;
@@ -113,10 +118,6 @@ export type RootStackParams = {
   };
   MessageNew: any;
   Notifications: any;
-  Map: {
-    profession: string;
-    userId: string;
-  };
   Privacy: any;
   PrivacyComments: any;
   PrivacyLikes: any;

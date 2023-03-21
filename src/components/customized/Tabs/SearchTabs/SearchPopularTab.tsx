@@ -3,6 +3,7 @@ import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import {
+  useAuth,
   useGetPaginate,
   usePaginateActions,
   useRefreshOnFocus,
@@ -17,11 +18,19 @@ import { User } from "../../../../models/user";
 import { Hashtag } from "../../../../models/hashtag";
 import { Post } from "../../../../models/post";
 
+type PostListItem = {
+  id: string;
+  post: Post;
+  isLiked: boolean;
+  isBookmarked: boolean;
+};
+
 export const SearchPopularTab = ({ search }: { search: string }) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation("common");
   const isFocused = useIsFocused();
+  const { user } = useAuth();
 
   const usersOptions = useGetPaginate({
     model: "users",
@@ -41,8 +50,8 @@ export const SearchPopularTab = ({ search }: { search: string }) => {
 
   const postsOptions = useGetPaginate({
     model: "searchPosts",
-    uri: `/posts/search`,
-    limit: "42",
+    uri: `/users/${user?.id}/posts/search`,
+    limit: "12",
     queries: `search=${search}&postType=photo`,
     enabled: isFocused,
   });
@@ -96,15 +105,18 @@ export const SearchPopularTab = ({ search }: { search: string }) => {
   );
 
   const renderPopularPosts = useCallback(
-    ({ item, index }: ListRenderItemInfo<Post>) => (
-      <GridImageListItem
-        index={index}
-        post={item}
-        expirationTime={item.expirationTime}
-        discount={item?.product?.discount}
-        posts={posts}
-      />
-    ),
+    ({ item, index }: ListRenderItemInfo<PostListItem>) => {
+      const { post } = item;
+      return (
+        <GridImageListItem
+          index={index}
+          post={post}
+          expirationTime={post?.expirationTime}
+          discount={post?.product?.discount}
+          posts={posts}
+        />
+      );
+    },
     []
   );
 
@@ -155,7 +167,7 @@ export const SearchPopularTab = ({ search }: { search: string }) => {
           }
           numColumns={3}
           data={posts}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item: PostListItem) => item.id}
           showsVerticalScrollIndicator={false}
           renderItem={renderPopularPosts}
           ListFooterComponent={showSpinner}

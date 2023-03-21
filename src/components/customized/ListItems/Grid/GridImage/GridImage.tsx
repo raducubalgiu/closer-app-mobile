@@ -22,7 +22,6 @@ const GridImage = ({ uri, id, opacity }: IProps) => {
           opacity,
         }}
         transition={true}
-        transitionDuration={200}
         PlaceholderContent={
           <PostGradient width={IMAGE_WIDTH} height={IMAGE_HEIGHT} />
         }

@@ -3,11 +3,12 @@ import { Icon } from "@rneui/themed";
 import Stack from "../Stack/Stack";
 import theme from "../../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
+import { memo } from "react";
 
 const { black } = theme.lightColors || {};
 type IProps = { title: string; onPress: () => void; sx?: {} };
 
-export const HeadingAction = ({ title, onPress, sx }: IProps) => {
+const HeadingAction = ({ title, onPress, sx }: IProps) => {
   const { t } = useTranslation("common");
 
   return (
@@ -22,6 +23,8 @@ export const HeadingAction = ({ title, onPress, sx }: IProps) => {
     </Stack>
   );
 };
+
+export default memo(HeadingAction);
 
 const styles = StyleSheet.create({
   container: { paddingLeft: 10, paddingVertical: 10 },

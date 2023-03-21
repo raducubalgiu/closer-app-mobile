@@ -1,4 +1,11 @@
-import { Pressable, StyleSheet, Dimensions, View, Text } from "react-native";
+import {
+  Pressable,
+  StyleSheet,
+  Dimensions,
+  View,
+  Text,
+  useWindowDimensions,
+} from "react-native";
 import { memo, useCallback, useRef, useState, useEffect, useMemo } from "react";
 import { ResizeMode, Video } from "expo-av";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -20,6 +27,8 @@ import { VideoStatusType } from "../../../../../models/videoStatus";
 import SheetModal from "../../../../core/SheetModal/SheetModal";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { SharedElement } from "react-navigation-shared-element";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import Animated from "react-native-reanimated";
 
 type IProps = {
   video: Post;
@@ -51,15 +60,19 @@ const VideoListItem = ({ video, setScrollEnabled, isVisible }: IProps) => {
     viewsCount,
   } = video;
   const reactions = likesCount + commentsCount + bookmarksCount;
+
   const videoRef = useRef<any>(null);
   const [status, setStatus] = useState<VideoStatusType>(defaultStatus);
+  const tabBarHeight = useBottomTabBarHeight();
 
   const [isSliding, setIsSliding] = useState(false);
   const [currentValue, setCurrentValue] = useState(0);
   const insets = useSafeAreaInsets();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const VIDEO_HEIGHT = height - insets.bottom - 55;
+
+  const VIDEO_HEIGHT = height - tabBarHeight;
+
   const sheetSm = height / 1.5;
   const sheetBig = height / 1.1;
 
@@ -206,7 +219,7 @@ const VideoListItem = ({ video, setScrollEnabled, isVisible }: IProps) => {
           />
         )}
       </Pressable>
-      <View style={{ height: 55 + insets.bottom }}>
+      {/* <View style={{ height: 55 + insets.bottom }}>
         {hasSlider ? (
           <VideoListItemSlider
             width={width}
@@ -227,8 +240,8 @@ const VideoListItem = ({ video, setScrollEnabled, isVisible }: IProps) => {
           onShowMoreSheet={() => {}}
           onShowLikesSheet={() => {}}
         />
-      </View>
-      <SheetModal ref={likesRef} snapPoints={likesSnapPoints}>
+      </View> */}
+      {/* <SheetModal ref={likesRef} snapPoints={likesSnapPoints}>
         <LikesSheet
           postId={id}
           counter={{ likesCount, commentsCount, bookmarksCount, viewsCount }}
@@ -242,7 +255,7 @@ const VideoListItem = ({ video, setScrollEnabled, isVisible }: IProps) => {
       </SheetModal>
       <SheetModal ref={productRef} snapPoints={productSnapPoints}>
         <ProductSheet product={product} expirationTime={expirationTime} />
-      </SheetModal>
+      </SheetModal> */}
     </View>
   );
 };
@@ -252,8 +265,6 @@ export default memo(VideoListItem);
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "black",
-    height,
-    width,
     flex: 1,
   },
   video: { width, flex: 1 },
