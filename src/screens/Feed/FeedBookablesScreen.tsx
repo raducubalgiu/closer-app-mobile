@@ -80,6 +80,7 @@ export const FeedBookablesScreen = () => {
   const viewabilityConfig = {
     waitForInteraction: true,
     itemVisiblePercentThreshold: 65,
+    minimumViewTime: 2000,
   };
 
   const { mutate } = usePost({ uri: `/posts/views` });

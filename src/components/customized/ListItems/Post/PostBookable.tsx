@@ -47,11 +47,11 @@ const PostBookable = ({ product, isVisible, expirationTime }: IProps) => {
             duration: 500,
           });
         }
-      }, 1000);
+      }, 500);
     }
-
-    animation.value = 0;
   }, [isVisible]);
+
+  animation.value = 0;
 
   return (
     <Pressable onPress={() => {}}>

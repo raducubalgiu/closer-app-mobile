@@ -7,7 +7,7 @@ type IProps = { discount: number; expirationTime: string | null };
 const { error, secondary } = theme.lightColors || {};
 
 const GridDiscount = ({ discount, expirationTime }: IProps) => {
-  const bgColor = expirationTime ? error : secondary;
+  const bgColor = expirationTime ? "#f11263" : secondary;
 
   return (
     <View style={styles.container}>
