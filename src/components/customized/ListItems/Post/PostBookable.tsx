@@ -9,6 +9,7 @@ import Animated, {
   useSharedValue,
   interpolateColor,
   withTiming,
+  Easing,
 } from "react-native-reanimated";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -21,7 +22,7 @@ type IProps = {
   isVisible: boolean;
   expirationTime: string | null;
 };
-const { black, secondary } = theme.lightColors || {};
+const { black, secondary, error } = theme.lightColors || {};
 
 const PostBookable = ({
   product,
@@ -30,8 +31,9 @@ const PostBookable = ({
   isVisible,
   expirationTime,
 }: IProps) => {
-  const { name, price } = product;
+  const { name, priceWithDiscount, discount } = product;
   const transitionColor = expirationTime ? secondary : "#f11263";
+  const transitionColDisc = expirationTime ? error : "white";
   const animation = useSharedValue(0);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -52,15 +54,24 @@ const PostBookable = ({
     };
   });
 
+  const colorDisc = useAnimatedStyle(() => {
+    return {
+      color: interpolateColor(
+        animation.value,
+        [0, 1],
+        [`${error}`, `${transitionColDisc}`]
+      ),
+    };
+  });
+
   useEffect(() => {
     if (isVisible) {
-      setTimeout(() => {
-        if (animation.value === 0) {
-          animation.value = withTiming(1 - animation.value, {
-            duration: 500,
-          });
-        }
-      }, 2500);
+      if (animation.value === 0) {
+        animation.value = withTiming(1 - animation.value, {
+          duration: 1000,
+          easing: Easing.exp,
+        });
+      }
     }
   }, [isVisible]);
 
@@ -81,8 +92,13 @@ const PostBookable = ({
         </Stack>
         <Stack direction="row">
           <Animated.Text style={[styles.price, color]}>
-            lei {price}
+            lei {priceWithDiscount}
           </Animated.Text>
+          {discount > 0 && (
+            <Animated.Text style={[styles.discount, colorDisc]}>
+              (-{discount}%)
+            </Animated.Text>
+          )}
           <Icon name="keyboard-arrow-right" color={black} size={22.5} />
         </Stack>
       </Animated.View>
@@ -109,5 +125,9 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     marginRight: 10,
     fontSize: 14,
+  },
+  discount: {
+    fontSize: 13,
+    fontWeight: "600",
   },
 });

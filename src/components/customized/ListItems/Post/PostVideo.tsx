@@ -13,7 +13,7 @@ const PostVideo = ({ uri, isVisible }: IProps) => {
   useFocusEffect(
     useCallback(() => {
       if (isVisible) {
-        ref.current?.playAsync();
+        ref.current?.playFromPositionAsync(0);
       } else {
         ref.current?.pauseAsync();
       }
@@ -35,7 +35,7 @@ const PostVideo = ({ uri, isVisible }: IProps) => {
       style={{ width, height: 500 }}
       isMuted={false}
       shouldPlay={false}
-      isLooping={true}
+      isLooping={false}
       resizeMode={ResizeMode.COVER}
     />
   );

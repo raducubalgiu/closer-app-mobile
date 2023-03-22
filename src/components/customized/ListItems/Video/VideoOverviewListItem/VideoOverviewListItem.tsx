@@ -1,7 +1,8 @@
 import { StyleSheet, Dimensions, Pressable, View } from "react-native";
-import { memo } from "react";
+import { memo, useRef, useCallback, useEffect } from "react";
 import { ResizeMode, Video } from "expo-av";
 import { SharedElement } from "react-navigation-shared-element";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 const { width } = Dimensions.get("window");
 
@@ -9,14 +10,37 @@ type IProps = {
   uri: string;
   id: string;
   onPress: () => void;
+  isVisible: boolean;
 };
 
-const VideoOverviewListItem = ({ uri, onPress, id }: IProps) => {
+const VideoOverviewListItem = ({ uri, onPress, id, isVisible }: IProps) => {
+  const ref = useRef<Video | null>(null);
+  const navigation = useNavigation();
+
+  useFocusEffect(
+    useCallback(() => {
+      if (isVisible) {
+        ref.current?.playFromPositionAsync(0);
+      } else {
+        ref.current?.pauseAsync();
+      }
+    }, [isVisible])
+  );
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("blur", () => {
+      ref.current?.pauseAsync();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
   return (
     <Pressable onPress={onPress} style={{ flex: 1 }}>
       <View style={styles.box}>
         <SharedElement id={id} style={{ flex: 1 }}>
           <Video
+            ref={ref}
             style={styles.video}
             source={{ uri }}
             useNativeControls={false}
