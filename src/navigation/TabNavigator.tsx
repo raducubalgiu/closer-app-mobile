@@ -14,6 +14,7 @@ import {
 } from "../screens";
 import FeedNavigator from "./FeedNavigator";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
+import { useScheduleCounter } from "../hooks/scheduleCounter";
 
 const Tab = createBottomTabNavigator();
 const Stack = createSharedElementStackNavigator();
@@ -90,24 +91,18 @@ const getTabStyle = (route: any) => {
 
 const TabNavigator = () => {
   const { user } = useAuth();
+  const { counter } = useScheduleCounter();
 
   let badgeOptions = {};
 
-  if (user) {
-    const { data } = useGet({
-      model: "currentSchedules",
-      uri: `/users/${user.id}/schedules/current-schedules`,
-    });
-
-    if (data?.currentSchedules > 0) {
-      badgeOptions = {
-        tabBarBadge: data?.currentSchedules,
-        tabBarBadgeStyle: {
-          backgroundColor: error,
-          fontSize: 11,
-        },
-      };
-    }
+  if (counter > 0) {
+    badgeOptions = {
+      tabBarBadge: counter,
+      tabBarBadgeStyle: {
+        backgroundColor: error,
+        fontSize: 11,
+      },
+    };
   }
 
   return (

@@ -13,6 +13,7 @@ import {
 import dayjs from "dayjs";
 import { RootStackParams } from "../navigation/rootStackParams";
 import { showToast } from "../utils";
+import { useScheduleCounter } from "../hooks/scheduleCounter";
 
 const { black, grey0, error, secondary } = theme.lightColors || {};
 const bookableBgColor = "#f11263";
@@ -27,10 +28,14 @@ export const ScheduleConfirmScreen = ({ route }: IProps) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation("common");
+  const { increaseCounter } = useScheduleCounter();
 
   const { mutate, isLoading, isSuccess } = usePost({
     uri: "/schedules",
-    onSuccess: () => navigation.navigate("Schedules"),
+    onSuccess: () => {
+      increaseCounter();
+      navigation.navigate("Schedules");
+    },
     onError: () => showToast({ message: t("somethingWentWrong") }),
   });
 

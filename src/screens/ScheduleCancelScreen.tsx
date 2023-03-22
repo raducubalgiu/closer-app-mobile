@@ -23,6 +23,7 @@ import { useAuth, usePatch } from "../hooks";
 import { RootStackParams } from "../navigation/rootStackParams";
 import { showToast } from "../utils";
 import { useHeaderHeight } from "@react-navigation/elements";
+import { useScheduleCounter } from "../hooks/scheduleCounter";
 
 const { error, black, grey0 } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "ScheduleCancel">;
@@ -37,6 +38,7 @@ export const ScheduleCancelScreen = ({ route }: IProps) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const headerHeight = useHeaderHeight();
+  const { decreaseCounter } = useScheduleCounter();
 
   const messages = [
     { id: "1", message: t("cannotArrive") },
@@ -46,10 +48,12 @@ export const ScheduleCancelScreen = ({ route }: IProps) => {
 
   const { mutate, isLoading } = usePatch({
     uri: `/users/${user?.id}/schedules/${scheduleId}`,
-    onSuccess: () =>
+    onSuccess: () => {
+      decreaseCounter();
       user?.role !== MAIN_ROLE
         ? navigation.navigate("Schedules")
-        : navigation.navigate("MyCalendar"),
+        : navigation.navigate("MyCalendar");
+    },
     onError: () =>
       showToast({ message: t('"somethingWentWrong"'), bgColor: error }),
   });
