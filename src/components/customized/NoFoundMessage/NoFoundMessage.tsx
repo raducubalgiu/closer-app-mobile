@@ -45,7 +45,7 @@ export const NoFoundMessage = ({
 };
 
 const styles = StyleSheet.create({
-  container: { marginTop: 100, paddingHorizontal: 50 },
+  container: { marginTop: 50, paddingHorizontal: 50 },
   title: {
     fontSize: 19,
     marginTop: 15,

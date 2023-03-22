@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     flex: 1,
     color: black,
+    fontWeight: "500",
   },
   rightIcon: { paddingVertical: 15, paddingHorizontal: 5 },
   strokeLength: {

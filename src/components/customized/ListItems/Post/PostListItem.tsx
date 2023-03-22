@@ -19,8 +19,8 @@ type IProps = {
 const PostListItem = forwardRef(
   ({ post, isLiked, isBookmarked, isVisible }: IProps, ref: any) => {
     const { id, userId, bookable, images, product, serviceId } = post;
-    const { likesCount, commentsCount, createdAt, description, postType } =
-      post;
+    const { createdAt, description, postType } = post;
+    const { viewsCount, likesCount, commentsCount, bookmarksCount } = post;
     const { avatar, username, checkmark } = userId;
 
     return (
@@ -44,6 +44,9 @@ const PostListItem = forwardRef(
           likesCount={likesCount}
           isLiked={isLiked}
           isBookmarked={isBookmarked}
+          images={images}
+          counters={{ viewsCount, likesCount, commentsCount, bookmarksCount }}
+          postType={postType}
         />
         <PostDescription
           description={description}

@@ -21,7 +21,7 @@ type IProps = {
   isVisible: boolean;
   expirationTime: string | null;
 };
-const { black, secondary, error } = theme.lightColors || {};
+const { black, secondary } = theme.lightColors || {};
 
 const PostBookable = ({
   product,
@@ -31,7 +31,7 @@ const PostBookable = ({
   expirationTime,
 }: IProps) => {
   const { name, price } = product;
-  const transitionColor = expirationTime ? "#f11263" : secondary;
+  const transitionColor = expirationTime ? secondary : "#f11263";
   const animation = useSharedValue(0);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -60,7 +60,7 @@ const PostBookable = ({
             duration: 500,
           });
         }
-      }, 500);
+      }, 100);
     }
   }, [isVisible]);
 
@@ -70,6 +70,7 @@ const PostBookable = ({
     navigation.navigate("CalendarBig", {
       product: { ...product, ownerId },
       serviceId,
+      expirationTime,
     });
 
   return (

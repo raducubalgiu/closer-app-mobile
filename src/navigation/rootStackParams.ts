@@ -40,7 +40,11 @@ export type RootStackParams = {
     date: string;
     name: string;
   };
-  CalendarBig: { product: Product; serviceId: string };
+  CalendarBig: {
+    product: Product;
+    serviceId: string;
+    expirationTime: string | null;
+  };
   Camera: { name: string; avatar: any };
   CameraPreview: { photo: { uri: string }; avatar: any; name: string };
   ClearCache: any;
@@ -159,6 +163,7 @@ export type RootStackParams = {
     serviceId: string;
     product: Product;
     slot: Slot;
+    expirationTime: string | null;
   };
   ScheduleDetails: { schedule: Schedule };
   ScheduleCancel: { scheduleId: string };

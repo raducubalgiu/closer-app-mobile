@@ -36,7 +36,7 @@ const DUMMY_AVAILABLE = [
 ];
 
 export const CalendarScreen = ({ route }: IProps) => {
-  const { product, serviceId } = route.params;
+  const { product, serviceId, expirationTime } = route.params;
   const { ownerId } = product;
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -55,6 +55,7 @@ export const CalendarScreen = ({ route }: IProps) => {
       serviceId,
       product,
       slot,
+      expirationTime,
     });
   };
 

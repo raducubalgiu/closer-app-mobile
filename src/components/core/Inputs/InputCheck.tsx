@@ -3,7 +3,7 @@ import theme from "../../../../assets/styles/theme";
 import Stack from "../Stack/Stack";
 import { IconButton } from "../IconButton/IconButton";
 
-const { success } = theme.lightColors || {};
+const { success, black } = theme.lightColors || {};
 
 type IProps = {
   placeholder: string;
@@ -52,10 +52,13 @@ const styles = StyleSheet.create({
   container: {
     marginHorizontal: 15,
     borderBottomWidth: 0.5,
-    borderBottomColor: "#ddd",
+    borderBottomColor: "#eee",
+    flex: 1,
   },
   input: {
     paddingVertical: 20,
     flex: 1,
+    fontWeight: "500",
+    color: black,
   },
 });

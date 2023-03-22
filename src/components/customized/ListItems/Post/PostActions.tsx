@@ -1,17 +1,20 @@
 import { StyleSheet, Text, Pressable, Share } from "react-native";
-import { memo } from "react";
+import { memo, useMemo, useRef } from "react";
 import { Icon, Divider } from "@rneui/themed";
 import {
   Stack,
   LikeButton,
   BookmarkIconButton,
   ShareIButton,
+  SheetModal,
 } from "../../../core";
 import theme from "../../../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import PostStats from "../../Sheets/PostStats";
 
 const { black } = theme.lightColors || {};
 type IProps = {
@@ -19,12 +22,30 @@ type IProps = {
   likesCount: number;
   isLiked: boolean;
   isBookmarked: boolean;
+  images: any;
+  counters: {
+    viewsCount: number;
+    likesCount: number;
+    commentsCount: number;
+    bookmarksCount: number;
+  };
+  postType: string;
 };
 
-const PostActions = ({ likesCount, postId, isLiked, isBookmarked }: IProps) => {
+const PostActions = ({
+  likesCount,
+  postId,
+  isLiked,
+  isBookmarked,
+  images,
+  counters,
+  postType,
+}: IProps) => {
   const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
+  const sheetRef = useRef<BottomSheetModal>(null);
+  const snapPoints = useMemo(() => [1, 400], []);
 
   const onShare = async () => {
     try {
@@ -78,13 +99,27 @@ const PostActions = ({ likesCount, postId, isLiked, isBookmarked }: IProps) => {
           <ShareIButton onPress={onShare} sx={styles.button} />
           <Pressable
             style={{ paddingLeft: 15, paddingVertical: 5 }}
-            onPress={() => {}}
+            onPress={() => sheetRef.current?.present()}
           >
             <Icon name="bar-chart" type="feather" />
           </Pressable>
         </Stack>
       </Stack>
       <Divider color="#ddd" style={styles.divider} />
+      <SheetModal
+        ref={sheetRef}
+        snapPoints={snapPoints}
+        animationConfig={{ duration: 150 }}
+        showIndicator={false}
+        enableContentPanningGesture={false}
+      >
+        <PostStats
+          images={images}
+          onClose={() => sheetRef.current?.close()}
+          counters={counters}
+          postType={postType}
+        />
+      </SheetModal>
     </>
   );
 };

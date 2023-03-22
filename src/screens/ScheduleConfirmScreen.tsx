@@ -14,12 +14,13 @@ import dayjs from "dayjs";
 import { RootStackParams } from "../navigation/rootStackParams";
 import { showToast } from "../utils";
 
-const { black, grey0, error } = theme.lightColors || {};
+const { black, grey0, error, secondary } = theme.lightColors || {};
+const bookableBgColor = "#f11263";
 type IProps = NativeStackScreenProps<RootStackParams, "ScheduleConfirm">;
 
 export const ScheduleConfirmScreen = ({ route }: IProps) => {
   const { user: customerId } = useAuth();
-  const { serviceId, product, slot } = route.params;
+  const { serviceId, product, slot, expirationTime } = route.params;
   const { start, end, hour } = slot;
   const { ownerId, name, option, duration, description, locationId } = product;
   const { price, priceWithDiscount, discount } = product;
@@ -64,6 +65,20 @@ export const ScheduleConfirmScreen = ({ route }: IProps) => {
     <SafeAreaView style={styles.screen}>
       <Header title={t("checkBookingDetails")} />
       <ScrollView contentContainerStyle={styles.scrollView}>
+        {discount > 0 && (
+          <Stack
+            sx={{
+              marginBottom: 30,
+              marginTop: 5,
+              backgroundColor: expirationTime ? secondary : bookableBgColor,
+              padding: 10,
+            }}
+          >
+            <Text style={{ color: "white", fontWeight: "600" }}>
+              {expirationTime ? t("lastMinuteOffer") : t("promotionalOffer")}
+            </Text>
+          </Stack>
+        )}
         <Stack align="start">
           <Stack align="start" direction="row" sx={{ marginBottom: 50 }}>
             <Icon
@@ -147,7 +162,6 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     marginHorizontal: 20,
-    marginTop: 40,
     flex: 1,
   },
   heading: {
@@ -168,7 +182,7 @@ const styles = StyleSheet.create({
   duration: { marginTop: 5, color: grey0, fontSize: 16 },
   price: {
     color: grey0,
-    fontSize: 18,
+    fontSize: 19,
     fontWeight: "500",
     textDecorationLine: "line-through",
     textDecorationStyle: "solid",
@@ -183,7 +197,7 @@ const styles = StyleSheet.create({
   discount: {
     marginLeft: 5,
     color: error,
-    fontWeight: "500",
-    fontSize: 12,
+    fontWeight: "600",
+    fontSize: 13,
   },
 });

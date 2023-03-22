@@ -44,7 +44,10 @@ const FeedExploreVideosList = ({ videos }: IProps) => {
     []
   );
 
-  const keyExtractorVideo = useCallback((item: VideoListItem) => item?.id, []);
+  const keyExtractorVideo = useCallback(
+    (item: VideoListItem) => item?.post?.id,
+    []
+  );
 
   return (
     <View>

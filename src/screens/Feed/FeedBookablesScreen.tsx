@@ -75,8 +75,6 @@ export const FeedBookablesScreen = () => {
     <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
   );
 
-  const header = <FeedExploreVideosList videos={videos} />;
-
   const viewabilityConfig = {
     waitForInteraction: true,
     itemVisiblePercentThreshold: 80,
@@ -97,6 +95,8 @@ export const FeedBookablesScreen = () => {
       trackItem(visible.item);
     });
   }, []);
+
+  const header = <FeedExploreVideosList videos={videos} />;
 
   return (
     <SafeAreaView style={styles.screen}>

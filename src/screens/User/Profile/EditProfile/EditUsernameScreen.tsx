@@ -67,13 +67,16 @@ export const EditUsernameScreen = () => {
         disabledBack={isLoadingUpdate}
         disabledSave={disableSave}
       />
-      <InputCheck
-        placeholder={t("username")}
-        value={username}
-        isAvailable={status}
-        isLoading={isLoadingGet}
-        onChange={onChange}
-      />
+      <Stack direction="row" sx={{ marginLeft: 10 }}>
+        <Icon name="at-sign" type="feather" />
+        <InputCheck
+          placeholder={t("username")}
+          value={username}
+          isAvailable={status}
+          isLoading={isLoadingGet}
+          onChange={onChange}
+        />
+      </Stack>
       {!!message && message !== "typing" && !isLoadingGet && (
         <Stack direction="row" justify="start" sx={{ margin: 15 }}>
           <Icon name="alert-triangle" type="feather" size={18} color={error} />
