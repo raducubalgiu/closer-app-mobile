@@ -60,7 +60,7 @@ const PostBookable = ({
             duration: 500,
           });
         }
-      }, 100);
+      }, 2500);
     }
   }, [isVisible]);
 

@@ -1,11 +1,32 @@
-import { StyleSheet, useWindowDimensions } from "react-native";
-import { forwardRef, memo } from "react";
+import { useWindowDimensions } from "react-native";
+import { memo, useCallback, useRef, useEffect } from "react";
 import { ResizeMode, Video } from "expo-av";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
-type IProps = { uri: string };
+type IProps = { uri: string; isVisible: boolean };
 
-const PostVideo = forwardRef(({ uri }: IProps, ref: any) => {
+const PostVideo = ({ uri, isVisible }: IProps) => {
   const { width } = useWindowDimensions();
+  const ref = useRef<Video>(null);
+  const navigation = useNavigation();
+
+  useFocusEffect(
+    useCallback(() => {
+      if (isVisible) {
+        ref.current?.playAsync();
+      } else {
+        ref.current?.pauseAsync();
+      }
+    }, [isVisible])
+  );
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("blur", () => {
+      ref.current?.pauseAsync();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <Video
@@ -14,12 +35,10 @@ const PostVideo = forwardRef(({ uri }: IProps, ref: any) => {
       style={{ width, height: 500 }}
       isMuted={false}
       shouldPlay={false}
-      isLooping={false}
+      isLooping={true}
       resizeMode={ResizeMode.COVER}
     />
   );
-});
+};
 
 export default memo(PostVideo);
-
-const styles = StyleSheet.create({});

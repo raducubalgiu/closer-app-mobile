@@ -12,6 +12,7 @@ import { useTranslation } from "react-i18next";
 import { Icon } from "@rneui/themed";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import ProgramSheet from "../../Sheets/ProgramSheet";
+import dayjs from "dayjs";
 
 const { black, success } = theme.lightColors || {};
 
@@ -32,6 +33,8 @@ export const HeaderProfileGeneral = ({
   let open = true;
   const snapPoints = useMemo(() => [1, 450], []);
   const sheetRef = useRef<BottomSheetModal>(null);
+
+  const now = dayjs().utc(true);
 
   return (
     <SafeAreaView style={{ backgroundColor: "white", zIndex: 1000 }}>
@@ -58,7 +61,6 @@ export const HeaderProfileGeneral = ({
               <Icon name="keyboard-arrow-down" />
             </Stack>
           </Pressable>
-          {/* {checkmark && <Checkmark sx={{ marginLeft: 5 }} />} */}
         </Stack>
         <Stack direction="row">
           <IconButton

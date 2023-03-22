@@ -52,6 +52,9 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
     },
   });
 
+  const { id, profession, address, settings, role, checkmark, hours } =
+    userDetails?.user || {};
+
   useRefreshOnFocus(refetch);
 
   const {
@@ -61,7 +64,7 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
   } = useGetMutate({ uri: `/users/suggested` });
 
   const { mutate: follow } = usePost({
-    uri: `/users/${user?.id}/followings/${userDetails?.user.id}/follows`,
+    uri: `/users/${user?.id}/followings/${id}/follows`,
     onSuccess: () => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       setIsFollow(true);
@@ -70,7 +73,7 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
   });
 
   const { mutate: unfollow } = useDelete({
-    uri: `/users/${user?.id}/followings/${userDetails?.user?.id}/follows`,
+    uri: `/users/${user?.id}/followings/${id}/follows`,
     onSuccess: () => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       setIsFollow(false);
@@ -78,7 +81,7 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
   });
 
   const { mutate: block } = usePost({
-    uri: `/users/${user?.id}/blocks/${userDetails?.user?.id}`,
+    uri: `/users/${user?.id}/blocks/${id}`,
     onSuccess: () => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       setIsBlocked(true);
@@ -87,7 +90,7 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
   });
 
   const { mutate: unblock } = useDelete({
-    uri: `/users/${user?.id}/blocks/${userDetails?.user?.id}`,
+    uri: `/users/${user?.id}/blocks/${id}`,
     onSuccess: () => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       setIsBlocked(false);
@@ -123,13 +126,13 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
 
   const goToMap = () => {
     navigation.push("Map", {
-      profession: userDetails?.user.profession?.id,
-      userId: userDetails?.user?.id,
-      initialCoordinates: userDetails?.user?.address?.coordinates,
+      profession: profession?.id,
+      userId: id,
+      initialCoordinates: address?.coordinates,
     });
   };
 
-  const userSettings = userDetails?.user?.settings;
+  const userSettings = settings;
   const isPrivate = !isFollow && userSettings?.private;
 
   const profileActions = (
@@ -142,10 +145,7 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
       {isFollow && (
         <ProfileIconButton name="message-circle" onPress={goToMessage} />
       )}
-      <Protected
-        roles={[MAIN_ROLE, SECOND_ROLE]}
-        userRole={userDetails?.user?.role}
-      >
+      <Protected roles={[MAIN_ROLE, SECOND_ROLE]} userRole={role}>
         <ProfileIconButton name="map-pin" onPress={goToMap} />
       </Protected>
       <ProfileIconButton
@@ -160,9 +160,9 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
   return (
     <View style={styles.container}>
       <HeaderProfileGeneral
-        username={userDetails?.username}
-        checkmark={userDetails?.user?.checkmark}
-        hours={userDetails?.user?.hours}
+        username={username}
+        checkmark={checkmark}
+        hours={hours}
         onOpenSettings={() => settingsRef.current?.present()}
       />
       <Profile

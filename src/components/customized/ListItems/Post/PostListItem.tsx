@@ -1,5 +1,5 @@
 import { StyleSheet, View } from "react-native";
-import { forwardRef, memo } from "react";
+import { memo } from "react";
 import { Post } from "../../../../models";
 import { FROM_NOW } from "../../../../utils/date-utils";
 import PostHeader from "./PostHeader";
@@ -16,47 +16,45 @@ type IProps = {
   isVisible: boolean;
 };
 
-const PostListItem = forwardRef(
-  ({ post, isLiked, isBookmarked, isVisible }: IProps, ref: any) => {
-    const { id, userId, bookable, images, product, serviceId } = post;
-    const { createdAt, description, postType } = post;
-    const { viewsCount, likesCount, commentsCount, bookmarksCount } = post;
-    const { avatar, username, checkmark } = userId;
+const PostListItem = ({ post, isLiked, isBookmarked, isVisible }: IProps) => {
+  const { id, userId, bookable, images, product, serviceId } = post;
+  const { createdAt, description, postType } = post;
+  const { viewsCount, likesCount, commentsCount, bookmarksCount } = post;
+  const { avatar, username, checkmark } = userId;
 
-    return (
-      <View style={styles.container}>
-        <PostHeader avatar={avatar} username={username} checkmark={checkmark} />
-        {postType === "photo" && (
-          <PostImage id={post.id} uri={images[0]?.url} />
-        )}
-        {postType === "video" && <PostVideo uri={images[0]?.url} ref={ref} />}
-        {bookable && (
-          <PostBookable
-            product={product}
-            isVisible={isVisible}
-            expirationTime={post.expirationTime}
-            serviceId={serviceId}
-            ownerId={post.userId}
-          />
-        )}
-        <PostActions
-          postId={id}
-          likesCount={likesCount}
-          isLiked={isLiked}
-          isBookmarked={isBookmarked}
-          images={images}
-          counters={{ viewsCount, likesCount, commentsCount, bookmarksCount }}
-          postType={postType}
+  return (
+    <View style={styles.container}>
+      <PostHeader avatar={avatar} username={username} checkmark={checkmark} />
+      {postType === "photo" && <PostImage id={post.id} uri={images[0]?.url} />}
+      {postType === "video" && (
+        <PostVideo uri={images[0]?.url} isVisible={isVisible} />
+      )}
+      {bookable && (
+        <PostBookable
+          product={product}
+          isVisible={isVisible}
+          expirationTime={post.expirationTime}
+          serviceId={serviceId}
+          ownerId={post.userId}
         />
-        <PostDescription
-          description={description}
-          commentsCount={commentsCount}
-          date={FROM_NOW(createdAt)}
-        />
-      </View>
-    );
-  }
-);
+      )}
+      <PostActions
+        postId={id}
+        likesCount={likesCount}
+        isLiked={isLiked}
+        isBookmarked={isBookmarked}
+        images={images}
+        counters={{ viewsCount, likesCount, commentsCount, bookmarksCount }}
+        postType={postType}
+      />
+      <PostDescription
+        description={description}
+        commentsCount={commentsCount}
+        date={FROM_NOW(createdAt)}
+      />
+    </View>
+  );
+};
 
 export default memo(PostListItem);
 

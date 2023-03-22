@@ -22,18 +22,7 @@ export const CardRecommended = ({ location, index }: IProps) => {
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation("common");
 
-  const goToUser = () => {
-    navigation.push("ProfileGeneral", {
-      screen: "Products",
-      userId: owner?._id,
-      avatar,
-      username,
-      name,
-      checkmark,
-      service: null,
-      option: null,
-    });
-  };
+  const goToUser = () => {};
 
   return (
     <Pressable
@@ -80,16 +69,13 @@ const styles = StyleSheet.create({
   button: {
     width: width / 2 - 15,
     marginBottom: 20,
-    borderWidth: 1,
-    borderColor: "#f1f1f1",
     borderRadius: 2.5,
   },
   image: {
     flex: 1,
     width: undefined,
     backgroundColor: "#f1f1f1",
-    borderTopLeftRadius: 2.5,
-    borderTopRightRadius: 2.5,
+    borderRadius: 1,
   },
   item: {
     borderRadius: 5,
@@ -129,14 +115,12 @@ const styles = StyleSheet.create({
     color: grey0,
   },
   bookBtn: {
-    paddingVertical: 5,
+    paddingVertical: 7.5,
     paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: "#ddd",
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
     marginTop: 10,
-    borderRadius: 2.5,
+    backgroundColor: "#f1f1f1",
   },
 });

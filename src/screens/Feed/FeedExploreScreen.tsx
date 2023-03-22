@@ -20,10 +20,7 @@ import {
 } from "../../hooks";
 import { Post } from "../../models/post";
 import { RootStackParams } from "../../navigation/rootStackParams";
-import StoryAvatarListItem from "../../components/customized/ListItems/Story/StoryAvatarListItem";
 import PostListItem from "../../components/customized/ListItems/Post/PostListItem";
-import { Video } from "expo-av";
-import FeedExploreVideosList from "../../components/customized/Lists/FeedExploreVideosList";
 
 type PostListItem = { post: Post; isLiked: boolean; isBookmarked: boolean };
 
@@ -33,7 +30,6 @@ export const FeedExploreScreen = () => {
   const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const video = useRef<Video>(null);
   const [visibleItem, setVisibleItem] = useState<PostListItem | null>(null);
 
   const postsOptions = useGetPaginate({
@@ -87,7 +83,6 @@ export const FeedExploreScreen = () => {
           post={item?.post}
           isLiked={item?.isLiked}
           isBookmarked={item?.isBookmarked}
-          ref={video}
           isVisible={visibleItem?.post.id === item.post.id}
         />
       );
@@ -96,45 +91,49 @@ export const FeedExploreScreen = () => {
   );
 
   const keyExtractor = useCallback((item: PostListItem) => item?.post?.id, []);
-  const keyExtractorStory = useCallback((item: any) => item.id, []);
 
-  const renderStoryAvatar = useCallback(
-    ({ item }: ListRenderItemInfo<any>) => (
-      <StoryAvatarListItem
-        username={item?.followeeId?.username}
-        avatar={item?.followeeId?.avatar}
-        onPress={() =>
-          navigation.navigate("Story", { userId: item?.followeeId?.id })
-        }
-      />
-    ),
-    []
-  );
-
-  const goToVideos = () => {};
-
-  const viewabilityConfig = {
+  const viewabilityConfigSetItem = { itemVisiblePercentThreshold: 65 };
+  const viewabilityConfigSaveView = {
     waitForInteraction: true,
     itemVisiblePercentThreshold: 80,
     minimumViewTime: 2000,
   };
 
-  const { mutate } = usePost({ uri: `/posts/views` });
-
-  const trackItem = useCallback((item: PostListItem) => {
+  const trackItem = useCallback((item: any) => {
     setVisibleItem(item);
-    const { post } = item;
-    mutate({ postId: post.id, userId: user?.id, from: "explore" });
   }, []);
 
-  const onViewableItemsChanged = useCallback((info: { changed: any }): void => {
+  const onViewableSetItem = useCallback((info: { changed: any }): void => {
     const visibleItems = info.changed.filter((entry: any) => entry.isViewable);
     visibleItems.forEach((visible: any) => {
       trackItem(visible.item);
     });
   }, []);
 
-  const header = <FeedExploreVideosList videos={videos} />;
+  const { mutate } = usePost({ uri: `/posts/views` });
+
+  const saveView = useCallback((item: any) => {
+    const { post } = item;
+    mutate({ postId: post.id, userId: user?.id, from: "explore" });
+  }, []);
+
+  const onViewableSaveView = useCallback((info: { changed: any }): void => {
+    const visibleItems = info.changed.filter((entry: any) => entry.isViewable);
+    visibleItems.forEach((visible: any) => {
+      saveView(visible.item);
+    });
+  }, []);
+
+  const viewabilityConfigCallbackPairs = useRef([
+    {
+      viewabilityConfig: viewabilityConfigSetItem,
+      onViewableItemsChanged: onViewableSetItem,
+    },
+    {
+      viewabilityConfig: viewabilityConfigSaveView,
+      onViewableItemsChanged: onViewableSaveView,
+    },
+  ]);
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -142,35 +141,6 @@ export const FeedExploreScreen = () => {
       {!loading && (
         <FlatList
           ref={ref}
-          // ListHeaderComponent={
-          //   <>
-          //     <FeedExploreVideosList videos={videos} />
-          //     <Divider color="#ddd" style={{ marginTop: 15 }} />
-          //     {/* <HeadingAction title={t("stories")} onPress={() => {}} />
-          //     <FlatList
-          //       ListHeaderComponent={
-          //         <Stack sx={{ paddingLeft: 10 }}>
-          //           <AvatarBadge
-          //             avatar={user?.avatar}
-          //             size={67}
-          //             sx={styles.avatarBadge}
-          //           />
-          //           <Text style={styles.storyTxt}>Povestea ta</Text>
-          //         </Stack>
-          //       }
-          //       data={stories}
-          //       horizontal
-          //       keyExtractor={keyExtractorStory}
-          //       showsHorizontalScrollIndicator={false}
-          //       renderItem={renderStoryAvatar}
-          //     />
-          //     <Divider
-          //       color="#ddd"
-          //       style={{ marginTop: 15, marginBottom: 10 }}
-          //     /> */}
-          //   </>
-          // }
-          // ListHeaderComponent={header}
           refreshControl={refreshControl}
           data={posts}
           renderItem={renderPost}
@@ -179,8 +149,9 @@ export const FeedExploreScreen = () => {
           ListFooterComponent={showSpinner}
           onEndReached={loadMore}
           onEndReachedThreshold={0.3}
-          viewabilityConfig={viewabilityConfig}
-          onViewableItemsChanged={onViewableItemsChanged}
+          viewabilityConfigCallbackPairs={
+            viewabilityConfigCallbackPairs.current
+          }
         />
       )}
       {loading && <Spinner />}

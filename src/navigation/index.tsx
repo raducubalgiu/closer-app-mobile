@@ -107,10 +107,10 @@ const AppNavigation = () => {
         <PortalProvider>
           <Stack.Navigator
             screenOptions={{
-              gestureEnabled: false,
+              //gestureEnabled: false,
               headerShown: false,
-              cardStyle: { backgroundColor: "rgba(0,0,0, 0.4)" },
-              presentation: "card",
+              //cardStyle: { backgroundColor: "rgba(0,0,0, 0.4)" },
+              //presentation: "card",
               // detachPreviousScreen: false,
               // cardStyleInterpolator: ({ current: { progress } }) => {
               //   return {
