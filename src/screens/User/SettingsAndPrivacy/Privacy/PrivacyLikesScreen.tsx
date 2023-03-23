@@ -12,7 +12,7 @@ import { useState } from "react";
 import { useAuth, usePatch } from "../../../../hooks";
 import { useNavigation } from "@react-navigation/native";
 import { showToast, displayNothing } from "../../../../utils";
-import { ViewLikesEnum } from "../../../../models";
+import { ViewLikesListEnum } from "../../../../models";
 
 const { grey0, error } = theme.lightColors || {};
 
@@ -27,12 +27,12 @@ export const PrivacyLikesScreen = () => {
     {
       title: t("allPeople"),
       description: t("privacyLikesAllDescription"),
-      action: ViewLikesEnum.ALL,
+      action: ViewLikesListEnum.ALL,
     },
     {
       title: t("justMe"),
       description: t("privacyLikesJustMe"),
-      action: ViewLikesEnum.ME,
+      action: ViewLikesListEnum.ME,
     },
   ];
 

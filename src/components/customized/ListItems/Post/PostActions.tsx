@@ -15,7 +15,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import PostStats from "../../Sheets/PostStats";
-import { ViewLikesEnum } from "../../../../models";
+import { ViewLikesListEnum } from "../../../../models";
 import { useAuth } from "../../../../hooks";
 
 const { black } = theme.lightColors || {};
@@ -75,7 +75,7 @@ const PostActions = ({
   };
 
   const goToLikes = () => {
-    if (settings.viewLikes === ViewLikesEnum.ALL || isMyPost) {
+    if (settings.viewLikes === ViewLikesListEnum.ALL || isMyPost) {
       navigation.navigate("Likes", { postId });
     }
   };
