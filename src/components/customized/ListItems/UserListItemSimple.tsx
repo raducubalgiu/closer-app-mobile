@@ -46,8 +46,8 @@ const styles = StyleSheet.create({
   ownerName: {
     color: black,
     fontWeight: "600",
-    fontSize: 15,
+    fontSize: 16,
     marginRight: 5,
   },
-  profession: { color: grey0, marginTop: 2.5 },
+  profession: { color: grey0, marginTop: 2.5, fontSize: 15 },
 });

@@ -56,21 +56,21 @@ const ProfileVideosTab = forwardRef(
 
     let header;
     switch (true) {
-      case isPrivate:
-        header = (
-          <NoFoundMessage
-            iconProps={{ name: "eye-off" }}
-            title={t("thisAccountIsPrivate")}
-            description={t("followThisAccountForSeeContent")}
-          />
-        );
-        break;
       case isBlocked:
         header = (
           <NoFoundMessage
             iconProps={{ name: "eye-off" }}
             title={`${t("youHaveBlocked")} @raducubalgiu`}
             description={t("cannotSeeEachOtherContent")}
+          />
+        );
+        break;
+      case isPrivate:
+        header = (
+          <NoFoundMessage
+            iconProps={{ name: "eye-off" }}
+            title={t("thisAccountIsPrivate")}
+            description={t("followThisAccountForSeeContent")}
           />
         );
         break;

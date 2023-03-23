@@ -7,8 +7,10 @@ import {
   StyleSheet,
 } from "react-native";
 import { Header, Spinner } from "../../../../components/core";
-import { NoFoundMessage } from "../../../../components/customized";
-import UserListItem from "../../../../components/customized/ListItems/UserListItem";
+import {
+  NoFoundMessage,
+  UserListItemSimple,
+} from "../../../../components/customized";
 import {
   useAuth,
   useGetPaginate,
@@ -16,10 +18,15 @@ import {
   useRefreshByUser,
 } from "../../../../hooks";
 import { User } from "../../../../models";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../../navigation/rootStackParams";
 
 export const PrivacyBlockedAccounts = () => {
   const { user } = useAuth();
   const { t } = useTranslation("common");
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const options = useGetPaginate({
     model: "blockedUsers",
@@ -31,10 +38,25 @@ export const PrivacyBlockedAccounts = () => {
   const loading = isLoading && !isFetchingNextPage;
   const { data: users, showSpinner, loadMore } = usePaginateActions(options);
 
-  const renderUser = useCallback(
-    ({ item }: any) => <UserListItem user={item.blockedUserId} />,
-    []
-  );
+  const renderUser = useCallback(({ item }: any) => {
+    const { checkmark, username, name, avatar } = item?.blockedUserId;
+
+    return (
+      <UserListItemSimple
+        checkmark={checkmark}
+        name={name}
+        avatar={avatar}
+        profession={`@${username}`}
+        onGoToUser={() => {
+          navigation.navigate("ProfileGeneral", {
+            username,
+            service: null,
+            option: null,
+          });
+        }}
+      />
+    );
+  }, []);
 
   const keyExtractor = useCallback((item: User) => item.id, []);
 
@@ -66,7 +88,7 @@ export const PrivacyBlockedAccounts = () => {
             renderItem={renderUser}
             onEndReached={loadMore}
             ListFooterComponent={showSpinner}
-            contentContainerStyle={{ marginVertical: 15 }}
+            contentContainerStyle={{ margin: 15 }}
           />
         )}
         {loading && <Spinner />}
