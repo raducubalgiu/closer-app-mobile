@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useContext } from "react";
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { MAIN_ROLE, SECOND_ROLE, THIRD_ROLE } from "@env";
@@ -13,6 +13,7 @@ import { RootStackParams } from "../../../navigation/rootStackParams";
 import AvatarBadge from "../../core/Avatars/AvatarBadge";
 import { useAuth } from "../../../hooks";
 import { Divider } from "@rneui/themed";
+import { ViewFollowingsListEnum } from "../../../models/enums/viewFollowingsListEnum";
 
 const { black, primary, grey0 } = theme.lightColors || {};
 
@@ -43,10 +44,12 @@ const ProfileOverview = ({
     followersCount,
     followingsCount,
     ratingsAverage,
+    settings,
   } = user || {};
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation(["common", "professions"]);
+  const sameUser = user?.id === userContext?.id;
 
   const goToFollowers = () =>
     navigation.push("ProfileStats", {
@@ -58,6 +61,7 @@ const ProfileOverview = ({
       ratingsQuantity,
       followersCount,
       followingsCount,
+      settings,
     });
   const goToReviews = () =>
     navigation.push("ProfileStats", {
@@ -69,8 +73,13 @@ const ProfileOverview = ({
       ratingsQuantity,
       followersCount,
       followingsCount,
+      settings,
     });
-  const goToFollowings = () =>
+  const goToFollowings = () => {
+    if (!sameUser && settings?.viewFollowings === ViewFollowingsListEnum.ME) {
+      return;
+    }
+
     navigation.push("ProfileStats", {
       screen: "Following",
       userId: user?.id,
@@ -80,7 +89,9 @@ const ProfileOverview = ({
       ratingsQuantity,
       followersCount,
       followingsCount,
+      settings,
     });
+  };
 
   const isBusiness = role === MAIN_ROLE || role === SECOND_ROLE;
   const disableStatsBtn = isBlocked || isPrivate;

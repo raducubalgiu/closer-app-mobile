@@ -146,6 +146,7 @@ export type RootStackParams = {
     ratingsQuantity: number;
     followersCount: number;
     followingsCount: number;
+    settings: any;
   };
   PhotoLibrary: any;
   PhotoAlbums: any;

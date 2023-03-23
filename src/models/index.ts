@@ -17,4 +17,4 @@ export { Service } from "./service";
 export { Slot } from "./slot";
 export { User } from "./user";
 
-export { ViewLikesListEnum } from "./enums/showLikesListEnum";
+export { ViewLikesListEnum } from "./enums/viewLikesListEnum";

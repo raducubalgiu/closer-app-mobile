@@ -16,7 +16,7 @@ import { RootStackParams } from "../../../navigation/rootStackParams";
 type IProps = NativeStackScreenProps<RootStackParams, "ProfileStats">;
 
 export const ProfileStatsScreen = ({ route }: IProps) => {
-  const { initialRoute, username, userId, role } = route.params;
+  const { initialRoute, username, userId, role, settings } = route.params;
   const { ratingsQuantity, followersCount, followingsCount } = route.params;
   const { t } = useTranslation("common");
   const Tab = createMaterialTopTabNavigator();
@@ -27,8 +27,8 @@ export const ProfileStatsScreen = ({ route }: IProps) => {
     [userId]
   );
   const Followings = useCallback(
-    () => <FollowingsTab userId={userId} />,
-    [userId]
+    () => <FollowingsTab userId={userId} settings={settings} />,
+    [userId, settings]
   );
 
   const isBusiness = role === MAIN_ROLE || role === SECOND_ROLE;

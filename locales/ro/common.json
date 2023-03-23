@@ -439,6 +439,8 @@
   "justMe": "Doar eu",
   "allPeople": "Toată lumea",
   "nobody": "Nimeni",
+  "restrictioned": "Restricţionat",
+  "thisUserDoesNotAllowSeeFollowings": "Acest utilizator nu permite afişarea listei de urmăriri",
   "peopleThatYouAreFollowing": "Persoane pe care le urmăreşti",
   "privacyCommentsNobodyDescription": "Ceilalţi utilizatori nu pot comenta la niciunul dintre postările tale actuale sau cele viitoare",
   "privacyCommentsAllDescription": "Oricine poate comenta la postările tale, atât cele actuala cât şi cele viitoare",

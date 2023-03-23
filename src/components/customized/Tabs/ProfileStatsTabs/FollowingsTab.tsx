@@ -9,14 +9,17 @@ import {
   useGetPaginate,
   useRefreshByUser,
   usePaginateActions,
+  useAuth,
 } from "../../../../hooks";
 import { User } from "../../../../models/user";
 import { Spinner } from "../../../core";
+import { ViewFollowingsListEnum } from "../../../../models/enums/viewFollowingsListEnum";
 
-type IProps = { userId: string };
+type IProps = { userId: string; settings: any };
 type UseListItem = { id: string; user: User; isFollow: boolean };
 
-export const FollowingsTab = ({ userId }: IProps) => {
+export const FollowingsTab = ({ userId, settings }: IProps) => {
+  const { user } = useAuth();
   const isFocused = useIsFocused();
   const { t } = useTranslation("common");
   const options = useGetPaginate({
@@ -25,6 +28,7 @@ export const FollowingsTab = ({ userId }: IProps) => {
     limit: "20",
     enabled: isFocused,
   });
+  const sameUser = userId === user?.id;
 
   const { refetch, isLoading, isFetchingNextPage } = options;
 
@@ -54,6 +58,16 @@ export const FollowingsTab = ({ userId }: IProps) => {
       <NoFoundMessage
         title={t("following")}
         description={t("noFoundFollowings")}
+      />
+    );
+  }
+
+  if (!sameUser && settings.viewFollowings === ViewFollowingsListEnum.ME) {
+    return (
+      <NoFoundMessage
+        iconProps={{ name: "eye-off" }}
+        title={t("restrictioned")}
+        description={t("thisUserDoesNotAllowSeeFollowings")}
       />
     );
   }
