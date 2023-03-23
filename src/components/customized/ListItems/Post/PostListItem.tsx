@@ -20,7 +20,7 @@ const PostListItem = ({ post, isLiked, isBookmarked, isVisible }: IProps) => {
   const { id, userId, bookable, images, product, serviceId } = post;
   const { createdAt, description, postType } = post;
   const { viewsCount, likesCount, commentsCount, bookmarksCount } = post;
-  const { avatar, username, checkmark } = userId;
+  const { avatar, username, checkmark, settings } = userId;
 
   return (
     <View style={styles.container}>
@@ -46,6 +46,8 @@ const PostListItem = ({ post, isLiked, isBookmarked, isVisible }: IProps) => {
         images={images}
         counters={{ viewsCount, likesCount, commentsCount, bookmarksCount }}
         postType={postType}
+        settings={settings}
+        userId={userId.id}
       />
       <PostDescription
         description={description}

@@ -15,9 +15,12 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import PostStats from "../../Sheets/PostStats";
+import { ViewLikesEnum } from "../../../../models";
+import { useAuth } from "../../../../hooks";
 
 const { black } = theme.lightColors || {};
 type IProps = {
+  userId: string;
   postId: string;
   likesCount: number;
   isLiked: boolean;
@@ -30,6 +33,7 @@ type IProps = {
     bookmarksCount: number;
   };
   postType: string;
+  settings: any;
 };
 
 const PostActions = ({
@@ -40,12 +44,16 @@ const PostActions = ({
   images,
   counters,
   postType,
+  settings,
+  userId,
 }: IProps) => {
+  const { user } = useAuth();
   const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const sheetRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => [1, 400], []);
+  const isMyPost = userId === user?.id;
 
   const onShare = async () => {
     try {
@@ -67,7 +75,9 @@ const PostActions = ({
   };
 
   const goToLikes = () => {
-    navigation.navigate("Likes", { postId });
+    if (settings.viewLikes === ViewLikesEnum.ALL || isMyPost) {
+      navigation.navigate("Likes", { postId });
+    }
   };
 
   return (

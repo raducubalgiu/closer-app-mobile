@@ -25,8 +25,8 @@ export interface User {
   settings: {
     private: boolean;
     status: string;
-    likesCount: string;
     viewsCount: string;
+    viewLikes: string;
     viewComments: string;
     viewFollowings: string;
     tags: string;

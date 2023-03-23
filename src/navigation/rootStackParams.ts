@@ -157,6 +157,7 @@ export type RootStackParams = {
   ReportUser: any;
   SavingData: any;
   Settings: any;
+  SearchStack: any;
   SearchAll: { screen: string | null; search: string };
   Schedules: any;
   ScheduleConfirm: {

@@ -73,7 +73,7 @@ export const ScheduleConfirmScreen = ({ route }: IProps) => {
         {discount > 0 && (
           <Stack
             sx={{
-              marginBottom: 30,
+              marginBottom: 35,
               marginTop: 5,
               backgroundColor: expirationTime ? secondary : bookableBgColor,
               padding: 10,
@@ -85,7 +85,7 @@ export const ScheduleConfirmScreen = ({ route }: IProps) => {
           </Stack>
         )}
         <Stack align="start">
-          <Stack align="start" direction="row" sx={{ marginBottom: 50 }}>
+          <Stack align="start" direction="row" sx={{ marginBottom: 35 }}>
             <Icon
               name="calendar"
               type="feather"
@@ -97,15 +97,31 @@ export const ScheduleConfirmScreen = ({ route }: IProps) => {
               <Text style={styles.heading}>
                 {dayjs(start).format("DD-MM-YYYY")} - {hour}
               </Text>
-              <Text style={{ ...styles.heading, marginTop: 5 }}>
+              <Text style={{ ...styles.description, marginTop: 5 }}>
                 {ownerId?.name}
               </Text>
             </Stack>
           </Stack>
-          <Stack align="start" direction="row" sx={{ marginBottom: 50 }}>
+          <Stack align="start" direction="row" sx={{ marginBottom: 35 }}>
             <Icon
-              name="shopping-bag"
+              name="map-pin"
               type="feather"
+              size={20}
+              color={black}
+              style={styles.icon}
+            />
+            <Stack align="start" sx={{ marginLeft: 15, flex: 1 }}>
+              <Text style={styles.heading}>Locatie</Text>
+              <Text style={styles.description}>
+                Strada Oarecare, nr 33, Sector 3
+              </Text>
+              <Text style={styles.duration}>la 5 km de tine</Text>
+            </Stack>
+          </Stack>
+          <Stack align="start" direction="row" sx={{ marginBottom: 35 }}>
+            <Icon
+              name="shopping-outline"
+              type="material-community"
               size={20}
               color={black}
               style={styles.icon}
@@ -118,7 +134,7 @@ export const ScheduleConfirmScreen = ({ route }: IProps) => {
               <Text style={styles.duration}>Durata: ~ {duration} min</Text>
             </Stack>
           </Stack>
-          <Stack align="start" direction="row" sx={{ marginBottom: 50 }}>
+          <Stack align="start" direction="row" sx={{ marginBottom: 35 }}>
             <Icon
               name="credit-card"
               type="feather"

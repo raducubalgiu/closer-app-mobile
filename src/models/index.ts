@@ -16,3 +16,5 @@ export { Schedule } from "./schedule";
 export { Service } from "./service";
 export { Slot } from "./slot";
 export { User } from "./user";
+
+export { ViewLikesEnum } from "./enums/showLikesEnum";

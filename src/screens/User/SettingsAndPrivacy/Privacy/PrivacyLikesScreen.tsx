@@ -11,23 +11,37 @@ import { Divider } from "@rneui/themed";
 import { useState } from "react";
 import { useAuth, usePatch } from "../../../../hooks";
 import { useNavigation } from "@react-navigation/native";
-import { showToast } from "../../../../utils";
+import { showToast, displayNothing } from "../../../../utils";
+import { ViewLikesEnum } from "../../../../models";
 
 const { grey0, error } = theme.lightColors || {};
 
 export const PrivacyLikesScreen = () => {
   const { user, setUser } = useAuth();
-  const { likesCount } = user?.settings || {};
-  const [showLikes, setShowLikes] = useState(likesCount);
+  const { settings } = user || {};
+  const [viewLikes, setViewLikes] = useState(settings?.viewLikes);
   const { t } = useTranslation("common");
   const navigation = useNavigation();
+
+  const inputs = [
+    {
+      title: t("allPeople"),
+      description: t("privacyLikesAllDescription"),
+      action: ViewLikesEnum.ALL,
+    },
+    {
+      title: t("justMe"),
+      description: t("privacyLikesJustMe"),
+      action: ViewLikesEnum.ME,
+    },
+  ];
 
   const { mutate, isLoading } = usePatch({
     uri: `/users/${user?.id}/settings`,
     onSuccess: () => {
       setUser({
         ...user,
-        settings: { ...user?.settings, likesCount: showLikes },
+        settings: { ...user?.settings, viewLikes },
       });
       showToast({ message: t("youChangedSettings"), short: true });
       navigation.goBack();
@@ -36,7 +50,7 @@ export const PrivacyLikesScreen = () => {
       showToast({ message: t("somethingWentWrong"), bgColor: error }),
   });
 
-  const handleUpdate = () => mutate({ likesCount: showLikes });
+  const handleUpdate = () => mutate({ viewLikes });
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -44,29 +58,30 @@ export const PrivacyLikesScreen = () => {
       <View style={styles.container}>
         <View>
           <Heading
-            title="Cine poate vedea postările apreciate de tine"
+            title={t("whoCanSeeLikesListOfYourPosts")}
             sx={styles.heading}
           />
-          <FormInputRadio
-            title={t("allPeople")}
-            checked={showLikes === "all"}
-            onPress={() => setShowLikes("all")}
-            sx={{ paddingVertical: 0 }}
-            variant="normal"
-          />
-          <Divider color="#ddd" style={{ marginVertical: 10 }} />
-          <FormInputRadio
-            title={t("justMe")}
-            checked={showLikes === "me"}
-            onPress={() => setShowLikes("me")}
-            sx={{ paddingVertical: 0 }}
-            variant="normal"
-          />
+          {inputs.map((input, i) => (
+            <View key={i}>
+              <FormInputRadio
+                title={input.title}
+                description={displayNothing(
+                  viewLikes === input.action,
+                  input.description
+                )}
+                checked={viewLikes === input.action}
+                onPress={() => setViewLikes(input.action)}
+                sx={{ paddingVertical: 0 }}
+                variant="normal"
+              />
+              <Divider color="#ddd" style={{ marginVertical: 10 }} />
+            </View>
+          ))}
         </View>
         <Button
           title={t("save")}
           onPress={handleUpdate}
-          disabled={likesCount === showLikes || isLoading}
+          disabled={viewLikes === settings?.viewLikes || isLoading}
           loading={isLoading}
         />
       </View>

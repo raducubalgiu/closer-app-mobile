@@ -131,7 +131,7 @@ export const FeedExploreScreen = () => {
     []
   );
 
-  const viewabilityConfigSetItem = { itemVisiblePercentThreshold: 65 };
+  const viewabilityConfigSetItem = { itemVisiblePercentThreshold: 70 };
   const viewabilityConfigSaveView = {
     waitForInteraction: true,
     itemVisiblePercentThreshold: 80,
