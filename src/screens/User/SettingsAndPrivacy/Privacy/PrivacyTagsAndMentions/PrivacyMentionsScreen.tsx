@@ -12,7 +12,7 @@ import theme from "../../../../../../assets/styles/theme";
 import { useAuth, usePatch } from "../../../../../hooks";
 import { showToast } from "../../../../../utils";
 import { useNavigation } from "@react-navigation/native";
-import { MentionsEnum } from "../../../../../models/enums/mentionsEnum";
+import { MentionsEnum } from "../../../../../ts";
 
 const { error } = theme.lightColors || {};
 

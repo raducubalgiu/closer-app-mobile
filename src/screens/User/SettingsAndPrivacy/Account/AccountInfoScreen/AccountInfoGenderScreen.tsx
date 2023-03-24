@@ -7,7 +7,7 @@ import { FormInputRadio, Spinner } from "../../../../../components/core";
 import { HeaderEdit } from "../../../../../components/customized";
 import { RootStackParams } from "../../../../../navigation/rootStackParams";
 import theme from "../../../../../../assets/styles/theme";
-import { GenderEnum } from "../../../../../models/enums/genderEnum";
+import { GenderEnum } from "../../../../../ts";
 import { useAuth, usePatch } from "../../../../../hooks";
 import { useNavigation } from "@react-navigation/native";
 

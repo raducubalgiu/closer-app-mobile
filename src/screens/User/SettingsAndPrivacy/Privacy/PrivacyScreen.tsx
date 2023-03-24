@@ -30,7 +30,7 @@ export const PrivacyScreen = () => {
         ...user,
         settings: { ...user?.settings, private: !privateAccount },
       });
-      setPrivateAccount((privateAccount) => !privateAccount);
+      setPrivateAccount((privateAccount: boolean) => !privateAccount);
       showToast({ message: t("youChangedAccountStatus"), short: true });
     },
     onError: () =>

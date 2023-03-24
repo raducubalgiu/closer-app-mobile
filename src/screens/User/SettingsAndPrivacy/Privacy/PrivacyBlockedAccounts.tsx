@@ -17,7 +17,7 @@ import {
   usePaginateActions,
   useRefreshByUser,
 } from "../../../../hooks";
-import { User } from "../../../../models";
+import { User } from "../../../../ts";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";

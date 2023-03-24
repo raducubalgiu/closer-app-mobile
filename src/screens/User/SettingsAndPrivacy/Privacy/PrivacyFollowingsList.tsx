@@ -12,7 +12,7 @@ import { useState } from "react";
 import { useAuth, usePatch } from "../../../../hooks";
 import { useNavigation } from "@react-navigation/native";
 import { showToast } from "../../../../utils";
-import { ViewFollowingsListEnum } from "../../../../models/enums/viewFollowingsListEnum";
+import { ViewFollowingsListEnum } from "../../../../ts";
 
 const { grey0, error } = theme.lightColors || {};
 

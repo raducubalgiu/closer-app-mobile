@@ -12,7 +12,7 @@ import {
 import { useAuth, usePatch } from "../../../../../hooks";
 import { showToast } from "../../../../../utils";
 import theme from "../../../../../../assets/styles/theme";
-import { CommentsViewCreateEnum } from "../../../../../models/enums/commentsViewCreateEnum";
+import { CommentsViewCreateEnum } from "../../../../../ts";
 
 const { error } = theme.lightColors || {};
 
