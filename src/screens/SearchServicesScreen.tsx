@@ -16,7 +16,7 @@ import {
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
 import { RootStackParams } from "../navigation/rootStackParams";
-import { Service } from "../models/service";
+import { Service } from "../ts";
 import { NoFoundMessage, TapFeedbackButton } from "../components/customized";
 import { Icon } from "@rneui/themed";
 

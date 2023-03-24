@@ -27,7 +27,7 @@ import {
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../navigation/rootStackParams";
-import { Message } from "../models/message";
+import { Message } from "../ts";
 
 const { grey0 } = theme.lightColors || {};
 

@@ -13,7 +13,7 @@ import {
 } from "../hooks";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParams } from "../navigation/rootStackParams";
-import { User } from "../models/user";
+import { User } from "../ts";
 
 type IProps = NativeStackScreenProps<RootStackParams, "Likes">;
 type UserListItem = { id: string; user: User; isFollow: boolean };

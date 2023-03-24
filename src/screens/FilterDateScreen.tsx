@@ -13,7 +13,7 @@ import {
 } from "../components/customized";
 import DateRangePicker from "../components/customized/Calendars/DateRangePicker";
 import { RootStackParams } from "../navigation/rootStackParams";
-import { Period } from "../models/period";
+import { Period } from "../ts";
 import { dayMonthFormat } from "../utils/date-utils";
 import { useCalendarList, useMinutes } from "../hooks";
 import dayjs from "dayjs";

@@ -11,7 +11,7 @@ import {
 import { FiltersContainer } from "../components/customized";
 import OptionListItem from "../components/customized/ListItems/OptionListItem";
 import { RootStackParams } from "../navigation/rootStackParams";
-import { Option } from "../models/option";
+import { Option } from "../ts";
 import { useGet } from "../hooks";
 import { displayDash } from "../utils";
 

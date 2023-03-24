@@ -15,7 +15,7 @@ import LocationListItem from "../components/customized/ListItems/LocationListIte
 import { useGet } from "../hooks";
 import theme from "../../assets/styles/theme";
 import { RootStackParams } from "../navigation/rootStackParams";
-import { Location } from "../models/location";
+import { Location } from "../ts";
 import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import { Spinner, Stack } from "../components/core";
 

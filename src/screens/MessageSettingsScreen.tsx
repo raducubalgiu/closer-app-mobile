@@ -8,7 +8,7 @@ import { Checkmark, Header, Heading, Stack } from "../components/core";
 import CustomAvatar from "../components/core/Avatars/CustomAvatar";
 import { SettingListItem } from "../components/customized";
 import { useAuth, useDelete } from "../hooks";
-import { ConfirmModal } from "../components/customized/Modals/ConfirmModal";
+import ConfirmModal from "../components/customized/Modals/ConfirmModal";
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,

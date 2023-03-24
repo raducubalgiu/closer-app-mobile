@@ -12,7 +12,7 @@ import { Header, Spinner, Stack } from "../components/core";
 import { NoFoundMessage, CardReviewSummary } from "../components/customized";
 import RatingListItem from "../components/customized/ListItems/RatingListItem";
 import { useGet, useGetPaginate, useRefreshByUser } from "../hooks";
-import { Review } from "../models/review";
+import { Review } from "../ts";
 import { RootStackParams } from "../navigation/rootStackParams";
 
 type IProps = NativeStackScreenProps<RootStackParams, "ProductReviews">;

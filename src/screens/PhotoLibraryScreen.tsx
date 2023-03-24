@@ -14,7 +14,7 @@ import {
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
 import { RootStackParams } from "../navigation/rootStackParams";
-import { Post } from "../models/post";
+import { Post } from "../ts";
 
 const { black } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "PhotoLibrary">;
