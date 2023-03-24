@@ -24,7 +24,7 @@ export const PrivacyScreen = () => {
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const { mutate } = usePatch({
-    uri: `/users/${user?.id}/settings`,
+    uri: `/users/${user?.id}`,
     onSuccess: () => {
       setUser({
         ...user,
@@ -37,7 +37,36 @@ export const PrivacyScreen = () => {
       showToast({ message: t("somethingWentWrong"), bgColor: error }),
   });
 
-  const handleChangePrivate = () => mutate({ private: !privateAccount });
+  const handleChangePrivate = () =>
+    mutate({ settings: { ...user?.settings, private: !privateAccount } });
+
+  const inputs = [
+    {
+      title: t("comments"),
+      iconProps: { name: "message-circle", color: grey0 },
+      nav: "PrivacyComments",
+    },
+    {
+      title: t("mentionsAndTags"),
+      iconProps: { name: "at-sign", color: grey0 },
+      nav: "PrivacyTagsAndMentions",
+    },
+    {
+      title: t("listLikes"),
+      iconProps: { name: "heart", color: grey0 },
+      nav: "PrivacyLikes",
+    },
+    {
+      title: t("followingsList"),
+      iconProps: { name: "users", color: grey0 },
+      nav: "PrivacyFollowings",
+    },
+    {
+      title: t("blockedAccounts"),
+      iconProps: { name: "block", type: "entypo", color: grey0 },
+      nav: "PrivacyBlockedAccounts",
+    },
+  ];
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -52,42 +81,15 @@ export const PrivacyScreen = () => {
         />
         <Divider style={{ marginVertical: 15 }} color="#ddd" />
         <Heading title={t("interaction")} sx={styles.heading} />
-        <SettingsListItem
-          title={t("comments")}
-          iconLeftProps={{ name: "message-circle", color: grey0 }}
-          onPress={() => navigation.navigate("PrivacyComments")}
-          sx={{ paddingVertical: 12.5 }}
-        />
-        <SettingsListItem
-          title={t("mentionsAndTags")}
-          iconLeftProps={{ name: "at-sign", color: grey0 }}
-          onPress={() => navigation.navigate("PrivacyTagsAndMentions")}
-          sx={{ paddingVertical: 12.5 }}
-        />
-        <SettingsListItem
-          title={t("postViews")}
-          iconLeftProps={{ name: "play", color: grey0 }}
-          onPress={() => {}}
-          sx={{ paddingVertical: 12.5 }}
-        />
-        <SettingsListItem
-          title={t("postLikes")}
-          iconLeftProps={{ name: "heart", color: grey0 }}
-          onPress={() => navigation.navigate("PrivacyLikes")}
-          sx={{ paddingVertical: 12.5 }}
-        />
-        <SettingsListItem
-          title={t("followingsList")}
-          iconLeftProps={{ name: "users", color: grey0 }}
-          onPress={() => navigation.navigate("PrivacyFollowings")}
-          sx={{ paddingVertical: 12.5 }}
-        />
-        <SettingsListItem
-          title={t("blockedAccounts")}
-          iconLeftProps={{ name: "block", type: "entypo", color: grey0 }}
-          onPress={() => navigation.navigate("PrivacyBlockedAccounts")}
-          sx={{ paddingVertical: 12.5 }}
-        />
+        {inputs.map((input, i) => (
+          <SettingsListItem
+            key={i}
+            title={input.title}
+            iconLeftProps={input.iconProps}
+            onPress={() => navigation.navigate<any>(input.nav)}
+            sx={{ paddingVertical: 12.5 }}
+          />
+        ))}
       </ScrollView>
     </SafeAreaView>
   );

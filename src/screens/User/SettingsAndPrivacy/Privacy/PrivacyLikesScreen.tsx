@@ -37,7 +37,7 @@ export const PrivacyLikesScreen = () => {
   ];
 
   const { mutate, isLoading } = usePatch({
-    uri: `/users/${user?.id}/settings`,
+    uri: `/users/${user?.id}`,
     onSuccess: () => {
       setUser({
         ...user,
@@ -50,7 +50,8 @@ export const PrivacyLikesScreen = () => {
       showToast({ message: t("somethingWentWrong"), bgColor: error }),
   });
 
-  const handleUpdate = () => mutate({ viewLikes });
+  const handleUpdate = () =>
+    mutate({ settings: { ...user?.settings, viewLikes } });
 
   return (
     <SafeAreaView style={styles.screen}>

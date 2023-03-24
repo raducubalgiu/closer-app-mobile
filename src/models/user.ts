@@ -27,7 +27,10 @@ export interface User {
     status: string;
     viewsCount: string;
     viewLikes: string;
-    viewComments: string;
+    comments: {
+      create: string;
+      view: string;
+    };
     viewFollowings: string;
     tags: string;
     mentions: string;

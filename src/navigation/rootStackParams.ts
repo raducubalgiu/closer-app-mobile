@@ -124,6 +124,8 @@ export type RootStackParams = {
   Notifications: any;
   Privacy: any;
   PrivacyComments: any;
+  PrivacyCommentsCreate: any;
+  PrivacyCommentsView: any;
   PrivacyLikes: any;
   PrivacyFollowings: any;
   PrivacyBlockedAccounts: any;

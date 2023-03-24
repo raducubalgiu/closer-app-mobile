@@ -64,6 +64,8 @@ import {
   ProductScreen,
   PrivacyScreen,
   PrivacyCommentsScreen,
+  PrivacyCommentsCreateScreen,
+  PrivacyCommentsViewScreen,
   PrivacyLikesScreen,
   PrivacyFollowingsScreen,
   PrivacyBlockedAccounts,
@@ -224,6 +226,14 @@ const AppNavigation = () => {
             <Stack.Screen
               name="PrivacyComments"
               component={PrivacyCommentsScreen}
+            />
+            <Stack.Screen
+              name="PrivacyCommentsCreate"
+              component={PrivacyCommentsCreateScreen}
+            />
+            <Stack.Screen
+              name="PrivacyCommentsView"
+              component={PrivacyCommentsViewScreen}
             />
             <Stack.Screen name="PrivacyLikes" component={PrivacyLikesScreen} />
             <Stack.Screen

@@ -80,7 +80,9 @@ export { DeleteAccountPermanentlyScreen } from "./User/SettingsAndPrivacy/Accoun
 export { DisableAccountScreen } from "./User/SettingsAndPrivacy/Account/DisableAccountScreen";
 export { HideAccountScreen } from "./User/SettingsAndPrivacy/Account/HideAccountScreen";
 export { PrivacyScreen } from "./User/SettingsAndPrivacy/Privacy/PrivacyScreen";
-export { PrivacyCommentsScreen } from "./User/SettingsAndPrivacy/Privacy/PrivacyCommentsScreen";
+export { PrivacyCommentsScreen } from "./User/SettingsAndPrivacy/Privacy/PrivacyComments/PrivacyCommentsScreen";
+export { PrivacyCommentsCreateScreen } from "./User/SettingsAndPrivacy/Privacy/PrivacyComments/PrivacyCommentsCreateScreen";
+export { PrivacyCommentsViewScreen } from "./User/SettingsAndPrivacy/Privacy/PrivacyComments/PrivacyCommentsViewScreen";
 export { PrivacyLikesScreen } from "./User/SettingsAndPrivacy/Privacy/PrivacyLikesScreen";
 export { PrivacyFollowingsScreen } from "./User/SettingsAndPrivacy/Privacy/PrivacyFollowingsList";
 export { PrivacyBlockedAccounts } from "./User/SettingsAndPrivacy/Privacy/PrivacyBlockedAccounts";

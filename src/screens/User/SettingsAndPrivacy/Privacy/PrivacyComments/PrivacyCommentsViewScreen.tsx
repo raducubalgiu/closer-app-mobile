@@ -1,32 +1,38 @@
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Divider } from "@rneui/themed";
 import { SafeAreaView, StyleSheet, View } from "react-native";
+import { Divider } from "@rneui/themed";
 import {
-  Button,
-  FormInputRadio,
   Header,
   Heading,
+  FormInputRadio,
+  Button,
 } from "../../../../../components/core";
-import theme from "../../../../../../assets/styles/theme";
-import { useAuth, usePatch } from "../../../../../hooks";
+import { useAuth } from "../../../../../hooks";
+import { useState } from "react";
+import { usePatch } from "../../../../../hooks";
 import { showToast } from "../../../../../utils";
+import theme from "../../../../../../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
-import { TagsEnum } from "../../../../../models/enums/tagsEnum";
 
 const { error } = theme.lightColors || {};
 
-export const PrivacyTagsScreen = () => {
+export const PrivacyCommentsViewScreen = () => {
   const { user, setUser } = useAuth();
-  const { settings } = user || {};
-  const [tags, setTags] = useState(settings?.tags);
-  const { t } = useTranslation("common");
+  const { comments } = user?.settings || {};
+  const [view, setView] = useState(comments?.view);
+  const { t } = useTranslation();
   const navigation = useNavigation();
 
   const { mutate, isLoading } = usePatch({
     uri: `/users/${user?.id}`,
     onSuccess: () => {
-      setUser({ ...user, settings: { ...user?.settings, tags } });
+      setUser({
+        ...user,
+        settings: {
+          ...user?.settings,
+          comments: { ...user?.settings.comments, view },
+        },
+      });
       showToast({ message: t("youChangedSettings"), short: true });
       navigation.goBack();
     },
@@ -34,35 +40,34 @@ export const PrivacyTagsScreen = () => {
       showToast({ message: t("somethingWentWrong"), bgColor: error }),
   });
 
-  const handleUpdate = () => mutate({ settings: { ...user?.settings, tags } });
+  const handleUpdate = () =>
+    mutate({
+      settings: { ...user?.settings, comments: { ...comments, view } },
+    });
 
   const inputs = [
-    { title: t("allPeople"), action: TagsEnum.ALL },
-    { title: t("peopleThatYouAreFollowing"), action: TagsEnum.FOLLOWINGS },
+    { title: t("allPeople"), action: "all" },
+    { title: t("nobody"), action: "nobody" },
     {
       title: t("followersThatYouAreFollowing"),
-      action: TagsEnum.FOLLOWERS_AND_FOLLOWINGS,
-    },
-    {
-      title: t("nobody"),
-      action: TagsEnum.NOBODY,
+      action: "followersAndFollowings",
     },
   ];
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Header title={t("tags")} />
+      <Header title={t("privacyCommentsCreateTitle")} />
       <View style={styles.container}>
         <View>
-          <Heading title={t("whoCanMentionYou")} />
+          <Heading title={t("whoCanSeeCommentsToYourPosts")} />
           {inputs.map((input, i) => (
             <View key={i}>
               <FormInputRadio
                 title={input.title}
-                checked={tags === input.action}
-                onPress={() => setTags(input.action)}
+                checked={view === input.action}
+                onPress={() => setView(input.action)}
                 variant="normal"
-                sx={{ paddingBottom: 0, marginTop: 5 }}
+                sx={{ paddingBottom: 0 }}
               />
               <Divider color="#ddd" style={styles.divider} />
             </View>
@@ -70,7 +75,7 @@ export const PrivacyTagsScreen = () => {
         </View>
         <Button
           title={t("save")}
-          disabled={tags === settings?.tags}
+          disabled={view === comments?.view}
           loading={isLoading}
           onPress={handleUpdate}
         />
@@ -85,5 +90,5 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   container: { margin: 15, justifyContent: "space-between", flex: 1 },
-  divider: { marginVertical: 5 },
+  divider: { marginVertical: 10 },
 });

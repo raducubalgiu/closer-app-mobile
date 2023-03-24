@@ -1,32 +1,38 @@
-import { useState } from "react";
-import { useTranslation } from "react-i18next";
-import { Divider } from "@rneui/themed";
 import { SafeAreaView, StyleSheet, View } from "react-native";
+import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { Divider } from "@rneui/themed";
+import { useTranslation } from "react-i18next";
 import {
-  Button,
-  FormInputRadio,
   Header,
   Heading,
+  FormInputRadio,
+  Button,
 } from "../../../../../components/core";
-import theme from "../../../../../../assets/styles/theme";
 import { useAuth, usePatch } from "../../../../../hooks";
 import { showToast } from "../../../../../utils";
-import { useNavigation } from "@react-navigation/native";
-import { TagsEnum } from "../../../../../models/enums/tagsEnum";
+import theme from "../../../../../../assets/styles/theme";
+import { CommentsViewCreateEnum } from "../../../../../models/enums/commentsViewCreateEnum";
 
 const { error } = theme.lightColors || {};
 
-export const PrivacyTagsScreen = () => {
+export const PrivacyCommentsCreateScreen = () => {
   const { user, setUser } = useAuth();
-  const { settings } = user || {};
-  const [tags, setTags] = useState(settings?.tags);
-  const { t } = useTranslation("common");
+  const { comments } = user?.settings || {};
+  const [create, setCreate] = useState(comments?.create);
+  const { t } = useTranslation();
   const navigation = useNavigation();
 
   const { mutate, isLoading } = usePatch({
     uri: `/users/${user?.id}`,
     onSuccess: () => {
-      setUser({ ...user, settings: { ...user?.settings, tags } });
+      setUser({
+        ...user,
+        settings: {
+          ...user?.settings,
+          comments: { ...user?.settings.comments, create },
+        },
+      });
       showToast({ message: t("youChangedSettings"), short: true });
       navigation.goBack();
     },
@@ -34,35 +40,34 @@ export const PrivacyTagsScreen = () => {
       showToast({ message: t("somethingWentWrong"), bgColor: error }),
   });
 
-  const handleUpdate = () => mutate({ settings: { ...user?.settings, tags } });
+  const handleUpdate = () =>
+    mutate({
+      settings: { ...user?.settings, comments: { ...comments, create } },
+    });
 
   const inputs = [
-    { title: t("allPeople"), action: TagsEnum.ALL },
-    { title: t("peopleThatYouAreFollowing"), action: TagsEnum.FOLLOWINGS },
+    { title: t("allPeople"), action: CommentsViewCreateEnum.ALL },
+    { title: t("nobody"), action: CommentsViewCreateEnum.NOBODY },
     {
       title: t("followersThatYouAreFollowing"),
-      action: TagsEnum.FOLLOWERS_AND_FOLLOWINGS,
-    },
-    {
-      title: t("nobody"),
-      action: TagsEnum.NOBODY,
+      action: CommentsViewCreateEnum.FOLLOWERS_AND_FOLLOWINGS,
     },
   ];
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Header title={t("tags")} />
+      <Header title={t("privacyCommentsCreateTitle")} />
       <View style={styles.container}>
         <View>
-          <Heading title={t("whoCanMentionYou")} />
+          <Heading title={t("whoCanCommentToYourPosts")} />
           {inputs.map((input, i) => (
             <View key={i}>
               <FormInputRadio
                 title={input.title}
-                checked={tags === input.action}
-                onPress={() => setTags(input.action)}
+                checked={create === input.action}
+                onPress={() => setCreate(input.action)}
                 variant="normal"
-                sx={{ paddingBottom: 0, marginTop: 5 }}
+                sx={{ paddingBottom: 0 }}
               />
               <Divider color="#ddd" style={styles.divider} />
             </View>
@@ -70,7 +75,7 @@ export const PrivacyTagsScreen = () => {
         </View>
         <Button
           title={t("save")}
-          disabled={tags === settings?.tags}
+          disabled={create === comments?.create}
           loading={isLoading}
           onPress={handleUpdate}
         />
@@ -85,5 +90,5 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   container: { margin: 15, justifyContent: "space-between", flex: 1 },
-  divider: { marginVertical: 5 },
+  divider: { marginVertical: 10 },
 });

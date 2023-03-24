@@ -37,7 +37,7 @@ export const PrivacyFollowingsScreen = () => {
   ];
 
   const { mutate, isLoading } = usePatch({
-    uri: `/users/${user?.id}/settings`,
+    uri: `/users/${user?.id}`,
     onSuccess: () => {
       setUser({
         ...user,
@@ -50,7 +50,8 @@ export const PrivacyFollowingsScreen = () => {
       showToast({ message: t("somethingWentWrong"), bgColor: error }),
   });
 
-  const handleUpdate = () => mutate({ viewFollowings });
+  const handleUpdate = () =>
+    mutate({ settings: { ...user?.settings, viewFollowings } });
 
   return (
     <SafeAreaView style={styles.screen}>
