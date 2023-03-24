@@ -23,3 +23,4 @@ export { Schedule } from "./interfaces/schedule";
 export { Service } from "./interfaces/service";
 export { Slot } from "./interfaces/slot";
 export { User } from "./interfaces/user";
+export { SearchAll } from "./interfaces/searchAll";

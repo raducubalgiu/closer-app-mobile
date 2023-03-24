@@ -28,8 +28,7 @@ import {
   usePost,
   useRefreshOnFocus,
 } from "../../hooks";
-import { Hashtag, User } from "../../models";
-import { SearchAll } from "../../models/searchAll";
+import { Hashtag, User, SearchAll } from "../../ts";
 
 const { grey0, primary, black } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "SearchPosts">;

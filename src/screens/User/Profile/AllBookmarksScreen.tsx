@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next";
 import { useAuth, useGet } from "../../../hooks";
 import { Header } from "../../../components/core";
 import PostListItem from "../../../components/customized/ListItems/Post/PostListItem";
-import { Post } from "../../../models/post";
+import { Post } from "../../../ts";
 
 const { width, height } = Dimensions.get("window");
 

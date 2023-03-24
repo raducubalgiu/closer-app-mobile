@@ -27,7 +27,7 @@ import {
 import { RootStackParams } from "../../../../navigation/rootStackParams";
 import { useAuth, useCalendarList, useGet, usePost } from "../../../../hooks";
 import theme from "../../../../../assets/styles/theme";
-import { Product } from "../../../../models";
+import { Product } from "../../../../ts";
 import { showToast } from "../../../../utils";
 import { required } from "../../../../utils/validation";
 

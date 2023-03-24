@@ -18,8 +18,8 @@ import {
 } from "../../../../components/core";
 import theme from "../../../../../assets/styles/theme";
 import { useAuth, usePatch, useGet } from "../../../../hooks";
-import { ConfirmModal } from "../../../../components/customized/Modals/ConfirmModal";
-import { Service } from "../../../../models/service";
+import ConfirmModal from "../../../../components/customized/Modals/ConfirmModal";
+import { Service } from "../../../../ts";
 import { FormProvider, useForm } from "react-hook-form";
 import { showToast } from "../../../../utils";
 import { NoFoundMessage } from "../../../../components/customized";

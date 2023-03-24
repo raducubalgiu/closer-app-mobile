@@ -16,7 +16,7 @@ import {
   usePaginateActions,
   usePatch,
 } from "../../../../hooks";
-import { Profession } from "../../../../models/profession";
+import { Profession } from "../../../../ts";
 import { HeaderEdit } from "../../../../components/customized";
 import { SUPERADMIN_ROLE, THIRD_ROLE } from "@env";
 import {

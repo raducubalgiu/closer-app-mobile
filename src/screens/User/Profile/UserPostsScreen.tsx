@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Header } from "../../../components/core";
 import { RootStackParams } from "../../../navigation/rootStackParams";
-import { Post } from "../../../models";
+import { Post } from "../../../ts";
 import { ResizeMode, Video } from "expo-av";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import Animated, {
