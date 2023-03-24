@@ -10,7 +10,7 @@ import {
   usePaginateActions,
   useRefreshByUser,
 } from "../../../../hooks";
-import { User } from "../../../../models/user";
+import { User } from "../../../../ts";
 import { Spinner } from "../../../core";
 
 type IProps = { userId: string };

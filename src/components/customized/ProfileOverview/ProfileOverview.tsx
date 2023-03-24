@@ -13,7 +13,7 @@ import { RootStackParams } from "../../../navigation/rootStackParams";
 import AvatarBadge from "../../core/Avatars/AvatarBadge";
 import { useAuth } from "../../../hooks";
 import { Divider } from "@rneui/themed";
-import { ViewFollowingsListEnum } from "../../../models/enums/viewFollowingsListEnum";
+import { ViewFollowingsListEnum } from "../../../ts";
 
 const { black, primary, grey0 } = theme.lightColors || {};
 

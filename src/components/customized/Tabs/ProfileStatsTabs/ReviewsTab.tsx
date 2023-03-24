@@ -21,10 +21,9 @@ import {
 } from "../../../../hooks";
 import { CardReviewSummary } from "../../Cards/CardReviewSummary";
 import RatingListItem from "../../ListItems/RatingListItem";
-import { Review } from "../../../../models/review";
+import { Review, Product } from "../../../../ts";
 import { Divider, Icon, ListItem } from "@rneui/themed";
 import theme from "../../../../../assets/styles/theme";
-import { Product } from "../../../../models";
 
 type IProps = { userId: string };
 const { black, success } = theme.lightColors || {};

@@ -15,7 +15,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import PostStats from "../../Sheets/PostStats";
-import { ViewLikesListEnum } from "../../../../models";
+import { ViewLikesListEnum } from "../../../../ts";
 import { useAuth } from "../../../../hooks";
 
 const { black } = theme.lightColors || {};

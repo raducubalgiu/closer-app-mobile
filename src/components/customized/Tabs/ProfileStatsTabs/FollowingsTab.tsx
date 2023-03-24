@@ -11,9 +11,8 @@ import {
   usePaginateActions,
   useAuth,
 } from "../../../../hooks";
-import { User } from "../../../../models/user";
+import { User, ViewFollowingsListEnum } from "../../../../ts";
 import { Spinner } from "../../../core";
-import { ViewFollowingsListEnum } from "../../../../models/enums/viewFollowingsListEnum";
 
 type IProps = { userId: string; settings: any };
 type UseListItem = { id: string; user: User; isFollow: boolean };
