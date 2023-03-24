@@ -1,7 +1,7 @@
 import { StyleSheet, Animated, useWindowDimensions } from "react-native";
 import { memo } from "react";
-import { User } from "../../../models";
-import ProfileOverview from "../ProfileOverview/ProfileOverview";
+import { User } from "../../../ts";
+import ProfileOverview from "./ProfileOverview";
 
 type IProps = {
   user: User | null;
