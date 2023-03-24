@@ -12,7 +12,7 @@ import { BookButton } from "../Buttons/BookButton";
 import { UserListItemSimple } from "./UserListItemSimple";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/rootStackParams";
-import { Product } from "../../../models/product";
+import { Product } from "../../../ts";
 
 const { black, grey0, primary } = theme.lightColors || {};
 

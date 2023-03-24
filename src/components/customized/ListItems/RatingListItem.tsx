@@ -5,7 +5,7 @@ import theme from "../../../../assets/styles/theme";
 import { Checkmark, Stack, Rating } from "../../core";
 import CustomAvatar from "../../core/Avatars/CustomAvatar";
 import dayjs from "dayjs";
-import { User } from "../../../models/user";
+import { User } from "../../../ts";
 import { useAuth, useDelete, useGet, usePost } from "../../../hooks";
 
 const { black, grey0, error } = theme.lightColors || {};

@@ -8,7 +8,7 @@ import { Stack } from "../../core";
 import CustomAvatar from "../../core/Avatars/CustomAvatar";
 import theme from "../../../../assets/styles/theme";
 import { RootStackParams } from "../../../navigation/rootStackParams";
-import { Schedule } from "../../../models/schedule";
+import { Schedule } from "../../../ts";
 
 const { black, success, error, primary } = theme.lightColors || {};
 type IProps = { item: any };

@@ -7,7 +7,7 @@ import { Icon } from "@rneui/themed";
 import theme from "../../../../assets/styles/theme";
 import { Stack } from "../../core";
 import { RootStackParams } from "../../../navigation/rootStackParams";
-import { Schedule } from "../../../models/schedule";
+import { Schedule } from "../../../ts";
 import { UserListItemSimple } from "./UserListItemSimple";
 
 const { black, grey0, error, success, primary } = theme.lightColors || {};

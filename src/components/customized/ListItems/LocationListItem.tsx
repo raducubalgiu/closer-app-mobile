@@ -15,7 +15,7 @@ import { trimFunc, AddressFormat } from "../../../utils";
 import { IconLocation, IconStar, Stack } from "../../core";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/rootStackParams";
-import { Location } from "../../../models/location";
+import { Location } from "../../../ts";
 
 const { width } = Dimensions.get("window");
 const { black, grey0 } = theme.lightColors || {};

@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import { memo } from "react";
-import { Post } from "../../../../models";
+import { Post } from "../../../../ts";
 import { FROM_NOW } from "../../../../utils/date-utils";
 import PostHeader from "./PostHeader";
 import PostImage from "./PostImage";

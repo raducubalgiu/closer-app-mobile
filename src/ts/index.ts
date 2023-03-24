@@ -24,3 +24,4 @@ export { Service } from "./interfaces/service";
 export { Slot } from "./interfaces/slot";
 export { User } from "./interfaces/user";
 export { SearchAll } from "./interfaces/searchAll";
+export { VideoStatus } from "./interfaces/videoStatus";

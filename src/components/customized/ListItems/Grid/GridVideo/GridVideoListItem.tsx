@@ -8,7 +8,7 @@ import {
 import { memo } from "react";
 import { Icon } from "@rneui/themed";
 import { LinearGradient } from "expo-linear-gradient";
-import { Post } from "../../../../../models";
+import { Post } from "../../../../../ts";
 import GridVideo from "./GridVideo";
 
 type IProps = {

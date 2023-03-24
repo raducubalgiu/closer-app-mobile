@@ -17,13 +17,12 @@ import MoreSheet from "../../../Sheets/MoreSheet";
 import LikesSheet from "../../../Sheets/LikesSheet";
 import CommentsSheet from "../../../Sheets/CommentsSheet";
 import { RootStackParams } from "../../../../../navigation/rootStackParams";
-import { Post } from "../../../../../models/post";
+import { Post, VideoStatus } from "../../../../../ts";
 import VideoListItemButtons from "./VideoListItemButtons";
 import VideoListItemDetails from "./VideoListItemDetails";
 import VideoListItemSlider from "./VideoListItemSlider";
 import { Icon } from "@rneui/themed";
 import { Stack } from "../../../../core";
-import { VideoStatusType } from "../../../../../models/videoStatus";
 import SheetModal from "../../../../core/SheetModal/SheetModal";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { SharedElement } from "react-navigation-shared-element";
@@ -62,7 +61,7 @@ const VideoListItem = ({ video, setScrollEnabled, isVisible }: IProps) => {
   const reactions = likesCount + commentsCount + bookmarksCount;
 
   const videoRef = useRef<any>(null);
-  const [status, setStatus] = useState<VideoStatusType>(defaultStatus);
+  const [status, setStatus] = useState<VideoStatus>(defaultStatus);
   const tabBarHeight = useBottomTabBarHeight();
 
   const [isSliding, setIsSliding] = useState(false);

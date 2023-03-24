@@ -1,4 +1,4 @@
-export interface VideoStatusType {
+export interface VideoStatus {
   didJustFinish?: boolean;
   durationMillis: number;
   hasJustBeenInterrupted?: boolean;

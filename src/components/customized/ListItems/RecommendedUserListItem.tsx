@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import { trimFunc } from "../../../utils";
 import FollowButton from "../Buttons/FollowButton";
 import { MAIN_ROLE, SECOND_ROLE } from "@env";
-import { User } from "../../../models/user";
+import { User } from "../../../ts";
 
 const { grey0, black, primary } = theme.lightColors || {};
 
