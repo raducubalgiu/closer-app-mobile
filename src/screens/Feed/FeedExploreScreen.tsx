@@ -19,7 +19,7 @@ import {
   usePost,
   useRefreshByUser,
 } from "../../hooks";
-import { Post } from "../../models/post";
+import { Post } from "../../ts";
 import { RootStackParams } from "../../navigation/rootStackParams";
 import PostListItem from "../../components/customized/ListItems/Post/PostListItem";
 import HeadingAction from "../../components/core/Heading/HeadingAction";

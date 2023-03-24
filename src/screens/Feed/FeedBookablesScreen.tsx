@@ -17,7 +17,7 @@ import {
   useRefreshByUser,
   usePost,
 } from "../../hooks";
-import { Post } from "../../models/post";
+import { Post } from "../../ts";
 import { Spinner } from "../../components/core";
 
 type PostListItem = {

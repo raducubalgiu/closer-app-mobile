@@ -9,7 +9,7 @@ import { useCallback, useRef } from "react";
 import { useScrollToTop } from "@react-navigation/native";
 import { HeaderFeed } from "../../components/customized";
 import PostListItem from "../../components/customized/ListItems/Post/PostListItem";
-import { Post } from "../../models";
+import { Post } from "../../ts";
 import { Divider } from "@rneui/themed";
 import {
   useAuth,
