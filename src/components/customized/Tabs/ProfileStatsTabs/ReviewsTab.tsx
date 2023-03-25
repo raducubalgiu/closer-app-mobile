@@ -102,46 +102,48 @@ export const ReviewsTab = ({ userId }: IProps) => {
 
   const header = (
     <>
-      <ListItem.Accordion
-        content={accordionTitle}
-        onPress={() => setExpanded((expanded) => !expanded)}
-        isExpanded={expanded}
-        containerStyle={styles.accordion}
-      >
-        <ScrollView style={styles.accordionList}>
-          <Pressable onPress={() => onHandleProduct(null)}>
-            <Stack direction="row" sx={{ padding: 15 }}>
-              <Text style={{ color: black, fontWeight: "500" }}>
-                {t("allServices")}
-              </Text>
-              {!selectedProduct && (
-                <Icon name="check" type="feather" color={success} size={20} />
-              )}
-            </Stack>
-            <Divider color="#ddd" />
-          </Pressable>
-          {products?.map((prod: Product, i: number) => {
-            return (
-              <Pressable key={i} onPress={() => onHandleProduct(prod)}>
-                <Stack direction="row" sx={{ padding: 15 }}>
-                  <Text style={{ color: black, fontWeight: "500" }}>
-                    {prod.name}
-                  </Text>
-                  {selectedProduct?.id === prod?.id && (
-                    <Icon
-                      name="check"
-                      type="feather"
-                      color={success}
-                      size={20}
-                    />
-                  )}
-                </Stack>
-                <Divider color="#ddd" />
-              </Pressable>
-            );
-          })}
-        </ScrollView>
-      </ListItem.Accordion>
+      {reviews?.length > 0 && (
+        <ListItem.Accordion
+          content={accordionTitle}
+          onPress={() => setExpanded((expanded) => !expanded)}
+          isExpanded={expanded}
+          containerStyle={styles.accordion}
+        >
+          <ScrollView style={styles.accordionList}>
+            <Pressable onPress={() => onHandleProduct(null)}>
+              <Stack direction="row" sx={{ padding: 15 }}>
+                <Text style={{ color: black, fontWeight: "500" }}>
+                  {t("allServices")}
+                </Text>
+                {!selectedProduct && (
+                  <Icon name="check" type="feather" color={success} size={20} />
+                )}
+              </Stack>
+              <Divider color="#ddd" />
+            </Pressable>
+            {products?.map((prod: Product, i: number) => {
+              return (
+                <Pressable key={i} onPress={() => onHandleProduct(prod)}>
+                  <Stack direction="row" sx={{ padding: 15 }}>
+                    <Text style={{ color: black, fontWeight: "500" }}>
+                      {prod.name}
+                    </Text>
+                    {selectedProduct?.id === prod?.id && (
+                      <Icon
+                        name="check"
+                        type="feather"
+                        color={success}
+                        size={20}
+                      />
+                    )}
+                  </Stack>
+                  <Divider color="#ddd" />
+                </Pressable>
+              );
+            })}
+          </ScrollView>
+        </ListItem.Accordion>
+      )}
       {!expanded && !loading && reviews?.length > 0 && (
         <CardReviewSummary
           ratings={summary?.ratings}

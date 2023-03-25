@@ -1,5 +1,4 @@
 import {
-  SafeAreaView,
   StyleSheet,
   Text,
   Pressable,
@@ -7,6 +6,7 @@ import {
   KeyboardAvoidingView,
   ListRenderItemInfo,
   Platform,
+  View,
 } from "react-native";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -16,7 +16,7 @@ import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import { Button, Textarea } from "../components/core";
+import { Button, IconBackButton, Textarea } from "../components/core";
 import { MAIN_ROLE } from "@env";
 import theme from "../../assets/styles/theme";
 import { useAuth, usePatch } from "../hooks";
@@ -24,6 +24,7 @@ import { RootStackParams } from "../navigation/rootStackParams";
 import { showToast } from "../utils";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useScheduleCounter } from "../hooks/scheduleCounter";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const { error, black, grey0 } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "ScheduleCancel">;
@@ -39,6 +40,7 @@ export const ScheduleCancelScreen = ({ route }: IProps) => {
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const headerHeight = useHeaderHeight();
   const { decreaseCounter } = useScheduleCounter();
+  const insets = useSafeAreaInsets();
 
   const messages = [
     { id: "1", message: t("cannotArrive") },
@@ -113,7 +115,10 @@ export const ScheduleCancelScreen = ({ route }: IProps) => {
   }
 
   return (
-    <SafeAreaView style={styles.screen}>
+    <View style={styles.screen}>
+      <View style={{ ...styles.header, paddingTop: insets.top + 10 }}>
+        <IconBackButton />
+      </View>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "position" : "height"}
         keyboardVerticalOffset={headerHeight}
@@ -137,12 +142,19 @@ export const ScheduleCancelScreen = ({ route }: IProps) => {
           loading={isLoading}
         />
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: "white" },
+  header: {
+    backgroundColor: "white",
+    alignItems: "flex-start",
+    paddingBottom: 10,
+    paddingHorizontal: 15,
+    zIndex: 10000,
+  },
   container: {
     flex: 1,
     paddingHorizontal: 15,

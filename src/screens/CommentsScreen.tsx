@@ -5,8 +5,9 @@ import {
   FlatList,
   Platform,
   ListRenderItemInfo,
+  View,
 } from "react-native";
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import {
   CommentListItem,
   FooterComments,
@@ -22,6 +23,8 @@ import {
 } from "@react-navigation/native-stack";
 import { RootStackParams } from "../navigation/rootStackParams";
 import { useTranslation } from "react-i18next";
+import { Divider } from "@rneui/themed";
+import { CommentsViewCreateEnum } from "../ts";
 
 type IProps = NativeStackScreenProps<RootStackParams, "Comments">;
 
@@ -29,8 +32,10 @@ export const CommentsScreen = ({ route }: IProps) => {
   const { user } = useAuth();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const { postId, description, avatar, username } = route.params;
-  const { name, date, focus, creatorId } = route.params;
+  const { post } = route.params;
+  const { id, description, createdAt, userId } = post;
+  const { username, avatar, settings } = userId;
+  const { view, create } = settings?.comments;
   const { t } = useTranslation("common");
   const [comments, setComments] = useState([]);
   const [next, setNext] = useState(null);
@@ -42,7 +47,7 @@ export const CommentsScreen = ({ route }: IProps) => {
 
   const { isLoading, isFetching } = useGet({
     model: "comments",
-    uri: `/posts/${postId}/comments?page=${page}&limit=25`,
+    uri: `/posts/${id}/comments?page=${page}&limit=25`,
     onSuccess: (res) => {
       setNext(res.data.next);
       setComments((comments) => comments.concat(res.data.results));
@@ -50,37 +55,45 @@ export const CommentsScreen = ({ route }: IProps) => {
   });
 
   const { mutate } = usePost({
-    uri: `/posts/${postId}/comments`,
+    uri: `/posts/${id}/comments`,
     onSuccess: () => setComment(""),
   });
 
   const handleComment = () =>
     mutate({
       comment,
-      post: postId,
+      post: id,
       user: user?.id,
       previousComment: prevComment ? prevComment : commentId,
     });
 
   const goToUserExtra = () =>
     navigation.push("ProfileGeneral", {
-      userId: user?.id,
-      avatar,
       username,
-      name,
-      checkmark: false,
       service: null,
       option: null,
     });
 
+  const onEndReached = useCallback(() => {
+    if (next && !isFetching) setPage(page + 1);
+  }, [next, isFetching]);
+
+  let footer;
+  if (isLoading || isFetching) {
+    footer = <Spinner sx={{ paddingVertical: 20 }} />;
+  }
+
   const renderHeader = (
-    <CardPostDescription
-      avatar={avatar}
-      username={username}
-      description={description}
-      date={date}
-      onGoToUserAllInfo={goToUserExtra}
-    />
+    <>
+      <CardPostDescription
+        avatar={avatar}
+        username={username}
+        description={description}
+        date={createdAt}
+        onGoToUserAllInfo={goToUserExtra}
+      />
+      <Divider style={{ marginVertical: 15 }} />
+    </>
   );
 
   const handleReply = (
@@ -98,48 +111,44 @@ export const CommentsScreen = ({ route }: IProps) => {
       <CommentListItem
         item={item}
         onReply={handleReply}
-        creatorId={creatorId}
+        creatorId={userId.id}
       />
     ),
     []
   );
   const keyExtractor = useCallback((item: any) => item?._id, []);
 
-  const onEndReached = useCallback(() => {
-    if (next && !isFetching) setPage(page + 1);
-  }, [next, isFetching]);
-
-  let footer;
-  if (isLoading || isFetching) {
-    footer = <Spinner sx={{ paddingVertical: 20 }} />;
-  }
+  const viewComments = view === CommentsViewCreateEnum.ALL ? comments : [];
+  const createComments = create === CommentsViewCreateEnum.ALL;
 
   return (
     <SafeAreaView style={styles.screen}>
       <Header title={t("comments")} />
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "position" : "height"}
-        style={styles.container}
-        //keyboardVerticalOffset={headerHeight + 70}
-      >
-        <FlatList
-          ListHeaderComponent={renderHeader}
-          data={comments}
-          keyExtractor={keyExtractor}
-          renderItem={renderComment}
-          contentContainerStyle={styles.flatlist}
-          onEndReached={onEndReached}
-          onEndReachedThreshold={0}
-          ListFooterComponent={footer}
-        />
-        <FooterComments
-          comment={comment}
-          onChangeText={(text) => setComment(text)}
-          focus={focus}
-          avatar={avatar}
-          onHandleComment={handleComment}
-        />
-      </KeyboardAvoidingView>
+      <View style={{ flex: 1 }}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          keyboardVerticalOffset={headerHeight + 100}
+          style={{ flex: 1, justifyContent: "space-between" }}
+        >
+          <FlatList
+            ListHeaderComponent={renderHeader}
+            data={viewComments}
+            keyExtractor={keyExtractor}
+            renderItem={renderComment}
+            onEndReached={onEndReached}
+            onEndReachedThreshold={0}
+            ListFooterComponent={footer}
+            contentContainerStyle={{ paddingHorizontal: 15 }}
+          />
+          {createComments && (
+            <FooterComments
+              comment={comment}
+              onChangeText={(text) => setComment(text)}
+              onHandleComment={handleComment}
+            />
+          )}
+        </KeyboardAvoidingView>
+      </View>
     </SafeAreaView>
   );
 };
@@ -149,6 +158,5 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
   },
-  container: { flex: 1, justifyContent: "space-between", marginBottom: 50 },
-  flatlist: { padding: 15, minHeight: 700 },
+  container: { flex: 1, justifyContent: "space-between" },
 });

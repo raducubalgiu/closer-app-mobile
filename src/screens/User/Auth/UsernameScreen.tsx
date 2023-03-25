@@ -1,29 +1,39 @@
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import axios from "axios";
-import React, { useState } from "react";
-import theme from "../../../../assets/styles/theme";
-import { useAuth } from "../../../hooks";
-import InputCheck from "../../../components/core/Inputs/InputCheck";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { Icon } from "@rneui/themed";
+import theme from "../../../../assets/styles/theme";
+import { useAuth, useGetMutate } from "../../../hooks";
+import InputCheck from "../../../components/core/Inputs/InputCheck";
+import { Button, Stack } from "../../../components/core";
+import { showToast } from "../../../utils";
 
-const { grey0 } = theme.lightColors || {};
+const { grey0, error } = theme.lightColors || {};
+type Available = { status: boolean; message: string };
 
 export const UsernameScreen = ({ route }: any) => {
   const { idTokenResult, role } = route.params;
   const { displayName, photoURL } = idTokenResult;
+  const [username, setUsername] = useState("");
+  const [isAvailable, setIsAvailable] = useState<Available>({
+    status: true,
+    message: "",
+  });
+  const { status, message } = isAvailable;
   const [loading, setLoading] = useState(false);
   const { setUser } = useAuth();
   const { t } = useTranslation("common");
 
-  const handleSubmit = async (data: any) => {
+  const handleSubmit = async () => {
     try {
       setLoading(true);
 
       const userResult = await axios.post(
         `${process.env.BASE_ENDPOINT}/users/register`,
         {
-          username: data.username,
-          name: displayName ? displayName : data.username,
+          username,
+          name: displayName ? displayName : username,
           avatar: photoURL ? photoURL : [],
           role,
         },
@@ -38,12 +48,34 @@ export const UsernameScreen = ({ route }: any) => {
         ...userResult.data,
         token: idTokenResult?.token,
       });
-
       setLoading(false);
     } catch (err) {
+      showToast({ message: t("somethingWentWrong") });
       setLoading(false);
     }
   };
+
+  const { mutate, isLoading: isLoadingGet } = useGetMutate({
+    uri: `/users/${username}/check`,
+    onSuccess: (res) => setIsAvailable(res.data),
+  });
+
+  useEffect(() => {
+    const unsubscribe = setTimeout(() => {
+      if (username?.length) {
+        mutate();
+      }
+    }, 1500);
+
+    return () => clearTimeout(unsubscribe);
+  }, [username]);
+
+  const onChange = (text: string) => {
+    setIsAvailable({ status: false, message: "typing" });
+    setUsername(text);
+  };
+
+  const disable = loading || isLoadingGet || !status || !username;
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -51,22 +83,37 @@ export const UsernameScreen = ({ route }: any) => {
         <Text style={styles.title}>{t("createAUsername")}</Text>
         <Text style={styles.description}>{t("pickAUsername")}</Text>
       </View>
-      <View style={{ flex: 1, marginHorizontal: 15 }}>
+      <Stack direction="row" sx={{ marginHorizontal: 15 }}>
+        <Icon name="at-sign" type="feather" size={20} />
         <InputCheck
-          endpoint={`${process.env.BASE_ENDPOINT}/users/check-username`}
-          inputName="username"
-          onSubmit={handleSubmit}
-          loadingBtn={loading}
+          placeholder={t("username")}
+          value={username}
+          isAvailable={status}
+          isLoading={isLoadingGet}
+          onChange={onChange}
         />
-      </View>
+      </Stack>
+      {!!message && message !== "typing" && !isLoadingGet && (
+        <Stack direction="row" justify="start" sx={{ margin: 15 }}>
+          <Icon name="alert-triangle" type="feather" size={18} color={error} />
+          <Text style={styles.errorMessage}>{t(`${message}`)}</Text>
+        </Stack>
+      )}
+      <Button
+        title={t("next")}
+        onPress={handleSubmit}
+        sxBtn={styles.nextBtn}
+        disabled={disable}
+        loading={loading}
+      />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   screen: {
-    flex: 1,
     backgroundColor: "white",
+    flex: 1,
   },
   container: {
     alignItems: "center",
@@ -86,12 +133,6 @@ const styles = StyleSheet.create({
     color: grey0,
     fontSize: 15,
   },
-  input: {
-    padding: 15,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    width: "100%",
-    borderRadius: 10,
-    marginTop: 10,
-  },
+  errorMessage: { fontSize: 13, marginLeft: 10, color: error, flex: 1 },
+  nextBtn: { marginHorizontal: 15, marginTop: 20 },
 });

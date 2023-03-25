@@ -5,9 +5,11 @@ import {
   RegisterScreen,
   RegisterBusinessScreen,
   UsernameScreen,
+  BirthdayScreen,
 } from "../screens";
+import { RootStackParams } from "./rootStackParams";
 
-const Stack = createSharedElementStackNavigator();
+const Stack = createSharedElementStackNavigator<RootStackParams>();
 
 const AuthNavigator = () => {
   return (
@@ -16,6 +18,7 @@ const AuthNavigator = () => {
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Register" component={RegisterScreen} />
       <Stack.Screen name="Username" component={UsernameScreen} />
+      <Stack.Screen name="Birthday" component={BirthdayScreen} />
       <Stack.Screen
         name="RegisterBusiness"
         component={RegisterBusinessScreen}

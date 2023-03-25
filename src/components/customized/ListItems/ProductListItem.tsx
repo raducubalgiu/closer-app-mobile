@@ -37,19 +37,15 @@ const ProductListItem = ({
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const goToCalendar = () => {
-    navigation.navigate("CalendarBig", {
-      product: product,
-      serviceId,
-    });
+    // navigation.navigate("CalendarBig", {
+    //   product: product,
+    //   serviceId,
+    // });
   };
 
   const goToOwner = () => {
     navigation.push("ProfileGeneral", {
-      userId: ownerId.id,
       username: ownerId?.username,
-      avatar: ownerId?.avatar,
-      name: ownerId?.name,
-      checkmark: ownerId?.checkmark,
       service: null,
       option: null,
     });

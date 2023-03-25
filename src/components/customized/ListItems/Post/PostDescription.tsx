@@ -6,18 +6,13 @@ import CustomAvatar from "../../../core/Avatars/CustomAvatar";
 import { Stack } from "../../../core";
 import { useAuth } from "../../../../hooks";
 import theme from "../../../../../assets/styles/theme";
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../../navigation/rootStackParams";
 
-type IProps = { commentsCount: number; date: string; description: string };
+type IProps = { onGoToComments: () => void; date: string; description: string };
 const { grey0 } = theme.lightColors || {};
 
-const PostDescription = ({ commentsCount, date, description }: IProps) => {
+const PostDescription = ({ onGoToComments, date, description }: IProps) => {
   const { user } = useAuth();
   const { t } = useTranslation("common");
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   return (
     <View style={styles.container}>
@@ -28,7 +23,7 @@ const PostDescription = ({ commentsCount, date, description }: IProps) => {
           goToUserAllInfo={() => {}}
         />
       )}
-      <Pressable onPress={() => {}}>
+      <Pressable onPress={onGoToComments}>
         <Stack direction="row" justify="start">
           <CustomAvatar size={22.5} avatar={user?.avatar} />
           <Text style={styles.addCommText}>{t("addComment")}</Text>

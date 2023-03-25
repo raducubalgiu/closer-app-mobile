@@ -24,8 +24,7 @@ export const AuthScreen = () => {
       <Button
         title={t("connect")}
         onPress={() => navigation.navigate("Login")}
-        radius={5}
-        size="lg"
+        size="md"
         sxBtn={{ margin: 15 }}
       />
       <Stack direction="row" justify="start" sx={styles.registerText}>
@@ -105,7 +104,7 @@ const styles = StyleSheet.create({
   secondHeading: {
     color: grey0,
     fontSize: 16,
-    marginVertical: 2.5,
+    marginVertical: 5,
   },
   mainBtn: {
     backgroundColor: primary,

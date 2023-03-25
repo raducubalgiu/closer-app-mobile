@@ -66,15 +66,13 @@ export const LoginRegisterForm = ({
           secureTextEntry={true}
         />
         <Button
-          size="lg"
-          radius={7.5}
+          size="md"
           title={heading}
           loading={loading}
           onPress={handleSubmit(onSubmit)}
           disabled={loading || disabled}
         />
       </FormProvider>
-
       <Stack align="start">
         <Stack direction="row">
           <Text style={styles.statusText}>{statusText}</Text>
@@ -98,7 +96,7 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
   statusText: { marginRight: 5 },
-  statusBtn: {},
+  statusBtn: { fontWeight: "600", color: black },
   inputEmail: {
     marginBottom: 0,
     borderBottomLeftRadius: 0,
@@ -106,6 +104,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
     padding: 7.5,
   },
-  inputPass: { borderTopLeftRadius: 0, borderTopRightRadius: 0, padding: 7.5 },
+  inputPass: {
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+    padding: 7.5,
+    marginBottom: 5,
+  },
   divider: { marginTop: 20, marginBottom: 35 },
 });

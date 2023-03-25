@@ -8,6 +8,9 @@ import PostBookable from "./PostBookable";
 import PostActions from "./PostActions";
 import PostDescription from "./PostDescription";
 import PostVideo from "./PostVideo";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../../navigation/rootStackParams";
 
 type IProps = {
   post: Post;
@@ -20,7 +23,11 @@ const PostListItem = ({ post, isLiked, isBookmarked, isVisible }: IProps) => {
   const { id, userId, bookable, images, product, serviceId } = post;
   const { createdAt, description, postType } = post;
   const { viewsCount, likesCount, commentsCount, bookmarksCount } = post;
-  const { avatar, username, checkmark, settings } = userId;
+  const { avatar, username, name, checkmark, settings } = userId;
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+
+  const goToComments = () => navigation.navigate("Comments", { post });
 
   return (
     <View style={styles.container}>
@@ -51,8 +58,8 @@ const PostListItem = ({ post, isLiked, isBookmarked, isVisible }: IProps) => {
       />
       <PostDescription
         description={description}
-        commentsCount={commentsCount}
         date={FROM_NOW(createdAt)}
+        onGoToComments={goToComments}
       />
     </View>
   );

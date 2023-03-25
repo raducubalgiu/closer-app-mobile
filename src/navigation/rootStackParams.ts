@@ -1,10 +1,4 @@
-import { Post } from "../models";
-import { Option } from "../models/option";
-import { Product } from "../models/product";
-import { Schedule } from "../models/schedule";
-import { Service } from "../models/service";
-import { Slot } from "../models/slot";
-import { User } from "../models/user";
+import { Post, Option, Product, Schedule, Service, Slot, User } from "../ts";
 
 export type RootStackParams = {
   Account: any;
@@ -29,17 +23,10 @@ export type RootStackParams = {
   AddProgram: any;
   AddPost: any;
   AddSchedule: { start: string; end: string };
+  Auth: any;
   Bookmarks: { user: any };
-  Comments: {
-    postId: string;
-    description: string;
-    avatar: any;
-    username: string;
-    creatorId: string;
-    focus: boolean;
-    date: string;
-    name: string;
-  };
+  Birthday: any;
+  Comments: { post: Post };
   CalendarBig: {
     product: Product;
     serviceId: string;

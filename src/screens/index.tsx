@@ -14,6 +14,7 @@ export { AddProductsScreen } from "./User/Profile/MyBusiness/AddProductsScreen";
 export { AddUserProgramScreen } from "./User/Profile/MyBusiness/AddUserProgramScreen";
 export { AddServicesScreen } from "./User/Profile/MyBusiness/AddServicesScreen";
 export { AddScheduleScreen } from "./User/Profile/MyBusiness/AddScheduleScreen";
+export { BirthdayScreen } from "./User/Auth/BirthdayScreen";
 export { EditProductScreen } from "./User/Profile/MyBusiness/EditProductScreen";
 export { MyBusinessScreen } from "./User/Profile/MyBusiness/MyBusinessScreen";
 export { MyCalendarScreen } from "./User/Profile/MyBusiness/MyCalendarScreen";

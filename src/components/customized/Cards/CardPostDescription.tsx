@@ -1,8 +1,9 @@
 import { StyleSheet, Text, View } from "react-native";
 import CustomAvatar from "../../core/Avatars/CustomAvatar";
 import DisplayText from "../Typography/DisplayText/DisplayText";
-import { Divider } from "@rneui/themed";
 import theme from "../../../../assets/styles/theme";
+import { Stack } from "../../core";
+import { FROM_NOW } from "../../../utils/date-utils";
 
 const { grey0 } = theme.lightColors || {};
 
@@ -22,37 +23,37 @@ export const CardPostDescription = ({
   onGoToUserAllInfo,
 }: IProps) => {
   return (
-    <>
-      <View style={styles.headerCont}>
-        <CustomAvatar size={32.5} avatar={avatar} />
-        <View style={styles.textCont}>
-          {description ? (
-            <DisplayText
-              text={description}
-              maxWords={10}
-              username={username}
-              goToUserAllInfo={onGoToUserAllInfo}
-            />
-          ) : (
-            <Text>...</Text>
-          )}
-          <Text style={styles.date}>{date}</Text>
-        </View>
+    <Stack
+      direction="row"
+      align="start"
+      justify="start"
+      sx={{ paddingVertical: 15 }}
+    >
+      <CustomAvatar size={32.5} avatar={avatar} />
+      <View style={styles.textCont}>
+        {description ? (
+          <DisplayText
+            text={description}
+            maxWords={10}
+            username={username}
+            goToUserAllInfo={onGoToUserAllInfo}
+          />
+        ) : (
+          <Text>...</Text>
+        )}
+        <Text style={styles.date}>{FROM_NOW(date)}</Text>
       </View>
-      <Divider style={{ marginVertical: 15 }} />
-    </>
+    </Stack>
   );
 };
 
 const styles = StyleSheet.create({
-  headerCont: { flexDirection: "row" },
   textCont: {
     marginLeft: 10,
-    flex: 1,
   },
   date: {
     color: grey0,
-    marginTop: 1,
+    marginTop: 10,
     fontSize: 13,
   },
 });
