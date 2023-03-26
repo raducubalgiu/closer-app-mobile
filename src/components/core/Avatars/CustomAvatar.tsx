@@ -1,4 +1,4 @@
-import { Avatar, Image } from "@rneui/themed";
+import { Avatar } from "@rneui/themed";
 import { memo } from "react";
 import NoAvatar from "../../../../assets/images/avatar.jpg";
 import { LinearGradient } from "expo-linear-gradient";

@@ -4,6 +4,7 @@ import { memo } from "react";
 import { Stack } from "../../core";
 import theme from "../../../../assets/styles/theme";
 import HeaderSheet from "../Layout/Headers/HeaderSheet";
+import { ResizeMode, Video } from "expo-av";
 
 const { black } = theme.lightColors || {};
 
@@ -68,11 +69,22 @@ const PostStats = ({ images, onClose, counters, postType }: IProps) => {
       <HeaderSheet title="Statistici" onClose={onClose} />
       <Stack>
         <View style={styles.imageContainer}>
-          <Image
-            source={{ uri: images[0]?.url }}
-            containerStyle={styles.image}
-            resizeMode="cover"
-          />
+          {postType === "photo" && (
+            <Image
+              source={{ uri: images[0]?.url }}
+              containerStyle={styles.image}
+              resizeMode="cover"
+            />
+          )}
+          {postType === "video" && (
+            <Video
+              source={{ uri: images[0]?.url }}
+              style={styles.image}
+              resizeMode={ResizeMode.COVER}
+              shouldPlay={false}
+              isMuted={true}
+            />
+          )}
           {icon}
         </View>
       </Stack>
