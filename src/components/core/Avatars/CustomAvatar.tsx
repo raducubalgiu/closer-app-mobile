@@ -3,6 +3,7 @@ import { memo } from "react";
 import NoAvatar from "../../../../assets/images/avatar.jpg";
 import { LinearGradient } from "expo-linear-gradient";
 import theme from "../../../../assets/styles/theme";
+import { StyleSheet } from "react-native";
 
 type Props = {
   avatar: any;
@@ -28,19 +29,24 @@ const CustomAvatar = ({
       style={{ borderRadius: 50 }}
     >
       <Avatar
-        size={size}
         rounded
+        size={size}
         source={uri}
         avatarStyle={{ resizeMode: "cover" }}
         containerStyle={{
-          borderWidth: 1,
-          borderColor: "#ddd",
+          ...styles.container,
           margin: hasStories ? 1.5 : 0,
           ...sx,
         }}
+        overlayContainerStyle={styles.overlay}
       />
     </LinearGradient>
   );
 };
 
 export default memo(CustomAvatar);
+
+const styles = StyleSheet.create({
+  container: { borderWidth: 1, borderColor: "#ddd" },
+  overlay: { backgroundColor: "#eee" },
+});

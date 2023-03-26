@@ -8,16 +8,16 @@ import {
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
-import theme from "../../assets/styles/theme";
-import { IconBackButton, SearchBarInput, Stack } from "../components/core";
-import { useGet } from "../hooks";
+import theme from "../../../assets/styles/theme";
+import { IconBackButton, SearchBarInput, Stack } from "../../components/core";
+import { useGet } from "../../hooks";
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import { RootStackParams } from "../navigation/rootStackParams";
-import { Service } from "../ts";
-import { NoFoundMessage, TapFeedbackButton } from "../components/customized";
+import { RootStackParams } from "../../navigation/rootStackParams";
+import { Service } from "../../ts";
+import { NoFoundMessage, TapFeedbackButton } from "../../components/customized";
 import { Icon } from "@rneui/themed";
 
 const { black, grey0 } = theme.lightColors || {};

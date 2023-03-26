@@ -55,7 +55,7 @@ export { ScheduleDetailsScreen } from "./ScheduleDetailsScreen";
 export { SchedulesScreen } from "./SchedulesScreen";
 export { SearchAllScreen } from "./Search/SearchAllScreen";
 export { SearchPostsScreen } from "./Search/SearchPostsScreen";
-export { SearchServicesScreen } from "./SearchServicesScreen";
+export { SearchServicesScreen } from "./Search/SearchServicesScreen";
 export { ServiceScreen } from "./ServiceScreen";
 export { AuthScreen } from "./User/Auth/AuthScreen";
 export { LoginScreen } from "./User/Auth/LoginScreen";

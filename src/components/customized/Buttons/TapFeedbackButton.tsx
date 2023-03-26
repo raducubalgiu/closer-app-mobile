@@ -1,37 +1,39 @@
-import { Animated, Pressable } from "react-native";
+import { Pressable } from "react-native";
+import { TapGestureHandler } from "react-native-gesture-handler";
+import Animated, {
+  useSharedValue,
+  useAnimatedGestureHandler,
+  useAnimatedStyle,
+} from "react-native-reanimated";
 
 type IProps = { children: any; sx?: {}; onPress: () => void };
 
 export const TapFeedbackButton = ({ children, sx, onPress }: IProps) => {
-  const animation = new Animated.Value(0);
+  const pressed = useSharedValue(false);
 
-  const handleAnimation = () => {
-    animation.setValue(1);
-    Animated.timing(animation, {
-      toValue: 1,
-      useNativeDriver: false,
-      duration: 5,
-    }).start(() => {
-      animation.setValue(0);
-      Animated.timing(animation, {
-        toValue: 0,
-        useNativeDriver: false,
-        duration: 5,
-      }).start();
-      onPress();
-    });
-  };
+  const gestureHandler = useAnimatedGestureHandler<any>({
+    onStart: () => {
+      pressed.value = true;
+    },
+    onActive: () => {
+      pressed.value = true;
+    },
+    onFinish: () => {
+      pressed.value = false;
+    },
+  });
 
-  const backgroundColor = animation.interpolate({
-    inputRange: [0, 1],
-    outputRange: ["white", "rgba(0, 0, 0, 0.2)"],
+  const bgColor = useAnimatedStyle(() => {
+    return {
+      backgroundColor: pressed.value ? "rgba(0, 0, 0, 0.2)" : "white",
+    };
   });
 
   return (
-    <Pressable onPress={handleAnimation} style={sx}>
-      <Animated.View style={{ paddingVertical: 10, backgroundColor }}>
-        {children}
+    <TapGestureHandler onGestureEvent={gestureHandler}>
+      <Animated.View style={[{ paddingVertical: 10 }, sx, bgColor]}>
+        <Pressable onPress={onPress}>{children}</Pressable>
       </Animated.View>
-    </Pressable>
+    </TapGestureHandler>
   );
 };
