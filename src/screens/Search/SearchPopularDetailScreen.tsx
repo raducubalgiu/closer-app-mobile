@@ -16,7 +16,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { useVector, snapPoint } from "react-native-redash";
 import { RootStackParams } from "../../navigation/rootStackParams";
-import PostListItem from "../../components/customized/ListItems/Post/PostListItem";
+import PostListItem from "../../components/customized/ListItems/Post/PostImageListItem";
 import { Header } from "../../components/core";
 
 type IProps = NativeStackScreenProps<RootStackParams, "UserAllPosts">;

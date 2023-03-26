@@ -28,5 +28,6 @@ export const showToast = ({
     opacity: 1,
     backgroundColor: bgColor ? bgColor : black,
     containerStyle: { width: width - 30 },
+    textStyle: { fontSize: 14.5 },
   });
 };

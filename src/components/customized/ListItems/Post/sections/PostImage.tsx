@@ -1,10 +1,9 @@
-import { StyleSheet, useWindowDimensions, View, Text } from "react-native";
-import { Stack } from "../../../core";
-import { Icon, Image } from "@rneui/themed";
+import { StyleSheet, useWindowDimensions, View } from "react-native";
+import { Image } from "@rneui/themed";
 import { memo } from "react";
-import PostGradient from "../../Gradients/PostGradient";
+import PostGradient from "../../../Gradients/PostGradient";
 import { SharedElement } from "react-navigation-shared-element";
-import theme from "../../../../../assets/styles/theme";
+import theme from "../../../../../../assets/styles/theme";
 
 type IProps = { uri: string; id: string };
 const { error, secondary } = theme.lightColors || {};

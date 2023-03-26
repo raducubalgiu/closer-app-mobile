@@ -10,7 +10,7 @@ import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useAuth, useGet } from "../../../hooks";
 import { Header } from "../../../components/core";
-import PostListItem from "../../../components/customized/ListItems/Post/PostListItem";
+import PostListItem from "../../../components/customized/ListItems/Post/PostImageListItem";
 import { Post } from "../../../ts";
 
 const { width, height } = Dimensions.get("window");

@@ -25,7 +25,7 @@ import Animated, {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useVector, snapPoint } from "react-native-redash";
 import { useNavigation } from "@react-navigation/native";
-import PostListItem from "../../../components/customized/ListItems/Post/PostListItem";
+import PostListItem from "../../../components/customized/ListItems/Post/PostImageListItem";
 import { SharedElement } from "react-navigation-shared-element";
 
 type IProps = NativeStackScreenProps<RootStackParams, "UserPosts">;

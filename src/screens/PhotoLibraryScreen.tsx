@@ -8,7 +8,7 @@ import { Stack } from "../components/core";
 import { CloseIconButton } from "../components/customized";
 import theme from "../../assets/styles/theme";
 import { Icon } from "@rneui/themed";
-import PostListItem from "../components/customized/ListItems/Post/PostListItem";
+import PostListItem from "../components/customized/ListItems/Post/PostImageListItem";
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,

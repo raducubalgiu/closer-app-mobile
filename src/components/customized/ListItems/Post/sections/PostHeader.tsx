@@ -1,18 +1,23 @@
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import { StyleSheet, Text, Pressable } from "react-native";
 import { memo, useMemo, useRef } from "react";
 import { Icon } from "@rneui/themed";
-import CustomAvatar from "../../../core/Avatars/CustomAvatar";
-import { Checkmark, SheetModal } from "../../../core";
-import Stack from "../../../core/Stack/Stack";
+import CustomAvatar from "../../../../core/Avatars/CustomAvatar";
+import { Checkmark, SheetModal } from "../../../../core";
+import Stack from "../../../../core/Stack/Stack";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { PostInfoSheet } from "../../Sheets/PostInfoSheet";
+import { PostInfoSheet } from "../../../Sheets/PostInfoSheet";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../../navigation/rootStackParams";
+import { RootStackParams } from "../../../../../navigation/rootStackParams";
 
-type IProps = { avatar: any; username: string; checkmark: boolean };
+type IProps = {
+  avatar: any;
+  username: string;
+  checkmark: boolean;
+  postType: string;
+};
 
-const PostHeader = ({ avatar, username, checkmark }: IProps) => {
+const PostHeader = ({ avatar, username, checkmark, postType }: IProps) => {
   const sheetRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => [1, 250], []);
   const navigation =
@@ -32,7 +37,14 @@ const PostHeader = ({ avatar, username, checkmark }: IProps) => {
         <Pressable onPress={onGoToUser}>
           <Stack direction="row" sx={styles.header}>
             <CustomAvatar avatar={avatar} size={32.5} />
-            <Text style={styles.username}>@{username}</Text>
+            <Text
+              style={{
+                ...styles.username,
+                color: postType === "photo" ? "black" : "white",
+              }}
+            >
+              @{username}
+            </Text>
             {checkmark && <Checkmark size={7.5} sx={{ marginLeft: 5 }} />}
           </Stack>
         </Pressable>
@@ -40,7 +52,12 @@ const PostHeader = ({ avatar, username, checkmark }: IProps) => {
           style={styles.icon}
           onPress={() => sheetRef.current?.present()}
         >
-          <Icon name="more-horizontal" type="feather" size={20} />
+          <Icon
+            name="more-horizontal"
+            type="feather"
+            size={20}
+            color={postType === "photo" ? "black" : "white"}
+          />
         </Pressable>
       </Stack>
       <SheetModal

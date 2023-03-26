@@ -10,6 +10,7 @@ import {
   usePaginateActions,
   useRefreshByUser,
   useGetPaginate,
+  useRefreshOnFocus,
 } from "../hooks";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParams } from "../navigation/rootStackParams";
@@ -29,9 +30,11 @@ export const LikesScreen = ({ route }: IProps) => {
     limit: "25",
   });
 
-  const { isLoading, isFetchingNextPage, refetch } = options;
-  const loading = isLoading && !isFetchingNextPage;
+  const { isLoading, isRefetching, isFetchingNextPage, refetch } = options;
+  const loading = (isLoading || isRefetching) && !isFetchingNextPage;
   const { data: users, loadMore, showSpinner } = usePaginateActions(options);
+
+  useRefreshOnFocus(refetch);
 
   const renderPerson = useCallback(
     ({ item }: ListRenderItemInfo<UserListItem>) => (

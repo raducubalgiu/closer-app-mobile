@@ -1,10 +1,4 @@
-import {
-  StyleSheet,
-  RefreshControl,
-  FlatList,
-  ListRenderItemInfo,
-  SafeAreaView,
-} from "react-native";
+import { StyleSheet, RefreshControl, SafeAreaView } from "react-native";
 import { useCallback, useRef, useState } from "react";
 import { useNavigation, useScrollToTop } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
@@ -21,10 +15,11 @@ import {
 } from "../../hooks";
 import { Post } from "../../ts";
 import { RootStackParams } from "../../navigation/rootStackParams";
-import PostListItem from "../../components/customized/ListItems/Post/PostListItem";
 import HeadingAction from "../../components/core/Heading/HeadingAction";
 import VideoOverviewListItem from "../../components/customized/ListItems/Video/VideoOverviewListItem/VideoOverviewListItem";
-import { FlashList } from "@shopify/flash-list";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
+import PostImageListItem from "../../components/customized/ListItems/Post/PostImageListItem";
+import PostVideoListItem from "../../components/customized/ListItems/Post/PostVideoListItem";
 
 type PostListItem = {
   id: string;
@@ -35,14 +30,14 @@ type PostListItem = {
 
 export const FeedExploreScreen = () => {
   const { user } = useAuth();
-  const ref = useRef<FlatList>(null);
+  const ref = useRef<FlashList<PostListItem>>(null);
   const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const [visibleItem, setVisibleItem] = useState<PostListItem | null>(null);
   const [visibleVideoOverview, setVisibleVideoOverview] =
     useState<PostListItem | null>(null);
-  useScrollToTop(ref);
+  //useScrollToTop(ref);
 
   const postsOptions = useGetPaginate({
     model: "allPosts",
@@ -80,14 +75,28 @@ export const FeedExploreScreen = () => {
 
   const renderPost = useCallback(
     ({ item }: ListRenderItemInfo<PostListItem>) => {
-      return (
-        <PostListItem
-          post={item?.post}
-          isLiked={item?.isLiked}
-          isBookmarked={item?.isBookmarked}
-          isVisible={visibleItem?.post.id === item.post.id}
-        />
-      );
+      switch (item.post.postType) {
+        case "photo":
+          return (
+            <PostImageListItem
+              post={item?.post}
+              isLiked={item?.isLiked}
+              isBookmarked={item?.isBookmarked}
+              isVisible={visibleItem?.post.id === item.post.id}
+            />
+          );
+        case "video":
+          return (
+            <PostVideoListItem
+              post={item?.post}
+              isLiked={item?.isLiked}
+              isBookmarked={item?.isBookmarked}
+              isVisible={visibleItem?.post.id === item.post.id}
+            />
+          );
+        default:
+          return null;
+      }
     },
     [visibleItem]
   );
@@ -131,7 +140,7 @@ export const FeedExploreScreen = () => {
     []
   );
 
-  const viewabilityConfigSetItem = { itemVisiblePercentThreshold: 70 };
+  const viewabilityConfigSetItem = { itemVisiblePercentThreshold: 50 };
   const viewabilityConfigSaveView = {
     waitForInteraction: true,
     itemVisiblePercentThreshold: 80,
@@ -186,7 +195,7 @@ export const FeedExploreScreen = () => {
     <SafeAreaView style={styles.screen}>
       <HeaderFeed indexLabel={0} />
       {!loading && (
-        <FlatList
+        <FlashList
           ref={ref}
           ListHeaderComponent={
             <>
@@ -216,6 +225,7 @@ export const FeedExploreScreen = () => {
           viewabilityConfigCallbackPairs={
             viewabilityConfigCallbackPairs.current
           }
+          estimatedItemSize={725}
         />
       )}
       {loading && <Spinner />}

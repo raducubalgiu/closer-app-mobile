@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import { memo } from "react";
 import { useTranslation } from "react-i18next";
-import DisplayText from "../../Typography/DisplayText/DisplayText";
-import CustomAvatar from "../../../core/Avatars/CustomAvatar";
-import { Stack } from "../../../core";
-import { useAuth } from "../../../../hooks";
-import theme from "../../../../../assets/styles/theme";
+import DisplayText from "../../../Typography/DisplayText/DisplayText";
+import CustomAvatar from "../../../../core/Avatars/CustomAvatar";
+import { Stack } from "../../../../core";
+import { useAuth } from "../../../../../hooks";
+import theme from "../../../../../../assets/styles/theme";
 
 type IProps = { onGoToComments: () => void; date: string; description: string };
 const { grey0 } = theme.lightColors || {};

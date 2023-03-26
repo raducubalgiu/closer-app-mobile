@@ -9,8 +9,6 @@ const { error, black } = theme.lightColors || {};
 type IProps = {
   model: string;
   modelId: string;
-  onAddLike: () => void;
-  onRemoveLike: () => void;
   size?: number;
   sx?: {};
   color?: any;
@@ -20,16 +18,18 @@ type IProps = {
 const LikeButton = ({
   model,
   modelId,
-  onAddLike,
-  onRemoveLike,
   size = 25,
   sx = {},
   color = black,
   isLiked,
 }: IProps) => {
   const { user } = useAuth();
-
+  const lastItemId = useRef(modelId);
   const [liked, setLiked] = useState(isLiked);
+  if (modelId !== lastItemId.current) {
+    lastItemId.current = modelId;
+    setLiked(isLiked);
+  }
 
   const endpoints = `/users/${user?.id}/${model}/${modelId}/likes`;
   const animatedScale = useRef(new Animated.Value(0)).current;
@@ -48,12 +48,10 @@ const LikeButton = ({
 
     if (!liked) {
       setLiked(true);
-      onAddLike();
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       makePost({});
     } else {
       setLiked(false);
-      onRemoveLike();
       makeDelete();
     }
   }, [liked, endpoints]);

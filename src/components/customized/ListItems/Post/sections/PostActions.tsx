@@ -7,16 +7,16 @@ import {
   BookmarkIconButton,
   ShareIButton,
   SheetModal,
-} from "../../../core";
-import theme from "../../../../../assets/styles/theme";
+} from "../../../../core";
+import theme from "../../../../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../../navigation/rootStackParams";
+import { RootStackParams } from "../../../../../navigation/rootStackParams";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import PostStats from "../../Sheets/PostStats";
-import { ViewLikesListEnum } from "../../../../ts";
-import { useAuth } from "../../../../hooks";
+import PostStats from "../../../Sheets/PostStats";
+import { ViewLikesListEnum } from "../../../../../ts";
+import { useAuth } from "../../../../../hooks";
 
 const { black } = theme.lightColors || {};
 type IProps = {
@@ -96,8 +96,6 @@ const PostActions = ({
             model="posts"
             modelId={postId}
             isLiked={isLiked}
-            onAddLike={() => {}}
-            onRemoveLike={() => {}}
             sx={styles.button}
           />
           <BookmarkIconButton

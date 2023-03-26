@@ -1,7 +1,7 @@
-import { StyleSheet, useWindowDimensions, View } from "react-native";
-import { memo, useCallback, useRef, useEffect } from "react";
+import { Pressable, StyleSheet, useWindowDimensions, View } from "react-native";
+import { memo, useRef, useEffect, useState } from "react";
 import { ResizeMode, Video } from "expo-av";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { Icon } from "@rneui/themed";
 
 type IProps = { uri: string; isVisible: boolean };
@@ -11,15 +11,13 @@ const PostVideo = ({ uri, isVisible }: IProps) => {
   const ref = useRef<Video>(null);
   const navigation = useNavigation();
 
-  useFocusEffect(
-    useCallback(() => {
-      if (isVisible) {
-        ref.current?.playFromPositionAsync(0);
-      } else {
-        ref.current?.pauseAsync();
-      }
-    }, [isVisible])
-  );
+  useEffect(() => {
+    if (isVisible) {
+      ref.current?.playFromPositionAsync(0);
+    } else {
+      ref.current?.pauseAsync();
+    }
+  }, [isVisible]);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("blur", () => {
@@ -32,13 +30,19 @@ const PostVideo = ({ uri, isVisible }: IProps) => {
   const styles = StyleSheet.create({
     container: {
       width,
-      height: 500,
-      backgroundColor: "#f1f1f1",
+      height: 550,
+      backgroundColor: "black",
     },
     video: {
       width: undefined,
       height: undefined,
       ...StyleSheet.absoluteFillObject,
+    },
+    overlay: {
+      backgroundColor: "black",
+      alignItems: "center",
+      justifyContent: "center",
+      //opacity: status?.didJustFinish ? 0 : 0.7,
     },
   });
 
@@ -55,22 +59,10 @@ const PostVideo = ({ uri, isVisible }: IProps) => {
         isLooping={false}
         resizeMode={ResizeMode.COVER}
       />
-      {/* <View
-        style={{
-          ...StyleSheet.absoluteFillObject,
-          backgroundColor: "black",
-          opacity: 0.2,
-        }}
-      >
-        <Icon
-          name="replay"
-          style={{
-            backgroundColor: "red",
-            alignItems: "center",
-            justifyContent: "center",
-            zIndex: 10000,
-          }}
-        />
+      {/* <View style={[StyleSheet.absoluteFill, styles.overlay]}>
+        <Pressable onPress={() => ref.current?.playFromPositionAsync(0)}>
+          <Icon name="replay" color="white" size={40} />
+        </Pressable>
       </View> */}
     </View>
   );

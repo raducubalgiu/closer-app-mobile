@@ -1,9 +1,9 @@
-import { StyleSheet, Text, Pressable } from "react-native";
+import { StyleSheet, Pressable } from "react-native";
 import { memo, useEffect } from "react";
 import { Icon } from "@rneui/themed";
-import { Stack } from "../../../core";
-import { Product, User } from "../../../../models";
-import theme from "../../../../../assets/styles/theme";
+import { Stack } from "../../../../core";
+import { Product, User } from "../../../../../ts";
+import theme from "../../../../../../assets/styles/theme";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -13,7 +13,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../../navigation/rootStackParams";
+import { RootStackParams } from "../../../../../navigation/rootStackParams";
 
 type IProps = {
   product: Product;

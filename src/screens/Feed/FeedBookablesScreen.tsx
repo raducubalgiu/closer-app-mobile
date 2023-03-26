@@ -8,7 +8,7 @@ import {
 import { useCallback, useRef, useState } from "react";
 import { useScrollToTop } from "@react-navigation/native";
 import FeedExploreVideosList from "../../components/customized/Lists/FeedExploreVideosList";
-import PostListItem from "../../components/customized/ListItems/Post/PostListItem";
+import PostListItem from "../../components/customized/ListItems/Post/PostImageListItem";
 import { HeaderFeed } from "../../components/customized";
 import {
   useAuth,

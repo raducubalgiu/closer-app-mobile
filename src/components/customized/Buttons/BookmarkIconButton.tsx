@@ -24,7 +24,13 @@ const BookmarkIconButton = ({
   isBookmarked,
 }: IProps) => {
   const { user } = useAuth();
+  const lastItemId = useRef(typeId);
   const [bookmarked, setBookmarked] = useState(isBookmarked);
+  if (typeId !== lastItemId.current) {
+    lastItemId.current = typeId;
+    setBookmarked(isBookmarked);
+  }
+
   const animatedScale = useRef(new Animated.Value(0)).current;
   const bookmarkEndpoints = `/users/${user?.id}/${type}/${typeId}/bookmarks`;
   const { t } = useTranslation("common");

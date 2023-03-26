@@ -2,12 +2,11 @@ import { StyleSheet, View } from "react-native";
 import { memo } from "react";
 import { Post } from "../../../../ts";
 import { FROM_NOW } from "../../../../utils/date-utils";
-import PostHeader from "./PostHeader";
-import PostImage from "./PostImage";
-import PostBookable from "./PostBookable";
-import PostActions from "./PostActions";
-import PostDescription from "./PostDescription";
-import PostVideo from "./PostVideo";
+import PostHeader from "./sections/PostHeader";
+import PostImage from "./sections/PostImage";
+import PostBookable from "./sections/PostBookable";
+import PostActions from "./sections/PostActions";
+import PostDescription from "./sections/PostDescription";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
@@ -19,11 +18,16 @@ type IProps = {
   isVisible: boolean;
 };
 
-const PostListItem = ({ post, isLiked, isBookmarked, isVisible }: IProps) => {
+const PostImageListItem = ({
+  post,
+  isLiked,
+  isBookmarked,
+  isVisible,
+}: IProps) => {
   const { id, userId, bookable, images, product, serviceId } = post;
   const { createdAt, description, postType } = post;
   const { viewsCount, likesCount, commentsCount, bookmarksCount } = post;
-  const { avatar, username, name, checkmark, settings } = userId;
+  const { avatar, username, checkmark, settings } = userId;
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
@@ -31,11 +35,13 @@ const PostListItem = ({ post, isLiked, isBookmarked, isVisible }: IProps) => {
 
   return (
     <View style={styles.container}>
-      <PostHeader avatar={avatar} username={username} checkmark={checkmark} />
-      {postType === "photo" && <PostImage id={post.id} uri={images[0]?.url} />}
-      {postType === "video" && (
-        <PostVideo uri={images[0]?.url} isVisible={isVisible} />
-      )}
+      <PostHeader
+        avatar={avatar}
+        username={username}
+        checkmark={checkmark}
+        postType={postType}
+      />
+      <PostImage id={post.id} uri={images[0]?.url} />
       {bookable && (
         <PostBookable
           product={product}
@@ -65,7 +71,7 @@ const PostListItem = ({ post, isLiked, isBookmarked, isVisible }: IProps) => {
   );
 };
 
-export default memo(PostListItem);
+export default memo(PostImageListItem);
 
 const styles = StyleSheet.create({
   container: {
