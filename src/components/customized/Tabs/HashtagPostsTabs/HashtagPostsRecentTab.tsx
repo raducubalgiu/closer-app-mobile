@@ -2,13 +2,19 @@ import { Animated, ListRenderItemInfo } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { useGetPaginate, usePaginateActions } from "../../../../hooks";
+import { useAuth, useGetPaginate, usePaginateActions } from "../../../../hooks";
 import GridImageListItem from "../../ListItems/Grid/GridImage/GridImageListItem";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { Spinner } from "../../../core";
-import { Post } from "../../../../models/post";
+import { Post } from "../../../../ts";
 
 type IProps = { name: string; onScroll: () => void; headerHeight: number };
+type PostListItem = {
+  id: string;
+  post: Post;
+  isLiked: boolean;
+  isBoomarked: boolean;
+};
 
 export const HashtagPostsRecentTab = ({
   name,
@@ -17,11 +23,12 @@ export const HashtagPostsRecentTab = ({
 }: IProps) => {
   const { t } = useTranslation("common");
   const isFocused = useIsFocused();
+  const { user } = useAuth();
 
   const options = useGetPaginate({
     model: "hRecent",
-    uri: `/hashtags/${name}/posts/recent`,
-    limit: "30",
+    uri: `/users/${user?.id}/hashtags/${name}/posts/recent`,
+    limit: "18",
     enabled: isFocused,
   });
 
@@ -29,20 +36,23 @@ export const HashtagPostsRecentTab = ({
   const { data: posts, showSpinner, loadMore } = usePaginateActions(options);
 
   const renderPosts = useCallback(
-    ({ item, index }: ListRenderItemInfo<Post>) => (
-      <GridImageListItem
-        onPress={() => {}}
-        index={index}
-        post={item}
-        posts={posts}
-        discount={item?.product.discount}
-        expirationTime={item.expirationTime}
-      />
-    ),
+    ({ item, index }: ListRenderItemInfo<PostListItem>) => {
+      const { post } = item;
+
+      return (
+        <GridImageListItem
+          index={index}
+          post={post}
+          posts={posts}
+          discount={post?.product.discount}
+          expirationTime={post.expirationTime}
+        />
+      );
+    },
     []
   );
 
-  const keyExtractor = useCallback((item: Post) => item.id, []);
+  const keyExtractor = useCallback((item: PostListItem) => item.post?.id, []);
 
   if (!isLoading && !isFetchingNextPage && posts?.length === 0) {
     return (
@@ -64,6 +74,7 @@ export const HashtagPostsRecentTab = ({
         showsVerticalScrollIndicator={false}
         onScroll={onScroll}
         contentContainerStyle={{ paddingBottom: headerHeight }}
+        bounces={false}
       />
     </>
   );

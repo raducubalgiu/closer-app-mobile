@@ -2,13 +2,19 @@ import { Animated, ListRenderItemInfo } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { useGetPaginate, usePaginateActions } from "../../../../hooks";
+import { useAuth, useGetPaginate, usePaginateActions } from "../../../../hooks";
 import GridImageListItem from "../../ListItems/Grid/GridImage/GridImageListItem";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { Spinner } from "../../../core";
-import { Post } from "../../../../models/post";
+import { Post } from "../../../../ts";
 
 type IProps = { name: string; onScroll: () => void; headerHeight: number };
+type PostListItem = {
+  id: string;
+  post: Post;
+  isLiked: boolean;
+  isBookmarked: boolean;
+};
 
 export const HashtagPostsPopularTab = ({
   name,
@@ -17,11 +23,12 @@ export const HashtagPostsPopularTab = ({
 }: IProps) => {
   const { t } = useTranslation("common");
   const isFocused = useIsFocused();
+  const { user } = useAuth();
 
   const options = useGetPaginate({
     model: "hPopular",
-    uri: `/hashtags/${name}/posts/popular`,
-    limit: "30",
+    uri: `/users/${user.id}/hashtags/${name}/posts/popular`,
+    limit: "27",
     enabled: isFocused,
   });
 
@@ -35,20 +42,23 @@ export const HashtagPostsPopularTab = ({
   }
 
   const renderPosts = useCallback(
-    ({ item, index }: ListRenderItemInfo<any>) => (
-      <GridImageListItem
-        onPress={() => {}}
-        index={index}
-        post={item}
-        discount={item?.product.discount}
-        expirationTime={item.expirationTime}
-        posts={posts}
-      />
-    ),
+    ({ item, index }: ListRenderItemInfo<PostListItem>) => {
+      const { post } = item;
+
+      return (
+        <GridImageListItem
+          index={index}
+          post={post}
+          discount={post?.product.discount}
+          expirationTime={post.expirationTime}
+          posts={posts}
+        />
+      );
+    },
     []
   );
 
-  const keyExtractor = useCallback((item: Post) => item.id, []);
+  const keyExtractor = useCallback((item: PostListItem) => item.post.id, []);
 
   return (
     <>
@@ -64,6 +74,7 @@ export const HashtagPostsPopularTab = ({
         showsVerticalScrollIndicator={false}
         onScroll={onScroll}
         contentContainerStyle={{ paddingBottom: headerHeight }}
+        bounces={false}
       />
     </>
   );

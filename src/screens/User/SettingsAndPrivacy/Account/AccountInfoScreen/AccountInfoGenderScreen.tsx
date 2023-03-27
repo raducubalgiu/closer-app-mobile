@@ -21,10 +21,6 @@ export const AccountInfoGenderScreen = ({ route }: IProps) => {
   const { t } = useTranslation("common");
   const navigation = useNavigation();
 
-  const handleMale = () => setCheckboxGender("male");
-  const handleFemale = () => setCheckboxGender("female");
-  const handleNone = () => setCheckboxGender("none");
-
   const { mutate, isLoading } = usePatch({
     uri: `/users/${user?.id}`,
     onSuccess: (res) => {
@@ -37,6 +33,12 @@ export const AccountInfoGenderScreen = ({ route }: IProps) => {
     mutate({ gender: checkboxGender });
   };
 
+  const inputs = [
+    { title: t("male"), action: "male" },
+    { title: t("female"), action: "female" },
+    { title: t("preferToNotSay"), action: "none" },
+  ];
+
   return (
     <SafeAreaView style={styles.screen}>
       <HeaderEdit
@@ -46,25 +48,18 @@ export const AccountInfoGenderScreen = ({ route }: IProps) => {
         disabledBack={isLoading}
       />
       {!isLoading && (
-        <View style={{ marginBottom: 15 }}>
-          <Text style={{ margin: 15, color: grey0 }}>
+        <View style={{ margin: 15 }}>
+          <Text style={{ color: grey0, marginBottom: 15 }}>
             {t("accountInfoDescription")}
           </Text>
-          <FormInputRadio
-            checked={checkboxGender === GenderEnum.MALE}
-            text={t("male")}
-            onPress={handleMale}
-          />
-          <FormInputRadio
-            checked={checkboxGender === GenderEnum.FEMALE}
-            text={t("female")}
-            onPress={handleFemale}
-          />
-          <FormInputRadio
-            checked={checkboxGender === GenderEnum.NONE}
-            text={t("preferToNotSay")}
-            onPress={handleNone}
-          />
+          {inputs.map((input, i) => (
+            <FormInputRadio
+              key={i}
+              checked={input.action === GenderEnum.MALE}
+              title={input.title}
+              onPress={() => setCheckboxGender(input.action)}
+            />
+          ))}
         </View>
       )}
       {isLoading && <Spinner />}

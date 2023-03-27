@@ -5,11 +5,10 @@ import BookmarkIconButton from "../customized/Buttons/BookmarkIconButton";
 import PostGradient from "../customized/Gradients/PostGradient";
 import SheetModal from "./SheetModal/SheetModal";
 
-export { ShareIButton } from "./Buttons/ShareIButton";
 export { ButtonLink } from "./Buttons/ButtonLink";
 export { Button } from "./Buttons/Button";
 
-export { ButtonGroup } from "./ButtonGroup/ButtonGroup";
+export { ButtonGroup } from "../customized/Buttons/ButtonGroup";
 
 export { IconButton } from "./IconButton/IconButton";
 export { IconBackButton } from "./IconButton/IconBackButton";
@@ -44,13 +43,10 @@ export { Textarea } from "./Inputs/Textarea";
 
 export { Protected } from "./Protected/Protected";
 
-export { CSwitch } from "./CSwitch/CSwitch";
-
 export { CModal } from "./CModal/CModal";
 
 export { Heading } from "./Heading/Heading";
 export { HeadingWithAction } from "./Heading/HeadingWithAction";
-export { HeadingAction } from "./Heading/HeadingAction";
 
 export {
   Stack,

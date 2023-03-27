@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import theme from "../../../../assets/styles/theme";
-import Stack from "../Stack/Stack";
+import Stack from "../../core/Stack/Stack";
 
 const black = theme.lightColors?.black;
 

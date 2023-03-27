@@ -5,9 +5,9 @@ import {
   Stack,
   LikeButton,
   BookmarkIconButton,
-  ShareIButton,
   SheetModal,
 } from "../../../../core";
+import { ShareIButton } from "../../../Buttons/ShareIButton";
 import theme from "../../../../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
@@ -17,6 +17,7 @@ import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import PostStats from "../../../Sheets/PostStats";
 import { ViewLikesListEnum } from "../../../../../ts";
 import { useAuth } from "../../../../../hooks";
+import { showToast } from "../../../../../utils";
 
 const { black } = theme.lightColors || {};
 type IProps = {
@@ -77,6 +78,10 @@ const PostActions = ({
   const goToLikes = () => {
     if (settings.viewLikes === ViewLikesListEnum.ALL || isMyPost) {
       navigation.navigate("Likes", { postId });
+    } else {
+      showToast({
+        message: t("thisUserDoesNotAllowViewingListOfLikes"),
+      });
     }
   };
 

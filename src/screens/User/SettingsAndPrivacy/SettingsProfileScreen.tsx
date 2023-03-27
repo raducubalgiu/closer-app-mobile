@@ -37,7 +37,10 @@ export const SettingsProfileScreen = () => {
           <SettingsListItem
             onPress={() => navigation.navigate("Account")}
             title={t("account")}
-            iconLeftProps={{ name: "user" }}
+            iconLeftProps={{
+              name: "account-circle-outline",
+              type: "material-community",
+            }}
           />
           <SettingsListItem
             onPress={() => navigation.navigate("Privacy")}
