@@ -11,7 +11,7 @@ export interface Post {
   product: Product;
   serviceId: string;
   userId: User;
-  bookable: boolean;
+  bookable: string | null;
   fixed: boolean;
   postType: string;
   orientation: string;

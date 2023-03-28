@@ -110,7 +110,6 @@ export const FeedExploreScreen = () => {
           onPress={() => goToVideoExplore(item, index)}
           uri={item?.post?.images[0]?.url}
           id={item?.id}
-          isVisible={visibleVideoOverview?.post.id === item.post.id}
         />
       );
     },
@@ -119,24 +118,6 @@ export const FeedExploreScreen = () => {
 
   const keyExtractorVideo = useCallback(
     (item: PostListItem) => item?.post?.id,
-    []
-  );
-
-  const viewabilityVideoOverview = { itemVisiblePercentThreshold: 60 };
-
-  const trackVideoOverview = useCallback((item: PostListItem) => {
-    setVisibleVideoOverview(item);
-  }, []);
-
-  const onViewableVideoOverview = useCallback(
-    (info: { changed: any }): void => {
-      const visibleItems = info.changed.filter(
-        (entry: any) => entry.isViewable
-      );
-      visibleItems.forEach((visible: any) => {
-        trackVideoOverview(visible.item);
-      });
-    },
     []
   );
 
@@ -207,8 +188,6 @@ export const FeedExploreScreen = () => {
                 keyExtractor={keyExtractorVideo}
                 renderItem={renderVideo}
                 contentContainerStyle={styles.flatList}
-                viewabilityConfig={viewabilityVideoOverview}
-                onViewableItemsChanged={onViewableVideoOverview}
                 estimatedItemSize={214}
               />
               <Divider color="#ddd" style={{ marginTop: 15 }} />

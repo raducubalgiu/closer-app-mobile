@@ -30,7 +30,7 @@ export const SearchServicesScreen = ({ route }: IProps) => {
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { period } = route.params || {};
 
-  const { data: services } = useGet({
+  const { data: services, isLoading } = useGet({
     model: "searchServices",
     uri: `/services/search?search=${search}&page=1&limit=5`,
     enabled: !!search,
@@ -80,6 +80,8 @@ export const SearchServicesScreen = ({ route }: IProps) => {
     );
   }
 
+  const displayResults = !isLoading && results;
+
   return (
     <SafeAreaView style={styles.screen}>
       <Stack direction="row" justify="start">
@@ -94,7 +96,7 @@ export const SearchServicesScreen = ({ route }: IProps) => {
         </Stack>
       </Stack>
       <FlatList
-        data={!results?.length && !search?.length ? suggested : results}
+        data={!results?.length && !search?.length ? suggested : displayResults}
         keyExtractor={keyExtractor}
         renderItem={renderServices}
         keyboardShouldPersistTaps={"handled"}

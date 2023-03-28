@@ -5,7 +5,7 @@ import GridImageListItem from "../../ListItems/Grid/GridImage/GridImageListItem"
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { useTranslation } from "react-i18next";
 import { useGetPaginate, usePaginateActions } from "../../../../hooks";
-import { Post } from "../../../../models/post";
+import { Post } from "../../../../ts";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
 

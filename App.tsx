@@ -3,6 +3,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { enableScreens } from "react-native-screens";
 import AppNavigation from "./src/navigation";
 import { AuthProvider } from "./src/hooks/auth";
+import { LocationProvider } from "./src/hooks/locationPermission";
 import { ThemeProvider } from "@rneui/themed";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import theme from "./assets/styles/theme";
@@ -66,17 +67,19 @@ const App = () => {
   return (
     <AuthProvider>
       <QueryClientProvider client={queryClient}>
-        <ScheduleCounterProvider>
-          <GestureHandlerRootView style={{ flex: 1 }}>
-            <SafeAreaProvider>
-              <RootSiblingParent>
-                <ThemeProvider theme={theme}>
-                  <AppNavigation />
-                </ThemeProvider>
-              </RootSiblingParent>
-            </SafeAreaProvider>
-          </GestureHandlerRootView>
-        </ScheduleCounterProvider>
+        <LocationProvider>
+          <ScheduleCounterProvider>
+            <GestureHandlerRootView style={{ flex: 1 }}>
+              <SafeAreaProvider>
+                <RootSiblingParent>
+                  <ThemeProvider theme={theme}>
+                    <AppNavigation />
+                  </ThemeProvider>
+                </RootSiblingParent>
+              </SafeAreaProvider>
+            </GestureHandlerRootView>
+          </ScheduleCounterProvider>
+        </LocationProvider>
       </QueryClientProvider>
     </AuthProvider>
   );

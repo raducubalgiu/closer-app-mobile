@@ -30,8 +30,8 @@ export const LikesScreen = ({ route }: IProps) => {
     limit: "25",
   });
 
-  const { isLoading, isRefetching, isFetchingNextPage, refetch } = options;
-  const loading = (isLoading || isRefetching) && !isFetchingNextPage;
+  const { isLoading, isFetchingNextPage, refetch } = options;
+  const loading = isLoading && !isFetchingNextPage;
   const { data: users, loadMore, showSpinner } = usePaginateActions(options);
 
   useRefreshOnFocus(refetch);

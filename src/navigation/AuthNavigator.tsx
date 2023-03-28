@@ -6,6 +6,7 @@ import {
   RegisterBusinessScreen,
   UsernameScreen,
   BirthdayScreen,
+  UserLocationPermissionScreen,
 } from "../screens";
 import { RootStackParams } from "./rootStackParams";
 
@@ -19,6 +20,10 @@ const AuthNavigator = () => {
       <Stack.Screen name="Register" component={RegisterScreen} />
       <Stack.Screen name="Username" component={UsernameScreen} />
       <Stack.Screen name="Birthday" component={BirthdayScreen} />
+      <Stack.Screen
+        name="UserLocationPermission"
+        component={UserLocationPermissionScreen}
+      />
       <Stack.Screen
         name="RegisterBusiness"
         component={RegisterBusinessScreen}

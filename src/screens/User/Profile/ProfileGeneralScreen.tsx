@@ -52,8 +52,9 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
     },
   });
 
-  const { id, profession, address, settings, role, checkmark, hours } =
+  const { id, profession, locationId, settings, role, checkmark, hours } =
     userDetails?.user || {};
+  const { address } = locationId || {};
 
   useRefreshOnFocus(refetch);
 

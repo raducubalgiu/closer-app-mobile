@@ -90,7 +90,6 @@ import {
   PhotoLibraryScreen,
   PhotoAlbumsScreen,
   AddPostScreen,
-  UserLocationPermissionScreen,
   SearchPopularDetailScreen,
 } from "../screens";
 
@@ -324,10 +323,6 @@ const AppNavigation = () => {
               component={CameraPreviewScreen}
             />
             <Stack.Screen name="Likes" component={LikesScreen} />
-            <Stack.Screen
-              name="UserLocationPermission"
-              component={UserLocationPermissionScreen}
-            />
           </Stack.Navigator>
         </PortalProvider>
       ) : (

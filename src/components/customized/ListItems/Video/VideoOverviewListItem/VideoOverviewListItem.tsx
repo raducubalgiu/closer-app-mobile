@@ -10,22 +10,11 @@ type IProps = {
   uri: string;
   id: string;
   onPress: () => void;
-  isVisible: boolean;
 };
 
-const VideoOverviewListItem = ({ uri, onPress, id, isVisible }: IProps) => {
+const VideoOverviewListItem = ({ uri, onPress, id }: IProps) => {
   const ref = useRef<Video | null>(null);
   const navigation = useNavigation();
-
-  useFocusEffect(
-    useCallback(() => {
-      if (isVisible) {
-        ref.current?.playFromPositionAsync(0);
-      } else {
-        ref.current?.pauseAsync();
-      }
-    }, [isVisible])
-  );
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("blur", () => {

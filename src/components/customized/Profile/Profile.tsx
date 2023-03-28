@@ -19,7 +19,7 @@ import {
   ViewStyle,
 } from "react-native";
 import { TabView, TabBarProps, Route, SceneMap } from "react-native-tab-view";
-import { User } from "../../../models";
+import { User } from "../../../ts";
 import * as Haptics from "expo-haptics";
 import ProfileHeader from "./ProfileHeader";
 import ProfileTabBar from "./ProfileTabBar";

@@ -33,13 +33,9 @@ const UserListItem = ({ user, isFollow, sx = {} }: IProps) => {
   const [follow, setFollow] = useState(isFollow);
   const FOLLOW_ENDPOINT = `/users/${userContext?.id}/followings/${id}/follows`;
 
-  const goToUser = (userId: string) => {
+  const goToUser = () => {
     navigation.push("ProfileGeneral", {
-      userId,
       username,
-      avatar,
-      name,
-      checkmark,
       service: null,
       option: null,
     });
@@ -70,9 +66,11 @@ const UserListItem = ({ user, isFollow, sx = {} }: IProps) => {
     }
   }, [follow]);
 
+  const isSameUser = id === userContext?.id;
+
   return (
     <Stack direction="row" sx={{ ...styles.container, ...sx }}>
-      <Pressable style={styles.goToUser} onPress={() => goToUser(id)}>
+      <Pressable style={styles.goToUser} onPress={goToUser}>
         <CustomAvatar avatar={avatar} size={50} />
         <Stack align="start" sx={{ marginLeft: 10 }}>
           <Stack direction="row">
@@ -82,7 +80,9 @@ const UserListItem = ({ user, isFollow, sx = {} }: IProps) => {
           <Text style={styles.name}>{name}</Text>
         </Stack>
       </Pressable>
-      <FollowButton isFollow={isFollow} onPress={followHandler} />
+      {!isSameUser && (
+        <FollowButton isFollow={isFollow} onPress={followHandler} />
+      )}
     </Stack>
   );
 };
