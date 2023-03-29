@@ -1,5 +1,5 @@
 import { StyleSheet, Text, Pressable } from "react-native";
-import { useCallback, useState, memo } from "react";
+import { useCallback, useState, memo, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Stack, Checkmark } from "../../core";
 import FollowButton from "../Buttons/FollowButton";
@@ -30,7 +30,14 @@ const UserListItem = ({ user, isFollow, sx = {} }: IProps) => {
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { user: userContext } = useAuth();
   const { avatar, id, username, name, checkmark } = user;
+
+  const lastItemId = useRef(id);
   const [follow, setFollow] = useState(isFollow);
+  if (id !== lastItemId.current) {
+    lastItemId.current = id;
+    setFollow(isFollow);
+  }
+
   const FOLLOW_ENDPOINT = `/users/${userContext?.id}/followings/${id}/follows`;
 
   const goToUser = () => {

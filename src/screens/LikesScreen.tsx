@@ -74,6 +74,7 @@ export const LikesScreen = ({ route }: IProps) => {
           estimatedItemSize={75}
           onEndReached={loadMore}
           onEndReachedThreshold={0.3}
+          showsVerticalScrollIndicator={false}
         />
       )}
       {loading && <Spinner />}

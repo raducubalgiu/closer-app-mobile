@@ -47,6 +47,6 @@ const CustomAvatar = ({
 export default memo(CustomAvatar);
 
 const styles = StyleSheet.create({
-  container: { borderWidth: 1, borderColor: "#ddd" },
+  container: { borderWidth: 1, borderColor: "#ddd", backgroundColor: "#eee" },
   overlay: { backgroundColor: "#eee" },
 });

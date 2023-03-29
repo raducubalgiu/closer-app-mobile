@@ -35,8 +35,6 @@ export const FeedExploreScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const [visibleItem, setVisibleItem] = useState<PostListItem | null>(null);
-  const [visibleVideoOverview, setVisibleVideoOverview] =
-    useState<PostListItem | null>(null);
   //useScrollToTop(ref);
 
   const postsOptions = useGetPaginate({
@@ -103,18 +101,15 @@ export const FeedExploreScreen = () => {
 
   const keyExtractor = useCallback((item: PostListItem) => item?.post?.id, []);
 
-  const renderVideo = useCallback(
-    ({ item, index }: any) => {
-      return (
-        <VideoOverviewListItem
-          onPress={() => goToVideoExplore(item, index)}
-          uri={item?.post?.images[0]?.url}
-          id={item?.id}
-        />
-      );
-    },
-    [visibleVideoOverview]
-  );
+  const renderVideo = useCallback(({ item, index }: any) => {
+    return (
+      <VideoOverviewListItem
+        onPress={() => goToVideoExplore(item, index)}
+        uri={item?.post?.images[0]?.url}
+        id={item?.id}
+      />
+    );
+  }, []);
 
   const keyExtractorVideo = useCallback(
     (item: PostListItem) => item?.post?.id,
