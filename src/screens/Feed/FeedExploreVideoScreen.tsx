@@ -1,87 +1,109 @@
-import { FlatList, Dimensions, View, RefreshControl } from "react-native";
+import {
+  FlatList,
+  Dimensions,
+  View,
+  ListRenderItemInfo,
+  ViewToken,
+} from "react-native";
 import { useCallback, useState, useRef } from "react";
-import VideoListItem from "../../components/customized/ListItems/Video/VideoListItem/VideoListItem";
 import { usePost, useAuth } from "../../hooks";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../navigation/rootStackParams";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import VideoListItemm from "../../components/customized/ListItems/Video/VideoListItemm/VideoListItemm";
+import { Video } from "expo-av";
+import { findIndex, filter } from "lodash";
+import { Post } from "../../ts";
 
 const { height } = Dimensions.get("window");
 type IProps = NativeStackScreenProps<RootStackParams, "FeedExploreVideo">;
+type PostListItem = {
+  id: string;
+  post: Post;
+  isLiked: boolean;
+  isBookmarked: boolean;
+};
+type VideoRef = { ref: Video; key: string };
 
 export const FeedExploreVideoScreen = ({ route }: IProps) => {
   const { index, videos, video } = route.params;
   const [scrollEnabled, setScrollEnabled] = useState(true);
-  const [visibleItem, setVisibleItem] = useState<any>(null);
   const { user } = useAuth();
   const tabBarHeight = useBottomTabBarHeight();
+  const VIDEO_HEIGHT = height - tabBarHeight;
+  const videoRefs = useRef<VideoRef[]>([]);
 
-  const { mutate } = usePost({ uri: `/posts/views` });
+  const addToRefs = (ref: Video, item: PostListItem) => {
+    const key = item.post.id;
 
-  const viewabilityConfigPlayVideo = { itemVisiblePercentThreshold: 95 };
-  const viewabilityConfigSaveView = {
-    waitForInteraction: true,
-    itemVisiblePercentThreshold: 75,
-    minimumViewTime: 3000,
+    if (ref && !videoRefs.current.includes({ ref, key })) {
+      videoRefs.current.push({ ref, key });
+    }
+    return ref;
   };
 
-  const trackItem = useCallback((item: any) => {
-    setVisibleItem(item);
-  }, []);
-
-  const onViewablePlayVideo = useCallback((info: { changed: any }): void => {
-    const visibleItems = info.changed.filter((entry: any) => entry.isViewable);
-    visibleItems.forEach((visible: any) => {
-      trackItem(visible.item);
-    });
-  }, []);
-
-  const saveView = useCallback((item: any) => {
-    mutate({ postId: item.id, userId: user?.id, from: "explore" });
-  }, []);
-
-  const onViewableSaveView = useCallback((info: { changed: any }): void => {
-    const visibleItems = info.changed.filter((entry: any) => entry.isViewable);
-    visibleItems.forEach((visible: any) => {
-      saveView(visible.item);
-    });
-  }, []);
-
-  const viewabilityConfigCallbackPairs = useRef([
-    {
-      viewabilityConfig: viewabilityConfigPlayVideo,
-      onViewableItemsChanged: onViewablePlayVideo,
-    },
-    {
-      viewabilityConfig: viewabilityConfigSaveView,
-      onViewableItemsChanged: onViewableSaveView,
-    },
-  ]);
-
   const renderVideo = useCallback(
-    ({ item }: { item: any }) => {
+    ({ item }: ListRenderItemInfo<PostListItem>) => {
       return (
-        <VideoListItem
-          video={item.post}
-          setScrollEnabled={setScrollEnabled}
-          isVisible={visibleItem?.id === item?.post?.id}
-        />
+        <VideoListItemm ref={(ref: Video) => addToRefs(ref, item)} {...item} />
       );
     },
-    [visibleItem]
+    []
   );
 
-  const keyExtractor = useCallback((item: any) => item?.id, []);
+  const keyExtractor = useCallback((item: PostListItem) => item?.post?.id, []);
 
   const getItemLayout = useCallback(
     (_: any, index: number) => ({
-      length: height - tabBarHeight,
-      offset: height - tabBarHeight * index,
+      length: VIDEO_HEIGHT,
+      offset: VIDEO_HEIGHT * index,
       index,
     }),
     []
   );
 
+  const { mutate } = usePost({ uri: `/posts/views` });
+
+  const onViewableItemsChanged = useRef(
+    (info: { changed: Array<ViewToken> }) => {
+      info.changed.forEach(({ index, key, isViewable }: ViewToken) => {
+        const postIndex = findIndex(videoRefs.current, { key });
+        const { ref } = videoRefs.current[postIndex];
+        if (index === postIndex && isViewable) {
+          ref.playFromPositionAsync(0);
+        } else {
+          ref.pauseAsync();
+        }
+      });
+    }
+  ).current;
+
+  const onViewableSaveView = useRef((info: { changed: Array<ViewToken> }) => {
+    const visibleItems = filter(info.changed, { isViewable: true });
+
+    visibleItems.forEach(({ item }: ViewToken) => {
+      mutate({
+        postId: item.post.id,
+        userId: user?.id,
+        from: "explore",
+      });
+    });
+  }).current;
+
+  const viewabilityConfigCallbackPairs = useRef([
+    {
+      viewabilityConfig: {
+        itemVisiblePercentThreshold: 80,
+        minimumViewTime: 2000,
+      },
+      onViewableItemsChanged: onViewableSaveView,
+    },
+    {
+      viewabilityConfig: { itemVisiblePercentThreshold: 60 },
+      onViewableItemsChanged: onViewableItemsChanged,
+    },
+  ]).current;
+  6;
   return (
     <View style={{ backgroundColor: "black" }}>
       <FlatList
@@ -90,13 +112,13 @@ export const FeedExploreVideoScreen = ({ route }: IProps) => {
         renderItem={renderVideo}
         showsVerticalScrollIndicator={false}
         decelerationRate={0.0}
-        bounces={false}
         pagingEnabled={true}
         getItemLayout={getItemLayout}
         initialScrollIndex={index}
         onEndReachedThreshold={0.3}
-        scrollEnabled={scrollEnabled}
-        viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
+        windowSize={5}
+        //scrollEnabled={scrollEnabled}
+        viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs}
       />
     </View>
   );
