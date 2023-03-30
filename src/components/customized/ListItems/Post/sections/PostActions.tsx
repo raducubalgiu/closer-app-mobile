@@ -14,7 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../../navigation/rootStackParams";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import PostStats from "../../../Sheets/PostStats";
+import PostStatsSheet from "../../../Sheets/PostStatsSheet";
 import { ViewLikesListEnum } from "../../../../../ts";
 import { useAuth } from "../../../../../hooks";
 import { showToast } from "../../../../../utils";
@@ -126,7 +126,7 @@ const PostActions = ({
         showIndicator={false}
         enableContentPanningGesture={false}
       >
-        <PostStats
+        <PostStatsSheet
           images={images}
           onClose={() => sheetRef.current?.close()}
           counters={counters}

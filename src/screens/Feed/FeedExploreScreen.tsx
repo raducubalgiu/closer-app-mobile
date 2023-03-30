@@ -20,6 +20,7 @@ import VideoOverviewListItem from "../../components/customized/ListItems/Video/V
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import PostImageListItem from "../../components/customized/ListItems/Post/PostImageListItem";
 import PostVideoListItem from "../../components/customized/ListItems/Post/PostVideoListItem";
+import PostCarouselListItem from "../../components/customized/ListItems/Post/PostCarouselListItem";
 
 type PostListItem = {
   id: string;
@@ -74,6 +75,15 @@ export const FeedExploreScreen = () => {
   const renderPost = useCallback(
     ({ item }: ListRenderItemInfo<PostListItem>) => {
       switch (item.post.postType) {
+        case "carousel":
+          return (
+            <PostCarouselListItem
+              post={item?.post}
+              isLiked={item?.isLiked}
+              isBookmarked={item?.isBookmarked}
+              isVisible={visibleItem?.post.id === item.post.id}
+            />
+          );
         case "photo":
           return (
             <PostImageListItem

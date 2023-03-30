@@ -18,7 +18,7 @@ const PostImage = ({ uri, id }: IProps) => {
           source={{ uri }}
           containerStyle={styles.image}
           resizeMode="cover"
-          PlaceholderContent={<PostGradient width={width} height={400} />}
+          PlaceholderContent={<PostGradient width={width} height={500} />}
         />
       </SharedElement>
     </View>

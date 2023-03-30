@@ -30,7 +30,7 @@ const StatsItem = ({ counter, icon }: StatsProps) => {
   );
 };
 
-const PostStats = ({ images, onClose, counters, postType }: IProps) => {
+const PostStatsSheet = ({ images, onClose, counters, postType }: IProps) => {
   const { viewsCount, likesCount, commentsCount, bookmarksCount } = counters;
   const imagesLength = images?.length;
 
@@ -64,19 +64,20 @@ const PostStats = ({ images, onClose, counters, postType }: IProps) => {
       icon = <></>;
   }
 
+  const isPhoto = postType === "photo" || postType === "carousel";
+
   return (
     <View style={styles.container}>
       <HeaderSheet title="Statistici" onClose={onClose} />
       <Stack>
         <View style={styles.imageContainer}>
-          {postType === "photo" && (
+          {isPhoto ? (
             <Image
               source={{ uri: images[0]?.url }}
               containerStyle={styles.image}
               resizeMode="cover"
             />
-          )}
-          {postType === "video" && (
+          ) : (
             <Video
               source={{ uri: images[0]?.url }}
               style={styles.image}
@@ -90,10 +91,7 @@ const PostStats = ({ images, onClose, counters, postType }: IProps) => {
       </Stack>
       <Divider color="#ddd" />
       <Stack direction="row" justify="around" sx={styles.statsContainer}>
-        <StatsItem
-          icon={postType === "photo" ? "eye" : "play"}
-          counter={`${viewsCount}`}
-        />
+        <StatsItem icon={isPhoto ? "eye" : "play"} counter={`${viewsCount}`} />
         <StatsItem icon="heart" counter={`${likesCount}`} />
         <StatsItem icon="message-circle" counter={`${commentsCount}`} />
         <StatsItem icon="bookmark" counter={`${bookmarksCount}`} />
@@ -102,7 +100,7 @@ const PostStats = ({ images, onClose, counters, postType }: IProps) => {
   );
 };
 
-export default memo(PostStats);
+export default memo(PostStatsSheet);
 
 const styles = StyleSheet.create({
   container: {
