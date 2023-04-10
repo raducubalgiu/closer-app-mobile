@@ -6,26 +6,17 @@ import { InfoIconButton } from "../../IconButtons/InfoIconButton";
 import CustomAvatar from "../../../core/Avatars/CustomAvatar";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
+import { Chat } from "../../../../ts";
 
 const { grey0 } = theme.lightColors || {};
 
 type IProps = {
-  userId: string;
-  avatar: any;
-  name: string;
-  username: string;
-  checkmark: boolean;
-  conversationId: string;
+  userId: string | undefined;
+  chat: Chat;
 };
 
-export const HeaderMessageItem = ({
-  userId,
-  avatar,
-  name,
-  username,
-  checkmark,
-  conversationId,
-}: IProps) => {
+export const HeaderMessageItem = ({ userId, chat }: IProps) => {
+  const { name } = chat;
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
@@ -34,28 +25,16 @@ export const HeaderMessageItem = ({
       <Stack direction="row">
         <IconBackButton />
         <Stack direction="row">
-          <CustomAvatar size={40} avatar={avatar} />
+          <CustomAvatar size={40} avatar={[]} />
           <Stack align="start" sx={{ marginLeft: 10 }}>
             <Stack direction="row">
               <Text style={styles.name}>{name}</Text>
-              {checkmark && <Checkmark />}
             </Stack>
-            <Text style={styles.username}>@{username}</Text>
+            <Text style={styles.active}>Active now</Text>
           </Stack>
         </Stack>
       </Stack>
-      <InfoIconButton
-        onPress={() =>
-          navigation.navigate("MessageSettings", {
-            _id: userId,
-            avatar,
-            name,
-            username,
-            checkmark,
-            conversationId,
-          })
-        }
-      />
+      <InfoIconButton onPress={() => {}} />
     </Stack>
   );
 };
@@ -72,7 +51,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     marginRight: 5,
   },
-  username: {
+  active: {
     color: grey0,
     fontSize: 13,
   },

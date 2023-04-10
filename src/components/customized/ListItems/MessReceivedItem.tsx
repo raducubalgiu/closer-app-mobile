@@ -25,7 +25,7 @@ export const MessReceivedItem = ({
   dateSame,
   date,
 }: IProps) => {
-  const { message, id, liked, createdAt } = item || {};
+  const { content, id, liked, createdAt } = item || {};
   const [isLiked, setIsLiked] = useState(liked);
   const { user } = useAuth();
 
@@ -51,14 +51,14 @@ export const MessReceivedItem = ({
               <CustomAvatar avatar={avatar} size={30} />
             </Stack>
           )}
-          {!message?.url && (
+          {!content?.url && (
             <Stack sx={styles.message}>
-              <Text style={styles.messageText}>{message?.text}</Text>
+              <Text style={styles.messageText}>{content?.text}</Text>
             </Stack>
           )}
-          {message?.url && (
+          {content?.url && (
             <Image
-              source={{ uri: message?.url }}
+              source={{ uri: content?.url }}
               style={{ width: width / 2, height: 300, borderRadius: 10 }}
             />
           )}

@@ -9,6 +9,7 @@ export { Day } from "./interfaces/day";
 export { Filter } from "./interfaces/filter";
 export { Hashtag } from "./interfaces/hashtag";
 export { Location } from "./interfaces/location";
+export { Chat } from "./interfaces/chat";
 export { Message } from "./interfaces/message";
 export { Month } from "./interfaces/month";
 export { Option } from "./interfaces/option";

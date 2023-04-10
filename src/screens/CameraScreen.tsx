@@ -77,7 +77,7 @@ export const CameraScreen = ({ route }: IProps) => {
   return (
     <SafeAreaView style={styles.screen}>
       <Camera ref={cameraRef} type={type} style={styles.container}>
-        <Stack direction="row" sx={{ margin: 20 }}>
+        <Stack direction="row" sx={{ margin: 15 }}>
           <Stack direction="row" sx={styles.user}>
             <CustomAvatar avatar={avatar} size={30} />
             <Stack align="start" sx={{ marginLeft: 10 }}>
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     padding: 7.5,
     paddingRight: 12.5,
     borderRadius: 25,
-    opacity: 0.85,
+    opacity: 0.9,
   },
   to: { color: grey0, fontSize: 12 },
   name: { color: black, fontWeight: "500", fontSize: 13.5 },

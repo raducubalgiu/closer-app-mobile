@@ -6,35 +6,34 @@ import { trimFunc } from "../../../utils";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/rootStackParams";
+import { Chat } from "../../../ts";
+import dayjs from "dayjs";
 
 const { black, grey0 } = theme.lightColors || {};
 
-export const MessageListItem = ({ conversation }: any) => {
-  const { message, user } = conversation;
-  const { name, avatar, checkmark } = user;
+type IProps = { chat: Chat };
+
+export const ChatListItem = ({ chat }: IProps) => {
+  const { name, message, updatedAt } = chat || {};
+
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const goToMessages = () => {
-    navigation.navigate("MessageItem", { user });
+    navigation.navigate("Messages", { chat });
   };
 
   return (
     <Pressable onPress={goToMessages} style={styles.container}>
-      <Stack direction="row" justify="start">
-        <CustomAvatar avatar={avatar} size={50} />
-        <Stack direction="row" sx={{ flex: 1 }} align="start">
+      <Stack direction="row" align="start">
+        <Stack direction="row">
+          <CustomAvatar avatar={[]} size={50} />
           <Stack align="start" sx={{ marginLeft: 10 }}>
-            <Stack direction="row">
-              <Text style={styles.name}>{name}</Text>
-              {checkmark && <Checkmark size={8} />}
-            </Stack>
-            <Text style={styles.message}>
-              {trimFunc(message?.message?.text, 35)}
-            </Text>
+            <Text style={styles.name}>{name}</Text>
+            <Text style={styles.message}>{message}</Text>
           </Stack>
-          <Text style={styles.date}>1z</Text>
         </Stack>
+        <Text style={styles.date}>{dayjs(updatedAt).format("DD/MM/YY")}</Text>
       </Stack>
     </Pressable>
   );
@@ -54,7 +53,7 @@ const styles = StyleSheet.create({
   },
   message: {
     color: grey0,
-    marginTop: 2.5,
+    marginTop: 4,
   },
   date: {
     color: grey0,

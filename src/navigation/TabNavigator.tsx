@@ -7,7 +7,7 @@ import theme from "../../assets/styles/theme";
 import {
   SchedulesScreen,
   HomeScreen,
-  MessagesScreen,
+  ChatsScreen,
   ProfileScreen,
   UserPostsScreen,
   UserAllPostsScreen,
@@ -118,7 +118,7 @@ const TabNavigator = () => {
             name = focused ? "search" : "shopping-outline";
             type = focused ? "feather" : "material-community";
             size = type === "material-community" ? 26 : 24;
-          } else if (route.name === "Messages") {
+          } else if (route.name === "Chats") {
             name = focused ? "message-circle" : "message-circle";
           } else if (route.name === "FeedStack") {
             name = focused ? "compass" : "compass";
@@ -146,7 +146,17 @@ const TabNavigator = () => {
       sceneContainerStyle={{ backgroundColor: "white" }}
     >
       <Tab.Screen name="FeedStack" component={FeedNavigator} />
-      <Tab.Screen name="Messages" component={MessagesScreen} />
+      <Tab.Screen
+        name="Chats"
+        component={ChatsScreen}
+        options={{
+          tabBarBadge: 2,
+          tabBarBadgeStyle: {
+            backgroundColor: error,
+            fontSize: 11,
+          },
+        }}
+      />
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen
         name="Schedules"

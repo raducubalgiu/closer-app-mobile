@@ -185,7 +185,10 @@ export const FeedExploreScreen = () => {
           ref={ref}
           ListHeaderComponent={
             <>
-              <HeadingAction title={t("videoclips")} onPress={() => {}} />
+              <HeadingAction
+                title={t("videoclips")}
+                onPress={() => goToVideoExplore(videos[0], 0)}
+              />
               <FlashList
                 horizontal
                 showsHorizontalScrollIndicator={false}

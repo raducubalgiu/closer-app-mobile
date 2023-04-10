@@ -15,6 +15,7 @@ import theme from "../../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParams } from "../navigation/rootStackParams";
+import { showToast } from "../utils";
 
 const { black } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "CameraPreview">;
@@ -25,7 +26,11 @@ export const CameraPreviewScreen = ({ route }: IProps) => {
   const { t } = useTranslation("common");
 
   const handleClosePreview = () => navigation.goBack();
-  const handleDownload = () => MediaLibrary.saveToLibraryAsync(photo.uri);
+  const handleDownload = () => {
+    MediaLibrary.saveToLibraryAsync(photo.uri)
+      .then(() => showToast({ message: "Salvat in telefon" }))
+      .catch((err) => console.log(err));
+  };
   const handleSendPhoto = () => {};
 
   return (
@@ -33,7 +38,7 @@ export const CameraPreviewScreen = ({ route }: IProps) => {
       <Image style={styles.preview} source={{ uri: photo.uri }} />
       <View style={styles.container}>
         <SafeAreaView style={styles.safeArea}>
-          <Stack direction="row" sx={{ margin: 20 }}>
+          <Stack direction="row" sx={{ margin: 15 }}>
             <CloseIconButton onPress={handleClosePreview} size={32.5} />
             <DownloadIconButton onPress={handleDownload} size={30} />
           </Stack>

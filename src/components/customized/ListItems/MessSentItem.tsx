@@ -32,7 +32,7 @@ export const MessSentItem = ({
   dateSame: boolean;
   date: string;
 }) => {
-  const { message, liked } = item || {};
+  const { content, liked } = item || {};
 
   return (
     <View style={{ marginRight: 15 }}>
@@ -41,9 +41,9 @@ export const MessSentItem = ({
         justify="end"
         sx={liked ? { marginBottom: 25 } : { marginBottom: 5 }}
       >
-        {!message?.url && (
+        {!content?.url && (
           <View style={styles.message}>
-            <Text style={styles.messageText}>{message?.text}</Text>
+            <Text style={styles.messageText}>{content?.text}</Text>
             {liked && (
               <View style={styles.liked}>
                 <Icon name="heart" type="antdesign" color={error} size={15} />
@@ -51,7 +51,7 @@ export const MessSentItem = ({
             )}
           </View>
         )}
-        {message?.url && <MessImage message={message} liked={liked} />}
+        {content?.url && <MessImage message={content} liked={liked} />}
       </Stack>
       {!dateSame && <MessDateItem date={date} />}
     </View>

@@ -68,7 +68,7 @@ export { HeaderMap } from "./Layout/Headers/HeaderMap";
 export { ServicesList } from "./Lists/ServicesList";
 export { FixedPeriodList } from "./Lists/FixedPeriodList";
 
-export { MessageListItem } from "./ListItems/MessageListItem";
+export { ChatListItem } from "./ListItems/ChatListItem";
 export { HashtagListItem } from "./ListItems/HashtagListItem";
 export { UserListItemSimple } from "./ListItems/UserListItemSimple";
 export { CommentListItem } from "./ListItems/CommentListItem";

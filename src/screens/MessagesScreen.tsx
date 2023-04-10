@@ -1,123 +1,117 @@
 import {
-  StyleSheet,
-  RefreshControl,
   SafeAreaView,
-  View,
-  Text,
+  StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
-import React, { useState, useCallback } from "react";
-import { useNavigation } from "@react-navigation/native";
-import { useTranslation } from "react-i18next";
-import { MessageListItem, NoFoundMessage } from "../components/customized";
-import theme from "../../assets/styles/theme";
-import {
-  useAuth,
-  useGetPaginate,
-  useRefreshByUser,
-  useRefreshOnFocus,
-} from "../hooks";
-import {
-  SearchBarInput,
-  Header,
-  IconButtonEdit,
-  Stack,
-  Heading,
-  Spinner,
-} from "../components/core";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import React, { useCallback, useState } from "react";
+import { Camera } from "expo-camera";
+import { usePost, useAuth, useGetPaginate, usePaginateActions } from "../hooks";
+import {
+  FooterMessageItem,
+  MessReceivedItem,
+  MessSentItem,
+  HeaderMessageItem,
+} from "../components/customized";
+import { Divider } from "@rneui/themed";
+import { useNavigation } from "@react-navigation/native";
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
 import { RootStackParams } from "../navigation/rootStackParams";
 import { Message } from "../ts";
 
-const { grey0 } = theme.lightColors || {};
+type IProps = NativeStackScreenProps<RootStackParams, "Messages">;
 
-export const MessagesScreen = () => {
+export const MessagesScreen = ({ route }: IProps) => {
   const { user } = useAuth();
-  const [search, setSearch] = useState("");
+  const { chat } = route.params;
+  const [permission] = Camera.useCameraPermissions();
+  const [message, setMessage] = useState("");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const { t } = useTranslation("common");
 
-  const {
-    data,
-    hasNextPage,
-    fetchNextPage,
-    isFetchingNextPage,
-    isLoading,
-    isFetching,
-    refetch,
-  } = useGetPaginate({
-    model: "conversations",
-    uri: `/users/${user.id}/conversations`,
-    limit: "12",
+  const options = useGetPaginate({
+    model: "messages",
+    uri: `/users/${user?.id}/chats/${chat?.id}/messages`,
+    limit: "20",
+    enabled: !!chat,
   });
 
-  const renderMessages = useCallback(
-    ({ item }: ListRenderItemInfo<Message>) => (
-      <MessageListItem conversation={item} />
-    ),
+  const { data: messages, loadMore, showSpinner } = usePaginateActions(options);
+
+  const onSendMessage = () => {
+    setMessage("");
+  };
+
+  const handleOpenCamera = () => {
+    if (permission?.granted) {
+      navigation.navigate("Camera", { name: user?.name, avatar: user?.avatar });
+    }
+  };
+
+  const isSenderSame = (curr: Message, prev: Message) => {
+    return curr?.sender?.id === prev?.sender?.id;
+  };
+
+  const renderMessage = useCallback(
+    ({ item, index }: ListRenderItemInfo<Message>) => {
+      const isSent = user?.id === item.sender.id;
+
+      switch (true) {
+        case isSent:
+          return (
+            <MessSentItem item={item} dateSame={true} date={item.createdAt} />
+          );
+        case !isSent:
+          return (
+            <MessReceivedItem
+              avatar={[]}
+              item={item}
+              senderSame={isSenderSame(item, messages[index - 1])}
+              dateSame={true}
+              date={item.createdAt}
+            />
+          );
+        default:
+          return null;
+      }
+    },
     []
   );
 
   const keyExtractor = useCallback((item: Message) => item?.id, []);
 
-  const { refreshing, refetchByUser } = useRefreshByUser(refetch);
-  useRefreshOnFocus(refetch);
-
-  const refreshControl = (
-    <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
-  );
-
-  const { pages } = data || {};
-  const messages = pages?.map((page) => page.results).flat();
-
-  const loadMore = () => {
-    if (hasNextPage) fetchNextPage();
-  };
-
-  const header = <Heading title={t("messages")} sx={{ marginLeft: 15 }} />;
-
-  let footer;
-  if (isFetchingNextPage) {
-    footer = <Spinner />;
-  } else if (messages?.length === 0) {
-    footer = (
-      <NoFoundMessage title={t("messages")} description={t("noFoundMessage")} />
-    );
-  }
-
-  console.log("MESSAGES!!!!", messages);
-
   return (
     <SafeAreaView style={styles.screen}>
-      <Header
-        title={t("myMessages")}
-        hideBtnLeft={true}
-        actionBtn={
-          <IconButtonEdit onPress={() => navigation.navigate("MessageNew")} />
-        }
-      />
-      <View style={{ height: 50, paddingHorizontal: 15 }}>
-        <SearchBarInput
-          showCancel={false}
-          placeholder={t("search")}
-          value={search}
-          updateValue={(text: string) => setSearch(text)}
+      <HeaderMessageItem userId={user?.id} chat={chat} />
+      <Divider color="#ddd" />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.screen}
+        keyboardVerticalOffset={10}
+      >
+        <FlashList
+          inverted
+          ListFooterComponent={showSpinner}
+          initialScrollIndex={0}
+          data={messages}
+          renderItem={renderMessage}
+          keyExtractor={keyExtractor}
+          contentContainerStyle={styles.flatList}
+          onEndReached={loadMore}
+          onEndReachedThreshold={0.3}
+          estimatedItemSize={100}
         />
-      </View>
-      {isLoading && isFetching && !isFetchingNextPage && <Spinner />}
-      <FlashList
-        refreshControl={refreshControl}
-        ListHeaderComponent={header}
-        showsVerticalScrollIndicator={false}
-        data={messages}
-        keyExtractor={keyExtractor}
-        renderItem={renderMessages}
-        estimatedItemSize={70}
-        ListFooterComponent={footer}
-        onEndReached={loadMore}
-        onEndReachedThreshold={0.3}
-      />
+        <FooterMessageItem
+          message={message}
+          onOpenCamera={handleOpenCamera}
+          onSendMessage={onSendMessage}
+          onChangeText={(text: string) => setMessage(text)}
+        />
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
@@ -126,5 +120,8 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: "white",
+  },
+  flatList: {
+    paddingVertical: 15,
   },
 });

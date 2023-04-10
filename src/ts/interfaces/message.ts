@@ -1,9 +1,14 @@
+import { User } from "./user";
+
 export interface Message {
   id: string;
-  message: { text: string; url: string };
-  sender: string;
-  receiver: string;
+  content: {
+    text: string;
+    url: string | null;
+  };
+  sender: User;
   liked: boolean;
-  conversationId: string;
+  seenBy: User[];
+  chatId: string;
   createdAt: string;
 }

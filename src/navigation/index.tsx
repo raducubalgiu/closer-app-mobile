@@ -58,7 +58,7 @@ import {
   LocationsScreen,
   LocationFiltersScreen,
   MapScreen,
-  MessageItemScreen,
+  MessagesScreen,
   MessageNewScreen,
   NotificationsScreen,
   ProductScreen,
@@ -187,7 +187,7 @@ const AppNavigation = () => {
             <Stack.Screen name="AddProducts" component={AddProductsScreen} />
             <Stack.Screen name="AddJobs" component={AddJobsScreen} />
             <Stack.Screen name="EditProduct" component={EditProductScreen} />
-            <Stack.Screen name="MessageItem" component={MessageItemScreen} />
+            <Stack.Screen name="Messages" component={MessagesScreen} />
             <Stack.Screen
               name="MessageSettings"
               component={MessageSettingsScreen}
@@ -321,6 +321,7 @@ const AppNavigation = () => {
             <Stack.Screen
               name="CameraPreview"
               component={CameraPreviewScreen}
+              options={{ animationEnabled: false }}
             />
             <Stack.Screen name="Likes" component={LikesScreen} />
           </Stack.Navigator>

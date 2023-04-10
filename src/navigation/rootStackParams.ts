@@ -1,4 +1,13 @@
-import { Post, Option, Product, Schedule, Service, Slot, User } from "../ts";
+import {
+  Post,
+  Option,
+  Product,
+  Schedule,
+  Service,
+  Slot,
+  User,
+  Chat,
+} from "../ts";
 
 export type RootStackParams = {
   Account: any;
@@ -32,8 +41,9 @@ export type RootStackParams = {
     serviceId: string;
     expirationTime: string | null;
   };
-  Camera: { name: string; avatar: any };
+  Camera: { name: string | undefined; avatar: any };
   CameraPreview: { photo: { uri: string }; avatar: any; name: string };
+  Chats: any;
   ClearCache: any;
   DeleteAccount: any;
   DeleteAccountPermanently: any;
@@ -89,16 +99,7 @@ export type RootStackParams = {
   MyLocation: any;
   MyProducts: any;
   MyJobs: any;
-  Messages: any;
-  MessageItem: {
-    user: {
-      _id: string;
-      name: string;
-      username: string;
-      avatar: string;
-      checkmark: boolean;
-    };
-  };
+  Messages: { chat: Chat };
   MessageSettings: {
     _id: string;
     avatar: any;
