@@ -26,11 +26,11 @@ export const ChatListItem = ({ chat }: IProps) => {
   return (
     <Pressable onPress={goToMessages} style={styles.container}>
       <Stack direction="row" align="start">
-        <Stack direction="row">
+        <Stack direction="row" align="start" sx={{ flex: 1 }}>
           <CustomAvatar avatar={[]} size={50} />
-          <Stack align="start" sx={{ marginLeft: 10 }}>
+          <Stack align="start" sx={{ marginLeft: 10, flex: 1 }}>
             <Text style={styles.name}>{name}</Text>
-            <Text style={styles.message}>{message}</Text>
+            <Text style={styles.message}>{trimFunc(message, 30)}</Text>
           </Stack>
         </Stack>
         <Text style={styles.date}>{dayjs(updatedAt).format("DD/MM/YY")}</Text>

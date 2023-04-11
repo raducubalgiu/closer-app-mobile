@@ -1,16 +1,26 @@
-import { StyleSheet, Text, TextInput, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  Pressable,
+  Dimensions,
+} from "react-native";
 import * as Haptics from "expo-haptics";
 import { useTranslation } from "react-i18next";
 import { Stack, IconButton } from "../../../core";
 import theme from "../../../../../assets/styles/theme";
+import { emoji } from "../../../../../assets/emojis/emoji-comm.json";
 
 const { primary } = theme.lightColors || {};
+const { width } = Dimensions.get("window");
 
 type IProps = {
   message: string;
   onChangeText: (text: string) => void;
   onSendMessage: () => void;
   onOpenCamera: () => void;
+  onOpenMediaLibrary: () => void;
+  onAddEmojy: (emojy: string) => void;
 };
 
 export const FooterMessageItem = ({
@@ -18,29 +28,60 @@ export const FooterMessageItem = ({
   onChangeText,
   onSendMessage,
   onOpenCamera,
+  onOpenMediaLibrary,
+  onAddEmojy,
 }: IProps) => {
   const { t } = useTranslation("common");
 
   return (
-    <Stack direction="row" sx={styles.inputContainer}>
-      <Stack direction="row" justify="start" sx={{ flex: 1 }}>
-        <IconButton
-          name="camera"
-          onPress={() => {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-            onOpenCamera();
-          }}
-        />
-        <TextInput
-          onChangeText={(text) => onChangeText(text)}
-          value={message}
-          style={styles.input}
-          placeholder={`${t("message")}...`}
-        />
+    <Stack>
+      <Stack direction="row" sx={styles.emojies}>
+        {emoji.map((emoji, i) => (
+          <Pressable key={i} onPress={() => onAddEmojy(emoji.char)}>
+            <Text style={{ fontSize: 25 }}>{emoji.char}</Text>
+          </Pressable>
+        ))}
       </Stack>
-      <Pressable onPress={onSendMessage} style={styles.sendBtn}>
-        <Text style={styles.sendBtnText}>{t("send")}</Text>
-      </Pressable>
+      <Stack direction="row" sx={styles.inputContainer}>
+        <Stack direction="row" justify="start" sx={{ flex: 1 }}>
+          <IconButton
+            name="camera"
+            type="font-awesome"
+            onPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+              onOpenCamera();
+            }}
+            size={22.5}
+          />
+          <TextInput
+            onChangeText={(text) => onChangeText(text)}
+            value={message}
+            style={styles.input}
+            placeholder={`${t("message")}...`}
+          />
+        </Stack>
+        {message?.length === 0 && (
+          <Stack direction="row">
+            <IconButton
+              name="photo-library"
+              type="material"
+              size={25}
+              onPress={onOpenMediaLibrary}
+            />
+            <IconButton
+              name="sticker-emoji"
+              type="material-community"
+              size={25}
+              sx={{ marginLeft: 10 }}
+            />
+          </Stack>
+        )}
+        {message?.length > 0 && (
+          <Pressable style={styles.sendBtn} onPress={onSendMessage}>
+            <Text style={styles.sendBtnText}>{t("send")}</Text>
+          </Pressable>
+        )}
+      </Stack>
     </Stack>
   );
 };
@@ -58,7 +99,6 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 10,
     paddingVertical: 7.5,
-    fontSize: 15,
   },
   sendBtn: {
     backgroundColor: primary,
@@ -69,5 +109,11 @@ const styles = StyleSheet.create({
   sendBtnText: {
     color: "white",
     fontWeight: "600",
+  },
+  emojies: {
+    width: width - 30,
+    paddingVertical: 7.5,
+    borderTopWidth: 1,
+    borderTopColor: "#ddd",
   },
 });

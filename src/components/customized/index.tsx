@@ -75,8 +75,6 @@ export { CommentListItem } from "./ListItems/CommentListItem";
 export { RelatedCommentsList } from "./ListItems/RelatedCommentsList";
 export { RecentSearchListItem } from "./ListItems/RecentSearchListItem";
 export { ServiceListItem } from "./ListItems/ServiceListItem";
-export { MessReceivedItem } from "./ListItems/MessReceivedItem";
-export { MessSentItem } from "./ListItems/MessSentItem";
 export { MessDateItem } from "./ListItems/MessDateItem";
 export { SettingListItem } from "./ListItems/SettingListItem";
 export { AlbumListItem } from "./ListItems/AlbumListItem";

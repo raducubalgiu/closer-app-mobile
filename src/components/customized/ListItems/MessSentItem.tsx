@@ -3,9 +3,10 @@ import { Icon } from "@rneui/themed";
 import theme from "../../../../assets/styles/theme";
 import { Stack } from "../../core";
 import { MessDateItem } from "./MessDateItem";
+import { memo } from "react";
 
 const { width } = Dimensions.get("window");
-const { black, error } = theme.lightColors || {};
+const { black, error, primary } = theme.lightColors || {};
 
 const MessImage = ({ message, liked }: { message: any; liked: boolean }) => {
   return (
@@ -23,7 +24,7 @@ const MessImage = ({ message, liked }: { message: any; liked: boolean }) => {
   );
 };
 
-export const MessSentItem = ({
+const MessSentItem = ({
   item,
   dateSame,
   date,
@@ -46,7 +47,7 @@ export const MessSentItem = ({
             <Text style={styles.messageText}>{content?.text}</Text>
             {liked && (
               <View style={styles.liked}>
-                <Icon name="heart" type="antdesign" color={error} size={15} />
+                <Icon name="heart" type="antdesign" color={error} size={12.5} />
               </View>
             )}
           </View>
@@ -57,6 +58,8 @@ export const MessSentItem = ({
     </View>
   );
 };
+
+export default memo(MessSentItem);
 
 const styles = StyleSheet.create({
   message: {

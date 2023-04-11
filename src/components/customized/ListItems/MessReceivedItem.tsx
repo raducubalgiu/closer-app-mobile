@@ -1,5 +1,12 @@
-import { StyleSheet, Text, Dimensions, Image, Pressable } from "react-native";
-import { useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  Dimensions,
+  Image,
+  Pressable,
+  View,
+} from "react-native";
+import { memo, useState } from "react";
 import { Icon } from "@rneui/themed";
 import { Stack } from "../../core";
 import CustomAvatar from "../../core/Avatars/CustomAvatar";
@@ -18,7 +25,7 @@ type IProps = {
   date: string;
 };
 
-export const MessReceivedItem = ({
+const MessReceivedItem = ({
   avatar,
   item,
   senderSame,
@@ -26,16 +33,17 @@ export const MessReceivedItem = ({
   date,
 }: IProps) => {
   const { content, id, liked, createdAt } = item || {};
+  const { url } = content;
   const [isLiked, setIsLiked] = useState(liked);
   const { user } = useAuth();
 
   const { mutate } = usePatch({
-    uri: `/users/${user?.id}/messages/${id}`,
+    uri: `/messages/${id}`,
   });
 
   const handleLike = () => {
     setIsLiked((isLiked: boolean) => !isLiked);
-    mutate({ userId: user?.id, messageId: id });
+    mutate({ messageId: id });
   };
 
   return (
@@ -46,17 +54,14 @@ export const MessReceivedItem = ({
     >
       <Stack direction="row">
         <Stack direction="row" align="end" justify="start" sx={{ flex: 1 }}>
-          {!senderSame && (
-            <Stack sx={{ width: 30 }}>
-              <CustomAvatar avatar={avatar} size={30} />
-            </Stack>
-          )}
-          {!content?.url && (
+          <Stack sx={{ width: 30 }}>
+            {!senderSame && <CustomAvatar avatar={avatar} size={30} />}
+          </Stack>
+          {!content?.url ? (
             <Stack sx={styles.message}>
               <Text style={styles.messageText}>{content?.text}</Text>
             </Stack>
-          )}
-          {content?.url && (
+          ) : (
             <Image
               source={{ uri: content?.url }}
               style={{ width: width / 2, height: 300, borderRadius: 10 }}
@@ -68,7 +73,7 @@ export const MessReceivedItem = ({
             name={isLiked ? "heart" : "hearto"}
             type="antdesign"
             color={isLiked ? error : "#ddd"}
-            size={20}
+            size={15}
           />
         </Pressable>
       </Stack>
@@ -76,6 +81,8 @@ export const MessReceivedItem = ({
     </Stack>
   );
 };
+
+export default memo(MessReceivedItem);
 
 const styles = StyleSheet.create({
   message: {

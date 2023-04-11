@@ -14,7 +14,7 @@ const FakeSearchBarSimple = ({ onPress, sx = {} }: IProps) => {
     <TouchableOpacity style={{ ...styles.container, ...sx }} onPress={onPress}>
       <Stack direction="row">
         <Stack direction="row">
-          <Icon type="antdesign" name="search1" size={18} color={black} />
+          <Icon type="ionicon" name="ios-search" size={20} color={black} />
           <Text style={styles.text}>{t("search")}</Text>
         </Stack>
       </Stack>
@@ -28,11 +28,12 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 5,
     backgroundColor: "#f1f1f1",
-    paddingHorizontal: 15,
-    paddingVertical: 9,
+    paddingHorizontal: 7.5,
+    paddingVertical: 7.5,
   },
   text: {
-    marginLeft: 15,
+    marginLeft: 10,
     color: grey0,
+    fontSize: 15,
   },
 });

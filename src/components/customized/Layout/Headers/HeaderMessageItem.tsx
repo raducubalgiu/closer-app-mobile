@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, Text } from "react-native";
+import { Pressable, StyleSheet, Text } from "react-native";
 import theme from "../../../../../assets/styles/theme";
 import { Stack, IconBackButton, Checkmark } from "../../../core";
 import { InfoIconButton } from "../../IconButtons/InfoIconButton";
@@ -20,19 +20,23 @@ export const HeaderMessageItem = ({ userId, chat }: IProps) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
+  const goToUser = () => {};
+
   return (
     <Stack direction="row" sx={styles.container}>
       <Stack direction="row">
         <IconBackButton />
-        <Stack direction="row">
-          <CustomAvatar size={40} avatar={[]} />
-          <Stack align="start" sx={{ marginLeft: 10 }}>
-            <Stack direction="row">
-              <Text style={styles.name}>{name}</Text>
+        <Pressable onPress={goToUser}>
+          <Stack direction="row">
+            <CustomAvatar size={40} avatar={[]} />
+            <Stack align="start" sx={{ marginLeft: 10 }}>
+              <Stack direction="row">
+                <Text style={styles.name}>{name}</Text>
+              </Stack>
+              <Text style={styles.active}>Active now</Text>
             </Stack>
-            <Text style={styles.active}>Active now</Text>
           </Stack>
-        </Stack>
+        </Pressable>
       </Stack>
       <InfoIconButton onPress={() => {}} />
     </Stack>

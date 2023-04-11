@@ -3,17 +3,28 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
+  Text,
+  useWindowDimensions,
 } from "react-native";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
-import React, { useCallback, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Camera } from "expo-camera";
-import { usePost, useAuth, useGetPaginate, usePaginateActions } from "../hooks";
 import {
-  FooterMessageItem,
-  MessReceivedItem,
-  MessSentItem,
-  HeaderMessageItem,
-} from "../components/customized";
+  usePost,
+  useAuth,
+  useGetPaginate,
+  usePaginateActions,
+  useRefreshOnFocus,
+} from "../hooks";
+import { FooterMessageItem, HeaderMessageItem } from "../components/customized";
+import MessSentItem from "../components/customized/ListItems/MessSentItem";
+import MessReceivedItem from "../components/customized/ListItems/MessReceivedItem";
 import { Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import {
@@ -21,17 +32,36 @@ import {
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
 import { RootStackParams } from "../navigation/rootStackParams";
-import { Message } from "../ts";
+import { Message, User } from "../ts";
+import { showToast } from "../utils";
+import io from "socket.io-client";
+import { SheetModal, Spinner, Stack } from "../components/core";
+import CustomAvatar from "../components/core/Avatars/CustomAvatar";
+import theme from "../../assets/styles/theme";
+import { useTranslation } from "react-i18next";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
 type IProps = NativeStackScreenProps<RootStackParams, "Messages">;
+const { grey0 } = theme.lightColors || {};
+
+const ENDPOINT = "http://192.168.100.2:8000";
+let socket: any;
 
 export const MessagesScreen = ({ route }: IProps) => {
   const { user } = useAuth();
   const { chat } = route.params;
+  const { t } = useTranslation();
   const [permission] = Camera.useCameraPermissions();
   const [message, setMessage] = useState("");
+  const [socketConnected, setSocketConnected] = useState(false);
+  const [isTypingUser, setIsTypingUser] = useState<User | null>(null);
+  const [typing, setTyping] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
+  const { height } = useWindowDimensions();
+  const snapPoints = useMemo(() => [1, height / 1.75, height / 1.1], []);
+  const sheetRef = useRef<BottomSheetModal>(null);
 
   const options = useGetPaginate({
     model: "messages",
@@ -40,10 +70,67 @@ export const MessagesScreen = ({ route }: IProps) => {
     enabled: !!chat,
   });
 
-  const { data: messages, loadMore, showSpinner } = usePaginateActions(options);
+  const { refetch, isInitialLoading } = options;
+  const { data, loadMore, showSpinner } = usePaginateActions(options);
+
+  const [messages, setMessages] = useState(data);
+
+  useEffect(() => {
+    socket = io(ENDPOINT);
+    socket.emit("setup", user);
+    socket.on("connected", () => setSocketConnected(true));
+    socket.emit("join chat", chat.id);
+    socket.on("typing", (user: User) => {
+      setIsTypingUser(user);
+      setIsTyping(true);
+    });
+    socket.on("stop typing", () => setIsTyping(false));
+  }, []);
+
+  useEffect(() => {
+    socket.on("message received", (messageReceived: any) => {
+      setMessages([messageReceived, ...messages]);
+    });
+  });
+
+  useRefreshOnFocus(refetch);
+
+  const { mutate } = usePost({
+    uri: `/users/${user?.id}/chats/${chat?.id}/messages`,
+    onSuccess: (response) => {
+      socket.emit("new message", response.data);
+      setMessage("");
+      refetch();
+    },
+    onError: () => showToast({ message: t("theMessageCouldNotBeSent") }),
+  });
 
   const onSendMessage = () => {
-    setMessage("");
+    if (message.length > 0) {
+      socket.emit("stop typing", chat.id);
+      mutate({ content: { text: message } });
+    }
+  };
+
+  const typingHandler = (text: string) => {
+    setMessage(text);
+
+    if (!socketConnected) return;
+
+    if (!typing) {
+      setTyping(true);
+      socket.emit("typing", chat.id, user);
+    }
+    let lastTypingTime = new Date().getTime();
+    var timerLength = 10000;
+    setTimeout(() => {
+      var timeNow = new Date().getTime();
+      var timeDiff = timeNow - lastTypingTime;
+      if (timeDiff >= timerLength && typing) {
+        socket.emit("stop typing", chat.id);
+        setTyping(false);
+      }
+    }, timerLength);
   };
 
   const handleOpenCamera = () => {
@@ -58,28 +145,37 @@ export const MessagesScreen = ({ route }: IProps) => {
 
   const renderMessage = useCallback(
     ({ item, index }: ListRenderItemInfo<Message>) => {
-      const isSent = user?.id === item.sender.id;
+      const isSent = user?.id === item?.sender?.id;
 
-      switch (true) {
-        case isSent:
+      switch (isSent) {
+        case true:
           return (
             <MessSentItem item={item} dateSame={true} date={item.createdAt} />
           );
-        case !isSent:
+        case false:
           return (
             <MessReceivedItem
-              avatar={[]}
+              avatar={item?.sender?.avatar}
               item={item}
               senderSame={isSenderSame(item, messages[index - 1])}
               dateSame={true}
-              date={item.createdAt}
+              date={item?.createdAt}
             />
           );
-        default:
-          return null;
       }
     },
     []
+  );
+
+  let header = (
+    <>
+      {isTyping && (
+        <Stack direction="row" justify="start" sx={{ margin: 15 }}>
+          <CustomAvatar size={30} avatar={isTypingUser?.avatar} />
+          <Text style={{ marginLeft: 10, color: grey0 }}>Scrie...</Text>
+        </Stack>
+      )}
+    </>
   );
 
   const keyExtractor = useCallback((item: Message) => item?.id, []);
@@ -93,25 +189,40 @@ export const MessagesScreen = ({ route }: IProps) => {
         style={styles.screen}
         keyboardVerticalOffset={10}
       >
-        <FlashList
-          inverted
-          ListFooterComponent={showSpinner}
-          initialScrollIndex={0}
-          data={messages}
-          renderItem={renderMessage}
-          keyExtractor={keyExtractor}
-          contentContainerStyle={styles.flatList}
-          onEndReached={loadMore}
-          onEndReachedThreshold={0.3}
-          estimatedItemSize={100}
-        />
+        {messages?.length > 0 && (
+          <FlashList
+            inverted
+            ListHeaderComponent={header}
+            ListFooterComponent={showSpinner}
+            initialScrollIndex={0}
+            data={messages}
+            renderItem={renderMessage}
+            keyExtractor={keyExtractor}
+            contentContainerStyle={styles.flatList}
+            onEndReached={loadMore}
+            onEndReachedThreshold={0.3}
+            estimatedItemSize={100}
+          />
+        )}
+        {isInitialLoading && <Spinner />}
         <FooterMessageItem
           message={message}
           onOpenCamera={handleOpenCamera}
           onSendMessage={onSendMessage}
-          onChangeText={(text: string) => setMessage(text)}
+          onChangeText={typingHandler}
+          onOpenMediaLibrary={() => sheetRef.current?.present()}
+          onAddEmojy={(emojy: string) =>
+            setMessage((message) => message.concat(emojy))
+          }
         />
       </KeyboardAvoidingView>
+      <SheetModal
+        ref={sheetRef}
+        snapPoints={snapPoints}
+        animationConfig={{ duration: 300 }}
+      >
+        <Text>Hello World</Text>
+      </SheetModal>
     </SafeAreaView>
   );
 };

@@ -480,5 +480,6 @@
   "selectDefaultLanguage": "Selectează limba implicită a aplicaţiei",
   "selectLanguageTranslation": "Selectează limba în care îţi vor fi traduse postările",
   "promotionalOffer": "Ofertă cu reducere",
-  "thisUserDoesNotAllowViewingListOfLikes": "Acest utilizator nu permite vizualizarea listei de aprecieri"
+  "thisUserDoesNotAllowViewingListOfLikes": "Acest utilizator nu permite vizualizarea listei de aprecieri",
+  "theMessageCouldNotBeSent": "The message could not be sent"
 }
