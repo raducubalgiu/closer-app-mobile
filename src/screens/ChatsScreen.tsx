@@ -1,5 +1,5 @@
-import { StyleSheet, SafeAreaView, View } from "react-native";
-import { useState, useCallback } from "react";
+import { StyleSheet, SafeAreaView } from "react-native";
+import { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import {
@@ -8,24 +8,16 @@ import {
   usePaginateActions,
   useRefreshOnFocus,
 } from "../hooks";
-import {
-  SearchBarInput,
-  Header,
-  IconButtonEdit,
-  Heading,
-  Spinner,
-} from "../components/core";
+import { Header, IconButtonEdit, Heading, Spinner } from "../components/core";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../navigation/rootStackParams";
 import { Chat } from "../ts";
-import dayjs from "dayjs";
 import { ChatListItem, NoFoundMessage } from "../components/customized";
 import FakeSearchBarSimple from "../components/customized/FakeSearchBar/FakeSearchBarSimple";
 
 export const ChatsScreen = () => {
   const { user } = useAuth();
-  const [search, setSearch] = useState("");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation("common");
@@ -46,7 +38,16 @@ export const ChatsScreen = () => {
 
   const keyExtractor = useCallback((item: Chat) => item?.id, []);
 
-  const header = <Heading title={t("messages")} sx={{ marginLeft: 15 }} />;
+  const goToSearch = () => {
+    navigation.navigate("MessagesSearch");
+  };
+
+  const header = (
+    <>
+      <FakeSearchBarSimple onPress={goToSearch} sx={{ marginHorizontal: 15 }} />
+      <Heading title={t("messages")} sx={{ marginLeft: 15 }} />
+    </>
+  );
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -57,15 +58,6 @@ export const ChatsScreen = () => {
           <IconButtonEdit onPress={() => navigation.navigate("MessageNew")} />
         }
       />
-      {/* <View style={{ height: 50, paddingHorizontal: 15 }}>
-        <SearchBarInput
-          showCancel={false}
-          placeholder={t("search")}
-          value={search}
-          onChangeText={(text: string) => setSearch(text)}
-        />
-      </View> */}
-      <FakeSearchBarSimple onPress={() => {}} sx={{ marginHorizontal: 15 }} />
 
       {!isInitialLoading && chats.length > 0 && (
         <FlashList

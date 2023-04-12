@@ -19,7 +19,7 @@ const CustomAvatar = ({
   hasStories = false,
   sx = {},
 }: Props) => {
-  const uri = avatar.length ? { uri: `${avatar[0]?.url}` } : NoAvatar;
+  const uri = avatar?.length ? { uri: `${avatar[0]?.url}` } : NoAvatar;
 
   return (
     <LinearGradient

@@ -1,5 +1,5 @@
 import { StyleSheet, Text, Pressable } from "react-native";
-import { Stack, Checkmark } from "../../core";
+import { Stack } from "../../core";
 import CustomAvatar from "../../core/Avatars/CustomAvatar";
 import theme from "../../../../assets/styles/theme";
 import { trimFunc } from "../../../utils";
@@ -14,7 +14,9 @@ const { black, grey0 } = theme.lightColors || {};
 type IProps = { chat: Chat };
 
 export const ChatListItem = ({ chat }: IProps) => {
-  const { name, message, updatedAt } = chat || {};
+  const { summary, latestMessage, updatedAt } = chat || {};
+  const { name, avatar } = summary || {};
+  const { text } = latestMessage || {};
 
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -27,10 +29,10 @@ export const ChatListItem = ({ chat }: IProps) => {
     <Pressable onPress={goToMessages} style={styles.container}>
       <Stack direction="row" align="start">
         <Stack direction="row" align="start" sx={{ flex: 1 }}>
-          <CustomAvatar avatar={[]} size={50} />
+          <CustomAvatar avatar={avatar} size={50} />
           <Stack align="start" sx={{ marginLeft: 10, flex: 1 }}>
             <Text style={styles.name}>{name}</Text>
-            <Text style={styles.message}>{trimFunc(message, 30)}</Text>
+            <Text style={styles.message}>{trimFunc(text, 30)}</Text>
           </Stack>
         </Stack>
         <Text style={styles.date}>{dayjs(updatedAt).format("DD/MM/YY")}</Text>

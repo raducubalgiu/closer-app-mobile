@@ -1,26 +1,39 @@
 import { useNavigation } from "@react-navigation/native";
 import { Pressable, StyleSheet, Text } from "react-native";
 import theme from "../../../../../assets/styles/theme";
-import { Stack, IconBackButton, Checkmark } from "../../../core";
+import { Stack, IconBackButton } from "../../../core";
 import { InfoIconButton } from "../../IconButtons/InfoIconButton";
 import CustomAvatar from "../../../core/Avatars/CustomAvatar";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
 import { Chat } from "../../../../ts";
+import { trimFunc } from "../../../../utils";
 
 const { grey0 } = theme.lightColors || {};
 
-type IProps = {
-  userId: string | undefined;
-  chat: Chat;
-};
+type IProps = { chat: Chat };
 
-export const HeaderMessageItem = ({ userId, chat }: IProps) => {
-  const { name } = chat;
+export const HeaderMessageItem = ({ chat }: IProps) => {
+  const { summary, users, isGroupChat } = chat;
+  const { name, avatar } = summary;
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
-  const goToUser = () => {};
+  const goToUser = () => {
+    if (!isGroupChat) {
+      navigation.push("ProfileGeneral", {
+        username: name,
+        service: null,
+        option: null,
+      });
+    }
+  };
+
+  const goToMessagesSettings = () => {
+    navigation.navigate("ChatSettings", { chat });
+  };
+
+  const displayGroupUsers = users.map((user) => `${user.username}`).toString();
 
   return (
     <Stack direction="row" sx={styles.container}>
@@ -28,17 +41,19 @@ export const HeaderMessageItem = ({ userId, chat }: IProps) => {
         <IconBackButton />
         <Pressable onPress={goToUser}>
           <Stack direction="row">
-            <CustomAvatar size={40} avatar={[]} />
+            <CustomAvatar size={40} avatar={avatar} />
             <Stack align="start" sx={{ marginLeft: 10 }}>
-              <Stack direction="row">
+              <Stack direction="row" sx={{ flex: 1 }}>
                 <Text style={styles.name}>{name}</Text>
               </Stack>
-              <Text style={styles.active}>Active now</Text>
+              <Text style={styles.active}>
+                {isGroupChat ? trimFunc(displayGroupUsers, 30) : "Active now"}
+              </Text>
             </Stack>
           </Stack>
         </Pressable>
       </Stack>
-      <InfoIconButton onPress={() => {}} />
+      <InfoIconButton onPress={goToMessagesSettings} />
     </Stack>
   );
 };
@@ -58,5 +73,6 @@ const styles = StyleSheet.create({
   active: {
     color: grey0,
     fontSize: 13,
+    flexDirection: "row",
   },
 });

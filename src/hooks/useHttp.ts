@@ -1,6 +1,11 @@
 import axios from "axios";
 import { useAuth } from "./auth";
-import { useMutation, useQuery, useInfiniteQuery } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQuery,
+  useInfiniteQuery,
+  UseQueryOptions,
+} from "@tanstack/react-query";
 
 const BASE_ENDPOINT = `${process.env.BASE_ENDPOINT}`;
 
@@ -91,38 +96,25 @@ export const useDelete = ({ uri, onSuccess, onError }: DeleteProps) => {
 type GetProps = {
   model: string;
   uri: string;
-  onSuccess?: (res: any) => void;
-  onError?: (err: any) => void;
-  enabled?: boolean;
   enableId?: string;
-  others?: {};
+  options: Omit<
+    UseQueryOptions<any, unknown, any, (string | false | undefined)[]>,
+    "initialData" | "queryFn" | "queryKey"
+  > & { initialData?: (() => undefined) | undefined };
 };
 
-export const useGet = ({
-  model,
-  uri,
-  onSuccess,
-  onError,
-  enabled = true,
-  enableId = "",
-  others = {},
-}: GetProps) => {
+export const useGet = ({ model, uri, enableId = "", options }: GetProps) => {
   const { user } = useAuth();
 
   const response = useQuery(
-    [model, uri, enabled && enableId],
+    [model, uri, options?.enabled && enableId],
     async ({ signal }) => {
       return await axios.get(`${BASE_ENDPOINT}${uri}`, {
         signal,
         headers: { Authorization: `Bearer ${user?.token}` },
       });
     },
-    {
-      onSuccess,
-      onError,
-      enabled,
-      ...others,
-    }
+    options
   );
 
   return {

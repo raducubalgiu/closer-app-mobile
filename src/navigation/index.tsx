@@ -13,6 +13,9 @@ import {
   AssistanceScreen,
   AddScheduleScreen,
   ClearCacheScreen,
+  CameraScreen,
+  CameraPreviewScreen,
+  ChatSettingsScreen,
   DeleteAccountScreen,
   DeleteAccountPermanentlyScreen,
   DisableAccountScreen,
@@ -60,6 +63,7 @@ import {
   MapScreen,
   MessagesScreen,
   MessageNewScreen,
+  MessagesSearchScreen,
   NotificationsScreen,
   ProductScreen,
   PrivacyScreen,
@@ -84,9 +88,6 @@ import {
   ServiceScreen,
   SavingDataScreen,
   StoryScreen,
-  CameraScreen,
-  CameraPreviewScreen,
-  MessageSettingsScreen,
   PhotoLibraryScreen,
   PhotoAlbumsScreen,
   AddPostScreen,
@@ -188,11 +189,13 @@ const AppNavigation = () => {
             <Stack.Screen name="AddJobs" component={AddJobsScreen} />
             <Stack.Screen name="EditProduct" component={EditProductScreen} />
             <Stack.Screen name="Messages" component={MessagesScreen} />
-            <Stack.Screen
-              name="MessageSettings"
-              component={MessageSettingsScreen}
-            />
+            <Stack.Screen name="ChatSettings" component={ChatSettingsScreen} />
             <Stack.Screen name="MessageNew" component={MessageNewScreen} />
+            <Stack.Screen
+              name="MessagesSearch"
+              component={MessagesSearchScreen}
+              options={{ animationEnabled: false }}
+            />
             <Stack.Screen name="Settings" component={SettingsProfileScreen} />
             <Stack.Screen name="Account" component={AccountScreen} />
             <Stack.Screen name="AccountInfo" component={AccountInfoScreen} />

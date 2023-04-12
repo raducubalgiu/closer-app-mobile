@@ -100,15 +100,9 @@ export type RootStackParams = {
   MyProducts: any;
   MyJobs: any;
   Messages: { chat: Chat };
-  MessageSettings: {
-    _id: string;
-    avatar: any;
-    name: string;
-    username: string;
-    checkmark: Boolean;
-    conversationId: string;
-  };
+  ChatSettings: { chat: Chat };
   MessageNew: any;
+  MessagesSearch: any;
   Notifications: any;
   Privacy: any;
   PrivacyComments: any;

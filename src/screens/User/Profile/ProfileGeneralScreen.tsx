@@ -46,9 +46,11 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
   const { data: userDetails, refetch } = useGet({
     model: "fetchUser",
     uri: `/users/${user?.id}/user/${username}`,
-    onSuccess: (res) => {
-      setIsFollow(res.data.isFollow);
-      setIsBlocked(res.data.isBlocked);
+    options: {
+      onSuccess: (response) => {
+        setIsFollow(response.data.isFollow);
+        setIsBlocked(response.data.isBlocked);
+      },
     },
   });
 

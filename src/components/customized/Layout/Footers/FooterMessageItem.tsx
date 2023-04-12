@@ -63,15 +63,15 @@ export const FooterMessageItem = ({
         {message?.length === 0 && (
           <Stack direction="row">
             <IconButton
-              name="photo-library"
-              type="material"
+              name="image"
+              type="feather"
               size={25}
               onPress={onOpenMediaLibrary}
             />
             <IconButton
               name="sticker-emoji"
               type="material-community"
-              size={25}
+              size={26}
               sx={{ marginLeft: 10 }}
             />
           </Stack>

@@ -15,13 +15,7 @@ import React, {
   useState,
 } from "react";
 import { Camera } from "expo-camera";
-import {
-  usePost,
-  useAuth,
-  useGetPaginate,
-  usePaginateActions,
-  useRefreshOnFocus,
-} from "../hooks";
+import { usePost, useAuth, useGet } from "../hooks";
 import { FooterMessageItem, HeaderMessageItem } from "../components/customized";
 import MessSentItem from "../components/customized/ListItems/MessSentItem";
 import MessReceivedItem from "../components/customized/ListItems/MessReceivedItem";
@@ -52,6 +46,9 @@ export const MessagesScreen = ({ route }: IProps) => {
   const { chat } = route.params;
   const { t } = useTranslation();
   const [permission] = Camera.useCameraPermissions();
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [hasNext, setHasNext] = useState(null);
+  const [page, setPage] = useState(1);
   const [message, setMessage] = useState("");
   const [socketConnected, setSocketConnected] = useState(false);
   const [isTypingUser, setIsTypingUser] = useState<User | null>(null);
@@ -63,17 +60,19 @@ export const MessagesScreen = ({ route }: IProps) => {
   const snapPoints = useMemo(() => [1, height / 1.75, height / 1.1], []);
   const sheetRef = useRef<BottomSheetModal>(null);
 
-  const options = useGetPaginate({
+  const { isPreviousData, isInitialLoading, isRefetching } = useGet({
     model: "messages",
-    uri: `/users/${user?.id}/chats/${chat?.id}/messages`,
-    limit: "20",
-    enabled: !!chat,
+    uri: `/users/${user?.id}/chats/${chat?.id}/messages?page=${page}&limit=20`,
+    options: {
+      onSuccess: (response) => {
+        if (response.data.next !== hasNext) {
+          setHasNext(response.data.next);
+          setMessages((messages) => messages.concat(response.data.results));
+        }
+      },
+      keepPreviousData: true,
+    },
   });
-
-  const { refetch, isInitialLoading } = options;
-  const { data, loadMore, showSpinner } = usePaginateActions(options);
-
-  const [messages, setMessages] = useState(data);
 
   useEffect(() => {
     socket = io(ENDPOINT);
@@ -93,14 +92,11 @@ export const MessagesScreen = ({ route }: IProps) => {
     });
   });
 
-  useRefreshOnFocus(refetch);
-
   const { mutate } = usePost({
     uri: `/users/${user?.id}/chats/${chat?.id}/messages`,
     onSuccess: (response) => {
       socket.emit("new message", response.data);
       setMessage("");
-      refetch();
     },
     onError: () => showToast({ message: t("theMessageCouldNotBeSent") }),
   });
@@ -180,20 +176,30 @@ export const MessagesScreen = ({ route }: IProps) => {
 
   const keyExtractor = useCallback((item: Message) => item?.id, []);
 
+  const loadMore = () => {
+    if (!!hasNext && !isPreviousData) {
+      setPage((page) => page + 1);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.screen}>
-      <HeaderMessageItem userId={user?.id} chat={chat} />
+      <HeaderMessageItem chat={chat} />
       <Divider color="#ddd" />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.screen}
         keyboardVerticalOffset={10}
       >
-        {messages?.length > 0 && (
+        {!isInitialLoading && (
           <FlashList
             inverted
             ListHeaderComponent={header}
-            ListFooterComponent={showSpinner}
+            ListFooterComponent={
+              <>
+                {isRefetching ? <Spinner sx={{ paddingVertical: 30 }} /> : null}
+              </>
+            }
             initialScrollIndex={0}
             data={messages}
             renderItem={renderMessage}
