@@ -21,9 +21,11 @@ export const ScheduleCounterProvider = ({ children }: { children: any }) => {
   useGet({
     model: "currentSchedules",
     uri: `/users/${user?.id}/schedules/current-schedules`,
-    onSuccess: (res) => setCounter(res.data.currentSchedules),
-    enabled: !!user?.id,
     enableId: user?.id,
+    options: {
+      onSuccess: (res) => setCounter(res.data.currentSchedules),
+      enabled: !!user?.id,
+    },
   });
 
   const increaseCounter = () => setCounter((counter) => counter + 1);

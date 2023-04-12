@@ -14,9 +14,7 @@ export const CommentListItem = ({ item, onReply, creatorId }: IProps) => {
 
   const { mutate, isLoading } = useGetMutate({
     uri: `/comments/${item.id}/related-comments?page=1&limit=5`,
-    onSuccess: (res) => {
-      setRelatedComments(res.data.results);
-    },
+    onSuccess: (res) => setRelatedComments(res.data.results),
   });
 
   return (

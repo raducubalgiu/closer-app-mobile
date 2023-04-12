@@ -24,7 +24,9 @@ export const LikeCommentButton = ({
   useGet({
     model: "checkLike",
     uri: likeEndpoints,
-    onSuccess: (res) => setLiked(res.data.status),
+    options: {
+      onSuccess: (response) => setLiked(response.data.status),
+    },
   });
 
   const { mutate: makePost } = usePost({ uri: likeEndpoints });

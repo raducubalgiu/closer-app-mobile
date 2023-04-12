@@ -32,7 +32,9 @@ export const BookmarkButton = ({
   useGet({
     model: "checkBookmark",
     uri: endoints,
-    onSuccess: (res) => setBookmarked(res.data.status),
+    options: {
+      onSuccess: (response) => setBookmarked(response.data.status),
+    },
   });
   const { mutate: makePost } = usePost({
     uri: endoints,

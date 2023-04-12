@@ -46,15 +46,19 @@ export const SearchPostsScreen = ({ route }: IProps) => {
   const { data: users } = useGet({
     model: "search",
     uri: `/users/search?search=${search}&page=1&limit=5`,
-    enabled: !isHashtag && search?.length > 0,
     enableId: search,
+    options: {
+      enabled: !isHashtag && search?.length > 0,
+    },
   });
 
   const { data: hashtags } = useGet({
     model: "searchHashtags",
     uri: `/hashtags/search?search=${search?.split("#")[1]}&page=1&limit=5`,
-    enabled: isHashtag && search?.length > 1,
     enableId: search,
+    options: {
+      enabled: isHashtag && search?.length > 1,
+    },
   });
 
   const { data: recents, refetch } = useGet({

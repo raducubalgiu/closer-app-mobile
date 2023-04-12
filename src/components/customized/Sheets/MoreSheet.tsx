@@ -21,8 +21,10 @@ const MoreSheet = ({ postId, userId }: IProps) => {
   const { isLoading } = useGet({
     model: "checkBookmark",
     uri: endoints,
-    enabled: isFocused,
-    onSuccess: (res) => setBookmarked(res.data.status),
+    options: {
+      enabled: isFocused,
+      onSuccess: (res) => setBookmarked(res.data.status),
+    },
   });
   const { mutate: makePost } = usePost({ uri: endoints });
   const { mutate: makeDelete } = useDelete({ uri: endoints });

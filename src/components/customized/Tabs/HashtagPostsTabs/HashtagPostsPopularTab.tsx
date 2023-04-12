@@ -27,7 +27,7 @@ export const HashtagPostsPopularTab = ({
 
   const options = useGetPaginate({
     model: "hPopular",
-    uri: `/users/${user.id}/hashtags/${name}/posts/popular`,
+    uri: `/users/${user?.id}/hashtags/${name}/posts/popular`,
     limit: "27",
     enabled: isFocused,
   });

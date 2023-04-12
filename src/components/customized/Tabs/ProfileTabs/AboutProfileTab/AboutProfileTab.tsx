@@ -4,7 +4,7 @@ import { useIsFocused } from "@react-navigation/native";
 import { SheetModal } from "../../../../core";
 import { useGet } from "../../../../../hooks";
 import Animated from "react-native-reanimated";
-import { User } from "../../../../../models";
+import { User } from "../../../../../ts";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import AboutDescription from "./sections/AboutDescription";
 import AboutInfo from "./sections/AboutInfo";
@@ -29,8 +29,10 @@ const AboutProfileTab = forwardRef((props: IProps, ref: any) => {
   const { data: location, isLoading } = useGet({
     model: "location",
     uri: `/locations/${locationId}`,
-    enabled: isFocused && !!locationId,
     enableId: locationId,
+    options: {
+      enabled: isFocused && !!locationId,
+    },
   });
 
   const { ownerId } = location || {};

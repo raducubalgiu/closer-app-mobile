@@ -38,7 +38,9 @@ const RatingListItem = ({
   useGet({
     model: "checkLike",
     uri: endpoint,
-    onSuccess: (res) => setLiked(res.data.status),
+    options: {
+      onSuccess: (res) => setLiked(res.data.status),
+    },
   });
 
   const { mutate: like } = usePost({ uri: endpoint });

@@ -48,9 +48,11 @@ export const CommentsScreen = ({ route }: IProps) => {
   const { isLoading, isFetching } = useGet({
     model: "comments",
     uri: `/posts/${id}/comments?page=${page}&limit=25`,
-    onSuccess: (res) => {
-      setNext(res.data.next);
-      setComments((comments) => comments.concat(res.data.results));
+    options: {
+      onSuccess: (res) => {
+        setNext(res.data.next);
+        setComments((comments) => comments.concat(res.data.results));
+      },
     },
   });
 

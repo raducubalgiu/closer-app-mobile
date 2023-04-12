@@ -36,7 +36,9 @@ export const MyLocationScreen = () => {
   const { data } = useGet({
     model: "myLocation",
     uri: `/users/${user?.id}/locations/${user?.locationId}`,
-    onError: () => showToast({ message: t("somethingWentWrong") }),
+    options: {
+      onError: () => showToast({ message: t("somethingWentWrong") }),
+    },
   });
 
   const { coordinates } = data?.address || {};

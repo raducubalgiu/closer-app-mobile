@@ -43,7 +43,9 @@ export const AddServicesScreen = () => {
   const { isLoading: isLoadingServices } = useGet({
     model: "services",
     uri: `/users/${user?.id}/locations/${user?.locationId}/services`,
-    onSuccess: (res) => setServices(res.data),
+    options: {
+      onSuccess: (res) => setServices(res.data),
+    },
   });
 
   const { mutate: addService, isLoading: isLoadingAdd } = usePatch({

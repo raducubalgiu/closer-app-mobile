@@ -62,22 +62,21 @@ export const AddScheduleScreen = ({ route }: IProps) => {
   const { data: services } = useGet({
     model: "services",
     uri: `/locations/${user?.locationId}/services`,
-    others: { staleTime: 600000 },
+    options: { staleTime: 600000 },
   });
 
   const { data: filters } = useGet({
     model: "filters",
     uri: `/services/${selectedService}/filters`,
-    enabled: !!selectedService,
     enableId: selectedService,
-    others: { staleTime: 600000 },
+    options: { staleTime: 600000, enabled: !!selectedService },
   });
 
   const { data: products } = useGet({
     model: "products",
     uri: `/users/${user?.id}/services/${selectedService}/products?option=${selectedOption}`,
-    enabled: !!selectedOption,
     enableId: selectedOption,
+    options: { enabled: !!selectedOption },
   });
 
   const { mutate, isLoading } = usePost({

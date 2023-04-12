@@ -113,19 +113,21 @@ export const MapScreen = ({ route }: IProps) => {
   } = useGet({
     model: "locations",
     uri: `/locations/map?latlng=${location?.coords?.longitude},${location?.coords?.latitude}&professionId=${profession}`,
-    onSuccess: () => {
-      setRegion({
-        latitude: initialCoordinates[0],
-        longitude: initialCoordinates[1],
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      });
-      mapRef.current?.animateToRegion({
-        latitude: initialCoordinates[0],
-        longitude: initialCoordinates[1],
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      });
+    options: {
+      onSuccess: () => {
+        setRegion({
+          latitude: initialCoordinates[0],
+          longitude: initialCoordinates[1],
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        });
+        mapRef.current?.animateToRegion({
+          latitude: initialCoordinates[0],
+          longitude: initialCoordinates[1],
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        });
+      },
     },
   });
 

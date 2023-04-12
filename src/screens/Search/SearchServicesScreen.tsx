@@ -33,8 +33,10 @@ export const SearchServicesScreen = ({ route }: IProps) => {
   const { data: services, isLoading } = useGet({
     model: "searchServices",
     uri: `/services/search?search=${search}&page=1&limit=5`,
-    enabled: !!search,
     enableId: search,
+    options: {
+      enabled: !!search,
+    },
   });
 
   const { results } = services || [];

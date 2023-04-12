@@ -1,4 +1,4 @@
-import { Service } from "../../../../models/service";
+import { Service } from "../../../../ts";
 import { TopTabServices } from "../TopTabContainer/TopTabServices";
 import { useGet } from "../../../../hooks";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";

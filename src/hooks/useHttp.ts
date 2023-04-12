@@ -97,7 +97,7 @@ type GetProps = {
   model: string;
   uri: string;
   enableId?: string;
-  options: Omit<
+  options?: Omit<
     UseQueryOptions<any, unknown, any, (string | false | undefined)[]>,
     "initialData" | "queryFn" | "queryKey"
   > & { initialData?: (() => undefined) | undefined };

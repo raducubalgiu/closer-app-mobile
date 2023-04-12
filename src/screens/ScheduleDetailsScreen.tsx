@@ -54,8 +54,10 @@ export const ScheduleDetailsScreen = ({ route }: IProps) => {
   const { data } = useGet({
     model: "location",
     uri: `/users/${ownerId?.id}/locations/${locationId}`,
-    onError: () =>
-      showToast({ message: "Nu au fost obtinute detaliile despre locatie" }),
+    options: {
+      onError: () =>
+        showToast({ message: "Nu au fost obtinute detaliile despre locatie" }),
+    },
   });
 
   const { address } = data || {};

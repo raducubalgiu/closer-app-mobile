@@ -84,8 +84,7 @@ export const MyCalendarScreen = () => {
     <NoFoundMessage
       title={t("closed")}
       description={t("noFoundAvailableProgram")}
-      iconName="calendar-clock"
-      iconType="material-community"
+      iconProps={{ name: "calendar-clock", type: "material-community" }}
     />
   );
 
