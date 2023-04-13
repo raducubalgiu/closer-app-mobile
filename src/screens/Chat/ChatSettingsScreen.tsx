@@ -37,7 +37,7 @@ export const ChatSettingsScreen = ({ route }: IProps) => {
         option: null,
       });
     } else {
-      navigation.push("ChatGroupSettings", { chat });
+      navigation.push("ChatGroupSettings", { chatId: chat.id });
     }
   };
 
@@ -61,51 +61,42 @@ export const ChatSettingsScreen = ({ route }: IProps) => {
         <Stack direction="row" sx={{ padding: 15 }}>
           <Stack direction="row">
             <CustomAvatar avatar={avatar} size={55} />
-            <Text
-              style={{
-                fontSize: 16,
-                color: black,
-                fontWeight: "500",
-                marginLeft: 10,
-              }}
-            >
-              {name}
-            </Text>
+            <Stack align="start" sx={{ marginLeft: 10 }}>
+              <Text style={styles.name}>{name}</Text>
+              {isGroupChat && (
+                <Text style={styles.groupSettings}>{t("groupSettings")}</Text>
+              )}
+            </Stack>
           </Stack>
           <Icon name="chevron-right" type="feather" color={grey0} />
         </Stack>
       </Pressable>
       <Stack sx={{ paddingHorizontal: 15 }} align="start">
         <Heading title={t("actions")} sx={styles.heading} />
-        <SettingsSwitchListItem
-          value={false}
-          title={t("stopMessages")}
-          onValueChange={() => {}}
-        />
+        {!isGroupChat && (
+          <SettingsSwitchListItem
+            value={false}
+            title={t("stopMessages")}
+            onValueChange={() => {}}
+          />
+        )}
         <SettingsSwitchListItem
           value={false}
           title={t("disableNotifications")}
           onValueChange={() => {}}
         />
-        <SettingsSwitchListItem
-          value={isBlocked}
-          title={t("block")}
-          onValueChange={() => {
-            setIsBlocked(true);
-            block({});
-          }}
-        />
-        <Pressable onPress={() => {}}>
-          <Text
-            style={{
-              color: error,
-              fontSize: 15,
-              paddingVertical: 15,
-              fontWeight: "500",
+        {!isGroupChat && (
+          <SettingsSwitchListItem
+            value={isBlocked}
+            title={t("block")}
+            onValueChange={() => {
+              setIsBlocked(true);
+              block({});
             }}
-          >
-            {t("deleteConversation")}
-          </Text>
+          />
+        )}
+        <Pressable onPress={() => {}}>
+          <Text style={styles.deleteConv}>{t("deleteConversation")}</Text>
         </Pressable>
       </Stack>
     </SafeAreaView>
@@ -118,4 +109,20 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   heading: { fontSize: 16, fontWeight: "600", marginBottom: 20 },
+  name: {
+    fontSize: 16,
+    color: black,
+    fontWeight: "500",
+  },
+  groupSettings: {
+    color: grey0,
+    fontSize: 15,
+    marginTop: 2.5,
+  },
+  deleteConv: {
+    color: error,
+    fontSize: 16,
+    paddingVertical: 20,
+    fontWeight: "500",
+  },
 });

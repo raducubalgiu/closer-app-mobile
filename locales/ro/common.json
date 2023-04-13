@@ -490,5 +490,8 @@
   "mediaPostsAndProducts": "Media, postări şi produse",
   "nameOfGroup": "Numele grupului",
   "changeGroupName": "Schimbă numele grupului",
-  "logoutFromGroup": "Ieşi din grup"
+  "logoutFromGroup": "Ieşi din grup",
+  "administrator": "Administrator",
+  "youChangedSuccessfullyNameOfGroup": "Ai schimbat cu succes numele grupului",
+  "groupSettings": "Setările grupului"
 }

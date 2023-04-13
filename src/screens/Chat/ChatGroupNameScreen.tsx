@@ -1,22 +1,38 @@
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import { Button, FormTextField, Header, Stack } from "../../components/core";
+import { SafeAreaView, StyleSheet, View } from "react-native";
+import { Button, FormTextField, Header } from "../../components/core";
 import { useTranslation } from "react-i18next";
 import { FormProvider, useForm } from "react-hook-form";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../navigation/rootStackParams";
+import { useAuth, usePatch } from "../../hooks";
+import { useNavigation } from "@react-navigation/native";
+import { showToast } from "../../utils";
 
 type IProps = NativeStackScreenProps<RootStackParams, "ChatGroupName">;
 
 export const ChatGroupNameScreen = ({ route }: IProps) => {
-  const { name } = route.params;
+  const { user } = useAuth();
+  const { name, chatId } = route.params;
   const { t } = useTranslation();
   const methods = useForm({ defaultValues: { name } });
   const {
     handleSubmit,
     formState: { isDirty },
   } = methods;
+  const navigation = useNavigation();
 
-  const handleChangeName = (data: any) => {};
+  const { mutate, isLoading } = usePatch({
+    uri: `/users/${user?.id}/chats/${chatId}/groups/rename`,
+    onSuccess: () => {
+      showToast({ message: t("youChangedSuccessfullyNameOfGroup") });
+      navigation.goBack();
+    },
+  });
+
+  const handleChangeName = (data: any) => {
+    const { name } = data;
+    mutate({ chatId, name });
+  };
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -30,8 +46,9 @@ export const ChatGroupNameScreen = ({ route }: IProps) => {
           />
           <Button
             title={t("save")}
-            disabled={!isDirty}
+            disabled={!isDirty || isLoading}
             onPress={handleSubmit(handleChangeName)}
+            loading={isLoading}
           />
         </FormProvider>
       </View>

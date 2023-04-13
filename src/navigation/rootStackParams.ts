@@ -47,7 +47,7 @@ export type RootStackParams = {
   ChatSettings: { chat: Chat };
   ChatGroupSettings: { chatId: string };
   ChatGroupUsers: { users: { user: User; isAdmin: boolean }[] | undefined };
-  ChatGroupName: { name: string | undefined };
+  ChatGroupName: { name: string | undefined; chatId: string | undefined };
   ClearCache: any;
   DeleteAccount: any;
   DeleteAccountPermanently: any;

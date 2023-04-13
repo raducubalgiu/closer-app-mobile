@@ -12,5 +12,6 @@ export interface ChatGroup {
     seenBy: User[];
   };
   isGroupChat: boolean;
+  isAdmin: boolean;
   updatedAt: string;
 }

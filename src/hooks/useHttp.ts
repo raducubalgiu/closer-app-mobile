@@ -5,6 +5,7 @@ import {
   useQuery,
   useInfiniteQuery,
   UseQueryOptions,
+  UseQueryResult,
 } from "@tanstack/react-query";
 import { Chat } from "../ts";
 
@@ -104,7 +105,12 @@ export function useGet<TData>({
   uri: string;
   enableId?: string;
   options?: Omit<
-    UseQueryOptions<any, unknown, TData, (string | false | undefined)[]>,
+    UseQueryOptions<
+      any,
+      unknown,
+      UseQueryResult<TData, Error>,
+      (string | false | undefined)[]
+    >,
     "initialData" | "queryFn" | "queryKey"
   > & { initialData?: (() => undefined) | undefined };
 }) {
@@ -123,7 +129,10 @@ export function useGet<TData>({
     }
   );
 
-  return response;
+  return {
+    ...response,
+    data: response.data?.data,
+  };
 }
 
 type GetMutateProps = {

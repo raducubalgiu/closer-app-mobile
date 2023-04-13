@@ -5,6 +5,7 @@ import {
   Platform,
   Text,
   useWindowDimensions,
+  Keyboard,
 } from "react-native";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import React, {
@@ -46,9 +47,7 @@ const ENDPOINT = "http://192.168.100.2:8000";
 let socket: any;
 
 type IProps = NativeStackScreenProps<RootStackParams, "Messages">;
-type MessageResponse = {
-  data: { next: number | null; results: Message[] };
-};
+type MessageResponse = { next: number | null; results: Message[] | [] };
 
 export const MessagesScreen = ({ route }: IProps) => {
   const { user } = useAuth();
@@ -56,7 +55,7 @@ export const MessagesScreen = ({ route }: IProps) => {
   const { t } = useTranslation();
   const [permission] = Camera.useCameraPermissions();
   const [messages, setMessages] = useState<Message[]>([]);
-  const [hasNext, setHasNext] = useState<null | number>(null);
+  const [hasNext, setHasNext] = useState<null | number | undefined>(null);
   const [page, setPage] = useState(1);
   const [message, setMessage] = useState("");
   const [socketConnected, setSocketConnected] = useState(false);
@@ -75,10 +74,15 @@ export const MessagesScreen = ({ route }: IProps) => {
       uri: `/users/${user?.id}/chats/${chat?.id}/messages?page=${page}&limit=20`,
       options: {
         onSuccess(response) {
-          setHasNext(response.data.next);
-          setMessages((messages) => messages.concat(response.data.results));
+          if (response.data) {
+            setHasNext(response?.data?.next);
+            setMessages((messages) =>
+              messages?.concat(response?.data?.results)
+            );
+          }
         },
         keepPreviousData: true,
+        enabled: !!chat.id,
       },
     });
 
@@ -240,7 +244,10 @@ export const MessagesScreen = ({ route }: IProps) => {
           onOpenCamera={handleOpenCamera}
           onSendMessage={() => onSendMessage({ content: { text: message } })}
           onChangeText={typingHandler}
-          onOpenMediaLibrary={() => sheetRef.current?.present()}
+          onOpenMediaLibrary={() => {
+            Keyboard.dismiss();
+            sheetRef.current?.present();
+          }}
           onAddEmojy={(emojy: string) =>
             setMessage((message) => message.concat(emojy))
           }

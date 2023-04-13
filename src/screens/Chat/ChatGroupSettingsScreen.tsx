@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next";
 import { Icon } from "@rneui/themed";
 import theme from "../../../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
-import { useAuth, useGet } from "../../hooks";
+import { useAuth, useGet, useRefreshOnFocus } from "../../hooks";
 import { ChatGroup } from "../../ts/interfaces/chatGroup";
 
 const { error } = theme.lightColors || {};
@@ -24,35 +24,33 @@ export const ChatGroupSettingsScreen = ({ route }: IProps) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
-  const { data: chat } = useGet<ChatGroup>({
+  const { data: chat, refetch } = useGet<ChatGroup>({
     model: "groupDetails",
     uri: `/users/${user?.id}/chats/${chatId}`,
   });
 
-  const { users, summary } = chat || {};
+  useRefreshOnFocus(refetch);
+
+  const { users, summary, isAdmin } = chat || {};
 
   const displayUsers = users
-    ?.splice(0, 2)
     ?.map((el) => `${el.user.username} `)
+    ?.splice(0, 2)
     .toString();
 
   const andOthers = users && users?.length > 1 ? t("andSomeoneElse") : "";
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Header title={name} />
+      <Header title={summary?.name} />
       <Stack align="start" sx={{ margin: 15 }}>
         <SettingsListItem
           title={t("persons")}
-          description={trimFunc(`${displayUsers} ${andOthers}`, 45)}
-          onPress={() => navigation.navigate("ChatGroupUsers", { users })}
+          description={trimFunc(`${displayUsers} ${andOthers}`, 40)}
+          onPress={() =>
+            navigation.navigate("ChatGroupUsers", { users: chat?.users })
+          }
           iconLeftProps={{ name: "users" }}
-        />
-        <SettingsListItem
-          title={t("addPersons")}
-          description={t("addNewPersons")}
-          onPress={() => {}}
-          iconLeftProps={{ name: "user-plus" }}
         />
         <SettingsListItem
           title={t("media")}
@@ -60,14 +58,27 @@ export const ChatGroupSettingsScreen = ({ route }: IProps) => {
           onPress={() => {}}
           iconLeftProps={{ name: "image" }}
         />
-        <SettingsListItem
-          title={t("nameOfGroup")}
-          description={t("changeGroupName")}
-          onPress={() =>
-            navigation.navigate("ChatGroupName", { name: summary?.name })
-          }
-          iconLeftProps={{ name: "at-sign" }}
-        />
+        {isAdmin && (
+          <>
+            <SettingsListItem
+              title={t("addPersons")}
+              description={t("addNewPersons")}
+              onPress={() => {}}
+              iconLeftProps={{ name: "user-plus" }}
+            />
+            <SettingsListItem
+              title={t("nameOfGroup")}
+              description={t("changeGroupName")}
+              onPress={() =>
+                navigation.navigate("ChatGroupName", {
+                  name: summary?.name,
+                  chatId: chat?.id,
+                })
+              }
+              iconLeftProps={{ name: "at-sign" }}
+            />
+          </>
+        )}
         <Pressable>
           <Stack direction="row">
             <Icon name="log-out" type="feather" color={error} />
