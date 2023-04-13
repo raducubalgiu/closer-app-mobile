@@ -7,14 +7,19 @@ import {
   useGetPaginate,
   usePaginateActions,
   useRefreshOnFocus,
-} from "../hooks";
-import { Header, IconButtonEdit, Heading, Spinner } from "../components/core";
+} from "../../hooks";
+import {
+  Header,
+  IconButtonEdit,
+  Heading,
+  Spinner,
+} from "../../components/core";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../navigation/rootStackParams";
-import { Chat } from "../ts";
-import { ChatListItem, NoFoundMessage } from "../components/customized";
-import FakeSearchBarSimple from "../components/customized/FakeSearchBar/FakeSearchBarSimple";
+import { RootStackParams } from "../../navigation/rootStackParams";
+import { Chat } from "../../ts";
+import { ChatListItem, NoFoundMessage } from "../../components/customized";
+import FakeSearchBarSimple from "../../components/customized/FakeSearchBar/FakeSearchBarSimple";
 
 export const ChatsScreen = () => {
   const { user } = useAuth();

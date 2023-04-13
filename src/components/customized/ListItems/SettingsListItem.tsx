@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   title: {
     color: black,
     fontWeight: "600",
-    fontSize: 15,
+    fontSize: 16,
   },
   description: {
     color: grey0,

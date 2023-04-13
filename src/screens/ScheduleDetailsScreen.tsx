@@ -64,11 +64,7 @@ export const ScheduleDetailsScreen = ({ route }: IProps) => {
 
   const goToOwner = () =>
     navigation.push("ProfileGeneral", {
-      userId: ownerId.id,
       username,
-      name,
-      avatar,
-      checkmark,
       service: null,
       option: null,
     });

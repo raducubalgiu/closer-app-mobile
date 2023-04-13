@@ -2,18 +2,18 @@ import { useNavigation } from "@react-navigation/native";
 import { Icon } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView, StyleSheet, Text, Pressable } from "react-native";
-import theme from "../../assets/styles/theme";
+import theme from "../../../assets/styles/theme";
 import * as Haptics from "expo-haptics";
-import { Header, Heading, Stack } from "../components/core";
-import CustomAvatar from "../components/core/Avatars/CustomAvatar";
-import { SettingsSwitchListItem } from "../components/customized";
-import { useAuth, usePost } from "../hooks";
+import { Header, Heading, Stack } from "../../components/core";
+import CustomAvatar from "../../components/core/Avatars/CustomAvatar";
+import { SettingsSwitchListItem } from "../../components/customized";
+import { useAuth, usePost } from "../../hooks";
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import { RootStackParams } from "../navigation/rootStackParams";
-import { showToast } from "../utils";
+import { RootStackParams } from "../../navigation/rootStackParams";
+import { showToast } from "../../utils";
 import { useState } from "react";
 
 const { grey0, black, error } = theme.lightColors || {};
@@ -22,6 +22,7 @@ type IProps = NativeStackScreenProps<RootStackParams, "ChatSettings">;
 export const ChatSettingsScreen = ({ route }: IProps) => {
   const { user } = useAuth();
   const [isBlocked, setIsBlocked] = useState(false);
+  const { chat } = route.params;
   const { summary, isGroupChat, id } = route.params.chat;
   const { avatar, name } = summary;
   const navigation =
@@ -35,6 +36,8 @@ export const ChatSettingsScreen = ({ route }: IProps) => {
         service: null,
         option: null,
       });
+    } else {
+      navigation.push("ChatGroupSettings", { chat });
     }
   };
 

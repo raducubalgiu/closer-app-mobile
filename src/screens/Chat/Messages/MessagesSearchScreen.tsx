@@ -1,6 +1,6 @@
 import { Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
-import { Header, SearchBarInput, Stack } from "../components/core";
+import { Header, SearchBarInput, Stack } from "../../../components/core";
 import { useNavigation } from "@react-navigation/native";
 
 export const MessagesSearchScreen = () => {

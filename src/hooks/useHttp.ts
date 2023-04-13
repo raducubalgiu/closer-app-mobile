@@ -6,6 +6,7 @@ import {
   useInfiniteQuery,
   UseQueryOptions,
 } from "@tanstack/react-query";
+import { Chat } from "../ts";
 
 const BASE_ENDPOINT = `${process.env.BASE_ENDPOINT}`;
 
@@ -93,35 +94,37 @@ export const useDelete = ({ uri, onSuccess, onError }: DeleteProps) => {
   return mutations;
 };
 
-type GetProps = {
+export function useGet<TData>({
+  model,
+  uri,
+  enableId = "",
+  options,
+}: {
   model: string;
   uri: string;
   enableId?: string;
   options?: Omit<
-    UseQueryOptions<any, unknown, any, (string | false | undefined)[]>,
+    UseQueryOptions<any, unknown, TData, (string | false | undefined)[]>,
     "initialData" | "queryFn" | "queryKey"
   > & { initialData?: (() => undefined) | undefined };
-};
-
-export const useGet = ({ model, uri, enableId = "", options }: GetProps) => {
+}) {
   const { user } = useAuth();
 
   const response = useQuery(
-    [model, uri, options?.enabled && enableId],
+    [model, uri, options?.hasOwnProperty("enabled") && enableId],
     async ({ signal }) => {
-      return await axios.get(`${BASE_ENDPOINT}${uri}`, {
+      return await axios.get<TData>(`${BASE_ENDPOINT}${uri}`, {
         signal,
         headers: { Authorization: `Bearer ${user?.token}` },
       });
     },
-    options
+    {
+      ...options,
+    }
   );
 
-  return {
-    ...response,
-    data: response?.data?.data,
-  };
-};
+  return response;
+}
 
 type GetMutateProps = {
   uri: string;

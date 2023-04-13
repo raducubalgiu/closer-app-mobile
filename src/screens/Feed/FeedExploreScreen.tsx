@@ -1,4 +1,10 @@
-import { StyleSheet, RefreshControl, SafeAreaView } from "react-native";
+import {
+  StyleSheet,
+  SafeAreaView,
+  FlatList,
+  ListRenderItemInfo,
+  ViewToken,
+} from "react-native";
 import { useCallback, useRef, useState } from "react";
 import { useNavigation, useScrollToTop } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
@@ -6,21 +12,15 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Spinner } from "../../components/core";
 import { HeaderFeed } from "../../components/customized";
 import { Divider } from "@rneui/themed";
-import {
-  useAuth,
-  useGetPaginate,
-  usePaginateActions,
-  usePost,
-  useRefreshByUser,
-} from "../../hooks";
+import { useAuth, useGet, usePost } from "../../hooks";
 import { Post } from "../../ts";
 import { RootStackParams } from "../../navigation/rootStackParams";
 import HeadingAction from "../../components/core/Heading/HeadingAction";
 import VideoOverviewListItem from "../../components/customized/ListItems/Video/VideoOverviewListItem/VideoOverviewListItem";
-import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import PostImageListItem from "../../components/customized/ListItems/Post/PostImageListItem";
 import PostVideoListItem from "../../components/customized/ListItems/Post/PostVideoListItem";
 import PostCarouselListItem from "../../components/customized/ListItems/Post/PostCarouselListItem";
+import { filter } from "lodash";
 
 type PostListItem = {
   id: string;
@@ -31,46 +31,39 @@ type PostListItem = {
 
 export const FeedExploreScreen = () => {
   const { user } = useAuth();
-  const ref = useRef<FlashList<PostListItem>>(null);
+  const [posts, setPosts] = useState<PostListItem[]>([]);
+  const [hasNext, setHasNext] = useState<null | number>(null);
+  const [page, setPage] = useState(1);
+  const ref = useRef<any>(null);
   const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const [visibleItem, setVisibleItem] = useState<PostListItem | null>(null);
-  //useScrollToTop(ref);
+  useScrollToTop(ref);
 
-  const postsOptions = useGetPaginate({
-    model: "allPosts",
-    uri: `/users/${user?.id}/posts/get-all-posts`,
-    limit: "20",
+  const { isInitialLoading, isPreviousData, isRefetching } = useGet({
+    model: "posts",
+    uri: `/users/${user?.id}/posts/get-all-posts?page=${page}&limit=20`,
+    options: {
+      onSuccess: (response) => {
+        if (response.data.next !== hasNext) {
+          setHasNext(response.data.next);
+          setPosts((posts) => posts.concat(response.data.results));
+        }
+      },
+      keepPreviousData: true,
+    },
   });
 
-  const videosOptions = useGetPaginate({
-    model: "allPosts",
-    uri: `/posts/get-all-posts`,
-    limit: "5",
-    queries: "postType=video&orientation=portrait",
+  const { data: videos } = useGet({
+    model: "videos",
+    uri: `/users/${user?.id}/posts/get-all-posts?page=1&limit=5&postType=video`,
   });
 
-  const {
-    isLoading: isLoadingPosts,
-    isFetchingNextPage,
-    refetch,
-  } = postsOptions;
-
-  const {
-    data: posts,
-    loadMore,
-    showSpinner,
-  } = usePaginateActions(postsOptions);
-
-  const { isLoading: isLoadingVideos } = videosOptions;
-  const { data: videos } = usePaginateActions(videosOptions);
-  const loading = (isLoadingPosts || isLoadingVideos) && !isFetchingNextPage;
-
-  const { refreshing, refetchByUser } = useRefreshByUser(refetch);
-  const refreshControl = (
-    <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
-  );
+  // const { refreshing, refetchByUser } = useRefreshByUser(refetch);
+  // const refreshControl = (
+  //   <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
+  // );
 
   const renderPost = useCallback(
     ({ item }: ListRenderItemInfo<PostListItem>) => {
@@ -141,7 +134,7 @@ export const FeedExploreScreen = () => {
     });
   };
 
-  const trackPost = useCallback((item: any) => {
+  const trackPost = useCallback((item: PostListItem) => {
     setVisibleItem(item);
   }, []);
 
@@ -159,12 +152,15 @@ export const FeedExploreScreen = () => {
     mutate({ postId: post.id, userId: user?.id, from: "explore" });
   }, []);
 
-  const onViewableSaveView = useCallback((info: { changed: any }): void => {
-    const visibleItems = info.changed.filter((entry: any) => entry.isViewable);
-    visibleItems.forEach((visible: any) => {
-      saveView(visible.item);
-    });
-  }, []);
+  const onViewableSaveView = useCallback(
+    (info: { changed: Array<ViewToken> }): void => {
+      const visibleItems = filter(info.changed, { isViewable: true });
+      visibleItems.forEach((visible: ViewToken) => {
+        saveView(visible.item);
+      });
+    },
+    []
+  );
 
   const viewabilityConfigCallbackPairs = useRef([
     {
@@ -177,11 +173,21 @@ export const FeedExploreScreen = () => {
     },
   ]);
 
+  const loadMore = () => {
+    if (!!hasNext && !isPreviousData) {
+      setPage((page) => page + 1);
+    }
+  };
+
+  const footer = (
+    <>{isRefetching ? <Spinner sx={{ paddingVertical: 30 }} /> : null}</>
+  );
+
   return (
     <SafeAreaView style={styles.screen}>
       <HeaderFeed indexLabel={0} />
-      {!loading && (
-        <FlashList
+      {!isInitialLoading && (
+        <FlatList
           ref={ref}
           ListHeaderComponent={
             <>
@@ -189,33 +195,32 @@ export const FeedExploreScreen = () => {
                 title={t("videoclips")}
                 onPress={() => goToVideoExplore(videos[0], 0)}
               />
-              <FlashList
+              <FlatList
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                data={videos}
+                data={videos?.results}
                 keyExtractor={keyExtractorVideo}
                 renderItem={renderVideo}
                 contentContainerStyle={styles.flatList}
-                estimatedItemSize={214}
               />
               <Divider color="#ddd" style={{ marginTop: 15 }} />
             </>
           }
-          refreshControl={refreshControl}
+          //refreshControl={refreshControl}
           data={posts}
           renderItem={renderPost}
           keyExtractor={keyExtractor}
           showsVerticalScrollIndicator={false}
-          ListFooterComponent={showSpinner}
+          ListFooterComponent={footer}
           onEndReached={loadMore}
           onEndReachedThreshold={0.3}
           viewabilityConfigCallbackPairs={
             viewabilityConfigCallbackPairs.current
           }
-          estimatedItemSize={725}
+          //estimatedItemSize={725}
         />
       )}
-      {loading && <Spinner />}
+      {isInitialLoading && <Spinner />}
     </SafeAreaView>
   );
 };

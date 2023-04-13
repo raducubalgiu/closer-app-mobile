@@ -15,31 +15,40 @@ import React, {
   useState,
 } from "react";
 import { Camera } from "expo-camera";
-import { usePost, useAuth, useGet } from "../hooks";
-import { FooterMessageItem, HeaderMessageItem } from "../components/customized";
-import MessSentItem from "../components/customized/ListItems/MessSentItem";
-import MessReceivedItem from "../components/customized/ListItems/MessReceivedItem";
+import { usePost, useAuth, useGet } from "../../../hooks";
+import {
+  FooterMessageItem,
+  HeaderMessageItem,
+} from "../../../components/customized";
+import MessSentItem from "../../../components/customized/ListItems/MessSentItem";
+import MessReceivedItem from "../../../components/customized/ListItems/MessReceivedItem";
 import { Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import { RootStackParams } from "../navigation/rootStackParams";
-import { Message, User } from "../ts";
-import { showToast } from "../utils";
+import { RootStackParams } from "../../../navigation/rootStackParams";
+import { Message, User } from "../../../ts";
+import { showToast } from "../../../utils";
 import io from "socket.io-client";
-import { SheetModal, Spinner, Stack } from "../components/core";
-import CustomAvatar from "../components/core/Avatars/CustomAvatar";
-import theme from "../../assets/styles/theme";
+import { SheetModal, Spinner, Stack } from "../../../components/core";
+import CustomAvatar from "../../../components/core/Avatars/CustomAvatar";
+import theme from "../../../../assets/styles/theme";
 import { useTranslation } from "react-i18next";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import dayjs from "dayjs";
+import { MessageContent } from "../../../ts/interfaces/message";
 
-type IProps = NativeStackScreenProps<RootStackParams, "Messages">;
 const { grey0 } = theme.lightColors || {};
 
 const ENDPOINT = "http://192.168.100.2:8000";
 let socket: any;
+
+type IProps = NativeStackScreenProps<RootStackParams, "Messages">;
+type MessageResponse = {
+  data: { next: number | null; results: Message[] };
+};
 
 export const MessagesScreen = ({ route }: IProps) => {
   const { user } = useAuth();
@@ -47,7 +56,7 @@ export const MessagesScreen = ({ route }: IProps) => {
   const { t } = useTranslation();
   const [permission] = Camera.useCameraPermissions();
   const [messages, setMessages] = useState<Message[]>([]);
-  const [hasNext, setHasNext] = useState(null);
+  const [hasNext, setHasNext] = useState<null | number>(null);
   const [page, setPage] = useState(1);
   const [message, setMessage] = useState("");
   const [socketConnected, setSocketConnected] = useState(false);
@@ -60,19 +69,18 @@ export const MessagesScreen = ({ route }: IProps) => {
   const snapPoints = useMemo(() => [1, height / 1.75, height / 1.1], []);
   const sheetRef = useRef<BottomSheetModal>(null);
 
-  const { isPreviousData, isInitialLoading, isRefetching } = useGet({
-    model: "messages",
-    uri: `/users/${user?.id}/chats/${chat?.id}/messages?page=${page}&limit=20`,
-    options: {
-      onSuccess: (response) => {
-        if (response.data.next !== hasNext) {
+  const { isPreviousData, isInitialLoading, isRefetching } =
+    useGet<MessageResponse>({
+      model: "messages",
+      uri: `/users/${user?.id}/chats/${chat?.id}/messages?page=${page}&limit=20`,
+      options: {
+        onSuccess(response) {
           setHasNext(response.data.next);
           setMessages((messages) => messages.concat(response.data.results));
-        }
+        },
+        keepPreviousData: true,
       },
-      keepPreviousData: true,
-    },
-  });
+    });
 
   useEffect(() => {
     socket = io(ENDPOINT);
@@ -96,14 +104,26 @@ export const MessagesScreen = ({ route }: IProps) => {
     uri: `/users/${user?.id}/chats/${chat?.id}/messages`,
     onSuccess: (response) => {
       socket.emit("new message", response.data);
-      setMessage("");
     },
     onError: () => showToast({ message: t("theMessageCouldNotBeSent") }),
   });
 
-  const onSendMessage = () => {
+  const onSendMessage = (newMess: { content: MessageContent }) => {
     if (message.length > 0) {
       socket.emit("stop typing", chat.id);
+      setMessage("");
+      setMessages([
+        {
+          id: "",
+          sender: user,
+          content: newMess.content,
+          chatId: chat.id,
+          createdAt: dayjs().format(),
+          liked: false,
+          seenBy: [],
+        },
+        ...messages,
+      ]);
       mutate({ content: { text: message } });
     }
   };
@@ -117,6 +137,7 @@ export const MessagesScreen = ({ route }: IProps) => {
       setTyping(true);
       socket.emit("typing", chat.id, user);
     }
+
     let lastTypingTime = new Date().getTime();
     var timerLength = 10000;
     setTimeout(() => {
@@ -174,7 +195,10 @@ export const MessagesScreen = ({ route }: IProps) => {
     </>
   );
 
-  const keyExtractor = useCallback((item: Message) => item?.id, []);
+  const keyExtractor = useCallback(
+    (item: Message, index: number) => index.toString(),
+    []
+  );
 
   const loadMore = () => {
     if (!!hasNext && !isPreviousData) {
@@ -214,7 +238,7 @@ export const MessagesScreen = ({ route }: IProps) => {
         <FooterMessageItem
           message={message}
           onOpenCamera={handleOpenCamera}
-          onSendMessage={onSendMessage}
+          onSendMessage={() => onSendMessage({ content: { text: message } })}
           onChangeText={typingHandler}
           onOpenMediaLibrary={() => sheetRef.current?.present()}
           onAddEmojy={(emojy: string) =>

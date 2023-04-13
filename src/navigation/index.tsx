@@ -16,6 +16,9 @@ import {
   CameraScreen,
   CameraPreviewScreen,
   ChatSettingsScreen,
+  ChatGroupSettingsScreen,
+  ChatGroupUsersScreen,
+  ChatGroupNameScreen,
   DeleteAccountScreen,
   DeleteAccountPermanentlyScreen,
   DisableAccountScreen,
@@ -190,6 +193,18 @@ const AppNavigation = () => {
             <Stack.Screen name="EditProduct" component={EditProductScreen} />
             <Stack.Screen name="Messages" component={MessagesScreen} />
             <Stack.Screen name="ChatSettings" component={ChatSettingsScreen} />
+            <Stack.Screen
+              name="ChatGroupSettings"
+              component={ChatGroupSettingsScreen}
+            />
+            <Stack.Screen
+              name="ChatGroupUsers"
+              component={ChatGroupUsersScreen}
+            />
+            <Stack.Screen
+              name="ChatGroupName"
+              component={ChatGroupNameScreen}
+            />
             <Stack.Screen name="MessageNew" component={MessageNewScreen} />
             <Stack.Screen
               name="MessagesSearch"

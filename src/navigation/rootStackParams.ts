@@ -44,6 +44,10 @@ export type RootStackParams = {
   Camera: { name: string | undefined; avatar: any };
   CameraPreview: { photo: { uri: string }; avatar: any; name: string };
   Chats: any;
+  ChatSettings: { chat: Chat };
+  ChatGroupSettings: { chatId: string };
+  ChatGroupUsers: { users: { user: User; isAdmin: boolean }[] | undefined };
+  ChatGroupName: { name: string | undefined };
   ClearCache: any;
   DeleteAccount: any;
   DeleteAccountPermanently: any;
@@ -100,7 +104,6 @@ export type RootStackParams = {
   MyProducts: any;
   MyJobs: any;
   Messages: { chat: Chat };
-  ChatSettings: { chat: Chat };
   MessageNew: any;
   MessagesSearch: any;
   Notifications: any;

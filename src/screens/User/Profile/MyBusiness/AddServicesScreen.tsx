@@ -153,13 +153,6 @@ export const AddServicesScreen = () => {
         estimatedItemSize={59}
         ListFooterComponent={footer}
       />
-      <ConfirmModal
-        onDelete={handleDelete}
-        visible={visible}
-        onCloseModal={closeModal}
-        title={t("deleteService")}
-        description={t("deleteServiceDescription")}
-      />
     </SafeAreaView>
   );
 };

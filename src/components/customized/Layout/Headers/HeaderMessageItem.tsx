@@ -33,7 +33,7 @@ export const HeaderMessageItem = ({ chat }: IProps) => {
     navigation.navigate("ChatSettings", { chat });
   };
 
-  const displayGroupUsers = users.map((user) => `${user.username}`).toString();
+  const displayGroupUsers = users.map((el) => `${el.user.username}`).toString();
 
   return (
     <Stack direction="row" sx={styles.container}>

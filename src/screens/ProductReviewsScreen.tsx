@@ -34,7 +34,6 @@ export const ProductReviewsScreen = ({ route }: IProps) => {
     fetchNextPage,
     isFetchingNextPage,
     isLoading,
-    isFetching,
     refetch,
   } = useGetPaginate({
     model: "ratings",

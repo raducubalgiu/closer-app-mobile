@@ -59,6 +59,7 @@ export const FormTextField = ({
     input: {
       flex: 1,
       paddingVertical: 10,
+      fontSize: 15,
       ...sx,
     },
   });

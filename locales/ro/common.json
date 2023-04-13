@@ -481,5 +481,14 @@
   "selectLanguageTranslation": "Selectează limba în care îţi vor fi traduse postările",
   "promotionalOffer": "Ofertă cu reducere",
   "thisUserDoesNotAllowViewingListOfLikes": "Acest utilizator nu permite vizualizarea listei de aprecieri",
-  "theMessageCouldNotBeSent": "Mesajul nu a putut fi trimis"
+  "theMessageCouldNotBeSent": "Mesajul nu a putut fi trimis",
+  "andSomeoneElse": "şi încă cineva",
+  "persons": "Persoane",
+  "addPersons": "Adaugă persoane",
+  "addNewPersons": "Adaugă persoane noi",
+  "media": "Media",
+  "mediaPostsAndProducts": "Media, postări şi produse",
+  "nameOfGroup": "Numele grupului",
+  "changeGroupName": "Schimbă numele grupului",
+  "logoutFromGroup": "Ieşi din grup"
 }
