@@ -129,10 +129,10 @@ export const SearchPostsScreen = ({ route }: IProps) => {
       } else {
         return (
           <UserListItemSimple
-            name={item.name}
+            title={item.name}
+            description={item.username}
             checkmark={item.checkmark}
             avatar={item.avatar}
-            profession={item.username}
             onGoToUser={() => goToUser(item)}
             sx={{ marginBottom: 15 }}
           />

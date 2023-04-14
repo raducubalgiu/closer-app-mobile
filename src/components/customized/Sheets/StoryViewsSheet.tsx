@@ -6,7 +6,7 @@ import { StyleSheet, ListRenderItemInfo, Text } from "react-native";
 import { useGetPaginate, usePaginateActions } from "../../../hooks";
 import { Spinner, Stack } from "../../core";
 import theme from "../../../../assets/styles/theme";
-import { UserListItemSimple } from "../ListItems/UserListItemSimple";
+import { UserListItemSimple } from "../ListItems/User/UserListItemSimple";
 
 type IProps = { storyId: string; viewsCount: number; likesCount: number };
 const { black, grey0, error } = theme.lightColors || {};

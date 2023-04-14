@@ -4,7 +4,7 @@ import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useIsFocused } from "@react-navigation/native";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
-import UserListItem from "../../ListItems/UserListItem";
+import UserListItem from "../../ListItems/User/UserListItem";
 import {
   useGetPaginate,
   usePaginateActions,

@@ -25,8 +25,8 @@ export const ChatGroupUsersScreen = ({ route }: IProps) => {
       const { name, username, checkmark, avatar } = user;
       return (
         <UserListItemSimple
-          name={name}
-          profession={isAdmin ? t("administrator") : `@${username}`}
+          title={name}
+          description={isAdmin ? t("administrator") : `@${username}`}
           checkmark={checkmark}
           avatar={avatar}
           sx={{ marginBottom: 15 }}

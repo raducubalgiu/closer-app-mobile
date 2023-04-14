@@ -8,7 +8,7 @@ import theme from "../../../../assets/styles/theme";
 import { Stack } from "../../core";
 import { RootStackParams } from "../../../navigation/rootStackParams";
 import { Schedule } from "../../../ts";
-import { UserListItemSimple } from "./UserListItemSimple";
+import { UserListItemSimple } from "./User/UserListItemSimple";
 
 const { black, grey0, error, success, primary } = theme.lightColors || {};
 
@@ -71,9 +71,9 @@ export const ScheduleOverviewListItem = ({ schedule }: IProps) => {
             </Stack>
             <UserListItemSimple
               checkmark={checkmark}
-              name={name}
+              title={name}
+              description={profession.name}
               avatar={avatar}
-              profession={profession.name}
               avatarSize={30}
             />
           </Stack>

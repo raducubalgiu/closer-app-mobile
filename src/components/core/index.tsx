@@ -1,3 +1,4 @@
+// Pure Components
 import Rating from "./Rating/Rating";
 import Stack from "./Stack/Stack";
 import LikeButton from "../customized/Buttons/LikeButton";
@@ -6,6 +7,17 @@ import PostGradient from "../customized/Gradients/PostGradient";
 import SheetModal from "./SheetModal/SheetModal";
 import CustomAvatar from "./Avatars/CustomAvatar";
 
+export {
+  BookmarkIconButton,
+  CustomAvatar,
+  LikeButton,
+  PostGradient,
+  Rating,
+  SheetModal,
+  Stack,
+};
+
+// Normal Components
 export { ButtonLink } from "./Buttons/ButtonLink";
 export { Button } from "./Buttons/Button";
 
@@ -48,13 +60,3 @@ export { CModal } from "./CModal/CModal";
 
 export { Heading } from "./Heading/Heading";
 export { HeadingWithAction } from "./Heading/HeadingWithAction";
-
-export {
-  Stack,
-  Rating,
-  LikeButton,
-  BookmarkIconButton,
-  PostGradient,
-  SheetModal,
-  CustomAvatar,
-};

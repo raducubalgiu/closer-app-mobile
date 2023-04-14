@@ -44,9 +44,9 @@ export const PrivacyBlockedAccounts = () => {
     return (
       <UserListItemSimple
         checkmark={checkmark}
-        name={name}
+        title={name}
+        description={`@${username}`}
         avatar={avatar}
-        profession={`@${username}`}
         onGoToUser={() => {
           navigation.navigate("ProfileGeneral", {
             username,

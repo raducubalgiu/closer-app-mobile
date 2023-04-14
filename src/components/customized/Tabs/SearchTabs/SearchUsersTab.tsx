@@ -4,7 +4,7 @@ import { useAuth } from "../../../../hooks";
 import { useTranslation } from "react-i18next";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { Spinner } from "../../../core";
-import UserListItem from "../../ListItems/UserListItem";
+import UserListItem from "../../ListItems/User/UserListItem";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useIsFocused } from "@react-navigation/native";

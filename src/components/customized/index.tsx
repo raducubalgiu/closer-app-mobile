@@ -1,3 +1,4 @@
+// Pure Components
 import DisplayText from "./Typography/DisplayText/DisplayText";
 import MediaLibrarySheet from "./Sheets/MediaLibrarySheet";
 import MediaLibraryAlbumsList from "./Lists/MediaLibraryAlbumsList";
@@ -5,6 +6,16 @@ import MediaLibraryPhotoListItem from "./ListItems/MediaLibraryPhotoListItem";
 import MessSentItem from "./ListItems/MessSentItem";
 import MessReceivedItem from "./ListItems/MessReceivedItem";
 
+export {
+  DisplayText,
+  MediaLibrarySheet,
+  MediaLibraryAlbumsList,
+  MediaLibraryPhotoListItem,
+  MessSentItem,
+  MessReceivedItem,
+};
+
+// Normal Components
 export { AutocompleteGoogle } from "./Forms/AutocompleteGoogle";
 
 export { HeaderProfile } from "./Layout/Headers/HeaderProfile";
@@ -75,7 +86,7 @@ export { FixedPeriodList } from "./Lists/FixedPeriodList";
 
 export { ChatListItem } from "./ListItems/ChatListItem";
 export { HashtagListItem } from "./ListItems/HashtagListItem";
-export { UserListItemSimple } from "./ListItems/UserListItemSimple";
+export { UserListItemSimple } from "./ListItems/User/UserListItemSimple";
 export { CommentListItem } from "./ListItems/CommentListItem";
 export { RelatedCommentsList } from "./ListItems/RelatedCommentsList";
 export { RecentSearchListItem } from "./ListItems/RecentSearchListItem";
@@ -122,12 +133,3 @@ export { PhotoIconButton } from "./IconButtons/PhotoIconButton";
 export { RevertIconButton } from "./IconButtons/RevertIconButton";
 export { InfoIconButton } from "./IconButtons/InfoIconButton";
 export { ProfileIconButton } from "./IconButtons/ProfileIconButton";
-
-export {
-  DisplayText,
-  MediaLibrarySheet,
-  MediaLibraryAlbumsList,
-  MediaLibraryPhotoListItem,
-  MessSentItem,
-  MessReceivedItem,
-};

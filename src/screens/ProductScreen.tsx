@@ -102,8 +102,8 @@ export const ProductScreen = ({ route }: IProps) => {
             <Text style={styles.counter}>{reservationsCount} rezervari</Text>
           </Stack>
           <UserListItemSimple
-            name={ownerId?.name}
-            profession={ownerId?.profession.name}
+            title={ownerId?.name}
+            description={ownerId?.profession.name}
             avatar={ownerId?.avatar}
             checkmark={ownerId?.checkmark}
             onGoToUser={goToOwner}

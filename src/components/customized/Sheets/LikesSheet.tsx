@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import { Divider, Icon } from "@rneui/themed";
 import { useGetPaginate, usePaginateActions } from "../../../hooks";
-import UserListItem from "../ListItems/UserListItem";
+import UserListItem from "../ListItems/User/UserListItem";
 import { User } from "../../../ts";
 import { Heading, Spinner, Stack } from "../../core";
 import { NoFoundMessage } from "../NoFoundMessage/NoFoundMessage";

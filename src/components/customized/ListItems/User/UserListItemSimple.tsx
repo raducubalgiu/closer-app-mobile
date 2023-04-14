@@ -1,15 +1,15 @@
 import { StyleSheet, Text, Pressable } from "react-native";
-import { Stack, Checkmark } from "../../core";
-import CustomAvatar from "../../core/Avatars/CustomAvatar";
-import theme from "../../../../assets/styles/theme";
+import { Stack, Checkmark } from "../../../core";
+import CustomAvatar from "../../../core/Avatars/CustomAvatar";
+import theme from "../../../../../assets/styles/theme";
 
 const { grey0, black } = theme.lightColors || {};
 
 type IProps = {
+  title: string;
+  description: string;
   checkmark: boolean;
-  name: string;
   avatar: any;
-  profession: any;
   sx?: {};
   avatarSize?: number;
   onGoToUser?: () => void;
@@ -17,9 +17,9 @@ type IProps = {
 
 export const UserListItemSimple = ({
   checkmark = false,
-  name,
+  title,
   avatar,
-  profession,
+  description,
   onGoToUser,
   avatarSize = 50,
   sx,
@@ -31,10 +31,10 @@ export const UserListItemSimple = ({
           <CustomAvatar avatar={avatar} size={avatarSize} />
           <Stack align="start" justify="start" sx={{ marginLeft: 10 }}>
             <Stack direction="row">
-              <Text style={styles.ownerName}>{name}</Text>
+              <Text style={styles.ownerName}>{title}</Text>
               {checkmark && <Checkmark />}
             </Stack>
-            <Text style={styles.profession}>{profession}</Text>
+            <Text style={styles.profession}>{description}</Text>
           </Stack>
         </Stack>
       </Stack>

@@ -4,7 +4,7 @@ import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Header, Spinner } from "../components/core";
 import { NoFoundMessage } from "../components/customized";
-import UserListItem from "../components/customized/ListItems/UserListItem";
+import UserListItem from "../components/customized/ListItems/User/UserListItem";
 import {
   useAuth,
   usePaginateActions,

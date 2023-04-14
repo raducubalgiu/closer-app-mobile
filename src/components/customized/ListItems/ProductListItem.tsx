@@ -9,7 +9,7 @@ import { trimFunc } from "../../../utils";
 import { useAuth, useDuration } from "../../../hooks";
 import { BookmarkButton } from "../Buttons/BookmarkButton";
 import { BookButton } from "../Buttons/BookButton";
-import { UserListItemSimple } from "./UserListItemSimple";
+import { UserListItemSimple } from "./User/UserListItemSimple";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/rootStackParams";
 import { Product } from "../../../ts";
@@ -77,8 +77,8 @@ const ProductListItem = ({
       <Stack sx={styles.card} align="start">
         {ownerInfo && (
           <UserListItemSimple
-            name={ownerId?.name}
-            profession={professionDescription}
+            title={ownerId?.name}
+            description={professionDescription}
             avatar={ownerId?.avatar}
             checkmark={ownerId?.checkmark}
             onGoToUser={goToOwner}

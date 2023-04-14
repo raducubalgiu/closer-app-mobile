@@ -63,9 +63,8 @@ export const MessagesScreen = ({ route }: IProps) => {
   const [page, setPage] = useState(1);
   const [message, setMessage] = useState("");
   const [socketConnected, setSocketConnected] = useState(false);
-  const [isTypingUser, setIsTypingUser] = useState<User | null>(null);
   const [typing, setTyping] = useState(false);
-  const [isTyping, setIsTyping] = useState(false);
+  const [isTypingUser, setIsTypingUser] = useState<User | null>(null);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { height } = useWindowDimensions();
@@ -95,11 +94,8 @@ export const MessagesScreen = ({ route }: IProps) => {
     socket.emit("setup", user);
     socket.on("connected", () => setSocketConnected(true));
     socket.emit("join chat", chat?.id);
-    socket.on("typing", (user: User) => {
-      setIsTypingUser(user);
-      setIsTyping(true);
-    });
-    socket.on("stop typing", () => setIsTyping(false));
+    socket.on("typing", (user: User) => setIsTypingUser(user));
+    socket.on("stop typing", () => setIsTypingUser(null));
   }, []);
 
   useEffect(() => {
@@ -193,7 +189,7 @@ export const MessagesScreen = ({ route }: IProps) => {
 
   let header = (
     <>
-      {isTyping && (
+      {isTypingUser && (
         <Stack direction="row" justify="start" sx={{ margin: 15 }}>
           <CustomAvatar size={30} avatar={isTypingUser?.avatar} />
           <Text style={{ marginLeft: 10, color: grey0 }}>Scrie...</Text>

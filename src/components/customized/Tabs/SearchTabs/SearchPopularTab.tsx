@@ -10,7 +10,7 @@ import {
 } from "../../../../hooks";
 import { HashtagListItem } from "../../ListItems/HashtagListItem";
 import { HeadingWithAction, Spinner } from "../../../core";
-import UserListItem from "../../ListItems/UserListItem";
+import UserListItem from "../../ListItems/User/UserListItem";
 import GridImageListItem from "../../ListItems/Grid/GridImage/GridImageListItem";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
