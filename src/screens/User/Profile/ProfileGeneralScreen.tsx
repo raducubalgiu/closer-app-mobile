@@ -28,8 +28,15 @@ import ProfileSettingsSheet from "../../../components/customized/Sheets/ProfileS
 import BlockUserSheet from "../../../components/customized/Sheets/BlockUserSheet";
 import { showToast } from "../../../utils";
 import { useTranslation } from "react-i18next";
+import { User } from "../../../ts";
 
 type IProps = NativeStackScreenProps<RootStackParams, "ProfileGeneral">;
+type UserListItem = {
+  id: string;
+  user: User;
+  isFollow: boolean;
+  isBlocked: boolean;
+};
 
 export const ProfileGeneralScreen = ({ route }: IProps) => {
   const { user } = useAuth();
@@ -43,19 +50,29 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
   const blockRef = useRef<BottomSheetModal>(null);
   const { t } = useTranslation("common");
 
-  const { data: userDetails, refetch } = useGet({
+  const { data: userDetails, refetch } = useGet<UserListItem>({
     model: "fetchUser",
     uri: `/users/${user?.id}/user/${username}`,
     options: {
-      onSuccess: (response) => {
-        setIsFollow(response.data.isFollow);
-        setIsBlocked(response.data.isBlocked);
+      onSuccess(response) {
+        if (response.data) {
+          setIsFollow(response.data?.isFollow);
+          setIsBlocked(response.data?.isBlocked);
+        }
       },
     },
   });
 
-  const { id, profession, locationId, settings, role, checkmark, hours } =
-    userDetails?.user || {};
+  const {
+    id,
+    profession,
+    locationId,
+    settings,
+    role,
+    checkmark,
+    hours,
+    avatar,
+  } = userDetails?.user || {};
   const { address } = locationId || {};
 
   useRefreshOnFocus(refetch);

@@ -1,4 +1,9 @@
 import DisplayText from "./Typography/DisplayText/DisplayText";
+import MediaLibrarySheet from "./Sheets/MediaLibrarySheet";
+import MediaLibraryAlbumsList from "./Lists/MediaLibraryAlbumsList";
+import MediaLibraryPhotoListItem from "./ListItems/MediaLibraryPhotoListItem";
+import MessSentItem from "./ListItems/MessSentItem";
+import MessReceivedItem from "./ListItems/MessReceivedItem";
 
 export { AutocompleteGoogle } from "./Forms/AutocompleteGoogle";
 
@@ -118,4 +123,11 @@ export { RevertIconButton } from "./IconButtons/RevertIconButton";
 export { InfoIconButton } from "./IconButtons/InfoIconButton";
 export { ProfileIconButton } from "./IconButtons/ProfileIconButton";
 
-export { DisplayText };
+export {
+  DisplayText,
+  MediaLibrarySheet,
+  MediaLibraryAlbumsList,
+  MediaLibraryPhotoListItem,
+  MessSentItem,
+  MessReceivedItem,
+};

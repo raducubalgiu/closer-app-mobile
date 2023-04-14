@@ -24,7 +24,10 @@ export const ChatGroupNameScreen = ({ route }: IProps) => {
   const { mutate, isLoading } = usePatch({
     uri: `/users/${user?.id}/chats/${chatId}/groups/rename`,
     onSuccess: () => {
-      showToast({ message: t("youChangedSuccessfullyNameOfGroup") });
+      showToast({
+        message: t("youChangedSuccessfullyNameOfGroup"),
+        short: true,
+      });
       navigation.goBack();
     },
   });

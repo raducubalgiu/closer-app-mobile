@@ -7,7 +7,6 @@ import {
   useWindowDimensions,
   Keyboard,
 } from "react-native";
-import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import React, {
   useCallback,
   useEffect,
@@ -15,31 +14,36 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { Camera } from "expo-camera";
-import { usePost, useAuth, useGet } from "../../../hooks";
-import {
-  FooterMessageItem,
-  HeaderMessageItem,
-} from "../../../components/customized";
-import MessSentItem from "../../../components/customized/ListItems/MessSentItem";
-import MessReceivedItem from "../../../components/customized/ListItems/MessReceivedItem";
+import io from "socket.io-client";
 import { Divider } from "@rneui/themed";
-import { useNavigation } from "@react-navigation/native";
+import { Camera } from "expo-camera";
+import { useTranslation } from "react-i18next";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import dayjs from "dayjs";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
+import { useNavigation } from "@react-navigation/native";
 import { RootStackParams } from "../../../navigation/rootStackParams";
-import { Message, User } from "../../../ts";
-import { showToast } from "../../../utils";
-import io from "socket.io-client";
-import { SheetModal, Spinner, Stack } from "../../../components/core";
-import CustomAvatar from "../../../components/core/Avatars/CustomAvatar";
 import theme from "../../../../assets/styles/theme";
-import { useTranslation } from "react-i18next";
-import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import dayjs from "dayjs";
-import { MessageContent } from "../../../ts/interfaces/message";
+import { usePost, useAuth, useGet } from "../../../hooks";
+import { Message, MessageContent, User } from "../../../ts";
+import { showToast } from "../../../utils";
+import {
+  SheetModal,
+  Spinner,
+  Stack,
+  CustomAvatar,
+} from "../../../components/core";
+import {
+  FooterMessageItem,
+  HeaderMessageItem,
+  MediaLibrarySheet,
+  MessSentItem,
+  MessReceivedItem,
+} from "../../../components/customized";
 
 const { grey0 } = theme.lightColors || {};
 
@@ -65,7 +69,7 @@ export const MessagesScreen = ({ route }: IProps) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { height } = useWindowDimensions();
-  const snapPoints = useMemo(() => [1, height / 1.75, height / 1.1], []);
+  const snapPoints = useMemo(() => [1, height / 1.1], []);
   const sheetRef = useRef<BottomSheetModal>(null);
 
   const { isPreviousData, isInitialLoading, isRefetching } =
@@ -82,7 +86,7 @@ export const MessagesScreen = ({ route }: IProps) => {
           }
         },
         keepPreviousData: true,
-        enabled: !!chat.id,
+        enabled: !!chat?.id,
       },
     });
 
@@ -90,7 +94,7 @@ export const MessagesScreen = ({ route }: IProps) => {
     socket = io(ENDPOINT);
     socket.emit("setup", user);
     socket.on("connected", () => setSocketConnected(true));
-    socket.emit("join chat", chat.id);
+    socket.emit("join chat", chat?.id);
     socket.on("typing", (user: User) => {
       setIsTypingUser(user);
       setIsTyping(true);
@@ -99,7 +103,7 @@ export const MessagesScreen = ({ route }: IProps) => {
   }, []);
 
   useEffect(() => {
-    socket.on("message received", (messageReceived: any) => {
+    socket.on("message received", (messageReceived: Message) => {
       setMessages([messageReceived, ...messages]);
     });
   });
@@ -114,14 +118,14 @@ export const MessagesScreen = ({ route }: IProps) => {
 
   const onSendMessage = (newMess: { content: MessageContent }) => {
     if (message.length > 0) {
-      socket.emit("stop typing", chat.id);
+      socket.emit("stop typing", chat?.id);
       setMessage("");
       setMessages([
         {
           id: "",
           sender: user,
           content: newMess.content,
-          chatId: chat.id,
+          chatId: chat?.id,
           createdAt: dayjs().format(),
           liked: false,
           seenBy: [],
@@ -139,7 +143,7 @@ export const MessagesScreen = ({ route }: IProps) => {
 
     if (!typing) {
       setTyping(true);
-      socket.emit("typing", chat.id, user);
+      socket.emit("typing", chat?.id, user);
     }
 
     let lastTypingTime = new Date().getTime();
@@ -148,7 +152,7 @@ export const MessagesScreen = ({ route }: IProps) => {
       var timeNow = new Date().getTime();
       var timeDiff = timeNow - lastTypingTime;
       if (timeDiff >= timerLength && typing) {
-        socket.emit("stop typing", chat.id);
+        socket.emit("stop typing", chat?.id);
         setTyping(false);
       }
     }, timerLength);
@@ -167,7 +171,6 @@ export const MessagesScreen = ({ route }: IProps) => {
   const renderMessage = useCallback(
     ({ item, index }: ListRenderItemInfo<Message>) => {
       const isSent = user?.id === item?.sender?.id;
-
       switch (isSent) {
         case true:
           return (
@@ -200,7 +203,7 @@ export const MessagesScreen = ({ route }: IProps) => {
   );
 
   const keyExtractor = useCallback(
-    (item: Message, index: number) => index.toString(),
+    (_: Message, index: number) => index.toString(),
     []
   );
 
@@ -209,6 +212,8 @@ export const MessagesScreen = ({ route }: IProps) => {
       setPage((page) => page + 1);
     }
   };
+
+  const footer = isRefetching ? <Spinner sx={{ paddingVertical: 30 }} /> : null;
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -223,11 +228,7 @@ export const MessagesScreen = ({ route }: IProps) => {
           <FlashList
             inverted
             ListHeaderComponent={header}
-            ListFooterComponent={
-              <>
-                {isRefetching ? <Spinner sx={{ paddingVertical: 30 }} /> : null}
-              </>
-            }
+            ListFooterComponent={footer}
             initialScrollIndex={0}
             data={messages}
             renderItem={renderMessage}
@@ -257,8 +258,12 @@ export const MessagesScreen = ({ route }: IProps) => {
         ref={sheetRef}
         snapPoints={snapPoints}
         animationConfig={{ duration: 300 }}
+        showIndicator={false}
       >
-        <Text>Hello World</Text>
+        <MediaLibrarySheet
+          onClose={() => sheetRef.current?.close()}
+          selectMany
+        />
       </SheetModal>
     </SafeAreaView>
   );

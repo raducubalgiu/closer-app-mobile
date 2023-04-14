@@ -53,7 +53,6 @@ export const PhotoLibraryScreen = ({ route }: IProps) => {
   const renderPhoto = useCallback(
     ({ item, index }: ListRenderItemInfo<any>) => (
       <PostListItem
-        index={index}
         image={item.uri}
         col={4}
         onPress={() => {

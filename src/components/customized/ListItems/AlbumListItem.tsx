@@ -1,21 +1,25 @@
-import { StyleSheet, Text, Image, Pressable } from "react-native";
+import { StyleSheet, Text, Pressable } from "react-native";
+import { Image } from "@rneui/themed";
 import { Stack } from "../../core";
 import theme from "../../../../assets/styles/theme";
+import { LibraryAlbum } from "../../../ts/interfaces/libraryAlbum";
 
 const { black, grey0 } = theme.lightColors || {};
 
-type IProps = {
-  uri: string;
-  title: string;
-  assetCount: number;
-  onPress: () => void;
-};
-
-export const AlbumListItem = ({ uri, title, assetCount, onPress }: IProps) => {
+export const AlbumListItem = ({
+  uri,
+  title,
+  assetCount,
+  onPress,
+}: LibraryAlbum) => {
   return (
     <Pressable onPress={onPress} style={styles.container}>
       <Stack direction="row" justify="start">
-        <Image source={{ uri }} style={{ width: 80, height: 80 }} />
+        <Image
+          source={{ uri }}
+          containerStyle={styles.image}
+          resizeMode="cover"
+        />
         <Stack align="start" sx={styles.details}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.assetCount}>{assetCount}</Text>
@@ -32,4 +36,5 @@ const styles = StyleSheet.create({
   },
   title: { color: black, fontWeight: "600", fontSize: 16, marginBottom: 2.5 },
   assetCount: { color: grey0 },
+  image: { width: 80, height: 80 },
 });

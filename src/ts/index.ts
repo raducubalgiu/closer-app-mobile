@@ -11,6 +11,7 @@ export { Hashtag } from "./interfaces/hashtag";
 export { Location } from "./interfaces/location";
 export { Chat } from "./interfaces/chat";
 export { Message } from "./interfaces/message";
+export { MessageContent } from "./interfaces/message";
 export { Month } from "./interfaces/month";
 export { Option } from "./interfaces/option";
 export { Period } from "./interfaces/period";

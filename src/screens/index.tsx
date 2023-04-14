@@ -67,6 +67,7 @@ export { ChatSettingsScreen } from "./Chat/ChatSettingsScreen";
 export { ChatGroupSettingsScreen } from "./Chat/ChatGroupSettingsScreen";
 export { ChatGroupUsersScreen } from "./Chat/ChatGroupUsersScreen";
 export { ChatGroupNameScreen } from "./Chat/ChatGroupNameScreen";
+export { ChatGroupMediaScreen } from "./Chat/ChatGroupMediaScreen";
 export { PhotoLibraryScreen } from "./PhotoLibraryScreen";
 export { PhotoAlbumsScreen } from "./PhotoAlbumsScreen";
 export { AddPostScreen } from "./AddPostScreen";

@@ -1,17 +1,12 @@
 import { User } from "./user";
 
-type UserListItem = {
-  user: User;
-  isAdmin: boolean;
-};
-
 export interface Chat {
   id: string;
   summary: {
     name: string;
     avatar: any;
   };
-  users: UserListItem[];
+  users: User[];
   latestMessage: {
     text: string;
     seenBy: User[];

@@ -26,6 +26,8 @@ export const HeaderMessageItem = ({ chat }: IProps) => {
         service: null,
         option: null,
       });
+    } else {
+      navigation.push("ChatGroupSettings", { chatId: chat.id });
     }
   };
 
@@ -33,7 +35,7 @@ export const HeaderMessageItem = ({ chat }: IProps) => {
     navigation.navigate("ChatSettings", { chat });
   };
 
-  const displayGroupUsers = users.map((el) => `${el.user.username}`).toString();
+  const displayGroupUsers = users.map((el) => `${el.username}`).toString();
 
   return (
     <Stack direction="row" sx={styles.container}>

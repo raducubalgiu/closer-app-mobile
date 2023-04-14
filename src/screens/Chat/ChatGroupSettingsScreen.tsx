@@ -55,7 +55,9 @@ export const ChatGroupSettingsScreen = ({ route }: IProps) => {
         <SettingsListItem
           title={t("media")}
           description={t("mediaPostsAndProducts")}
-          onPress={() => {}}
+          onPress={() =>
+            navigation.navigate("ChatGroupMedia", { chatId: chat?.id })
+          }
           iconLeftProps={{ name: "image" }}
         />
         {isAdmin && (

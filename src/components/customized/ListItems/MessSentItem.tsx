@@ -37,6 +37,7 @@ const MessSentItem = ({
 
   return (
     <View style={{ marginRight: 15 }}>
+      {!dateSame && <MessDateItem date={date} />}
       <Stack
         direction="row"
         justify="end"
@@ -54,7 +55,6 @@ const MessSentItem = ({
         )}
         {content?.url && <MessImage message={content} liked={liked} />}
       </Stack>
-      {!dateSame && <MessDateItem date={date} />}
     </View>
   );
 };

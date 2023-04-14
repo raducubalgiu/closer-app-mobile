@@ -52,6 +52,7 @@ const MessReceivedItem = ({
       justify="start"
       sx={{ marginBottom: 5, marginHorizontal: 15 }}
     >
+      {!dateSame && <MessDateItem date={date} />}
       <Stack direction="row">
         <Stack direction="row" align="end" justify="start" sx={{ flex: 1 }}>
           <Stack sx={{ width: 30 }}>
@@ -77,7 +78,6 @@ const MessReceivedItem = ({
           />
         </Pressable>
       </Stack>
-      {!dateSame && <MessDateItem date={date} />}
     </Stack>
   );
 };

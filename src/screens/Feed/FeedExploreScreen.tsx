@@ -4,6 +4,7 @@ import {
   FlatList,
   ListRenderItemInfo,
   ViewToken,
+  RefreshControl,
 } from "react-native";
 import { useCallback, useRef, useState } from "react";
 import { useNavigation, useScrollToTop } from "@react-navigation/native";
@@ -21,6 +22,7 @@ import PostImageListItem from "../../components/customized/ListItems/Post/PostIm
 import PostVideoListItem from "../../components/customized/ListItems/Post/PostVideoListItem";
 import PostCarouselListItem from "../../components/customized/ListItems/Post/PostCarouselListItem";
 import { filter } from "lodash";
+import { useRefreshByUser } from "../../hooks";
 
 type PostListItem = {
   id: string;
@@ -28,6 +30,7 @@ type PostListItem = {
   isLiked: boolean;
   isBookmarked: boolean;
 };
+type PostsResponse = { next: number | null; results: PostListItem[] | [] };
 
 export const FeedExploreScreen = () => {
   const { user } = useAuth();
@@ -41,29 +44,30 @@ export const FeedExploreScreen = () => {
   const [visibleItem, setVisibleItem] = useState<PostListItem | null>(null);
   useScrollToTop(ref);
 
-  const { isInitialLoading, isPreviousData, isRefetching } = useGet({
-    model: "posts",
-    uri: `/users/${user?.id}/posts/get-all-posts?page=${page}&limit=20`,
-    options: {
-      onSuccess: (response) => {
-        if (response.data.next !== hasNext) {
-          setHasNext(response.data.next);
-          setPosts((posts) => posts.concat(response.data.results));
-        }
+  const { isInitialLoading, isPreviousData, isRefetching, refetch } =
+    useGet<PostsResponse>({
+      model: "posts",
+      uri: `/users/${user?.id}/posts/get-all-posts?page=${page}&limit=20`,
+      options: {
+        onSuccess: (response) => {
+          if (response.data && response.data.next !== hasNext) {
+            setHasNext(response.data.next);
+            setPosts((posts) => posts.concat(response.data.results));
+          }
+        },
+        keepPreviousData: true,
       },
-      keepPreviousData: true,
-    },
-  });
+    });
 
-  const { data: videos } = useGet({
+  const { data: videos } = useGet<PostsResponse>({
     model: "videos",
     uri: `/users/${user?.id}/posts/get-all-posts?page=1&limit=5&postType=video`,
   });
 
-  // const { refreshing, refetchByUser } = useRefreshByUser(refetch);
-  // const refreshControl = (
-  //   <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
-  // );
+  const { refreshing, refetchByUser } = useRefreshByUser(refetch);
+  const refreshControl = (
+    <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
+  );
 
   const renderPost = useCallback(
     ({ item }: ListRenderItemInfo<PostListItem>) => {
@@ -183,30 +187,29 @@ export const FeedExploreScreen = () => {
     <>{isRefetching ? <Spinner sx={{ paddingVertical: 30 }} /> : null}</>
   );
 
+  const header = (
+    <>
+      <HeadingAction title={t("videoclips")} onPress={() => {}} />
+      <FlatList
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        data={videos?.results}
+        keyExtractor={keyExtractorVideo}
+        renderItem={renderVideo}
+        contentContainerStyle={styles.flatList}
+      />
+      <Divider color="#ddd" style={{ marginTop: 15 }} />
+    </>
+  );
+
   return (
     <SafeAreaView style={styles.screen}>
       <HeaderFeed indexLabel={0} />
       {!isInitialLoading && (
         <FlatList
           ref={ref}
-          ListHeaderComponent={
-            <>
-              <HeadingAction
-                title={t("videoclips")}
-                onPress={() => goToVideoExplore(videos[0], 0)}
-              />
-              <FlatList
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                data={videos?.results}
-                keyExtractor={keyExtractorVideo}
-                renderItem={renderVideo}
-                contentContainerStyle={styles.flatList}
-              />
-              <Divider color="#ddd" style={{ marginTop: 15 }} />
-            </>
-          }
-          //refreshControl={refreshControl}
+          ListHeaderComponent={header}
+          refreshControl={refreshControl}
           data={posts}
           renderItem={renderPost}
           keyExtractor={keyExtractor}

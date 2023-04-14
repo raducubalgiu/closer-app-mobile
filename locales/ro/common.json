@@ -493,5 +493,6 @@
   "logoutFromGroup": "Ieşi din grup",
   "administrator": "Administrator",
   "youChangedSuccessfullyNameOfGroup": "Ai schimbat cu succes numele grupului",
-  "groupSettings": "Setările grupului"
+  "groupSettings": "Setările grupului",
+  "youCanSelectMaximumTenImages": "Poţi selecta maxim 10 imagini"
 }

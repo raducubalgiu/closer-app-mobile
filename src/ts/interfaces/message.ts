@@ -11,6 +11,6 @@ export interface Message {
   sender: User | null;
   liked: boolean;
   seenBy: User[];
-  chatId: string;
+  chatId: string | undefined;
   createdAt: string;
 }

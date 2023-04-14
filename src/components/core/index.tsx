@@ -4,6 +4,7 @@ import LikeButton from "../customized/Buttons/LikeButton";
 import BookmarkIconButton from "../customized/Buttons/BookmarkIconButton";
 import PostGradient from "../customized/Gradients/PostGradient";
 import SheetModal from "./SheetModal/SheetModal";
+import CustomAvatar from "./Avatars/CustomAvatar";
 
 export { ButtonLink } from "./Buttons/ButtonLink";
 export { Button } from "./Buttons/Button";
@@ -55,4 +56,5 @@ export {
   BookmarkIconButton,
   PostGradient,
   SheetModal,
+  CustomAvatar,
 };
