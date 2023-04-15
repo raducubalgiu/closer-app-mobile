@@ -2,6 +2,7 @@ import { StyleSheet, Text, Pressable } from "react-native";
 import { Stack, Checkmark } from "../../../core";
 import CustomAvatar from "../../../core/Avatars/CustomAvatar";
 import theme from "../../../../../assets/styles/theme";
+import { Icon } from "@rneui/themed";
 
 const { grey0, black } = theme.lightColors || {};
 
@@ -10,6 +11,7 @@ type IProps = {
   description: string;
   checkmark: boolean;
   avatar: any;
+  arrowRight?: boolean;
   sx?: {};
   avatarSize?: number;
   onGoToUser?: () => void;
@@ -20,13 +22,14 @@ export const UserListItemSimple = ({
   title,
   avatar,
   description,
+  arrowRight = false,
   onGoToUser,
   avatarSize = 50,
   sx,
 }: IProps) => {
   return (
     <Pressable onPress={onGoToUser} style={sx}>
-      <Stack align="start">
+      <Stack direction="row">
         <Stack direction="row">
           <CustomAvatar avatar={avatar} size={avatarSize} />
           <Stack align="start" justify="start" sx={{ marginLeft: 10 }}>
@@ -37,6 +40,13 @@ export const UserListItemSimple = ({
             <Text style={styles.profession}>{description}</Text>
           </Stack>
         </Stack>
+        {arrowRight && (
+          <Icon
+            name="keyboard-arrow-right"
+            color={grey0}
+            style={{ marginLeft: 10 }}
+          />
+        )}
       </Stack>
     </Pressable>
   );

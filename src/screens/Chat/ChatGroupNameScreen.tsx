@@ -2,7 +2,10 @@ import { SafeAreaView, StyleSheet, View } from "react-native";
 import { Button, FormTextField, Header } from "../../components/core";
 import { useTranslation } from "react-i18next";
 import { FormProvider, useForm } from "react-hook-form";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
 import { RootStackParams } from "../../navigation/rootStackParams";
 import { useAuth, usePatch } from "../../hooks";
 import { useNavigation } from "@react-navigation/native";
@@ -19,7 +22,8 @@ export const ChatGroupNameScreen = ({ route }: IProps) => {
     handleSubmit,
     formState: { isDirty },
   } = methods;
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const { mutate, isLoading } = usePatch({
     uri: `/users/${user?.id}/chats/${chatId}/groups/rename`,
@@ -28,7 +32,7 @@ export const ChatGroupNameScreen = ({ route }: IProps) => {
         message: t("youChangedSuccessfullyNameOfGroup"),
         short: true,
       });
-      navigation.goBack();
+      navigation.navigate("Chats");
     },
   });
 

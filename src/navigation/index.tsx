@@ -18,8 +18,10 @@ import {
   ChatSettingsScreen,
   ChatGroupSettingsScreen,
   ChatGroupUsersScreen,
+  ChatGroupUserScreen,
   ChatGroupNameScreen,
   ChatGroupMediaScreen,
+  ChatGroupAddUsersScreen,
   DeleteAccountScreen,
   DeleteAccountPermanentlyScreen,
   DisableAccountScreen,
@@ -209,6 +211,14 @@ const AppNavigation = () => {
             <Stack.Screen
               name="ChatGroupMedia"
               component={ChatGroupMediaScreen}
+            />
+            <Stack.Screen
+              name="ChatGroupAddUsers"
+              component={ChatGroupAddUsersScreen}
+            />
+            <Stack.Screen
+              name="ChatGroupUser"
+              component={ChatGroupUserScreen}
             />
             <Stack.Screen name="MessageNew" component={MessageNewScreen} />
             <Stack.Screen

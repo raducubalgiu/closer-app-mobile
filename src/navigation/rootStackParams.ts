@@ -8,6 +8,7 @@ import {
   User,
   Chat,
 } from "../ts";
+import { ChatGroup } from "../ts/interfaces/chatGroup";
 
 export type RootStackParams = {
   Account: any;
@@ -46,8 +47,18 @@ export type RootStackParams = {
   Chats: any;
   ChatSettings: { chat: Chat };
   ChatGroupSettings: { chatId: string };
-  ChatGroupUsers: { users: { user: User; isAdmin: boolean }[] | undefined };
-  ChatGroupName: { name: string | undefined; chatId: string | undefined };
+  ChatGroupUsers: {
+    users: { user: User; isAdmin: boolean }[];
+    chatId: string;
+  };
+  ChatGroupName: { name: string; chatId: string };
+  ChatGroupAddUsers: { chatId: string };
+  ChatGroupUser: {
+    userId: string;
+    name: string;
+    isAdmin: boolean;
+    chatId: string;
+  };
   ChatGroupMedia: any;
   ClearCache: any;
   DeleteAccount: any;

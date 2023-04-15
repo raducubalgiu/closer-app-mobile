@@ -5,7 +5,6 @@ import {
   View,
   Pressable,
   TouchableOpacity,
-  useWindowDimensions,
 } from "react-native";
 import { Icon } from "@rneui/themed";
 import * as MediaLibrary from "expo-media-library";
@@ -31,7 +30,6 @@ const MediaLibrarySheet = ({ onClose, selectMany }: IProps) => {
   const [albums, setAlbums] = useState<LibraryAlbum[]>([]);
   const [photos, setPhotos] = useState<Asset[]>([]);
   const insets = useSafeAreaInsets();
-  const { width } = useWindowDimensions();
   const { t } = useTranslation();
 
   const fetchAlbums = useCallback(async () => {
@@ -160,13 +158,8 @@ const MediaLibrarySheet = ({ onClose, selectMany }: IProps) => {
         <View style={{ alignItems: "center" }}>
           <Button
             sxBtn={{
-              position: "absolute",
               bottom: insets.bottom,
-              width: width - 30,
-              shadowColor: "#171717",
-              shadowOffset: { width: -2, height: 4 },
-              shadowOpacity: 0.2,
-              shadowRadius: 5,
+              ...styles.sendBtn,
             }}
             title={t("send")}
             onPress={() => {}}
@@ -182,4 +175,12 @@ export default memo(MediaLibrarySheet);
 const styles = StyleSheet.create({
   icon: { padding: 15 },
   title: { color: black, fontWeight: "700", fontSize: 16, marginRight: 5 },
+  sendBtn: {
+    position: "absolute",
+    width: "100%",
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+  },
 });

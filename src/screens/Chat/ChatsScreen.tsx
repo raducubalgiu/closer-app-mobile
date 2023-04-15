@@ -1,4 +1,4 @@
-import { StyleSheet, SafeAreaView } from "react-native";
+import { StyleSheet, SafeAreaView, RefreshControl } from "react-native";
 import { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
@@ -7,6 +7,7 @@ import {
   useGetPaginate,
   usePaginateActions,
   useRefreshOnFocus,
+  useRefreshByUser,
 } from "../../hooks";
 import {
   Header,
@@ -36,6 +37,11 @@ export const ChatsScreen = () => {
   const { refetch, isInitialLoading } = options;
   const { data: chats, showSpinner, loadMore } = usePaginateActions(options);
   useRefreshOnFocus(refetch);
+
+  const { refreshing, refetchByUser } = useRefreshByUser(refetch);
+  const refreshControl = (
+    <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
+  );
 
   const renderMessages = useCallback(({ item }: ListRenderItemInfo<Chat>) => {
     return <ChatListItem chat={item} />;
@@ -67,6 +73,7 @@ export const ChatsScreen = () => {
       {!isInitialLoading && chats.length > 0 && (
         <FlashList
           ListHeaderComponent={header}
+          refreshControl={refreshControl}
           showsVerticalScrollIndicator={false}
           data={chats}
           keyExtractor={keyExtractor}

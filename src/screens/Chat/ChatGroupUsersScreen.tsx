@@ -1,4 +1,7 @@
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
 import {
   FlatList,
   ListRenderItemInfo,
@@ -11,24 +14,37 @@ import { useTranslation } from "react-i18next";
 import { useCallback } from "react";
 import { User } from "../../ts";
 import { UserListItemSimple } from "../../components/customized";
+import { useNavigation } from "@react-navigation/native";
+import { useAuth } from "../../hooks";
 
 type IProps = NativeStackScreenProps<RootStackParams, "ChatGroupUsers">;
 type UserListItem = { user: User; isAdmin: boolean };
 
 export const ChatGroupUsersScreen = ({ route }: IProps) => {
-  const { users } = route.params;
+  const { user } = useAuth();
+  const { users, chatId } = route.params;
   const { t } = useTranslation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+
+  const goToUser = (userId: string, name: string, isAdmin: boolean) => {
+    if (user?.id !== userId) {
+      navigation.navigate("ChatGroupUser", { userId, name, isAdmin, chatId });
+    }
+  };
 
   const renderUser = useCallback(
     ({ item }: ListRenderItemInfo<UserListItem>) => {
-      const { user, isAdmin } = item;
-      const { name, username, checkmark, avatar } = user;
+      const { isAdmin } = item;
+      const { id, name, username, checkmark, avatar } = item.user;
       return (
         <UserListItemSimple
+          onGoToUser={() => goToUser(id, name, isAdmin)}
           title={name}
           description={isAdmin ? t("administrator") : `@${username}`}
           checkmark={checkmark}
           avatar={avatar}
+          arrowRight={user?.id !== id}
           sx={{ marginBottom: 15 }}
         />
       );

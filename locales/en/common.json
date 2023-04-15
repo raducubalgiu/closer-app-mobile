@@ -494,5 +494,8 @@
   "administrator": "Administrator",
   "youChangedSuccessfullyNameOfGroup": "Ai schimbat cu succes numele grupului",
   "groupSettings": "Setările grupului",
-  "youCanSelectMaximumTenImages": "Poţi selecta maxim 10 imagini"
+  "youCanSelectMaximumTenImages": "Poţi selecta maxim 10 imagini",
+  "justAdminsCanAddNewUsersToGroup": "Doar utilizatorii cu drepturi de administrator pot adăuga persoane noi",
+  "justAdminsCanChangeGroupName": "Doar utilizatorii cu drepturi de administrator pot modifica numele grupului",
+  "youLeavedTheGroup": "Ai părăsit grupul {{GROUP_NAME}}"
 }
