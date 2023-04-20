@@ -1,15 +1,25 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { Icon } from "@rneui/themed";
 import theme from "../../../../../assets/styles/theme";
 import { Stack, CustomAvatar } from "../../../core";
 import { User } from "../../../../ts";
 
 const { black, primary, grey0 } = theme.lightColors || {};
-type IProps = { user: User; onSelect: (user: User, action: string) => void };
+type IProps = {
+  user: User;
+  selected: boolean;
+  onSelect: (user: User, action: string) => void;
+  disabled?: boolean;
+};
 
-const UserListItemSelectable = ({ user, onSelect }: IProps) => {
-  const [isSelected, setIsSelected] = useState(false);
+const UserSelectableListItem = ({
+  user,
+  onSelect,
+  selected,
+  disabled = false,
+}: IProps) => {
+  const [isSelected, setIsSelected] = useState(selected);
 
   const onSelectUser = () => {
     setIsSelected((isSelected) => !isSelected);
@@ -17,7 +27,7 @@ const UserListItemSelectable = ({ user, onSelect }: IProps) => {
   };
 
   return (
-    <Pressable onPress={onSelectUser}>
+    <Pressable onPress={onSelectUser} disabled={disabled}>
       <Stack direction="row" sx={styles.container}>
         <Stack direction="row">
           <CustomAvatar avatar={user?.avatar} />
@@ -40,7 +50,7 @@ const UserListItemSelectable = ({ user, onSelect }: IProps) => {
   );
 };
 
-export default UserListItemSelectable;
+export default memo(UserSelectableListItem);
 
 const styles = StyleSheet.create({
   container: { marginHorizontal: 15, marginBottom: 15 },

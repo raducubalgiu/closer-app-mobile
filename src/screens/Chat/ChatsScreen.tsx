@@ -56,7 +56,10 @@ export const ChatsScreen = () => {
   const header = (
     <>
       <FakeSearchBarSimple onPress={goToSearch} sx={{ marginHorizontal: 15 }} />
-      <Heading title={t("messages")} sx={{ marginLeft: 15 }} />
+      <Heading
+        title={t("messages")}
+        sx={{ marginLeft: 15, marginBottom: 20 }}
+      />
     </>
   );
 

@@ -5,6 +5,7 @@ import MediaLibraryAlbumsList from "./Lists/MediaLibraryAlbumsList";
 import MediaLibraryPhotoListItem from "./ListItems/MediaLibraryPhotoListItem";
 import MessSentItem from "./ListItems/MessSentItem";
 import MessReceivedItem from "./ListItems/MessReceivedItem";
+import UserSelectableListItem from "./ListItems/User/UserSelectableListItem";
 
 export {
   DisplayText,
@@ -13,6 +14,7 @@ export {
   MediaLibraryPhotoListItem,
   MessSentItem,
   MessReceivedItem,
+  UserSelectableListItem,
 };
 
 // Normal Components

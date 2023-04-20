@@ -24,7 +24,7 @@ export const SearchBarInput = ({
   autoFocus,
   ...props
 }: IProps) => {
-  let cancel = !showCancel
+  const cancel = !showCancel
     ? {
         color: "gray",
         display: "none",
@@ -71,10 +71,11 @@ const styles = StyleSheet.create({
     color: grey0,
   },
   cancelBtnText: {
-    fontSize: 13.5,
+    fontSize: 14.5,
     color: black,
     backgroundColor: "white",
     padding: 10,
+    fontWeight: "600",
   },
   searchIcon: { color: black },
 });

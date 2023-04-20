@@ -10,8 +10,8 @@ export const Heading = ({ sx = {}, title = "" }) => {
 const styles = StyleSheet.create({
   heading: {
     color: black,
-    fontWeight: "700",
-    fontSize: 14,
+    fontWeight: "600",
+    fontSize: 15,
     marginTop: 15,
     marginBottom: 10,
   },

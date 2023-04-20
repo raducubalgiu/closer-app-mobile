@@ -70,6 +70,7 @@ export { ChatGroupNameScreen } from "./Chat/ChatGroupNameScreen";
 export { ChatGroupMediaScreen } from "./Chat/ChatGroupMediaScreen";
 export { ChatGroupAddUsersScreen } from "./Chat/ChatGroupAddUsersScreen";
 export { ChatGroupUserScreen } from "./Chat/ChatGroupUserScreen";
+export { ChatGroupCreateScreen } from "./Chat/ChatGroupCreateScreen";
 export { PhotoLibraryScreen } from "./PhotoLibraryScreen";
 export { PhotoAlbumsScreen } from "./PhotoAlbumsScreen";
 export { AddPostScreen } from "./AddPostScreen";

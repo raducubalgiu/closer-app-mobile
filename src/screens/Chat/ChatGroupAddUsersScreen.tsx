@@ -11,7 +11,7 @@ import {
 import { Header, SearchBarInput, Button } from "../../components/core";
 import { User } from "../../ts";
 import { useTranslation } from "react-i18next";
-import UserListItemSelectable from "../../components/customized/ListItems/User/UserListItemSelectable";
+import UserListItemSelectable from "../../components/customized/ListItems/User/UserSelectableListItem";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -64,7 +64,11 @@ export const ChatGroupAddUsersScreen = ({ route }: IProps) => {
 
   const renderUser = useCallback(
     ({ item }: ListRenderItemInfo<User>) => (
-      <UserListItemSelectable user={item} onSelect={selectUsers} />
+      <UserListItemSelectable
+        user={item}
+        onSelect={selectUsers}
+        selected={false}
+      />
     ),
     []
   );

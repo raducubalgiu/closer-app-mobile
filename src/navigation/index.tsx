@@ -1,6 +1,5 @@
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
-import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 import "../../i18next";
 import { useAuth } from "../hooks";
 import { RootStackParams } from "./rootStackParams";
@@ -22,6 +21,7 @@ import {
   ChatGroupNameScreen,
   ChatGroupMediaScreen,
   ChatGroupAddUsersScreen,
+  ChatGroupCreateScreen,
   DeleteAccountScreen,
   DeleteAccountPermanentlyScreen,
   DisableAccountScreen,
@@ -100,10 +100,11 @@ import {
   SearchPopularDetailScreen,
 } from "../screens";
 
-const Stack = createSharedElementStackNavigator<RootStackParams>();
+const Stack = createNativeStackNavigator<RootStackParams>();
 import AuthNavigator from "./AuthNavigator";
 import TabNavigator from "./TabNavigator";
 import { PortalProvider } from "@gorhom/portal";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const AppNavigation = () => {
   const { user } = useAuth();
@@ -118,14 +119,16 @@ const AppNavigation = () => {
               name="SearchPosts"
               component={SearchPostsScreen}
               options={{
-                animationEnabled: false,
+                animation: "fade",
+                animationDuration: 150,
               }}
             />
             <Stack.Screen
               name="SearchAll"
               component={SearchAllScreen}
               options={{
-                animationEnabled: false,
+                animation: "fade",
+                animationDuration: 150,
               }}
             />
             <Stack.Screen
@@ -220,11 +223,19 @@ const AppNavigation = () => {
               name="ChatGroupUser"
               component={ChatGroupUserScreen}
             />
-            <Stack.Screen name="MessageNew" component={MessageNewScreen} />
+            <Stack.Screen
+              name="ChatGroupCreate"
+              component={ChatGroupCreateScreen}
+            />
+            <Stack.Screen
+              name="MessageNew"
+              component={MessageNewScreen}
+              options={{ animation: "simple_push" }}
+            />
             <Stack.Screen
               name="MessagesSearch"
               component={MessagesSearchScreen}
-              options={{ animationEnabled: false }}
+              options={{ animation: "fade_from_bottom" }}
             />
             <Stack.Screen name="Settings" component={SettingsProfileScreen} />
             <Stack.Screen name="Account" component={AccountScreen} />
@@ -354,7 +365,7 @@ const AppNavigation = () => {
             <Stack.Screen
               name="CameraPreview"
               component={CameraPreviewScreen}
-              options={{ animationEnabled: false }}
+              options={{ animation: "none" }}
             />
             <Stack.Screen name="Likes" component={LikesScreen} />
           </Stack.Navigator>

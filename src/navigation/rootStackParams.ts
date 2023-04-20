@@ -59,7 +59,8 @@ export type RootStackParams = {
     isAdmin: boolean;
     chatId: string;
   };
-  ChatGroupMedia: any;
+  ChatGroupCreate: { users: User[] };
+  ChatGroupMedia: { chatId: string };
   ClearCache: any;
   DeleteAccount: any;
   DeleteAccountPermanently: any;

@@ -2,10 +2,12 @@ import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { Header } from "../../components/core";
 import { TopTabContainer } from "../../components/customized";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../navigation/rootStackParams";
 
-type IProps = { chatId: string };
+type IProps = NativeStackScreenProps<RootStackParams, "ChatGroupMedia">;
 
-export const ChatGroupMediaScreen = ({ chatId }: IProps) => {
+export const ChatGroupMediaScreen = ({ route }: IProps) => {
   const Tab = createMaterialTopTabNavigator();
 
   const Media = () => {

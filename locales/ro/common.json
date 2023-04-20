@@ -499,5 +499,6 @@
   "justAdminsCanChangeGroupName": "Doar utilizatorii cu drepturi de administrator pot modifica numele grupului",
   "withAdminRights": "Cu drepturi de administrator",
   "withoutAdminRights": "Fără drepturi de administrator",
-  "youLeavedTheGroup": "Ai părăsit grupul {{GROUP_NAME}}"
+  "youLeavedTheGroup": "Ai părăsit grupul {{GROUP_NAME}}",
+  "createNewGroup": "Creează grup nou"
 }

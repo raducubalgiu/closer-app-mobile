@@ -58,7 +58,7 @@ export const FormTextField = ({
   const inputStyle = StyleSheet.create({
     input: {
       flex: 1,
-      paddingVertical: 10,
+      paddingVertical: 15,
       fontSize: 15,
       ...sx,
     },
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     color: black,
     marginBottom: 2.5,
     fontWeight: "600",
-    fontSize: 14,
+    fontSize: 15.5,
   },
   errMsg: {
     color: error,

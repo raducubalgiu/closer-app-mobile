@@ -497,5 +497,6 @@
   "youCanSelectMaximumTenImages": "Poţi selecta maxim 10 imagini",
   "justAdminsCanAddNewUsersToGroup": "Doar utilizatorii cu drepturi de administrator pot adăuga persoane noi",
   "justAdminsCanChangeGroupName": "Doar utilizatorii cu drepturi de administrator pot modifica numele grupului",
-  "youLeavedTheGroup": "Ai părăsit grupul {{GROUP_NAME}}"
+  "youLeavedTheGroup": "Ai părăsit grupul {{GROUP_NAME}}",
+  "createNewGroup": "Creează grup nou"
 }
