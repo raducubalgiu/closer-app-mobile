@@ -30,7 +30,7 @@ import { RootStackParams } from "../../../navigation/rootStackParams";
 import theme from "../../../../assets/styles/theme";
 import { usePost, useAuth, useGet } from "../../../hooks";
 import { Message, MessageContent, User } from "../../../ts";
-import { showToast } from "../../../utils";
+import { isSame, showToast } from "../../../utils";
 import {
   SheetModal,
   Spinner,
@@ -44,6 +44,7 @@ import {
   MessSentItem,
   MessReceivedItem,
 } from "../../../components/customized";
+import { shortFormat } from "../../../utils/date-utils";
 
 const { grey0 } = theme.lightColors || {};
 
@@ -77,7 +78,7 @@ export const MessagesScreen = ({ route }: IProps) => {
       uri: `/users/${user?.id}/chats/${chat?.id}/messages?page=${page}&limit=20`,
       options: {
         onSuccess(response) {
-          if (response.data) {
+          if (response.data && response.data.next !== hasNext) {
             setHasNext(response?.data?.next);
             setMessages((messages) =>
               messages?.concat(response?.data?.results)
@@ -132,27 +133,30 @@ export const MessagesScreen = ({ route }: IProps) => {
     }
   };
 
-  const typingHandler = (text: string) => {
-    setMessage(text);
+  const typingHandler = useCallback(
+    (text: string) => {
+      setMessage(text);
 
-    if (!socketConnected) return;
+      if (!socketConnected) return;
 
-    if (!typing) {
-      setTyping(true);
-      socket.emit("typing", chat?.id, user);
-    }
-
-    let lastTypingTime = new Date().getTime();
-    var timerLength = 10000;
-    setTimeout(() => {
-      var timeNow = new Date().getTime();
-      var timeDiff = timeNow - lastTypingTime;
-      if (timeDiff >= timerLength && typing) {
-        socket.emit("stop typing", chat?.id);
-        setTyping(false);
+      if (!typing) {
+        setTyping(true);
+        socket.emit("typing", chat?.id, user);
       }
-    }, timerLength);
-  };
+
+      let lastTypingTime = new Date().getTime();
+      var timerLength = 10000;
+      setTimeout(() => {
+        var timeNow = new Date().getTime();
+        var timeDiff = timeNow - lastTypingTime;
+        if (timeDiff >= timerLength && typing) {
+          socket.emit("stop typing", chat?.id);
+          setTyping(false);
+        }
+      }, timerLength);
+    },
+    [setMessage, socketConnected, setTyping, socket, typing]
+  );
 
   const handleOpenCamera = () => {
     if (permission?.granted) {
@@ -160,31 +164,38 @@ export const MessagesScreen = ({ route }: IProps) => {
     }
   };
 
-  const isSenderSame = (curr: Message, prev: Message) => {
-    return curr?.sender?.id === prev?.sender?.id;
-  };
-
   const renderMessage = useCallback(
     ({ item, index }: ListRenderItemInfo<Message>) => {
+      const prev = messages[index - 1];
       const isSent = user?.id === item?.sender?.id;
+
+      const isDateSame = isSame(
+        shortFormat(item?.createdAt),
+        shortFormat(prev?.createdAt)
+      );
+
       switch (isSent) {
         case true:
           return (
-            <MessSentItem item={item} dateSame={true} date={item.createdAt} />
+            <MessSentItem
+              item={item}
+              dateSame={isDateSame}
+              date={item.createdAt}
+            />
           );
         case false:
           return (
             <MessReceivedItem
               avatar={item?.sender?.avatar}
               item={item}
-              senderSame={isSenderSame(item, messages[index - 1])}
-              dateSame={true}
+              senderSame={isSame(item.sender?.id, prev?.sender?.id)}
+              dateSame={isDateSame}
               date={item?.createdAt}
             />
           );
       }
     },
-    []
+    [messages]
   );
 
   let header = (

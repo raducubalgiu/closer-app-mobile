@@ -118,6 +118,13 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
     },
   });
 
+  const { mutate: goToMessages, isLoading: isLoadingChat } = usePost({
+    uri: `/users/${user?.id}/chats`,
+    onSuccess: (response) => {
+      navigation.navigate("Messages", { chat: response.data });
+    },
+  });
+
   const handleFollow = () => {
     if (isFollow) {
       unfollow();
@@ -142,14 +149,12 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
     }
   };
 
-  const goToMessage = () => {};
-
   const goToMap = () => {
-    navigation.push("Map", {
-      profession: profession?.id,
-      userId: id,
-      initialCoordinates: address?.coordinates,
-    });
+    // navigation.push("Map", {
+    //   profession: profession?.id,
+    //   userId: id,
+    //   initialCoordinates: address?.coordinates,
+    // });
   };
 
   const userSettings = settings;
@@ -163,7 +168,11 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
         onPress={handleFollow}
       />
       {isFollow && (
-        <ProfileIconButton name="message-circle" onPress={goToMessage} />
+        <ProfileIconButton
+          name="message-circle"
+          loading={isLoadingChat}
+          onPress={() => goToMessages({ users: [id] })}
+        />
       )}
       <Protected roles={[MAIN_ROLE, SECOND_ROLE]} userRole={role}>
         <ProfileIconButton name="map-pin" onPress={goToMap} />

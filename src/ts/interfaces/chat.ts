@@ -10,6 +10,7 @@ export interface Chat {
   latestMessage: {
     text: string;
     seenBy: User[];
+    createdAt: string;
   };
   isGroupChat: boolean;
   updatedAt: string;

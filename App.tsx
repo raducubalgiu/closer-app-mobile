@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { enableScreens } from "react-native-screens";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import AppNavigation from "./src/navigation";
 import { AuthProvider } from "./src/hooks/auth";
 import { LocationProvider } from "./src/hooks/locationPermission";
@@ -14,16 +15,18 @@ import { Asset } from "expo-asset";
 import AppLoading from "expo-app-loading";
 import dayjs from "dayjs";
 import "dayjs/locale/ro";
+import relativeTime from "dayjs/plugin/relativeTime";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import utc from "dayjs/plugin/utc";
 import weekday from "dayjs/plugin/weekday";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { ScheduleCounterProvider } from "./src/hooks/scheduleCounter";
+
 dayjs.extend(weekday);
 dayjs.extend(isSameOrBefore);
 dayjs.extend(isSameOrAfter);
 dayjs.extend(utc);
+dayjs.extend(relativeTime);
 dayjs.locale("ro");
 
 enableScreens();

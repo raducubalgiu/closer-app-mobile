@@ -7,3 +7,4 @@ export { displayCount } from "./display-count";
 export { displayNothing } from "./display-nothing";
 export { showToast } from "./showToast";
 export { numberWithComma } from "./numberWithComma";
+export { isSame } from "./isSame";

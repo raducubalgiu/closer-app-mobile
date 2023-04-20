@@ -14,9 +14,9 @@ const { black, grey0 } = theme.lightColors || {};
 type IProps = { chat: Chat };
 
 export const ChatListItem = ({ chat }: IProps) => {
-  const { summary, latestMessage, updatedAt } = chat || {};
+  const { summary, latestMessage } = chat || {};
   const { name, avatar } = summary || {};
-  const { text } = latestMessage || {};
+  const { text, createdAt } = latestMessage || {};
 
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -35,7 +35,7 @@ export const ChatListItem = ({ chat }: IProps) => {
             <Text style={styles.message}>{trimFunc(text, 30)}</Text>
           </Stack>
         </Stack>
-        <Text style={styles.date}>{dayjs(updatedAt).format("DD/MM/YY")}</Text>
+        <Text style={styles.date}>{dayjs(createdAt).format("DD/MM/YY")}</Text>
       </Stack>
     </Pressable>
   );
