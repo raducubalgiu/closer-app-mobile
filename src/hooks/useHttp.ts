@@ -7,7 +7,6 @@ import {
   UseQueryOptions,
   UseQueryResult,
 } from "@tanstack/react-query";
-import { Chat } from "../ts";
 
 const BASE_ENDPOINT = `${process.env.BASE_ENDPOINT}`;
 

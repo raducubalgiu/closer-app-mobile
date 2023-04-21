@@ -77,7 +77,7 @@ export const MessageNewScreen = () => {
 
   const onSubmit = () => {
     if (selectedUsers?.length === 1) {
-      goToMessages({ users: [selectedUsers[0]] });
+      goToMessages({ users: [selectedUsers[0].id] });
     } else {
       navigation.navigate("ChatGroupCreate", { users: selectedUsers });
     }

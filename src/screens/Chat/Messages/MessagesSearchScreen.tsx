@@ -6,33 +6,74 @@ import {
   Keyboard,
   View,
   Text,
+  Pressable,
 } from "react-native";
 import { useState, useCallback } from "react";
-import { Heading, SearchBarInput, Stack } from "../../../components/core";
+import {
+  CustomAvatar,
+  Heading,
+  IconBackButton,
+  SearchBarInput,
+  Stack,
+} from "../../../components/core";
 import { UserListItemSimple } from "../../../components/customized";
 import {
   useAuth,
   useGetPaginate,
   usePaginateActions,
   useRefreshOnFocus,
+  useGet,
+  usePost,
 } from "../../../hooks";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { User } from "../../../ts";
+import { Chat, User } from "../../../ts";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../navigation/rootStackParams";
+import { showToast, trimFunc } from "../../../utils";
+
+type SearchUserResponse = { next: any; results: User[] };
 
 export const MessagesSearchScreen = () => {
   const { user } = useAuth();
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [search, setSearch] = useState("");
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation("common");
+
+  const optionsGroups = useGetPaginate({
+    model: "chats",
+    uri: `/users/${user?.id}/chats/groups`,
+    limit: "12",
+  });
+
+  const { data: groups } = usePaginateActions(optionsGroups);
 
   const options = useGetPaginate({
     model: "users",
     uri: `/users/suggested`,
-    limit: "10",
+    limit: "20",
   });
 
-  const { refetch, isInitialLoading } = options;
+  const { data: searchedUsers } = useGet<SearchUserResponse>({
+    model: "search",
+    uri: `/users/search?search=${search}&page=1&limit=5`,
+    enableId: search,
+    options: {
+      enabled: search?.length > 0,
+    },
+  });
+
+  const { mutate: goToMessages, isLoading } = usePost({
+    uri: `/users/${user?.id}/chats`,
+    onSuccess: (response) => {
+      navigation.navigate("Messages", { chat: response.data });
+    },
+    onError: () => showToast({ message: t("somethingWentWrong") }),
+  });
+
+  const { refetch } = options;
   const { data: users, showSpinner, loadMore } = usePaginateActions(options);
   useRefreshOnFocus(refetch);
 
@@ -40,20 +81,32 @@ export const MessagesSearchScreen = () => {
     ({ item }: ListRenderItemInfo<User>) => (
       <UserListItemSimple
         title={item?.name}
-        description={item.username}
+        description={`@${item.username}`}
         checkmark={item?.checkmark}
         avatar={item?.avatar}
-        sx={{ marginBottom: 15 }}
+        sx={{ marginBottom: 15, marginHorizontal: 15 }}
+        loading={isLoading && selectedUser?.id === item.id}
+        onGoToUser={() => {
+          setSelectedUser(item);
+          goToMessages({ users: [item.id] });
+        }}
       />
     ),
-    []
+    [isLoading]
   );
 
   const renderGroup = useCallback(
-    () => (
-      <View>
-        <Text>Group</Text>
-      </View>
+    ({ item }: ListRenderItemInfo<Chat>) => (
+      <Pressable
+        onPress={() => navigation.navigate("Messages", { chat: item })}
+      >
+        <Stack justify="center" align="center" sx={{ marginRight: 20 }}>
+          <CustomAvatar avatar={item.summary.avatar} />
+          <Text style={{ fontWeight: "500", marginTop: 10 }}>
+            {trimFunc(item.summary.name, 10)}
+          </Text>
+        </Stack>
+      </Pressable>
     ),
     []
   );
@@ -62,13 +115,17 @@ export const MessagesSearchScreen = () => {
 
   const header = (
     <>
+      <Heading title="Grupurile mele" sx={{ marginLeft: 15 }} />
       <FlatList
-        ListHeaderComponent={<Heading title="Grupurile mele" />}
-        data={[]}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        data={groups}
         renderItem={renderGroup}
         keyExtractor={(item, index) => index.toString()}
+        contentContainerStyle={{ padding: 15 }}
+        keyboardShouldPersistTaps={"handled"}
       />
-      <Heading title="Sugestii" />
+      <Heading title="Sugestii" sx={{ marginBottom: 15, marginLeft: 15 }} />
     </>
   );
 
@@ -76,27 +133,37 @@ export const MessagesSearchScreen = () => {
     <View style={styles.screen}>
       <SafeAreaView>
         <Stack direction="row" sx={{ marginHorizontal: 15 }}>
+          <IconBackButton />
           <SearchBarInput
             value={search}
             onChangeText={(text) => setSearch(text)}
-            placeholder="Cauta"
+            placeholder={t("search")}
             autoFocus={true}
-            showCancel={true}
-            cancelButtonTitle={t("cancel")}
-            onCancel={() => navigation.goBack()}
+            showCancel={false}
           />
         </Stack>
       </SafeAreaView>
-      <FlatList
-        ListHeaderComponent={header}
-        data={users}
-        keyExtractor={keyExtractor}
-        renderItem={renderUser}
-        onEndReached={loadMore}
-        ListFooterComponent={showSpinner}
-        contentContainerStyle={{ paddingHorizontal: 15 }}
-        onMomentumScrollBegin={() => Keyboard.dismiss()}
-      />
+      {search?.length === 0 && (
+        <FlatList
+          ListHeaderComponent={header}
+          data={users}
+          keyExtractor={keyExtractor}
+          renderItem={renderUser}
+          onEndReached={loadMore}
+          ListFooterComponent={showSpinner}
+          onMomentumScrollBegin={() => Keyboard.dismiss()}
+          keyboardShouldPersistTaps={"handled"}
+        />
+      )}
+      {search?.length > 0 && (
+        <FlatList
+          data={searchedUsers?.results}
+          keyExtractor={keyExtractor}
+          renderItem={renderUser}
+          onMomentumScrollBegin={() => Keyboard.dismiss()}
+          keyboardShouldPersistTaps={"handled"}
+        />
+      )}
     </View>
   );
 };

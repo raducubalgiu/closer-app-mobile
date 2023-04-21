@@ -14,7 +14,7 @@ const { black, grey0 } = theme.lightColors || {};
 type IProps = { chat: Chat };
 
 export const ChatListItem = ({ chat }: IProps) => {
-  const { summary, latestMessage } = chat || {};
+  const { summary, latestMessage, isGroupChat } = chat || {};
   const { name, avatar } = summary || {};
   const { text, createdAt } = latestMessage || {};
 

@@ -19,6 +19,7 @@ import { RootStackParams } from "../../navigation/rootStackParams";
 import { Service } from "../../ts";
 import { NoFoundMessage, TapFeedbackButton } from "../../components/customized";
 import { Icon } from "@rneui/themed";
+import { isEmpty, result } from "lodash";
 
 const { black, grey0 } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "SearchServices">;
@@ -30,23 +31,21 @@ export const SearchServicesScreen = ({ route }: IProps) => {
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { period } = route.params || {};
 
-  const { data: services, isLoading } = useGet({
+  const { data: services, isLoading } = useGet<any>({
     model: "searchServices",
     uri: `/services/search?search=${search}&page=1&limit=5`,
     enableId: search,
-    options: {
-      enabled: !!search,
-    },
+    options: { enabled: !!search },
   });
 
-  const { results } = services || [];
+  const { results } = services || {};
 
   const { data: suggested } = useGet({
     model: "suggestedServices",
     uri: `/services/suggested`,
   });
 
-  const goToFilters = (item: any) => {
+  const goToFilters = (item: Service) => {
     navigation.navigate("FiltersDate", {
       service: item,
       period,
@@ -73,7 +72,7 @@ export const SearchServicesScreen = ({ route }: IProps) => {
   const keyExtractor = useCallback((item: Service) => item.id, []);
 
   let footer;
-  if (!results?.length && search.length > 0) {
+  if (isEmpty(results) && !isEmpty(search) && search.length > 1) {
     footer = (
       <NoFoundMessage
         title={t("services")}
@@ -98,7 +97,7 @@ export const SearchServicesScreen = ({ route }: IProps) => {
         </Stack>
       </Stack>
       <FlatList
-        data={!results?.length && !search?.length ? suggested : displayResults}
+        data={isEmpty(results) && isEmpty(search) ? suggested : displayResults}
         keyExtractor={keyExtractor}
         renderItem={renderServices}
         keyboardShouldPersistTaps={"handled"}

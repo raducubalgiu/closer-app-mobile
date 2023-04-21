@@ -4,9 +4,10 @@ import {
   View,
   KeyboardAvoidingView,
   Platform,
+  FlatList,
+  ListRenderItemInfo,
 } from "react-native";
 import { useCallback } from "react";
-import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import { useForm, FormProvider } from "react-hook-form";
@@ -20,6 +21,7 @@ import { useAuth, usePost } from "../../hooks";
 import { Button, FormTextField, Header, Heading } from "../../components/core";
 import { UserListItemSimple } from "../../components/customized";
 import { showToast } from "../../utils";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type IProps = NativeStackScreenProps<RootStackParams, "ChatGroupCreate">;
 
@@ -29,6 +31,7 @@ export const ChatGroupCreateScreen = ({ route }: IProps) => {
   const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
+  const insets = useSafeAreaInsets();
   const methods = useForm({ defaultValues: { name: "" } });
   const {
     handleSubmit,
@@ -50,7 +53,7 @@ export const ChatGroupCreateScreen = ({ route }: IProps) => {
         description={item?.username}
         checkmark={item?.checkmark}
         avatar={item?.avatar}
-        sx={{ marginHorizontal: 15, marginBottom: 15 }}
+        sx={{ marginBottom: 15 }}
       />
     ),
     []
@@ -62,7 +65,7 @@ export const ChatGroupCreateScreen = ({ route }: IProps) => {
     goToMessages({
       name: data.name,
       users: users.map((u) => u.id),
-      adminGroup: [user?.id],
+      groupAdmin: [user?.id],
       isGroupChat: true,
     });
   };
@@ -72,37 +75,33 @@ export const ChatGroupCreateScreen = ({ route }: IProps) => {
       <Header title={t("createNewGroup")} />
       <FormProvider {...methods}>
         <View style={styles.container}>
-          <View style={{ marginVertical: 15, flex: 1 }}>
-            <View style={{ marginHorizontal: 15 }}>
-              <FormTextField
-                name="name"
-                placeholder="Adauga un nume grupului"
-                label="Numele grupului"
-              />
-            </View>
-            <Heading
-              title="Utilizatori selectati"
-              sx={{ marginHorizontal: 15, marginBottom: 25 }}
+          <View style={{ margin: 15, flex: 1 }}>
+            <FormTextField
+              name="name"
+              placeholder={t("chooseGroupName")}
+              label={t("nameOfTheGroup")}
             />
             {user && (
-              <FlashList
+              <FlatList
+                ListHeaderComponent={
+                  <Heading title={t("members")} sx={{ marginBottom: 25 }} />
+                }
                 data={[user, ...users]}
                 keyExtractor={keyExtractor}
                 renderItem={renderUser}
-                estimatedItemSize={55}
               />
             )}
           </View>
           <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "position" : "height"}
-            keyboardVerticalOffset={100}
-            style={{ marginHorizontal: 15 }}
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            keyboardVerticalOffset={95}
           >
             <Button
               title={t("createNewGroup")}
               onPress={handleSubmit(onCreateGroup)}
               disabled={!isDirty || isLoading}
               loading={isLoading}
+              sxBtn={{ marginHorizontal: 15 }}
             />
           </KeyboardAvoidingView>
         </View>

@@ -500,5 +500,8 @@
   "withAdminRights": "Cu drepturi de administrator",
   "withoutAdminRights": "Fără drepturi de administrator",
   "youLeavedTheGroup": "Ai părăsit grupul {{GROUP_NAME}}",
-  "createNewGroup": "Creează grup nou"
+  "createNewGroup": "Creează grup nou",
+  "members": "Membri",
+  "nameOfTheGroup": "Numele grupului",
+  "chooseGroupName": "Cum să se numească grupul?"
 }

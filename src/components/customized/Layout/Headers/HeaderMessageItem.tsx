@@ -15,14 +15,14 @@ type IProps = { chat: Chat };
 
 export const HeaderMessageItem = ({ chat }: IProps) => {
   const { summary, users, isGroupChat } = chat;
-  const { name, avatar } = summary;
+  const { name, avatar, username } = summary;
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const goToUser = () => {
     if (!isGroupChat) {
       navigation.push("ProfileGeneral", {
-        username: name,
+        username,
         service: null,
         option: null,
       });
@@ -35,7 +35,7 @@ export const HeaderMessageItem = ({ chat }: IProps) => {
     navigation.navigate("ChatSettings", { chat });
   };
 
-  const displayGroupUsers = users.map((el) => `${el.username}`).toString();
+  const displayGroupUsers = users.map((el) => `${el.user.username}`).toString();
 
   return (
     <Stack direction="row" sx={styles.container}>

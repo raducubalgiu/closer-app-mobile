@@ -1,4 +1,4 @@
-import { StyleSheet, Text, Pressable } from "react-native";
+import { StyleSheet, Text, Pressable, ActivityIndicator } from "react-native";
 import { Stack, Checkmark } from "../../../core";
 import CustomAvatar from "../../../core/Avatars/CustomAvatar";
 import theme from "../../../../../assets/styles/theme";
@@ -15,6 +15,7 @@ type IProps = {
   sx?: {};
   avatarSize?: number;
   onGoToUser?: () => void;
+  loading?: boolean;
 };
 
 export const UserListItemSimple = ({
@@ -26,6 +27,7 @@ export const UserListItemSimple = ({
   onGoToUser,
   avatarSize = 50,
   sx,
+  loading = false,
 }: IProps) => {
   return (
     <Pressable onPress={onGoToUser} style={sx}>
@@ -47,6 +49,7 @@ export const UserListItemSimple = ({
             style={{ marginLeft: 10 }}
           />
         )}
+        {loading && <ActivityIndicator />}
       </Stack>
     </Pressable>
   );

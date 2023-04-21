@@ -73,13 +73,6 @@ export const ChatSettingsScreen = ({ route }: IProps) => {
       </Pressable>
       <Stack sx={{ paddingHorizontal: 15 }} align="start">
         <Heading title={t("actions")} sx={styles.heading} />
-        {!isGroupChat && (
-          <SettingsSwitchListItem
-            value={false}
-            title={t("stopMessages")}
-            onValueChange={() => {}}
-          />
-        )}
         <SettingsSwitchListItem
           value={false}
           title={t("disableNotifications")}
