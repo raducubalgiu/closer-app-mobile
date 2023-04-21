@@ -1,20 +1,19 @@
+import { SafeAreaView, StyleSheet, Text, Pressable } from "react-native";
+import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Icon } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
-import { SafeAreaView, StyleSheet, Text, Pressable } from "react-native";
-import theme from "../../../assets/styles/theme";
-import * as Haptics from "expo-haptics";
-import { Header, Heading, Stack } from "../../components/core";
-import CustomAvatar from "../../components/core/Avatars/CustomAvatar";
-import { SettingsSwitchListItem } from "../../components/customized";
-import { useAuth, usePost } from "../../hooks";
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
+import * as Haptics from "expo-haptics";
+import theme from "../../../assets/styles/theme";
 import { RootStackParams } from "../../navigation/rootStackParams";
+import { Header, Heading, Stack, CustomAvatar } from "../../components/core";
+import { SettingsSwitchListItem } from "../../components/customized";
+import { useAuth, usePost } from "../../hooks";
 import { showToast } from "../../utils";
-import { useState } from "react";
 
 const { grey0, black, error } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "ChatSettings">;

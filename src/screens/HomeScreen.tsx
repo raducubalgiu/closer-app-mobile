@@ -1,23 +1,20 @@
-import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-  Text,
-  RefreshControl,
-} from "react-native";
+import { SafeAreaView, StyleSheet, Text, RefreshControl } from "react-native";
 import {
   MasonryFlashList,
   MasonryListRenderItemInfo,
 } from "@shopify/flash-list";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import FakeSearchBar from "../components/customized/FakeSearchBar/FakeSearchBar";
-import theme from "../../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
-import { ServicesList, CardRecommended } from "../components/customized";
-import { useGet, useRefreshByUser } from "../hooks";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../navigation/rootStackParams";
+import theme from "../../assets/styles/theme";
+import {
+  ServicesList,
+  CardRecommended,
+  FakeSearchBarServices,
+} from "../components/customized";
+import { useGet, useRefreshByUser } from "../hooks";
 import { RecommendedLocation } from "../ts";
 
 const { black } = theme.lightColors || {};
@@ -69,7 +66,7 @@ export const HomeScreen = () => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <FakeSearchBar
+      <FakeSearchBarServices
         onGoAnytime={goToServicesAnytime}
         onGoNow={goToServicesNow}
       />

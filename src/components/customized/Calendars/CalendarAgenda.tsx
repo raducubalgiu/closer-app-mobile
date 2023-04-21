@@ -14,9 +14,8 @@ import { Divider, ListItem } from "@rneui/themed";
 import * as Haptics from "expo-haptics";
 import { useCalendarList } from "../../../hooks";
 import theme from "../../../../assets/styles/theme";
-import { SHORT_DATE } from "../../../utils/date-utils";
-import { Month } from "../../../models/month";
-import { Day } from "../../../models/day";
+import { shortFormat } from "../../../utils/date-utils";
+import { Month, Day } from "../../../ts";
 
 const { primary, black, grey0 } = theme.lightColors || {};
 const { width } = Dimensions.get("window");
@@ -54,7 +53,7 @@ const CalendarAgenda = ({
 
   const getBgColor = useCallback(
     (item: Day) => {
-      if (SHORT_DATE(item.date) === selectedDay && !item.prevDates) {
+      if (shortFormat(item.date) === selectedDay && !item.prevDates) {
         return primary;
       } else {
         return "white";
@@ -67,7 +66,7 @@ const CalendarAgenda = ({
     (item: Day) => {
       if (item.disabled) {
         return "#ccc";
-      } else if (SHORT_DATE(item.date) === selectedDay) {
+      } else if (shortFormat(item.date) === selectedDay) {
         return "white";
       } else {
         return black;

@@ -9,6 +9,11 @@ import {
   Pressable,
 } from "react-native";
 import { useState, useCallback } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { isEmpty } from "lodash";
+import { RootStackParams } from "../../../navigation/rootStackParams";
 import {
   CustomAvatar,
   Heading,
@@ -25,11 +30,7 @@ import {
   useGet,
   usePost,
 } from "../../../hooks";
-import { useNavigation } from "@react-navigation/native";
-import { useTranslation } from "react-i18next";
 import { Chat, User } from "../../../ts";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../navigation/rootStackParams";
 import { showToast, trimFunc } from "../../../utils";
 
 type SearchUserResponse = { next: any; results: User[] };
@@ -95,11 +96,15 @@ export const MessagesSearchScreen = () => {
     [isLoading]
   );
 
+  const navigateToMessage = (item: Chat) => {
+    if (!isLoading) {
+      navigation.navigate("Messages", { chat: item });
+    }
+  };
+
   const renderGroup = useCallback(
     ({ item }: ListRenderItemInfo<Chat>) => (
-      <Pressable
-        onPress={() => navigation.navigate("Messages", { chat: item })}
-      >
+      <Pressable onPress={() => navigateToMessage(item)}>
         <Stack justify="center" align="center" sx={{ marginRight: 20 }}>
           <CustomAvatar avatar={item.summary.avatar} />
           <Text style={{ fontWeight: "500", marginTop: 10 }}>
@@ -143,7 +148,7 @@ export const MessagesSearchScreen = () => {
           />
         </Stack>
       </SafeAreaView>
-      {search?.length === 0 && (
+      {isEmpty(search) ? (
         <FlatList
           ListHeaderComponent={header}
           data={users}
@@ -154,14 +159,14 @@ export const MessagesSearchScreen = () => {
           onMomentumScrollBegin={() => Keyboard.dismiss()}
           keyboardShouldPersistTaps={"handled"}
         />
-      )}
-      {search?.length > 0 && (
+      ) : (
         <FlatList
           data={searchedUsers?.results}
           keyExtractor={keyExtractor}
           renderItem={renderUser}
           onMomentumScrollBegin={() => Keyboard.dismiss()}
           keyboardShouldPersistTaps={"handled"}
+          contentContainerStyle={{ marginTop: 10 }}
         />
       )}
     </View>

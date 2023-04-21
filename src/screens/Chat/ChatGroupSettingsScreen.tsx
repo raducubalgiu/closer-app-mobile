@@ -1,18 +1,18 @@
 import { Pressable, SafeAreaView, StyleSheet, Text } from "react-native";
-import { Header, Stack } from "../../components/core";
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../navigation/rootStackParams";
-import { SettingsListItem } from "../../components/customized";
-import { showToast, trimFunc } from "../../utils";
 import { useTranslation } from "react-i18next";
 import { Icon } from "@rneui/themed";
-import theme from "../../../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
+import { RootStackParams } from "../../navigation/rootStackParams";
 import { useAuth, useGet, usePatch, useRefreshOnFocus } from "../../hooks";
-import { ChatGroup } from "../../ts/interfaces/chatGroup";
+import { Header, Stack } from "../../components/core";
+import { SettingsListItem } from "../../components/customized";
+import { showToast, trimFunc } from "../../utils";
+import theme from "../../../assets/styles/theme";
+import { Chat } from "../../ts";
 
 const { error } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "ChatGroupSettings">;
@@ -24,7 +24,7 @@ export const ChatGroupSettingsScreen = ({ route }: IProps) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
-  const { data: chat, refetch } = useGet<ChatGroup>({
+  const { data: chat, refetch } = useGet<Chat>({
     model: "groupDetails",
     uri: `/users/${user?.id}/chats/${chatId}`,
   });

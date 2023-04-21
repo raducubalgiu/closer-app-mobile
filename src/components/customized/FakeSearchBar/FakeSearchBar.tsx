@@ -1,70 +1,37 @@
-import { StyleSheet, Text, View, Pressable } from "react-native";
-import { Icon, Divider } from "@rneui/themed";
+import { Pressable, StyleSheet, Text } from "react-native";
+import { Icon } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
 import theme from "../../../../assets/styles/theme";
 import { Stack } from "../../core";
 
-const { black, grey0 } = theme.lightColors || {};
+const { grey0, black } = theme.lightColors || {};
+type IProps = { onPress: () => void; sx?: {} };
 
-type IProps = { onGoAnytime: () => void; onGoNow: () => void };
-
-const FakeSearchBar = ({ onGoAnytime, onGoNow }: IProps) => {
-  const { t } = useTranslation("common");
+export const FakeSearchBar = ({ onPress, sx = {} }: IProps) => {
+  const { t } = useTranslation();
 
   return (
-    <View style={styles.container}>
-      <Pressable onPress={onGoAnytime} style={{ flex: 1 }}>
-        <Stack direction="row" justify="start">
-          <Icon name="search" type="feather" color={black} size={20} />
-          <Text style={styles.fakeInput}>{t("searchService")}</Text>
+    <Pressable style={{ ...styles.container, ...sx }} onPress={onPress}>
+      <Stack direction="row">
+        <Stack direction="row">
+          <Icon type="ionicon" name="ios-search" size={20} color={black} />
+          <Text style={styles.text}>{t("search")}</Text>
         </Stack>
-      </Pressable>
-      <Divider orientation="vertical" style={{ marginRight: 15 }} />
-      <Pressable onPress={onGoNow} style={styles.nowBtn}>
-        <Icon
-          name="clock"
-          type="feather"
-          size={15}
-          style={{ marginRight: 5 }}
-          color={black}
-        />
-        <Text style={styles.nowBtnText}>{t("now")}</Text>
-        <Icon name="keyboard-arrow-down" color={black} />
-      </Pressable>
-    </View>
+      </Stack>
+    </Pressable>
   );
 };
 
-export default FakeSearchBar;
-
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginVertical: 10,
+    marginTop: 5,
     backgroundColor: "#f1f1f1",
-    paddingVertical: 6,
-    paddingHorizontal: 15,
-    marginHorizontal: 10,
-    borderRadius: 2.5,
-  },
-  fakeInput: {
-    marginLeft: 7.5,
-    color: grey0,
-  },
-  nowBtn: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "white",
-    borderRadius: 20,
-    paddingVertical: 2.5,
     paddingHorizontal: 7.5,
+    paddingVertical: 9,
   },
-  nowBtnText: {
-    marginRight: 5,
-    color: black,
-    fontSize: 13.5,
-    fontWeight: "600",
+  text: {
+    marginLeft: 10,
+    color: grey0,
+    fontSize: 15,
   },
 });

@@ -8,13 +8,13 @@ import {
   SafeAreaView,
   StyleSheet,
 } from "react-native";
+import { useCallback } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 import { RootStackParams } from "../../navigation/rootStackParams";
 import { Header } from "../../components/core";
-import { useTranslation } from "react-i18next";
-import { useCallback } from "react";
-import { User } from "../../ts";
 import { UserListItemSimple } from "../../components/customized";
-import { useNavigation } from "@react-navigation/native";
+import { User } from "../../ts";
 import { useAuth } from "../../hooks";
 
 type IProps = NativeStackScreenProps<RootStackParams, "ChatGroupUsers">;

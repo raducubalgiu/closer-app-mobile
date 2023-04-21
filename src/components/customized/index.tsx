@@ -122,6 +122,9 @@ export { PostOptionsSheet } from "./Sheets/PostOptionsSheet";
 export { ProfileMenuSheet } from "./Sheets/ProfileMenuSheet";
 export { StoryViewsSheet } from "./Sheets/StoryViewsSheet";
 
+export { FakeSearchBar } from "./FakeSearchBar/FakeSearchBar";
+export { FakeSearchBarServices } from "./FakeSearchBar/FakeSearchBarServices";
+
 export { FiltersContainer } from "./Layout/Containers/FiltersContainer";
 
 export { BookableLabel } from "./Typography/Labels/BookableLabel";

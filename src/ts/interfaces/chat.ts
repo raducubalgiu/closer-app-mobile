@@ -13,6 +13,7 @@ export interface Chat {
     seenBy: User[];
     createdAt: string;
   };
+  isAdmin: boolean;
   isGroupChat: boolean;
   updatedAt: string;
 }

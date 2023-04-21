@@ -1,4 +1,4 @@
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import utc from "dayjs/plugin/utc";
 
 dayjs.extend(utc);
@@ -6,7 +6,7 @@ dayjs.extend(utc);
 export const NOW = dayjs.utc().format();
 
 export const FROM_NOW = (date: string) => dayjs(date).fromNow();
-export const shortFormat = (date: string) => dayjs(date).format("YYYY-MM-DD");
+export const shortFormat = (date: Dayjs) => dayjs(date).format("YYYY-MM-DD");
 
 export const dayMonthFormat = (date: string) => {
   if (date) {

@@ -17,7 +17,7 @@ import theme from "../../../../../assets/styles/theme";
 import { NoFoundMessage } from "../../../../components/customized";
 import SlotDetailsListItem from "../../../../components/customized/ListItems/SlotDetailsListItem";
 import { Header, Spinner, Stack } from "../../../../components/core";
-import { SHORT_DATE } from "../../../../utils/date-utils";
+import { shortFormat } from "../../../../utils/date-utils";
 import {
   useAuth,
   useGet,
@@ -146,7 +146,7 @@ export const MyCalendarScreen = () => {
         initialIndex={monthIndex}
         selectedDay={selectedDay}
         onSelectedDay={(item: any, mIndex: number) => {
-          setSelectedDay(SHORT_DATE(item.date));
+          setSelectedDay(shortFormat(item.date));
           setMonthIndex(mIndex);
         }}
       >

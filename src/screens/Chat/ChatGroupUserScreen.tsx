@@ -8,8 +8,8 @@ import {
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParams } from "../../navigation/rootStackParams";
-import { Button, FormInputRadio, Header, Stack } from "../../components/core";
 import theme from "../../../assets/styles/theme";
+import { Button, FormInputRadio, Header, Stack } from "../../components/core";
 import { useAuth, usePatch } from "../../hooks";
 import { showToast } from "../../utils";
 

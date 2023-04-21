@@ -19,8 +19,11 @@ import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../navigation/rootStackParams";
 import { Chat } from "../../ts";
-import { ChatListItem, NoFoundMessage } from "../../components/customized";
-import FakeSearchBarSimple from "../../components/customized/FakeSearchBar/FakeSearchBarSimple";
+import {
+  ChatListItem,
+  NoFoundMessage,
+  FakeSearchBar,
+} from "../../components/customized";
 
 export const ChatsScreen = () => {
   const { user } = useAuth();
@@ -55,7 +58,7 @@ export const ChatsScreen = () => {
 
   const header = (
     <>
-      <FakeSearchBarSimple onPress={goToSearch} sx={{ marginHorizontal: 15 }} />
+      <FakeSearchBar onPress={goToSearch} sx={{ marginHorizontal: 15 }} />
       <Heading
         title={t("messages")}
         sx={{ marginLeft: 15, marginBottom: 20 }}
