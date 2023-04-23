@@ -1,7 +1,7 @@
 import { StyleSheet, Text, Image } from "react-native";
 import { Stack } from "../../core";
 
-type IProps = { uri: string; name: string };
+type IProps = { uri: string | null; name: string };
 
 export const PresetListItem = ({ uri, name }: IProps) => {
   return (

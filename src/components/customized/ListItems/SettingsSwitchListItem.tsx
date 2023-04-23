@@ -1,28 +1,57 @@
 import { StyleSheet, Text } from "react-native";
-import { Switch } from "@rneui/themed";
-import { Stack } from "../../core";
+import { Switch, Icon } from "@rneui/themed";
+import { ListItem, Stack } from "../../core";
 import theme from "../../../../assets/styles/theme";
 
 const { black, grey0 } = theme?.lightColors || {};
 type IProps = {
   title: string;
+  sx?: {};
   sxTitle?: {};
   description?: string;
   sxDescription?: {};
   value: any;
   onValueChange: () => void;
+  defaultLeftIconProps?: {
+    name: string;
+    type: string;
+    size: number;
+    color: string;
+  };
+  iconLeftProps?: {
+    name: string;
+    type?: string;
+    size?: number;
+    color?: string;
+  };
 };
 
 export const SettingsSwitchListItem = ({
   title,
-  sxTitle,
-  sxDescription,
   description,
   value,
   onValueChange,
+  sx,
+  sxTitle,
+  sxDescription,
+  defaultLeftIconProps = {
+    name: "",
+    type: "feather",
+    size: 20,
+    color: `${black}`,
+  },
+  iconLeftProps,
 }: IProps) => {
   return (
-    <Stack direction="row" sx={styles.container}>
+    <ListItem between align="center" sx={{ ...styles.container, ...sx }}>
+      {!!iconLeftProps && (
+        <Icon
+          {...defaultLeftIconProps}
+          {...iconLeftProps}
+          style={styles.iconLeft}
+          size={22}
+        />
+      )}
       <Stack align="start" sx={{ marginRight: 10, flex: 1 }}>
         <Text style={[styles.title, sxTitle]}>{title}</Text>
         {description && (
@@ -30,7 +59,7 @@ export const SettingsSwitchListItem = ({
         )}
       </Stack>
       <Switch value={value} onValueChange={onValueChange} />
-    </Stack>
+    </ListItem>
   );
 };
 
@@ -44,5 +73,9 @@ const styles = StyleSheet.create({
   description: {
     color: grey0,
     marginTop: 5,
+  },
+  iconLeft: {
+    marginRight: 10,
+    paddingHorizontal: 5,
   },
 });

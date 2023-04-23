@@ -10,6 +10,9 @@ import {
   AccountInfoGenderScreen,
   AccountPasswordScreen,
   AssistanceScreen,
+  AddPhotosScreen,
+  AddPhotosPreviewScreen,
+  AddPostScreen,
   AddScheduleScreen,
   ClearCacheScreen,
   CameraScreen,
@@ -96,8 +99,8 @@ import {
   StoryScreen,
   PhotoLibraryScreen,
   PhotoAlbumsScreen,
-  AddPostScreen,
   SearchPopularDetailScreen,
+  TagUsersScreen,
 } from "../screens";
 
 const Stack = createNativeStackNavigator<RootStackParams>();
@@ -348,7 +351,18 @@ const AppNavigation = () => {
               component={ScheduleConfirmScreen}
             />
             <Stack.Screen name="AddProgram" component={AddUserProgramScreen} />
+            <Stack.Screen
+              name="AddPhotos"
+              component={AddPhotosScreen}
+              options={{ animation: "slide_from_bottom" }}
+            />
+            <Stack.Screen
+              name="AddPhotosPreview"
+              component={AddPhotosPreviewScreen}
+              options={{ animation: "none" }}
+            />
             <Stack.Screen name="AddPost" component={AddPostScreen} />
+            <Stack.Screen name="TagUsers" component={TagUsersScreen} />
             <Stack.Screen
               options={{ presentation: "modal" }}
               name="PhotoLibrary"

@@ -19,11 +19,8 @@ const UserSelectableListItem = ({
   selected,
   disabled = false,
 }: IProps) => {
-  const [isSelected, setIsSelected] = useState(selected);
-
   const onSelectUser = () => {
-    setIsSelected((isSelected) => !isSelected);
-    onSelect(user, isSelected ? "REMOVE" : "ADD");
+    onSelect(user, selected ? "REMOVE" : "ADD");
   };
 
   return (
@@ -38,12 +35,12 @@ const UserSelectableListItem = ({
         </Stack>
         <View
           style={{
-            borderColor: isSelected ? primary : "#ccc",
-            backgroundColor: isSelected ? primary : "white",
+            borderColor: selected ? primary : "#ccc",
+            backgroundColor: selected ? primary : "white",
             ...styles.select,
           }}
         >
-          {isSelected && <Icon name="check" size={20} color="white" />}
+          {selected && <Icon name="check" size={20} color="white" />}
         </View>
       </Stack>
     </Pressable>

@@ -1,5 +1,8 @@
 import ProfileScreen from "./User/Profile/ProfileScreen";
 
+export { AddPhotosScreen } from "./AddPost/AddPhotosScreen";
+export { AddPhotosPreviewScreen } from "./AddPost/AddPhotosPreviewScreen";
+export { AddPostScreen } from "./AddPost/AddPostScreen";
 export { AllBookmarksScreen } from "./User/Profile/AllBookmarksScreen";
 export { EditBioScreen } from "./User/Profile/EditProfile/EditBioScreen";
 export { EditNameScreen } from "./User/Profile/EditProfile/EditNameScreen";
@@ -73,7 +76,6 @@ export { ChatGroupUserScreen } from "./Chat/ChatGroupUserScreen";
 export { ChatGroupCreateScreen } from "./Chat/ChatGroupCreateScreen";
 export { PhotoLibraryScreen } from "./PhotoLibraryScreen";
 export { PhotoAlbumsScreen } from "./PhotoAlbumsScreen";
-export { AddPostScreen } from "./AddPostScreen";
 export { CameraScreen } from "./CameraScreen";
 export { CameraPreviewScreen } from "./CameraPreviewScreen";
 export { ProductScreen } from "./ProductScreen";
@@ -111,5 +113,6 @@ export { LanguageScreen } from "./User/SettingsAndPrivacy/Language/LanguageScree
 export { LanguageAppScreen } from "./User/SettingsAndPrivacy/Language/LanguageAppScreen";
 export { LanguageTranslationScreen } from "./User/SettingsAndPrivacy/Language/LanguageTranslationScreen";
 export { SearchPopularDetailScreen } from "./Search/SearchPopularDetailScreen";
+export { TagUsersScreen } from "./AddPost/TagUsersScreen";
 
 export { ProfileScreen };

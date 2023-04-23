@@ -501,5 +501,15 @@
   "createNewGroup": "Creează grup nou",
   "members": "Membri",
   "nameOfTheGroup": "Numele grupului",
-  "chooseGroupName": "Cum să se numească grupul?"
+  "chooseGroupName": "Cum să se numească grupul?",
+  "bookablePost": "Postare rezervabilă",
+  "upload": "Postează",
+  "bookablePostDescription": "Poţi adăuga un produs, iar utilizatorii îl vor putea rezerva consultând calendarul tău",
+  "tagPeople": "Etichetează persoane",
+  "youCanTagMaxTenPersons": "Poţi eticheta maxim 10 persoane",
+  "advancedSettings": "Setări avansate",
+  "advacedAddPostSettingsDescription": "Poţi alege să restricţionezi comentariile, vizualizările, plus alte detalii",
+  "saveInThePhone": "Salvează în telefon",
+  "thePostWillBeSavedInPhoneAfterPosting": "Postarea va fi salvată în telefon după distribuire",
+  "addPostDescription": "Adaugă o descriere postării"
 }

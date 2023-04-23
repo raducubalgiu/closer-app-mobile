@@ -8,7 +8,6 @@ import {
   User,
   Chat,
 } from "../ts";
-import { ChatGroup } from "../ts/interfaces/chatGroup";
 
 export type RootStackParams = {
   Account: any;
@@ -31,7 +30,9 @@ export type RootStackParams = {
   AddProducts: any;
   AddJobs: any;
   AddProgram: any;
-  AddPost: any;
+  AddPhotos: any;
+  AddPhotosPreview: { photo: any };
+  AddPost: { photo?: any; taggedUsers: User[] };
   AddSchedule: { start: string; end: string };
   Auth: any;
   Bookmarks: { user: any };
@@ -182,4 +183,5 @@ export type RootStackParams = {
   UserPosts: { post: Post };
   UserVideos: { id: number; videos: Post[] };
   UserAllPosts: { post: Post; posts: Post[]; index: number };
+  TagUsers: { taggedUsers: User[] };
 };

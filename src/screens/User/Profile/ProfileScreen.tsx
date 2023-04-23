@@ -61,7 +61,13 @@ const ProfileScreen = () => {
         snapPoints={snapPoints}
         animationConfig={{ duration: 150 }}
       >
-        <PostOptionsSheet />
+        <PostOptionsSheet
+          onNavigateToAddImage={() => {
+            addPostRef.current?.close();
+            navigation.navigate("AddPhotos");
+          }}
+          onNavigateToAddVideo={() => {}}
+        />
       </SheetModal>
     </View>
   );

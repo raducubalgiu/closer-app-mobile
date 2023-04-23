@@ -11,8 +11,13 @@ type IProps = {
   sxTitle?: {};
   description?: string;
   sxDescription?: {};
-  rightIcon?: boolean;
-  defaultIconProps?: {
+  defaultLeftIconProps?: {
+    name: string;
+    type: string;
+    size: number;
+    color: string;
+  };
+  defaultRightIconProps?: {
     name: string;
     type: string;
     size: number;
@@ -24,6 +29,13 @@ type IProps = {
     size?: number;
     color?: string;
   };
+  iconRightProps?: {
+    name?: string;
+    type?: string;
+    size?: number;
+    color?: string;
+  };
+  rightIcon?: boolean;
 };
 
 export const SettingsListItem = ({
@@ -33,9 +45,21 @@ export const SettingsListItem = ({
   sxTitle,
   description,
   sxDescription,
-  rightIcon = true,
-  defaultIconProps = { name: "", type: "feather", size: 20, color: `${black}` },
+  defaultLeftIconProps = {
+    name: "",
+    type: "feather",
+    size: 20,
+    color: `${black}`,
+  },
+  defaultRightIconProps = {
+    name: "keyboard-arrow-right",
+    type: "material",
+    size: 20,
+    color: `${grey0}`,
+  },
   iconLeftProps,
+  iconRightProps,
+  rightIcon = true,
 }: IProps) => {
   return (
     <ListItem
@@ -47,13 +71,13 @@ export const SettingsListItem = ({
       <Stack justify="start" direction="row" sx={{ flex: 1 }}>
         {!!iconLeftProps && (
           <Icon
-            {...defaultIconProps}
+            {...defaultLeftIconProps}
             {...iconLeftProps}
             style={styles.iconLeft}
             size={22}
           />
         )}
-        <Stack align="start">
+        <Stack align="start" sx={{ flex: 1 }}>
           <Text style={[styles.title, sxTitle]}>{title}</Text>
           {description && (
             <Text style={[styles.description, sxDescription]}>
@@ -64,8 +88,8 @@ export const SettingsListItem = ({
       </Stack>
       {rightIcon && (
         <Icon
-          name="keyboard-arrow-right"
-          color={grey0}
+          {...defaultRightIconProps}
+          {...iconRightProps}
           style={styles.iconRight}
         />
       )}

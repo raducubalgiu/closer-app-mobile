@@ -6,7 +6,15 @@ import { SettingsListItem } from "../ListItems/SettingsListItem";
 
 const { black } = theme.lightColors || {};
 
-export const PostOptionsSheet = () => {
+type IProps = {
+  onNavigateToAddImage: () => void;
+  onNavigateToAddVideo: () => void;
+};
+
+export const PostOptionsSheet = ({
+  onNavigateToAddImage,
+  onNavigateToAddVideo,
+}: IProps) => {
   const { t } = useTranslation("common");
 
   return (
@@ -14,13 +22,13 @@ export const PostOptionsSheet = () => {
       <SettingsListItem
         title={t("newPhoto")}
         iconLeftProps={{ name: "camera", size: 22.5 }}
-        onPress={() => {}}
+        onPress={onNavigateToAddImage}
         rightIcon={false}
       />
       <SettingsListItem
         title={t("newVideo")}
         iconLeftProps={{ name: "video", size: 22.5 }}
-        onPress={() => {}}
+        onPress={onNavigateToAddVideo}
         rightIcon={false}
       />
     </Stack>

@@ -6,10 +6,12 @@ import BookmarkIconButton from "../customized/Buttons/BookmarkIconButton";
 import PostGradient from "../customized/Gradients/PostGradient";
 import SheetModal from "./SheetModal/SheetModal";
 import CustomAvatar from "./Avatars/CustomAvatar";
+import AvatarDelete from "./Avatars/AvatarDelete";
 
 export {
   BookmarkIconButton,
   CustomAvatar,
+  AvatarDelete,
   LikeButton,
   PostGradient,
   Rating,
