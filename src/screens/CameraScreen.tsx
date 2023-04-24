@@ -1,15 +1,17 @@
-import { StyleSheet, Text, SafeAreaView, Pressable } from "react-native";
-import { useRef, useState, useCallback } from "react";
-import { Icon } from "@rneui/themed";
+import { StyleSheet, Text, SafeAreaView } from "react-native";
+import { useRef, useState } from "react";
 import { Camera, CameraType, FlashMode } from "expo-camera";
 import * as Haptics from "expo-haptics";
-import * as MediaLibrary from "expo-media-library";
-import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { IconButton, Stack } from "../components/core";
 import CustomAvatar from "../components/core/Avatars/CustomAvatar";
 import theme from "../../assets/styles/theme";
-import { CloseIconButton, RevertIconButton } from "../components/customized";
+import {
+  CameraIconButton,
+  CloseIconButton,
+  RevertIconButton,
+} from "../components/customized";
 import { PhotoLibraryButton } from "../components/customized/Buttons/PhotoLibraryButton";
 import {
   NativeStackNavigationProp,
@@ -84,29 +86,9 @@ export const CameraScreen = ({ route }: IProps) => {
           </Stack>
         </Stack>
         <Stack direction="row" sx={{ margin: 20 }}>
-          <PhotoLibraryButton
-            onPress={() =>
-              navigation.push("PhotoLibrary", { nav: "CameraPreview" })
-            }
-          />
-          <Pressable onPress={handleTakePicture}>
-            <Icon
-              name="ios-radio-button-on-outline"
-              type="ionicon"
-              color="white"
-              size={85}
-            />
-          </Pressable>
-          <Pressable
-            onPress={handleRevertCamera}
-            style={{
-              padding: 10,
-              backgroundColor: "rgba(64, 64, 64, 0.6)",
-              borderRadius: 50,
-            }}
-          >
-            <Icon name="refresh-ccw" type="feather" color="white" size={22.5} />
-          </Pressable>
+          <PhotoLibraryButton onPress={() => {}} />
+          <CameraIconButton onPress={handleTakePicture} />
+          <RevertIconButton onPress={handleRevertCamera} />
         </Stack>
       </Camera>
     </SafeAreaView>

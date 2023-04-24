@@ -1,4 +1,5 @@
-import { IconButton } from "../../core";
+import { Pressable, StyleSheet } from "react-native";
+import { Icon } from "@rneui/themed";
 
 type Props = {
   size?: number;
@@ -6,20 +7,18 @@ type Props = {
   onPress: () => void;
 };
 
-export const RevertIconButton = ({ size = 30, sx = {}, onPress }: Props) => {
+export const RevertIconButton = ({ size = 22.5, sx = {}, onPress }: Props) => {
   return (
-    <IconButton
-      name="refresh-ccw"
-      size={size}
-      color="#ebebe0"
-      sx={{
-        shadowColor: "#171717",
-        shadowOffset: { width: -2, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
-        ...sx,
-      }}
-      onPress={onPress}
-    />
+    <Pressable onPress={onPress} style={[styles.container, sx]}>
+      <Icon name="refresh-ccw" type="feather" color="white" size={size} />
+    </Pressable>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 10,
+    backgroundColor: "rgba(64, 64, 64, 0.6)",
+    borderRadius: 50,
+  },
+});

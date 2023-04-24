@@ -43,6 +43,15 @@ export { VideoCommentButton } from "./Buttons/VideoCommentButton";
 export { FollowOutlinedButton } from "./Buttons/FollowOutlinedButton";
 export { TapFeedbackButton } from "./Buttons/TapFeedbackButton";
 
+export { CloseIconButton } from "./IconButtons/CloseIconButton";
+export { DownloadIconButton } from "./IconButtons/DownloadIconButton";
+export { PhotoIconButton } from "./IconButtons/PhotoIconButton";
+export { RevertIconButton } from "./IconButtons/RevertIconButton";
+export { InfoIconButton } from "./IconButtons/InfoIconButton";
+export { ProfileIconButton } from "./IconButtons/ProfileIconButton";
+export { CameraIconButton } from "./IconButtons/CameraIconButton";
+export { FlashIconButton } from "./IconButtons/FlashIconButton";
+
 export { TopTabContainer } from "./Tabs/TopTabContainer/TopTabContainer";
 export { TopTabProfile } from "./Tabs/TopTabContainer/TopTabProfile";
 export { SavedPostsTab } from "./Tabs/SavedTabs/SavedPostsTab";
@@ -133,10 +142,3 @@ export { BookableLabel } from "./Typography/Labels/BookableLabel";
 export { LastMinuteLabel } from "./Typography/Labels/LastMinuteLabel";
 export { StoryLabel } from "./Typography/Labels/StoryLabel";
 export { TextWithBullet } from "./Typography/TextWithBullet";
-
-export { CloseIconButton } from "./IconButtons/CloseIconButton";
-export { DownloadIconButton } from "./IconButtons/DownloadIconButton";
-export { PhotoIconButton } from "./IconButtons/PhotoIconButton";
-export { RevertIconButton } from "./IconButtons/RevertIconButton";
-export { InfoIconButton } from "./IconButtons/InfoIconButton";
-export { ProfileIconButton } from "./IconButtons/ProfileIconButton";
