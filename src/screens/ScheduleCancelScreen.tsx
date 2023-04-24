@@ -23,7 +23,7 @@ import { useAuth, usePatch } from "../hooks";
 import { RootStackParams } from "../navigation/rootStackParams";
 import { showToast } from "../utils";
 import { useHeaderHeight } from "@react-navigation/elements";
-import { useScheduleCounter } from "../hooks/scheduleCounter";
+import { useStore } from "../store/appStore";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const { error, black, grey0 } = theme.lightColors || {};
@@ -39,7 +39,7 @@ export const ScheduleCancelScreen = ({ route }: IProps) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const headerHeight = useHeaderHeight();
-  const { decreaseCounter } = useScheduleCounter();
+  const { addSchedule } = useStore();
   const insets = useSafeAreaInsets();
 
   const messages = [
@@ -51,7 +51,7 @@ export const ScheduleCancelScreen = ({ route }: IProps) => {
   const { mutate, isLoading } = usePatch({
     uri: `/users/${user?.id}/schedules/${scheduleId}`,
     onSuccess: () => {
-      decreaseCounter();
+      addSchedule();
       user?.role !== MAIN_ROLE
         ? navigation.navigate("Schedules")
         : navigation.navigate("MyCalendar");

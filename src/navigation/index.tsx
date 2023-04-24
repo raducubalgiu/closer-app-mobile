@@ -35,6 +35,7 @@ import {
   EditUsernameScreen,
   EditWebsiteScreen,
   EditAvatarScreen,
+  EditAvatarCameraScreen,
   MyBusinessScreen,
   MyDashboardScreen,
   MyProductsScreen,
@@ -375,8 +376,20 @@ const AppNavigation = () => {
               name="PhotoAlbums"
               component={PhotoAlbumsScreen}
             />
-            <Stack.Screen name="EditAvatar" component={EditAvatarScreen} />
-            <Stack.Screen name="Camera" component={CameraScreen} />
+            <Stack.Screen
+              name="EditAvatarCamera"
+              component={EditAvatarCameraScreen}
+            />
+            <Stack.Screen
+              name="EditAvatar"
+              component={EditAvatarScreen}
+              options={{ animation: "slide_from_bottom" }}
+            />
+            <Stack.Screen
+              name="Camera"
+              component={CameraScreen}
+              options={{ animation: "slide_from_bottom" }}
+            />
             <Stack.Screen
               name="CameraPreview"
               component={CameraPreviewScreen}

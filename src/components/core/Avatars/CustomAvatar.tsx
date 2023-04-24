@@ -20,6 +20,7 @@ const CustomAvatar = ({
   sx = {},
 }: Props) => {
   const uri = avatar?.length ? { uri: `${avatar[0]?.url}` } : NoAvatar;
+  const bgColor = uri ? {} : { backgroundColor: "#eee" };
 
   return (
     <LinearGradient
@@ -32,7 +33,7 @@ const CustomAvatar = ({
         rounded
         size={size}
         source={uri}
-        avatarStyle={{ resizeMode: "cover" }}
+        avatarStyle={{ resizeMode: "cover", ...bgColor }}
         containerStyle={{
           ...styles.container,
           margin: hasStories ? 1.5 : 0,
@@ -47,6 +48,6 @@ const CustomAvatar = ({
 export default memo(CustomAvatar);
 
 const styles = StyleSheet.create({
-  container: { borderWidth: 1, borderColor: "#ddd", backgroundColor: "#eee" },
+  container: { borderWidth: 1, borderColor: "#ddd" },
   overlay: { backgroundColor: "#eee" },
 });

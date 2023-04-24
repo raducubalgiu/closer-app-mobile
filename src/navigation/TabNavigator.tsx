@@ -14,7 +14,7 @@ import {
 } from "../screens";
 import FeedNavigator from "./FeedNavigator";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
-import { useScheduleCounter } from "../hooks/scheduleCounter";
+import { useStore } from "../store/appStore";
 
 const Tab = createBottomTabNavigator();
 const Stack = createSharedElementStackNavigator();
@@ -91,13 +91,24 @@ const getTabStyle = (route: any) => {
 
 const TabNavigator = () => {
   const { user } = useAuth();
-  const { counter } = useScheduleCounter();
+  const { schedulesCount, messagesCount } = useStore();
 
-  let badgeOptions = {};
+  let schedulesBadgeOptions = {};
+  let messagesBadgeOptions = {};
 
-  if (counter > 0) {
-    badgeOptions = {
-      tabBarBadge: counter,
+  if (schedulesCount > 0) {
+    schedulesBadgeOptions = {
+      tabBarBadge: schedulesCount,
+      tabBarBadgeStyle: {
+        backgroundColor: error,
+        fontSize: 11,
+      },
+    };
+  }
+
+  if (messagesCount > 0) {
+    messagesBadgeOptions = {
+      tabBarBadge: schedulesCount,
       tabBarBadgeStyle: {
         backgroundColor: error,
         fontSize: 11,
@@ -149,19 +160,13 @@ const TabNavigator = () => {
       <Tab.Screen
         name="Chats"
         component={ChatsScreen}
-        options={{
-          tabBarBadge: 2,
-          tabBarBadgeStyle: {
-            backgroundColor: error,
-            fontSize: 11,
-          },
-        }}
+        options={messagesBadgeOptions}
       />
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen
         name="Schedules"
         component={SchedulesScreen}
-        options={badgeOptions}
+        options={schedulesBadgeOptions}
       />
       <Tab.Screen
         name="ProfileStack"

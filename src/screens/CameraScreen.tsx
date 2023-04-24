@@ -1,5 +1,6 @@
-import { StyleSheet, Text, SafeAreaView } from "react-native";
+import { StyleSheet, Text, SafeAreaView, Pressable } from "react-native";
 import { useRef, useState, useCallback } from "react";
+import { Icon } from "@rneui/themed";
 import { Camera, CameraType, FlashMode } from "expo-camera";
 import * as Haptics from "expo-haptics";
 import * as MediaLibrary from "expo-media-library";
@@ -28,27 +29,6 @@ export const CameraScreen = ({ route }: IProps) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation("common");
-
-  useFocusEffect(
-    useCallback(() => {
-      let isActive = true;
-      const fetchPhotos = async () => {
-        const getPhotos = await MediaLibrary.getAlbumAsync("Recents");
-        const { assets } = await MediaLibrary.getAssetsAsync({
-          album: getPhotos,
-          mediaType: ["photo"],
-          first: 1,
-        });
-
-        setGalleryUrl(assets[0]?.uri);
-      };
-
-      fetchPhotos();
-      return () => {
-        isActive = false;
-      };
-    }, [])
-  );
 
   let handleTakePicture = async () => {
     let options = {
@@ -105,20 +85,28 @@ export const CameraScreen = ({ route }: IProps) => {
         </Stack>
         <Stack direction="row" sx={{ margin: 20 }}>
           <PhotoLibraryButton
-            uri={galleryUrl}
             onPress={() =>
               navigation.push("PhotoLibrary", { nav: "CameraPreview" })
             }
           />
-          <IconButton
-            name="camera"
-            type="entypo"
-            onPress={handleTakePicture}
-            size={32.5}
-            color={black}
-            sx={styles.cameraBtn}
-          />
-          <RevertIconButton size={35} onPress={handleRevertCamera} />
+          <Pressable onPress={handleTakePicture}>
+            <Icon
+              name="ios-radio-button-on-outline"
+              type="ionicon"
+              color="white"
+              size={85}
+            />
+          </Pressable>
+          <Pressable
+            onPress={handleRevertCamera}
+            style={{
+              padding: 10,
+              backgroundColor: "rgba(64, 64, 64, 0.6)",
+              borderRadius: 50,
+            }}
+          >
+            <Icon name="refresh-ccw" type="feather" color="white" size={22.5} />
+          </Pressable>
         </Stack>
       </Camera>
     </SafeAreaView>

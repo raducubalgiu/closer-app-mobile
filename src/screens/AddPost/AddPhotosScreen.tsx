@@ -46,11 +46,9 @@ export const AddPhotosScreen = () => {
 
     let photo = result.assets ? result?.assets[0] : null;
 
-    if (!result) {
-      return showToast({ message: t("somethingWentWrong") });
+    if (photo) {
+      navigation.push("AddPhotosPreview", { photo });
     }
-
-    navigation.push("AddPhotosPreview", { photo });
   };
 
   let handleTakePicture = async () => {

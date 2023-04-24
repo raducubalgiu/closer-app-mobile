@@ -74,6 +74,7 @@ export type RootStackParams = {
   EditUsername: any;
   EditProfession: any;
   EditAvatar: { photo: { uri: string } };
+  EditAvatarCamera: any;
   EditProduct: { product: any };
   ExploreVideoLandscape: any;
   ExploreVideoPortrait: any;

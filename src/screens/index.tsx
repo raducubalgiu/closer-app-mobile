@@ -11,6 +11,7 @@ export { EditProfileScreen } from "./User/Profile/EditProfile/EditProfileScreen"
 export { EditUsernameScreen } from "./User/Profile/EditProfile/EditUsernameScreen";
 export { EditWebsiteScreen } from "./User/Profile/EditProfile/EditWebsiteScreen";
 export { EditAvatarScreen } from "./User/Profile/EditProfile/EditAvatarScreen";
+export { EditAvatarCameraScreen } from "./User/Profile/EditProfile/EditAvatarCameraScreen";
 export { AddJobsScreen } from "./User/Profile/MyBusiness/AddJobsScreen";
 export { AddLocationScreen } from "./User/Profile/MyBusiness/AddLocationScreen";
 export { AddProductsScreen } from "./User/Profile/MyBusiness/AddProductsScreen";

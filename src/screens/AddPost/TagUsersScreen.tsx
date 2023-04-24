@@ -2,7 +2,6 @@ import {
   SafeAreaView,
   StyleSheet,
   View,
-  Text,
   FlatList,
   ListRenderItemInfo,
 } from "react-native";
@@ -11,23 +10,18 @@ import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../navigation/rootStackParams";
-import {
-  Heading,
-  SearchBarInput,
-  Header,
-  Button,
-  AvatarDelete,
-} from "../../components/core";
+import { useNavigation } from "@react-navigation/native";
+import { isEmpty } from "lodash";
 import { useTranslation } from "react-i18next";
+import { RootStackParams } from "../../navigation/rootStackParams";
+import { Heading, SearchBarInput, Header } from "../../components/core";
 import { useGetPaginate, usePaginateActions } from "../../hooks";
 import { User } from "../../ts";
-import { UserSelectableListItem } from "../../components/customized";
-import { useNavigation } from "@react-navigation/native";
-import { isEmpty, some } from "lodash";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import {
+  UserSelectableListItem,
+  FooterUserSelectable,
+} from "../../components/customized";
 import { showToast } from "../../utils";
-import * as Animatable from "react-native-animatable";
 
 type IProps = NativeStackScreenProps<RootStackParams, "TagUsers">;
 
@@ -37,7 +31,6 @@ export const TagUsersScreen = ({ route }: IProps) => {
   const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const insets = useSafeAreaInsets();
 
   const options = useGetPaginate({
     model: "tagUsers",
@@ -79,20 +72,6 @@ export const TagUsersScreen = ({ route }: IProps) => {
 
   const keyExtractor = useCallback((item: User) => item.id, []);
 
-  const renderSelectedUser = useCallback(
-    ({ item }: ListRenderItemInfo<User>) => (
-      <AvatarDelete
-        onPress={() =>
-          setSelectedUsers((selectedUsers) =>
-            selectedUsers.filter((u) => u?.id !== item.id)
-          )
-        }
-        uri={item.avatar[0]?.url}
-      />
-    ),
-    [selectedUsers]
-  );
-
   const navigateBack = () => {
     navigation.navigate({
       name: "AddPost",
@@ -125,32 +104,11 @@ export const TagUsersScreen = ({ route }: IProps) => {
         ListFooterComponent={showSpinner}
       />
       {!isEmpty(selectedUsers) && (
-        <Animatable.View
-          animation="fadeInUp"
-          duration={100}
-          style={{
-            paddingBottom: insets.bottom,
-            ...styles.btn,
-          }}
-        >
-          <FlatList
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            data={selectedUsers}
-            keyExtractor={(item) => item.id}
-            renderItem={renderSelectedUser}
-          />
-          <Button
-            title={
-              !isEmpty(selectedUsers)
-                ? `${t("select")} (${selectedUsers?.length})`
-                : `${t("select")}`
-            }
-            //loading={isLoading}
-            disabled={selectedUsers?.length === 0}
-            onPress={navigateBack}
-          />
-        </Animatable.View>
+        <FooterUserSelectable
+          selectedUsers={selectedUsers}
+          setSelectedUsers={setSelectedUsers}
+          onPress={navigateBack}
+        />
       )}
     </View>
   );

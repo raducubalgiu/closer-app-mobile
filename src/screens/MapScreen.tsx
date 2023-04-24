@@ -19,7 +19,7 @@ import { Button, Stack } from "../components/core";
 import { useGet, useRefreshOnFocus } from "../hooks";
 import { RootStackParams } from "../navigation/rootStackParams";
 import { Icon } from "@rneui/themed";
-import { useUserLocation } from "../hooks/locationPermission";
+import { useStore } from "../store/appStore";
 import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import MapPostsTab from "../components/customized/Tabs/MapTabs/MapPostsTab";
@@ -96,7 +96,7 @@ export const MapScreen = ({ route }: IProps) => {
   const mapRef = useRef<any>();
   const sheetRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => [350, height - insets.top], []);
-  const { location } = useUserLocation();
+  const { location } = useStore();
 
   const [region, setRegion] = useState({
     latitude: initialCoordinates[0],

@@ -2,40 +2,50 @@ import { Text, StyleSheet, Pressable } from "react-native";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
-import * as MediaLibrary from "expo-media-library";
 import { Stack, CModal } from "../../core";
 import theme from "../../../../assets/styles/theme";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/rootStackParams";
+import * as ImagePicker from "expo-image-picker";
 
 const { black, grey0 } = theme.lightColors || {};
 
 type IProps = { onCloseSheet: () => void };
 
 export const EditProfileSheet = ({ onCloseSheet }: IProps) => {
-  const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
   const [modal, setModal] = useState<boolean>(false);
   const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
-  const goToLibrary = () => {
-    if (permissionResponse?.granted) {
-      navigation.navigate("PhotoLibrary", { nav: "EditAvatar" });
+  const handlePickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    let photo = result.assets ? result?.assets[0] : null;
+
+    if (photo) {
       onCloseSheet();
-    } else {
-      setModal(true);
-      requestPermission();
+      navigation.navigate("EditAvatar", { photo });
     }
+  };
+
+  const navigateToCamera = () => {
+    onCloseSheet();
+    navigation.navigate("EditAvatarCamera");
   };
 
   return (
     <>
       <Stack sx={{ padding: 15 }}>
-        <Pressable style={styles.title}>
+        <Pressable style={styles.title} onPress={navigateToCamera}>
           <Text style={styles.text}>Fă o fotografie</Text>
         </Pressable>
-        <Pressable style={styles.title} onPress={goToLibrary}>
+        <Pressable style={styles.title} onPress={handlePickImage}>
           <Text style={styles.text}>{t("chooseFromLibrary")}</Text>
         </Pressable>
         <Pressable style={styles.cancelBtn} onPress={onCloseSheet}>

@@ -6,6 +6,7 @@ import MediaLibraryPhotoListItem from "./ListItems/MediaLibraryPhotoListItem";
 import MessSentItem from "./ListItems/MessSentItem";
 import MessReceivedItem from "./ListItems/MessReceivedItem";
 import UserSelectableListItem from "./ListItems/User/UserSelectableListItem";
+import FooterUserSelectable from "./Layout/Footers/FooterUserSelectable";
 
 export {
   DisplayText,
@@ -15,6 +16,7 @@ export {
   MessSentItem,
   MessReceivedItem,
   UserSelectableListItem,
+  FooterUserSelectable,
 };
 
 // Normal Components
