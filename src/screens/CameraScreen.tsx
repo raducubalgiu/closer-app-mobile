@@ -75,11 +75,33 @@ export const CameraScreen = ({ route }: IProps) => {
   };
   const handleCloseCamera = () => navigation.goBack();
 
-  const flashOptions = [
+  const flashes = [
     { name: "Auto", mode: FlashMode.auto },
     { name: t("yes"), mode: FlashMode.on },
     { name: t("no"), mode: FlashMode.off },
   ];
+
+  const onFlash = (mode: FlashMode) => {
+    setFlash(mode);
+    setOpenFlash(false);
+  };
+
+  const renderFlash = (f: { name: string; mode: FlashMode }, i: number) => (
+    <Pressable
+      onPress={() => onFlash(f.mode)}
+      key={i}
+      style={styles.flashOptions}
+    >
+      <Text
+        style={{
+          color: f.mode === flash ? "#FCD12A" : "white",
+          ...styles.flashOptionTxt,
+        }}
+      >
+        {f.name}
+      </Text>
+    </Pressable>
+  );
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -113,32 +135,7 @@ export const CameraScreen = ({ route }: IProps) => {
                 justify="center"
                 sx={{ marginTop: 30 }}
               >
-                {flashOptions.map((f, i) => {
-                  return (
-                    <Pressable
-                      onPress={() => {
-                        setFlash(f.mode);
-                        setOpenFlash(false);
-                      }}
-                      key={i}
-                      style={{ paddingVertical: 15, paddingHorizontal: 20 }}
-                    >
-                      <Text
-                        style={{
-                          fontSize: f.mode === flash ? 15 : 14.5,
-                          color: f.mode === flash ? "#FCD12A" : "white",
-                          fontWeight: f.mode === flash ? "500" : "400",
-                          shadowColor: "#171717",
-                          shadowOffset: { width: -2, height: 2 },
-                          shadowOpacity: 0.2,
-                          shadowRadius: 3,
-                        }}
-                      >
-                        {f.name}
-                      </Text>
-                    </Pressable>
-                  );
-                })}
+                {flashes.map((f, i) => renderFlash(f, i))}
               </Stack>
             </Animatable.View>
           )}
@@ -176,5 +173,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 3,
     marginRight: 25,
+  },
+  flashOptions: { paddingVertical: 15, paddingHorizontal: 20 },
+  flashOptionTxt: {
+    fontSize: 15,
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
   },
 });

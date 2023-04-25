@@ -1,11 +1,13 @@
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { SafeAreaView, StyleSheet, View, Keyboard } from "react-native";
 import { useCallback, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { useTranslation } from "react-i18next";
-import * as Animatable from "react-native-animatable";
-import { Header, SearchBarInput, Button } from "../../../components/core";
-import { UserSelectableListItem } from "../../../components/customized";
+import { Header, SearchBarInput } from "../../../components/core";
+import {
+  FooterUserSelectable,
+  UserSelectableListItem,
+} from "../../../components/customized";
 import {
   useAuth,
   useGetPaginate,
@@ -17,6 +19,7 @@ import { User } from "../../../ts";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/rootStackParams";
+import { some } from "lodash";
 
 export const MessageNewScreen = () => {
   const { user } = useAuth();
@@ -62,13 +65,13 @@ export const MessageNewScreen = () => {
       <UserSelectableListItem
         user={item}
         onSelect={handleSelectUsers}
-        selected={false}
+        selected={some(selectedUsers, { id: item.id })}
       />
     ),
-    []
+    [selectedUsers]
   );
 
-  const { mutate: goToMessages, isLoading } = usePost({
+  const { mutate: goToMessages } = usePost({
     uri: `/users/${user?.id}/chats`,
     onSuccess: (response) => {
       navigation.navigate("Messages", { chat: response.data });
@@ -104,26 +107,13 @@ export const MessageNewScreen = () => {
         onEndReached={loadMore}
         ListFooterComponent={showSpinner}
         estimatedItemSize={55}
+        onMomentumScrollBegin={() => Keyboard.dismiss()}
       />
-      {selectedUsers?.length > 0 && (
-        <Animatable.View
-          animation="fadeInUp"
-          duration={100}
-          style={{
-            paddingBottom: insets.bottom,
-            ...styles.btn,
-          }}
-        >
-          <Button
-            title={
-              selectedUsers?.length < 2 ? t("sendMessage") : t("createNewGroup")
-            }
-            loading={isLoading}
-            disabled={isLoading || selectedUsers?.length === 0}
-            onPress={onSubmit}
-          />
-        </Animatable.View>
-      )}
+      <FooterUserSelectable
+        selectedUsers={selectedUsers}
+        setSelectedUsers={setSelectedUsers}
+        onPress={onSubmit}
+      />
     </View>
   );
 };
