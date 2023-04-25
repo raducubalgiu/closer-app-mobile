@@ -1,3 +1,4 @@
+import { Camera, CameraCapturedPicture, CameraType } from "expo-camera";
 import {
   Post,
   Option,
@@ -8,6 +9,7 @@ import {
   User,
   Chat,
 } from "../ts";
+import { ImagePickerAsset } from "expo-image-picker";
 
 export type RootStackParams = {
   Account: any;
@@ -43,8 +45,12 @@ export type RootStackParams = {
     serviceId: string;
     expirationTime: string | null;
   };
-  Camera: { name: string | undefined; avatar: any };
-  CameraPreview: { photo: { uri: string }; avatar: any; name: string };
+  Camera: { name: string; avatar: any };
+  CameraPreview: {
+    photo: ImagePickerAsset | CameraCapturedPicture;
+    avatar: any;
+    name: string;
+  };
   Chats: any;
   ChatSettings: { chat: Chat };
   ChatGroupSettings: { chatId: string };

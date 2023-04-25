@@ -42,6 +42,7 @@ export { FeedLabelButton } from "./Buttons/FeedLabelButton";
 export { VideoCommentButton } from "./Buttons/VideoCommentButton";
 export { FollowOutlinedButton } from "./Buttons/FollowOutlinedButton";
 export { TapFeedbackButton } from "./Buttons/TapFeedbackButton";
+export { PhotoLibraryButton } from "./Buttons/PhotoLibraryButton";
 
 export { CloseIconButton } from "./IconButtons/CloseIconButton";
 export { DownloadIconButton } from "./IconButtons/DownloadIconButton";

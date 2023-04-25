@@ -34,8 +34,12 @@ export const CameraPreviewScreen = ({ route }: IProps) => {
   const handleSendPhoto = () => {};
 
   return (
-    <>
-      <Image style={styles.preview} source={{ uri: photo.uri }} />
+    <View style={{ flex: 1, backgroundColor: "black" }}>
+      <Image
+        style={styles.preview}
+        source={{ uri: photo.uri }}
+        resizeMode="contain"
+      />
       <View style={styles.container}>
         <SafeAreaView style={styles.safeArea}>
           <Stack direction="row" sx={{ margin: 15 }}>
@@ -50,12 +54,18 @@ export const CameraPreviewScreen = ({ route }: IProps) => {
           </Pressable>
         </SafeAreaView>
       </View>
-    </>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { position: "absolute", top: 0, left: 0, right: 0, bottom: 0 },
+  container: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
   safeArea: { justifyContent: "space-between", height: "100%" },
   sendBtn: {
     margin: 20,
@@ -63,7 +73,8 @@ const styles = StyleSheet.create({
   },
   sendCont: {
     backgroundColor: "white",
-    padding: 8,
+    paddingVertical: 6,
+    paddingHorizontal: 7.5,
     borderRadius: 50,
     shadowColor: "#171717",
     shadowOffset: { width: -2, height: 2 },

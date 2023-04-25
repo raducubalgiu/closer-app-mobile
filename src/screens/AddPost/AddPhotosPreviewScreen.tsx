@@ -1,4 +1,10 @@
-import { SafeAreaView, StyleSheet, Image, View } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  Image,
+  View,
+  useWindowDimensions,
+} from "react-native";
 import React from "react";
 import {
   NativeStackNavigationProp,
@@ -16,6 +22,7 @@ export const AddPhotosPreviewScreen = ({ route }: IProps) => {
   const { t } = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
+  const { width } = useWindowDimensions();
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -37,6 +44,7 @@ export const AddPhotosPreviewScreen = ({ route }: IProps) => {
                 taggedUsers: [],
               })
             }
+            sxBtn={{ width: width - 30 }}
           />
         </View>
       </View>
@@ -65,8 +73,8 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
   },
   footer: {
+    height: 100,
     justifyContent: "center",
-    marginHorizontal: 15,
-    marginTop: 10,
+    alignItems: "center",
   },
 });

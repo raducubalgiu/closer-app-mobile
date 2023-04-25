@@ -1,7 +1,9 @@
-import { StyleSheet, Text, SafeAreaView } from "react-native";
+import { StyleSheet, Text, SafeAreaView, View, Pressable } from "react-native";
 import { useRef, useState } from "react";
+import * as Animatable from "react-native-animatable";
 import { Camera, CameraType, FlashMode } from "expo-camera";
 import * as Haptics from "expo-haptics";
+import * as ImagePicker from "expo-image-picker";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { IconButton, Stack } from "../components/core";
@@ -11,8 +13,8 @@ import {
   CameraIconButton,
   CloseIconButton,
   RevertIconButton,
+  PhotoLibraryButton,
 } from "../components/customized";
-import { PhotoLibraryButton } from "../components/customized/Buttons/PhotoLibraryButton";
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
@@ -24,10 +26,10 @@ type IProps = NativeStackScreenProps<RootStackParams, "Camera">;
 
 export const CameraScreen = ({ route }: IProps) => {
   const { name, avatar } = route.params;
-  const [galleryUrl, setGalleryUrl] = useState("");
   const [type, setType] = useState(CameraType.back);
-  const [flash, setFlash] = useState(FlashMode.off);
-  let cameraRef = useRef<any>();
+  const [flash, setFlash] = useState(FlashMode.auto);
+  const [openFlash, setOpenFlash] = useState(false);
+  const cameraRef = useRef<Camera>(null);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation("common");
@@ -39,14 +41,31 @@ export const CameraScreen = ({ route }: IProps) => {
       exif: false,
     };
 
-    let photo = await cameraRef.current.takePictureAsync(options);
+    let photo = await cameraRef.current?.takePictureAsync(options);
     await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
 
-    navigation.navigate("CameraPreview", {
-      photo,
-      avatar,
-      name,
+    if (photo) {
+      navigation.navigate("CameraPreview", {
+        photo,
+        avatar,
+        name,
+      });
+    }
+  };
+
+  const handlePickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: false,
+      aspect: [4, 3],
+      quality: 1,
     });
+
+    let photo = result.assets ? result?.assets[0] : null;
+
+    if (photo) {
+      navigation.push("CameraPreview", { photo, avatar, name });
+    }
   };
 
   const handleRevertCamera = () => {
@@ -56,37 +75,76 @@ export const CameraScreen = ({ route }: IProps) => {
   };
   const handleCloseCamera = () => navigation.goBack();
 
+  const flashOptions = [
+    { name: "Auto", mode: FlashMode.auto },
+    { name: t("yes"), mode: FlashMode.on },
+    { name: t("no"), mode: FlashMode.off },
+  ];
+
   return (
     <SafeAreaView style={styles.screen}>
       <Camera ref={cameraRef} type={type} style={styles.container}>
-        <Stack direction="row" sx={{ margin: 15 }}>
-          <Stack direction="row" sx={styles.user}>
-            <CustomAvatar avatar={avatar} size={30} />
-            <Stack align="start" sx={{ marginLeft: 10 }}>
-              <Text style={styles.to}>{t("to")}</Text>
-              <Text style={styles.name}>{name}</Text>
+        <View style={{ margin: 15 }}>
+          <Stack direction="row">
+            <Stack direction="row" sx={styles.user}>
+              <CustomAvatar avatar={avatar} size={30} />
+              <Stack align="start" sx={{ marginLeft: 10 }}>
+                <Text style={styles.to}>{t("to")}</Text>
+                <Text style={styles.name}>{name}</Text>
+              </Stack>
+            </Stack>
+            <Stack direction="row">
+              <IconButton
+                name={flash === FlashMode.off ? "flash-off" : "flash"}
+                type="ionicon"
+                size={25}
+                color="white"
+                onPress={() => setOpenFlash((openFlash) => !openFlash)}
+                sx={styles.flash}
+              />
+              <CloseIconButton onPress={handleCloseCamera} />
             </Stack>
           </Stack>
-          <Stack direction="row">
-            <IconButton
-              name="flash"
-              type="ionicon"
-              size={25}
-              color="white"
-              onPress={() => {}}
-              sx={{
-                shadowColor: "#171717",
-                shadowOffset: { width: -2, height: 2 },
-                shadowOpacity: 0.2,
-                shadowRadius: 3,
-                marginRight: 25,
-              }}
-            />
-            <CloseIconButton onPress={handleCloseCamera} />
-          </Stack>
-        </Stack>
+          {openFlash && (
+            <Animatable.View animation="fadeInLeft" duration={150}>
+              <Stack
+                direction="row"
+                align="center"
+                justify="center"
+                sx={{ marginTop: 30 }}
+              >
+                {flashOptions.map((f, i) => {
+                  return (
+                    <Pressable
+                      onPress={() => {
+                        setFlash(f.mode);
+                        setOpenFlash(false);
+                      }}
+                      key={i}
+                      style={{ paddingVertical: 15, paddingHorizontal: 20 }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: f.mode === flash ? 15 : 14.5,
+                          color: f.mode === flash ? "#FCD12A" : "white",
+                          fontWeight: f.mode === flash ? "500" : "400",
+                          shadowColor: "#171717",
+                          shadowOffset: { width: -2, height: 2 },
+                          shadowOpacity: 0.2,
+                          shadowRadius: 3,
+                        }}
+                      >
+                        {f.name}
+                      </Text>
+                    </Pressable>
+                  );
+                })}
+              </Stack>
+            </Animatable.View>
+          )}
+        </View>
         <Stack direction="row" sx={{ margin: 20 }}>
-          <PhotoLibraryButton onPress={() => {}} />
+          <PhotoLibraryButton onPress={handlePickImage} />
           <CameraIconButton onPress={handleTakePicture} />
           <RevertIconButton onPress={handleRevertCamera} />
         </Stack>
@@ -105,21 +163,18 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   user: {
-    backgroundColor: "#ebebe0",
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
     padding: 7.5,
     paddingRight: 12.5,
     borderRadius: 25,
-    opacity: 0.9,
   },
   to: { color: grey0, fontSize: 12 },
   name: { color: black, fontWeight: "500", fontSize: 13.5 },
-  cameraBtn: {
-    backgroundColor: "white",
-    padding: 17.5,
-    borderRadius: 50,
+  flash: {
     shadowColor: "#171717",
     shadowOffset: { width: -2, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
+    marginRight: 25,
   },
 });

@@ -513,5 +513,7 @@
   "advacedAddPostSettingsDescription": "Poţi alege să restricţionezi comentariile, vizualizările, plus alte detalii",
   "saveInThePhone": "Salvează în telefon",
   "thePostWillBeSavedInPhoneAfterPosting": "Postarea va fi salvată în telefon după distribuire",
-  "addPostDescription": "Adaugă o descriere postării"
+  "addPostDescription": "Adaugă o descriere postării",
+  "yes": "Da",
+  "no": "Nu"
 }
