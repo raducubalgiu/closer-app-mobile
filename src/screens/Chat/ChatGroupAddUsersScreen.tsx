@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { SafeAreaView, StyleSheet, View, Keyboard } from "react-native";
 import { useState, useCallback } from "react";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import {
@@ -17,6 +17,8 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../navigation/rootStackParams";
 import { showToast } from "../../utils";
+import { FooterUserSelectable } from "../../components/customized";
+import { isEmpty, some } from "lodash";
 
 type IProps = NativeStackScreenProps<RootStackParams, "ChatGroupAddUsers">;
 
@@ -24,7 +26,7 @@ export const ChatGroupAddUsersScreen = ({ route }: IProps) => {
   const { user } = useAuth();
   const { chatId } = route.params;
   const { t } = useTranslation();
-  const [selectedUsersIds, setSelectedUsersIds] = useState<string[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
   const [search, setSearch] = useState("");
   const insets = useSafeAreaInsets();
   const navigation = useNavigation();
@@ -50,16 +52,14 @@ export const ChatGroupAddUsersScreen = ({ route }: IProps) => {
   const selectUsers = useCallback(
     (user: User, action: string) => {
       if (action === "REMOVE") {
-        setSelectedUsersIds((selectedUsersIds) =>
-          selectedUsersIds.filter((selUserId) => selUserId !== user.id)
+        setSelectedUsers((selectedUsers) =>
+          selectedUsers.filter((u) => u.id !== user.id)
         );
       } else {
-        setSelectedUsersIds((selectedUsersIds) =>
-          selectedUsersIds.concat(user.id)
-        );
+        setSelectedUsers((selectedUsers) => selectedUsers.concat(user));
       }
     },
-    [selectedUsersIds]
+    [selectedUsers]
   );
 
   const renderUser = useCallback(
@@ -67,13 +67,17 @@ export const ChatGroupAddUsersScreen = ({ route }: IProps) => {
       <UserListItemSelectable
         user={item}
         onSelect={selectUsers}
-        selected={false}
+        selected={some(selectedUsers, { id: item.id })}
       />
     ),
-    []
+    [selectUsers]
   );
 
   const keyExtractor = useCallback((item: User) => item.id, []);
+
+  const onSubmit = () => {
+    addUsers({ users: selectedUsers.map((user) => user.id) });
+  };
 
   return (
     <View style={styles.screen}>
@@ -96,20 +100,15 @@ export const ChatGroupAddUsersScreen = ({ route }: IProps) => {
         onEndReached={loadMore}
         ListFooterComponent={showSpinner}
         estimatedItemSize={55}
+        onMomentumScrollBegin={() => Keyboard.dismiss()}
       />
-      {selectedUsersIds?.length > 0 && (
-        <View style={{ marginHorizontal: 15 }}>
-          <Button
-            sxBtn={{
-              bottom: insets.bottom,
-              ...styles.sendBtn,
-            }}
-            title={t("send")}
-            loading={isLoading}
-            disabled={isLoading}
-            onPress={() => addUsers({ users: selectedUsersIds })}
-          />
-        </View>
+      {!isEmpty(selectedUsers) && (
+        <FooterUserSelectable
+          selectedUsers={selectedUsers}
+          setSelectedUsers={setSelectedUsers}
+          onPress={onSubmit}
+          isLoading={isLoading}
+        />
       )}
     </View>
   );

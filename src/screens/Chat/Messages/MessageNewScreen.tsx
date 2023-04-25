@@ -19,7 +19,7 @@ import { User } from "../../../ts";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/rootStackParams";
-import { some } from "lodash";
+import { isEmpty, some } from "lodash";
 
 export const MessageNewScreen = () => {
   const { user } = useAuth();
@@ -109,11 +109,13 @@ export const MessageNewScreen = () => {
         estimatedItemSize={55}
         onMomentumScrollBegin={() => Keyboard.dismiss()}
       />
-      <FooterUserSelectable
-        selectedUsers={selectedUsers}
-        setSelectedUsers={setSelectedUsers}
-        onPress={onSubmit}
-      />
+      {!isEmpty(selectedUsers) && (
+        <FooterUserSelectable
+          selectedUsers={selectedUsers}
+          setSelectedUsers={setSelectedUsers}
+          onPress={onSubmit}
+        />
+      )}
     </View>
   );
 };
