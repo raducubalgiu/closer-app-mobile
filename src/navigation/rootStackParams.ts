@@ -10,6 +10,7 @@ import {
   Chat,
 } from "../ts";
 import { ImagePickerAsset } from "expo-image-picker";
+import { ImageResizeMode } from "react-native";
 
 export type RootStackParams = {
   Account: any;
@@ -33,7 +34,7 @@ export type RootStackParams = {
   AddJobs: any;
   AddProgram: any;
   AddPhotos: any;
-  AddPhotosPreview: { photo: any };
+  AddPhotosPreview: { photo: any; resizeMode: ImageResizeMode };
   AddPost: { photo?: any; taggedUsers: User[] };
   AddSchedule: { start: string; end: string };
   Auth: any;

@@ -5,14 +5,14 @@ import { isEmpty } from "lodash";
 
 type IProps = { onPress: () => void; size?: number };
 
-export const PhotoLibraryButton = ({ onPress, size = 40 }: IProps) => {
+export const PhotoLibraryButton = ({ onPress, size = 35 }: IProps) => {
   const [uri, setUri] = useState("");
 
   const styles = StyleSheet.create({
     image: {
       width: size,
       height: size,
-      borderRadius: 10,
+      borderRadius: 5,
       borderWidth: 2,
       borderColor: "white",
     },

@@ -105,7 +105,12 @@ export const CameraScreen = ({ route }: IProps) => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <Camera ref={cameraRef} type={type} style={styles.container}>
+      <Camera
+        ref={cameraRef}
+        type={type}
+        flashMode={flash}
+        style={styles.container}
+      >
         <View style={{ margin: 15 }}>
           <Stack direction="row">
             <Stack direction="row" sx={styles.user}>

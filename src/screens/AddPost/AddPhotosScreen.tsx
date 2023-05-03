@@ -1,33 +1,20 @@
-import { SafeAreaView, StyleSheet, View, Pressable } from "react-native";
+import { SafeAreaView, StyleSheet, View, Text, Pressable } from "react-native";
 import { useRef, useState } from "react";
-import { Button, IconBackButton, Stack } from "../../components/core";
-import { useNavigation } from "@react-navigation/native";
-import { PhotoLibraryButton } from "../../components/customized/Buttons/PhotoLibraryButton";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../navigation/rootStackParams";
-import { useAuth } from "../../hooks";
+import { useNavigation } from "@react-navigation/native";
 import * as Haptics from "expo-haptics";
 import * as ImagePicker from "expo-image-picker";
 import { Camera, CameraType } from "expo-camera";
-import { Icon } from "@rneui/themed";
-import { RevertIconButton } from "../../components/customized";
-import { showToast } from "../../utils";
 import { useTranslation } from "react-i18next";
-
-const DUMMY_PRESETS = [
-  { _id: "1", name: "Normal" },
-  {
-    _id: "2",
-    name: "Clarendon",
-  },
-  { _id: "3", name: "Gingam" },
-  { _id: "4", name: "Werido" },
-  { _id: "5", name: "Paris" },
-  {
-    _id: "6",
-    name: "Normandia",
-  },
-];
+import { RootStackParams } from "../../navigation/rootStackParams";
+import { IconBackButton, Stack } from "../../components/core";
+import {
+  CameraIconButton,
+  RevertIconButton,
+  PhotoLibraryButton,
+} from "../../components/customized";
+import { showToast } from "../../utils";
+import { Icon } from "@rneui/themed";
 
 export const AddPhotosScreen = () => {
   const navigation =
@@ -47,7 +34,7 @@ export const AddPhotosScreen = () => {
     let photo = result.assets ? result?.assets[0] : null;
 
     if (photo) {
-      navigation.push("AddPhotosPreview", { photo });
+      navigation.push("AddPhotosPreview", { photo, resizeMode: "contain" });
     }
   };
 
@@ -65,7 +52,7 @@ export const AddPhotosScreen = () => {
       return showToast({ message: t("somethingWentWrong") });
     }
 
-    navigation.push("AddPhotosPreview", { photo });
+    navigation.push("AddPhotosPreview", { photo, resizeMode: "cover" });
   };
 
   const handleRevertCamera = () => {
@@ -74,73 +61,36 @@ export const AddPhotosScreen = () => {
     );
   };
 
-  // const onSubmit = async () => {
-  //   const formData = new FormData();
-  //   const imageJSON = {
-  //     name: dayjs().format("DD-MM-YYYY:HH:mm"),
-  //     uri,
-  //     type: "image",
-  //   } as unknown as Blob;
-  //   formData.append("image", imageJSON);
-
-  //   const options = {
-  //     method: "POST",
-  //     body: formData,
-  //   };
-
-  //   try {
-  //     const response = await fetch(
-  //       "http://192.168.100.2:8000/api/v1/images/upload-images",
-  //       options
-  //     );
-  //     const data = response.json();
-
-  //     console.log("DATA!!!!", data);
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // };
-
   return (
     <SafeAreaView style={styles.screen}>
-      <View style={styles.container}>
-        <View style={styles.camera}>
-          <Camera ref={cameraRef} type={cameraType} style={{ flex: 1 }} />
-          <View style={StyleSheet.absoluteFill}>
-            <IconBackButton sx={{ top: 10, left: 10 }} />
+      <Camera
+        ref={cameraRef}
+        type={cameraType}
+        style={{
+          flex: 1,
+          justifyContent: "space-between",
+          paddingVertical: 10,
+        }}
+      >
+        <Stack direction="row">
+          <Pressable
+            style={{ padding: 15 }}
+            onPress={() => navigation.goBack()}
+          >
+            <Icon name="close" type="antdesign" size={25} color="white" />
+          </Pressable>
+          <View style={{ padding: 15 }}>
+            <Text>Hello</Text>
           </View>
-        </View>
+        </Stack>
         <View style={styles.footer}>
           <Stack direction="row" sx={{ width: "100%" }} justify="around">
-            <View
-              style={{
-                width: 100,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <PhotoLibraryButton onPress={handlePickImage} />
-            </View>
-            <Pressable onPress={handleTakePicture}>
-              <Icon
-                name="ios-radio-button-on-outline"
-                type="ionicon"
-                color="white"
-                size={85}
-              />
-            </Pressable>
-            <View
-              style={{
-                width: 100,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <RevertIconButton size={35} onPress={handleRevertCamera} />
-            </View>
+            <PhotoLibraryButton onPress={handlePickImage} />
+            <CameraIconButton onPress={handleTakePicture} />
+            <RevertIconButton onPress={handleRevertCamera} />
           </Stack>
         </View>
-      </View>
+      </Camera>
     </SafeAreaView>
   );
 };
@@ -155,11 +105,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-between",
   },
-  camera: {
-    flex: 1,
-  },
+  camera: { flex: 1 },
   footer: {
-    height: 100,
+    height: 80,
     justifyContent: "center",
     alignItems: "center",
   },

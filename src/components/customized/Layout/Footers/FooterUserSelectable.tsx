@@ -31,7 +31,7 @@ const FooterUserSelectable = ({
             selectedUsers.filter((u) => u?.id !== item.id)
           )
         }
-        uri={item.avatar[0]?.url}
+        uri={item.avatar?.url}
       />
     ),
     [selectedUsers]

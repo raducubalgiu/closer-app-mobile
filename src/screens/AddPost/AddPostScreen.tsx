@@ -21,12 +21,15 @@ import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import { isEmpty } from "lodash";
 import { useState } from "react";
+import { useAuth, usePost } from "../../hooks";
 
 type IProps = NativeStackScreenProps<RootStackParams, "AddPost">;
 
 export const AddPostScreen = ({ route }: IProps) => {
+  const { user } = useAuth();
   const { photo, taggedUsers } = route.params;
   const [saveInPhone, setSaveInPhone] = useState(false);
+  const [description, setDescription] = useState("");
   const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -36,6 +39,17 @@ export const AddPostScreen = ({ route }: IProps) => {
     : taggedUsers.map((user, index) =>
         index === taggedUsers?.length - 1 ? user?.name : `${user.name}, `
       );
+
+  const { mutate, isLoading } = usePost({ uri: `/posts` });
+
+  const handlePost = () => {
+    mutate({
+      description,
+      images: [{ uri: photo.uri }],
+      mentions: taggedUsers.map((user) => user.id),
+      userId: user?.id,
+    });
+  };
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -47,7 +61,11 @@ export const AddPostScreen = ({ route }: IProps) => {
               <Image source={{ uri: photo.uri }} style={styles.image} />
             </View>
             <View style={{ flex: 1, marginLeft: 10 }}>
-              <TextInput value="" placeholder={t("addPostDescription")} />
+              <TextInput
+                value={description}
+                placeholder={t("addPostDescription")}
+                onChangeText={(text) => setDescription(text)}
+              />
             </View>
           </Stack>
           <Divider color="#ddd" style={{ marginVertical: 10 }} />
@@ -88,7 +106,12 @@ export const AddPostScreen = ({ route }: IProps) => {
           />
         </ScrollView>
         <View>
-          <Button title={t("upload")} onPress={() => {}} />
+          <Button
+            title={t("upload")}
+            onPress={handlePost}
+            disabled={isLoading}
+            loading={isLoading}
+          />
         </View>
       </View>
     </SafeAreaView>

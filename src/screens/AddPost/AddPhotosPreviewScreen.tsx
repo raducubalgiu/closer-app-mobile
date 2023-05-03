@@ -4,14 +4,17 @@ import {
   Image,
   View,
   useWindowDimensions,
+  Pressable,
+  Text,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
+import { Icon } from "@rneui/themed";
 import { RootStackParams } from "../../navigation/rootStackParams";
-import { Button, IconBackButton } from "../../components/core";
+import { Button, Stack } from "../../components/core";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 
@@ -19,6 +22,8 @@ type IProps = NativeStackScreenProps<RootStackParams, "AddPhotosPreview">;
 
 export const AddPhotosPreviewScreen = ({ route }: IProps) => {
   const { uri } = route.params.photo;
+  const { resizeMode } = route.params;
+  const [resize, setResize] = useState(resizeMode);
   const { t } = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -28,11 +33,19 @@ export const AddPhotosPreviewScreen = ({ route }: IProps) => {
     <SafeAreaView style={styles.screen}>
       <View style={styles.container}>
         <View style={styles.imageBox}>
-          <Image source={{ uri }} style={styles.image} resizeMode="contain" />
+          <Image source={{ uri }} style={styles.image} resizeMode={resize} />
           <View style={StyleSheet.absoluteFill}>
-            <View style={{ left: 0 }}>
-              <IconBackButton />
-            </View>
+            <Stack direction="row" sx={{ paddingVertical: 10 }}>
+              <Pressable
+                style={{ padding: 15 }}
+                onPress={() => navigation.goBack()}
+              >
+                <Icon name="arrow-back-ios" size={22.5} color="white" />
+              </Pressable>
+              <View style={{ padding: 15 }}>
+                <Text style={{ color: "white" }}>Hello</Text>
+              </View>
+            </Stack>
           </View>
         </View>
         <View style={styles.footer}>
@@ -73,7 +86,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
   },
   footer: {
-    height: 100,
+    height: 80,
     justifyContent: "center",
     alignItems: "center",
   },

@@ -32,14 +32,12 @@ const AvatarBadge = ({
   sx = {},
   sxBadge = {},
 }: Props) => {
-  const uri = avatar.length ? { uri: `${avatar[0]?.url}` } : NoAvatar;
-
   return (
     <View>
       <Avatar
         size={size}
         rounded
-        source={uri}
+        source={avatar?.url ? { uri: avatar?.url } : NoAvatar}
         avatarStyle={{ resizeMode: "cover" }}
         containerStyle={[styles.avatarContainer, sx]}
       />

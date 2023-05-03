@@ -31,6 +31,8 @@ const PostHeader = ({ avatar, username, checkmark, postType }: IProps) => {
     });
   };
 
+  console.log(avatar);
+
   return (
     <>
       <Stack direction="row">

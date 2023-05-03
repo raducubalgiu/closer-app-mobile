@@ -2,10 +2,24 @@ import { Pressable, View, StyleSheet } from "react-native";
 import theme from "../../../../assets/styles/theme";
 
 const { error } = theme.lightColors || {};
-type IProps = { onPress: () => void; sx?: {}; type?: string };
+type IProps = { onPress: () => void; sx?: {}; type?: string; size?: number };
 
-export const CameraIconButton = ({ onPress, sx, type = "photo" }: IProps) => {
+export const CameraIconButton = ({
+  onPress,
+  sx,
+  type = "photo",
+  size = 62.5,
+}: IProps) => {
   const backgroundColor = type === "photo" ? "white" : error;
+
+  const styles = StyleSheet.create({
+    container: { borderWidth: 4, borderColor: "white", borderRadius: 50 },
+    content: {
+      width: size,
+      height: size,
+      borderRadius: size / 2,
+    },
+  });
 
   return (
     <Pressable onPress={onPress} style={sx}>
@@ -17,12 +31,3 @@ export const CameraIconButton = ({ onPress, sx, type = "photo" }: IProps) => {
     </Pressable>
   );
 };
-
-const styles = StyleSheet.create({
-  container: { borderWidth: 4, borderColor: "white", borderRadius: 50 },
-  content: {
-    width: 62.5,
-    height: 62.5,
-    borderRadius: 50,
-  },
-});

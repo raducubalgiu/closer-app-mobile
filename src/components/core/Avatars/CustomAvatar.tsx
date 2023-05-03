@@ -1,8 +1,6 @@
 import { Avatar } from "@rneui/themed";
 import { memo } from "react";
 import NoAvatar from "../../../../assets/images/avatar.jpg";
-import { LinearGradient } from "expo-linear-gradient";
-import theme from "../../../../assets/styles/theme";
 import { StyleSheet } from "react-native";
 
 type Props = {
@@ -11,37 +9,26 @@ type Props = {
   hasStories?: boolean;
   sx?: {};
 };
-const { primary } = theme.lightColors || {};
 
 const CustomAvatar = ({
-  avatar = [],
+  avatar,
   size = 55,
   hasStories = false,
   sx = {},
 }: Props) => {
-  const uri = avatar?.length ? { uri: `${avatar[0]?.url}` } : NoAvatar;
-  const bgColor = uri ? {} : { backgroundColor: "#eee" };
-
   return (
-    <LinearGradient
-      colors={[`${primary}`, `#ffd9b3`]}
-      start={{ x: 1, y: 0.4 }}
-      end={{ x: 1.4, y: 3 }}
-      style={{ borderRadius: 50 }}
-    >
-      <Avatar
-        rounded
-        size={size}
-        source={uri}
-        avatarStyle={{ resizeMode: "cover", ...bgColor }}
-        containerStyle={{
-          ...styles.container,
-          margin: hasStories ? 1.5 : 0,
-          ...sx,
-        }}
-        overlayContainerStyle={styles.overlay}
-      />
-    </LinearGradient>
+    <Avatar
+      rounded
+      size={size}
+      source={avatar?.url ? { uri: avatar?.url } : NoAvatar}
+      avatarStyle={{ resizeMode: "cover" }}
+      containerStyle={{
+        ...styles.container,
+        margin: hasStories ? 1.5 : 0,
+        ...sx,
+      }}
+      overlayContainerStyle={styles.overlay}
+    />
   );
 };
 

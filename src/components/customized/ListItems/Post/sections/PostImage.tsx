@@ -3,10 +3,8 @@ import { Image } from "@rneui/themed";
 import { memo } from "react";
 import PostGradient from "../../../Gradients/PostGradient";
 import { SharedElement } from "react-navigation-shared-element";
-import theme from "../../../../../../assets/styles/theme";
 
 type IProps = { uri: string; id: string };
-const { error, secondary } = theme.lightColors || {};
 
 const PostImage = ({ uri, id }: IProps) => {
   const { width } = useWindowDimensions();

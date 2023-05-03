@@ -10,7 +10,10 @@ export interface User {
   website: string;
   role: string;
   token: string;
-  avatar: any;
+  avatar: {
+    url: string;
+    key: string;
+  };
   checkmark: boolean;
   followersCount: number;
   followingsCount: number;
