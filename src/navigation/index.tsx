@@ -11,11 +11,13 @@ import {
   AccountPasswordScreen,
   AssistanceScreen,
   AddPhotosScreen,
+  AddVideosScreen,
   AddPhotosPreviewScreen,
   AddPostScreen,
   AddScheduleScreen,
   ClearCacheScreen,
   CameraScreen,
+  CameraTimerScreen,
   CameraPreviewScreen,
   ChatSettingsScreen,
   ChatGroupSettingsScreen,
@@ -355,7 +357,12 @@ const AppNavigation = () => {
             <Stack.Screen
               name="AddPhotos"
               component={AddPhotosScreen}
-              options={{ animation: "slide_from_bottom" }}
+              options={{ animation: "fade", animationDuration: 200 }}
+            />
+            <Stack.Screen
+              name="AddVideos"
+              component={AddVideosScreen}
+              options={{ animation: "fade", animationDuration: 200 }}
             />
             <Stack.Screen
               name="AddPhotosPreview"
@@ -389,6 +396,11 @@ const AppNavigation = () => {
               name="Camera"
               component={CameraScreen}
               options={{ animation: "slide_from_bottom" }}
+            />
+            <Stack.Screen
+              name="CameraTimer"
+              component={CameraTimerScreen}
+              options={{ animation: "none" }}
             />
             <Stack.Screen
               name="CameraPreview"

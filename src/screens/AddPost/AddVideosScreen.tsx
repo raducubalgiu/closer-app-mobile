@@ -1,37 +1,37 @@
-import { SafeAreaView, StyleSheet, View } from "react-native";
-import { useMemo, useRef, useState } from "react";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { SafeAreaView, StyleSheet, View, Pressable } from "react-native";
+import { useRef, useState, useMemo } from "react";
+import { Icon, Divider } from "@rneui/themed";
+import { Camera, CameraType, FlashMode } from "expo-camera";
+import { Stack, SheetModal } from "../../components/core";
+import {
+  PhotoLibraryButton,
+  CameraIconButton,
+  RevertIconButton,
+  CameraReusableIconButton,
+} from "../../components/customized";
+import CameraTimerSheet from "../../components/customized/Sheets/CameraTimerSheet";
 import { useNavigation } from "@react-navigation/native";
 import * as Haptics from "expo-haptics";
 import * as ImagePicker from "expo-image-picker";
-import { Camera, CameraType, FlashMode } from "expo-camera";
-import { useTranslation } from "react-i18next";
-import { RootStackParams } from "../../navigation/rootStackParams";
-import { Stack, SheetModal } from "../../components/core";
-import {
-  CameraIconButton,
-  RevertIconButton,
-  PhotoLibraryButton,
-  CameraReusableIconButton,
-} from "../../components/customized";
 import { showToast } from "../../utils";
-import { Divider } from "@rneui/themed";
+import { useTranslation } from "react-i18next";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../navigation/rootStackParams";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import CameraTimerSheet from "../../components/customized/Sheets/CameraTimerSheet";
 
-export const AddPhotosScreen = () => {
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+export const AddVideosScreen = () => {
+  const [cameraType, setCameraType] = useState(CameraType.back);
+  const [flash, setFlash] = useState(FlashMode.off);
   const cameraRef = useRef<Camera>(null);
   const sheetRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => [200, 400], []);
-  const [cameraType, setCameraType] = useState(CameraType.back);
-  const [flash, setFlash] = useState(FlashMode.off);
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
 
   const handlePickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      mediaTypes: ImagePicker.MediaTypeOptions.Videos,
       allowsEditing: false,
       aspect: [4, 3],
       quality: 1,
@@ -80,11 +80,12 @@ export const AddPhotosScreen = () => {
         }}
       >
         <Stack direction="row" align="start">
-          <CameraReusableIconButton
-            name="close"
-            type="antdesign"
+          <Pressable
+            style={{ padding: 15 }}
             onPress={() => navigation.goBack()}
-          />
+          >
+            <Icon name="close" type="antdesign" size={25} color="white" />
+          </Pressable>
           <View>
             {cameraType === CameraType.back && (
               <CameraReusableIconButton
@@ -105,22 +106,28 @@ export const AddPhotosScreen = () => {
             <View style={{ alignItems: "center", paddingVertical: 5 }}>
               <Divider style={{ width: 20 }} />
             </View>
-            <CameraReusableIconButton
-              name="color-filter"
-              type="ionicon"
-              onPress={() => {}}
-            />
-            <CameraReusableIconButton
-              name="music-note"
-              type="fontisto"
-              onPress={() => {}}
-            />
+            <Pressable style={{ padding: 15 }} onPress={() => {}}>
+              <Icon
+                name="color-filter"
+                type="ionicon"
+                size={27.5}
+                color="white"
+              />
+            </Pressable>
+            <Pressable style={{ padding: 15 }} onPress={() => {}}>
+              <Icon
+                name="music-note"
+                type="fontisto"
+                size={27.5}
+                color="white"
+              />
+            </Pressable>
           </View>
         </Stack>
         <View style={styles.footer}>
           <Stack direction="row" sx={{ width: "100%" }} justify="around">
             <PhotoLibraryButton onPress={handlePickImage} />
-            <CameraIconButton onPress={handleTakePicture} />
+            <CameraIconButton onPress={handleTakePicture} type="video" />
             <RevertIconButton onPress={handleRevertCamera} />
           </Stack>
         </View>
@@ -145,13 +152,7 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: "black",
-    justifyContent: "space-between",
   },
-  container: {
-    flex: 1,
-    justifyContent: "space-between",
-  },
-  camera: { flex: 1 },
   footer: {
     height: 80,
     justifyContent: "center",

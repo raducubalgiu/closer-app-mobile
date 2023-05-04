@@ -513,5 +513,7 @@
   "thePostWillBeSavedInPhoneAfterPosting": "Postarea va fi salvată în telefon după distribuire",
   "addPostDescription": "Adaugă o descriere postării",
   "yes": "Da",
-  "no": "Nu"
+  "no": "Nu",
+  "setDuration": "Setează durata",
+  "slideForSelectSequenceDuration": "Glişează pentru a alege durata secvenţei. Secvenţa va începe după numărătoare inversă selectată"
 }

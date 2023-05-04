@@ -11,6 +11,7 @@ import {
 } from "../ts";
 import { ImagePickerAsset } from "expo-image-picker";
 import { ImageResizeMode } from "react-native";
+import { ResizeMode } from "expo-av";
 
 export type RootStackParams = {
   Account: any;
@@ -34,7 +35,8 @@ export type RootStackParams = {
   AddJobs: any;
   AddProgram: any;
   AddPhotos: any;
-  AddPhotosPreview: { photo: any; resizeMode: ImageResizeMode };
+  AddVideos: any;
+  AddPhotosPreview: { photo: any; resizeMode: ImageResizeMode | ResizeMode };
   AddPost: { photo?: any; taggedUsers: User[] };
   AddSchedule: { start: string; end: string };
   Auth: any;
@@ -52,6 +54,7 @@ export type RootStackParams = {
     avatar: any;
     name: string;
   };
+  CameraTimer: { counter: number; sequence: number; cameraType: CameraType };
   Chats: any;
   ChatSettings: { chat: Chat };
   ChatGroupSettings: { chatId: string };

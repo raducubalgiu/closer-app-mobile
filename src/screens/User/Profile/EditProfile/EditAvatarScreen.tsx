@@ -53,7 +53,6 @@ export const EditAvatarScreen = ({ route }: IProps) => {
       );
 
       const data = await response.json();
-      console.log("DATA!!!", data);
       setUser({ ...user, avatar: data.avatar });
       setLoading(false);
       navigation.goBack();

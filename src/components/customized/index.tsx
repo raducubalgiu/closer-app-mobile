@@ -52,6 +52,8 @@ export { InfoIconButton } from "./IconButtons/InfoIconButton";
 export { ProfileIconButton } from "./IconButtons/ProfileIconButton";
 export { CameraIconButton } from "./IconButtons/CameraIconButton";
 export { FlashIconButton } from "./IconButtons/FlashIconButton";
+export { CameraReusableIconButton } from "./IconButtons/CameraReusableIconButton";
+export { CameraTimerIconButton } from "./IconButtons/CameraTimerIconButton";
 
 export { TopTabContainer } from "./Tabs/TopTabContainer/TopTabContainer";
 export { TopTabProfile } from "./Tabs/TopTabContainer/TopTabProfile";

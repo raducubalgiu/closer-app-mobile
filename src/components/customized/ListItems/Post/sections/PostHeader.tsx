@@ -9,15 +9,24 @@ import { PostInfoSheet } from "../../../Sheets/PostInfoSheet";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../../navigation/rootStackParams";
+import { useAuth, useDelete } from "../../../../../hooks";
 
 type IProps = {
   avatar: any;
   username: string;
   checkmark: boolean;
   postType: string;
+  postId: string;
 };
 
-const PostHeader = ({ avatar, username, checkmark, postType }: IProps) => {
+const PostHeader = ({
+  avatar,
+  username,
+  checkmark,
+  postType,
+  postId,
+}: IProps) => {
+  const { user } = useAuth();
   const sheetRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => [1, 250], []);
   const navigation =
@@ -31,7 +40,10 @@ const PostHeader = ({ avatar, username, checkmark, postType }: IProps) => {
     });
   };
 
-  console.log(avatar);
+  const { mutate } = useDelete({
+    uri: `/users/${user?.id}/posts/${postId}`,
+    onSuccess: () => sheetRef.current?.close(),
+  });
 
   return (
     <>
@@ -67,7 +79,7 @@ const PostHeader = ({ avatar, username, checkmark, postType }: IProps) => {
         snapPoints={snapPoints}
         animationConfig={{ duration: 150 }}
       >
-        <PostInfoSheet onShowConfirm={() => {}} />
+        <PostInfoSheet onDelete={() => mutate()} />
       </SheetModal>
     </>
   );

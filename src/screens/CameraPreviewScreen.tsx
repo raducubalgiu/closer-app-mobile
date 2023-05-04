@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Stack } from "../components/core";
 import CustomAvatar from "../components/core/Avatars/CustomAvatar";
-import { CloseIconButton, DownloadIconButton } from "../components/customized";
+import { CameraReusableIconButton } from "../components/customized";
 import * as MediaLibrary from "expo-media-library";
 import theme from "../../assets/styles/theme";
 import { useNavigation } from "@react-navigation/native";
@@ -42,9 +42,17 @@ export const CameraPreviewScreen = ({ route }: IProps) => {
       />
       <View style={styles.container}>
         <SafeAreaView style={styles.safeArea}>
-          <Stack direction="row" sx={{ margin: 15 }}>
-            <CloseIconButton onPress={handleClosePreview} size={32.5} />
-            <DownloadIconButton onPress={handleDownload} size={30} />
+          <Stack direction="row" sx={{ marginTop: 15 }}>
+            <CameraReusableIconButton
+              name="close"
+              onPress={handleClosePreview}
+              size={32.5}
+            />
+            <CameraReusableIconButton
+              name="download"
+              type="feather"
+              onPress={handleDownload}
+            />
           </Stack>
           <Pressable style={styles.sendBtn} onPress={handleSendPhoto}>
             <Stack direction="row" sx={styles.sendCont}>

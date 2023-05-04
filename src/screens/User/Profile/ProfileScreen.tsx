@@ -66,7 +66,10 @@ const ProfileScreen = () => {
             addPostRef.current?.close();
             navigation.navigate("AddPhotos");
           }}
-          onNavigateToAddVideo={() => {}}
+          onNavigateToAddVideo={() => {
+            addPostRef.current?.close();
+            navigation.navigate("AddVideos");
+          }}
         />
       </SheetModal>
     </View>

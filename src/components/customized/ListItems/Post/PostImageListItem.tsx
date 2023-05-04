@@ -40,9 +40,10 @@ const PostImageListItem = ({
         username={username}
         checkmark={checkmark}
         postType={postType}
+        postId={post?.id}
       />
       <PostImage id={post.id} uri={images[0]?.url} />
-      {bookable && (
+      {bookable !== "none" && (
         <PostBookable
           product={product}
           isVisible={isVisible}

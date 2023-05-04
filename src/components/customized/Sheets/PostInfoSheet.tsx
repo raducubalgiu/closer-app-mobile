@@ -5,9 +5,9 @@ import theme from "../../../../assets/styles/theme";
 
 const { error, black } = theme.lightColors || {};
 
-type IProps = { onShowConfirm: () => void };
+type IProps = { onDelete: () => void };
 
-export const PostInfoSheet = ({ onShowConfirm }: IProps) => {
+export const PostInfoSheet = ({ onDelete }: IProps) => {
   const { t } = useTranslation("common");
 
   return (
@@ -24,7 +24,7 @@ export const PostInfoSheet = ({ onShowConfirm }: IProps) => {
       </ListItem>
       <ListItem
         center
-        onPress={onShowConfirm}
+        onPress={onDelete}
         sx={{ ...styles.listItem, backgroundColor: "#f1f1f1" }}
       >
         <Text style={{ ...styles.text, color: error, fontWeight: "500" }}>

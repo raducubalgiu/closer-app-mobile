@@ -13,7 +13,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Spinner } from "../../components/core";
 import { HeaderFeed } from "../../components/customized";
 import { Divider } from "@rneui/themed";
-import { useAuth, useGet, usePost } from "../../hooks";
+import { useAuth, useGet, usePost, useRefreshOnFocus } from "../../hooks";
 import { Post } from "../../ts";
 import { RootStackParams } from "../../navigation/rootStackParams";
 import HeadingAction from "../../components/core/Heading/HeadingAction";
@@ -22,7 +22,11 @@ import PostImageListItem from "../../components/customized/ListItems/Post/PostIm
 import PostVideoListItem from "../../components/customized/ListItems/Post/PostVideoListItem";
 import PostCarouselListItem from "../../components/customized/ListItems/Post/PostCarouselListItem";
 import { filter } from "lodash";
-import { useRefreshByUser } from "../../hooks";
+import {
+  useRefreshByUser,
+  useGetPaginate,
+  usePaginateActions,
+} from "../../hooks";
 
 type PostListItem = {
   id: string;
@@ -34,9 +38,6 @@ type PostsResponse = { next: number | null; results: PostListItem[] | [] };
 
 export const FeedExploreScreen = () => {
   const { user } = useAuth();
-  const [posts, setPosts] = useState<PostListItem[]>([]);
-  const [hasNext, setHasNext] = useState<null | number>(null);
-  const [page, setPage] = useState(1);
   const ref = useRef<any>(null);
   const { t } = useTranslation("common");
   const navigation =
@@ -44,25 +45,21 @@ export const FeedExploreScreen = () => {
   const [visibleItem, setVisibleItem] = useState<PostListItem | null>(null);
   useScrollToTop(ref);
 
-  const { isInitialLoading, isPreviousData, isRefetching, refetch } =
-    useGet<PostsResponse>({
-      model: "posts",
-      uri: `/users/${user?.id}/posts/get-all-posts?page=${page}&limit=20`,
-      options: {
-        onSuccess: (response) => {
-          if (response.data && response.data.next !== hasNext) {
-            setHasNext(response.data.next);
-            setPosts((posts) => posts.concat(response.data.results));
-          }
-        },
-        keepPreviousData: true,
-      },
-    });
+  const options = useGetPaginate({
+    model: "posts",
+    uri: `/users/${user?.id}/posts/get-all-posts`,
+    limit: "10",
+  });
+
+  const { refetch, isInitialLoading } = options;
+  const { data: posts, showSpinner, loadMore } = usePaginateActions(options);
 
   const { data: videos } = useGet<PostsResponse>({
     model: "videos",
     uri: `/users/${user?.id}/posts/get-all-posts?page=1&limit=5&postType=video`,
   });
+
+  useRefreshOnFocus(refetch);
 
   const { refreshing, refetchByUser } = useRefreshByUser(refetch);
   const refreshControl = (
@@ -176,17 +173,6 @@ export const FeedExploreScreen = () => {
       onViewableItemsChanged: onViewableSaveView,
     },
   ]);
-
-  const loadMore = () => {
-    if (!!hasNext && !isPreviousData) {
-      setPage((page) => page + 1);
-    }
-  };
-
-  const footer = (
-    <>{isRefetching ? <Spinner sx={{ paddingVertical: 30 }} /> : null}</>
-  );
-
   const header = (
     <>
       <HeadingAction title={t("videoclips")} onPress={() => {}} />
@@ -214,13 +200,12 @@ export const FeedExploreScreen = () => {
           renderItem={renderPost}
           keyExtractor={keyExtractor}
           showsVerticalScrollIndicator={false}
-          ListFooterComponent={footer}
+          ListFooterComponent={showSpinner}
           onEndReached={loadMore}
           onEndReachedThreshold={0.3}
           viewabilityConfigCallbackPairs={
             viewabilityConfigCallbackPairs.current
           }
-          //estimatedItemSize={725}
         />
       )}
       {isInitialLoading && <Spinner />}

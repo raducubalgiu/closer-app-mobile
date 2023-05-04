@@ -1,6 +1,7 @@
 import ProfileScreen from "./User/Profile/ProfileScreen";
 
 export { AddPhotosScreen } from "./AddPost/AddPhotosScreen";
+export { AddVideosScreen } from "./AddPost/AddVideosScreen";
 export { AddPhotosPreviewScreen } from "./AddPost/AddPhotosPreviewScreen";
 export { AddPostScreen } from "./AddPost/AddPostScreen";
 export { AllBookmarksScreen } from "./User/Profile/AllBookmarksScreen";
@@ -18,6 +19,7 @@ export { AddProductsScreen } from "./User/Profile/MyBusiness/AddProductsScreen";
 export { AddUserProgramScreen } from "./User/Profile/MyBusiness/AddUserProgramScreen";
 export { AddServicesScreen } from "./User/Profile/MyBusiness/AddServicesScreen";
 export { AddScheduleScreen } from "./User/Profile/MyBusiness/AddScheduleScreen";
+export { CameraTimerScreen } from "./Camera/CameraTimerScreen";
 export { BirthdayScreen } from "./User/Auth/BirthdayScreen";
 export { EditProductScreen } from "./User/Profile/MyBusiness/EditProductScreen";
 export { MyBusinessScreen } from "./User/Profile/MyBusiness/MyBusinessScreen";

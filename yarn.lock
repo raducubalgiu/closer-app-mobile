@@ -4799,6 +4799,13 @@ expo-font@~11.1.1:
   dependencies:
     fontfaceobserver "^2.1.0"
 
+expo-gl@~12.0.1:
+  version "12.0.1"
+  resolved "https://registry.yarnpkg.com/expo-gl/-/expo-gl-12.0.1.tgz#2099d164b395cb33a4b22eac89a9a94b1eac38da"
+  integrity sha512-2lLvlh8Iw+HignariuGcDTEpglgBsIxUwE+yHqwwSPIBCbYHR3zKfg2E4kUnUw/yaGIl/tTKoWKArq1WLRQ4gg==
+  dependencies:
+    invariant "^2.2.4"
+
 expo-haptics@~12.0.1:
   version "12.0.1"
   resolved "https://registry.yarnpkg.com/expo-haptics/-/expo-haptics-12.0.1.tgz#151dc57bc01c1fa16d021e4714b23916bbc9f8e5"
@@ -4809,11 +4816,6 @@ expo-image-loader@~4.0.0:
   resolved "https://registry.yarnpkg.com/expo-image-loader/-/expo-image-loader-4.0.0.tgz#a17e5f95a4c1671791168dd5dfc221bf2f88480c"
   integrity sha512-hVMhXagsO1cSng5s70IEjuJAuHy2hX/inu5MM3T0ecJMf7L/7detKf22molQBRymerbk6Tzu+20h11eU0n/3jQ==
 
-expo-image-loader@~4.1.0:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/expo-image-loader/-/expo-image-loader-4.1.1.tgz#efadbb17de1861106864820194900f336dd641b6"
-  integrity sha512-ciEHVokU0f6w0eTxdRxLCio6tskMsjxWIoV92+/ZD37qePUJYMfEphPhu1sruyvMBNR8/j5iyOvPFVGTfO8oxA==
-
 expo-image-manipulator@~11.0.0:
   version "11.0.0"
   resolved "https://registry.yarnpkg.com/expo-image-manipulator/-/expo-image-manipulator-11.0.0.tgz#f863bfcbc1534d92e9efc6f9265cf152cf7988c1"
@@ -4821,12 +4823,12 @@ expo-image-manipulator@~11.0.0:
   dependencies:
     expo-image-loader "~4.0.0"
 
-expo-image-picker@^14.1.1:
-  version "14.1.1"
-  resolved "https://registry.yarnpkg.com/expo-image-picker/-/expo-image-picker-14.1.1.tgz#181f1348ba6a43df7b87cee4a601d45c79b7c2d7"
-  integrity sha512-SvWtnkLW7jp5Ntvk3lVcRQmhFYja8psmiR7O6P/+7S6f4llt3vaFwb4I3+pUXqJxxpi7BHc2+95qOLf0SFOIag==
+expo-image-picker@~14.0.2:
+  version "14.0.3"
+  resolved "https://registry.yarnpkg.com/expo-image-picker/-/expo-image-picker-14.0.3.tgz#ea0bbe796ccc3bd5e58fc00487be22bac317afeb"
+  integrity sha512-VN5wMWzhYhIRhFq8I1pjMbn/ivjlhWfxzJpz5jUOf3mQ8vxrI5GcR8cJO9kyYwuCrI9W3GUzh/aDt7QRSTQDDA==
   dependencies:
-    expo-image-loader "~4.1.0"
+    expo-image-loader "~4.0.0"
 
 expo-keep-awake@~11.0.1:
   version "11.0.1"
@@ -5393,6 +5395,14 @@ getenv@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/getenv/-/getenv-1.0.0.tgz#874f2e7544fbca53c7a4738f37de8605c3fcfc31"
   integrity sha512-7yetJWqbS9sbn0vIfliPsFgoXMKn/YMF+Wuiog97x+urnSRRRZ7xB+uVkwGKzRgq9CDFfMQnE9ruL5DHv9c6Xg==
+
+gl-react-expo@^5.2.1:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/gl-react-expo/-/gl-react-expo-5.2.1.tgz#e9aba1dd9d8861260b67f928656f6da77853aa98"
+  integrity sha512-zAf0qMBiJa1HhthAUO7dxBciCgqm+4uNKkKkJ4k9L+mLSqYzGqFKA1UB/C7jxms2ul8MP8DApf80KBaZfSphWQ==
+  dependencies:
+    invariant "^2.2.4"
+    webgltexture-loader-expo "1.2.0"
 
 glob-parent@^5.1.2:
   version "5.1.2"
@@ -7802,6 +7812,11 @@ react-native-collapsible-tab-view@^5.0.0-rc.13:
   dependencies:
     use-deep-compare "^1.1.0"
 
+react-native-countdown-circle-timer@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-countdown-circle-timer/-/react-native-countdown-circle-timer-3.2.1.tgz#077548e943fcf24b47c7e5ce2f12c1dfa35833c2"
+  integrity sha512-iHiOgipG0hMprerswqUCUfjGo9hL0UhKNS0BGh4o6yY9Lu7f3VXQ7EJt757Obwn74AiF5MOHURIdqldoGnVrDw==
+
 react-native-dotenv@^3.3.1:
   version "3.4.2"
   resolved "https://registry.yarnpkg.com/react-native-dotenv/-/react-native-dotenv-3.4.2.tgz#75b61ee8691af5e0897a4db21f4145080fca7da3"
@@ -9386,6 +9401,18 @@ wcwidth@^1.0.1:
   integrity sha512-XHPEwS0q6TaxcvG85+8EYkbiCux2XtWG2mkc47Ng2A77BQu9+DqIOJldST4HgPkuea7dvKSj5VgX3P1d4rW8Tg==
   dependencies:
     defaults "^1.0.3"
+
+webgltexture-loader-expo@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/webgltexture-loader-expo/-/webgltexture-loader-expo-1.2.0.tgz#5bfeee5b5334e6274c94bb58b1bd61bf804bfe79"
+  integrity sha512-g+uHrXvsZ5hLWLmO3c08LGxlT8JVvR40OlGg7uWbb4bQslYXRzBjyplcVY0Y9CiS+D/YYqBKBkJzShEcylyxfw==
+  dependencies:
+    webgltexture-loader "^1.0.0"
+
+webgltexture-loader@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/webgltexture-loader/-/webgltexture-loader-1.0.0.tgz#e3d5b687d79ac85bed29222a7931f1405b69da6a"
+  integrity sha512-TbQUdr0Bc3tcJ4pKIFoM9dKyLdYNf9Uxq05oZuIT+2e/vCcfaQS+WjNmW1FwYqaBrzcLr9CA/HBAmvyaS/REGw==
 
 webidl-conversions@^3.0.0:
   version "3.0.1"

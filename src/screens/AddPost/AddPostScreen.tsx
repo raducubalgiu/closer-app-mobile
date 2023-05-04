@@ -5,6 +5,9 @@ import {
   Image,
   View,
   TextInput,
+  Text,
+  Pressable,
+  useWindowDimensions,
 } from "react-native";
 import { Button, Header, Stack } from "../../components/core";
 import {
@@ -16,13 +19,16 @@ import {
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../navigation/rootStackParams";
-import { Divider } from "@rneui/themed";
+import { Divider, Icon } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import { isEmpty } from "lodash";
-import { useState } from "react";
-import { useAuth, usePost } from "../../hooks";
+import { useCallback, useState } from "react";
+import { useAuth } from "../../hooks";
+import dayjs from "dayjs";
+import theme from "../../../assets/styles/theme";
 
+const { black, primary, error } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "AddPost">;
 
 export const AddPostScreen = ({ route }: IProps) => {
@@ -30,9 +36,12 @@ export const AddPostScreen = ({ route }: IProps) => {
   const { photo, taggedUsers } = route.params;
   const [saveInPhone, setSaveInPhone] = useState(false);
   const [description, setDescription] = useState("");
+  const [height, setHeight] = useState<number>(100);
   const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
+  const [loading, setLoading] = useState(false);
+  const { width } = useWindowDimensions();
 
   const tagUsersDescription: any = isEmpty(taggedUsers)
     ? t("youCanTagMaxTenPersons")
@@ -40,16 +49,54 @@ export const AddPostScreen = ({ route }: IProps) => {
         index === taggedUsers?.length - 1 ? user?.name : `${user.name}, `
       );
 
-  const { mutate, isLoading } = usePost({ uri: `/posts` });
+  const formatFileName = `${dayjs().utc(true).format()}_${
+    user?.username
+  }_post_image`;
 
-  const handlePost = () => {
-    mutate({
-      description,
-      images: [{ uri: photo.uri }],
-      mentions: taggedUsers.map((user) => user.id),
-      userId: user?.id,
-    });
+  const handlePost = async () => {
+    let formData: any = new FormData();
+    formData.append("image", {
+      name: formatFileName,
+      uri: photo.uri,
+      type: "image/jpg",
+    } as unknown as Blob);
+
+    formData.append("userId", user?.id);
+    formData.append("description", description);
+
+    if (!isEmpty(taggedUsers)) {
+      formData.append(
+        "mentions",
+        taggedUsers.map((user) => user.id)
+      );
+    }
+
+    try {
+      setLoading(true);
+      const response = await fetch(`${process.env.BASE_ENDPOINT}/posts`, {
+        method: "POST",
+        body: formData,
+        headers: { Authorization: `Bearer ${user?.token}` },
+      });
+
+      const data = await response.json();
+      setLoading(false);
+      navigation.navigate("FeedExplore");
+    } catch (error) {
+      setLoading(false);
+    }
   };
+
+  const getColor = useCallback((description: string) => {
+    switch (description?.length) {
+      case 0:
+        return "#ddd";
+      case 200:
+        return error;
+      default:
+        return primary;
+    }
+  }, []);
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -64,9 +111,95 @@ export const AddPostScreen = ({ route }: IProps) => {
               <TextInput
                 value={description}
                 placeholder={t("addPostDescription")}
+                multiline={true}
                 onChangeText={(text) => setDescription(text)}
+                style={{
+                  height: 100,
+                }}
+                maxLength={300}
               />
+              <Stack direction="row" justify="start" sx={{ marginTop: 10 }}>
+                <View
+                  style={{
+                    height: 20,
+                    width: 25,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontWeight: "500",
+                      color: getColor(description),
+                    }}
+                  >
+                    {description.length}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    height: 20,
+                    width: 15,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text style={{ marginHorizontal: 5, color: "#ddd" }}>/</Text>
+                </View>
+                <View
+                  style={{
+                    height: 20,
+                    width: 25,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text style={{ color: "#ddd" }}>300</Text>
+                </View>
+              </Stack>
             </View>
+          </Stack>
+          <Stack direction="row" sx={{ marginVertical: 5 }}>
+            <Pressable
+              style={{
+                width: width / 2 - 20,
+                alignItems: "center",
+                justifyContent: "center",
+                borderWidth: 1,
+                borderColor: "#ddd",
+                height: 30,
+                borderRadius: 2.5,
+              }}
+            >
+              <Stack direction="row">
+                <Icon name="hash" type="feather" size={15} />
+                <Text
+                  style={{ marginLeft: 5, fontWeight: "500", fontSize: 13.5 }}
+                >
+                  {t("hashtags")}
+                </Text>
+              </Stack>
+            </Pressable>
+            <Pressable
+              style={{
+                width: width / 2 - 20,
+                alignItems: "center",
+                justifyContent: "center",
+                borderWidth: 1,
+                borderColor: "#ddd",
+                height: 30,
+                borderRadius: 2.5,
+              }}
+            >
+              <Stack direction="row">
+                <Icon name="at-sign" type="feather" size={15} />
+                <Text
+                  style={{ marginLeft: 5, fontWeight: "500", fontSize: 13.5 }}
+                >
+                  {t("mentions")}
+                </Text>
+              </Stack>
+            </Pressable>
           </Stack>
           <Divider color="#ddd" style={{ marginVertical: 10 }} />
           <SettingsListItem
@@ -109,8 +242,8 @@ export const AddPostScreen = ({ route }: IProps) => {
           <Button
             title={t("upload")}
             onPress={handlePost}
-            disabled={isLoading}
-            loading={isLoading}
+            disabled={loading}
+            loading={loading}
           />
         </View>
       </View>
@@ -133,7 +266,7 @@ const styles = StyleSheet.create({
   description: {
     marginBottom: 15,
   },
-  imageBox: { height: 120, width: 95 },
+  imageBox: { height: 130, width: 95 },
   image: {
     height: undefined,
     width: undefined,
