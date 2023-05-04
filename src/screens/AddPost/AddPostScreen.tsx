@@ -9,7 +9,7 @@ import {
   Pressable,
   useWindowDimensions,
 } from "react-native";
-import { Button, Header, Stack } from "../../components/core";
+import { Button, Header, Input, Stack } from "../../components/core";
 import {
   SettingsListItem,
   SettingsSwitchListItem,
@@ -108,55 +108,17 @@ export const AddPostScreen = ({ route }: IProps) => {
               <Image source={{ uri: photo.uri }} style={styles.image} />
             </View>
             <View style={{ flex: 1, marginLeft: 10 }}>
-              <TextInput
+              <Input
                 value={description}
                 placeholder={t("addPostDescription")}
                 multiline={true}
                 onChangeText={(text) => setDescription(text)}
-                style={{
-                  height: 100,
-                }}
+                height={100}
                 maxLength={300}
+                withDetails
+                spacing={0}
+                border={false}
               />
-              <Stack direction="row" justify="start" sx={{ marginTop: 10 }}>
-                <View
-                  style={{
-                    height: 20,
-                    width: 25,
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontWeight: "500",
-                      color: getColor(description),
-                    }}
-                  >
-                    {description.length}
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    height: 20,
-                    width: 15,
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Text style={{ marginHorizontal: 5, color: "#ddd" }}>/</Text>
-                </View>
-                <View
-                  style={{
-                    height: 20,
-                    width: 25,
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Text style={{ color: "#ddd" }}>300</Text>
-                </View>
-              </Stack>
             </View>
           </Stack>
           <Stack direction="row" sx={{ marginVertical: 5 }}>

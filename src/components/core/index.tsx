@@ -47,13 +47,13 @@ export { ListItem } from "./ListItem/ListItem";
 
 export { Spinner } from "./Spinner/Spinner";
 
-export { FormInputRadio } from "./Inputs/FormInputRadio";
+export { FormInputRadio } from "./Inputs/react-hook-form/FormInputRadio";
 export { InputSelect } from "./Inputs/InputSelect";
 export { SearchBarInput } from "./Inputs/SearchBarInput";
-export { InputEdit } from "./Inputs/InputEdit";
-export { FormInput } from "./Inputs/FormInput";
-export { FormInputSelect } from "./Inputs/FormInputSelect";
-export { FormTextField } from "./Inputs/FormTextField";
+export { Input } from "./Inputs/Input";
+export { FormInput } from "./Inputs/react-hook-form/FormInput";
+export { FormInputSelect } from "./Inputs/react-hook-form/FormInputSelect";
+export { FormTextField } from "./Inputs/react-hook-form/FormTextField";
 
 export { Protected } from "./Protected/Protected";
 

@@ -2,7 +2,7 @@ import { SafeAreaView, StyleSheet, Keyboard } from "react-native";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import { InputEdit, Spinner } from "../../../../components/core";
+import { Input, Spinner } from "../../../../components/core";
 import { HeaderEdit } from "../../../../components/customized";
 import { usePatch, useAuth } from "../../../../hooks";
 
@@ -32,7 +32,7 @@ export const EditWebsiteScreen = () => {
         disabledBack={isLoading}
         disabledSave={isLoading}
       />
-      <InputEdit
+      <Input
         placeholder={t("addWebsite")}
         value={website}
         maxLength={40}

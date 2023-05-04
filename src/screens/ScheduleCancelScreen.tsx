@@ -16,7 +16,7 @@ import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import { Button, IconBackButton, InputEdit } from "../components/core";
+import { Button, IconBackButton, Input } from "../components/core";
 import { MAIN_ROLE } from "@env";
 import theme from "../../assets/styles/theme";
 import { useAuth, usePatch } from "../hooks";
@@ -106,7 +106,7 @@ export const ScheduleCancelScreen = ({ route }: IProps) => {
   if (textarea) {
     footer = (
       <View style={{ marginTop: 20 }}>
-        <InputEdit
+        <Input
           value={textareaVal}
           maxLength={200}
           height={150}

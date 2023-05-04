@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { HeaderEdit } from "../../../../components/customized";
-import { InputEdit } from "../../../../components/core";
+import { Input } from "../../../../components/core";
 import { useAuth, usePatch } from "../../../../hooks";
 
 export const EditBioScreen = () => {
@@ -34,7 +34,7 @@ export const EditBioScreen = () => {
         disabledBack={isLoading}
         disabledSave={isLoading}
       />
-      <InputEdit
+      <Input
         value={bio}
         withDetails
         onChangeText={(text) => setBio(text)}

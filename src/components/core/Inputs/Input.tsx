@@ -10,20 +10,29 @@ import theme from "../../../../assets/styles/theme";
 
 const { grey0, error, black } = theme.lightColors || {};
 
-type IProps = TextInputProps & { height?: number; withDetails?: boolean };
+type IProps = TextInputProps & {
+  height?: number;
+  withDetails?: boolean;
+  border?: boolean;
+  spacing?: number;
+};
 
-export const InputEdit = ({
+export const Input = ({
   withDetails = false,
+  border = true,
   height,
+  spacing = 15,
   ...props
 }: IProps) => {
   const { value, maxLength } = props || {};
   const valColor =
     value && maxLength && value?.length >= maxLength ? { color: error } : {};
 
+  const borderBottom = { borderBottomWidth: 0.5, borderColor: "#ddd" };
+
   return (
-    <View style={{ marginHorizontal: 15 }}>
-      <Stack direction="row" sx={styles.inputContainer}>
+    <View style={{ margin: spacing }}>
+      <Stack direction="row" sx={border && borderBottom}>
         <TextInput
           {...props}
           style={{ ...styles.input, height }}
@@ -32,7 +41,7 @@ export const InputEdit = ({
         />
       </Stack>
       {withDetails && (
-        <Stack direction="row" justify="start">
+        <Stack direction="row" justify="start" sx={{ marginTop: 10 }}>
           <Text style={[styles.strokeLength, valColor]}>
             {props?.value?.length}
           </Text>
@@ -45,17 +54,11 @@ export const InputEdit = ({
 };
 
 const styles = StyleSheet.create({
-  inputContainer: {
-    borderBottomWidth: 0.5,
-    borderColor: "#ddd",
-    marginBottom: 10,
-  },
   input: {
     paddingVertical: 20,
     fontSize: 15,
     flex: 1,
     color: black,
-    fontWeight: "500",
   },
   rightIcon: { paddingVertical: 15, paddingHorizontal: 5 },
   strokeLength: {

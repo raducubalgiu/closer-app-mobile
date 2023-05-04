@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { HeaderEdit } from "../../../../components/customized";
-import { InputEdit, Spinner } from "../../../../components/core";
+import { Input, Spinner } from "../../../../components/core";
 import { usePatch, useAuth } from "../../../../hooks";
 
 export const EditNameScreen = () => {
@@ -33,7 +33,7 @@ export const EditNameScreen = () => {
         disabledSave={isLoading}
         disabledBack={isLoading}
       />
-      <InputEdit
+      <Input
         placeholder={t("addName")}
         value={name ? name : ""}
         maxLength={30}
