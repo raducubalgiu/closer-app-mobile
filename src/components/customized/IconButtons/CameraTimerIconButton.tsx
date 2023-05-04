@@ -1,6 +1,7 @@
 import { StyleSheet, Pressable, View, Text } from "react-native";
 import { useCallback, useState } from "react";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
+import * as Animatable from "react-native-animatable";
 import theme from "../../../../assets/styles/theme";
 import { Stack } from "../../core";
 
@@ -23,7 +24,7 @@ export const CameraTimerIconButton = ({
   );
 
   return (
-    <View>
+    <Animatable.View animation="zoomIn" duration={750}>
       <Stack sx={{ marginBottom: 20 }}>
         <Text style={styles.recordingTime}>00:{displayRecordingTime}</Text>
       </Stack>
@@ -52,7 +53,7 @@ export const CameraTimerIconButton = ({
           </CountdownCircleTimer>
         </View>
       </Pressable>
-    </View>
+    </Animatable.View>
   );
 };
 

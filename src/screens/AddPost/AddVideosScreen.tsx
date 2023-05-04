@@ -8,6 +8,7 @@ import {
   CameraIconButton,
   RevertIconButton,
   CameraReusableIconButton,
+  CameraTimerIconButton,
 } from "../../components/customized";
 import CameraTimerSheet from "../../components/customized/Sheets/CameraTimerSheet";
 import { useNavigation } from "@react-navigation/native";
@@ -28,6 +29,7 @@ export const AddVideosScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation();
+  const [recording, setRecording] = useState(false);
 
   const handlePickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -44,21 +46,8 @@ export const AddVideosScreen = () => {
     }
   };
 
-  let handleTakePicture = async () => {
-    let options = {
-      quality: 1,
-      base64: true,
-      exif: false,
-    };
-
-    let photo = await cameraRef.current?.takePictureAsync(options);
-    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-
-    if (!photo) {
-      return showToast({ message: t("somethingWentWrong") });
-    }
-
-    navigation.push("AddPhotosPreview", { photo, resizeMode: "cover" });
+  let handleStartRecording = async () => {
+    setRecording(true);
   };
 
   const handleRevertCamera = () => {
@@ -127,7 +116,16 @@ export const AddVideosScreen = () => {
         <View style={styles.footer}>
           <Stack direction="row" sx={{ width: "100%" }} justify="around">
             <PhotoLibraryButton onPress={handlePickImage} />
-            <CameraIconButton onPress={handleTakePicture} type="video" />
+            {!recording && (
+              <CameraIconButton onPress={handleStartRecording} type="video" />
+            )}
+            {recording && (
+              <CameraTimerIconButton
+                duration={15}
+                onPress={() => {}}
+                onComplete={() => {}}
+              />
+            )}
             <RevertIconButton onPress={handleRevertCamera} />
           </Stack>
         </View>

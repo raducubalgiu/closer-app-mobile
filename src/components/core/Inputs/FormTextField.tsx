@@ -1,47 +1,41 @@
-import { StyleSheet, TextInput, Text, Pressable } from "react-native";
+import {
+  StyleSheet,
+  TextInput,
+  Text,
+  Pressable,
+  TextInputProps,
+} from "react-native";
 import { useFormContext, Controller } from "react-hook-form";
-import { has, get } from "lodash";
+import { has, get, isEmpty } from "lodash";
 import { Icon } from "@rneui/themed";
 import theme from "../../../../assets/styles/theme";
 import Stack from "../Stack/Stack";
 
 const { error, black } = theme.lightColors || {};
 
-type Props = {
+type Props = TextInputProps & {
   name: string;
-  placeholder: string;
   rules?: {};
   sx?: {};
   label?: string;
-  maxLength?: number;
-  secureTextEntry?: boolean;
-  keyboardType?: any;
-  editable?: boolean;
   disableRightIcon?: boolean;
   initialValue?: any;
   rightIconProps?: any;
   rightText?: string;
   onChangeInput?: (event: string) => void;
-  onPressIn?: () => void;
   onRightIconPress?: () => void;
 };
 
 export const FormTextField = ({
   name,
-  placeholder,
   rules = {},
   sx = {},
   label = "",
-  secureTextEntry = false,
-  editable = true,
-  maxLength,
-  keyboardType = "default",
   initialValue = null,
   disableRightIcon,
   rightIconProps,
   onRightIconPress,
   onChangeInput,
-  onPressIn,
   ...props
 }: Props) => {
   const { formState, control } = useFormContext();
@@ -67,7 +61,7 @@ export const FormTextField = ({
   return (
     <>
       {has(errors, name) && errMsg}
-      {label?.length > 0 && <Text style={styles.label}>{label}</Text>}
+      {!isEmpty(label) && <Text style={styles.label}>{label}</Text>}
       <Controller
         control={control}
         rules={{ ...rules }}
@@ -75,17 +69,11 @@ export const FormTextField = ({
           <Stack direction="row" align="center" sx={styles.inputContainer}>
             <TextInput
               {...props}
-              placeholder={placeholder}
               style={inputStyle.input}
-              maxLength={maxLength}
-              keyboardType={keyboardType}
               onBlur={onBlur}
               onChangeText={onChangeInput ? onChangeInput : onChange}
-              onPressIn={onPressIn}
               value={initialValue ? initialValue : value}
               placeholderTextColor="#9EA0A4"
-              secureTextEntry={secureTextEntry}
-              editable={editable}
             />
             <Pressable
               onPress={onRightIconPress}

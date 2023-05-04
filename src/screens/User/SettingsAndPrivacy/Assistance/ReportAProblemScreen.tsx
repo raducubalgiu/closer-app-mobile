@@ -35,13 +35,14 @@ export const ReportAProblemScreen = () => {
   return (
     <SafeAreaView style={styles.screen}>
       <Header title={t("reportAProblem")} />
-      <Stack align="start" sx={{ margin: 15 }}>
+      <Stack align="start" justify="start" sx={{ margin: 15 }}>
         <FormProvider {...methods}>
           <FormTextField
             placeholder={t("forYourSafetyDontIncludePersonalData")}
             label={`${t("whichIsTheProblem")}?`}
             name="text"
-            sx={{ height: 150, textAlignVertical: "top" }}
+            multiline={true}
+            sx={{ height: 150 }}
           />
           <Button
             title={t("send")}
