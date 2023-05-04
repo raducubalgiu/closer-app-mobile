@@ -1,45 +1,41 @@
-import { StyleSheet, Text, View, TextInput } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  TextInputProps,
+} from "react-native";
 import Stack from "../Stack/Stack";
 import theme from "../../../../assets/styles/theme";
 
 const { grey0, error, black } = theme.lightColors || {};
 
-type IProps = {
-  value: string;
-  maxLength: number;
-  placeholder: string;
-  onChange: (text: string) => void;
-  withDetails?: boolean;
-  editable?: boolean;
-};
+type IProps = TextInputProps & { height?: number; withDetails?: boolean };
 
 export const InputEdit = ({
-  value = "",
-  maxLength,
-  placeholder,
-  onChange,
   withDetails = false,
-  editable,
+  height,
+  ...props
 }: IProps) => {
-  const valColor = value?.length >= maxLength ? { color: error } : {};
+  const { value, maxLength } = props || {};
+  const valColor =
+    value && maxLength && value?.length >= maxLength ? { color: error } : {};
 
   return (
     <View style={{ marginHorizontal: 15 }}>
       <Stack direction="row" sx={styles.inputContainer}>
         <TextInput
-          placeholder={placeholder}
-          style={styles.input}
-          maxLength={maxLength}
-          onChangeText={onChange}
-          value={value}
+          {...props}
+          style={{ ...styles.input, height }}
           placeholderTextColor="#9EA0A4"
-          editable={editable}
           clearButtonMode="while-editing"
         />
       </Stack>
       {withDetails && (
         <Stack direction="row" justify="start">
-          <Text style={[styles.strokeLength, valColor]}>{value?.length}</Text>
+          <Text style={[styles.strokeLength, valColor]}>
+            {props?.value?.length}
+          </Text>
           <Text style={styles.strokeLength}>/</Text>
           <Text style={styles.strokeLength}>{maxLength}</Text>
         </Stack>

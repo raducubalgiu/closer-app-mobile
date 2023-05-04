@@ -36,7 +36,7 @@ export const EditWebsiteScreen = () => {
         placeholder={t("addWebsite")}
         value={website}
         maxLength={40}
-        onChange={(website: string) => setWebsite(website)}
+        onChangeText={(website: string) => setWebsite(website)}
         withDetails
       />
       {isLoading && <Spinner />}

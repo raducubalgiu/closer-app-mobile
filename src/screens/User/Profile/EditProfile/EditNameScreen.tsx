@@ -37,7 +37,7 @@ export const EditNameScreen = () => {
         placeholder={t("addName")}
         value={name ? name : ""}
         maxLength={30}
-        onChange={(name: string) => setName(name)}
+        onChangeText={(text: string) => setName(text)}
         withDetails
       />
       {isLoading && <Spinner />}

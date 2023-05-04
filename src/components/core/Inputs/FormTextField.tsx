@@ -52,7 +52,7 @@ export const FormTextField = ({
   const inputStyle = StyleSheet.create({
     input: {
       flex: 1,
-      paddingVertical: 15,
+      paddingVertical: 12.5,
       fontSize: 15,
       ...sx,
     },

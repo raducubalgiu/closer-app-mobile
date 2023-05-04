@@ -1,22 +1,18 @@
-import { StyleSheet, TextInput, Text } from "react-native";
+import { StyleSheet, TextInput, Text, TextInputProps } from "react-native";
 import { useFormContext, Controller } from "react-hook-form";
-import { has, get } from "lodash";
+import { has, get, isEmpty } from "lodash";
 import { Icon } from "@rneui/themed";
 import theme from "../../../../assets/styles/theme";
 import Stack from "../Stack/Stack";
 
 const { error, black } = theme.lightColors || {};
 
-type Props = {
+type IProps = TextInputProps & {
   name: string;
   placeholder: string;
   rules?: {};
   sx?: {};
   label?: string;
-  maxLength?: number;
-  secureTextEntry?: boolean;
-  keyboardType?: any;
-  editable?: boolean;
   initialValue?: any;
   rightIconProps?: any;
   rightText?: string;
@@ -29,16 +25,12 @@ export const FormInput = ({
   rules = {},
   sx = {},
   label = "",
-  secureTextEntry = false,
-  editable = true,
-  maxLength,
-  keyboardType = "default",
   initialValue = null,
   rightIconProps,
   rightText,
   onChangeInput,
   ...props
-}: Props) => {
+}: IProps) => {
   const { formState, control } = useFormContext();
   const { errors } = formState;
   const message: string = get(errors, name)?.message as string;
@@ -51,7 +43,7 @@ export const FormInput = ({
   );
 
   const inputStyle = StyleSheet.create({
-    input: {
+    inputContainer: {
       borderWidth: 1,
       width: "100%",
       marginBottom: 10,
@@ -60,11 +52,12 @@ export const FormInput = ({
       borderColor: has(errors, name) ? error : "#ccc",
       ...sx,
     },
+    input: { flex: 1, paddingVertical: 12.5 },
   });
 
   return (
     <>
-      {label?.length > 0 && <Text style={styles.label}>{label}</Text>}
+      {!isEmpty(label) && <Text style={styles.label}>{label}</Text>}
       <Controller
         control={control}
         rules={{ ...rules }}
@@ -72,23 +65,19 @@ export const FormInput = ({
           <Stack
             direction="row"
             sx={
-              editable
-                ? inputStyle.input
-                : { ...inputStyle.input, backgroundColor: "#eee" }
+              props?.editable
+                ? inputStyle.inputContainer
+                : { ...inputStyle.inputContainer, backgroundColor: "#eee" }
             }
           >
             <TextInput
               {...props}
               placeholder={placeholder}
-              style={{ flex: 1, paddingVertical: 12.5 }}
-              maxLength={maxLength}
-              keyboardType={keyboardType}
+              style={inputStyle.input}
               onBlur={onBlur}
               onChangeText={onChangeInput ? onChangeInput : onChange}
               value={initialValue ? initialValue : value}
               placeholderTextColor="#9EA0A4"
-              secureTextEntry={secureTextEntry}
-              editable={editable}
             />
             {!!rightIconProps && <Icon {...rightIconProps} />}
             {!!rightText && (
