@@ -43,10 +43,11 @@ const PostVideoListItem = ({
             username={username}
             checkmark={checkmark}
             postType={postType}
+            postId={id}
           />
         </View>
       </View>
-      {bookable && (
+      {bookable !== "none" && (
         <PostBookable
           product={product}
           isVisible={isVisible}

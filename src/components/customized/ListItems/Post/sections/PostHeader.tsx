@@ -1,13 +1,11 @@
 import { StyleSheet, Text, Pressable } from "react-native";
 import { memo, useMemo, useRef } from "react";
 import { Icon } from "@rneui/themed";
-import CustomAvatar from "../../../../core/Avatars/CustomAvatar";
-import { Checkmark, SheetModal } from "../../../../core";
-import Stack from "../../../../core/Stack/Stack";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { PostInfoSheet } from "../../../Sheets/PostInfoSheet";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { Checkmark, SheetModal, CustomAvatar, Stack } from "../../../../core";
+import { PostInfoSheet } from "../../../Sheets/PostInfoSheet";
 import { RootStackParams } from "../../../../../navigation/rootStackParams";
 import { useAuth, useDelete } from "../../../../../hooks";
 
@@ -42,7 +40,9 @@ const PostHeader = ({
 
   const { mutate } = useDelete({
     uri: `/users/${user?.id}/posts/${postId}`,
-    onSuccess: () => sheetRef.current?.close(),
+    onSuccess: () => {
+      sheetRef.current?.close();
+    },
   });
 
   return (
@@ -79,7 +79,7 @@ const PostHeader = ({
         snapPoints={snapPoints}
         animationConfig={{ duration: 150 }}
       >
-        <PostInfoSheet onDelete={() => mutate()} />
+        <PostInfoSheet onDelete={mutate} />
       </SheetModal>
     </>
   );

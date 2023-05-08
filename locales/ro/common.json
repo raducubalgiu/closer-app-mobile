@@ -517,5 +517,7 @@
   "yes": "Da",
   "no": "Nu",
   "setDuration": "Setează durata",
-  "slideForSelectSequenceDuration": "Glişează pentru a alege durata secvenţei. Secvenţa va începe după numărătoare inversă selectată"
+  "slideForSelectSequenceDuration": "Glişează pentru a alege durata secvenţei. Secvenţa va începe după numărătoare inversă selectată",
+  "address": "Adresă",
+  "employees": "Angajaţi"
 }

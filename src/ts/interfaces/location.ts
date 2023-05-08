@@ -3,7 +3,7 @@ import { Service } from "./service";
 import { User } from "./user";
 
 export interface Location {
-  id: number;
+  id: string;
   ownerId: User;
   address: {
     type: string;

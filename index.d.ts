@@ -20,3 +20,4 @@ declare module "@env" {
 
 declare module "*.png";
 declare module "*.jpg";
+declare module "expo-cached-image";

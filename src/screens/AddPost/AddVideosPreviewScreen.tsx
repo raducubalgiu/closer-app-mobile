@@ -1,16 +1,17 @@
 import {
   SafeAreaView,
   StyleSheet,
-  Image,
-  View,
   useWindowDimensions,
+  View,
 } from "react-native";
+import { useEffect, useRef } from "react";
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
+import { ResizeMode, Video } from "expo-av";
 import { Divider } from "@rneui/themed";
 import { RootStackParams } from "../../navigation/rootStackParams";
 import { Button, Stack } from "../../components/core";
@@ -18,18 +19,35 @@ import { CameraReusableIconButton } from "../../components/customized";
 
 type IProps = NativeStackScreenProps<RootStackParams, "AddPhotosPreview">;
 
-export const AddPhotosPreviewScreen = ({ route }: IProps) => {
+export const AddVideosPreviewScreen = ({ route }: IProps) => {
   const { uri } = route.params;
   const { t } = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { width } = useWindowDimensions();
+  const videoRef = useRef<Video>(null);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("blur", () => {
+      videoRef.current?.pauseAsync();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.container}>
-        <View style={styles.imageBox}>
-          <Image source={{ uri }} style={styles.image} resizeMode="contain" />
+        <View style={styles.videoBox}>
+          <Video
+            ref={videoRef}
+            source={{ uri }}
+            style={styles.video}
+            resizeMode={ResizeMode.CONTAIN}
+            shouldPlay={true}
+            isLooping={true}
+            isMuted={false}
+          />
           <View style={StyleSheet.absoluteFill}>
             <Stack direction="row" sx={{ paddingVertical: 10 }} align="start">
               <CameraReusableIconButton
@@ -91,15 +109,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-between",
   },
-  imageBox: {
+  videoBox: {
     width: "100%",
     height: "100%",
     flex: 1,
   },
-  image: {
+  video: {
     width: undefined,
     height: undefined,
     ...StyleSheet.absoluteFillObject,
+    flex: 1,
   },
   footer: {
     height: 80,

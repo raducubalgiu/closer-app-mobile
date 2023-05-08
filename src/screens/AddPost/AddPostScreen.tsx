@@ -4,39 +4,35 @@ import {
   StyleSheet,
   Image,
   View,
-  TextInput,
   Text,
   Pressable,
   useWindowDimensions,
 } from "react-native";
+import { useState } from "react";
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
+import { Divider, Icon } from "@rneui/themed";
+import { useTranslation } from "react-i18next";
+import { useNavigation } from "@react-navigation/native";
+import { isEmpty } from "lodash";
+import dayjs from "dayjs";
+import { RootStackParams } from "../../navigation/rootStackParams";
 import { Button, Header, Input, Stack } from "../../components/core";
 import {
   SettingsListItem,
   SettingsSwitchListItem,
 } from "../../components/customized";
-import {
-  NativeStackNavigationProp,
-  NativeStackScreenProps,
-} from "@react-navigation/native-stack";
-import { RootStackParams } from "../../navigation/rootStackParams";
-import { Divider, Icon } from "@rneui/themed";
-import { useTranslation } from "react-i18next";
-import { useNavigation } from "@react-navigation/native";
-import { isEmpty } from "lodash";
-import { useCallback, useState } from "react";
 import { useAuth } from "../../hooks";
-import dayjs from "dayjs";
-import theme from "../../../assets/styles/theme";
 
-const { black, primary, error } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "AddPost">;
 
 export const AddPostScreen = ({ route }: IProps) => {
   const { user } = useAuth();
-  const { photo, taggedUsers } = route.params;
+  const { uri, taggedUsers } = route.params;
   const [saveInPhone, setSaveInPhone] = useState(false);
   const [description, setDescription] = useState("");
-  const [height, setHeight] = useState<number>(100);
   const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -57,12 +53,13 @@ export const AddPostScreen = ({ route }: IProps) => {
     let formData: any = new FormData();
     formData.append("image", {
       name: formatFileName,
-      uri: photo.uri,
+      uri,
       type: "image/jpg",
     } as unknown as Blob);
 
     formData.append("userId", user?.id);
     formData.append("description", description);
+    formData.append("postType", "video");
 
     if (!isEmpty(taggedUsers)) {
       formData.append(
@@ -87,17 +84,6 @@ export const AddPostScreen = ({ route }: IProps) => {
     }
   };
 
-  const getColor = useCallback((description: string) => {
-    switch (description?.length) {
-      case 0:
-        return "#ddd";
-      case 200:
-        return error;
-      default:
-        return primary;
-    }
-  }, []);
-
   return (
     <SafeAreaView style={styles.screen}>
       <Header title={t("upload")} />
@@ -105,7 +91,7 @@ export const AddPostScreen = ({ route }: IProps) => {
         <ScrollView style={styles.content}>
           <Stack direction="row" align="start" sx={styles.description}>
             <View style={styles.imageBox}>
-              <Image source={{ uri: photo.uri }} style={styles.image} />
+              <Image source={{ uri }} style={styles.image} />
             </View>
             <View style={{ flex: 1, marginLeft: 10 }}>
               <Input
@@ -200,7 +186,7 @@ export const AddPostScreen = ({ route }: IProps) => {
             onValueChange={() => setSaveInPhone((saveInPhone) => !saveInPhone)}
           />
         </ScrollView>
-        <View>
+        <View style={{ borderTopWidth: 1, borderTopColor: "#eee" }}>
           <Button
             title={t("upload")}
             onPress={handlePost}

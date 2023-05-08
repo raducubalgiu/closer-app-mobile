@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { memo, useState } from "react";
+import { memo } from "react";
 import { Icon } from "@rneui/themed";
 import theme from "../../../../../assets/styles/theme";
 import { Stack, CustomAvatar } from "../../../core";

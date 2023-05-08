@@ -13,6 +13,7 @@ import {
   AddPhotosScreen,
   AddVideosScreen,
   AddPhotosPreviewScreen,
+  AddVideosPreviewScreen,
   AddPostScreen,
   AddScheduleScreen,
   ClearCacheScreen,
@@ -76,6 +77,7 @@ import {
   MessagesScreen,
   MessageNewScreen,
   MessagesSearchScreen,
+  MusicScreen,
   NotificationsScreen,
   ProductScreen,
   PrivacyScreen,
@@ -244,6 +246,14 @@ const AppNavigation = () => {
               component={MessagesSearchScreen}
               options={{ animation: "fade_from_bottom" }}
             />
+            <Stack.Screen
+              name="Music"
+              component={MusicScreen}
+              options={{
+                presentation: "modal",
+                gestureEnabled: false,
+              }}
+            />
             <Stack.Screen name="Settings" component={SettingsProfileScreen} />
             <Stack.Screen name="Account" component={AccountScreen} />
             <Stack.Screen name="AccountInfo" component={AccountInfoScreen} />
@@ -367,6 +377,11 @@ const AppNavigation = () => {
             <Stack.Screen
               name="AddPhotosPreview"
               component={AddPhotosPreviewScreen}
+              options={{ animation: "none" }}
+            />
+            <Stack.Screen
+              name="AddVideosPreview"
+              component={AddVideosPreviewScreen}
               options={{ animation: "none" }}
             />
             <Stack.Screen name="AddPost" component={AddPostScreen} />

@@ -85,6 +85,8 @@ export { HashtagPostsBookableTab } from "./Tabs/HashtagPostsTabs/HashtagPostsBoo
 export { ServicePostsPopularTab } from "./Tabs/ServicePostsTabs/ServicePostsPopularTab";
 export { ServicePostsLastMinuteTab } from "./Tabs/ServicePostsTabs/ServicePostsLastMinuteTab";
 export { ServicePostsRecentTab } from "./Tabs/ServicePostsTabs/ServicePostsRecentTab";
+export { LocationDetailsTab } from "./Tabs/LocationTabs/LocationDetailsTab";
+export { LocationPhotosTab } from "./Tabs/LocationTabs/LocationPhotosTab";
 
 export { CardRecommended } from "./ListItems/CardRecommended";
 export { CardHashtagOverview } from "./Cards/CardHashtagOverview";
@@ -135,6 +137,7 @@ export { FollowUserSheet } from "./Sheets/FollowUserSheet";
 export { PostOptionsSheet } from "./Sheets/PostOptionsSheet";
 export { ProfileMenuSheet } from "./Sheets/ProfileMenuSheet";
 export { StoryViewsSheet } from "./Sheets/StoryViewsSheet";
+export { CameraTimerSheet } from "./Sheets/CameraTimerSheet";
 
 export { FakeSearchBar } from "./FakeSearchBar/FakeSearchBar";
 export { FakeSearchBarServices } from "./FakeSearchBar/FakeSearchBarServices";

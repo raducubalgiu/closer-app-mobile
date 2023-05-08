@@ -39,7 +39,7 @@ export const CameraTimerIconButton = ({
             rotation="counterclockwise"
             strokeWidth={6}
             trailStrokeWidth={6}
-            size={120}
+            size={110}
             onComplete={onComplete}
             onUpdate={(remainingTime) =>
               onDisplayRecordingTime(duration - remainingTime)

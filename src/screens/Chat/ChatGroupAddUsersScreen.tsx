@@ -7,8 +7,9 @@ import {
   usePaginateActions,
   usePatch,
   useAuth,
+  useGet,
 } from "../../hooks";
-import { Header, SearchBarInput, Button } from "../../components/core";
+import { Header, SearchBarInput } from "../../components/core";
 import { User } from "../../ts";
 import { useTranslation } from "react-i18next";
 import UserListItemSelectable from "../../components/customized/ListItems/User/UserSelectableListItem";
@@ -21,6 +22,8 @@ import { FooterUserSelectable } from "../../components/customized";
 import { isEmpty, some } from "lodash";
 
 type IProps = NativeStackScreenProps<RootStackParams, "ChatGroupAddUsers">;
+
+type SearchResponse = { next: null | number; results: User[] };
 
 export const ChatGroupAddUsersScreen = ({ route }: IProps) => {
   const { user } = useAuth();
@@ -37,8 +40,14 @@ export const ChatGroupAddUsersScreen = ({ route }: IProps) => {
     limit: "20",
   });
 
-  const { refetch } = options;
+  const { data: searchedUsers } = useGet<SearchResponse>({
+    model: "search",
+    uri: `/users/search?search=${search}&page=1&limit=5`,
+    enableId: search,
+    options: { enabled: !isEmpty(search) },
+  });
 
+  const { refetch } = options;
   useRefreshOnFocus(refetch);
 
   const { data: users, loadMore, showSpinner } = usePaginateActions(options);
@@ -58,6 +67,8 @@ export const ChatGroupAddUsersScreen = ({ route }: IProps) => {
       } else {
         setSelectedUsers((selectedUsers) => selectedUsers.concat(user));
       }
+
+      Keyboard.dismiss();
     },
     [selectedUsers]
   );
@@ -93,7 +104,7 @@ export const ChatGroupAddUsersScreen = ({ route }: IProps) => {
         />
       </View>
       <FlashList
-        data={users}
+        data={isEmpty(search) ? users : searchedUsers?.results}
         keyExtractor={keyExtractor}
         renderItem={renderUser}
         contentContainerStyle={{ paddingTop: 15, paddingBottom: insets.bottom }}
@@ -101,6 +112,7 @@ export const ChatGroupAddUsersScreen = ({ route }: IProps) => {
         ListFooterComponent={showSpinner}
         estimatedItemSize={55}
         onMomentumScrollBegin={() => Keyboard.dismiss()}
+        keyboardShouldPersistTaps={"handled"}
       />
       {!isEmpty(selectedUsers) && (
         <FooterUserSelectable

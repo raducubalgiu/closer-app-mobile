@@ -1,7 +1,13 @@
-import { SafeAreaView, StyleSheet, View, Pressable } from "react-native";
-import { useRef, useState, useMemo } from "react";
-import { Icon, Divider } from "@rneui/themed";
+import { SafeAreaView, StyleSheet, View, Pressable, Text } from "react-native";
+import { useRef, useState, useMemo, useCallback } from "react";
+import { Divider } from "@rneui/themed";
 import { Camera, CameraType, FlashMode } from "expo-camera";
+import { useNavigation } from "@react-navigation/native";
+import * as ImagePicker from "expo-image-picker";
+import * as Animatable from "react-native-animatable";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Stack, SheetModal } from "../../components/core";
 import {
   PhotoLibraryButton,
@@ -9,18 +15,15 @@ import {
   RevertIconButton,
   CameraReusableIconButton,
   CameraTimerIconButton,
+  CameraTimerSheet,
 } from "../../components/customized";
-import CameraTimerSheet from "../../components/customized/Sheets/CameraTimerSheet";
-import { useNavigation } from "@react-navigation/native";
-import * as Haptics from "expo-haptics";
-import * as ImagePicker from "expo-image-picker";
-import { showToast } from "../../utils";
-import { useTranslation } from "react-i18next";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../navigation/rootStackParams";
-import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
 export const AddVideosScreen = () => {
+  const [displayButtons, setDisplayButtons] = useState(true);
+  const [showCounter, setShowCounter] = useState(false);
+  const [recording, setRecording] = useState(false);
+  const [videoSize, setVideoSize] = useState(15);
   const [cameraType, setCameraType] = useState(CameraType.back);
   const [flash, setFlash] = useState(FlashMode.off);
   const cameraRef = useRef<Camera>(null);
@@ -28,33 +31,49 @@ export const AddVideosScreen = () => {
   const snapPoints = useMemo(() => [200, 400], []);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const { t } = useTranslation();
-  const [recording, setRecording] = useState(false);
+  const insets = useSafeAreaInsets();
 
-  const handlePickImage = async () => {
+  const handlePickVideo = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Videos,
       allowsEditing: false,
-      aspect: [4, 3],
       quality: 1,
     });
 
-    let photo = result.assets ? result?.assets[0] : null;
+    let video = result.assets ? result?.assets[0] : null;
 
-    if (photo) {
-      navigation.push("AddPhotosPreview", { photo, resizeMode: "contain" });
+    if (video?.uri) {
+      navigation.push("AddVideosPreview", { uri: video.uri });
     }
   };
 
-  let handleStartRecording = async () => {
+  let handleStartRecording = useCallback(async () => {
+    setDisplayButtons((displayButtons) => !displayButtons);
     setRecording(true);
-  };
 
-  const handleRevertCamera = () => {
+    const record = await cameraRef.current?.recordAsync();
+    if (record) {
+      navigation.navigate("AddVideosPreview", {
+        uri: record.uri,
+      });
+    }
+  }, [displayButtons]);
+
+  const handleStopRecording = () => cameraRef.current?.stopRecording();
+
+  const handleRevertCamera = useCallback(() => {
     setCameraType((type) =>
       type === CameraType.back ? CameraType.front : CameraType.back
     );
-  };
+  }, [CameraType]);
+
+  const onFlash = useCallback(
+    () =>
+      setFlash((flash) =>
+        flash === FlashMode.off ? FlashMode.torch : FlashMode.off
+      ),
+    [FlashMode]
+  );
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -62,73 +81,112 @@ export const AddVideosScreen = () => {
         ref={cameraRef}
         type={cameraType}
         flashMode={flash}
-        style={{
-          flex: 1,
-          justifyContent: "space-between",
-          paddingVertical: 10,
-        }}
+        style={{ flex: 1 }}
       >
-        <Stack direction="row" align="start">
-          <Pressable
-            style={{ padding: 15 }}
-            onPress={() => navigation.goBack()}
-          >
-            <Icon name="close" type="antdesign" size={25} color="white" />
-          </Pressable>
-          <View>
-            {cameraType === CameraType.back && (
+        {displayButtons && (
+          <Animatable.View animation="fadeIn" style={styles.content}>
+            <Stack direction="row" align="start">
               <CameraReusableIconButton
-                name={flash === FlashMode.off ? "flash-off" : "flash"}
-                type="ionicon"
-                onPress={() =>
-                  setFlash((flash) =>
-                    flash === FlashMode.off ? FlashMode.torch : FlashMode.off
-                  )
-                }
+                name="close"
+                type="antdesign"
+                onPress={() => navigation.goBack()}
+                size={25}
               />
-            )}
-            <CameraReusableIconButton
-              name="timer"
-              type="material-community"
-              onPress={() => sheetRef.current?.present()}
-            />
-            <View style={{ alignItems: "center", paddingVertical: 5 }}>
-              <Divider style={{ width: 20 }} />
+              <Stack>
+                {cameraType === CameraType.back && (
+                  <CameraReusableIconButton
+                    name={flash === FlashMode.off ? "flash-off" : "flash"}
+                    type="ionicon"
+                    onPress={onFlash}
+                  />
+                )}
+                <CameraReusableIconButton
+                  name="timer"
+                  type="material-community"
+                  onPress={() => sheetRef.current?.present()}
+                />
+                <Divider style={{ width: 20, marginVertical: 7.5 }} />
+                <CameraReusableIconButton
+                  name="emoji-emotions"
+                  onPress={() => {}}
+                />
+                <CameraReusableIconButton
+                  name="color-filter"
+                  type="ionicon"
+                  onPress={() => {}}
+                />
+                <CameraReusableIconButton
+                  name="music-note"
+                  type="fontisto"
+                  onPress={() => {}}
+                />
+              </Stack>
+            </Stack>
+            <View style={[styles.footer, { marginBottom: insets.bottom }]}>
+              <Stack direction="row" sx={{ marginBottom: 30 }}>
+                {[15, 30, 60].map((sec, i) => (
+                  <Pressable key={i} onPress={() => setVideoSize(sec)}>
+                    <Animatable.View
+                      style={{
+                        backgroundColor:
+                          sec === videoSize ? "white" : "transparent",
+                        paddingVertical: 5,
+                        paddingHorizontal: 30,
+
+                        borderRadius: 25,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: sec === videoSize ? "black" : "white",
+                          fontWeight: "600",
+                        }}
+                      >
+                        {sec}s
+                      </Text>
+                    </Animatable.View>
+                  </Pressable>
+                ))}
+              </Stack>
+              <Stack direction="row" sx={{ width: "100%" }} justify="around">
+                <PhotoLibraryButton onPress={handlePickVideo} />
+                {!recording && (
+                  <CameraIconButton
+                    onPress={handleStartRecording}
+                    type="video"
+                  />
+                )}
+                <RevertIconButton onPress={handleRevertCamera} />
+              </Stack>
             </View>
-            <Pressable style={{ padding: 15 }} onPress={() => {}}>
-              <Icon
-                name="color-filter"
-                type="ionicon"
-                size={27.5}
-                color="white"
-              />
-            </Pressable>
-            <Pressable style={{ padding: 15 }} onPress={() => {}}>
-              <Icon
-                name="music-note"
-                type="fontisto"
-                size={27.5}
-                color="white"
-              />
-            </Pressable>
-          </View>
-        </Stack>
-        <View style={styles.footer}>
-          <Stack direction="row" sx={{ width: "100%" }} justify="around">
-            <PhotoLibraryButton onPress={handlePickImage} />
-            {!recording && (
-              <CameraIconButton onPress={handleStartRecording} type="video" />
-            )}
-            {recording && (
-              <CameraTimerIconButton
-                duration={15}
-                onPress={() => {}}
-                onComplete={() => {}}
-              />
-            )}
-            <RevertIconButton onPress={handleRevertCamera} />
-          </Stack>
-        </View>
+          </Animatable.View>
+        )}
+        {recording && (
+          <Animatable.View
+            animation="fadeIn"
+            style={{
+              bottom: insets.bottom,
+              position: "absolute",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+            }}
+          >
+            <CameraTimerIconButton
+              duration={videoSize}
+              onPress={() => {
+                setRecording(false);
+                setDisplayButtons(true);
+                handleStopRecording();
+              }}
+              onComplete={() => {
+                setRecording(false);
+                setDisplayButtons(true);
+                handleStopRecording();
+              }}
+            />
+          </Animatable.View>
+        )}
       </Camera>
       <SheetModal
         ref={sheetRef}
@@ -151,8 +209,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "black",
   },
+  content: {
+    flex: 1,
+    justifyContent: "space-between",
+    paddingVertical: 10,
+  },
   footer: {
-    height: 80,
     justifyContent: "center",
     alignItems: "center",
   },

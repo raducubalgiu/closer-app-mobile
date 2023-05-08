@@ -5,6 +5,7 @@ import {
   FlatList,
   Pressable,
   ListRenderItemInfo,
+  Keyboard,
 } from "react-native";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -29,9 +30,13 @@ import {
   useRefreshOnFocus,
 } from "../../hooks";
 import { Hashtag, User, SearchAll } from "../../ts";
+import { isEmpty } from "lodash";
 
 const { grey0, primary, black } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "SearchPosts">;
+
+type UserResponse = { next: number | null; results: User[] };
+type HashtagResponse = { next: number | null; results: Hashtag[] };
 
 export const SearchPostsScreen = ({ route }: IProps) => {
   const { user } = useAuth();
@@ -43,7 +48,7 @@ export const SearchPostsScreen = ({ route }: IProps) => {
 
   const isHashtag = search.startsWith("#");
 
-  const { data: users } = useGet({
+  const { data: users } = useGet<UserResponse>({
     model: "search",
     uri: `/users/search?search=${search}&page=1&limit=5`,
     enableId: search,
@@ -52,7 +57,7 @@ export const SearchPostsScreen = ({ route }: IProps) => {
     },
   });
 
-  const { data: hashtags } = useGet({
+  const { data: hashtags } = useGet<HashtagResponse>({
     model: "searchHashtags",
     uri: `/hashtags/search?search=${search?.split("#")[1]}&page=1&limit=5`,
     enableId: search,
@@ -61,7 +66,7 @@ export const SearchPostsScreen = ({ route }: IProps) => {
     },
   });
 
-  const { data: recents, refetch } = useGet({
+  const { data: recents, refetch } = useGet<any>({
     model: "recentSearch",
     uri: `/users/${user?.id}/searches?page=1&limit=10`,
   });
@@ -81,7 +86,7 @@ export const SearchPostsScreen = ({ route }: IProps) => {
         id,
         name,
         username,
-        avatar: !!avatar ? avatar[0]?.url : [],
+        avatar: !!avatar ? avatar.url : [],
         checkmark,
       },
     });
@@ -210,7 +215,7 @@ export const SearchPostsScreen = ({ route }: IProps) => {
           <Text style={styles.cancelBtnText}>{t("search")}</Text>
         </Pressable>
       </Stack>
-      {search?.length > 0 && (
+      {!isEmpty(search) && (
         <FlatList
           data={isHashtag ? hashtags?.results : users?.results}
           keyExtractor={(item) => item.id}
@@ -219,9 +224,10 @@ export const SearchPostsScreen = ({ route }: IProps) => {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingHorizontal: 15, marginTop: 10 }}
           ListFooterComponent={footer}
+          onMomentumScrollBegin={() => Keyboard.dismiss()}
         />
       )}
-      {search?.length === 0 && (
+      {isEmpty(search) && (
         <FlatList
           ListHeaderComponent={header}
           data={recents?.results}
@@ -230,6 +236,7 @@ export const SearchPostsScreen = ({ route }: IProps) => {
           keyboardShouldPersistTaps={"handled"}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingHorizontal: 15 }}
+          onMomentumScrollBegin={() => Keyboard.dismiss()}
         />
       )}
     </SafeAreaView>

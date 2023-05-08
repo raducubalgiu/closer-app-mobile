@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   heading: {
     color: black,
     fontWeight: "600",
-    fontSize: 15,
+    fontSize: 16,
     marginTop: 15,
     marginBottom: 10,
   },

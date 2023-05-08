@@ -3,6 +3,9 @@ import { useCallback, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { useTranslation } from "react-i18next";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { isEmpty, some } from "lodash";
 import { Header, SearchBarInput } from "../../../components/core";
 import {
   FooterUserSelectable,
@@ -14,12 +17,12 @@ import {
   usePaginateActions,
   useRefreshOnFocus,
   usePost,
+  useGet,
 } from "../../../hooks";
 import { User } from "../../../ts";
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/rootStackParams";
-import { isEmpty, some } from "lodash";
+
+type SearchResponse = { next: null | number; results: User[] };
 
 export const MessageNewScreen = () => {
   const { user } = useAuth();
@@ -30,14 +33,17 @@ export const MessageNewScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
-  const updateSearch = (text: string) => {
-    setSearch(text);
-  };
-
   const options = useGetPaginate({
     model: "users",
     uri: `/users/suggested`,
     limit: "20",
+  });
+
+  const { data: searchedUsers } = useGet<SearchResponse>({
+    model: "search",
+    uri: `/users/search?search=${search}&page=1&limit=5`,
+    enableId: search,
+    options: { enabled: !isEmpty(search) },
   });
 
   const { refetch } = options;
@@ -56,6 +62,8 @@ export const MessageNewScreen = () => {
       } else {
         setSelectedUsers((selectedUsers) => selectedUsers.concat(user));
       }
+
+      Keyboard.dismiss();
     },
     [selectedUsers]
   );
@@ -95,12 +103,12 @@ export const MessageNewScreen = () => {
         <SearchBarInput
           placeholder={t("search")}
           value={search}
-          onChangeText={updateSearch}
+          onChangeText={(text) => setSearch(text)}
           showCancel={false}
         />
       </View>
       <FlashList
-        data={users}
+        data={isEmpty(search) ? users : searchedUsers?.results}
         keyExtractor={keyExtractor}
         renderItem={renderUser}
         contentContainerStyle={{ paddingTop: 15, paddingBottom: insets.bottom }}
@@ -108,6 +116,7 @@ export const MessageNewScreen = () => {
         ListFooterComponent={showSpinner}
         estimatedItemSize={55}
         onMomentumScrollBegin={() => Keyboard.dismiss()}
+        keyboardShouldPersistTaps={"handled"}
       />
       {!isEmpty(selectedUsers) && (
         <FooterUserSelectable

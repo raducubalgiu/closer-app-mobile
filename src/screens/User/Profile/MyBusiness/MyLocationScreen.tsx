@@ -1,39 +1,23 @@
-import { Divider } from "@rneui/themed";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import { useTranslation } from "react-i18next";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { Header } from "../../../../components/core";
 import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  ScrollView,
-  View,
-  useWindowDimensions,
-} from "react-native";
-import {
-  Header,
-  Heading,
-  IconButtonEdit,
-  SheetModal,
-  Stack,
-} from "../../../../components/core";
-import MapStatic from "../../../../components/customized/Map/MapStatic";
-import theme from "../../../../../assets/styles/theme";
+  TopTabContainer,
+  LocationDetailsTab,
+  LocationPhotosTab,
+} from "../../../../components/customized";
 import { useAuth, useGet } from "../../../../hooks";
-import { AddressFormat, showToast } from "../../../../utils";
-import { useMemo, useRef } from "react";
-import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import SheetMap from "../../../../components/customized/Sheets/SheetMap";
-
-const { grey0 } = theme.lightColors || {};
+import { showToast } from "../../../../utils";
+import { useCallback } from "react";
+import { Location } from "../../../../ts";
 
 export const MyLocationScreen = () => {
-  const { width, height } = useWindowDimensions();
-  const SHEET_HEIGHT = height / 1.2;
   const { user } = useAuth();
   const { t } = useTranslation("common");
-  const sheetRef = useRef<BottomSheetModal>(null);
-  const snapPoints = useMemo(() => [1, SHEET_HEIGHT], []);
+  const Tab = createMaterialTopTabNavigator();
 
-  const { data } = useGet({
+  const { data: location, isInitialLoading } = useGet<Location>({
     model: "myLocation",
     uri: `/users/${user?.id}/locations/${user?.locationId}`,
     options: {
@@ -41,47 +25,42 @@ export const MyLocationScreen = () => {
     },
   });
 
-  const { coordinates } = data?.address || {};
+  const LocationDetails = useCallback(
+    () => <LocationDetailsTab location={location} loading={isInitialLoading} />,
+    [location]
+  );
+
+  const LocationPhotos = useCallback(
+    () => (
+      <LocationPhotosTab
+        imageCover={location?.imageCover}
+        locationId={location?.id}
+      />
+    ),
+    [location?.imageCover, location?.id]
+  );
 
   return (
-    <SafeAreaView style={styles.screen}>
-      <Header
-        title={t("myLocation")}
-        actionBtn={<IconButtonEdit onPress={() => {}} />}
-      />
-      <Stack sx={{ flex: 1 }}>
-        <View style={{ flex: 1, width: "100%" }}>
-          <ScrollView>
-            <MapStatic
-              longitude={coordinates[1]}
-              latitude={coordinates[0]}
-              onOpenModal={() => sheetRef.current?.present()}
-            />
-            <View style={{ marginHorizontal: 15 }}>
-              <Heading title="Adresa" sx={{ fontSize: 15 }} />
-              <Text style={{ color: grey0, fontSize: 15 }}>
-                {AddressFormat(data.address)}
-              </Text>
-              <Divider style={{ marginVertical: 15 }} />
-            </View>
-          </ScrollView>
-        </View>
-      </Stack>
-      <SheetModal
-        snapPoints={snapPoints}
-        ref={sheetRef}
-        showIndicator={false}
-        enableContentPanningGesture={false}
+    <View style={styles.screen}>
+      <SafeAreaView>
+        <Header title="" />
+      </SafeAreaView>
+      <TopTabContainer
+        initialRouteName="LocationDetails"
+        options={{ swipeEnabled: false }}
       >
-        <SheetMap
-          latitude={coordinates[0]}
-          longitude={coordinates[1]}
-          height={SHEET_HEIGHT}
-          width={width}
-          onClose={() => sheetRef.current?.close()}
+        <Tab.Screen
+          name="LocationDetails"
+          component={LocationDetails}
+          options={{ tabBarLabel: t("myLocation") }}
         />
-      </SheetModal>
-    </SafeAreaView>
+        <Tab.Screen
+          name="LocationPhotos"
+          component={LocationPhotos}
+          options={{ tabBarLabel: "Imaginea de fundal" }}
+        />
+      </TopTabContainer>
+    </View>
   );
 };
 

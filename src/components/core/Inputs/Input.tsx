@@ -8,7 +8,7 @@ import {
 import Stack from "../Stack/Stack";
 import theme from "../../../../assets/styles/theme";
 
-const { grey0, error, black } = theme.lightColors || {};
+const { grey0, error, black, primary } = theme.lightColors || {};
 
 type IProps = TextInputProps & {
   height?: number;

@@ -36,7 +36,7 @@ export const CardRecommended = ({ location, index }: IProps) => {
         source={{ uri: imageCover?.url }}
         style={{
           height:
-            imageCover?.orientation === "portrait" ? width / 2 : width / 3,
+            imageCover?.orientation === "portrait" ? width / 2.5 : width / 4,
           ...styles.image,
         }}
       />
@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     width: undefined,
     backgroundColor: "#f1f1f1",
     borderRadius: 1,
+    resizeMode: "cover",
   },
   item: {
     borderRadius: 5,

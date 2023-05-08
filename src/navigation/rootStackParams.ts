@@ -36,8 +36,9 @@ export type RootStackParams = {
   AddProgram: any;
   AddPhotos: any;
   AddVideos: any;
-  AddPhotosPreview: { photo: any; resizeMode: ImageResizeMode | ResizeMode };
-  AddPost: { photo?: any; taggedUsers: User[] };
+  AddPhotosPreview: { uri: string };
+  AddVideosPreview: { uri: string };
+  AddPost: { uri?: string; taggedUsers: User[] };
   AddSchedule: { start: string; end: string };
   Auth: any;
   Bookmarks: { user: any };
@@ -131,6 +132,7 @@ export type RootStackParams = {
   Messages: { chat: Chat };
   MessageNew: any;
   MessagesSearch: any;
+  Music: any;
   Notifications: any;
   Privacy: any;
   PrivacyComments: any;

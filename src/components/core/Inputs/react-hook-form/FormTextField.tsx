@@ -8,8 +8,8 @@ import {
 import { useFormContext, Controller } from "react-hook-form";
 import { has, get, isEmpty } from "lodash";
 import { Icon } from "@rneui/themed";
-import theme from "../../../../assets/styles/theme";
-import Stack from "../Stack/Stack";
+import theme from "../../../../../assets/styles/theme";
+import Stack from "../../Stack/Stack";
 
 const { error, black } = theme.lightColors || {};
 

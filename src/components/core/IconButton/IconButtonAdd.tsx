@@ -4,7 +4,7 @@ import { Icon } from "@rneui/themed";
 import theme from "../../../../assets/styles/theme";
 
 const { primary } = theme.lightColors || {};
-type Props = { onPress: () => void; sx?: {}; disabled: boolean };
+type Props = { onPress: () => void; sx?: {}; disabled?: boolean };
 
 export const IconButtonAdd = ({
   onPress,
@@ -33,7 +33,7 @@ export const IconButtonAdd = ({
     <Pressable onPress={handlePress} style={sx} disabled={disabled}>
       <Animated.View style={[{ transform: [{ scale: animatedScale }] }]}>
         <Icon
-          name="pluscircle"
+          name="plussquare"
           type="antdesign"
           color={!disabled ? primary : "#ddd"}
           size={30}
