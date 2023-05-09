@@ -200,11 +200,7 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
         isPrivate={isPrivate}
         isBlocked={isBlocked}
       />
-      <SheetModal
-        snapPoints={snapPoints}
-        ref={settingsRef}
-        animationConfig={{ duration: 150 }}
-      >
+      <SheetModal snapPoints={snapPoints} ref={settingsRef}>
         <ProfileSettingsSheet
           onHandleBlock={onHandleBlock}
           onReport={() => {
@@ -214,11 +210,7 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
           isBlocked={isBlocked}
         />
       </SheetModal>
-      <SheetModal
-        snapPoints={snapPoints}
-        ref={blockRef}
-        animationConfig={{ duration: 150 }}
-      >
+      <SheetModal snapPoints={snapPoints} ref={blockRef}>
         <BlockUserSheet
           username={username}
           onBlock={handleBlock}

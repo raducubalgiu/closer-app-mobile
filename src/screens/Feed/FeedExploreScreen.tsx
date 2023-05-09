@@ -85,6 +85,7 @@ export const FeedExploreScreen = () => {
               isLiked={item?.isLiked}
               isBookmarked={item?.isBookmarked}
               isVisible={visibleItem?.post.id === item.post.id}
+              onDelete={refetch}
             />
           );
         case "video":

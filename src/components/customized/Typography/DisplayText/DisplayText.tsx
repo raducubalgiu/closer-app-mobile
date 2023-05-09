@@ -34,11 +34,7 @@ const DisplayText = ({
 
   const goToUser = (uName: string) => {
     navigation.push("ProfileGeneral", {
-      userId: "",
       username: uName,
-      avatar: null,
-      name: "",
-      checkmark: false,
       service: null,
       option: null,
     });

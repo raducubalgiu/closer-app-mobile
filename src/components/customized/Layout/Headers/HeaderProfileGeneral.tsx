@@ -74,7 +74,6 @@ export const HeaderProfileGeneral = ({
       <SheetModal
         snapPoints={snapPoints}
         ref={sheetRef}
-        animationConfig={{ duration: 300 }}
         showIndicator={false}
         enableContentPanningGesture={false}
       >

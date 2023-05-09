@@ -8,3 +8,4 @@ export { displayNothing } from "./display-nothing";
 export { showToast } from "./showToast";
 export { numberWithComma } from "./numberWithComma";
 export { isSame } from "./isSame";
+export { setFileName } from "./set-file-name";

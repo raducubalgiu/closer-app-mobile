@@ -1,5 +1,5 @@
 import { StyleSheet, Text } from "react-native";
-import { Icon } from "@rneui/themed";
+import { Icon, IconProps } from "@rneui/themed";
 import { ListItem, Stack } from "../../core";
 import theme from "../../../../assets/styles/theme";
 
@@ -11,24 +11,9 @@ type IProps = {
   sxTitle?: {};
   description?: string;
   sxDescription?: {};
-  defaultLeftIconProps?: {
-    name: string;
-    type: string;
-    size: number;
-    color: string;
-  };
-  defaultRightIconProps?: {
-    name: string;
-    type: string;
-    size: number;
-    color: string;
-  };
-  iconLeftProps?: {
-    name: string;
-    type?: string;
-    size?: number;
-    color?: string;
-  };
+  defaultLeftIconProps?: IconProps;
+  defaultRightIconProps?: IconProps;
+  iconLeftProps?: IconProps;
   iconRightProps?: {
     name?: string;
     type?: string;
@@ -104,7 +89,7 @@ const styles = StyleSheet.create({
   title: {
     color: black,
     fontWeight: "600",
-    fontSize: 16,
+    fontSize: 15.5,
   },
   description: {
     color: grey0,

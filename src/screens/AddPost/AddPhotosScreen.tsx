@@ -7,7 +7,7 @@ import * as ImagePicker from "expo-image-picker";
 import { Camera, CameraType, FlashMode } from "expo-camera";
 import { useTranslation } from "react-i18next";
 import { RootStackParams } from "../../navigation/rootStackParams";
-import { Stack, SheetModal, Button } from "../../components/core";
+import { Stack, SheetModal } from "../../components/core";
 import {
   CameraIconButton,
   RevertIconButton,
@@ -143,7 +143,6 @@ export const AddPhotosScreen = () => {
       <SheetModal
         ref={sheetRef}
         snapPoints={snapPoints}
-        animationConfig={{ duration: 150 }}
         showIndicator={false}
         enableContentPanningGesture={false}
       >

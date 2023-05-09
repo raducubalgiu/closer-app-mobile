@@ -5,29 +5,23 @@ import {
   BottomSheetModal,
   BottomSheetModalProvider,
   BottomSheetBackdrop,
+  BottomSheetModalProps,
+  useBottomSheetTimingConfigs,
 } from "@gorhom/bottom-sheet";
 
-const defAnimation = { duration: 400 };
-
-type IProps = {
+type IProps = BottomSheetModalProps & {
   children: React.ReactNode;
-  snapPoints: string[] | number[];
-  animationConfig?: any;
   showIndicator?: boolean;
-  enableContentPanningGesture?: boolean;
+  duration?: number;
 };
 
 const SheetModal = forwardRef(
   (
-    {
-      children,
-      snapPoints,
-      enableContentPanningGesture = true,
-      showIndicator = true,
-      animationConfig = defAnimation,
-    }: IProps,
+    { children, showIndicator = true, duration = 150, ...props }: IProps,
     ref: any
   ) => {
+    const animationConfigs = useBottomSheetTimingConfigs({ duration });
+
     const renderBackdrop = useCallback(
       (props: any) => (
         <BottomSheetBackdrop
@@ -58,15 +52,14 @@ const SheetModal = forwardRef(
       <Portal>
         <BottomSheetModalProvider>
           <BottomSheetModal
+            {...props}
             ref={ref}
             index={1}
-            snapPoints={snapPoints}
             backdropComponent={renderBackdrop}
             handleIndicatorStyle={styles.indicatorStyle}
             onChange={handleSheetChange}
-            animationConfigs={animationConfig}
-            enableContentPanningGesture={enableContentPanningGesture}
             handleStyle={{ padding: showIndicator ? 10 : 0 }}
+            animationConfigs={animationConfigs}
           >
             {children}
           </BottomSheetModal>

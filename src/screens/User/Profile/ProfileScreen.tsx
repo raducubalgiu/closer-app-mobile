@@ -49,18 +49,10 @@ const ProfileScreen = () => {
         onOpenPostOptions={() => addPostRef.current?.present()}
       />
       <Profile user={user} profileActions={profileActions} />
-      <SheetModal
-        ref={settingsRef}
-        snapPoints={snapPoints}
-        animationConfig={{ duration: 150 }}
-      >
+      <SheetModal ref={settingsRef} snapPoints={snapPoints}>
         <ProfileMenuSheet onCloseSheet={() => settingsRef.current?.close()} />
       </SheetModal>
-      <SheetModal
-        ref={addPostRef}
-        snapPoints={snapPoints}
-        animationConfig={{ duration: 150 }}
-      >
+      <SheetModal ref={addPostRef} snapPoints={snapPoints}>
         <PostOptionsSheet
           onNavigateToAddImage={() => {
             addPostRef.current?.close();

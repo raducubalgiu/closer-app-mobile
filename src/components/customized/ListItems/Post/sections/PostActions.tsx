@@ -122,7 +122,6 @@ const PostActions = ({
       <SheetModal
         ref={sheetRef}
         snapPoints={snapPoints}
-        animationConfig={{ duration: 150 }}
         showIndicator={false}
         enableContentPanningGesture={false}
       >

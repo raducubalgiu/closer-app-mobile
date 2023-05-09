@@ -264,7 +264,7 @@ export const MessagesScreen = ({ route }: IProps) => {
       <SheetModal
         ref={sheetRef}
         snapPoints={snapPoints}
-        animationConfig={{ duration: 300 }}
+        duration={300}
         showIndicator={false}
       >
         <MediaLibrarySheet

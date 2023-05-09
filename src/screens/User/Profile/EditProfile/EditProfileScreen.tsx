@@ -111,11 +111,7 @@ export const EditProfileScreen = () => {
           </View>
         </ScrollView>
       </SafeAreaView>
-      <SheetModal
-        ref={sheetRef}
-        snapPoints={snapPoints}
-        animationConfig={{ duration: 150 }}
-      >
+      <SheetModal ref={sheetRef} snapPoints={snapPoints}>
         <EditProfileSheet onCloseSheet={() => sheetRef.current?.close()} />
       </SheetModal>
     </>

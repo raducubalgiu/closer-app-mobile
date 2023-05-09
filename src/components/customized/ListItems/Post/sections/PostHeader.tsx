@@ -1,20 +1,17 @@
 import { StyleSheet, Text, Pressable } from "react-native";
-import { memo, useMemo, useRef } from "react";
+import { memo } from "react";
 import { Icon } from "@rneui/themed";
-import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { Checkmark, SheetModal, CustomAvatar, Stack } from "../../../../core";
-import { PostInfoSheet } from "../../../Sheets/PostInfoSheet";
+import { Checkmark, CustomAvatar, Stack } from "../../../../core";
 import { RootStackParams } from "../../../../../navigation/rootStackParams";
-import { useAuth, useDelete } from "../../../../../hooks";
 
 type IProps = {
   avatar: any;
   username: string;
   checkmark: boolean;
   postType: string;
-  postId: string;
+  onOpenSheet: () => void;
 };
 
 const PostHeader = ({
@@ -22,11 +19,8 @@ const PostHeader = ({
   username,
   checkmark,
   postType,
-  postId,
+  onOpenSheet,
 }: IProps) => {
-  const { user } = useAuth();
-  const sheetRef = useRef<BottomSheetModal>(null);
-  const snapPoints = useMemo(() => [1, 250], []);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
@@ -38,50 +32,31 @@ const PostHeader = ({
     });
   };
 
-  const { mutate } = useDelete({
-    uri: `/users/${user?.id}/posts/${postId}`,
-    onSuccess: () => {
-      sheetRef.current?.close();
-    },
-  });
-
   return (
-    <>
-      <Stack direction="row">
-        <Pressable onPress={onGoToUser}>
-          <Stack direction="row" sx={styles.header}>
-            <CustomAvatar avatar={avatar} size={32.5} />
-            <Text
-              style={{
-                ...styles.username,
-                color: postType === "photo" ? "black" : "white",
-              }}
-            >
-              @{username}
-            </Text>
-            {checkmark && <Checkmark size={7.5} sx={{ marginLeft: 5 }} />}
-          </Stack>
-        </Pressable>
-        <Pressable
-          style={styles.icon}
-          onPress={() => sheetRef.current?.present()}
-        >
-          <Icon
-            name="more-horizontal"
-            type="feather"
-            size={20}
-            color={postType === "photo" ? "black" : "white"}
-          />
-        </Pressable>
-      </Stack>
-      <SheetModal
-        ref={sheetRef}
-        snapPoints={snapPoints}
-        animationConfig={{ duration: 150 }}
-      >
-        <PostInfoSheet onDelete={mutate} />
-      </SheetModal>
-    </>
+    <Stack direction="row">
+      <Pressable onPress={onGoToUser}>
+        <Stack direction="row" sx={styles.header}>
+          <CustomAvatar avatar={avatar} size={32.5} />
+          <Text
+            style={{
+              ...styles.username,
+              color: postType === "photo" ? "black" : "white",
+            }}
+          >
+            @{username}
+          </Text>
+          {checkmark && <Checkmark size={7.5} sx={{ marginLeft: 5 }} />}
+        </Stack>
+      </Pressable>
+      <Pressable style={styles.icon} onPress={onOpenSheet}>
+        <Icon
+          name="more-horizontal"
+          type="feather"
+          size={20}
+          color={postType === "photo" ? "black" : "white"}
+        />
+      </Pressable>
+    </Stack>
   );
 };
 
