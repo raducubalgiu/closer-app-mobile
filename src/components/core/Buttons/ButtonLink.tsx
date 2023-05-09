@@ -1,8 +1,16 @@
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  TouchableOpacityProps,
+} from "react-native";
 
-type Props = { onPress: () => void; word: string; color?: any };
+type Props = TouchableOpacityProps & {
+  word: string;
+  color?: any;
+};
 
-export const ButtonLink = ({ onPress, word, color }: Props) => {
+export const ButtonLink = ({ onPress, word, color, ...props }: Props) => {
   const styles = StyleSheet.create({
     link: {
       color: color ? color : "#002266",
@@ -11,7 +19,7 @@ export const ButtonLink = ({ onPress, word, color }: Props) => {
   });
 
   return (
-    <TouchableOpacity activeOpacity={1} onPress={onPress}>
+    <TouchableOpacity activeOpacity={1} {...props}>
       <Text style={styles.link}>{word}</Text>
     </TouchableOpacity>
   );

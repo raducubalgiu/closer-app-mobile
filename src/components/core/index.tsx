@@ -57,7 +57,7 @@ export { FormTextField } from "./Inputs/react-hook-form/FormTextField";
 
 export { Protected } from "./Protected/Protected";
 
-export { CModal } from "./CModal/CModal";
+export { CModal } from "./Modal/CModal";
 
 export { Heading } from "./Heading/Heading";
 export { HeadingWithAction } from "./Heading/HeadingWithAction";

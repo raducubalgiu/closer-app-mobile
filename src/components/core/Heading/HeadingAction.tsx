@@ -1,4 +1,4 @@
-import { StyleSheet, Text, Pressable } from "react-native";
+import { StyleSheet, Text, Pressable, ViewStyle } from "react-native";
 import { Icon } from "@rneui/themed";
 import Stack from "../Stack/Stack";
 import theme from "../../../../assets/styles/theme";
@@ -6,13 +6,13 @@ import { useTranslation } from "react-i18next";
 import { memo } from "react";
 
 const { black } = theme.lightColors || {};
-type IProps = { title: string; onPress: () => void; sx?: {} };
+type IProps = { title: string; onPress: () => void; sx?: ViewStyle };
 
 const HeadingAction = ({ title, onPress, sx }: IProps) => {
   const { t } = useTranslation("common");
 
   return (
-    <Stack direction="row" sx={{ ...styles.container, ...sx }}>
+    <Stack direction="row" sx={[styles.container, sx]}>
       <Text style={styles.title}>{title}</Text>
       <Pressable onPress={onPress}>
         <Stack direction="row" sx={styles.actionBtnContainer}>

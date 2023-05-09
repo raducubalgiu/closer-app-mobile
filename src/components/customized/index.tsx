@@ -126,7 +126,6 @@ export { LoginRegisterForm } from "./Forms/LoginRegisterForm";
 export { AuthProviders } from "./Forms/AuthProviders";
 
 export { PickerHoursModal } from "./Modals/PickerHoursModal";
-export { AddScheduleModal } from "./Modals/AddScheduleModal";
 
 export { EditProfileSheet } from "./Sheets/EditProfileSheet";
 export { DashboardInfoSheet } from "./Sheets/DashboardInfoSheet";

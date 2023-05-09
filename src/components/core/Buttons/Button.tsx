@@ -1,20 +1,24 @@
-import { ActivityIndicator, Pressable, StyleSheet, Text } from "react-native";
+import {
+  ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  Text,
+  PressableProps,
+} from "react-native";
 import theme from "../../../../assets/styles/theme";
 
 const { primary, black, grey0 } = theme.lightColors || {};
 
-type Props = {
+type Props = PressableProps & {
   variant?: string;
-  size?: string;
   loading?: boolean;
-  disabled?: boolean;
+  size?: string;
   sxBtn?: {};
   sxText?: {};
   radius?: number | undefined;
   bgColor?: string | undefined;
   color?: string | undefined;
   title: string;
-  onPress: () => void;
 };
 
 interface StyleBtn {
@@ -27,17 +31,17 @@ interface StyleBtnText {
 
 export const Button = ({
   variant = "contained",
+  loading,
   size = "md",
-  loading = false,
-  disabled = false,
   sxBtn = {},
   sxText = {},
   radius = undefined,
   bgColor = undefined,
   color = undefined,
   title = "",
-  onPress,
+  ...props
 }: Props) => {
+  const { disabled } = props;
   let styleBtn: StyleBtn;
   let styleBtnTxt: StyleBtnText;
   let sizes = {};
@@ -101,8 +105,8 @@ export const Button = ({
 
   return (
     <Pressable
+      {...props}
       style={styles.container}
-      onPress={onPress}
       disabled={loading || disabled ? true : false}
     >
       {loading ? (

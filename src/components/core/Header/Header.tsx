@@ -1,9 +1,8 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, View, Pressable } from "react-native";
 import { Icon, Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../../assets/styles/theme";
 import Stack from "../Stack/Stack";
-import { IconBackButton } from "../IconButton/IconBackButton";
 
 const { black, grey0 } = theme.lightColors || {};
 
@@ -25,14 +24,17 @@ export const Header = ({
   sx,
 }: IProps) => {
   const navigation = useNavigation();
-  const handleBack = () => navigation.goBack();
 
   return (
     <View style={[styles.container, sx]}>
       <Stack direction="row">
-        <TouchableOpacity onPress={handleBack}>
-          <IconBackButton color={!hideBtnLeft ? black : "white"} />
-        </TouchableOpacity>
+        <Pressable onPress={() => navigation.goBack()} style={{ padding: 5 }}>
+          <Icon
+            name="arrow-back-ios"
+            size={21}
+            color={!hideBtnLeft ? black : "white"}
+          />
+        </Pressable>
         <Stack>
           <Text style={styles.title}>{title}</Text>
           {subtitle?.length > 0 && (

@@ -1,10 +1,12 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, TextStyle } from "react-native";
 import theme from "../../../../assets/styles/theme";
 
 const { black } = theme.lightColors || {};
 
-export const Heading = ({ sx = {}, title = "" }) => {
-  return <Text style={{ ...styles.heading, ...sx }}>{title}</Text>;
+type IProps = { title: string; sx?: TextStyle };
+
+export const Heading = ({ title = "", sx }: IProps) => {
+  return <Text style={[styles.heading, sx]}>{title}</Text>;
 };
 
 const styles = StyleSheet.create({
