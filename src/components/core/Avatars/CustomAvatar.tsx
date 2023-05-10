@@ -1,4 +1,4 @@
-import { Avatar } from "@rneui/themed";
+import { Image, ImageStyle } from "react-native";
 import { memo } from "react";
 import NoAvatar from "../../../../assets/images/avatar.jpg";
 import { StyleSheet } from "react-native";
@@ -7,34 +7,28 @@ type Props = {
   avatar: any;
   size?: number;
   hasStories?: boolean;
-  sx?: {};
+  sx?: ImageStyle;
 };
 
-const CustomAvatar = ({
-  avatar,
-  size = 55,
-  hasStories = false,
-  sx = {},
-}: Props) => {
+const CustomAvatar = ({ avatar, size = 55, sx }: Props) => {
+  const styles = StyleSheet.create({
+    image: {
+      width: size,
+      height: size,
+      borderRadius: size / 2,
+      borderWidth: 1,
+      borderColor: "#ddd",
+      backgroundColor: "#eee",
+    },
+  });
+
   return (
-    <Avatar
-      rounded
-      size={size}
+    <Image
       source={avatar?.url ? { uri: avatar?.url } : NoAvatar}
-      avatarStyle={{ resizeMode: "cover" }}
-      containerStyle={{
-        ...styles.container,
-        margin: hasStories ? 1.5 : 0,
-        ...sx,
-      }}
-      overlayContainerStyle={styles.overlay}
+      style={[styles.image, sx]}
+      resizeMode="cover"
     />
   );
 };
 
 export default memo(CustomAvatar);
-
-const styles = StyleSheet.create({
-  container: { borderWidth: 1, borderColor: "#ddd" },
-  overlay: { backgroundColor: "#eee" },
-});

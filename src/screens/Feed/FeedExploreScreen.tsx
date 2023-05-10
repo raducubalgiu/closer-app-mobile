@@ -27,6 +27,7 @@ import {
   useGetPaginate,
   usePaginateActions,
 } from "../../hooks";
+import { Video } from "expo-av";
 
 type PostListItem = {
   id: string;
@@ -39,6 +40,7 @@ type PostsResponse = { next: number | null; results: PostListItem[] | [] };
 export const FeedExploreScreen = () => {
   const { user } = useAuth();
   const ref = useRef<any>(null);
+  const videoRef = useRef<Video>(null);
   const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -95,6 +97,7 @@ export const FeedExploreScreen = () => {
               isLiked={item?.isLiked}
               isBookmarked={item?.isBookmarked}
               isVisible={visibleItem?.post.id === item.post.id}
+              onDelete={refetch}
             />
           );
         default:

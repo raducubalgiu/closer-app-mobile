@@ -20,6 +20,7 @@ import {
 import { User, ViewFollowingsListEnum } from "../../../../ts";
 import { SearchBarInput, Spinner } from "../../../core";
 import { isEmpty } from "lodash";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type IProps = { userId: string; settings: any };
 type UserListItem = { id: string; user: User; isFollow: boolean };
@@ -29,7 +30,9 @@ export const FollowingsTab = ({ userId, settings }: IProps) => {
   const { user } = useAuth();
   const [search, setSearch] = useState("");
   const isFocused = useIsFocused();
+  const insets = useSafeAreaInsets();
   const { t } = useTranslation("common");
+
   const options = useGetPaginate({
     model: "followings",
     uri: `/users/${userId}/followings`,
@@ -105,7 +108,7 @@ export const FollowingsTab = ({ userId, settings }: IProps) => {
         <FlatList
           ListHeaderComponent={header}
           refreshControl={refreshControl}
-          contentContainerStyle={{ paddingBottom: 15 }}
+          contentContainerStyle={{ marginBottom: insets.bottom }}
           data={isEmpty(search) ? followings : searchedUsers?.results}
           keyExtractor={keyExtractor}
           renderItem={renderPerson}

@@ -1,7 +1,7 @@
-import { memo, useContext } from "react";
+import { memo } from "react";
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { MAIN_ROLE, SECOND_ROLE, THIRD_ROLE } from "@env";
+import { MAIN_ROLE, SECOND_ROLE } from "@env";
 import { useTranslation } from "react-i18next";
 import theme from "../../../../assets/styles/theme";
 import { Stack, IconStar, Protected } from "../../core";
@@ -15,7 +15,7 @@ import { useAuth } from "../../../hooks";
 import { Divider } from "@rneui/themed";
 import { ViewFollowingsListEnum } from "../../../ts";
 
-const { black, primary, grey0 } = theme.lightColors || {};
+const { black, primary } = theme.lightColors || {};
 
 type IProps = {
   name: any;
