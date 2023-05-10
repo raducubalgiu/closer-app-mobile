@@ -1,11 +1,14 @@
 import { StyleSheet, View } from "react-native";
 import { useMemo, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { MAIN_ROLE, SECOND_ROLE } from "@env";
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import * as Haptics from "expo-haptics";
+import { useTranslation } from "react-i18next";
 import {
   useAuth,
   useGet,
@@ -14,20 +17,17 @@ import {
   useDelete,
   useRefreshOnFocus,
 } from "../../../hooks";
+import { Protected, SheetModal } from "../../../components/core";
 import {
   HeaderProfileGeneral,
   ProfileIconButton,
   FollowProfileButton,
+  ConfirmModal,
 } from "../../../components/customized";
 import { RootStackParams } from "../../../navigation/rootStackParams";
-import { Protected, SheetModal } from "../../../components/core";
-import { MAIN_ROLE, SECOND_ROLE } from "@env";
 import Profile from "../../../components/customized/Profile/Profile";
-import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import ProfileSettingsSheet from "../../../components/customized/Sheets/ProfileSettingsSheet";
-import BlockUserSheet from "../../../components/customized/Sheets/BlockUserSheet";
 import { showToast } from "../../../utils";
-import { useTranslation } from "react-i18next";
 import { User } from "../../../ts";
 
 type IProps = NativeStackScreenProps<RootStackParams, "ProfileGeneral">;
@@ -43,11 +43,11 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
   const { username, service, option } = route.params;
   const [isFollow, setIsFollow] = useState(false);
   const [isBlocked, setIsBlocked] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const snapPoints = useMemo(() => [1, 250], []);
   const settingsRef = useRef<BottomSheetModal>(null);
-  const blockRef = useRef<BottomSheetModal>(null);
   const { t } = useTranslation("common");
 
   const { data: userDetails, refetch } = useGet<UserListItem>({
@@ -73,7 +73,6 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
     hours,
     avatar,
   } = userDetails?.user || {};
-  const { address } = locationId || {};
 
   useRefreshOnFocus(refetch);
 
@@ -106,6 +105,7 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       setIsBlocked(true);
       showToast({ message: t("blocked") });
+      setModalVisible(false);
     },
   });
 
@@ -115,6 +115,7 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       setIsBlocked(false);
       showToast({ message: t("unblocked") });
+      setModalVisible(false);
     },
   });
 
@@ -133,11 +134,6 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
     } else {
       follow({});
     }
-  };
-
-  const onHandleBlock = () => {
-    settingsRef.current?.close();
-    blockRef.current?.present();
   };
 
   const handleBlock = () => {
@@ -202,7 +198,10 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
       />
       <SheetModal snapPoints={snapPoints} ref={settingsRef}>
         <ProfileSettingsSheet
-          onHandleBlock={onHandleBlock}
+          onHandleBlock={() => {
+            settingsRef.current?.close();
+            setModalVisible(true);
+          }}
           onReport={() => {
             settingsRef.current?.close();
             navigation.navigate("ReportUser");
@@ -210,13 +209,20 @@ export const ProfileGeneralScreen = ({ route }: IProps) => {
           isBlocked={isBlocked}
         />
       </SheetModal>
-      <SheetModal snapPoints={snapPoints} ref={blockRef}>
-        <BlockUserSheet
-          username={username}
-          onBlock={handleBlock}
-          isBlocked={isBlocked}
-        />
-      </SheetModal>
+      <ConfirmModal
+        visible={modalVisible}
+        title={
+          !isBlocked
+            ? t("doYouBlock", { username })
+            : t("doYouUnblock", { username })
+        }
+        description={
+          !isBlocked ? t("blockDescription") : t("unblockDescription")
+        }
+        action={isBlocked ? t("unblock") : t("block")}
+        onAction={handleBlock}
+        onClose={() => setModalVisible(false)}
+      />
     </View>
   );
 };

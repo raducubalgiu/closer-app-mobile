@@ -14,7 +14,7 @@ const { black, error } = theme.lightColors || {};
 
 export const DeleteAccountScreen = () => {
   const { user } = useAuth();
-  const { status } = user?.settings || {};
+  const { status } = user || {};
   const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();

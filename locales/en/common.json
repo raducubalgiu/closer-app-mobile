@@ -468,8 +468,8 @@
   "cannotSeeEachOtherContent": "Nu vă puteţi vedea reciproc conţinutul",
   "blocked": "Blocat",
   "unblocked": "Deblocat",
-  "doYouBlock": "Blochezi pe",
-  "doYouUnblock": "Deblochezi pe",
+  "doYouBlock": "Blochezi pe @{{username}}",
+  "doYouUnblock": "Deblochezi pe @{{username}}",
   "youHaveBlocked": "Ai blocat",
   "blockDescription": "Nu îţi va mai putea trimite mesaje şi nu vă veţi mai vedea fotografiile şi videoclipurile postate",
   "unblockDescription": "Vă veţi putea trimite mesaje şi vă veţi putea fotografiile şi videoclipurile postate",
@@ -518,5 +518,9 @@
   "slideForSelectSequenceDuration": "Glişează pentru a alege durata secvenţei. Secvenţa va începe după numărătoare inversă selectată",
   "address": "Adresă",
   "employees": "Angajaţi",
-  "deletePostDescription": "Ştergerea postării va fi definitivă şi nu o vei mai putea restabili"
+  "deletePostDescription": "Ştergerea postării va fi definitivă şi nu o vei mai putea restabili",
+  "invalidUsernameFormat": "Formatul introdus nu este acceptat",
+  "usernameAlreadyTaken": "Acest nume de utilizator nu este disponibil",
+  "usernameCanOnlyContainsDescription": " Numele utilizator pot conţine doar litere, numere, underscore şi puncte, iar lungimea acestuia trebuie să fie de maximum 24 de caractere",
+  "usernameCanBeChangedAfter30days": "Poţi schimba numele de utilizator numai o dată la 30 de zile"
 }

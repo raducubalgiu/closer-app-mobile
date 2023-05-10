@@ -1,4 +1,4 @@
-import { StyleSheet, SafeAreaView, Keyboard, Text } from "react-native";
+import { StyleSheet, SafeAreaView, Keyboard, Text, View } from "react-native";
 import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
@@ -9,8 +9,8 @@ import { useAuth, usePatch, useGetMutate } from "../../../../hooks";
 import InputCheck from "../../../../components/core/Inputs/InputCheck";
 import theme from "../../../../../assets/styles/theme";
 
-const { error } = theme.lightColors || {};
-type Available = { status: boolean; message: string };
+const { error, grey0 } = theme.lightColors || {};
+type Available = { status: string; message: string };
 
 export const EditUsernameScreen = () => {
   const { user, setUser } = useAuth();
@@ -18,14 +18,20 @@ export const EditUsernameScreen = () => {
   const { t } = useTranslation("common");
   const [username, setUsername] = useState(user?.username);
   const [isAvailable, setIsAvailable] = useState<Available>({
-    status: true,
+    status: "success",
     message: "",
   });
   const { status, message } = isAvailable;
 
   const { mutate, isLoading: isLoadingGet } = useGetMutate({
-    uri: `/users/${user?.id}/${username}/check`,
+    uri: `/users/${username}/check`,
     onSuccess: (res) => setIsAvailable(res.data),
+    onError: (err) => {
+      setIsAvailable({
+        status: err.response.data.status,
+        message: err.response.data.message,
+      });
+    },
   });
 
   useEffect(() => {
@@ -39,7 +45,7 @@ export const EditUsernameScreen = () => {
   }, [username]);
 
   const onChange = (text: string) => {
-    setIsAvailable({ status: false, message: "typing" });
+    setIsAvailable({ status: "error", message: "typing" });
     setUsername(text);
   };
 
@@ -68,21 +74,29 @@ export const EditUsernameScreen = () => {
         disabledSave={disableSave}
       />
       <Stack direction="row" sx={{ marginLeft: 10 }}>
-        <Icon name="at-sign" type="feather" />
+        <Icon name="at-sign" type="feather" size={20} />
         <InputCheck
           placeholder={t("username")}
           value={username}
-          isAvailable={status}
+          isAvailable={status === "success"}
           isLoading={isLoadingGet}
           onChange={onChange}
         />
       </Stack>
-      {!!message && message !== "typing" && !isLoadingGet && (
+      {status === "error" && message !== "typing" && !isLoadingGet && (
         <Stack direction="row" justify="start" sx={{ margin: 15 }}>
           <Icon name="alert-triangle" type="feather" size={18} color={error} />
           <Text style={styles.errorMessage}>{t(`${message}`)}</Text>
         </Stack>
       )}
+      <View style={{ margin: 15 }}>
+        <Text style={{ color: grey0, marginBottom: 15, fontSize: 13 }}>
+          {t("usernameCanOnlyContainsDescription")}
+        </Text>
+        <Text style={{ color: grey0, fontSize: 13 }}>
+          {t("usernameCanBeChangedAfter30days")}
+        </Text>
+      </View>
       {isLoadingUpdate && <Spinner />}
     </SafeAreaView>
   );

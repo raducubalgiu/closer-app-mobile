@@ -12,7 +12,7 @@ const HeadingAction = ({ title, onPress, sx }: IProps) => {
   const { t } = useTranslation("common");
 
   return (
-    <Stack direction="row" sx={[styles.container, sx]}>
+    <Stack direction="row" sx={{ ...styles.container, ...sx }}>
       <Text style={styles.title}>{title}</Text>
       <Pressable onPress={onPress}>
         <Stack direction="row" sx={styles.actionBtnContainer}>

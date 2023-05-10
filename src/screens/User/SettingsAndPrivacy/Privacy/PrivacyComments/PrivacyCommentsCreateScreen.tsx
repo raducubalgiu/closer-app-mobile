@@ -24,14 +24,11 @@ export const PrivacyCommentsCreateScreen = () => {
   const navigation = useNavigation();
 
   const { mutate, isLoading } = usePatch({
-    uri: `/users/${user?.id}`,
-    onSuccess: () => {
+    uri: `/users/${user?.id}/settings`,
+    onSuccess: (res) => {
       setUser({
         ...user,
-        settings: {
-          ...user?.settings,
-          comments: { ...user?.settings.comments, create },
-        },
+        settings: res.data,
       });
       showToast({ message: t("youChangedSettings"), short: true });
       navigation.goBack();
@@ -40,10 +37,7 @@ export const PrivacyCommentsCreateScreen = () => {
       showToast({ message: t("somethingWentWrong"), bgColor: error }),
   });
 
-  const handleUpdate = () =>
-    mutate({
-      settings: { ...user?.settings, comments: { ...comments, create } },
-    });
+  const handleUpdate = () => mutate({ comments: { ...comments, create } });
 
   const inputs = [
     { title: t("allPeople"), action: CommentsViewCreateEnum.ALL },

@@ -25,9 +25,9 @@ export interface User {
   hours: any;
   phone: any;
   gender: string;
+  status: string;
   settings: {
     private: boolean;
-    status: string;
     viewsCount: string;
     viewLikes: string;
     comments: {

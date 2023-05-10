@@ -10,14 +10,14 @@ import { Button, Stack } from "../../../components/core";
 import { showToast } from "../../../utils";
 
 const { grey0, error } = theme.lightColors || {};
-type Available = { status: boolean; message: string };
+type Available = { status: string; message: string };
 
 export const UsernameScreen = ({ route }: any) => {
   const { idTokenResult, role } = route.params;
   const { displayName, photoURL } = idTokenResult;
   const [username, setUsername] = useState("");
   const [isAvailable, setIsAvailable] = useState<Available>({
-    status: true,
+    status: "success",
     message: "",
   });
   const { status, message } = isAvailable;
@@ -58,6 +58,12 @@ export const UsernameScreen = ({ route }: any) => {
   const { mutate, isLoading: isLoadingGet } = useGetMutate({
     uri: `/users/${username}/check`,
     onSuccess: (res) => setIsAvailable(res.data),
+    onError: (err) => {
+      setIsAvailable({
+        status: err.response.data.status,
+        message: err.response.data.message,
+      });
+    },
   });
 
   useEffect(() => {
@@ -71,34 +77,42 @@ export const UsernameScreen = ({ route }: any) => {
   }, [username]);
 
   const onChange = (text: string) => {
-    setIsAvailable({ status: false, message: "typing" });
+    setIsAvailable({ status: "error", message: "typing" });
     setUsername(text);
   };
 
-  const disable = loading || isLoadingGet || !status || !username;
+  const disable =
+    loading || isLoadingGet || !status || !username || status === "error";
 
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.container}>
         <Text style={styles.title}>{t("createAUsername")}</Text>
-        <Text style={styles.description}>{t("pickAUsername")}</Text>
       </View>
-      <Stack direction="row" sx={{ marginHorizontal: 15 }}>
+      <Stack direction="row" sx={{ marginHorizontal: 15, marginTop: 40 }}>
         <Icon name="at-sign" type="feather" size={20} />
         <InputCheck
           placeholder={t("username")}
           value={username}
-          isAvailable={status}
+          isAvailable={status === "success"}
           isLoading={isLoadingGet}
           onChange={onChange}
         />
       </Stack>
-      {!!message && message !== "typing" && !isLoadingGet && (
+      {status === "error" && message !== "typing" && !isLoadingGet && (
         <Stack direction="row" justify="start" sx={{ margin: 15 }}>
           <Icon name="alert-triangle" type="feather" size={18} color={error} />
           <Text style={styles.errorMessage}>{t(`${message}`)}</Text>
         </Stack>
       )}
+      <View style={{ margin: 15 }}>
+        <Text style={{ color: grey0, marginBottom: 15, fontSize: 13 }}>
+          {t("usernameCanOnlyContainsDescription")}
+        </Text>
+        <Text style={{ color: grey0, fontSize: 13 }}>
+          {t("usernameCanBeChangedAfter30days")}
+        </Text>
+      </View>
       <Button
         title={t("next")}
         onPress={handleSubmit}

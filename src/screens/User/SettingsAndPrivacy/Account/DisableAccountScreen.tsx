@@ -15,7 +15,7 @@ export const DisableAccountScreen = () => {
   const { t } = useTranslation("common");
 
   const { mutate, isLoading } = usePatch({
-    uri: `/users/${user?.id}/settings`,
+    uri: `/users/${user?.id}`,
     onSuccess: () => {
       signOut(auth)
         .then(() => setUser(null))

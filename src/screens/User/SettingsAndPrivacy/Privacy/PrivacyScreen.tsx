@@ -24,21 +24,20 @@ export const PrivacyScreen = () => {
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const { mutate } = usePatch({
-    uri: `/users/${user?.id}`,
-    onSuccess: () => {
+    uri: `/users/${user?.id}/settings`,
+    onSuccess: (res) => {
       setUser({
         ...user,
-        settings: { ...user?.settings, private: !privateAccount },
+        settings: res.data,
       });
-      setPrivateAccount((privateAccount: boolean) => !privateAccount);
+      setPrivateAccount(res.data.private);
       showToast({ message: t("youChangedAccountStatus"), short: true });
     },
     onError: () =>
       showToast({ message: t("somethingWentWrong"), bgColor: error }),
   });
 
-  const handleChangePrivate = () =>
-    mutate({ settings: { ...user?.settings, private: !privateAccount } });
+  const handleChangePrivate = () => mutate({ private: !privateAccount });
 
   const inputs = [
     {

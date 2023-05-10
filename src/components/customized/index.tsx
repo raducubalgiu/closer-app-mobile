@@ -7,6 +7,7 @@ import MessSentItem from "./ListItems/MessSentItem";
 import MessReceivedItem from "./ListItems/MessReceivedItem";
 import UserSelectableListItem from "./ListItems/User/UserSelectableListItem";
 import FooterUserSelectable from "./Layout/Footers/FooterUserSelectable";
+import ConfirmModal from "./Modals/ConfirmModal";
 
 export {
   DisplayText,
@@ -17,6 +18,7 @@ export {
   MessReceivedItem,
   UserSelectableListItem,
   FooterUserSelectable,
+  ConfirmModal,
 };
 
 // Normal Components

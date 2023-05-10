@@ -86,7 +86,7 @@ export const SearchPostsScreen = ({ route }: IProps) => {
         id,
         name,
         username,
-        avatar: !!avatar ? avatar.url : [],
+        avatar: avatar?.url,
         checkmark,
       },
     });

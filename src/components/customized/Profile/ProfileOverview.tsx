@@ -99,18 +99,20 @@ const ProfileOverview = ({
   return (
     <View style={styles.container}>
       <Stack justify="center" align="center">
-        <Pressable>
-          {user?.id !== userContext?.id && (
-            <CustomAvatar size={95} avatar={avatar} />
-          )}
-          {user?.id === userContext?.id && (
-            <AvatarBadge
-              size={95}
-              avatar={avatar}
-              sxBadge={{ bottom: 2.5, left: 75 }}
-            />
-          )}
-        </Pressable>
+        <View style={{ alignItems: "center" }}>
+          <Pressable>
+            {user?.id !== userContext?.id && (
+              <CustomAvatar size={95} avatar={avatar} />
+            )}
+            {user?.id === userContext?.id && (
+              <AvatarBadge
+                size={95}
+                avatar={avatar}
+                sxBadge={{ bottom: 2.5, left: 75 }}
+              />
+            )}
+          </Pressable>
+        </View>
         <Text style={styles.name}>{name}</Text>
         <Stack direction="row" justify="start">
           <Text style={styles.business}>

@@ -12,20 +12,17 @@ const { black } = theme.lightColors || {};
 
 export const HideAccountScreen = () => {
   const { user, setUser } = useAuth();
-  const { status } = user?.settings || {};
+  const { status } = user || {};
   const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const { mutate, isLoading } = usePatch({
-    uri: `/users/${user?.id}/settings`,
-    onSuccess: () => {
+    uri: `/users/${user?.id}`,
+    onSuccess: (res) => {
       setUser({
         ...user,
-        settings: {
-          ...user?.settings,
-          status: status === "active" ? "hidden" : "active",
-        },
+        status: res.data.status,
       });
       navigation.navigate("Profile");
     },
