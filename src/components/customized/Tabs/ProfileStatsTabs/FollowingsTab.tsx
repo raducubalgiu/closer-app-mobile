@@ -1,6 +1,11 @@
-import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
-import { RefreshControl } from "react-native";
-import { useCallback } from "react";
+import {
+  RefreshControl,
+  View,
+  FlatList,
+  ListRenderItemInfo,
+  Keyboard,
+} from "react-native";
+import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useIsFocused } from "@react-navigation/native";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
@@ -10,15 +15,19 @@ import {
   useRefreshByUser,
   usePaginateActions,
   useAuth,
+  useGet,
 } from "../../../../hooks";
 import { User, ViewFollowingsListEnum } from "../../../../ts";
-import { Spinner } from "../../../core";
+import { SearchBarInput, Spinner } from "../../../core";
+import { isEmpty } from "lodash";
 
 type IProps = { userId: string; settings: any };
-type UseListItem = { id: string; user: User; isFollow: boolean };
+type UserListItem = { id: string; user: User; isFollow: boolean };
+type SearchResponse = { next: null | number; results: UserListItem[] };
 
 export const FollowingsTab = ({ userId, settings }: IProps) => {
   const { user } = useAuth();
+  const [search, setSearch] = useState("");
   const isFocused = useIsFocused();
   const { t } = useTranslation("common");
   const options = useGetPaginate({
@@ -27,6 +36,13 @@ export const FollowingsTab = ({ userId, settings }: IProps) => {
     limit: "20",
     enabled: isFocused,
   });
+
+  const { data: searchedUsers } = useGet<SearchResponse>({
+    model: "searchFollowings",
+    uri: `/users/${userId}/followings/search?search=${search}`,
+    options: { enabled: !!search },
+  });
+
   const sameUser = userId === user?.id;
 
   const { refetch, isLoading, isFetchingNextPage } = options;
@@ -38,12 +54,13 @@ export const FollowingsTab = ({ userId, settings }: IProps) => {
   } = usePaginateActions(options);
 
   const renderPerson = useCallback(
-    ({ item }: ListRenderItemInfo<UseListItem>) => (
+    ({ item }: ListRenderItemInfo<UserListItem>) => (
       <UserListItem user={item.user} isFollow={item.isFollow} />
     ),
     []
   );
-  const keyExtractor = useCallback((item: UseListItem) => item?.id, []);
+
+  const keyExtractor = useCallback((item: UserListItem) => item?.id, []);
 
   const { refreshing, refetchByUser } = useRefreshByUser(refetch);
   const refreshControl = (
@@ -71,19 +88,31 @@ export const FollowingsTab = ({ userId, settings }: IProps) => {
     );
   }
 
+  const header = (
+    <View style={{ marginHorizontal: 15 }}>
+      <SearchBarInput
+        value={search}
+        placeholder={t("search")}
+        onChangeText={(text) => setSearch(text)}
+        showCancel={false}
+      />
+    </View>
+  );
+
   return (
     <>
       {!loading && (
-        <FlashList
+        <FlatList
+          ListHeaderComponent={header}
           refreshControl={refreshControl}
-          contentContainerStyle={{ paddingVertical: 15 }}
-          data={followings}
+          contentContainerStyle={{ paddingBottom: 15 }}
+          data={isEmpty(search) ? followings : searchedUsers?.results}
           keyExtractor={keyExtractor}
           renderItem={renderPerson}
           ListFooterComponent={showSpinner}
           onEndReached={loadMore}
           onEndReachedThreshold={0.3}
-          estimatedItemSize={75}
+          onMomentumScrollBegin={() => Keyboard.dismiss()}
         />
       )}
       {loading && <Spinner />}
