@@ -5,22 +5,21 @@ import {
   ListRenderItemInfo,
   useWindowDimensions,
   View,
-  Pressable,
 } from "react-native";
-import MapStatic from "../../Map/MapStatic";
 import { useCallback, useMemo, useRef } from "react";
-import { useAuth, useGet } from "../../../../hooks";
-import { showToast, AddressFormat } from "../../../../utils";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useTranslation } from "react-i18next";
+import { Divider } from "@rneui/themed";
+import MapStatic from "../../Map/MapStatic";
+import { useAuth } from "../../../../hooks";
+import { AddressFormat } from "../../../../utils";
 import { UserListItemSimple } from "../../ListItems/User/UserListItemSimple";
 import { User, Location } from "../../../../ts";
-import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { Button, Heading, SheetModal, Spinner } from "../../../core";
 import theme from "../../../../../assets/styles/theme";
-import { Divider } from "@rneui/themed";
 import SheetMap from "../../Sheets/SheetMap";
 
-const { grey0, primary } = theme.lightColors || {};
+const { grey0 } = theme.lightColors || {};
 type IProps = { location: Location | undefined; loading: boolean };
 
 export const LocationDetailsTab = ({ location, loading }: IProps) => {
@@ -68,7 +67,11 @@ export const LocationDetailsTab = ({ location, loading }: IProps) => {
                   <Text style={{ color: grey0, fontSize: 15 }}>
                     {AddressFormat(location?.address)}
                   </Text>
-                  <Button title={t("edit")} onPress={() => {}} />
+                  <Button
+                    variant="outlined"
+                    title={t("edit")}
+                    onPress={() => {}}
+                  />
                   <Divider style={{ marginTop: 15 }} />
                 </View>
                 <View style={{ margin: 15 }}>
@@ -88,6 +91,7 @@ export const LocationDetailsTab = ({ location, loading }: IProps) => {
         ref={sheetRef}
         showIndicator={false}
         enableContentPanningGesture={false}
+        duration={500}
       >
         {location?.address && (
           <SheetMap

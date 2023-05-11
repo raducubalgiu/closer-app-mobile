@@ -280,7 +280,7 @@
   "cannotAddProducts": "Pentru a putea adăuga produsele, este necesar să adaugi minim un serviciu",
   "servicesNotAdded": "Nu ai adăugat serviciile",
   "deleteService": "Ştergi acest serviciu?",
-  "deleteServiceDescription": "Atenţie! Ştergerea acestui serviciu va declansa ştergerea tuturor produselor asociate acestuia",
+  "deleteServiceDescription": "Atenţie! Ştergerea acestui serviciu va declanşa ştergerea tuturor produselor asociate acestuia",
   "payment": "Plată",
   "checkBookingDetails": "Detaliile rezervării",
   "deleteHistory": "Şterge istoricul",

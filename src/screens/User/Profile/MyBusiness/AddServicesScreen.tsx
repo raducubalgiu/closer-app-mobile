@@ -5,8 +5,9 @@ import {
   View,
   Pressable,
   ActivityIndicator,
+  FlatList,
+  ListRenderItemInfo,
 } from "react-native";
-import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { useCallback, useState } from "react";
 import { Icon } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
@@ -16,13 +17,15 @@ import {
   IconButtonDelete,
   FormInputSelect,
 } from "../../../../components/core";
+import {
+  ConfirmModal,
+  NoFoundMessage,
+} from "../../../../components/customized";
 import theme from "../../../../../assets/styles/theme";
 import { useAuth, usePatch, useGet } from "../../../../hooks";
-import ConfirmModal from "../../../../components/customized/Modals/ConfirmModal";
 import { Service } from "../../../../ts";
 import { FormProvider, useForm } from "react-hook-form";
 import { showToast } from "../../../../utils";
-import { NoFoundMessage } from "../../../../components/customized";
 
 const { primary, error } = theme.lightColors || {};
 
@@ -35,16 +38,16 @@ export const AddServicesScreen = () => {
   const { handleSubmit, watch, setValue } = methods;
   const serviceId = watch("serviceId");
 
-  const { data: allServices } = useGet({
+  const { data: allServices } = useGet<any>({
     model: "allServices",
     uri: "/services",
   });
 
-  const { isLoading: isLoadingServices } = useGet({
+  const { isLoading: isLoadingServices } = useGet<Service[]>({
     model: "services",
     uri: `/users/${user?.id}/locations/${user?.locationId}/services`,
     options: {
-      onSuccess: (res) => setServices(res.data),
+      onSuccess: (res) => res.data && setServices(res.data),
     },
   });
 
@@ -66,9 +69,7 @@ export const AddServicesScreen = () => {
       showToast({ message: t("somethingWentWrong"), bgColor: error }),
   });
 
-  const closeModal = () => {
-    setVisible(false);
-  };
+  const closeModal = () => setVisible(false);
 
   const handleCreate = (data: any) => {
     addService({ serviceId: data.serviceId });
@@ -143,15 +144,21 @@ export const AddServicesScreen = () => {
           </Stack>
         </FormProvider>
       </Stack>
-      <FlashList
+      <FlatList
         ListHeaderComponent={header}
         data={services}
         renderItem={renderService}
         keyExtractor={keyExtractor}
-        bounces={false}
         showsVerticalScrollIndicator={false}
-        estimatedItemSize={59}
         ListFooterComponent={footer}
+      />
+      <ConfirmModal
+        title={t("deleteService")}
+        description={t("deleteServiceDescription")}
+        visible={visible}
+        onClose={() => setVisible(false)}
+        onAction={handleDelete}
+        action={t("delete")}
       />
     </SafeAreaView>
   );
