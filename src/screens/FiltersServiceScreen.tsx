@@ -8,10 +8,9 @@ import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import { FiltersContainer } from "../components/customized";
-import OptionListItem from "../components/customized/ListItems/OptionListItem";
+import { FiltersContainer, OptionListItem } from "../components/customized";
 import { RootStackParams } from "../navigation/rootStackParams";
-import { Option } from "../ts";
+import { Filter, Option } from "../ts";
 import { useGet } from "../hooks";
 import { displayDash } from "../utils";
 
@@ -26,7 +25,7 @@ export const FiltersServiceScreen = ({ route }: IProps) => {
   const { t } = useTranslation("common");
   const filter = first(service?.filters);
 
-  const { data } = useGet({
+  const { data } = useGet<Filter>({
     model: "filter",
     uri: `/filters/${filter?.id ? filter?.id : filter}`,
   });

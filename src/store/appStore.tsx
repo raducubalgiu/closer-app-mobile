@@ -49,6 +49,7 @@ export const StoreProvider = ({ children }: { children: any }) => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
+        return;
         // Redirect to LocationPermission
       }
 

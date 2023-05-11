@@ -1,10 +1,10 @@
 import { View } from "react-native";
 import { FormProvider, useForm } from "react-hook-form";
-import _ from "lodash";
+import { slice } from "lodash";
 import { useTranslation } from "react-i18next";
+import * as Animatable from "react-native-animatable";
 import { FormInputSelect, Stack, CustomModal, Button } from "../../core";
 import { isGreaterThan } from "../../../utils/validation";
-import { Period } from "../../../ts";
 
 type Minutes = {
   id: string | number;
@@ -12,8 +12,8 @@ type Minutes = {
 };
 
 interface IFormInputs {
-  sMinutes: "";
-  eMinutes: "";
+  startMinutes: "";
+  endMinutes: "";
 }
 
 type IProps = {
@@ -21,7 +21,6 @@ type IProps = {
   onAction: (data: IFormInputs) => void;
   minutes: Minutes[];
   visible: boolean;
-  period: Period;
 };
 
 export const PickerHoursModal = ({
@@ -29,36 +28,37 @@ export const PickerHoursModal = ({
   onClose,
   onAction,
   minutes,
-  period,
 }: IProps) => {
   const methods = useForm<IFormInputs>({
     defaultValues: {
-      sMinutes: "",
-      eMinutes: "",
+      startMinutes: "",
+      endMinutes: "",
     },
   });
-  const {
-    handleSubmit,
-    watch,
-    setValue,
-    formState: { isDirty },
-  } = methods;
+  const { handleSubmit, watch, setValue } = methods;
   const { t } = useTranslation("common");
-  const sMinutes = watch("sMinutes");
-  const eMinutes = watch("eMinutes");
-  const { isGreater } = isGreaterThan(sMinutes, eMinutes, t);
+  const startMinutes = watch("startMinutes");
+  const endMinutes = watch("endMinutes");
+  const { isGreater } = isGreaterThan(startMinutes, endMinutes, t);
 
   const handleReset = () => {
-    setValue("sMinutes", "");
-    setValue("eMinutes", "");
+    setValue("startMinutes", "");
+    setValue("endMinutes", "");
+    onAction({ startMinutes: "", endMinutes: "" });
   };
+
+  const showReset = startMinutes && endMinutes;
 
   const customFooter = (
     <Stack direction="row">
-      {sMinutes && eMinutes && (
-        <View style={{ flex: 1, marginRight: 10 }}>
-          <Button title="Reset" variant="outlined" onPress={handleReset} />
-        </View>
+      {showReset && (
+        <Animatable.View
+          animation={showReset ? "zoomIn" : "None"}
+          duration={150}
+          style={{ flex: 1, marginRight: 10 }}
+        >
+          <Button title="Reset" onPress={handleReset} variant="outlined" />
+        </Animatable.View>
       )}
       <View style={{ flex: 1 }}>
         <Button
@@ -84,16 +84,16 @@ export const PickerHoursModal = ({
         <Stack direction="row">
           <View style={{ flex: 1, marginRight: 20 }}>
             <FormInputSelect
-              items={_.slice(minutes, 0, minutes.length - 1)}
-              name="sMinutes"
+              items={slice(minutes, 0, minutes.length - 1)}
+              name="startMinutes"
               placeholder={t("from")}
               label={t("from")}
             />
           </View>
           <View style={{ flex: 1 }}>
             <FormInputSelect
-              items={_.slice(minutes, 0, minutes.length - 1)}
-              name="eMinutes"
+              items={slice(minutes, 0, minutes.length - 1)}
+              name="endMinutes"
               placeholder={t("until")}
               label={t("until")}
             />

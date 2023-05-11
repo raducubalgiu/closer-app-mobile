@@ -55,7 +55,7 @@ export const FiltersDateScreen = ({ route }: IProps) => {
 
     setActiveHours(hoursActive);
     setPickHour(pickHours);
-  }, [startMinutes, endMinutes]);
+  }, [period]);
 
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -78,12 +78,13 @@ export const FiltersDateScreen = ({ route }: IProps) => {
   };
 
   const handleHours = useCallback((data: any) => {
+    const { startMinutes, endMinutes } = data;
     setPeriod((period: Period) => ({
       ...period,
-      startMinutes: data.sMinutes,
-      endMinutes: data.eMinutes,
+      startMinutes,
+      endMinutes,
     }));
-    setVisible(false);
+    !!startMinutes && !!startMinutes ? setVisible(false) : null;
   }, []);
 
   const Calendar = useCallback(
@@ -111,11 +112,9 @@ export const FiltersDateScreen = ({ route }: IProps) => {
       <FixedPeriodTab
         period={period}
         onHandlePeriod={(per) => {
-          if (per.key === period.key) {
-            setPeriod(defaultPeriod);
-          } else {
-            setPeriod({ ...period, ...per });
-          }
+          per.key === period.key
+            ? setPeriod(defaultPeriod)
+            : setPeriod({ ...period, ...per });
         }}
       />
     );
@@ -229,7 +228,7 @@ export const FiltersDateScreen = ({ route }: IProps) => {
         <Stack direction="row">
           {showBtnHours && (
             <Animatable.View
-              animation={showBtnHours ? "slideInLeft" : "slideOutLeft"}
+              animation={showBtnHours ? "slideInLeft" : "None"}
               duration={150}
             >
               <ButtonGroup
@@ -248,7 +247,6 @@ export const FiltersDateScreen = ({ route }: IProps) => {
       <PickerHoursModal
         visible={visible}
         minutes={minutes}
-        period={period}
         onAction={handleHours}
         onClose={() => setVisible(false)}
       />
