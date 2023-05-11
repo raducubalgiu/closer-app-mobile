@@ -10,17 +10,13 @@ import {
 import { useCallback, memo, useRef } from "react";
 import theme from "../../../../assets/styles/theme";
 import * as Haptics from "expo-haptics";
-import { Dayjs } from "dayjs";
-import { Month } from "../../../models/month";
-import { Day } from "../../../models/day";
+import { Month, Day, Period } from "../../../ts";
 
 const { width } = Dimensions.get("window");
 const { black, primary, grey0 } = theme.lightColors || {};
 const MONTH_MT = 20;
 const DAY_SIZE = width / 7 - 5;
 const MONTH_HEIGHT = DAY_SIZE * 6 + 25;
-
-type Period = { startDate: Dayjs; endDate: Dayjs; monthIndex: number };
 
 type IProps = {
   initialIndex?: number;
@@ -41,12 +37,13 @@ const DateRangePicker = ({
 
   const getBackgroundColor = useCallback(
     (item: Day) => {
-      if (
-        (item.date.isSame(period?.startDate) ||
+      switch (true) {
+        case (item.date.isSame(period?.startDate) ||
           item.date.isSame(period?.endDate)) &&
-        !item.prevDates
-      ) {
-        return { backgroundColor: primary, borderRadius: 50 };
+          !item.prevDates:
+          return { backgroundColor: primary, borderRadius: 50 };
+        default:
+          return null;
       }
     },
     [period]
@@ -54,51 +51,49 @@ const DateRangePicker = ({
 
   const getBgMarked = useCallback(
     (item: Day) => {
-      if (
-        item.date.isSameOrAfter(period?.startDate) &&
-        item.date.isSame(period?.startDate) &&
-        !item.prevDates
-      ) {
-        return {
-          backgroundColor: "#f1f1f1",
-          borderTopLeftRadius: 50,
-          borderBottomLeftRadius: 50,
-        };
-      }
-      if (
-        item.date.isSameOrBefore(period?.endDate) &&
-        item.date.isSame(period?.endDate) &&
-        !item.prevDates
-      ) {
-        return {
-          backgroundColor: "#f1f1f1",
-          borderTopRightRadius: 50,
-          borderBottomRightRadius: 50,
-        };
-      }
-      if (
-        item.date.isSameOrAfter(period?.startDate) &&
-        item.date.isSameOrBefore(period?.endDate) &&
-        !item.prevDates
-      ) {
-        return { backgroundColor: "#f1f1f1" };
+      switch (true) {
+        case item.date.isSameOrAfter(period?.startDate) &&
+          item.date.isSame(period?.startDate) &&
+          !item.prevDates:
+          return {
+            backgroundColor: "#f1f1f1",
+            borderTopLeftRadius: 50,
+            borderBottomLeftRadius: 50,
+          };
+        case item.date.isSameOrBefore(period?.endDate) &&
+          item.date.isSame(period?.endDate) &&
+          !item.prevDates:
+          return {
+            backgroundColor: "#f1f1f1",
+            borderTopRightRadius: 50,
+            borderBottomRightRadius: 50,
+          };
+        case item.date.isSameOrAfter(period?.startDate) &&
+          item.date.isSameOrBefore(period?.endDate) &&
+          !item.prevDates:
+          return { backgroundColor: "#f1f1f1" };
+        default:
+          return null;
       }
     },
     [period]
   );
 
-  const getColorTxt = useCallback(
+  const getColorTxt: any = useCallback(
     (item: Day) => {
-      if (
-        (item.date.isSame(period?.startDate) ||
+      switch (true) {
+        case (item.date.isSame(period?.startDate) ||
           item.date.isSame(period?.endDate)) &&
-        !item.prevDates
-      ) {
-        return "white";
-      } else if (item.disabled) {
-        return "#ccc";
-      } else {
-        return black;
+          !item.prevDates:
+          return { color: "white" };
+        case item.disabled:
+          return {
+            color: "#ccc",
+            textDecorationStyle: "solid",
+            textDecorationLine: "line-through",
+          };
+        default:
+          return { color: black };
       }
     },
     [period]
@@ -114,7 +109,6 @@ const DateRangePicker = ({
       if (!period?.startDate && !period?.endDate && !item.prevDates) {
         onSetPeriod({
           ...period,
-          id: "0",
           startDate: item.date,
           endDate: null,
           monthIndex,
@@ -123,7 +117,6 @@ const DateRangePicker = ({
       }
       if (item.date.isBefore(period?.startDate) && !item.prevDates) {
         onSetPeriod({
-          id: "0",
           ...period,
           startDate: item.date,
           monthIndex,
@@ -133,7 +126,6 @@ const DateRangePicker = ({
       if (period?.startDate && period?.endDate && !item.prevDates) {
         onSetPeriod({
           ...period,
-          id: "0",
           startDate: item.date,
           endDate: null,
           monthIndex,
@@ -142,7 +134,6 @@ const DateRangePicker = ({
       }
       if (period?.startDate && !item.prevDates) {
         onSetPeriod({
-          id: "0",
           ...period,
           endDate: item.date,
           monthIndex,
@@ -154,7 +145,7 @@ const DateRangePicker = ({
   );
 
   const getItemLayout = useCallback(
-    (data: any, index: number) => ({
+    (_: any, index: number) => ({
       length: MONTH_HEIGHT,
       offset: MONTH_HEIGHT * index,
       index,
@@ -174,16 +165,13 @@ const DateRangePicker = ({
   const renderDay = useCallback(
     ({ item }: ListRenderItemInfo<Day>) => {
       return (
-        <View style={{ ...styles.dayContainer, ...getBgMarked(item) }}>
+        <View style={[styles.dayContainer, getBgMarked(item)]}>
           <Pressable
-            style={{
-              ...styles.dayContainer,
-              ...getBackgroundColor(item),
-            }}
+            style={[styles.dayContainer, getBackgroundColor(item)]}
             disabled={item.prevDates}
             onPress={() => handleDayPress({ item, monthIndex: 0 })}
           >
-            <Text style={{ ...styles.dayText, color: getColorTxt(item) }}>
+            <Text style={[styles.dayText, getColorTxt(item)]}>
               {item.prevDates ? "" : item.date.format("D")}
             </Text>
           </Pressable>
@@ -219,7 +207,7 @@ const DateRangePicker = ({
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ alignItems: "center", justifyContent: "center" }}>
+      <View style={styles.header}>
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -244,6 +232,7 @@ const DateRangePicker = ({
 export default memo(DateRangePicker);
 
 const styles = StyleSheet.create({
+  header: { alignItems: "center", justifyContent: "center" },
   dayContainer: {
     width: DAY_SIZE,
     height: DAY_SIZE,
@@ -269,7 +258,7 @@ const styles = StyleSheet.create({
   },
   dayText: {
     color: black,
-    fontWeight: "500",
-    fontSize: 15,
+    fontWeight: "600",
+    fontSize: 14,
   },
 });

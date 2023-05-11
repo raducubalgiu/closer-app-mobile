@@ -2,7 +2,7 @@ import { Text, StyleSheet, Pressable } from "react-native";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
-import { Stack, CModal } from "../../core";
+import { Stack } from "../../core";
 import theme from "../../../../assets/styles/theme";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/rootStackParams";
@@ -52,7 +52,7 @@ export const EditProfileSheet = ({ onCloseSheet }: IProps) => {
           <Text style={styles.cancelBtnTxt}>{t("cancel")}</Text>
         </Pressable>
       </Stack>
-      <CModal
+      {/* <CModal
         size="xs"
         visible={modal}
         onCloseModal={() => setModal(false)}
@@ -67,7 +67,7 @@ export const EditProfileSheet = ({ onCloseSheet }: IProps) => {
           <Text style={styles.modalTitle}>{t("photoDontAccess")}</Text>
           <Text style={styles.modalBody}>{t("goToSettingsPhoto")}</Text>
         </Stack>
-      </CModal>
+      </CModal> */}
     </>
   );
 };

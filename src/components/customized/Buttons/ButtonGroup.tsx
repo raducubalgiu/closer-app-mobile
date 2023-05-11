@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  StyleProp,
+  ViewStyle,
+} from "react-native";
 import theme from "../../../../assets/styles/theme";
 import Stack from "../../core/Stack/Stack";
 
@@ -8,7 +15,7 @@ type Props = {
   activeBtn: number;
   onPress: (index: number) => void;
   buttons: any;
-  sx?: {};
+  sx?: StyleProp<ViewStyle>;
   disableActiveBtn?: boolean;
 };
 

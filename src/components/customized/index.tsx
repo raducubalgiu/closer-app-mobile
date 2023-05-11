@@ -8,6 +8,7 @@ import MessReceivedItem from "./ListItems/MessReceivedItem";
 import UserSelectableListItem from "./ListItems/User/UserSelectableListItem";
 import FooterUserSelectable from "./Layout/Footers/FooterUserSelectable";
 import ConfirmModal from "./Modals/ConfirmModal";
+import DateRangePicker from "./Calendars/DateRangePicker";
 
 export {
   DisplayText,
@@ -19,6 +20,7 @@ export {
   UserSelectableListItem,
   FooterUserSelectable,
   ConfirmModal,
+  DateRangePicker,
 };
 
 // Normal Components
@@ -102,7 +104,6 @@ export { HeaderEdit } from "./Layout/Headers/HeaderEdit";
 export { HeaderMap } from "./Layout/Headers/HeaderMap";
 
 export { ServicesList } from "./Lists/ServicesList";
-export { FixedPeriodList } from "./Lists/FixedPeriodList";
 
 export { ChatListItem } from "./ListItems/ChatListItem";
 export { HashtagListItem } from "./ListItems/HashtagListItem";
@@ -115,7 +116,6 @@ export { MessDateItem } from "./ListItems/MessDateItem";
 export { SettingListItem } from "./ListItems/SettingListItem";
 export { AlbumListItem } from "./ListItems/AlbumListItem";
 export { PresetListItem } from "./ListItems/PresetListItem";
-export { FixedPeriodListItem } from "./ListItems/FixedPeriodListItem";
 export { ScheduleOverviewListItem } from "./ListItems/ScheduleOverviewListItem";
 export { SettingsListItem } from "./ListItems/SettingsListItem";
 export { SettingsSwitchListItem } from "./ListItems/SettingsSwitchListItem";

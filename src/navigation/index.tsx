@@ -158,7 +158,14 @@ const AppNavigation = () => {
               component={SearchServicesScreen}
               options={{ animation: "fade", animationDuration: 150 }}
             />
-            <Stack.Screen name="FiltersDate" component={FiltersDateScreen} />
+            <Stack.Screen
+              name="FiltersDate"
+              component={FiltersDateScreen}
+              options={{
+                animation: "fade_from_bottom",
+                animationDuration: 150,
+              }}
+            />
             <Stack.Screen
               name="FiltersService"
               component={FiltersServiceScreen}

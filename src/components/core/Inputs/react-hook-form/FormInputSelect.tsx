@@ -63,10 +63,9 @@ export const FormInputSelect = ({
       marginBottom: 10,
     },
     label: {
-      textTransform: "uppercase",
       color: black,
       marginBottom: 2.5,
-      fontSize: 13.5,
+      fontSize: 14.5,
       fontWeight: "600",
     },
     errMsg: {

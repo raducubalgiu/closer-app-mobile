@@ -8,7 +8,7 @@ export const NOW = dayjs.utc().format();
 export const FROM_NOW = (date: string) => dayjs(date).fromNow();
 export const shortFormat = (date: Dayjs) => dayjs(date).format("YYYY-MM-DD");
 
-export const dayMonthFormat = (date: string) => {
+export const dayMonthFormat = (date: Dayjs | null) => {
   if (date) {
     return dayjs(date)?.format("D MMM").split(".")[0];
   } else {

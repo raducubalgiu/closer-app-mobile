@@ -7,6 +7,7 @@ import PostGradient from "../customized/Gradients/PostGradient";
 import SheetModal from "./SheetModal/SheetModal";
 import CustomAvatar from "./Avatars/CustomAvatar";
 import AvatarDelete from "./Avatars/AvatarDelete";
+import CustomModal from "./CustomModal/CustomModal";
 
 export {
   BookmarkIconButton,
@@ -17,6 +18,7 @@ export {
   Rating,
   SheetModal,
   Stack,
+  CustomModal,
 };
 
 // Normal Components
@@ -56,8 +58,6 @@ export { FormInputSelect } from "./Inputs/react-hook-form/FormInputSelect";
 export { FormTextField } from "./Inputs/react-hook-form/FormTextField";
 
 export { Protected } from "./Protected/Protected";
-
-export { CModal } from "./Modal/CModal";
 
 export { Heading } from "./Heading/Heading";
 export { HeadingWithAction } from "./Heading/HeadingWithAction";

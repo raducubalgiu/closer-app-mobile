@@ -6,9 +6,9 @@ import theme from "../../../../assets/styles/theme";
 const { black, grey0 } = theme?.lightColors || {};
 type IProps = {
   title: string;
+  description?: string;
   sx?: {};
   sxTitle?: {};
-  description?: string;
   sxDescription?: {};
   value: any;
   onValueChange: () => void;

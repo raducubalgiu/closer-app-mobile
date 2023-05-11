@@ -19,17 +19,17 @@ import { RootStackParams } from "../../navigation/rootStackParams";
 import { Service } from "../../ts";
 import { NoFoundMessage, TapFeedbackButton } from "../../components/customized";
 import { Icon } from "@rneui/themed";
-import { isEmpty, result } from "lodash";
+import { isEmpty } from "lodash";
 
 const { black, grey0 } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "SearchServices">;
 
 export const SearchServicesScreen = ({ route }: IProps) => {
+  const { defaultPeriod, screen } = route.params;
   const [search, setSearch] = useState<string>("");
   const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const { period } = route.params || {};
 
   const { data: services, isLoading } = useGet<any>({
     model: "searchServices",
@@ -47,8 +47,9 @@ export const SearchServicesScreen = ({ route }: IProps) => {
 
   const goToFilters = (item: Service) => {
     navigation.navigate("FiltersDate", {
+      screen,
+      defaultPeriod,
       service: item,
-      period,
     });
   };
 

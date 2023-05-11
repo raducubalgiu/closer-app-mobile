@@ -10,11 +10,11 @@ import { useNavigation } from "@react-navigation/native";
 import theme from "../../../../assets/styles/theme";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/rootStackParams";
-import { Service } from "../../../models/service";
+import { Service } from "../../../ts";
 
 const { grey0, black } = theme.lightColors || {};
 
-type IProps = { services: Service[] };
+type IProps = { services: Service[] | undefined };
 
 export const ServicesList = ({ services }: IProps) => {
   const navigation =
@@ -22,8 +22,18 @@ export const ServicesList = ({ services }: IProps) => {
 
   const goToFilters = (item: Service) =>
     navigation.navigate("FiltersDate", {
+      screen: "Calendar",
       service: item,
-      period: { code: 0 },
+      defaultPeriod: {
+        title: "",
+        description: "",
+        startDate: null,
+        endDate: null,
+        startMinutes: null,
+        endMinutes: null,
+        monthIndex: 0,
+        key: "",
+      },
     });
 
   const renderService = useCallback(

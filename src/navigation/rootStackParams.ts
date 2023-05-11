@@ -8,10 +8,9 @@ import {
   Slot,
   User,
   Chat,
+  Period,
 } from "../ts";
 import { ImagePickerAsset } from "expo-image-picker";
-import { ImageResizeMode } from "react-native";
-import { ResizeMode } from "expo-av";
 
 export type RootStackParams = {
   Account: any;
@@ -89,9 +88,9 @@ export type RootStackParams = {
   EditProduct: { product: any };
   ExploreVideoLandscape: any;
   ExploreVideoPortrait: any;
-  SearchServices: any;
+  SearchServices: { screen: string; defaultPeriod: Period };
   FindFriends: any;
-  FiltersDate: { service: Service; period: any };
+  FiltersDate: { service: Service; defaultPeriod: Period; screen: string };
   FiltersService: {
     service: Service;
     period: any;

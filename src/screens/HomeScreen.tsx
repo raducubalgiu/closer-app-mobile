@@ -14,8 +14,8 @@ import {
   CardRecommended,
   FakeSearchBarServices,
 } from "../components/customized";
-import { useGet, useRefreshByUser } from "../hooks";
-import { RecommendedLocation } from "../ts";
+import { useGet, useRefreshByUser, useRefreshOnFocus } from "../hooks";
+import { RecommendedLocation, Service } from "../ts";
 
 const { black } = theme.lightColors || {};
 
@@ -24,12 +24,12 @@ export const HomeScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
-  const { data: locations, refetch } = useGet({
+  const { data: locations, refetch } = useGet<RecommendedLocation[]>({
     model: "recommended",
     uri: `/locations/recommended?latlng=26.100195,44.428286`,
   });
 
-  const { data: services } = useGet({
+  const { data: services } = useGet<Service[]>({
     model: "services",
     uri: "/services",
   });
@@ -44,12 +44,35 @@ export const HomeScreen = () => {
 
   const goToServicesAnytime = () =>
     navigation.navigate("SearchServices", {
-      period: { code: 0 },
+      screen: "Calendar",
+      defaultPeriod: {
+        title: "",
+        description: "",
+        startDate: null,
+        endDate: null,
+        startMinutes: null,
+        endMinutes: null,
+        key: "",
+        monthIndex: 0,
+      },
     });
+
   const goToServicesNow = () =>
     navigation.navigate("SearchServices", {
-      period: { code: 1 },
+      screen: "FixedPeriod",
+      defaultPeriod: {
+        title: "",
+        description: "",
+        startDate: null,
+        endDate: null,
+        startMinutes: null,
+        endMinutes: null,
+        key: "now",
+        monthIndex: 0,
+      },
     });
+
+  useRefreshOnFocus(refetch);
 
   const { refetchByUser, refreshing } = useRefreshByUser(refetch);
 
