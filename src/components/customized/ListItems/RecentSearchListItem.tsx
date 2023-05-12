@@ -1,4 +1,4 @@
-import { StyleSheet, Text, Pressable, View } from "react-native";
+import { StyleSheet, Text, Pressable, View, Image } from "react-native";
 import { Avatar, Icon } from "@rneui/themed";
 import { Checkmark, IconButton, Stack } from "../../core";
 import theme from "../../../../assets/styles/theme";
@@ -31,7 +31,17 @@ export const RecentSearchListItem = ({
         <Pressable style={styles.item} onPress={() => onGoToSearch(item)}>
           <Stack direction="row">
             <Stack direction="row">
-              <Avatar source={displayAvatar} rounded size={35} />
+              <Image
+                source={avatar ? { uri: avatar } : NoAvatar}
+                style={{
+                  width: 35,
+                  height: 35,
+                  borderRadius: 35 / 2,
+                  borderWidth: 1,
+                  borderColor: "#ddd",
+                }}
+                loadingIndicatorSource={NoAvatar}
+              />
               <Text style={styles.searchItem}>{name}</Text>
               {checkmark && <Checkmark sx={{ marginLeft: 5 }} size={7.5} />}
             </Stack>
@@ -86,25 +96,7 @@ export const RecentSearchListItem = ({
         </Pressable>
       );
     default:
-      return (
-        <Pressable style={styles.item} onPress={() => onGoToSearch(item)}>
-          <Stack direction="row">
-            <Stack direction="row">
-              <View style={styles.iconContainer}>
-                <Icon name="search" type="feather" color={black} size={17.5} />
-              </View>
-              <Text style={styles.searchItem}>{item.word}</Text>
-            </Stack>
-            <IconButton
-              name="close"
-              type="antdesign"
-              size={17.5}
-              color={grey0}
-              onPress={() => mutate()}
-            />
-          </Stack>
-        </Pressable>
-      );
+      return null;
   }
 };
 

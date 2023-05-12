@@ -5,17 +5,27 @@ import { Stack } from "../../../core";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
+import { Period, Service } from "../../../../ts";
 
 const { grey0, black } = theme.lightColors || {};
 
 type IProps = {
-  serviceName: string;
+  service: Service;
   details: string;
+  period: Period;
 };
 
-export const HeaderServices = ({ serviceName, details }: IProps) => {
+export const HeaderServices = ({ service, details, period }: IProps) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
+
+  const navigateToFilters = () => {
+    navigation.push("FiltersDate", {
+      service,
+      defaultPeriod: period,
+      screen: "Calendar",
+    });
+  };
 
   return (
     <Stack sx={styles.container}>
@@ -24,7 +34,7 @@ export const HeaderServices = ({ serviceName, details }: IProps) => {
           <Icon name="arrow-back-ios" size={21} color={black} />
         </Pressable>
         <Stack direction="row" sx={styles.search}>
-          <Pressable onPress={() => navigation.pop(2)}>
+          <Pressable onPress={navigateToFilters}>
             <Stack direction="row">
               <Stack direction="row">
                 <Icon
@@ -39,7 +49,7 @@ export const HeaderServices = ({ serviceName, details }: IProps) => {
                   sx={{ marginHorizontal: 5, height: 40 }}
                 >
                   <Stack direction="row" sx={{ marginBottom: 1.5 }}>
-                    <Text style={styles.service}>{serviceName}</Text>
+                    <Text style={styles.service}>{service?.name}</Text>
                     <Text style={styles.point}>{"\u2B24"}</Text>
                     <Text style={styles.service}>Autoturisme</Text>
                   </Stack>

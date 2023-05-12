@@ -5,9 +5,11 @@ import {
   Text,
   ListRenderItemInfo,
   Dimensions,
+  Pressable,
 } from "react-native";
+import { Icon } from "@rneui/themed";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useState, useCallback, useRef, useMemo, useEffect } from "react";
+import { useState, useCallback, useRef, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { HeaderServices, Map, NoFoundMessage } from "../components/customized";
@@ -18,8 +20,9 @@ import { RootStackParams } from "../navigation/rootStackParams";
 import { Location } from "../ts";
 import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import { Spinner, Stack } from "../components/core";
+import * as Animatable from "react-native-animatable";
 
-const { black, primary } = theme.lightColors || {};
+const { black } = theme.lightColors || {};
 const { height } = Dimensions.get("window");
 type IProps = NativeStackScreenProps<RootStackParams, "Locations">;
 
@@ -29,6 +32,8 @@ export const LocationsScreen = ({ route }: IProps) => {
   const insets = useSafeAreaInsets();
   const fullHeight = height - insets.top - insets.bottom + 40;
   const snapPoints = useMemo(() => [90, fullHeight], []);
+  const [defaultAnim, setDefAnim] = useState("");
+  const [showMapButton, setShowMapButton] = useState(true);
 
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(10000);
@@ -40,7 +45,7 @@ export const LocationsScreen = ({ route }: IProps) => {
     data: locations,
     isLoading,
     isFetching,
-  } = useGet({
+  } = useGet<Location[]>({
     model: "locations",
     uri: `/locations?latlng=${longitude},${latitude}&serviceId=${service?.id}&option=${option?._id}&minprice=${minPrice}&maxprice=${maxPrice}&mindistance=${minDistance}&maxdistance=${maxDistance}&minrating=0&maxrating=5&page=1&limit=25`,
   });
@@ -82,11 +87,22 @@ export const LocationsScreen = ({ route }: IProps) => {
     </>
   );
 
+  const handleOnChange = (index: number) => {
+    if (index === 1) {
+      setDefAnim("fadeIn");
+      setShowMapButton(true);
+    } else {
+      setDefAnim("fadeOut");
+      setShowMapButton(false);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.screen}>
       <HeaderServices
         details={`${option?.name}, 23 aug - 31 aug, Orice ora`}
-        serviceName={service?.name}
+        service={service}
+        period={period}
       />
       <Map
         locations={locations}
@@ -100,8 +116,8 @@ export const LocationsScreen = ({ route }: IProps) => {
         handleIndicatorStyle={styles.indicatorStyle}
         animateOnMount={false}
         index={1}
-        animationConfigs={{ duration: 210 }}
         containerStyle={{ flex: 1 }}
+        onChange={handleOnChange}
       >
         <BottomSheetFlatList
           ListHeaderComponent={header}
@@ -112,47 +128,51 @@ export const LocationsScreen = ({ route }: IProps) => {
           ListFooterComponent={footer}
         />
       </BottomSheet>
-      {/* <Animated.View
-        style={{
-          position: "absolute",
-          bottom: 75,
-          left: 0,
-          right: 0,
-          alignItems: "center",
-          justifyContent: "center",
-          flex: 1,
-        }}
-      >
-        <Pressable
-          onPress={() => {
-            sheetRef?.current?.snapToIndex(0);
-          }}
+      {showMapButton && (
+        <Animatable.View
+          animation={defaultAnim}
           style={{
-            backgroundColor: "#333333",
-            paddingVertical: 11.5,
-            paddingHorizontal: 25,
-            borderRadius: 50,
-            shadowColor: "#171717",
-            shadowOffset: { width: -3, height: 3 },
-            shadowOpacity: 0.2,
-            shadowRadius: 5,
+            position: "absolute",
+            bottom: insets.bottom + 70,
+            left: 0,
+            right: 0,
+            alignItems: "center",
+            justifyContent: "center",
+            flex: 1,
           }}
         >
-          <Stack direction="row">
-            <Icon name="map-pin" type="feather" color="white" size={20} />
-            <Text
-              style={{
-                color: "white",
-                marginLeft: 5,
-                fontWeight: "600",
-                fontSize: 15.5,
-              }}
-            >
-              Hartă
-            </Text>
-          </Stack>
-        </Pressable>
-      </Animated.View> */}
+          <Pressable
+            onPress={() => {
+              console.log("Pressed!!");
+              sheetRef?.current?.snapToIndex(0);
+            }}
+            style={{
+              backgroundColor: "#333333",
+              paddingVertical: 11.5,
+              paddingHorizontal: 25,
+              borderRadius: 50,
+              shadowColor: "#171717",
+              shadowOffset: { width: -3, height: 3 },
+              shadowOpacity: 0.2,
+              shadowRadius: 5,
+            }}
+          >
+            <Stack direction="row">
+              <Icon name="map-pin" type="feather" color="white" size={20} />
+              <Text
+                style={{
+                  color: "white",
+                  marginLeft: 5,
+                  fontWeight: "600",
+                  fontSize: 15.5,
+                }}
+              >
+                Hartă
+              </Text>
+            </Stack>
+          </Pressable>
+        </Animatable.View>
+      )}
     </SafeAreaView>
   );
 };

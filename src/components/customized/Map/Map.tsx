@@ -2,10 +2,11 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import MapView, { Marker, Callout, PROVIDER_GOOGLE } from "react-native-maps";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import theme from "../../../../assets/styles/theme";
 import { IconLocation, IconStar, Stack } from "../../core";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/rootStackParams";
+import { Location } from "../../../ts";
 
 const { grey0 } = theme.lightColors || {};
 
@@ -101,7 +102,6 @@ export const Map = ({
             latitude: loc.address.coordinates[0],
             longitude: loc.address.coordinates[1],
           }}
-          //image={require("../../../assets/images/map_marker_yellow.png")}
         >
           <Pressable style={styles.priceLabel}>
             <Text style={{ fontWeight: "700" }}>{loc?.minPrice} lei</Text>

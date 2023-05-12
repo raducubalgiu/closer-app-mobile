@@ -10,7 +10,7 @@ const PostImage = ({ uri, id }: IProps) => {
   const { width } = useWindowDimensions();
 
   return (
-    <View style={{ width, height: 500 }}>
+    <View style={{ width, height: width * 1.25, backgroundColor: "#ddd" }}>
       <SharedElement id={id} style={{ flex: 1 }}>
         <Image
           source={{ uri }}

@@ -108,7 +108,7 @@ export type RootStackParams = {
   Locations: {
     service: Service;
     option: Option | null;
-    period: any;
+    period: Period;
     longitude: number;
     latitude: number;
   };

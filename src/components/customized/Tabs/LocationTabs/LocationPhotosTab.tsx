@@ -85,8 +85,6 @@ export const LocationPhotosTab = ({ imageCover, locationId }: IProps) => {
       [{ crop: { width, height: 1350, originX: 1, originY: 1 } }],
       { compress: 0.8, base64: true }
     );
-    console.log("WIDTH", manipResult.width);
-    console.log("HEIGHT", manipResult.height);
     setImage({ url: manipResult.uri });
   };
 

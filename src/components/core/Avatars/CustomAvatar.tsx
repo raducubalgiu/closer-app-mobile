@@ -1,5 +1,5 @@
 import { Image, ImageStyle } from "react-native";
-import { memo } from "react";
+import { memo, useState } from "react";
 import NoAvatar from "../../../../assets/images/avatar.jpg";
 import { StyleSheet } from "react-native";
 
@@ -11,6 +11,8 @@ type Props = {
 };
 
 const CustomAvatar = ({ avatar, size = 55, sx }: Props) => {
+  const [loaded, setLoaded] = useState(false);
+
   const styles = StyleSheet.create({
     image: {
       width: size,
@@ -25,8 +27,11 @@ const CustomAvatar = ({ avatar, size = 55, sx }: Props) => {
   return (
     <Image
       source={avatar?.url ? { uri: avatar?.url } : NoAvatar}
-      style={[styles.image, sx]}
+      style={[styles.image, { opacity: loaded ? 1 : 0 }, sx]}
+      blurRadius={loaded ? 0 : 5}
       resizeMode="cover"
+      onLoad={() => setLoaded(true)}
+      loadingIndicatorSource={NoAvatar}
     />
   );
 };

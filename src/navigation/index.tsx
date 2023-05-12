@@ -163,7 +163,7 @@ const AppNavigation = () => {
               component={FiltersDateScreen}
               options={{
                 animation: "fade_from_bottom",
-                animationDuration: 150,
+                animationDuration: 250,
               }}
             />
             <Stack.Screen

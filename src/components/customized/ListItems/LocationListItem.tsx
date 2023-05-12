@@ -7,7 +7,6 @@ import {
   Pressable,
 } from "react-native";
 import { memo } from "react";
-import { Divider } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import theme from "../../../../assets/styles/theme";
@@ -34,7 +33,7 @@ const LocationListItem = ({
   moreProducts,
 }: IProps) => {
   const { imageCover, minPrice, distance, ownerId, address } = location;
-  const { name, username, avatar, checkmark } = ownerId;
+  const { name, username } = ownerId;
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation("common");
@@ -42,11 +41,7 @@ const LocationListItem = ({
   const goToUser = () =>
     navigation.push("ProfileGeneral", {
       screen: `Products`,
-      userId: ownerId?.id,
       username,
-      name,
-      avatar,
-      checkmark,
       service,
       option,
     });

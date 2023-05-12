@@ -5,6 +5,7 @@ import {
   ListRenderItemInfo,
   ViewToken,
   RefreshControl,
+  useWindowDimensions,
 } from "react-native";
 import { useCallback, useRef, useState } from "react";
 import { useNavigation, useScrollToTop } from "@react-navigation/native";
@@ -27,7 +28,6 @@ import {
   useGetPaginate,
   usePaginateActions,
 } from "../../hooks";
-import { Video } from "expo-av";
 
 type PostListItem = {
   id: string;
@@ -40,8 +40,8 @@ type PostsResponse = { next: number | null; results: PostListItem[] | [] };
 export const FeedExploreScreen = () => {
   const { user } = useAuth();
   const ref = useRef<any>(null);
-  const videoRef = useRef<Video>(null);
   const { t } = useTranslation("common");
+  const { width } = useWindowDimensions();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const [visibleItem, setVisibleItem] = useState<PostListItem | null>(null);
@@ -192,6 +192,15 @@ export const FeedExploreScreen = () => {
     </>
   );
 
+  // const getItemLayout = useCallback(
+  //   (_: any, index: number) => ({
+  //     length: width * 1.25,
+  //     offset: width * 1.25 * index,
+  //     index,
+  //   }),
+  //   []
+  // );
+
   return (
     <SafeAreaView style={styles.screen}>
       <HeaderFeed indexLabel={0} />
@@ -210,6 +219,7 @@ export const FeedExploreScreen = () => {
           viewabilityConfigCallbackPairs={
             viewabilityConfigCallbackPairs.current
           }
+          //getItemLayout={getItemLayout}
         />
       )}
       {isInitialLoading && <Spinner />}

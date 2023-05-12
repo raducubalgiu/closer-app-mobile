@@ -10,6 +10,7 @@ const PostVideo = ({ uri, isVisible }: IProps) => {
   const { width } = useWindowDimensions();
   const ref = useRef<Video>(null);
   const navigation = useNavigation();
+  const aspectRatio = 4 / 5;
 
   useEffect(() => {
     if (isVisible) {
@@ -30,7 +31,7 @@ const PostVideo = ({ uri, isVisible }: IProps) => {
   const styles = StyleSheet.create({
     container: {
       width,
-      height: 550,
+      height: width * 1.25,
       backgroundColor: "black",
     },
     video: {
