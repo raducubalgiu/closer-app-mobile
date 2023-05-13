@@ -6,15 +6,19 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import theme from "../../../../assets/styles/theme";
 import { IconLocation, IconStar, Stack } from "../../core";
 import { RootStackParams } from "../../../navigation/rootStackParams";
-import { Location } from "../../../ts";
+import { Icon } from "@rneui/themed";
+import * as Animatable from "react-native-animatable";
+import { useEffect, useRef, useState } from "react";
 
-const { grey0 } = theme.lightColors || {};
+const { grey0, black } = theme.lightColors || {};
 
 type IProps = {
   locations: any;
   serviceName: string;
   initialLatitude: number;
   initialLongitude: number;
+  mapHeight: number;
+  sheetIndex: number;
 };
 
 export const Map = ({
@@ -22,10 +26,14 @@ export const Map = ({
   serviceName,
   initialLatitude,
   initialLongitude,
+  mapHeight,
+  sheetIndex,
 }: IProps) => {
+  const ref = useRef<MapView>(null);
   const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
+  const animRef = useRef<any>(null);
 
   const mapStyle = [
     {
@@ -82,60 +90,157 @@ export const Map = ({
     },
   ];
 
+  const initialRegion = {
+    latitude: initialLatitude,
+    longitude: initialLongitude,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  };
+
+  useEffect(() => {
+    if (sheetIndex === 0) {
+      animRef.current?.fadeIn();
+    }
+  }, [sheetIndex]);
+
   return (
-    <MapView
-      style={{ height: "100%" }}
-      initialRegion={{
-        latitude: initialLatitude,
-        longitude: initialLongitude,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      }}
-      customMapStyle={mapStyle}
-      provider={PROVIDER_GOOGLE}
-      showsUserLocation={true}
-    >
-      {locations?.map((loc: any, i: number) => (
-        <Marker
-          key={i}
-          coordinate={{
-            latitude: loc.address.coordinates[0],
-            longitude: loc.address.coordinates[1],
+    <View>
+      <MapView
+        ref={ref}
+        style={{ height: mapHeight }}
+        initialRegion={initialRegion}
+        customMapStyle={mapStyle}
+        provider={PROVIDER_GOOGLE}
+        showsUserLocation={true}
+      >
+        {locations?.map((loc: any, i: number) => (
+          <Marker
+            key={i}
+            coordinate={{
+              latitude: loc.address.coordinates[0],
+              longitude: loc.address.coordinates[1],
+            }}
+          >
+            <Pressable
+              style={{
+                backgroundColor: "white",
+                paddingVertical: 10,
+                paddingHorizontal: 15,
+                borderRadius: 20,
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+
+                elevation: 5,
+              }}
+            >
+              <Text style={{ fontWeight: "700" }}>{loc?.minPrice} lei</Text>
+            </Pressable>
+            <Callout
+              onPress={() =>
+                navigation.push("LocationItem", { locationId: loc?.id })
+              }
+            >
+              <Stack align="start" sx={styles.callOut}>
+                <Text style={styles.name}>{loc.name}</Text>
+                <Stack direction="row">
+                  <Text>{serviceName}</Text>
+                  <Text style={styles.from}>{t("from")}</Text>
+                  <Text style={styles.price}>{loc.minPrice}</Text>
+                </Stack>
+                <Stack direction="row" sx={styles.ratingsC}>
+                  <IconStar />
+                  <Text style={styles.ratingsAvg}>{loc.ratingsAverage}</Text>
+                  <Text style={styles.ratingsQuant}>
+                    {loc.ratingsQuantity} {t("reviews")}
+                  </Text>
+                </Stack>
+                <View style={styles.distanceC}>
+                  <IconLocation />
+                  <Text style={styles.distance}>
+                    {t("at")} {Math.round(loc.distance)} {t("kmFromYou")}
+                  </Text>
+                </View>
+              </Stack>
+            </Callout>
+          </Marker>
+        ))}
+      </MapView>
+      {sheetIndex === 0 && (
+        <Animatable.View
+          ref={animRef}
+          style={{
+            position: "absolute",
+            right: 0,
+            top: 25,
+            marginRight: 15,
           }}
         >
-          <Pressable style={styles.priceLabel}>
-            <Text style={{ fontWeight: "700" }}>{loc?.minPrice} lei</Text>
-          </Pressable>
-          <Callout
-            onPress={() =>
-              navigation.push("LocationItem", { locationId: loc?.id })
-            }
+          <Pressable
+            onPress={() => {
+              ref.current?.animateToRegion(initialRegion);
+            }}
+            style={{
+              backgroundColor: "white",
+              padding: 10,
+              borderRadius: 15,
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+
+              elevation: 5,
+            }}
           >
-            <Stack align="start" sx={styles.callOut}>
-              <Text style={styles.name}>{loc.name}</Text>
-              <Stack direction="row">
-                <Text>{serviceName}</Text>
-                <Text style={styles.from}>{t("from")}</Text>
-                <Text style={styles.price}>{loc.minPrice}</Text>
-              </Stack>
-              <Stack direction="row" sx={styles.ratingsC}>
-                <IconStar />
-                <Text style={styles.ratingsAvg}>{loc.ratingsAverage}</Text>
-                <Text style={styles.ratingsQuant}>
-                  {loc.ratingsQuantity} {t("reviews")}
-                </Text>
-              </Stack>
-              <View style={styles.distanceC}>
-                <IconLocation />
-                <Text style={styles.distance}>
-                  {t("at")} {Math.round(loc.distance)} {t("kmFromYou")}
-                </Text>
-              </View>
-            </Stack>
-          </Callout>
-        </Marker>
-      ))}
-    </MapView>
+            <Icon name="navigation" type="feather" color={black} size={22.5} />
+          </Pressable>
+          <Pressable
+            style={{
+              backgroundColor: "white",
+              padding: 10,
+              borderRadius: 15,
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+
+              elevation: 5,
+              marginVertical: 10,
+            }}
+          >
+            <Icon name="plus" type="feather" color={black} size={22.5} />
+          </Pressable>
+          <Pressable
+            style={{
+              backgroundColor: "white",
+              padding: 10,
+              borderRadius: 15,
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+
+              elevation: 5,
+            }}
+          >
+            <Icon name="minus" type="feather" color={black} size={22.5} />
+          </Pressable>
+        </Animatable.View>
+      )}
+    </View>
   );
 };
 
@@ -179,15 +284,5 @@ const styles = StyleSheet.create({
   price: {
     marginLeft: 2.5,
     fontSize: 13.5,
-  },
-  priceLabel: {
-    backgroundColor: "white",
-    paddingHorizontal: 10,
-    paddingVertical: 7.5,
-    borderRadius: 50,
-    shadowColor: "#171717",
-    shadowOffset: { width: -2, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
   },
 });

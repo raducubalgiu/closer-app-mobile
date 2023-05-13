@@ -11,10 +11,18 @@ import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import theme from "../../../../assets/styles/theme";
 import { trimFunc, AddressFormat } from "../../../utils";
-import { IconLocation, IconStar, Stack } from "../../core";
+import {
+  CustomAvatar,
+  IconLocation,
+  IconStar,
+  Rating,
+  Stack,
+} from "../../core";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/rootStackParams";
-import { Location } from "../../../ts";
+import { Location, Option, Service } from "../../../ts";
+import { round } from "lodash";
+import { Divider } from "@rneui/themed";
 
 const { width } = Dimensions.get("window");
 const { black, grey0 } = theme.lightColors || {};
@@ -23,16 +31,10 @@ type IProps = {
   location: Location;
   service: any;
   option: any;
-  moreProducts: any;
 };
 
-const LocationListItem = ({
-  location,
-  service,
-  option,
-  moreProducts,
-}: IProps) => {
-  const { imageCover, minPrice, distance, ownerId, address } = location;
+const LocationListItem = ({ location, service, option }: IProps) => {
+  const { imageCover, minPrice, distance, ownerId, address, review } = location;
   const { name, username } = ownerId;
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -48,7 +50,7 @@ const LocationListItem = ({
 
   return (
     <Pressable onPress={goToUser}>
-      <Stack direction="row" sx={styles.container}>
+      <Stack direction="row" align="start" sx={styles.container}>
         <Stack sx={styles.imageC}>
           <Image style={styles.image} source={{ uri: imageCover?.url }} />
         </Stack>
@@ -56,33 +58,56 @@ const LocationListItem = ({
           <Stack align="start">
             <Text style={styles.business}>{name}</Text>
             <Text style={styles.address}>
-              {trimFunc(
-                `${address?.street}, ${address?.number}, ${address?.city}`,
-                30
-              )}
+              {trimFunc(`${address?.street}, ${address?.number}`, 30)}
             </Text>
-            <Stack direction="row" sx={styles.ratings}>
-              <IconStar />
+            <Stack direction="row" justify="start">
               <Text style={styles.ratingsAverage}>
-                {ownerId?.ratingsAverage}
+                {ownerId.ratingsAverage}
               </Text>
-              <Text style={styles.point}>{"\u2B24"}</Text>
+              <View>
+                <Rating rating={round(ownerId.ratingsAverage)} size={12.5} />
+              </View>
               <Text style={styles.ratingsQuantity}>
-                {ownerId?.ratingsQuantity} {t("reviews")}
+                ({ownerId.ratingsQuantity})
               </Text>
             </Stack>
           </Stack>
-          <Stack align="start">
-            <Text style={styles.option}>{option?.name}</Text>
+          <Stack direction="row" justify="start">
+            <Text style={styles.option}>{service?.name}</Text>
+            <Text style={{ ...styles.option, marginLeft: 5 }}>
+              {option?.name}
+            </Text>
           </Stack>
-          <Stack align="end">
-            <Stack direction="row" align="end">
-              {moreProducts && <Text style={styles.from}>de la</Text>}
+          {review && (
+            <Stack direction="row" sx={{ marginTop: 5 }}>
+              <CustomAvatar avatar="" size={20} />
+              <Text
+                style={{
+                  marginLeft: 10,
+                  color: black,
+                  flex: 1,
+                  fontStyle: "italic",
+                }}
+              >
+                "{trimFunc(`${review?.review}`, 100)}"
+              </Text>
+            </Stack>
+          )}
+          <Stack direction="row" sx={{ marginTop: 10 }} justify="end">
+            <Stack direction="row">
+              <Text style={styles.from}>de la</Text>
               <Text style={styles.price}>{minPrice} Lei</Text>
             </Stack>
-            <Stack direction="row" sx={styles.distanceC}>
-              <IconLocation size={15} />
-              <Text style={styles.distance}>{distance} km</Text>
+            <Divider
+              orientation="vertical"
+              style={{ marginHorizontal: 10 }}
+              color="#ddd"
+            />
+            <Stack direction="row">
+              <Stack direction="row">
+                <IconLocation size={15} />
+                <Text style={styles.distance}>la {distance} km</Text>
+              </Stack>
             </Stack>
           </Stack>
         </View>
@@ -97,20 +122,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginHorizontal: 15,
-    marginBottom: 30,
   },
   imageC: {
     width: width / 3.25,
+    height: 150,
   },
   image: {
-    flex: 1,
-    width: "100%",
+    ...StyleSheet.absoluteFillObject,
+    width: undefined,
+    height: undefined,
     resizeMode: "cover",
-    borderRadius: 15,
+    borderRadius: 7.5,
   },
   content: {
     flex: 1,
-    paddingVertical: 5,
     paddingLeft: 15,
     paddingRight: 10,
   },
@@ -122,17 +147,19 @@ const styles = StyleSheet.create({
   address: {
     color: grey0,
     marginTop: 1,
-    fontSize: 13,
   },
   ratings: {
     marginVertical: 5,
   },
   ratingsAverage: {
-    marginLeft: 2.5,
+    marginRight: 7.5,
     fontWeight: "600",
+    fontSize: 14.5,
+    color: black,
   },
   ratingsQuantity: {
     color: grey0,
+    fontSize: 13,
   },
   option: {
     fontWeight: "500",
@@ -156,7 +183,9 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 15.5,
     marginLeft: 5,
-    fontWeight: "700",
+    fontWeight: "600",
+    color: black,
+    textTransform: "lowercase",
   },
   from: {
     fontSize: 12,
@@ -165,14 +194,10 @@ const styles = StyleSheet.create({
     marginTop: 5,
     fontSize: 13,
   },
-  distanceC: {
-    marginTop: 7.5,
-  },
   distance: {
     marginLeft: 2.5,
     fontSize: 13,
     color: black,
     fontWeight: "600",
   },
-  point: { fontSize: 3, color: grey0, marginHorizontal: 5 },
 });

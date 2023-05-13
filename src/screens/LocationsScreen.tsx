@@ -1,13 +1,11 @@
 import {
-  SafeAreaView,
   StyleSheet,
   View,
   Text,
   ListRenderItemInfo,
-  Dimensions,
-  Pressable,
+  useWindowDimensions,
 } from "react-native";
-import { Icon } from "@rneui/themed";
+import { Divider } from "@rneui/themed";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useState, useCallback, useRef, useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -18,22 +16,27 @@ import { useGet } from "../hooks";
 import theme from "../../assets/styles/theme";
 import { RootStackParams } from "../navigation/rootStackParams";
 import { Location } from "../ts";
-import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
-import { Spinner, Stack } from "../components/core";
-import * as Animatable from "react-native-animatable";
+import BottomSheet, {
+  BottomSheetFlatList,
+  BottomSheetView,
+} from "@gorhom/bottom-sheet";
+import { Spinner } from "../components/core";
 
 const { black } = theme.lightColors || {};
-const { height } = Dimensions.get("window");
 type IProps = NativeStackScreenProps<RootStackParams, "Locations">;
+
+const SHEET_HEADER = 75;
+const HEADER_HEIGHT = 160;
 
 export const LocationsScreen = ({ route }: IProps) => {
   const { service, option, period, longitude, latitude } = route.params;
   const sheetRef = useRef<BottomSheet>(null);
   const insets = useSafeAreaInsets();
-  const fullHeight = height - insets.top - insets.bottom + 40;
-  const snapPoints = useMemo(() => [90, fullHeight], []);
-  const [defaultAnim, setDefAnim] = useState("");
-  const [showMapButton, setShowMapButton] = useState(true);
+  const { height } = useWindowDimensions();
+  const fullHeight = height - HEADER_HEIGHT + SHEET_HEADER;
+  const mapHeight = height - HEADER_HEIGHT - insets.top - 50;
+  const snapPoints = useMemo(() => [100, height / 2, fullHeight], []);
+  const [sheetIndex, setSheetIndex] = useState(1);
 
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(10000);
@@ -43,22 +46,19 @@ export const LocationsScreen = ({ route }: IProps) => {
 
   const {
     data: locations,
-    isLoading,
     isFetching,
+    isLoading,
   } = useGet<Location[]>({
     model: "locations",
     uri: `/locations?latlng=${longitude},${latitude}&serviceId=${service?.id}&option=${option?._id}&minprice=${minPrice}&maxprice=${maxPrice}&mindistance=${minDistance}&maxdistance=${maxDistance}&minrating=0&maxrating=5&page=1&limit=25`,
   });
 
+  const loading = isFetching || isLoading;
+
   const renderLocation = useCallback(
     ({ item }: ListRenderItemInfo<Location>) => {
       return (
-        <LocationListItem
-          location={item}
-          service={service}
-          option={option}
-          moreProducts={item.products.length > 1}
-        />
+        <LocationListItem location={item} service={service} option={option} />
       );
     },
     []
@@ -78,102 +78,81 @@ export const LocationsScreen = ({ route }: IProps) => {
 
   const header = (
     <>
-      <View style={{ height: 50, marginBottom: 20 }}>
+      <View
+        style={{
+          height: SHEET_HEADER,
+          marginTop: 7.5,
+          alignItems: "center",
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: "#ddd",
+            width: 45,
+            height: 4,
+            borderRadius: 2.5,
+          }}
+        />
         <Text style={styles.sheetHeading}>
-          {locations && locations?.length} rezultate
+          {locations && locations?.length} {t("results")}
         </Text>
       </View>
-      {(isLoading || isFetching) && <Spinner />}
+      <Divider color="#eee" style={{ marginBottom: 15 }} />
     </>
   );
 
-  const handleOnChange = (index: number) => {
-    if (index === 1) {
-      setDefAnim("fadeIn");
-      setShowMapButton(true);
-    } else {
-      setDefAnim("fadeOut");
-      setShowMapButton(false);
-    }
-  };
+  const handleOnChange = useCallback((index: number) => {
+    setSheetIndex(index);
+  }, []);
 
   return (
-    <SafeAreaView style={styles.screen}>
+    <View style={styles.screen}>
       <HeaderServices
-        details={`${option?.name}, 23 aug - 31 aug, Orice ora`}
+        headerHeight={HEADER_HEIGHT}
         service={service}
+        option={option}
         period={period}
+        onShowMap={() => sheetRef.current?.snapToIndex(0)}
       />
       <Map
         locations={locations}
         serviceName={service?.name}
         initialLatitude={latitude}
         initialLongitude={longitude}
+        mapHeight={mapHeight}
+        sheetIndex={sheetIndex}
       />
       <BottomSheet
         ref={sheetRef}
         snapPoints={snapPoints}
         handleIndicatorStyle={styles.indicatorStyle}
+        handleStyle={{ padding: 0 }}
         animateOnMount={false}
         index={1}
-        containerStyle={{ flex: 1 }}
         onChange={handleOnChange}
       >
-        <BottomSheetFlatList
-          ListHeaderComponent={header}
-          showsVerticalScrollIndicator={false}
-          data={locations}
-          keyExtractor={keyExtractor}
-          renderItem={renderLocation}
-          ListFooterComponent={footer}
-        />
+        {!loading && (
+          <BottomSheetFlatList
+            ListHeaderComponent={header}
+            data={locations}
+            keyExtractor={keyExtractor}
+            renderItem={renderLocation}
+            ListFooterComponent={footer}
+            ItemSeparatorComponent={() => (
+              <Divider style={{ marginVertical: 15 }} color="#ddd" />
+            )}
+            contentContainerStyle={{
+              paddingBottom: insets.bottom,
+            }}
+          />
+        )}
+        {loading && (
+          <BottomSheetView style={{ flex: 1 }}>
+            <Spinner />
+          </BottomSheetView>
+        )}
       </BottomSheet>
-      {showMapButton && (
-        <Animatable.View
-          animation={defaultAnim}
-          style={{
-            position: "absolute",
-            bottom: insets.bottom + 70,
-            left: 0,
-            right: 0,
-            alignItems: "center",
-            justifyContent: "center",
-            flex: 1,
-          }}
-        >
-          <Pressable
-            onPress={() => {
-              console.log("Pressed!!");
-              sheetRef?.current?.snapToIndex(0);
-            }}
-            style={{
-              backgroundColor: "#333333",
-              paddingVertical: 11.5,
-              paddingHorizontal: 25,
-              borderRadius: 50,
-              shadowColor: "#171717",
-              shadowOffset: { width: -3, height: 3 },
-              shadowOpacity: 0.2,
-              shadowRadius: 5,
-            }}
-          >
-            <Stack direction="row">
-              <Icon name="map-pin" type="feather" color="white" size={20} />
-              <Text
-                style={{
-                  color: "white",
-                  marginLeft: 5,
-                  fontWeight: "600",
-                  fontSize: 15.5,
-                }}
-              >
-                Hartă
-              </Text>
-            </Stack>
-          </Pressable>
-        </Animatable.View>
-      )}
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -187,11 +166,9 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: "center",
     fontWeight: "600",
-    marginTop: 10,
+    marginTop: 15,
   },
   indicatorStyle: {
-    backgroundColor: "#ddd",
-    width: 45,
-    height: 5,
+    display: "none",
   },
 });

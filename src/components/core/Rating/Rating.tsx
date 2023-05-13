@@ -1,11 +1,13 @@
 import { Icon } from "@rneui/themed";
 import Stack from "../Stack/Stack";
 import theme from "../../../../assets/styles/theme";
-import { View } from "react-native";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
 const { primary } = theme.lightColors || {};
 
-const Rating = ({ rating, sx }: { rating: number; sx?: {} }) => {
+type IProps = { rating: number; sx?: {}; size?: number };
+
+const Rating = ({ rating, sx = {}, size = 16 }: IProps) => {
   let ratings = [];
 
   for (let i = 1; i <= 5; i++) {
@@ -14,14 +16,14 @@ const Rating = ({ rating, sx }: { rating: number; sx?: {} }) => {
         name="star-fill"
         type="octicon"
         color={i <= rating ? primary : "#ddd"}
-        size={16}
+        size={size}
         style={{ marginRight: 7.5 }}
       />
     );
   }
 
   return (
-    <Stack direction="row" sx={{ marginVertical: 5, flex: 1, ...sx }}>
+    <Stack direction="row" sx={{ ...styles.container, ...sx }}>
       {ratings.map((r, i) => (
         <View key={i}>{r}</View>
       ))}
@@ -30,3 +32,10 @@ const Rating = ({ rating, sx }: { rating: number; sx?: {} }) => {
 };
 
 export default Rating;
+
+const styles = StyleSheet.create({
+  container: {
+    marginVertical: 5,
+    flex: 1,
+  },
+});

@@ -5,7 +5,7 @@ import {
   useWindowDimensions,
   StyleSheet,
 } from "react-native";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -38,6 +38,7 @@ export const FiltersDateScreen = ({ route }: IProps) => {
   const { service, defaultPeriod, screen } = route.params;
   const [visible, setVisible] = useState(false);
   const [activeHours, setActiveHours] = useState(0);
+  const animRef = useRef<any>(null);
   const { minutes } = useMinutes();
   const [period, setPeriod] = useState<Period>(defaultPeriod);
   const { startDate, endDate, startMinutes, endMinutes, key } = period;
@@ -141,6 +142,14 @@ export const FiltersDateScreen = ({ route }: IProps) => {
     period.key === "anytime" ||
     period.key === "weekend";
 
+  useEffect(() => {
+    if (showBtnHours) {
+      animRef.current?.fadeIn();
+    } else {
+      animRef.current?.fadeOut();
+    }
+  }, [period]);
+
   return (
     <View style={{ flex: 1, backgroundColor: primary }}>
       <SafeAreaView style={{ justifyContent: "space-between" }}>
@@ -226,19 +235,14 @@ export const FiltersDateScreen = ({ route }: IProps) => {
         }}
       >
         <Stack direction="row">
-          {showBtnHours && (
-            <Animatable.View
-              animation={showBtnHours ? "slideInLeft" : "None"}
-              duration={150}
-            >
-              <ButtonGroup
-                onPress={() => setVisible((visible) => !visible)}
-                buttons={hoursButtons}
-                activeBtn={activeHours}
-                sx={{ marginRight: 15 }}
-              />
-            </Animatable.View>
-          )}
+          <Animatable.View ref={animRef}>
+            <ButtonGroup
+              onPress={() => setVisible((visible) => !visible)}
+              buttons={hoursButtons}
+              activeBtn={activeHours}
+              sx={{ marginRight: 15 }}
+            />
+          </Animatable.View>
           <View style={{ flex: 1 }}>
             <Button title={t("next")} onPress={goNext} disabled={disabled()} />
           </View>

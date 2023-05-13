@@ -1,23 +1,46 @@
-import { Pressable, StyleSheet, Text } from "react-native";
+import {
+  FlatList,
+  ListRenderItemInfo,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { Icon } from "@rneui/themed";
 import theme from "../../../../../assets/styles/theme";
 import { Stack } from "../../../core";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
-import { Period, Service } from "../../../../ts";
+import { Option, Period, Service } from "../../../../ts";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useCallback } from "react";
+import { dayMonthFormat } from "../../../../utils/date-utils";
+import { useTranslation } from "react-i18next";
+import dayjs from "dayjs";
 
-const { grey0, black } = theme.lightColors || {};
+const { black } = theme.lightColors || {};
 
 type IProps = {
   service: Service;
-  details: string;
+  option: Option | null;
   period: Period;
+  headerHeight: number;
+  onShowMap: () => void;
 };
 
-export const HeaderServices = ({ service, details, period }: IProps) => {
+export const HeaderServices = ({
+  service,
+  option,
+  period,
+  headerHeight,
+  onShowMap,
+}: IProps) => {
+  const insets = useSafeAreaInsets();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
+  const { startDate, endDate, key, startMinutes, endMinutes } = period;
+  const { t } = useTranslation("common");
 
   const navigateToFilters = () => {
     navigation.push("FiltersDate", {
@@ -27,67 +50,150 @@ export const HeaderServices = ({ service, details, period }: IProps) => {
     });
   };
 
+  const btnFilters = [
+    { title: "Hartă" },
+    { title: "Toate Filtrele" },
+    { title: "Preţ" },
+    { title: "Distanţă" },
+    { title: "Rating" },
+  ];
+
+  const renderFilterBtn = useCallback(({ item }: ListRenderItemInfo<any>) => {
+    return (
+      <Pressable
+        onPress={onShowMap}
+        style={{
+          paddingVertical: 3.5,
+          paddingHorizontal: 15,
+          borderWidth: 1.25,
+          borderColor: "#eee",
+          borderRadius: 10,
+          marginRight: 7.5,
+          backgroundColor: "white",
+        }}
+      >
+        <Stack direction="row">
+          <Text style={{ fontWeight: "500", fontSize: 13.5, color: black }}>
+            {item.title}
+          </Text>
+          <Icon name="keyboard-arrow-down" />
+        </Stack>
+      </Pressable>
+    );
+  }, []);
+
   return (
-    <Stack sx={styles.container}>
-      <Stack direction="row">
+    <View
+      style={{
+        ...styles.container,
+        paddingTop: insets.top,
+        height: headerHeight,
+      }}
+    >
+      <Stack direction="row" sx={{ marginHorizontal: 15 }}>
         <Pressable onPress={() => navigation.popToTop()} style={styles.back}>
           <Icon name="arrow-back-ios" size={21} color={black} />
         </Pressable>
-        <Stack direction="row" sx={styles.search}>
-          <Pressable onPress={navigateToFilters}>
+        <Pressable onPress={navigateToFilters} style={styles.search}>
+          <Stack direction="row">
             <Stack direction="row">
-              <Stack direction="row">
-                <Icon
-                  name="search"
-                  size={20}
-                  color={black}
-                  style={{ padding: 5 }}
-                />
-                <Stack
-                  align="start"
-                  justify="center"
-                  sx={{ marginHorizontal: 5, height: 40 }}
-                >
-                  <Stack direction="row" sx={{ marginBottom: 1.5 }}>
-                    <Text style={styles.service}>{service?.name}</Text>
-                    <Text style={styles.point}>{"\u2B24"}</Text>
-                    <Text style={styles.service}>Autoturisme</Text>
-                  </Stack>
-                  <Stack direction="row">
-                    <Text style={styles.period}>23 - 30 aug</Text>
-                    <Text style={styles.point}>{"\u2B24"}</Text>
-                    <Text style={styles.period}>14:00 ~ 16:00</Text>
-                  </Stack>
+              <Icon
+                name="search"
+                type="feather"
+                size={21}
+                color={black}
+                style={{ padding: 7.5 }}
+              />
+              <Stack
+                align="start"
+                justify="center"
+                sx={{ marginHorizontal: 5, height: 40 }}
+              >
+                <Stack direction="row" sx={{ marginBottom: 3.5 }}>
+                  <Text style={styles.service}>{service?.name}</Text>
+                  <Text style={styles.point}>{"\u2B24"}</Text>
+                  <Text style={styles.service}>{option?.name}</Text>
+                </Stack>
+                <Stack direction="row">
+                  <Text style={styles.period}>
+                    {startDate && endDate
+                      ? `${dayMonthFormat(startDate)} - ${dayMonthFormat(
+                          endDate
+                        )}`
+                      : t(key)}
+                  </Text>
+                  <Text style={styles.point}>{"\u2B24"}</Text>
+                  <Text style={styles.period}>
+                    {startMinutes && endMinutes
+                      ? `${dayjs()
+                          .utc(true)
+                          .startOf("day")
+                          .add(startMinutes, "minutes")
+                          .format("HH:mm")} - ${dayjs()
+                          .utc(true)
+                          .startOf("day")
+                          .add(endMinutes, "minutes")
+                          .format("HH:mm")}`
+                      : t("anyHour")}
+                  </Text>
                 </Stack>
               </Stack>
             </Stack>
-          </Pressable>
-          <Pressable onPress={() => navigation.navigate("LocationFilters")}>
-            <Icon
-              name="filter"
-              type="feather"
-              color={black}
-              size={17.5}
-              style={styles.filter}
-            />
-          </Pressable>
-        </Stack>
+          </Stack>
+        </Pressable>
       </Stack>
-    </Stack>
+      <View style={{ marginTop: 10 }}>
+        <FlatList
+          horizontal
+          data={btnFilters}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={renderFilterBtn}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ paddingLeft: 15 }}
+        />
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 15,
-    zIndex: 1000000,
-    height: 70,
-    justifyContent: "flex-start",
-    alignItems: "center",
     backgroundColor: "white",
-    borderBottomWidth: 1,
-    borderBottomColor: "#f1f1f1",
+    zIndex: 1000,
+    borderBottomWidth: 0.5,
+    borderBottomColor: "#eee",
+    marginTop: 5,
   },
+  search: {
+    backgroundColor: "white",
+    borderRadius: 20,
+    paddingHorizontal: 15,
+    flex: 1,
+    paddingVertical: 10,
+    shadowColor: "#737373",
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 7,
+  },
+  service: {
+    color: black,
+    fontWeight: "600",
+    fontSize: 16.5,
+  },
+  period: {
+    color: "#9294a0",
+    fontSize: 14.5,
+  },
+  item: {
+    marginRight: 5,
+  },
+  filter: {
+    padding: 10,
+    borderWidth: 1.5,
+    borderRadius: 50,
+    borderColor: "#eee",
+  },
+  point: { fontSize: 3, color: "#9294a0", marginHorizontal: 5 },
   back: {
     backgroundColor: "white",
     paddingVertical: 10,
@@ -100,35 +206,4 @@ const styles = StyleSheet.create({
     shadowRadius: 7,
     marginRight: 10,
   },
-  search: {
-    backgroundColor: "white",
-    borderRadius: 50,
-    paddingHorizontal: 15,
-    flex: 1,
-    paddingVertical: 7.5,
-    shadowColor: "#737373",
-    shadowOffset: { width: 1, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 7,
-  },
-  service: {
-    color: black,
-    fontWeight: "700",
-    fontSize: 15,
-  },
-  period: {
-    color: grey0,
-    fontWeight: "500",
-    fontSize: 12.5,
-  },
-  item: {
-    marginRight: 5,
-  },
-  filter: {
-    padding: 10,
-    borderWidth: 1.5,
-    borderRadius: 50,
-    borderColor: "#eee",
-  },
-  point: { fontSize: 3, color: grey0, marginHorizontal: 5 },
 });

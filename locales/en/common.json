@@ -522,5 +522,6 @@
   "invalidUsernameFormat": "Formatul introdus nu este acceptat",
   "usernameAlreadyTaken": "Acest nume de utilizator nu este disponibil",
   "usernameCanOnlyContainsDescription": " Numele utilizator pot conţine doar litere, numere, underscore şi puncte, iar lungimea acestuia trebuie să fie de maximum 24 de caractere",
-  "usernameCanBeChangedAfter30days": "Poţi schimba numele de utilizator numai o dată la 30 de zile"
+  "usernameCanBeChangedAfter30days": "Poţi schimba numele de utilizator numai o dată la 30 de zile",
+  "results": "rezultate"
 }

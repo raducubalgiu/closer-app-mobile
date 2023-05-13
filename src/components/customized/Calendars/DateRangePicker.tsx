@@ -11,6 +11,7 @@ import { useCallback, memo, useRef } from "react";
 import theme from "../../../../assets/styles/theme";
 import * as Haptics from "expo-haptics";
 import { Month, Day, Period } from "../../../ts";
+import * as Animatable from "react-native-animatable";
 
 const { width } = Dimensions.get("window");
 const { black, primary, grey0 } = theme.lightColors || {};
@@ -171,9 +172,9 @@ const DateRangePicker = ({
             disabled={item.prevDates}
             onPress={() => handleDayPress({ item, monthIndex: 0 })}
           >
-            <Text style={[styles.dayText, getColorTxt(item)]}>
+            <Animatable.Text style={[styles.dayText, getColorTxt(item)]}>
               {item.prevDates ? "" : item.date.format("D")}
-            </Text>
+            </Animatable.Text>
           </Pressable>
         </View>
       );

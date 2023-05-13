@@ -1,4 +1,5 @@
 import { Product } from "./product";
+import { Review } from "./review";
 import { Service } from "./service";
 import { User } from "./user";
 
@@ -24,4 +25,5 @@ export interface Location {
   services: Service[];
   minPrice: number;
   distance: number;
+  review: Review;
 }

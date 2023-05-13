@@ -1,12 +1,12 @@
 import { memo } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
 type IProps = {
   children: any;
   direction?: string;
   align?: string;
   justify?: string;
-  sx?: {};
+  sx?: ViewStyle;
 };
 
 const Stack = ({
