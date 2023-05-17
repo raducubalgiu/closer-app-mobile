@@ -1,5 +1,5 @@
-import { FlatList, useWindowDimensions } from "react-native";
-import { useCallback, useRef } from "react";
+import { FlatList, Pressable, useWindowDimensions } from "react-native";
+import { useCallback, useEffect, useRef } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
@@ -18,6 +18,8 @@ import { useVector, snapPoint } from "react-native-redash";
 import { RootStackParams } from "../../../navigation/rootStackParams";
 import PostListItem from "../../../components/customized/ListItems/Post/PostImageListItem";
 import { Header } from "../../../components/core";
+import * as Animatable from "react-native-animatable";
+import { Icon } from "@rneui/themed";
 
 type IProps = NativeStackScreenProps<RootStackParams, "UserAllPosts">;
 
@@ -28,6 +30,7 @@ export const UserAllPostsScreen = ({ route }: IProps) => {
   const navigation = useNavigation();
   const { height } = useWindowDimensions();
   const { t } = useTranslation();
+  const animRef = useRef<any>(null);
 
   const translation = useVector();
   const isGestureActive = useSharedValue(false);
@@ -67,6 +70,7 @@ export const UserAllPostsScreen = ({ route }: IProps) => {
       flex: 1,
       backgroundColor: "white",
       paddingTop: insets.top,
+      borderRadius: 40,
       transform: [
         { translateX: translation.x.value * scale },
         { translateY: translation.y.value * scale },
@@ -90,20 +94,36 @@ export const UserAllPostsScreen = ({ route }: IProps) => {
     []
   );
 
+  useEffect(() => {
+    animRef.current.zoomIn(600);
+  }, []);
+
   return (
-    <PanGestureHandler onGestureEvent={onGestureEvent}>
-      <Animated.View style={[style]}>
-        <Header title={t("posts")} />
-        <FlatList
-          ref={ref}
-          data={posts}
-          keyExtractor={keyExtractor}
-          renderItem={renderPost}
-          showsVerticalScrollIndicator={false}
-          getItemLayout={getItemLayout}
-          initialScrollIndex={index}
-        />
-      </Animated.View>
-    </PanGestureHandler>
+    <Animatable.View ref={animRef} style={{ flex: 1 }}>
+      <PanGestureHandler onGestureEvent={onGestureEvent}>
+        <Animated.View style={[style]}>
+          {/* <Header title={t("posts")} /> */}
+
+          <Pressable
+            onPress={() => {
+              animRef.current
+                .animate({ 0: { scale: 1 }, 1: { scale: 0.8 } })
+                .then(() => navigation.goBack());
+            }}
+          >
+            <Icon name="arrow-back-ios" size={21} />
+          </Pressable>
+          <FlatList
+            ref={ref}
+            data={posts}
+            keyExtractor={keyExtractor}
+            renderItem={renderPost}
+            showsVerticalScrollIndicator={false}
+            getItemLayout={getItemLayout}
+            initialScrollIndex={index}
+          />
+        </Animated.View>
+      </PanGestureHandler>
+    </Animatable.View>
   );
 };

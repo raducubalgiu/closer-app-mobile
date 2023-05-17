@@ -137,19 +137,6 @@ export const FiltersDateScreen = ({ route }: IProps) => {
       ? `${dayMonthFormat(startDate)} - ${dayMonthFormat(endDate)}`
       : displayDash(period.title);
 
-  const showBtnHours =
-    (period.key === "calendar" && startDate && endDate) ||
-    period.key === "anytime" ||
-    period.key === "weekend";
-
-  useEffect(() => {
-    if (showBtnHours) {
-      animRef.current?.fadeIn();
-    } else {
-      animRef.current?.fadeOut();
-    }
-  }, [period]);
-
   return (
     <View style={{ flex: 1, backgroundColor: primary }}>
       <SafeAreaView style={{ justifyContent: "space-between" }}>
@@ -235,14 +222,13 @@ export const FiltersDateScreen = ({ route }: IProps) => {
         }}
       >
         <Stack direction="row">
-          <Animatable.View ref={animRef}>
-            <ButtonGroup
-              onPress={() => setVisible((visible) => !visible)}
-              buttons={hoursButtons}
-              activeBtn={activeHours}
-              sx={{ marginRight: 15 }}
-            />
-          </Animatable.View>
+          <ButtonGroup
+            onPress={() => setVisible((visible) => !visible)}
+            buttons={hoursButtons}
+            activeBtn={activeHours}
+            sx={{ marginRight: 15 }}
+            disabled={period.key === "after18"}
+          />
           <View style={{ flex: 1 }}>
             <Button title={t("next")} onPress={goNext} disabled={disabled()} />
           </View>

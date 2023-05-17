@@ -1,7 +1,7 @@
 import { Icon } from "@rneui/themed";
 import Stack from "../Stack/Stack";
 import theme from "../../../../assets/styles/theme";
-import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 const { primary } = theme.lightColors || {};
 
@@ -17,7 +17,7 @@ const Rating = ({ rating, sx = {}, size = 16 }: IProps) => {
         type="octicon"
         color={i <= rating ? primary : "#ddd"}
         size={size}
-        style={{ marginRight: 7.5 }}
+        style={i === 5 ? {} : { marginRight: 7.5 }}
       />
     );
   }

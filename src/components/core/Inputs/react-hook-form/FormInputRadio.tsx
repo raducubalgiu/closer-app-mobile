@@ -1,7 +1,7 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Icon } from "@rneui/themed";
 import Stack from "../../Stack/Stack";
 import theme from "../../../../../assets/styles/theme";
-import { IconButton } from "../../IconButton/IconButton";
 
 const { black, primary, grey0 } = theme.lightColors || {};
 type IProps = {
@@ -24,27 +24,27 @@ export const FormInputRadio = ({
   sx,
 }: IProps) => {
   return (
-    <View>
-      <Stack direction="row">
-        <Text
-          style={{
-            ...styles.text,
-            fontWeight: variant === "normal" ? "400" : "500",
-          }}
-        >
-          {title}
-        </Text>
-        <IconButton
-          onPress={onPress}
-          name={checked ? "radio-button-on" : "radio-button-off-sharp"}
-          type="ionicon"
-          size={30}
-          color={color}
-          sx={{ paddingVertical: 12.5, paddingLeft: 10, ...sx }}
-        />
-      </Stack>
+    <Pressable onPress={onPress} style={{ paddingVertical: 12.5, ...sx }}>
+      <View>
+        <Stack direction="row" align="center">
+          <Text
+            style={{
+              ...styles.text,
+              fontWeight: variant === "normal" ? "400" : "500",
+            }}
+          >
+            {title}
+          </Text>
+          <Icon
+            name={checked ? "radio-button-on" : "radio-button-off-sharp"}
+            type="ionicon"
+            size={30}
+            color={color}
+          />
+        </Stack>
+      </View>
       {description && <Text style={styles.description}>{description}</Text>}
-    </View>
+    </Pressable>
   );
 };
 

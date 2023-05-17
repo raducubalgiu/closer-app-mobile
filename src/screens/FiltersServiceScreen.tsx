@@ -13,6 +13,7 @@ import { RootStackParams } from "../navigation/rootStackParams";
 import { Filter, Option } from "../ts";
 import { useGet } from "../hooks";
 import { displayDash } from "../utils";
+import { Spinner } from "../components/core";
 
 type IProps = NativeStackScreenProps<RootStackParams, "FiltersService">;
 
@@ -25,7 +26,7 @@ export const FiltersServiceScreen = ({ route }: IProps) => {
   const { t } = useTranslation("common");
   const filter = first(service?.filters);
 
-  const { data } = useGet<Filter>({
+  const { data, isLoading, isFetching } = useGet<Filter>({
     model: "filter",
     uri: `/filters/${filter?.id ? filter?.id : filter}`,
   });
@@ -49,6 +50,10 @@ export const FiltersServiceScreen = ({ route }: IProps) => {
       service,
       option,
       period,
+      sort: {
+        title: t("distance"),
+        query: "distance,ownerId.ratingsQuantity,smallestPrice",
+      },
     });
   };
 
@@ -76,12 +81,15 @@ export const FiltersServiceScreen = ({ route }: IProps) => {
       disabled={!option || loading}
       loading={loading}
     >
-      <FlatList
-        bounces={false}
-        data={data?.options}
-        keyExtractor={keyExtractor}
-        renderItem={renderOption}
-      />
+      {(!isFetching || !isLoading) && (
+        <FlatList
+          bounces={false}
+          data={data?.options}
+          keyExtractor={keyExtractor}
+          renderItem={renderOption}
+        />
+      )}
+      {(isLoading || isFetching) && <Spinner />}
     </FiltersContainer>
   );
 };

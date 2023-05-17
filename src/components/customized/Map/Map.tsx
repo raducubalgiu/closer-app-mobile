@@ -8,15 +8,15 @@ import { IconLocation, IconStar, Stack } from "../../core";
 import { RootStackParams } from "../../../navigation/rootStackParams";
 import { Icon } from "@rneui/themed";
 import * as Animatable from "react-native-animatable";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 const { grey0, black } = theme.lightColors || {};
 
 type IProps = {
   locations: any;
-  serviceName: string;
-  initialLatitude: number;
-  initialLongitude: number;
+  serviceName: string | undefined;
+  initialLatitude: number | undefined;
+  initialLongitude: number | undefined;
   mapHeight: number;
   sheetIndex: number;
 };
@@ -91,8 +91,8 @@ export const Map = ({
   ];
 
   const initialRegion = {
-    latitude: initialLatitude,
-    longitude: initialLongitude,
+    latitude: initialLatitude ? initialLatitude : 0.0922,
+    longitude: initialLongitude ? initialLongitude : 0.0421,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   };

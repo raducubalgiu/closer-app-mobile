@@ -6,9 +6,9 @@ import { Stack } from "../../core";
 
 const { black, grey0 } = theme.lightColors || {};
 
-type IProps = { onGoAnytime: () => void; onGoNow: () => void };
+type IProps = { onGoAnytime: () => void; onGoToday: () => void };
 
-export const FakeSearchBarServices = ({ onGoAnytime, onGoNow }: IProps) => {
+export const FakeSearchBarServices = ({ onGoAnytime, onGoToday }: IProps) => {
   const { t } = useTranslation("common");
 
   return (
@@ -20,7 +20,7 @@ export const FakeSearchBarServices = ({ onGoAnytime, onGoNow }: IProps) => {
         </Stack>
       </Pressable>
       <Divider orientation="vertical" style={{ marginRight: 15 }} />
-      <Pressable onPress={onGoNow} style={styles.nowBtn}>
+      <Pressable onPress={onGoToday} style={styles.todayBtn}>
         <Icon
           name="clock"
           type="feather"
@@ -28,7 +28,7 @@ export const FakeSearchBarServices = ({ onGoAnytime, onGoNow }: IProps) => {
           style={{ marginRight: 5 }}
           color={black}
         />
-        <Text style={styles.nowBtnText}>{t("now")}</Text>
+        <Text style={styles.nowBtnText}>{t("today")}</Text>
         <Icon name="keyboard-arrow-down" color={black} />
       </Pressable>
     </View>
@@ -45,13 +45,13 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     paddingHorizontal: 15,
     marginHorizontal: 10,
-    borderRadius: 2.5,
+    borderRadius: 10,
   },
   fakeInput: {
     marginLeft: 7.5,
     color: grey0,
   },
-  nowBtn: {
+  todayBtn: {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "white",

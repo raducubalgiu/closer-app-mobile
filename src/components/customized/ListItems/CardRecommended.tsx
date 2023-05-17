@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: undefined,
     backgroundColor: "#f1f1f1",
-    borderRadius: 1,
+    borderRadius: 2.5,
     resizeMode: "cover",
   },
   item: {

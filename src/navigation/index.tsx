@@ -73,6 +73,7 @@ import {
   LikesScreen,
   LocationsScreen,
   LocationFiltersScreen,
+  LocationSortScreen,
   MapScreen,
   MessagesScreen,
   MessageNewScreen,
@@ -92,6 +93,7 @@ import {
   PrivacyTagsScreen,
   ProductReviewsScreen,
   ReportAProblemScreen,
+  ReportsListScreen,
   ReportUserScreen,
   ScheduleCancelScreen,
   ScheduleConfirmScreen,
@@ -174,7 +176,12 @@ const AppNavigation = () => {
             <Stack.Screen
               name="LocationFilters"
               component={LocationFiltersScreen}
-              options={{ presentation: "modal" }}
+              options={{ presentation: "modal", gestureEnabled: false }}
+            />
+            <Stack.Screen
+              name="LocationSort"
+              component={LocationSortScreen}
+              options={{ presentation: "modal", gestureEnabled: false }}
             />
             <Stack.Screen name="EditProfile" component={EditProfileScreen} />
             <Stack.Screen name="EditName" component={EditNameScreen} />
@@ -333,6 +340,7 @@ const AppNavigation = () => {
               name="ReportAProblem"
               component={ReportAProblemScreen}
             />
+            <Stack.Screen name="ReportsList" component={ReportsListScreen} />
             <Stack.Screen
               name="ScheduleDetails"
               component={ScheduleDetailsScreen}

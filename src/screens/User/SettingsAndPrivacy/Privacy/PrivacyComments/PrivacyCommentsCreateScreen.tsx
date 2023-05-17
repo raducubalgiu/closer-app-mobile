@@ -1,5 +1,11 @@
-import { SafeAreaView, StyleSheet, View } from "react-native";
-import { useState } from "react";
+import {
+  FlatList,
+  ListRenderItemInfo,
+  SafeAreaView,
+  StyleSheet,
+  View,
+} from "react-native";
+import { useCallback, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Divider } from "@rneui/themed";
 import { useTranslation } from "react-i18next";
@@ -39,6 +45,8 @@ export const PrivacyCommentsCreateScreen = () => {
 
   const handleUpdate = () => mutate({ comments: { ...comments, create } });
 
+  type InputProps = { title: string; action: string };
+
   const inputs = [
     { title: t("allPeople"), action: CommentsViewCreateEnum.ALL },
     { title: t("nobody"), action: CommentsViewCreateEnum.NOBODY },
@@ -48,24 +56,30 @@ export const PrivacyCommentsCreateScreen = () => {
     },
   ];
 
+  const renderFormRadio = useCallback(
+    ({ item }: ListRenderItemInfo<InputProps>) => (
+      <FormInputRadio
+        title={item.title}
+        checked={create === item.action}
+        onPress={() => setCreate(item.action)}
+        variant="normal"
+      />
+    ),
+    [create]
+  );
+
   return (
     <SafeAreaView style={styles.screen}>
       <Header title={t("privacyCommentsCreateTitle")} />
       <View style={styles.container}>
         <View>
           <Heading title={t("whoCanCommentToYourPosts")} />
-          {inputs.map((input, i) => (
-            <View key={i}>
-              <FormInputRadio
-                title={input.title}
-                checked={create === input.action}
-                onPress={() => setCreate(input.action)}
-                variant="normal"
-                sx={{ paddingBottom: 0 }}
-              />
-              <Divider color="#ddd" style={styles.divider} />
-            </View>
-          ))}
+          <FlatList
+            data={inputs}
+            keyExtractor={(_, index) => index.toString()}
+            renderItem={renderFormRadio}
+            ItemSeparatorComponent={() => <Divider />}
+          />
         </View>
         <Button
           title={t("save")}
@@ -84,5 +98,4 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   container: { margin: 15, justifyContent: "space-between", flex: 1 },
-  divider: { marginVertical: 10 },
 });

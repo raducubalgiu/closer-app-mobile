@@ -57,9 +57,9 @@ export const HomeScreen = () => {
       },
     });
 
-  const goToServicesNow = () =>
+  const goToServicesToday = () =>
     navigation.navigate("SearchServices", {
-      screen: "FixedPeriod",
+      screen: "FixedPeriods",
       defaultPeriod: {
         title: "",
         description: "",
@@ -67,7 +67,7 @@ export const HomeScreen = () => {
         endDate: null,
         startMinutes: null,
         endMinutes: null,
-        key: "now",
+        key: "today",
         monthIndex: 0,
       },
     });
@@ -91,7 +91,7 @@ export const HomeScreen = () => {
     <SafeAreaView style={styles.screen}>
       <FakeSearchBarServices
         onGoAnytime={goToServicesAnytime}
-        onGoNow={goToServicesNow}
+        onGoToday={goToServicesToday}
       />
       <MasonryFlashList
         refreshControl={refreshControl}

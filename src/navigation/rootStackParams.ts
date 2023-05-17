@@ -106,14 +106,24 @@ export type RootStackParams = {
   LanguageTranslation: any;
   Login: any;
   Locations: {
-    service: Service;
-    option: Option | null;
-    period: Period;
-    longitude: number;
-    latitude: number;
+    service?: Service;
+    option?: Option | null;
+    period?: Period;
+    longitude?: number;
+    latitude?: number;
+    sort: {
+      title: string;
+      query: string;
+    };
   };
   LocationItem: { locationId: string };
   LocationFilters: any;
+  LocationSort: {
+    sort: {
+      title: string;
+      query: string;
+    };
+  };
   Likes: { postId: string };
   Map: {
     profession: string;
@@ -168,6 +178,7 @@ export type RootStackParams = {
   Register: any;
   RegisterBusiness: any;
   ReportAProblem: any;
+  ReportsList: any;
   ReportUser: any;
   SavingData: any;
   Settings: any;

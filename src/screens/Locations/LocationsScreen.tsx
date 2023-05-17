@@ -7,20 +7,24 @@ import {
 } from "react-native";
 import { Divider } from "@rneui/themed";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useState, useCallback, useRef, useMemo } from "react";
-import { useTranslation } from "react-i18next";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { HeaderServices, Map, NoFoundMessage } from "../components/customized";
-import LocationListItem from "../components/customized/ListItems/LocationListItem";
-import { useGet } from "../hooks";
-import theme from "../../assets/styles/theme";
-import { RootStackParams } from "../navigation/rootStackParams";
-import { Location } from "../ts";
 import BottomSheet, {
   BottomSheetFlatList,
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
-import { Spinner } from "../components/core";
+import { useState, useCallback, useRef, useMemo } from "react";
+import { useTranslation } from "react-i18next";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import {
+  HeaderServices,
+  Map,
+  NoFoundMessage,
+} from "../../components/customized";
+import LocationListItem from "../../components/customized/ListItems/LocationListItem";
+import { useGet } from "../../hooks";
+import theme from "../../../assets/styles/theme";
+import { RootStackParams } from "../../navigation/rootStackParams";
+import { Location } from "../../ts";
+import { Spinner } from "../../components/core";
 
 const { black } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "Locations">;
@@ -29,7 +33,7 @@ const SHEET_HEADER = 75;
 const HEADER_HEIGHT = 160;
 
 export const LocationsScreen = ({ route }: IProps) => {
-  const { service, option, period, longitude, latitude } = route.params;
+  const { service, option, period, longitude, latitude, sort } = route.params;
   const sheetRef = useRef<BottomSheet>(null);
   const insets = useSafeAreaInsets();
   const { height } = useWindowDimensions();
@@ -50,7 +54,7 @@ export const LocationsScreen = ({ route }: IProps) => {
     isLoading,
   } = useGet<Location[]>({
     model: "locations",
-    uri: `/locations?latlng=${longitude},${latitude}&serviceId=${service?.id}&option=${option?._id}&minprice=${minPrice}&maxprice=${maxPrice}&mindistance=${minDistance}&maxdistance=${maxDistance}&minrating=0&maxrating=5&page=1&limit=25`,
+    uri: `/locations?page=1&limit=25&latlng=${longitude},${latitude}&serviceId=${service?.id}&option=${option?._id}&minprice=${minPrice}&maxprice=${maxPrice}&mindistance=${minDistance}&maxdistance=${maxDistance}&minrating=0&maxrating=5&sort=${sort.query}`,
   });
 
   const loading = isFetching || isLoading;
@@ -70,7 +74,7 @@ export const LocationsScreen = ({ route }: IProps) => {
   if (locations && locations.length === 0) {
     footer = (
       <NoFoundMessage
-        title={service.name}
+        title={service?.name}
         description={t("noFoundLocations")}
       />
     );
@@ -112,6 +116,7 @@ export const LocationsScreen = ({ route }: IProps) => {
         service={service}
         option={option}
         period={period}
+        sort={sort}
         onShowMap={() => sheetRef.current?.snapToIndex(0)}
       />
       <Map

@@ -30,13 +30,6 @@ const ProfileNavigator = () => {
         presentation: "card",
         detachPreviousScreen: false,
         animationEnabled: false,
-        cardStyleInterpolator: ({ current: { progress } }) => {
-          return {
-            cardStyle: {
-              opacity: progress,
-            },
-          };
-        },
       }}
     >
       <Stack.Screen name="Profile" component={ProfileScreen} />

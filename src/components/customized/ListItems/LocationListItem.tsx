@@ -10,27 +10,20 @@ import { memo } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import theme from "../../../../assets/styles/theme";
-import { trimFunc, AddressFormat } from "../../../utils";
-import {
-  CustomAvatar,
-  IconLocation,
-  IconStar,
-  Rating,
-  Stack,
-} from "../../core";
+import { trimFunc } from "../../../utils";
+import { CustomAvatar, IconLocation, Rating, Stack } from "../../core";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/rootStackParams";
 import { Location, Option, Service } from "../../../ts";
-import { round } from "lodash";
 import { Divider } from "@rneui/themed";
 
 const { width } = Dimensions.get("window");
-const { black, grey0 } = theme.lightColors || {};
+const { black, grey0, primary } = theme.lightColors || {};
 
 type IProps = {
   location: Location;
-  service: any;
-  option: any;
+  service: Service | undefined;
+  option: Option | null | undefined;
 };
 
 const LocationListItem = ({ location, service, option }: IProps) => {
@@ -40,13 +33,16 @@ const LocationListItem = ({ location, service, option }: IProps) => {
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation("common");
 
-  const goToUser = () =>
-    navigation.push("ProfileGeneral", {
-      screen: `Products`,
-      username,
-      service,
-      option,
-    });
+  const goToUser = () => {
+    if (option && service) {
+      navigation.push("ProfileGeneral", {
+        screen: `Products`,
+        username,
+        service: service?.id,
+        option: option?.id,
+      });
+    }
+  };
 
   return (
     <Pressable onPress={goToUser}>
@@ -60,27 +56,29 @@ const LocationListItem = ({ location, service, option }: IProps) => {
             <Text style={styles.address}>
               {trimFunc(`${address?.street}, ${address?.number}`, 30)}
             </Text>
-            <Stack direction="row" justify="start">
-              <Text style={styles.ratingsAverage}>
-                {ownerId.ratingsAverage}
-              </Text>
-              <View>
-                <Rating rating={round(ownerId.ratingsAverage)} size={12.5} />
-              </View>
-              <Text style={styles.ratingsQuantity}>
-                ({ownerId.ratingsQuantity})
-              </Text>
-            </Stack>
           </Stack>
-          <Stack direction="row" justify="start">
+          <Stack direction="row" justify="start" sx={{ marginVertical: 5 }}>
             <Text style={styles.option}>{service?.name}</Text>
             <Text style={{ ...styles.option, marginLeft: 5 }}>
               {option?.name}
             </Text>
           </Stack>
-          {review && (
-            <Stack direction="row" sx={{ marginTop: 5 }}>
-              <CustomAvatar avatar="" size={20} />
+          <Stack direction="row" justify="start">
+            <Text style={styles.ratingsAverage}>{ownerId.ratingsAverage}</Text>
+            <View>
+              <Rating rating={ownerId.ratingsAverage} size={12.5} />
+            </View>
+            <Text style={styles.ratingsQuantity}>
+              ({ownerId.ratingsQuantity})
+            </Text>
+          </Stack>
+          {review.review && (
+            <Stack direction="row" sx={{ marginTop: 7.5 }}>
+              <CustomAvatar
+                avatar={review.reviewerId.avatar}
+                size={20}
+                sx={{ borderWidth: 1.5, borderColor: primary }}
+              />
               <Text
                 style={{
                   marginLeft: 10,
@@ -138,6 +136,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: 15,
     paddingRight: 10,
+    justifyContent: "space-between",
   },
   business: {
     fontSize: 16,
@@ -159,7 +158,8 @@ const styles = StyleSheet.create({
   },
   ratingsQuantity: {
     color: grey0,
-    fontSize: 13,
+    fontSize: 13.5,
+    marginLeft: 5,
   },
   option: {
     fontWeight: "500",

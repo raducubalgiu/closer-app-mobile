@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   inputContainerStyle: {
     backgroundColor: "#f1f1f1",
     flex: 1,
-    borderRadius: 2.5,
+    borderRadius: 5,
     marginLeft: 0,
   },
   inputStyle: {

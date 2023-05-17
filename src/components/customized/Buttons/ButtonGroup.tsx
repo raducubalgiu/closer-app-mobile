@@ -16,7 +16,7 @@ type Props = {
   onPress: (index: number) => void;
   buttons: any;
   sx?: StyleProp<ViewStyle>;
-  disableActiveBtn?: boolean;
+  disabled?: boolean;
 };
 
 export const ButtonGroup = ({
@@ -24,7 +24,7 @@ export const ButtonGroup = ({
   onPress,
   buttons,
   sx = {},
-  disableActiveBtn,
+  disabled,
 }: Props) => {
   const styles = StyleSheet.create({
     buttonsContainer: {
@@ -55,7 +55,7 @@ export const ButtonGroup = ({
             <Pressable
               key={index}
               onPress={() => onPress(index)}
-              disabled={disableActiveBtn ? activeBtn === index : false}
+              disabled={disabled ? activeBtn === index : false}
               style={index === activeBtn ? activeBtnStyle : styles.button}
             >
               <Text style={index === activeBtn ? activeBtnTxt : styles.btnTxt}>

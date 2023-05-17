@@ -48,7 +48,7 @@
   "now": "Now",
   "whatServiceLooking": "Search service...",
   "calendar": "Calendar",
-  "after18": "After 18:00",
+  "after18": "Daily, After 18:00",
   "anyHour": "Any hour",
   "pickHour": "Pick hour",
   "next": "Next",
@@ -327,7 +327,7 @@
   "choosePeriod": "Alege perioada",
   "weekend": "Weekend",
   "anytimeDescription": "Îţi vom afişa toate locaţiile fără să ţinem cont de data şi ora la care pot fi rezervate",
-  "nowDescription": "Îţi vom afişa locaţiile ale căror produse sunt disponibile în perioada imediat următoare",
+  "todayDescription": "Îţi vom afişa locaţiile ale căror produse sunt disponibile astăzi",
   "after18Description": "Îţi vom afişa locaţiile ale căror produse sunt disponibile oricând după ora 18:00",
   "weekendDescription": "Îţi vom afişa locaţiile ale căror produse sunt disponible în oricare din weekendurile următoare",
   "select": "Selectează",
@@ -523,5 +523,7 @@
   "usernameAlreadyTaken": "Acest nume de utilizator nu este disponibil",
   "usernameCanOnlyContainsDescription": " Numele utilizator pot conţine doar litere, numere, underscore şi puncte, iar lungimea acestuia trebuie să fie de maximum 24 de caractere",
   "usernameCanBeChangedAfter30days": "Poţi schimba numele de utilizator numai o dată la 30 de zile",
-  "results": "rezultate"
+  "results": "rezultate",
+  "sort": "Sortează",
+  "reports": "Rapoarte"
 }

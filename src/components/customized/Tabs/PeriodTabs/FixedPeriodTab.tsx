@@ -11,20 +11,32 @@ const FixedPeriodTab = ({ period, onHandlePeriod }: IProps) => {
 
   const fixedPeriods = [
     {
-      title: t("now"),
-      description: t("nowDescription"),
+      title: t("today"),
+      description: t("todayDescription"),
       startDate: null,
       endDate: null,
       startMinutes: null,
       endMinutes: null,
       monthIndex: 0,
-      key: "now",
+      key: "today",
+    },
+    {
+      title: t("tommorow"),
+      description: t("tommorowDescription"),
+      startDate: null,
+      endDate: null,
+      startMinutes: null,
+      endMinutes: null,
+      monthIndex: 0,
+      key: "tommorow",
     },
     {
       title: t("anytime"),
       description: t("anytimeDescription"),
       startDate: null,
       endDate: null,
+      startMinutes: null,
+      endMinutes: null,
       monthIndex: 0,
       key: "anytime",
     },
@@ -33,18 +45,10 @@ const FixedPeriodTab = ({ period, onHandlePeriod }: IProps) => {
       description: t("after18Description"),
       startDate: null,
       endDate: null,
-      startMinutes: null,
-      endMinutes: null,
+      startMinutes: 1080,
+      endMinutes: 1410,
       monthIndex: 0,
       key: "after18",
-    },
-    {
-      title: t("weekend"),
-      description: t("weekendDescription"),
-      startDate: null,
-      endDate: null,
-      monthIndex: 0,
-      key: "weekend",
     },
   ];
 
@@ -71,7 +75,11 @@ const FixedPeriodTab = ({ period, onHandlePeriod }: IProps) => {
       keyExtractor={keyExtractor}
       renderItem={renderFixedPeriod}
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={{ marginHorizontal: 25, marginVertical: 10 }}
+      contentContainerStyle={{
+        marginHorizontal: 25,
+        paddingTop: 10,
+        paddingBottom: 20,
+      }}
     />
   );
 };

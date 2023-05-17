@@ -48,7 +48,7 @@
   "now": "Acum",
   "whatServiceLooking": "Ce serviciu cauţi?",
   "calendar": "Calendar",
-  "after18": "Oricând, după ora 18:00",
+  "after18": "Zilnic, după ora 18:00",
   "anyHour": "Orice oră",
   "pickHour": "Alege ora",
   "next": "Înainte",
@@ -325,9 +325,11 @@
   "willBeDeleteAndNotRestored": "vor fi şterse şi nu vor mai putea fi restaurate",
   "fixedPeriods": "Perioade fixe",
   "choosePeriod": "Alege perioada",
+  "tommorow": "Mâine",
   "weekend": "Weekend",
   "anytimeDescription": "Îţi vom afişa toate locaţiile fără să ţinem cont de data la care pot fi rezervate",
-  "nowDescription": "Îţi vom afişa locaţiile ale căror produse sunt disponibile în perioada imediat următoare",
+  "todayDescription": "Îţi vom afişa locaţiile ale căror produse sunt disponibile astăzi",
+  "tommorowDescription": "Îţi vom afişa locaţiile ale căror produse sunt disponibile mâine",
   "after18Description": "Îţi vom afişa locaţiile ale căror produse sunt disponibile între 18:00 - 00:00",
   "weekendDescription": "Îţi vom afişa locaţiile ale căror produse sunt disponible în oricare din weekendurile următoare",
   "select": "Selectează",
@@ -525,5 +527,13 @@
   "usernameAlreadyTaken": "Acest nume de utilizator nu este disponibil",
   "usernameCanOnlyContainsDescription": "Numele utilizator pot conţine doar litere, numere, underscore şi puncte, iar lungimea acestuia trebuie să fie de maximum 24 de caractere",
   "usernameCanBeChangedAfter30days": "Poţi schimba numele de utilizator numai o dată la 30 de zile",
-  "results": "rezultate"
+  "results": "rezultate",
+  "sort": "Sortează",
+
+  "reports": "Rapoarte",
+  "smallestPrice": "Cel mai mic preţ",
+  "highestPrice": "Cel mai mare preţ",
+  "recommended": "Recomandate",
+  "highestRating": "Cel mai bun rating",
+  "ratingsNumber": "Cele mai multe recenzii"
 }

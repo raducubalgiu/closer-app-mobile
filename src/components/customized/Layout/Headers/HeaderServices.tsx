@@ -19,14 +19,26 @@ import { dayMonthFormat } from "../../../../utils/date-utils";
 import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
 
-const { black } = theme.lightColors || {};
+const { black, primary } = theme.lightColors || {};
 
 type IProps = {
-  service: Service;
-  option: Option | null;
-  period: Period;
+  service: Service | undefined;
+  option: Option | null | undefined;
+  period: Period | undefined;
   headerHeight: number;
   onShowMap: () => void;
+  sort: { title: string; query: string };
+};
+
+type BtnFilters = {
+  title: string;
+  key: string;
+  params: {
+    sort?: {
+      title: string;
+      query: string;
+    };
+  };
 };
 
 export const HeaderServices = ({
@@ -35,52 +47,81 @@ export const HeaderServices = ({
   period,
   headerHeight,
   onShowMap,
+  sort,
 }: IProps) => {
   const insets = useSafeAreaInsets();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const { startDate, endDate, key, startMinutes, endMinutes } = period;
+  const { startDate, endDate, key, startMinutes, endMinutes } = period || {};
   const { t } = useTranslation("common");
 
   const navigateToFilters = () => {
-    navigation.push("FiltersDate", {
-      service,
-      defaultPeriod: period,
-      screen: "Calendar",
-    });
+    if (service && period) {
+      navigation.push("FiltersDate", {
+        service,
+        defaultPeriod: period,
+        screen: "Calendar",
+      });
+    }
   };
 
   const btnFilters = [
-    { title: "Hartă" },
-    { title: "Toate Filtrele" },
-    { title: "Preţ" },
-    { title: "Distanţă" },
-    { title: "Rating" },
+    { title: "Hartă", key: "", params: {} },
+    { title: t("filter"), key: "LocationFilters", params: {} },
+    { title: t("sort"), key: "LocationSort", params: { sort } },
   ];
 
-  const renderFilterBtn = useCallback(({ item }: ListRenderItemInfo<any>) => {
-    return (
-      <Pressable
-        onPress={onShowMap}
-        style={{
-          paddingVertical: 3.5,
-          paddingHorizontal: 15,
+  const navigateToSort = (item: BtnFilters) => {
+    if (item.params) {
+      navigation.navigate<any>({
+        name: `${item.key}`,
+        params: item.params,
+        merge: true,
+      });
+    }
+  };
+
+  const getLabelStyle = (item: BtnFilters) => {
+    switch (true) {
+      case item.title === t("sort") &&
+        item.params.sort?.title !== t("distance"):
+        return {
+          borderWidth: 1.5,
+          borderColor: primary,
+        };
+      default:
+        return {
           borderWidth: 1.25,
           borderColor: "#eee",
-          borderRadius: 10,
-          marginRight: 7.5,
-          backgroundColor: "white",
-        }}
-      >
-        <Stack direction="row">
-          <Text style={{ fontWeight: "500", fontSize: 13.5, color: black }}>
-            {item.title}
-          </Text>
-          <Icon name="keyboard-arrow-down" />
-        </Stack>
-      </Pressable>
-    );
-  }, []);
+        };
+    }
+  };
+
+  const renderFilterBtn = useCallback(
+    ({ item }: ListRenderItemInfo<BtnFilters>) => {
+      return (
+        <Pressable
+          onPress={() => navigateToSort(item)}
+          style={{
+            paddingVertical: 3.5,
+            paddingHorizontal: 15,
+            borderRadius: 10,
+            marginRight: 7.5,
+            backgroundColor: "white",
+            ...getLabelStyle(item),
+          }}
+        >
+          <Stack direction="row">
+            <Text style={{ fontWeight: "500", fontSize: 13.5, color: black }}>
+              {item.title}
+            </Text>
+            <Icon name="keyboard-arrow-down" />
+          </Stack>
+        </Pressable>
+      );
+    },
+    []
+  );
 
   return (
     <View
@@ -120,7 +161,7 @@ export const HeaderServices = ({
                       ? `${dayMonthFormat(startDate)} - ${dayMonthFormat(
                           endDate
                         )}`
-                      : t(key)}
+                      : t(key ? key : "")}
                   </Text>
                   <Text style={styles.point}>{"\u2B24"}</Text>
                   <Text style={styles.period}>
