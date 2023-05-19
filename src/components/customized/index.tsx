@@ -10,6 +10,7 @@ import FooterUserSelectable from "./Layout/Footers/FooterUserSelectable";
 import ConfirmModal from "./Modals/ConfirmModal";
 import DateRangePicker from "./Calendars/DateRangePicker";
 import OptionListItem from "./ListItems/OptionListItem";
+import LocationListItem from "./ListItems/LocationListItem";
 
 export {
   DisplayText,
@@ -23,6 +24,7 @@ export {
   ConfirmModal,
   DateRangePicker,
   OptionListItem,
+  LocationListItem,
 };
 
 // Normal Components

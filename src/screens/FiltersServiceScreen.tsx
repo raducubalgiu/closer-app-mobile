@@ -54,6 +54,10 @@ export const FiltersServiceScreen = ({ route }: IProps) => {
         title: t("distance"),
         query: "distance,ownerId.ratingsQuantity,smallestPrice",
       },
+      distance: {
+        min: 0,
+        max: 50,
+      },
     });
   };
 

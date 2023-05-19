@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\raduc\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @types/shorthash
+  C:\Program Files\nodejs\node.exe C:\Users\raduc\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @types/react-native-range-slider
 
 PATH: 
   C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\raduc\bin;C:\Python311\Scripts;C:\Python311;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\Git\cmd;D:\xammp\php;C:\ProgramData\ComposerSetup\bin;C:\Program Files\MongoDB\Server\4.4\bin;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;C:\Program Files\PowerShell\7;C:\Users\raduc\scoop\shims;C:\Program Files\MySQL\MySQL Shell 8.0\bin; D;C:\Program Files\Git\xammp\mysql\bin\";C:\Users\raduc\AppData\Local\Microsoft\WindowsApps;C:\Users\raduc\AppData\Local\Programs\Microsoft VS Code\bi;.;C:\Users\raduc\AppData\Roaming\Composer\vendor\bin;C:\Users\raduc\AppData\Local\Programs\Microsoft VS Code\bin;C:\Utilizatori\raduc\AppData\Roaming\npm;C:\Users\raduc\AppData\Roaming\npm
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2fshorthash: Not found
+  Error: https://registry.yarnpkg.com/@types%2freact-native-range-slider: Not found
       at Request.params.callback [as _callback] (C:\Users\raduc\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:67029:18)
       at Request.self.callback (C:\Users\raduc\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140883:22)
       at Request.emit (node:events:527:28)
@@ -111,6 +111,7 @@ npm manifest:
       "react-native-modal": "^13.0.1",
       "react-native-pager-view": "6.0.1",
       "react-native-picker-select": "^8.0.4",
+      "react-native-range-slider": "^0.1.2",
       "react-native-reanimated": "2.12.0",
       "react-native-redash": "^18.1.0",
       "react-native-root-toast": "^3.3.1",
@@ -8181,6 +8182,13 @@ Lockfile:
     dependencies:
       "@react-native-picker/picker" "^1.8.3"
       lodash.isequal "^4.5.0"
+  
+  react-native-range-slider@^0.1.2:
+    version "0.1.2"
+    resolved "https://registry.yarnpkg.com/react-native-range-slider/-/react-native-range-slider-0.1.2.tgz#f1bc020aa9094340a8ae22c25e22cbcb5af48710"
+    integrity sha512-EZLOtcnhOcOv4yZtPT826jZknqn+h3zbqM08tc3dFbakBFMoK4aN5GAuHP2RJ3PhMtwzl2h6HzOeFilq8cKaXQ==
+    dependencies:
+      prop-types "^15.5.10"
   
   react-native-ratings@^8.1.0:
     version "8.1.0"

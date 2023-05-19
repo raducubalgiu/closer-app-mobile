@@ -525,5 +525,14 @@
   "usernameCanBeChangedAfter30days": "Poţi schimba numele de utilizator numai o dată la 30 de zile",
   "results": "rezultate",
   "sort": "Sortează",
-  "reports": "Rapoarte"
+  "reports": "Rapoarte",
+  "smallestPrice": "Cel mai mic preţ",
+  "highestPrice": "Cel mai mare preţ",
+  "recommended": "Recomandate",
+  "highestRating": "Cel mai bun rating",
+  "ratingsNumber": "Cele mai multe recenzii",
+  "filterPrice": "Filtrează preţul",
+  "filterDistance": "Filtrează distanţă",
+  "errorAppearedTryLater": "A apărut o eroare. Încearcă mai târziu",
+  "error": "Eroare"
 }

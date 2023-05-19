@@ -111,13 +111,18 @@ export type RootStackParams = {
     period?: Period;
     longitude?: number;
     latitude?: number;
-    sort: {
+    sort?: {
       title: string;
       query: string;
     };
+    distance?: {
+      min: number;
+      max: number;
+    };
   };
   LocationItem: { locationId: string };
-  LocationFilters: any;
+  LocationFilterPrice: any;
+  LocationFilterDistance: { distance: { min: number; max: number } };
   LocationSort: {
     sort: {
       title: string;

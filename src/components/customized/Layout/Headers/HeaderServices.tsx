@@ -19,24 +19,29 @@ import { dayMonthFormat } from "../../../../utils/date-utils";
 import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
 
-const { black, primary } = theme.lightColors || {};
+const { black } = theme.lightColors || {};
 
 type IProps = {
   service: Service | undefined;
   option: Option | null | undefined;
   period: Period | undefined;
   headerHeight: number;
-  onShowMap: () => void;
   sort: { title: string; query: string };
+  distance: { min: number; max: number };
 };
 
 type BtnFilters = {
   title: string;
   key: string;
+  isFiltered: boolean;
   params: {
     sort?: {
       title: string;
       query: string;
+    };
+    distance?: {
+      min: number;
+      max: number;
     };
   };
 };
@@ -46,12 +51,13 @@ export const HeaderServices = ({
   option,
   period,
   headerHeight,
-  onShowMap,
   sort,
+  distance,
 }: IProps) => {
   const insets = useSafeAreaInsets();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
+  const { min, max } = distance || {};
   const { startDate, endDate, key, startMinutes, endMinutes } = period || {};
   const { t } = useTranslation("common");
 
@@ -66,9 +72,24 @@ export const HeaderServices = ({
   };
 
   const btnFilters = [
-    { title: "Hartă", key: "", params: {} },
-    { title: t("filter"), key: "LocationFilters", params: {} },
-    { title: t("sort"), key: "LocationSort", params: { sort } },
+    {
+      title: t("sort"),
+      isFiltered: sort.title !== t("distance"),
+      key: "LocationSort",
+      params: { sort },
+    },
+    {
+      title: t("distance"),
+      isFiltered: min > 0 || max < 50,
+      key: "LocationFilterDistance",
+      params: { distance },
+    },
+    {
+      title: t("price"),
+      isFiltered: false,
+      key: "LocationFilterPrice",
+      params: {},
+    },
   ];
 
   const navigateToSort = (item: BtnFilters) => {
@@ -78,22 +99,6 @@ export const HeaderServices = ({
         params: item.params,
         merge: true,
       });
-    }
-  };
-
-  const getLabelStyle = (item: BtnFilters) => {
-    switch (true) {
-      case item.title === t("sort") &&
-        item.params.sort?.title !== t("distance"):
-        return {
-          borderWidth: 1.5,
-          borderColor: primary,
-        };
-      default:
-        return {
-          borderWidth: 1.25,
-          borderColor: "#eee",
-        };
     }
   };
 
@@ -108,7 +113,8 @@ export const HeaderServices = ({
             borderRadius: 10,
             marginRight: 7.5,
             backgroundColor: "white",
-            ...getLabelStyle(item),
+            borderWidth: item.isFiltered ? 1.5 : 1.25,
+            borderColor: item.isFiltered ? "#4d4d4d" : "#eee",
           }}
         >
           <Stack direction="row">
@@ -120,7 +126,7 @@ export const HeaderServices = ({
         </Pressable>
       );
     },
-    []
+    [btnFilters]
   );
 
   return (
@@ -187,7 +193,7 @@ export const HeaderServices = ({
         <FlatList
           horizontal
           data={btnFilters}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(_, index) => index.toString()}
           renderItem={renderFilterBtn}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ paddingLeft: 15 }}

@@ -72,7 +72,8 @@ import {
   LanguageTranslationScreen,
   LikesScreen,
   LocationsScreen,
-  LocationFiltersScreen,
+  LocationFilterPriceScreen,
+  LocationFilterDistanceScreen,
   LocationSortScreen,
   MapScreen,
   MessagesScreen,
@@ -123,7 +124,11 @@ const AppNavigation = () => {
     <NavigationContainer>
       {user ? (
         <PortalProvider>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false,
+            }}
+          >
             <Stack.Screen name="App" component={TabNavigator} />
             <Stack.Screen
               name="SearchPosts"
@@ -174,14 +179,28 @@ const AppNavigation = () => {
             />
             <Stack.Screen name="Locations" component={LocationsScreen} />
             <Stack.Screen
-              name="LocationFilters"
-              component={LocationFiltersScreen}
-              options={{ presentation: "modal", gestureEnabled: false }}
+              name="LocationFilterPrice"
+              component={LocationFilterPriceScreen}
+              options={{
+                presentation: "containedModal",
+                gestureEnabled: false,
+              }}
+            />
+            <Stack.Screen
+              name="LocationFilterDistance"
+              component={LocationFilterDistanceScreen}
+              options={{
+                presentation: "containedModal",
+                gestureEnabled: false,
+              }}
             />
             <Stack.Screen
               name="LocationSort"
               component={LocationSortScreen}
-              options={{ presentation: "modal", gestureEnabled: false }}
+              options={{
+                presentation: "containedModal",
+                gestureEnabled: false,
+              }}
             />
             <Stack.Screen name="EditProfile" component={EditProfileScreen} />
             <Stack.Screen name="EditName" component={EditNameScreen} />

@@ -8,7 +8,7 @@ import {
 import HeaderSheet from "../../components/customized/Layout/Headers/HeaderSheet";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
-import { Button, FormInputRadio, Stack } from "../../components/core";
+import { Button, FormInputRadio, Heading, Stack } from "../../components/core";
 import { useState } from "react";
 import {
   NativeStackNavigationProp,
@@ -65,9 +65,21 @@ export const LocationSortScreen = ({ route }: IProps) => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <HeaderSheet title={t("sort")} onClose={() => navigation.goBack()} />
-      <View style={{ margin: 15, justifyContent: "space-between", flex: 1 }}>
+      <HeaderSheet
+        sx={{ marginVertical: 2.5 }}
+        title=""
+        onClose={() => navigation.goBack()}
+        divider={false}
+      />
+      <View
+        style={{
+          marginHorizontal: 15,
+          justifyContent: "space-between",
+          flex: 1,
+        }}
+      >
         <ScrollView>
+          <Heading title={t("sort")} sx={{ fontSize: 21 }} />
           {sortArr.map((el, i) => (
             <FormInputRadio
               key={i}
@@ -82,14 +94,14 @@ export const LocationSortScreen = ({ route }: IProps) => {
             title={t("delete")}
             onPress={() => setCustomSort(sortArr[0])}
             disabled={customSort.title === t("distance")}
-            sxBtn={{ width: width / 2 - 30 }}
+            sxBtn={{ width: width / 2 - 20 }}
             variant="outlined"
           />
           <Button
             title={t("sort")}
             onPress={navigateToLocations}
             disabled={customSort.title === route.params.sort.title}
-            sxBtn={{ width: width / 2 - 30 }}
+            sxBtn={{ width: width / 2 - 20 }}
           />
         </Stack>
       </View>
