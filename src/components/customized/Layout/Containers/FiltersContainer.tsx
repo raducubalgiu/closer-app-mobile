@@ -82,7 +82,7 @@ export const FiltersContainer = ({
       </LinearGradient>
       <Stack
         direction="row"
-        sx={styles.footer}
+        sx={{ ...styles.footer, paddingBottom: insets.bottom }}
         justify={!footerExtraBtns ? "end" : "between"}
       >
         {footerExtraBtns}
@@ -131,8 +131,6 @@ const styles = StyleSheet.create({
   },
   footer: {
     backgroundColor: "white",
-    paddingTop: 10,
-    paddingBottom: 20,
     borderTopWidth: 0.5,
     borderTopColor: "#ddd",
     paddingHorizontal: 15,

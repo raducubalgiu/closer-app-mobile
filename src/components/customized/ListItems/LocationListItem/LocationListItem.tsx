@@ -8,16 +8,22 @@ import {
   FlatList,
   ListRenderItemInfo,
 } from "react-native";
-import { memo, useCallback } from "react";
+import { memo, useCallback, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import theme from "../../../../assets/styles/theme";
-import { trimFunc } from "../../../utils";
-import { CustomAvatar, IconLocation, Rating, Stack } from "../../core";
+import theme from "../../../../../assets/styles/theme";
+import { trimFunc } from "../../../../utils";
+import { CustomAvatar, IconLocation, Rating, Stack } from "../../../core";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../../navigation/rootStackParams";
-import { Location, Option, Service } from "../../../ts";
-import { Divider } from "@rneui/themed";
+import { RootStackParams } from "../../../../navigation/rootStackParams";
+import { Location, Option, Period, Service } from "../../../../ts";
+import { Divider, Icon } from "@rneui/themed";
+import { sortBy } from "lodash";
+import { AvailableSlot } from "../../../../ts/interfaces/location";
+import { ListItem } from "@rneui/themed";
+import AvailableSlotListItem from "./AvailableSlotListItem";
+import dayjs from "dayjs";
+import { trimByWord } from "../../../../utils/trimByWord";
 
 const { width } = Dimensions.get("window");
 const { black, grey0, primary, error, success } = theme.lightColors || {};
@@ -26,15 +32,27 @@ type IProps = {
   location: Location;
   service: Service | undefined;
   option: Option | null | undefined;
+  period: Period | undefined;
 };
 
-const LocationListItem = ({ location, service, option }: IProps) => {
-  const { imageCover, minPrice, distance, ownerId, address, review, open } =
-    location;
+const LocationListItem = ({ location, service, option, period }: IProps) => {
+  const {
+    imageCover,
+    minPrice,
+    distance,
+    ownerId,
+    address,
+    review,
+    open,
+    availableSlots,
+    isClosingAt,
+  } = location;
+  const { key } = period || {};
   const { name, username } = ownerId;
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation("common");
+  const [expanded, setExpanded] = useState(false);
 
   const goToUser = () => {
     if (option && service) {
@@ -47,38 +65,29 @@ const LocationListItem = ({ location, service, option }: IProps) => {
     }
   };
 
-  const slots = [
-    { id: "1", title: "12 Aprilie 14:00" },
-    { id: "2", title: "5 Mai 09:00" },
-    { id: "3", title: "10 Mai 15:00" },
-    { id: "4", title: "12 Mai 16:00" },
-    { id: "5", title: "30 Mai 17:00" },
-    { id: "6", title: "1 Iunie 10:00" },
-  ];
+  const slotss: AvailableSlot[] = [];
 
-  type Slot = { id: string; title: string };
+  availableSlots.forEach((arr) => {
+    arr.map((el) => slotss.push(el));
+  });
+
+  const sortedArr = sortBy(slotss, ["start", "owner.ratingsAverage"]);
 
   const renderSlot = useCallback(
-    ({ item }: ListRenderItemInfo<Slot>) => (
-      <Pressable
-        style={{
-          borderWidth: 1,
-          borderColor: "#eee",
-          paddingVertical: 7.5,
-          paddingHorizontal: 15,
-          borderRadius: 5,
-          marginRight: 10,
-        }}
-      >
-        <Text style={{ color: black, fontWeight: "500", fontSize: 13.5 }}>
-          {item.title}
-        </Text>
-      </Pressable>
+    ({ item }: ListRenderItemInfo<AvailableSlot>) => (
+      <AvailableSlotListItem availableSlot={item} />
     ),
     []
   );
 
-  const slotKeyExtractor = useCallback((item: Slot) => item.id, []);
+  const slotKeyExtractor = useCallback(
+    (_: AvailableSlot, index: number) => index.toString(),
+    []
+  );
+
+  console.log(key);
+
+  const displayProgram = key !== "tommorow";
 
   return (
     <View>
@@ -109,14 +118,23 @@ const LocationListItem = ({ location, service, option }: IProps) => {
                   orientation="vertical"
                   style={{ marginHorizontal: 10 }}
                 />
-                <Text style={{ color: grey0 }}>Deschide la 09</Text>
+                <Text style={{ color: grey0 }}>
+                  {open
+                    ? t("isClosingAt", {
+                        IS_CLOSING_AT: dayjs()
+                          .startOf("day")
+                          .add(isClosingAt, "minutes")
+                          .format("HH:mm"),
+                      })
+                    : "Deschide la 9"}
+                </Text>
               </Stack>
-              <Stack direction="row" justify="start">
+              <Stack direction="row" justify="start" align="center">
                 <Text style={styles.ratingsAverage}>
                   {ownerId.ratingsAverage}
                 </Text>
                 <View>
-                  <Rating rating={ownerId.ratingsAverage} size={12.5} />
+                  <Rating rating={ownerId.ratingsAverage} size={13.5} />
                 </View>
                 <Text style={styles.ratingsQuantity}>
                   ({ownerId.ratingsQuantity})
@@ -137,7 +155,7 @@ const LocationListItem = ({ location, service, option }: IProps) => {
                       fontStyle: "italic",
                     }}
                   >
-                    "{trimFunc(`${review?.review}`, 100)}"
+                    {trimByWord(`${review?.review}`, 10)}
                   </Text>
                 </Stack>
               )}
@@ -161,36 +179,46 @@ const LocationListItem = ({ location, service, option }: IProps) => {
             </Stack>
           </View>
         </Stack>
-      </Pressable>
-      <Stack direction="row" sx={{ marginHorizontal: 15, marginTop: 20 }}>
-        <View
-          style={{
-            backgroundColor: "#f1f1f1",
-            paddingVertical: 7.5,
-            paddingHorizontal: 15,
-            borderRadius: 10,
+        <ListItem.Accordion
+          containerStyle={{
+            marginTop: 15,
+            marginHorizontal: 15,
+            paddingVertical: 5,
+            justifyContent: "center",
+            borderTopWidth: 1,
+            borderTopColor: "#eee",
+            borderBottomWidth: 1,
+            borderBottomColor: expanded ? "transparent" : "#eee",
           }}
+          leftRotate={true}
+          content={
+            <ListItem.Content>
+              <ListItem.Title
+                style={{ fontSize: 14.5, fontWeight: "500", color: black }}
+              >
+                Intervale sugerate
+              </ListItem.Title>
+            </ListItem.Content>
+          }
+          isExpanded={expanded}
+          onPress={() => setExpanded((expanded) => !expanded)}
         >
-          <Text
-            style={{
-              color: black,
-              fontWeight: "500",
-              fontSize: 15,
-            }}
-          >
-            Liber
-          </Text>
-        </View>
-        <Divider orientation="vertical" style={{ marginLeft: 10 }} />
-        <FlatList
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          data={slots}
-          keyExtractor={slotKeyExtractor}
-          renderItem={renderSlot}
-          contentContainerStyle={{ paddingLeft: 10 }}
-        />
-      </Stack>
+          {expanded && (
+            <FlatList
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              data={sortedArr}
+              keyExtractor={slotKeyExtractor}
+              renderItem={renderSlot}
+              contentContainerStyle={{
+                paddingLeft: 15,
+                paddingTop: 15,
+                paddingRight: 5,
+              }}
+            />
+          )}
+        </ListItem.Accordion>
+      </Pressable>
     </View>
   );
 };
@@ -205,6 +233,7 @@ const styles = StyleSheet.create({
   imageC: {
     width: width / 3.25,
     height: 150,
+    backgroundColor: "#ddd",
   },
   image: {
     ...StyleSheet.absoluteFillObject,
@@ -228,11 +257,8 @@ const styles = StyleSheet.create({
     color: grey0,
     marginTop: 1,
   },
-  ratings: {
-    marginVertical: 5,
-  },
   ratingsAverage: {
-    marginRight: 7.5,
+    marginRight: 10,
     fontWeight: "600",
     fontSize: 14.5,
     color: black,
@@ -240,7 +266,7 @@ const styles = StyleSheet.create({
   ratingsQuantity: {
     color: grey0,
     fontSize: 13.5,
-    marginLeft: 5,
+    marginLeft: 2,
   },
   option: {
     fontWeight: "500",
@@ -250,16 +276,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ddd",
     borderRadius: 5,
-  },
-  serviceContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 10,
-  },
-  service: {
-    backgroundColor: "#f1f1f1",
-    padding: 5,
-    fontSize: 12,
   },
   price: {
     fontSize: 15.5,

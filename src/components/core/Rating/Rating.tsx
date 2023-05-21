@@ -10,14 +10,42 @@ type IProps = { rating: number; sx?: {}; size?: number };
 const Rating = ({ rating, sx = {}, size = 16 }: IProps) => {
   let ratings = [];
 
-  for (let i = 1; i <= 5; i++) {
+  const solidStars = Math.floor(rating);
+  const halfStars = Math.ceil(rating - solidStars);
+  const emptyStars = 5 - solidStars - halfStars;
+
+  for (let i = 0; i < solidStars; i++) {
     ratings.push(
       <Icon
         name="star-fill"
         type="octicon"
-        color={i <= rating ? primary : "#ddd"}
+        color={primary}
         size={size}
-        style={i === 5 ? {} : { marginRight: 7.5 }}
+        style={{ marginRight: 8 }}
+      />
+    );
+  }
+
+  if (halfStars) {
+    ratings.push(
+      <Icon
+        name="star-half-o"
+        type="font-awesome"
+        color={primary}
+        size={size + 1}
+        style={{ marginRight: 8 }}
+      />
+    );
+  }
+
+  for (let i = 0; i < emptyStars; i++) {
+    ratings.push(
+      <Icon
+        name="star-fill"
+        type="octicon"
+        color="#ddd"
+        size={size}
+        style={{ marginRight: 8 }}
       />
     );
   }

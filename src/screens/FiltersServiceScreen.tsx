@@ -44,7 +44,7 @@ export const FiltersServiceScreen = ({ route }: IProps) => {
     const { longitude, latitude } = location?.coords || {};
 
     setLoading(false);
-    navigation.navigate("Locations", {
+    navigation.push("Locations", {
       longitude,
       latitude,
       service,

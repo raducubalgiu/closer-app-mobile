@@ -10,7 +10,7 @@ import FooterUserSelectable from "./Layout/Footers/FooterUserSelectable";
 import ConfirmModal from "./Modals/ConfirmModal";
 import DateRangePicker from "./Calendars/DateRangePicker";
 import OptionListItem from "./ListItems/OptionListItem";
-import LocationListItem from "./ListItems/LocationListItem";
+import LocationListItem from "./ListItems/LocationListItem/LocationListItem";
 import CustomRangeSlider from "./RangeSlider/CustomRangeSlider";
 
 export {

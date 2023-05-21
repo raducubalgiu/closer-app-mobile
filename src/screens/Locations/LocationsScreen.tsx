@@ -65,7 +65,12 @@ export const LocationsScreen = ({ route }: IProps) => {
   const renderLocation = useCallback(
     ({ item }: ListRenderItemInfo<Location>) => {
       return (
-        <LocationListItem location={item} service={service} option={option} />
+        <LocationListItem
+          location={item}
+          service={service}
+          option={option}
+          period={period}
+        />
       );
     },
     []

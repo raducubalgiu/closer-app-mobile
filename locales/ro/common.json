@@ -155,7 +155,7 @@
   "willApearHere": "vor apărea aici",
   "jobsPostedBy": "Joburile postate de către",
   "jobsPostedByYouMessage": "Joburile postate de tine vor apărea aici",
-  "isClosingAt": "Închide la",
+  "isClosingAt": "Închide la {{IS_CLOSING_AT}}",
   "closed": "Închis",
   "message": "Mesaj",
   "mon": "Luni",
@@ -540,5 +540,6 @@
   "errorAppearedTryLater": "A apărut o eroare. Încearcă mai târziu",
   "error": "Eroare",
   "distanceIsInKmDescription": "Distanţele sunt exprimate in kilometri. Poţi găsi servicii pe o distanţă de maximum 50 de km.",
-  "applingFiltersTheAveragePriceIs": "Aplicând filtrele selectate, preţul mediu pentru acest tip de serviciu este de {{AVERAGE_PRICE}} {{CURRENCY}}"
+  "applingFiltersTheAveragePriceIs": "Aplicând filtrele selectate, preţul mediu pentru acest tip de serviciu este de {{AVERAGE_PRICE}} {{CURRENCY}}",
+  "open": "Deschis"
 }

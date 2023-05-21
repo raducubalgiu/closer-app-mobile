@@ -62,7 +62,7 @@ export const FiltersDateScreen = ({ route }: IProps) => {
   const hoursButtons = [{ title: t("anyHour") }, { title: pickHour }];
 
   const goNext = () =>
-    navigation.navigate("FiltersService", {
+    navigation.push("FiltersService", {
       service,
       period: {
         ...period,

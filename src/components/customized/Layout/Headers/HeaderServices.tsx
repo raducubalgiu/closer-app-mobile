@@ -140,6 +140,30 @@ export const HeaderServices = ({
     [filters]
   );
 
+  const getHeaderDate = useCallback(
+    (key: string | undefined) => {
+      if (key && startDate && endDate) {
+        switch (key) {
+          case "calendar":
+            return `${dayMonthFormat(startDate)} - ${dayMonthFormat(endDate)}`;
+          case "today":
+            return `${t("today")}, ${dayMonthFormat(startDate)}`;
+          case "tommorow":
+            return `${t("tommorow")}, ${dayMonthFormat(startDate)}`;
+          case "after18":
+            return `Zilnic`;
+          case "anytime":
+            return t("anytime");
+          default:
+            return `${dayMonthFormat(startDate)} - ${dayMonthFormat(endDate)}`;
+        }
+      } else {
+        return "";
+      }
+    },
+    [key, startDate, endDate]
+  );
+
   return (
     <View
       style={{
@@ -173,13 +197,7 @@ export const HeaderServices = ({
                   <Text style={styles.service}>{option?.name}</Text>
                 </Stack>
                 <Stack direction="row">
-                  <Text style={styles.period}>
-                    {startDate && endDate
-                      ? `${dayMonthFormat(startDate)} - ${dayMonthFormat(
-                          endDate
-                        )}`
-                      : t(key ? key : "")}
-                  </Text>
+                  <Text style={styles.period}>{getHeaderDate(key)}</Text>
                   <Text style={styles.point}>{"\u2B24"}</Text>
                   <Text style={styles.period}>
                     {startMinutes && endMinutes

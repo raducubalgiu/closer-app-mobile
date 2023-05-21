@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import * as Haptics from "expo-haptics";
 import { useTranslation } from "react-i18next";
-import { Stack, IconButton } from "../../../core";
+import { Stack, IconButton, Input } from "../../../core";
 import theme from "../../../../../assets/styles/theme";
 import { emoji } from "../../../../../assets/emojis/emoji-comm.json";
 
@@ -42,24 +42,23 @@ export const FooterMessageItem = ({
           </Pressable>
         ))}
       </Stack>
-      <Stack direction="row" sx={styles.inputContainer}>
-        <Stack direction="row" justify="start" sx={{ flex: 1 }}>
-          <IconButton
-            name="camera"
-            type="font-awesome"
-            onPress={() => {
-              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-              onOpenCamera();
-            }}
-            size={22.5}
-          />
-          <TextInput
-            onChangeText={(text) => onChangeText(text)}
-            value={message}
-            style={styles.input}
-            placeholder={`${t("message")}...`}
-          />
-        </Stack>
+      <Stack direction="row" sx={styles.inputContainer} align="end">
+        <IconButton
+          name="camera"
+          type="font-awesome"
+          onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            onOpenCamera();
+          }}
+          size={22.5}
+        />
+        <TextInput
+          value={message}
+          style={styles.input}
+          placeholder={`${t("message")}...`}
+          onChangeText={(text) => onChangeText(text)}
+          multiline={true}
+        />
         {message?.length === 0 && (
           <Stack direction="row">
             <IconButton
@@ -99,6 +98,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 10,
     paddingVertical: 7.5,
+    maxHeight: 100,
   },
   sendBtn: {
     backgroundColor: primary,

@@ -3,6 +3,14 @@ import { Review } from "./review";
 import { Service } from "./service";
 import { User } from "./user";
 
+export interface AvailableSlot {
+  start: string;
+  end: string;
+  owner: User;
+  startMinutes: number;
+  endMinutes: number;
+}
+
 export interface Location {
   _id?: string;
   id: string;
@@ -28,4 +36,6 @@ export interface Location {
   distance: number;
   review: Review;
   open: boolean;
+  availableSlots: AvailableSlot[][];
+  isClosingAt: number;
 }
