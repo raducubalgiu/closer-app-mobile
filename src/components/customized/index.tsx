@@ -11,6 +11,7 @@ import ConfirmModal from "./Modals/ConfirmModal";
 import DateRangePicker from "./Calendars/DateRangePicker";
 import OptionListItem from "./ListItems/OptionListItem";
 import LocationListItem from "./ListItems/LocationListItem";
+import CustomRangeSlider from "./RangeSlider/CustomRangeSlider";
 
 export {
   DisplayText,
@@ -25,6 +26,7 @@ export {
   DateRangePicker,
   OptionListItem,
   LocationListItem,
+  CustomRangeSlider,
 };
 
 // Normal Components
@@ -106,6 +108,7 @@ export { CardReviewSummary } from "./Cards/CardReviewSummary";
 export { HeaderServices } from "./Layout/Headers/HeaderServices";
 export { HeaderEdit } from "./Layout/Headers/HeaderEdit";
 export { HeaderMap } from "./Layout/Headers/HeaderMap";
+export { HeaderSheet } from "./Layout/Headers/HeaderSheet";
 
 export { ServicesList } from "./Lists/ServicesList";
 

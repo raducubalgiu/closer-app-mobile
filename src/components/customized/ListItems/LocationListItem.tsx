@@ -29,7 +29,8 @@ type IProps = {
 };
 
 const LocationListItem = ({ location, service, option }: IProps) => {
-  const { imageCover, minPrice, distance, ownerId, address, review } = location;
+  const { imageCover, minPrice, distance, ownerId, address, review, open } =
+    location;
   const { name, username } = ownerId;
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -87,56 +88,60 @@ const LocationListItem = ({ location, service, option }: IProps) => {
             <Image style={styles.image} source={{ uri: imageCover?.url }} />
           </Stack>
           <View style={styles.content}>
-            <Stack align="start">
-              <Text style={styles.business}>{name}</Text>
-              <Text style={styles.address}>
-                {trimFunc(`${address?.street}, ${address?.number}`, 30)}
-              </Text>
-            </Stack>
-            {/* <Stack direction="row" justify="start" sx={{ marginVertical: 5 }}>
-            <Text style={styles.option}>{service?.name}</Text>
-            <Text style={{ ...styles.option, marginLeft: 5 }}>
-              {option?.name}
-            </Text>
-          </Stack> */}
-            <Stack direction="row" justify="start" sx={{ marginVertical: 5 }}>
-              <Text style={{ color: error, fontWeight: "500" }}>Închis</Text>
-              <Divider
-                orientation="vertical"
-                style={{ marginHorizontal: 10 }}
-              />
-              <Text style={{ color: grey0 }}>Deschide la 09</Text>
-            </Stack>
-            <Stack direction="row" justify="start">
-              <Text style={styles.ratingsAverage}>
-                {ownerId.ratingsAverage}
-              </Text>
-              <View>
-                <Rating rating={ownerId.ratingsAverage} size={12.5} />
-              </View>
-              <Text style={styles.ratingsQuantity}>
-                ({ownerId.ratingsQuantity})
-              </Text>
-            </Stack>
-            {review.review && (
-              <Stack direction="row" align="start" sx={{ marginTop: 7.5 }}>
-                <CustomAvatar
-                  avatar={review.reviewerId.avatar}
-                  size={20}
-                  sx={{ borderWidth: 1.5, borderColor: primary }}
-                />
-                <Text
-                  style={{
-                    marginLeft: 10,
-                    color: grey0,
-                    flex: 1,
-                    fontStyle: "italic",
-                  }}
-                >
-                  "{trimFunc(`${review?.review}`, 100)}"
+            <View style={{ flex: 1 }}>
+              <Stack align="start">
+                <Text style={styles.business}>{name}</Text>
+                <Text style={styles.address}>
+                  {trimFunc(`${address?.street}, ${address?.number}`, 27)}
                 </Text>
               </Stack>
-            )}
+              <Stack direction="row" justify="start" sx={{ marginVertical: 5 }}>
+                <Text
+                  style={
+                    open
+                      ? { fontWeight: "500", color: success }
+                      : { fontWeight: "500", color: error }
+                  }
+                >
+                  {open ? t("open") : t("closed")}
+                </Text>
+                <Divider
+                  orientation="vertical"
+                  style={{ marginHorizontal: 10 }}
+                />
+                <Text style={{ color: grey0 }}>Deschide la 09</Text>
+              </Stack>
+              <Stack direction="row" justify="start">
+                <Text style={styles.ratingsAverage}>
+                  {ownerId.ratingsAverage}
+                </Text>
+                <View>
+                  <Rating rating={ownerId.ratingsAverage} size={12.5} />
+                </View>
+                <Text style={styles.ratingsQuantity}>
+                  ({ownerId.ratingsQuantity})
+                </Text>
+              </Stack>
+              {review?.review && (
+                <Stack direction="row" align="start" sx={{ marginTop: 7.5 }}>
+                  <CustomAvatar
+                    avatar={review.reviewerId.avatar}
+                    size={20}
+                    sx={{ borderWidth: 1.5, borderColor: primary }}
+                  />
+                  <Text
+                    style={{
+                      marginLeft: 10,
+                      color: grey0,
+                      flex: 1,
+                      fontStyle: "italic",
+                    }}
+                  >
+                    "{trimFunc(`${review?.review}`, 100)}"
+                  </Text>
+                </Stack>
+              )}
+            </View>
             <Stack direction="row" sx={{ marginTop: 10 }} justify="end">
               <Stack direction="row">
                 <Text style={styles.from}>de la</Text>
@@ -215,7 +220,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   business: {
-    fontSize: 16,
+    fontSize: 16.5,
     color: black,
     fontWeight: "600",
   },

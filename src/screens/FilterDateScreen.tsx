@@ -5,7 +5,7 @@ import {
   useWindowDimensions,
   StyleSheet,
 } from "react-native";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -27,7 +27,6 @@ import CalendarPeriodTab from "../components/customized/Tabs/PeriodTabs/Calendar
 import _, { isEmpty } from "lodash";
 import FixedPeriodTab from "../components/customized/Tabs/PeriodTabs/FixedPeriodTab";
 import { displayDash } from "../utils";
-import * as Animatable from "react-native-animatable";
 
 type IProps = NativeStackScreenProps<RootStackParams, "FiltersDate">;
 const { primary } = theme.lightColors || {};
@@ -38,7 +37,6 @@ export const FiltersDateScreen = ({ route }: IProps) => {
   const { service, defaultPeriod, screen } = route.params;
   const [visible, setVisible] = useState(false);
   const [activeHours, setActiveHours] = useState(0);
-  const animRef = useRef<any>(null);
   const { minutes } = useMinutes();
   const [period, setPeriod] = useState<Period>(defaultPeriod);
   const { startDate, endDate, startMinutes, endMinutes, key } = period;
@@ -68,8 +66,8 @@ export const FiltersDateScreen = ({ route }: IProps) => {
       service,
       period: {
         ...period,
-        startDate: period.startDate?.format(),
-        endDate: period.endDate?.format(),
+        startDate: period.startDate?.format("YYYY-MM-DD"),
+        endDate: period.endDate?.format("YYYY-MM-DD"),
       },
     });
 

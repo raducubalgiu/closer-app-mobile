@@ -178,7 +178,7 @@ export const AddUserProgramScreen = () => {
               title={t("save")}
               loading={isLoading}
               onPress={handleSubmit(onSubmit)}
-              disabled={!formState.isDirty}
+              //disabled={!formState.isDirty}
             />
           </View>
         </FormProvider>

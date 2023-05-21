@@ -26,11 +26,12 @@ type IProps = {
   option: Option | null | undefined;
   period: Period | undefined;
   headerHeight: number;
-  sort: { title: string; query: string };
-  distance: { min: number; max: number };
+  sort: { title: string; query: string } | undefined;
+  distance: { min: number; max: number } | undefined;
+  price: { min: number; max: number } | undefined;
 };
 
-type BtnFilters = {
+type FilterScreen = {
   title: string;
   key: string;
   isFiltered: boolean;
@@ -40,6 +41,10 @@ type BtnFilters = {
       query: string;
     };
     distance?: {
+      min: number;
+      max: number;
+    };
+    price?: {
       min: number;
       max: number;
     };
@@ -53,11 +58,13 @@ export const HeaderServices = ({
   headerHeight,
   sort,
   distance,
+  price,
 }: IProps) => {
   const insets = useSafeAreaInsets();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const { min, max } = distance || {};
+  const { min: minDistance, max: maxDistance } = distance || {};
+  const { min: minPrice, max: maxPrice } = price || {};
   const { startDate, endDate, key, startMinutes, endMinutes } = period || {};
   const { t } = useTranslation("common");
 
@@ -71,28 +78,32 @@ export const HeaderServices = ({
     }
   };
 
-  const btnFilters = [
+  const filters = [
     {
       title: t("sort"),
-      isFiltered: sort.title !== t("distance"),
+      isFiltered: sort?.title !== t("distance"),
       key: "LocationSort",
       params: { sort },
     },
     {
       title: t("distance"),
-      isFiltered: min > 0 || max < 50,
+      isFiltered:
+        minDistance && maxDistance && minDistance >= 0 && maxDistance <= 50
+          ? true
+          : false,
       key: "LocationFilterDistance",
       params: { distance },
     },
     {
       title: t("price"),
-      isFiltered: false,
+      isFiltered:
+        minPrice && maxPrice && minPrice >= 0 && maxPrice <= 50 ? true : false,
       key: "LocationFilterPrice",
-      params: {},
+      params: { price },
     },
   ];
 
-  const navigateToSort = (item: BtnFilters) => {
+  const navigateToSort = (item: FilterScreen) => {
     if (item.params) {
       navigation.navigate<any>({
         name: `${item.key}`,
@@ -103,7 +114,7 @@ export const HeaderServices = ({
   };
 
   const renderFilterBtn = useCallback(
-    ({ item }: ListRenderItemInfo<BtnFilters>) => {
+    ({ item }: ListRenderItemInfo<FilterScreen>) => {
       return (
         <Pressable
           onPress={() => navigateToSort(item)}
@@ -126,7 +137,7 @@ export const HeaderServices = ({
         </Pressable>
       );
     },
-    [btnFilters]
+    [filters]
   );
 
   return (
@@ -192,7 +203,7 @@ export const HeaderServices = ({
       <View style={{ marginTop: 10 }}>
         <FlatList
           horizontal
-          data={btnFilters}
+          data={filters}
           keyExtractor={(_, index) => index.toString()}
           renderItem={renderFilterBtn}
           showsHorizontalScrollIndicator={false}

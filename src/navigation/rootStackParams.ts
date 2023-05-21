@@ -115,13 +115,17 @@ export type RootStackParams = {
       title: string;
       query: string;
     };
+    price?: {
+      min: number;
+      max: number;
+    };
     distance?: {
       min: number;
       max: number;
     };
   };
   LocationItem: { locationId: string };
-  LocationFilterPrice: any;
+  LocationFilterPrice: { price: { min: number; max: number } };
   LocationFilterDistance: { distance: { min: number; max: number } };
   LocationSort: {
     sort: {

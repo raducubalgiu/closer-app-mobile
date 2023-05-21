@@ -4,6 +4,7 @@ import { Service } from "./service";
 import { User } from "./user";
 
 export interface Location {
+  _id?: string;
   id: string;
   ownerId: User;
   address: {
@@ -26,4 +27,5 @@ export interface Location {
   minPrice: number;
   distance: number;
   review: Review;
+  open: boolean;
 }

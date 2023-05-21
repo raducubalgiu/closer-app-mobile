@@ -8,12 +8,12 @@ import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import { FiltersContainer, OptionListItem } from "../components/customized";
 import { RootStackParams } from "../navigation/rootStackParams";
 import { Filter, Option } from "../ts";
 import { useGet } from "../hooks";
 import { displayDash } from "../utils";
 import { Spinner } from "../components/core";
+import { FiltersContainer, OptionListItem } from "../components/customized";
 
 type IProps = NativeStackScreenProps<RootStackParams, "FiltersService">;
 
@@ -57,6 +57,10 @@ export const FiltersServiceScreen = ({ route }: IProps) => {
       distance: {
         min: 0,
         max: 50,
+      },
+      price: {
+        min: 1,
+        max: 5000,
       },
     });
   };

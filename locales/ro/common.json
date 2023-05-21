@@ -538,5 +538,7 @@
   "filterPrice": "Filtrează preţul",
   "filterDistance": "Filtrează distanţa",
   "errorAppearedTryLater": "A apărut o eroare. Încearcă mai târziu",
-  "error": "Eroare"
+  "error": "Eroare",
+  "distanceIsInKmDescription": "Distanţele sunt exprimate in kilometri. Poţi găsi servicii pe o distanţă de maximum 50 de km.",
+  "applingFiltersTheAveragePriceIs": "Aplicând filtrele selectate, preţul mediu pentru acest tip de serviciu este de {{AVERAGE_PRICE}} {{CURRENCY}}"
 }

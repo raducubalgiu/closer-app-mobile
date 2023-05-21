@@ -3,18 +3,27 @@ import { memo, useCallback } from "react";
 import { SettingsSwitchListItem } from "../../ListItems/SettingsSwitchListItem";
 import { Period } from "../../../../ts";
 import { useTranslation } from "react-i18next";
+import dayjs from "dayjs";
 
 type IProps = { period: Period; onHandlePeriod: (period: Period) => void };
 
 const FixedPeriodTab = ({ period, onHandlePeriod }: IProps) => {
   const { t } = useTranslation("common");
 
+  const startOfDay = dayjs().utc(true).startOf("day");
+  const endOfDay = dayjs().utc(true).endOf("day");
+
+  const tommorowStart = startOfDay.add(1, "day");
+  const tommorowEnd = endOfDay.add(1, "day");
+
+  const threeMonths = endOfDay.add(3, "months");
+
   const fixedPeriods = [
     {
       title: t("today"),
       description: t("todayDescription"),
-      startDate: null,
-      endDate: null,
+      startDate: startOfDay,
+      endDate: endOfDay,
       startMinutes: null,
       endMinutes: null,
       monthIndex: 0,
@@ -23,8 +32,8 @@ const FixedPeriodTab = ({ period, onHandlePeriod }: IProps) => {
     {
       title: t("tommorow"),
       description: t("tommorowDescription"),
-      startDate: null,
-      endDate: null,
+      startDate: tommorowStart,
+      endDate: tommorowEnd,
       startMinutes: null,
       endMinutes: null,
       monthIndex: 0,
@@ -33,8 +42,8 @@ const FixedPeriodTab = ({ period, onHandlePeriod }: IProps) => {
     {
       title: t("anytime"),
       description: t("anytimeDescription"),
-      startDate: null,
-      endDate: null,
+      startDate: startOfDay,
+      endDate: threeMonths,
       startMinutes: null,
       endMinutes: null,
       monthIndex: 0,
@@ -43,8 +52,8 @@ const FixedPeriodTab = ({ period, onHandlePeriod }: IProps) => {
     {
       title: t("after18"),
       description: t("after18Description"),
-      startDate: null,
-      endDate: null,
+      startDate: startOfDay,
+      endDate: threeMonths,
       startMinutes: 1080,
       endMinutes: 1410,
       monthIndex: 0,

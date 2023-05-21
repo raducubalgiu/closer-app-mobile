@@ -23,6 +23,7 @@ import { useGet } from "../../hooks";
 import theme from "../../../assets/styles/theme";
 import { RootStackParams } from "../../navigation/rootStackParams";
 import { Location } from "../../ts";
+import dayjs from "dayjs";
 
 const { black } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "Locations">;
@@ -31,8 +32,8 @@ const SHEET_HEADER = 75;
 const HEADER_HEIGHT = 160;
 
 export const LocationsScreen = ({ route }: IProps) => {
-  const { service, option, period, longitude, latitude, sort } = route.params;
-  const { min, max } = route.params.distance || {};
+  const { service, option, period, longitude, latitude } = route.params;
+  const { sort, distance, price } = route.params;
   const sheetRef = useRef<BottomSheet>(null);
   const insets = useSafeAreaInsets();
   const { height } = useWindowDimensions();
@@ -42,8 +43,11 @@ export const LocationsScreen = ({ route }: IProps) => {
   const [sheetIndex, setSheetIndex] = useState(1);
   const { t } = useTranslation("common");
 
-  const minDistance = min ? min * 1000 : 0;
-  const maxDistance = max ? max * 1000 : 0;
+  const minDistance = distance?.min ? distance?.min * 1000 : 0;
+  const maxDistance = distance?.max ? distance?.max * 1000 : 0;
+
+  const startMinutes = period?.startMinutes ? period?.startMinutes : 0;
+  const endMinutes = period?.endMinutes ? period?.endMinutes : 1440;
 
   const {
     data: locations,
@@ -52,7 +56,7 @@ export const LocationsScreen = ({ route }: IProps) => {
     isError,
   } = useGet<Location[]>({
     model: "locations",
-    uri: `/locations?page=1&limit=25&latlng=${longitude},${latitude}&serviceId=${service?.id}&option=${option?._id}&minprice=0&maxprice=5000&mindistance=${minDistance}&maxdistance=${maxDistance}&sort=${sort?.query}`,
+    uri: `/locations?page=1&limit=25&start=${period?.startDate}&end=${period?.endDate}&startMinutes=${startMinutes}&endMinutes=${endMinutes}&latlng=${longitude},${latitude}&serviceId=${service?.id}&option=${option?._id}&minprice=${price?.min}&maxprice=${price?.max}&mindistance=${minDistance}&maxdistance=${maxDistance}&sort=${sort?.query}`,
   });
 
   const loading = isFetching || isLoading;
@@ -67,7 +71,7 @@ export const LocationsScreen = ({ route }: IProps) => {
     []
   );
 
-  const keyExtractor = useCallback((item: any) => item.id, []);
+  const keyExtractor = useCallback((item: any) => item._id, []);
 
   let footer = (
     <>
@@ -100,9 +104,15 @@ export const LocationsScreen = ({ route }: IProps) => {
     </>
   );
 
-  const handleOnChange = useCallback((index: number) => {
-    setSheetIndex(index);
-  }, []);
+  const handleOnChange = useCallback(
+    (index: number) => setSheetIndex(index),
+    []
+  );
+
+  const itemSeparator = useCallback(
+    () => <Divider style={{ marginVertical: 20 }} color="#ddd" />,
+    []
+  );
 
   return (
     <View style={styles.screen}>
@@ -112,7 +122,8 @@ export const LocationsScreen = ({ route }: IProps) => {
         option={option}
         period={period}
         sort={sort}
-        distance={route.params.distance}
+        distance={distance}
+        price={price}
       />
       <Map
         locations={locations}
@@ -137,12 +148,8 @@ export const LocationsScreen = ({ route }: IProps) => {
           keyExtractor={keyExtractor}
           renderItem={renderLocation}
           ListFooterComponent={footer}
-          ItemSeparatorComponent={() => (
-            <Divider style={{ marginVertical: 20 }} color="#ddd" />
-          )}
-          contentContainerStyle={{
-            paddingBottom: insets.bottom,
-          }}
+          ItemSeparatorComponent={itemSeparator}
+          contentContainerStyle={{ paddingBottom: insets.bottom }}
         />
       </BottomSheet>
     </View>

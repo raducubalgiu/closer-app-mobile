@@ -5,17 +5,17 @@ import {
   ScrollView,
   useWindowDimensions,
 } from "react-native";
-import HeaderSheet from "../../components/customized/Layout/Headers/HeaderSheet";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
-import { Button, FormInputRadio, Heading, Stack } from "../../components/core";
-import { useState } from "react";
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
 import theme from "../../../assets/styles/theme";
 import { RootStackParams } from "../../navigation/rootStackParams";
+import { Button, FormInputRadio, Heading, Stack } from "../../components/core";
+import { HeaderSheet } from "../../components/customized";
 
 type IProps = NativeStackScreenProps<RootStackParams, "LocationSort">;
 const { error } = theme.lightColors || {};

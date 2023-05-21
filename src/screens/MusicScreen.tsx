@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
-import HeaderSheet from "../components/customized/Layout/Headers/HeaderSheet";
+import { StyleSheet, View } from "react-native";
+import { useState } from "react";
+import { HeaderSheet } from "../components/customized";
 import { useNavigation } from "@react-navigation/native";
 import { SearchBarInput } from "../components/core";
 import { useTranslation } from "react-i18next";

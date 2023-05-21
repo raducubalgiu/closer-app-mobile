@@ -8524,11 +8524,6 @@ rn-progressive-image@^3.0.0:
   resolved "https://registry.yarnpkg.com/rn-progressive-image/-/rn-progressive-image-3.0.0.tgz#b378b7ec3d4e5cbb3a9a065868d7acab7ee9a0ee"
   integrity sha512-YZhGzXIvp6WiUXE6YtVAISjv4tWjNjoClLmmAoY3zQC2otj6yOz1LLSVm8n6dL6/d8UXsRrs+bjQsA7/r75B0A==
 
-rn-range-slider@^2.2.2:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/rn-range-slider/-/rn-range-slider-2.2.2.tgz#bab4abf12f028df55364e041af6fce29ad46d7ea"
-  integrity sha512-34qdWz0oPEa6Wa9+B0+IihxolfydGPfzKvIyjieCyz4+YzVuSizalwpwRufxAnojfFPxqX1Kt/CTBckt8K7eEQ==
-
 rtl-detect@^1.0.2:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/rtl-detect/-/rtl-detect-1.0.4.tgz#40ae0ea7302a150b96bc75af7d749607392ecac6"

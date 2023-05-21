@@ -1,29 +1,48 @@
-import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-  Text,
-  ScrollView,
-  useWindowDimensions,
-  TextInput,
-} from "react-native";
-import { useCallback, useState } from "react";
+import { SafeAreaView, StyleSheet, View, ScrollView, Text } from "react-native";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import HeaderSheet from "../../components/customized/Layout/Headers/HeaderSheet";
-import { Button, Heading, Stack } from "../../components/core";
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
+import { Button, Heading } from "../../components/core";
 import { RootStackParams } from "../../navigation/rootStackParams";
 import theme from "../../../assets/styles/theme";
-import { Icon } from "@rneui/themed";
+import { Stack } from "../../components/core";
+import { CustomRangeSlider, HeaderSheet } from "../../components/customized";
 
-const { grey0, black } = theme.lightColors || {};
+const { grey0 } = theme.lightColors || {};
+type IProps = NativeStackScreenProps<RootStackParams, "LocationFilterPrice">;
 
-export const LocationFilterPriceScreen = () => {
+export const LocationFilterPriceScreen = ({ route }: IProps) => {
   const { t } = useTranslation("common");
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const { width } = useWindowDimensions();
+  const { min, max } = route.params.price;
+
+  const [range, setRange] = useState<[number, number]>([min, max]);
+
+  const handleReset = () => {
+    setRange([0, 50]);
+  };
+
+  const handleChange = (range: [number, number]) => {
+    setRange(range);
+  };
+
+  const navigateToLocations = () => {
+    navigation.navigate({
+      name: "Locations",
+      params: {
+        price: {
+          min: range[0],
+          max: range[1],
+        },
+      },
+      merge: true,
+    });
+  };
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -37,22 +56,34 @@ export const LocationFilterPriceScreen = () => {
         <ScrollView scrollEnabled={false}>
           <Heading title={t("filterPrice")} sx={styles.title} />
           <Text style={styles.description}>
-            Luand in calcul filtrele selectate, pretul mediu pentru acest
-            serviciu este de 450 lei
+            {t("applingFiltersTheAveragePriceIs", {
+              AVERAGE_PRICE: 145,
+              CURRENCY: "lei",
+            })}
           </Text>
+          <CustomRangeSlider
+            range={range}
+            min={0}
+            max={5000}
+            onValueChange={handleChange}
+            sx={{ marginHorizontal: 12.5 }}
+            sxHeader={{ marginHorizontal: 10 }}
+            label={t("lei")}
+          />
         </ScrollView>
         <Stack direction="row">
           <Button
-            //onPress={handleReset}
+            onPress={handleReset}
             title={t("delete")}
-            sxBtn={{ width: width / 2 - 30 }}
+            sxBtn={{ flex: 1 }}
             variant="outlined"
-            //disabled={low === 0 && high === 500}
+            disabled={range[0] !== min && range[1] !== max}
           />
           <Button
+            onPress={navigateToLocations}
             title={t("filter")}
-            sxBtn={{ width: width / 2 - 30 }}
-            //disabled={low !== 0 && high !== 500}
+            disabled={range[0] === min && range[1] === max}
+            sxBtn={{ flex: 1, marginLeft: 15 }}
           />
         </Stack>
       </View>

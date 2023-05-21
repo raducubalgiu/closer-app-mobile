@@ -3,7 +3,7 @@ import { Divider, Icon, Image } from "@rneui/themed";
 import { memo } from "react";
 import { Stack } from "../../core";
 import theme from "../../../../assets/styles/theme";
-import HeaderSheet from "../Layout/Headers/HeaderSheet";
+import { HeaderSheet } from "../Layout/Headers/HeaderSheet";
 import { ResizeMode, Video } from "expo-av";
 
 const { black } = theme.lightColors || {};

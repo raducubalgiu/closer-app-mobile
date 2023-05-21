@@ -12,7 +12,7 @@ type IProps = {
   sx?: ViewStyle;
 };
 
-const HeaderSheet = ({ onClose, divider = true, title, sx }: IProps) => {
+export const HeaderSheet = ({ onClose, divider = true, title, sx }: IProps) => {
   return (
     <>
       <Stack direction="row" sx={sx}>
@@ -26,8 +26,6 @@ const HeaderSheet = ({ onClose, divider = true, title, sx }: IProps) => {
     </>
   );
 };
-
-export default HeaderSheet;
 
 const styles = StyleSheet.create({
   icon: { paddingVertical: 10, paddingHorizontal: 15 },
