@@ -11,6 +11,8 @@ import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useIsFocused } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { isEmpty } from "lodash";
+import { Divider, Icon, ListItem } from "@rneui/themed";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { Spinner, Stack } from "../../../core";
 import {
@@ -19,14 +21,18 @@ import {
   usePaginateActions,
   useRefreshByUser,
 } from "../../../../hooks";
-import { CardReviewSummary } from "../../Cards/CardReviewSummary";
+import CardReviewSummary from "../../Cards/CardReviewSummary";
 import RatingListItem from "../../ListItems/RatingListItem";
 import { Review, Product } from "../../../../ts";
-import { Divider, Icon, ListItem } from "@rneui/themed";
 import theme from "../../../../../assets/styles/theme";
 
-type IProps = { userId: string };
 const { black, success } = theme.lightColors || {};
+type ReviewsSummary = {
+  ratings: Review[];
+  ratingsAverage: number;
+  ratingsQuantity: number;
+};
+type IProps = { userId: string };
 
 export const ReviewsTab = ({ userId }: IProps) => {
   const { t } = useTranslation("common");
@@ -35,12 +41,12 @@ export const ReviewsTab = ({ userId }: IProps) => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [expanded, setExpanded] = useState(false);
 
-  const { data: products } = useGet({
+  const { data: products } = useGet<Product[]>({
     model: "products",
     uri: `/users/${userId}/products/all`,
   });
 
-  const { data: summary } = useGet({
+  const { data: summary } = useGet<ReviewsSummary>({
     model: "summary",
     uri: `/users/${userId}/reviews/summary?productId=${
       selectedProduct ? selectedProduct?.id : ""
@@ -60,16 +66,8 @@ export const ReviewsTab = ({ userId }: IProps) => {
   const { data: reviews, showSpinner, loadMore } = usePaginateActions(options);
 
   const renderRatings = useCallback(({ item }: ListRenderItemInfo<Review>) => {
-    const {
-      id,
-      reviewerId,
-      serviceId,
-      productId,
-      rating,
-      review,
-      createdAt,
-      likesCount,
-    } = item || {};
+    const { id, reviewerId, serviceId, productId } = item || {};
+    const { rating, review, createdAt, likesCount } = item || {};
 
     return (
       <RatingListItem
@@ -102,7 +100,7 @@ export const ReviewsTab = ({ userId }: IProps) => {
 
   const header = (
     <>
-      {reviews?.length > 0 && (
+      {!isEmpty(reviews) && (
         <ListItem.Accordion
           content={accordionTitle}
           onPress={() => setExpanded((expanded) => !expanded)}
@@ -121,7 +119,7 @@ export const ReviewsTab = ({ userId }: IProps) => {
               </Stack>
               <Divider color="#ddd" />
             </Pressable>
-            {products?.map((prod: Product, i: number) => {
+            {products?.map((prod, i) => {
               return (
                 <Pressable key={i} onPress={() => onHandleProduct(prod)}>
                   <Stack direction="row" sx={{ padding: 15 }}>
@@ -144,14 +142,14 @@ export const ReviewsTab = ({ userId }: IProps) => {
           </ScrollView>
         </ListItem.Accordion>
       )}
-      {!expanded && !loading && reviews?.length > 0 && (
+      {!expanded && !loading && !isEmpty(reviews) && summary && (
         <CardReviewSummary
           ratings={summary?.ratings}
           ratingsQuantity={summary?.ratingsQuantity}
-          ratingsAverage={summary?.ratingsAvg}
+          ratingsAverage={summary?.ratingsAverage}
         />
       )}
-      {!loading && reviews?.length === 0 && (
+      {!loading && isEmpty(reviews) && (
         <NoFoundMessage
           title={t("reviews")}
           description={t("noFoundReviews")}
@@ -172,16 +170,16 @@ export const ReviewsTab = ({ userId }: IProps) => {
         <FlatList
           ListHeaderComponent={header}
           refreshControl={refreshControl}
-          contentContainerStyle={{
-            paddingTop: 15,
-            paddingBottom: insets.bottom,
-          }}
           data={reviews}
           keyExtractor={keyExtractor}
           renderItem={renderRatings}
           ListFooterComponent={showSpinner}
           onEndReached={loadMore}
           onEndReachedThreshold={0.3}
+          contentContainerStyle={{
+            paddingTop: 15,
+            paddingBottom: insets.bottom,
+          }}
         />
       )}
       {loading && <Spinner />}

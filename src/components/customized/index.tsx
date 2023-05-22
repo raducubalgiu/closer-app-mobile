@@ -12,6 +12,9 @@ import DateRangePicker from "./Calendars/DateRangePicker";
 import OptionListItem from "./ListItems/OptionListItem";
 import LocationListItem from "./ListItems/LocationListItem/LocationListItem";
 import CustomRangeSlider from "./RangeSlider/CustomRangeSlider";
+import CalendarPeriodTab from "./Tabs/PeriodTabs/CalendarPeriodTab";
+import FixedPeriodTab from "./Tabs/PeriodTabs/FixedPeriodTab";
+import CardReviewSummary from "./Cards/CardReviewSummary";
 
 export {
   DisplayText,
@@ -27,6 +30,9 @@ export {
   OptionListItem,
   LocationListItem,
   CustomRangeSlider,
+  CalendarPeriodTab,
+  FixedPeriodTab,
+  CardReviewSummary,
 };
 
 // Normal Components
@@ -67,6 +73,7 @@ export { CameraTimerIconButton } from "./IconButtons/CameraTimerIconButton";
 
 export { TopTabContainer } from "./Tabs/TopTabContainer/TopTabContainer";
 export { TopTabProfile } from "./Tabs/TopTabContainer/TopTabProfile";
+export { TopTabPeriod } from "./Tabs/TopTabContainer/TopTabPeriod";
 export { SavedPostsTab } from "./Tabs/SavedTabs/SavedPostsTab";
 export { SavedVideoTab } from "./Tabs/SavedTabs/SavedVideoTab";
 export { SavedHashtagsTab } from "./Tabs/SavedTabs/SavedHashtagsTab";
@@ -103,7 +110,6 @@ export { CardHashtagOverview } from "./Cards/CardHashtagOverview";
 export { CardServiceOverview } from "./Cards/CardServiceOverview";
 export { CardMessageUser } from "./Cards/CardMessageUser";
 export { CardPostDescription } from "./Cards/CardPostDescription";
-export { CardReviewSummary } from "./Cards/CardReviewSummary";
 
 export { HeaderServices } from "./Layout/Headers/HeaderServices";
 export { HeaderEdit } from "./Layout/Headers/HeaderEdit";
@@ -149,8 +155,6 @@ export { CameraTimerSheet } from "./Sheets/CameraTimerSheet";
 
 export { FakeSearchBar } from "./FakeSearchBar/FakeSearchBar";
 export { FakeSearchBarServices } from "./FakeSearchBar/FakeSearchBarServices";
-
-export { FiltersContainer } from "./Layout/Containers/FiltersContainer";
 
 export { BookableLabel } from "./Typography/Labels/BookableLabel";
 export { LastMinuteLabel } from "./Typography/Labels/LastMinuteLabel";

@@ -1,32 +1,29 @@
-import {
-  View,
-  Text,
-  SafeAreaView,
-  useWindowDimensions,
-  StyleSheet,
-} from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 import { Icon } from "@rneui/themed";
+import { isEmpty, find } from "lodash";
+import { LinearGradient } from "expo-linear-gradient";
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import { Button, ButtonGroup } from "../components/core";
-import { PickerHoursModal } from "../components/customized";
 import { RootStackParams } from "../navigation/rootStackParams";
 import { Period } from "../ts";
 import { dayMonthFormat } from "../utils/date-utils";
 import { useMinutes } from "../hooks";
 import theme from "../../assets/styles/theme";
-import { Stack, IconBackButton } from "../components/core";
-import CalendarPeriodTab from "../components/customized/Tabs/PeriodTabs/CalendarPeriodTab";
-import { isEmpty, find } from "lodash";
-import FixedPeriodTab from "../components/customized/Tabs/PeriodTabs/FixedPeriodTab";
 import { displayDash } from "../utils";
+import { Stack, IconBackButton, Button, ButtonGroup } from "../components/core";
+import {
+  PickerHoursModal,
+  CalendarPeriodTab,
+  FixedPeriodTab,
+  TopTabPeriod,
+} from "../components/customized";
 
 type IProps = NativeStackScreenProps<RootStackParams, "FiltersDate">;
 const { primary } = theme.lightColors || {};
@@ -42,7 +39,6 @@ export const FiltersDateScreen = ({ route }: IProps) => {
   const { startDate, endDate, startMinutes, endMinutes, key } = period;
   const { t } = useTranslation("common");
   const [pickHour, setPickHour] = useState(`${t("pickHour")}`);
-  const { width } = useWindowDimensions();
   const insets = useSafeAreaInsets();
 
   useEffect(() => {
@@ -123,90 +119,41 @@ export const FiltersDateScreen = ({ route }: IProps) => {
       : displayDash(period.title);
 
   return (
-    <View style={{ flex: 1, backgroundColor: primary }}>
-      <SafeAreaView style={{ justifyContent: "space-between" }}>
-        <View style={styles.header}>
-          <Text style={styles.mainHeading}>{t("select")}</Text>
-          <Text style={styles.mainHeading}>{t("period")}</Text>
-        </View>
-      </SafeAreaView>
-      <View
-        style={{
-          backgroundColor: "white",
-          flex: 1,
-          borderTopLeftRadius: 25,
-          borderTopRightRadius: 25,
-        }}
-      >
-        <View style={{ flex: 1, justifyContent: "space-between" }}>
-          <View style={styles.body}>
-            <Stack direction="row" justify="center" sx={styles.sheetOverview}>
-              <IconBackButton size={20} />
-              <Stack sx={{ flex: 1 }}>
-                <Text style={styles.title}>{service?.name}</Text>
-                <Text style={styles.description}>{description}</Text>
-              </Stack>
-              <Icon name="chevron-back" type="ionicon" color="white" />
-            </Stack>
-          </View>
-          <Tab.Navigator
-            initialRouteName={screen}
-            screenOptions={{
-              tabBarContentContainerStyle: {
-                height: 42,
-              },
-              tabBarStyle: {
-                borderRadius: 25,
-                backgroundColor: "#eee",
-                width: 280,
-                marginLeft: width / 2 - 140,
-                justifyContent: "center",
-              },
-              tabBarItemStyle: {
-                width: 140,
-              },
-              tabBarLabelStyle: {
-                color: "black",
-                textTransform: "none",
-                fontWeight: "600",
-                marginBottom: 5,
-                height: 32,
-                marginTop: 16,
-              },
-              tabBarIndicatorStyle: {
-                height: 32,
-                width: 130,
-                marginHorizontal: 5,
-                marginBottom: 5,
-                borderRadius: 25,
-                backgroundColor: "white",
-              },
-            }}
-            sceneContainerStyle={{ backgroundColor: "white" }}
-          >
-            <Tab.Screen
-              name="Calendar"
-              component={Calendar}
-              options={{ tabBarLabel: t("choosePeriod") }}
-            />
-            <Tab.Screen
-              name="FixedPeriods"
-              component={FixedPeriod}
-              options={{ tabBarLabel: t("fixedPeriods") }}
-            />
-          </Tab.Navigator>
-        </View>
+    <LinearGradient
+      colors={["#fe9934", "#f2f2f2"]}
+      start={{ x: 0.2, y: 0.2 }}
+      end={{ x: 0.5, y: 0.5 }}
+      style={styles.screen}
+    >
+      <View style={[styles.header, { paddingTop: insets.top }]}>
+        <Text style={styles.mainHeading}>{t("select")}</Text>
+        <Text style={styles.mainHeading}>{t("period")}</Text>
       </View>
-      <View
-        style={{
-          backgroundColor: "white",
-          borderTopWidth: 1,
-          borderTopColor: "#ddd",
-          paddingBottom: insets.bottom,
-          paddingHorizontal: 15,
-        }}
-      >
-        <Stack direction="row">
+      <View style={styles.container}>
+        <Stack direction="row" justify="center" sx={styles.sheetOverview}>
+          <IconBackButton size={20} />
+          <View style={{ flex: 1 }}>
+            <Text style={styles.title}>{service?.name}</Text>
+            <Text style={styles.description}>{description}</Text>
+          </View>
+          <Icon name="chevron-back" type="ionicon" color="white" />
+        </Stack>
+        <TopTabPeriod initialRouteName={screen}>
+          <Tab.Screen
+            name="Calendar"
+            component={Calendar}
+            options={{ tabBarLabel: t("choosePeriod") }}
+          />
+          <Tab.Screen
+            name="FixedPeriods"
+            component={FixedPeriod}
+            options={{ tabBarLabel: t("fixedPeriods") }}
+          />
+        </TopTabPeriod>
+        <Stack
+          direction="row"
+          sx={{ ...styles.footer, paddingBottom: insets.bottom }}
+        >
           <ButtonGroup
             onPress={() => setVisible((visible) => !visible)}
             buttons={hoursButtons}
@@ -215,7 +162,7 @@ export const FiltersDateScreen = ({ route }: IProps) => {
             disabled={period.key === "after18"}
           />
           <View style={{ flex: 1 }}>
-            <Button title={t("next")} onPress={goNext} disabled={disabled()} />
+            <Button title={t("next")} disabled={disabled()} onPress={goNext} />
           </View>
         </Stack>
       </View>
@@ -225,17 +172,20 @@ export const FiltersDateScreen = ({ route }: IProps) => {
         onAction={handleHours}
         onClose={() => setVisible(false)}
       />
-    </View>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
+  screen: { flex: 1, backgroundColor: primary },
   header: { marginVertical: 30, marginHorizontal: 20 },
   mainHeading: { color: "white", fontSize: 28, fontWeight: "700" },
-  body: {
+  container: {
     backgroundColor: "white",
+    flex: 1,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
+    justifyContent: "space-between",
   },
   sheetOverview: {
     marginHorizontal: 15,
@@ -254,5 +204,11 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginBottom: 15,
     fontWeight: "500",
+  },
+  footer: {
+    backgroundColor: "white",
+    borderTopWidth: 1,
+    borderTopColor: "#ddd",
+    paddingHorizontal: 15,
   },
 });

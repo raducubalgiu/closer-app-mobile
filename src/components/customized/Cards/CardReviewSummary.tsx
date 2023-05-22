@@ -2,18 +2,13 @@ import { StyleSheet, Text, View } from "react-native";
 import { find } from "lodash";
 import { ListItem, Rating, Stack } from "../../core";
 import theme from "../../../../assets/styles/theme";
+import { memo } from "react";
 
 const { primary, black, grey0 } = theme.lightColors || {};
 
-const RatingItem = ({
-  count,
-  defRating,
-  percentage,
-}: {
-  count: number;
-  defRating: number;
-  percentage: string;
-}) => {
+type RatingItemProps = { count: number; defRating: number; percentage: string };
+
+const RatingItem = ({ count, defRating, percentage }: RatingItemProps) => {
   const styles = StyleSheet.create({
     barContainer: {
       flex: 1,
@@ -34,7 +29,7 @@ const RatingItem = ({
   });
 
   return (
-    <ListItem between>
+    <ListItem align="center" between>
       <Rating rating={defRating} sx={{ marginVertical: 0 }} />
       <View style={styles.barContainer}>
         <View style={styles.barProgress} />
@@ -48,7 +43,7 @@ const RatingItem = ({
 
 type IProps = { ratings: any; ratingsQuantity: number; ratingsAverage: number };
 
-export const CardReviewSummary = ({
+const CardReviewSummary = ({
   ratings,
   ratingsQuantity = 0,
   ratingsAverage = 0,
@@ -100,6 +95,8 @@ export const CardReviewSummary = ({
     </Stack>
   );
 };
+
+export default memo(CardReviewSummary);
 
 const styles = StyleSheet.create({
   container: {

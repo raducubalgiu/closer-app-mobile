@@ -4,6 +4,7 @@ import { useGet } from "../../../../hooks";
 import { NoFoundMessage } from "../../NoFoundMessage/NoFoundMessage";
 import { useTranslation } from "react-i18next";
 import { memo } from "react";
+import { isEmpty } from "lodash";
 
 type IProps = {
   userId: string;
@@ -31,7 +32,7 @@ const ProductsProfileTab = ({
 
   return (
     <>
-      {services?.length > 0 && (
+      {!isEmpty(services) && (
         <TopTabServices
           userId={userId}
           initialRoute={service?.name.toLowerCase()}
@@ -42,7 +43,7 @@ const ProductsProfileTab = ({
           onScrollEndDrag={onScrollEndDrag}
         />
       )}
-      {services?.length === 0 && (
+      {isEmpty(services) && (
         <NoFoundMessage
           sx={{ marginTop: 50 }}
           title={t("products")}

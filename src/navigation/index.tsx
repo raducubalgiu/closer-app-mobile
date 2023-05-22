@@ -99,15 +99,12 @@ import {
   ScheduleCancelScreen,
   ScheduleConfirmScreen,
   ScheduleDetailsScreen,
-  SearchAllScreen,
-  SearchPostsScreen,
   SearchServicesScreen,
   ServiceScreen,
   SavingDataScreen,
   StoryScreen,
   PhotoLibraryScreen,
   PhotoAlbumsScreen,
-  SearchPopularDetailScreen,
   TagUsersScreen,
 } from "../screens";
 
@@ -124,42 +121,8 @@ const AppNavigation = () => {
     <NavigationContainer>
       {user ? (
         <PortalProvider>
-          <Stack.Navigator
-            screenOptions={{
-              headerShown: false,
-            }}
-          >
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="App" component={TabNavigator} />
-            <Stack.Screen
-              name="SearchPosts"
-              component={SearchPostsScreen}
-              options={{
-                animation: "fade",
-                animationDuration: 150,
-              }}
-            />
-            <Stack.Screen
-              name="SearchAll"
-              component={SearchAllScreen}
-              options={{
-                animation: "fade",
-                animationDuration: 150,
-              }}
-            />
-            <Stack.Screen
-              name="SearchPopular"
-              component={SearchPopularDetailScreen}
-              sharedElements={(route, otherRoute, showing) => {
-                const { post, posts, index } = route.params;
-                return [
-                  {
-                    id: post.id,
-                    posts,
-                    index,
-                  },
-                ];
-              }}
-            />
             <Stack.Screen
               name="SearchServices"
               component={SearchServicesScreen}

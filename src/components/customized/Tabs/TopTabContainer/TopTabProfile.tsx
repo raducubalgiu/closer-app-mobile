@@ -9,7 +9,7 @@ import ProductsProfileTab from "../ProfileTabs/ProductsProfileTab";
 import AboutProfileTab from "../ProfileTabs/AboutProfileTab/AboutProfileTab";
 import { TabBadge } from "../TabBadge/TabBadge";
 import theme from "../../../../../assets/styles/theme";
-import { User } from "../../../../models/user";
+import { User } from "../../../../ts";
 import { Animated, Dimensions, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 

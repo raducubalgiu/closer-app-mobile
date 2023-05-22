@@ -1,4 +1,10 @@
-import { FlatList, ListRenderItemInfo } from "react-native";
+import {
+  Text,
+  ListRenderItemInfo,
+  StyleSheet,
+  FlatList,
+  View,
+} from "react-native";
 import { useCallback, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
@@ -8,13 +14,18 @@ import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
+import { Icon } from "@rneui/themed";
+import { LinearGradient } from "expo-linear-gradient";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { RootStackParams } from "../navigation/rootStackParams";
 import { Filter, Option } from "../ts";
 import { useGet } from "../hooks";
 import { displayDash } from "../utils";
-import { Spinner } from "../components/core";
-import { FiltersContainer, OptionListItem } from "../components/customized";
+import theme from "../../assets/styles/theme";
+import { Spinner, Stack, IconBackButton, Button } from "../components/core";
+import { OptionListItem } from "../components/customized";
 
+const { primary } = theme.lightColors || {};
 type IProps = NativeStackScreenProps<RootStackParams, "FiltersService">;
 
 export const FiltersServiceScreen = ({ route }: IProps) => {
@@ -25,11 +36,14 @@ export const FiltersServiceScreen = ({ route }: IProps) => {
   const [option, setOption] = useState<Option | null>(null);
   const { t } = useTranslation("common");
   const filter = first(service?.filters);
+  const insets = useSafeAreaInsets();
 
   const { data, isLoading, isFetching } = useGet<Filter>({
     model: "filter",
     uri: `/filters/${filter?.id ? filter?.id : filter}`,
   });
+
+  const isLoadingOptions = isLoading || isFetching;
 
   const goToLocations = async () => {
     setLoading(true);
@@ -79,25 +93,80 @@ export const FiltersServiceScreen = ({ route }: IProps) => {
   const keyExtractor = useCallback((item: Option) => item._id, []);
 
   return (
-    <FiltersContainer
-      mainHeading={t("filter")}
-      secondHeading={t("correspondingServices")}
-      headerTitle={service?.name}
-      headerDescription={displayDash(option?.name)}
-      onNext={goToLocations}
-      btnTitle={t("search")}
-      disabled={!option || loading}
-      loading={loading}
+    <LinearGradient
+      colors={["#fe9934", "#f2f2f2"]}
+      start={{ x: 0.2, y: 0.2 }}
+      end={{ x: 0.5, y: 0.5 }}
+      style={styles.screen}
     >
-      {(!isFetching || !isLoading) && (
-        <FlatList
-          bounces={false}
-          data={data?.options}
-          keyExtractor={keyExtractor}
-          renderItem={renderOption}
-        />
-      )}
-      {(isLoading || isFetching) && <Spinner />}
-    </FiltersContainer>
+      <View style={[styles.header, { paddingTop: insets.top }]}>
+        <Text style={styles.mainHeading}>{t("select")}</Text>
+        <Text style={styles.mainHeading}>{t("period")}</Text>
+      </View>
+      <View style={styles.container}>
+        <Stack direction="row" justify="center" sx={styles.sheetOverview}>
+          <IconBackButton size={20} />
+          <View style={{ flex: 1 }}>
+            <Text style={styles.title}>{service?.name}</Text>
+            <Text style={styles.description}>{displayDash(option?.name)}</Text>
+          </View>
+          <Icon name="chevron-back" type="ionicon" color="white" />
+        </Stack>
+        {!isLoadingOptions && (
+          <FlatList
+            bounces={false}
+            data={data?.options}
+            keyExtractor={keyExtractor}
+            renderItem={renderOption}
+          />
+        )}
+        {isLoadingOptions && <Spinner />}
+        <View style={[styles.footer, { paddingBottom: insets.bottom }]}>
+          <Button
+            title={t("next")}
+            disabled={!option || loading}
+            onPress={goToLocations}
+            loading={loading}
+          />
+        </View>
+      </View>
+    </LinearGradient>
   );
 };
+
+const styles = StyleSheet.create({
+  screen: { flex: 1, backgroundColor: primary },
+  header: { marginVertical: 30, marginHorizontal: 20 },
+  mainHeading: { color: "white", fontSize: 28, fontWeight: "700" },
+  container: {
+    backgroundColor: "white",
+    flex: 1,
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    justifyContent: "space-between",
+  },
+  sheetOverview: {
+    marginHorizontal: 15,
+    marginBottom: 5,
+  },
+  title: {
+    textAlign: "center",
+    marginTop: 10,
+    fontSize: 18,
+    fontWeight: "700",
+  },
+  description: {
+    color: "grey",
+    marginTop: 5,
+    textAlign: "center",
+    fontSize: 15,
+    marginBottom: 15,
+    fontWeight: "500",
+  },
+  footer: {
+    backgroundColor: "white",
+    borderTopWidth: 1,
+    borderTopColor: "#ddd",
+    paddingHorizontal: 15,
+  },
+});
