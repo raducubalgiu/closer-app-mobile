@@ -24,7 +24,7 @@ import { useMinutes } from "../hooks";
 import theme from "../../assets/styles/theme";
 import { Stack, IconBackButton } from "../components/core";
 import CalendarPeriodTab from "../components/customized/Tabs/PeriodTabs/CalendarPeriodTab";
-import _, { isEmpty } from "lodash";
+import { isEmpty, find } from "lodash";
 import FixedPeriodTab from "../components/customized/Tabs/PeriodTabs/FixedPeriodTab";
 import { displayDash } from "../utils";
 
@@ -61,18 +61,10 @@ export const FiltersDateScreen = ({ route }: IProps) => {
 
   const hoursButtons = [{ title: t("anyHour") }, { title: pickHour }];
 
-  const goNext = () =>
-    navigation.push("FiltersService", {
-      service,
-      period: {
-        ...period,
-        startDate: period.startDate?.format("YYYY-MM-DD"),
-        endDate: period.endDate?.format("YYYY-MM-DD"),
-      },
-    });
+  const goNext = () => navigation.push("FiltersService", { service, period });
 
   const getMinutesName = (min: number) => {
-    const minuteEl = _.find(minutes, { id: min });
+    const minuteEl = find(minutes, { id: min });
     return minuteEl?.name;
   };
 
@@ -89,18 +81,13 @@ export const FiltersDateScreen = ({ route }: IProps) => {
   const Calendar = useCallback(
     () => (
       <CalendarPeriodTab
-        period={period}
+        period={{
+          ...period,
+          startDate: key === "calendar" ? period.startDate : null,
+          endDate: key === "calendar" ? period.endDate : null,
+        }}
         minutes={minutes}
-        onHandlePeriod={(period) =>
-          setPeriod({
-            ...period,
-            key: "calendar",
-            title: "",
-            description: "",
-            startMinutes: null,
-            endMinutes: null,
-          })
-        }
+        onHandlePeriod={(period) => setPeriod({ ...period, key: "calendar" })}
       />
     ),
     [period]

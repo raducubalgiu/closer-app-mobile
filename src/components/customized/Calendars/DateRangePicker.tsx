@@ -12,6 +12,7 @@ import theme from "../../../../assets/styles/theme";
 import * as Haptics from "expo-haptics";
 import { Month, Day, Period } from "../../../ts";
 import * as Animatable from "react-native-animatable";
+import dayjs from "dayjs";
 
 const { width } = Dimensions.get("window");
 const { black, primary, grey0 } = theme.lightColors || {};
@@ -36,55 +37,56 @@ const DateRangePicker = ({
 }: IProps) => {
   const flatlistRef = useRef<FlatList>(null);
 
+  const startDate = dayjs(period.startDate, "YYYY-MM-DD").utc(true);
+  const endDate = dayjs(period.endDate, "YYYY-MM-DD").utc(true);
+
   const getBackgroundColor = useCallback(
     (item: Day) => {
       switch (true) {
-        case (item.date.isSame(period?.startDate) ||
-          item.date.isSame(period?.endDate)) &&
+        case (item.date.isSame(startDate) || item.date.isSame(endDate)) &&
           !item.prevDates:
           return { backgroundColor: primary, borderRadius: 50 };
         default:
           return null;
       }
     },
-    [period]
+    [startDate, endDate]
   );
 
   const getBgMarked = useCallback(
     (item: Day) => {
       switch (true) {
-        case item.date.isSameOrAfter(period?.startDate) &&
-          item.date.isSame(period?.startDate) &&
+        case item.date.isSameOrAfter(startDate) &&
+          item.date.isSame(startDate) &&
           !item.prevDates:
           return {
             backgroundColor: "#f1f1f1",
             borderTopLeftRadius: 50,
             borderBottomLeftRadius: 50,
           };
-        case item.date.isSameOrBefore(period?.endDate) &&
-          item.date.isSame(period?.endDate) &&
+        case item.date.isSameOrBefore(endDate) &&
+          item.date.isSame(endDate) &&
           !item.prevDates:
           return {
             backgroundColor: "#f1f1f1",
             borderTopRightRadius: 50,
             borderBottomRightRadius: 50,
           };
-        case item.date.isSameOrAfter(period?.startDate) &&
-          item.date.isSameOrBefore(period?.endDate) &&
+        case item.date.isSameOrAfter(startDate) &&
+          item.date.isSameOrBefore(endDate) &&
           !item.prevDates:
           return { backgroundColor: "#f1f1f1" };
         default:
           return null;
       }
     },
-    [period]
+    [startDate, endDate]
   );
 
   const getColorTxt: any = useCallback(
     (item: Day) => {
       switch (true) {
-        case (item.date.isSame(period?.startDate) ||
-          item.date.isSame(period?.endDate)) &&
+        case (item.date.isSame(startDate) || item.date.isSame(endDate)) &&
           !item.prevDates:
           return { color: "white" };
         case item.disabled:
@@ -97,7 +99,7 @@ const DateRangePicker = ({
           return { color: black };
       }
     },
-    [period]
+    [startDate, endDate]
   );
 
   const handleDayPress = useCallback(
@@ -107,42 +109,42 @@ const DateRangePicker = ({
       if (item.disabled) return;
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 
-      if (!period?.startDate && !period?.endDate && !item.prevDates) {
+      if (!startDate.isValid() && !endDate.isValid() && !item.prevDates) {
         onSetPeriod({
           ...period,
-          startDate: item.date,
+          startDate: dayjs(item.date).format("YYYY-MM-DD"),
           endDate: null,
           monthIndex,
         });
         return;
       }
-      if (item.date.isBefore(period?.startDate) && !item.prevDates) {
+      if (item.date.isBefore(startDate) && !item.prevDates) {
         onSetPeriod({
           ...period,
-          startDate: item.date,
+          startDate: dayjs(item.date).format("YYYY-MM-DD"),
           monthIndex,
         });
         return;
       }
-      if (period?.startDate && period?.endDate && !item.prevDates) {
+      if (startDate.isValid() && endDate.isValid() && !item.prevDates) {
         onSetPeriod({
           ...period,
-          startDate: item.date,
+          startDate: dayjs(item.date).format("YYYY-MM-DD"),
           endDate: null,
           monthIndex,
         });
         return;
       }
-      if (period?.startDate && !item.prevDates) {
+      if (startDate.isValid() && !item.prevDates) {
         onSetPeriod({
           ...period,
-          endDate: item.date,
+          endDate: dayjs(item.date).format("YYYY-MM-DD"),
           monthIndex,
         });
         return;
       }
     },
-    [period]
+    [startDate, endDate]
   );
 
   const getItemLayout = useCallback(
@@ -179,7 +181,7 @@ const DateRangePicker = ({
         </View>
       );
     },
-    [period]
+    [startDate, endDate]
   );
 
   const renderMonth = useCallback(
@@ -200,7 +202,7 @@ const DateRangePicker = ({
         />
       );
     },
-    [period]
+    [startDate, endDate]
   );
 
   const keyDay = useCallback((item: Day) => item.date.toString(), []);

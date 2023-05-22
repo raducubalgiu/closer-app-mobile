@@ -155,6 +155,8 @@
   "willApearHere": "vor apărea aici",
   "jobsPostedBy": "Joburile postate de către",
   "jobsPostedByYouMessage": "Joburile postate de tine vor apărea aici",
+  "isOpeningAt": "Deschide la {{IS_OPENING_AT}}",
+  "isOpeningTommorowAt": "Mâine deschide la {{IS_OPENING_TOMMOROW_AT}}",
   "isClosingAt": "Închide la {{IS_CLOSING_AT}}",
   "closed": "Închis",
   "message": "Mesaj",

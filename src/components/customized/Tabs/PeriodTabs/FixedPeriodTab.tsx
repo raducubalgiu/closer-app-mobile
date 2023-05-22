@@ -22,8 +22,8 @@ const FixedPeriodTab = ({ period, onHandlePeriod }: IProps) => {
     {
       title: t("today"),
       description: t("todayDescription"),
-      startDate: startOfDay,
-      endDate: endOfDay,
+      startDate: startOfDay.format("YYYY-MM-DD"),
+      endDate: endOfDay.format("YYYY-MM-DD"),
       startMinutes: null,
       endMinutes: null,
       monthIndex: 0,
@@ -32,8 +32,8 @@ const FixedPeriodTab = ({ period, onHandlePeriod }: IProps) => {
     {
       title: t("tommorow"),
       description: t("tommorowDescription"),
-      startDate: tommorowStart,
-      endDate: tommorowEnd,
+      startDate: tommorowStart.format("YYYY-MM-DD"),
+      endDate: tommorowEnd.format("YYYY-MM-DD"),
       startMinutes: null,
       endMinutes: null,
       monthIndex: 0,
@@ -42,8 +42,8 @@ const FixedPeriodTab = ({ period, onHandlePeriod }: IProps) => {
     {
       title: t("anytime"),
       description: t("anytimeDescription"),
-      startDate: startOfDay,
-      endDate: threeMonths,
+      startDate: startOfDay.format("YYYY-MM-DD"),
+      endDate: threeMonths.format("YYYY-MM-DD"),
       startMinutes: null,
       endMinutes: null,
       monthIndex: 0,
@@ -52,8 +52,8 @@ const FixedPeriodTab = ({ period, onHandlePeriod }: IProps) => {
     {
       title: t("after18"),
       description: t("after18Description"),
-      startDate: startOfDay,
-      endDate: threeMonths,
+      startDate: startOfDay.format("YYYY-MM-DD"),
+      endDate: threeMonths.format("YYYY-MM-DD"),
       startMinutes: 1080,
       endMinutes: 1410,
       monthIndex: 0,

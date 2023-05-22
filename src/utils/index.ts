@@ -9,3 +9,5 @@ export { showToast } from "./showToast";
 export { numberWithComma } from "./numberWithComma";
 export { isSame } from "./isSame";
 export { setFileName } from "./set-file-name";
+export { trimByWord } from "./trimByWord";
+export { addMinutesFromNow } from "./date-utils";

@@ -53,7 +53,7 @@ export const PickerHoursModal = ({
     <Stack direction="row">
       {showReset && (
         <Animatable.View
-          animation={showReset ? "zoomIn" : "None"}
+          animation={showReset ? "fadeIn" : "None"}
           duration={150}
           style={{ flex: 1, marginRight: 10 }}
         >

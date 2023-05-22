@@ -12,7 +12,7 @@ import { memo, useCallback, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import theme from "../../../../../assets/styles/theme";
-import { trimFunc } from "../../../../utils";
+import { addMinutesFromNow, trimFunc } from "../../../../utils";
 import { CustomAvatar, IconLocation, Rating, Stack } from "../../../core";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
@@ -33,9 +33,16 @@ type IProps = {
   service: Service | undefined;
   option: Option | null | undefined;
   period: Period | undefined;
+  onDisplayOwnerReviews: () => void;
 };
 
-const LocationListItem = ({ location, service, option, period }: IProps) => {
+const LocationListItem = ({
+  location,
+  service,
+  option,
+  period,
+  onDisplayOwnerReviews,
+}: IProps) => {
   const {
     imageCover,
     minPrice,
@@ -43,11 +50,13 @@ const LocationListItem = ({ location, service, option, period }: IProps) => {
     ownerId,
     address,
     review,
-    open,
     availableSlots,
+    open,
     isClosingAt,
+    isOpeningAt,
+    isOpeningTommorowAt,
   } = location;
-  const { key } = period || {};
+  const { key, startDate } = period || {};
   const { name, username } = ownerId;
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
@@ -85,9 +94,46 @@ const LocationListItem = ({ location, service, option, period }: IProps) => {
     []
   );
 
-  console.log(key);
+  const startsFromToday = dayjs(startDate, "YYYY-MM-DD")
+    .utc(true)
+    .startOf("day")
+    .isSame(dayjs().utc(true).startOf("day"));
 
-  const displayProgram = key !== "tommorow";
+  const startsFromTommorow = dayjs(startDate, "YYYY-MM-DD")
+    .utc(true)
+    .startOf("day")
+    .isSame(dayjs().utc(true).add(1, "day").startOf("day"));
+
+  const openingDescription = useCallback(() => {
+    switch (true) {
+      case !!isClosingAt:
+        return t("isClosingAt", {
+          IS_CLOSING_AT: addMinutesFromNow(isClosingAt),
+        });
+      case !!isOpeningAt:
+        return t("isOpeningAt", {
+          IS_OPENING_AT: addMinutesFromNow(isOpeningAt),
+        });
+      default:
+        return "";
+    }
+  }, [isOpeningAt, isClosingAt]);
+
+  const getItemLayout = useCallback(
+    (_: any, index: number) => ({ length: 150, offset: 150 * index, index }),
+    []
+  );
+
+  const ItemSeparator = useCallback(
+    () => (
+      <Divider
+        orientation="vertical"
+        style={{ marginHorizontal: 10 }}
+        color="#eee"
+      />
+    ),
+    []
+  );
 
   return (
     <View>
@@ -104,61 +150,83 @@ const LocationListItem = ({ location, service, option, period }: IProps) => {
                   {trimFunc(`${address?.street}, ${address?.number}`, 27)}
                 </Text>
               </Stack>
-              <Stack direction="row" justify="start" sx={{ marginVertical: 5 }}>
-                <Text
-                  style={
-                    open
-                      ? { fontWeight: "500", color: success }
-                      : { fontWeight: "500", color: error }
-                  }
+              {startsFromToday && (
+                <Stack
+                  direction="row"
+                  justify="start"
+                  sx={{ marginVertical: 5 }}
                 >
-                  {open ? t("open") : t("closed")}
-                </Text>
-                <Divider
-                  orientation="vertical"
-                  style={{ marginHorizontal: 10 }}
-                />
-                <Text style={{ color: grey0 }}>
-                  {open
-                    ? t("isClosingAt", {
-                        IS_CLOSING_AT: dayjs()
-                          .startOf("day")
-                          .add(isClosingAt, "minutes")
-                          .format("HH:mm"),
-                      })
-                    : "Deschide la 9"}
-                </Text>
-              </Stack>
-              <Stack direction="row" justify="start" align="center">
-                <Text style={styles.ratingsAverage}>
-                  {ownerId.ratingsAverage}
-                </Text>
-                <View>
-                  <Rating rating={ownerId.ratingsAverage} size={13.5} />
-                </View>
-                <Text style={styles.ratingsQuantity}>
-                  ({ownerId.ratingsQuantity})
-                </Text>
-              </Stack>
-              {review?.review && (
-                <Stack direction="row" align="start" sx={{ marginTop: 7.5 }}>
-                  <CustomAvatar
-                    avatar={review.reviewerId.avatar}
-                    size={20}
-                    sx={{ borderWidth: 1.5, borderColor: primary }}
-                  />
                   <Text
-                    style={{
-                      marginLeft: 10,
-                      color: grey0,
-                      flex: 1,
-                      fontStyle: "italic",
-                    }}
+                    style={
+                      open
+                        ? { fontWeight: "500", color: success }
+                        : { fontWeight: "500", color: error }
+                    }
                   >
-                    {trimByWord(`${review?.review}`, 10)}
+                    {open ? t("open") : t("closed")}
                   </Text>
+                  <Divider
+                    orientation="vertical"
+                    style={{ marginHorizontal: 10 }}
+                  />
+                  <Text style={{ color: grey0 }}>{openingDescription()}</Text>
                 </Stack>
               )}
+              {startsFromTommorow && (
+                <Stack
+                  direction="row"
+                  sx={{ marginVertical: 5 }}
+                  justify="start"
+                >
+                  <Icon
+                    name="calendar"
+                    type="feather"
+                    color={grey0}
+                    size={20}
+                  />
+                  <Text style={{ color: grey0, marginLeft: 7.5 }}>
+                    {t("isOpeningTommorowAt", {
+                      IS_OPENING_TOMMOROW_AT: dayjs()
+                        .startOf("day")
+                        .add(isOpeningTommorowAt, "minutes")
+                        .format("HH:mm"),
+                    })}
+                  </Text>
+                  <Icon name="keyboard-arrow-down" color={grey0} size={20} />
+                </Stack>
+              )}
+              <Pressable onPress={onDisplayOwnerReviews}>
+                <Stack direction="row" justify="start" align="center">
+                  <Text style={styles.ratingsAverage}>
+                    {ownerId.ratingsAverage}
+                  </Text>
+                  <View>
+                    <Rating rating={ownerId.ratingsAverage} size={13.5} />
+                  </View>
+                  <Text style={styles.ratingsQuantity}>
+                    ({ownerId.ratingsQuantity})
+                  </Text>
+                </Stack>
+                {review?.review && (
+                  <Stack direction="row" align="start" sx={{ marginTop: 7.5 }}>
+                    <CustomAvatar
+                      avatar={review.reviewerId.avatar}
+                      size={20}
+                      sx={{ borderWidth: 1.5, borderColor: primary }}
+                    />
+                    <Text
+                      style={{
+                        marginLeft: 10,
+                        color: grey0,
+                        flex: 1,
+                        fontStyle: "italic",
+                      }}
+                    >
+                      {trimByWord(`${review?.review}`, 10)}
+                    </Text>
+                  </Stack>
+                )}
+              </Pressable>
             </View>
             <Stack direction="row" sx={{ marginTop: 10 }} justify="end">
               <Stack direction="row">
@@ -203,20 +271,16 @@ const LocationListItem = ({ location, service, option, period }: IProps) => {
           isExpanded={expanded}
           onPress={() => setExpanded((expanded) => !expanded)}
         >
-          {expanded && (
-            <FlatList
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              data={sortedArr}
-              keyExtractor={slotKeyExtractor}
-              renderItem={renderSlot}
-              contentContainerStyle={{
-                paddingLeft: 15,
-                paddingTop: 15,
-                paddingRight: 5,
-              }}
-            />
-          )}
+          <FlatList
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            data={sortedArr}
+            keyExtractor={slotKeyExtractor}
+            renderItem={renderSlot}
+            getItemLayout={getItemLayout}
+            contentContainerStyle={styles.horizFlatlist}
+            ItemSeparatorComponent={ItemSeparator}
+          />
         </ListItem.Accordion>
       </Pressable>
     </View>
@@ -296,5 +360,9 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: black,
     fontWeight: "600",
+  },
+  horizFlatlist: {
+    paddingHorizontal: 15,
+    paddingTop: 15,
   },
 });

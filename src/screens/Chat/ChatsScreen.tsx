@@ -2,6 +2,9 @@ import { StyleSheet, SafeAreaView, RefreshControl } from "react-native";
 import { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { isEmpty } from "lodash";
 import {
   useAuth,
   useGetPaginate,
@@ -9,16 +12,14 @@ import {
   useRefreshOnFocus,
   useRefreshByUser,
 } from "../../hooks";
+import { RootStackParams } from "../../navigation/rootStackParams";
+import { Chat } from "../../ts";
 import {
   Header,
   IconButtonEdit,
   Heading,
   Spinner,
 } from "../../components/core";
-import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParams } from "../../navigation/rootStackParams";
-import { Chat } from "../../ts";
 import {
   ChatListItem,
   NoFoundMessage,
@@ -46,23 +47,20 @@ export const ChatsScreen = () => {
     <RefreshControl refreshing={refreshing} onRefresh={refetchByUser} />
   );
 
-  const renderMessages = useCallback(({ item }: ListRenderItemInfo<Chat>) => {
-    return <ChatListItem chat={item} />;
-  }, []);
+  const renderMessages = useCallback(
+    ({ item }: ListRenderItemInfo<Chat>) => <ChatListItem chat={item} />,
+    []
+  );
 
   const keyExtractor = useCallback((item: Chat) => item?.id, []);
 
-  const goToSearch = () => {
-    navigation.navigate("MessagesSearch");
-  };
+  const goToSearch = () => navigation.navigate("MessagesSearch");
+  const navigateToNewMessage = () => navigation.navigate("MessageNew");
 
   const header = (
     <>
-      <FakeSearchBar onPress={goToSearch} sx={{ marginHorizontal: 15 }} />
-      <Heading
-        title={t("messages")}
-        sx={{ marginLeft: 15, marginBottom: 20 }}
-      />
+      <FakeSearchBar onPress={goToSearch} sx={styles.fakeSearchBar} />
+      <Heading title={t("messages")} sx={styles.heading} />
     </>
   );
 
@@ -71,12 +69,9 @@ export const ChatsScreen = () => {
       <Header
         title={t("myMessages")}
         hideBtnLeft={true}
-        actionBtn={
-          <IconButtonEdit onPress={() => navigation.navigate("MessageNew")} />
-        }
+        actionBtn={<IconButtonEdit onPress={navigateToNewMessage} />}
       />
-
-      {!isInitialLoading && chats.length > 0 && (
+      {!isInitialLoading && !isEmpty(chats) && (
         <FlashList
           ListHeaderComponent={header}
           refreshControl={refreshControl}
@@ -90,15 +85,13 @@ export const ChatsScreen = () => {
           onEndReachedThreshold={0.3}
         />
       )}
-
-      {!isInitialLoading && chats?.length === 0 && (
+      {!isInitialLoading && isEmpty(chats) && (
         <NoFoundMessage
           iconProps={{ name: "message-circle" }}
           title={t("messages")}
           description={t("noFoundMessage")}
         />
       )}
-
       {isInitialLoading && <Spinner />}
     </SafeAreaView>
   );
@@ -109,4 +102,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
   },
+  fakeSearchBar: { marginHorizontal: 15, borderRadius: 5 },
+  heading: { marginLeft: 15, marginBottom: 20 },
 });

@@ -37,5 +37,7 @@ export interface Location {
   review: Review;
   open: boolean;
   availableSlots: AvailableSlot[][];
+  isOpeningAt: number;
   isClosingAt: number;
+  isOpeningTommorowAt: number;
 }

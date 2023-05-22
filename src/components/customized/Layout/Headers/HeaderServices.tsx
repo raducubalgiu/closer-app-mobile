@@ -73,7 +73,7 @@ export const HeaderServices = ({
       navigation.push("FiltersDate", {
         service,
         defaultPeriod: period,
-        screen: "Calendar",
+        screen: key === "calendar" ? "Calendar" : "FixedPeriods",
       });
     }
   };

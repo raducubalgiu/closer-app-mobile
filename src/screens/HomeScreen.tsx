@@ -16,6 +16,7 @@ import {
 } from "../components/customized";
 import { useGet, useRefreshByUser, useRefreshOnFocus } from "../hooks";
 import { RecommendedLocation, Service } from "../ts";
+import dayjs from "dayjs";
 
 const { black } = theme.lightColors || {};
 
@@ -63,8 +64,8 @@ export const HomeScreen = () => {
       defaultPeriod: {
         title: "",
         description: "",
-        startDate: null,
-        endDate: null,
+        startDate: dayjs().utc(true).startOf("day").format("YYYY-MM-DD"),
+        endDate: dayjs().utc(true).endOf("day").format("YYYY-MM-DD"),
         startMinutes: null,
         endMinutes: null,
         key: "today",
