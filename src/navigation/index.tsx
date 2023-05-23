@@ -96,6 +96,7 @@ import {
   ReportAProblemScreen,
   ReportsListScreen,
   ReportUserScreen,
+  ReviewsSheetScreen,
   ScheduleCancelScreen,
   ScheduleConfirmScreen,
   ScheduleDetailsScreen,
@@ -141,6 +142,11 @@ const AppNavigation = () => {
               component={FiltersServiceScreen}
             />
             <Stack.Screen name="Locations" component={LocationsScreen} />
+            <Stack.Screen
+              name="ReviewsSheet"
+              component={ReviewsSheetScreen}
+              options={{ presentation: "formSheet" }}
+            />
             <Stack.Screen
               name="LocationFilterPrice"
               component={LocationFilterPriceScreen}

@@ -132,9 +132,9 @@ export const FeedExploreScreen = () => {
   };
 
   const goToVideoExplore = (item: PostListItem, index: number) => {
-    navigation.navigate("FeedExploreVideo", {
+    navigation.push("FeedExploreVideo", {
       video: item.post,
-      videos,
+      videos: videos?.results,
       index,
     });
   };
@@ -177,6 +177,7 @@ export const FeedExploreScreen = () => {
       onViewableItemsChanged: onViewableSaveView,
     },
   ]);
+
   const header = (
     <>
       <HeadingAction title={t("videoclips")} onPress={() => {}} />

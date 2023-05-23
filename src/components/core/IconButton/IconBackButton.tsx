@@ -1,10 +1,15 @@
-import { Pressable, StyleSheet } from "react-native";
+import { Pressable, StyleSheet, ViewStyle } from "react-native";
 import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import theme from "../../../../assets/styles/theme";
 
 const { black } = theme.lightColors || {};
-type IProps = { size?: number; color?: any; sx?: {}; disabled?: boolean };
+type IProps = {
+  size?: number;
+  color?: any;
+  sx?: ViewStyle;
+  disabled?: boolean;
+};
 
 export const IconBackButton = ({
   size = 21,
@@ -17,7 +22,7 @@ export const IconBackButton = ({
   return (
     <Pressable
       onPress={() => navigation.goBack()}
-      style={{ ...styles.btn, ...sx }}
+      style={[styles.btn, sx]}
       disabled={disabled}
     >
       <Icon name="arrow-back-ios" size={size} color={color} />

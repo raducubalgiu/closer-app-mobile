@@ -11,8 +11,6 @@ type Props = {
 };
 
 const CustomAvatar = ({ avatar, size = 55, sx }: Props) => {
-  const [loaded, setLoaded] = useState(false);
-
   const styles = StyleSheet.create({
     image: {
       width: size,
@@ -27,10 +25,8 @@ const CustomAvatar = ({ avatar, size = 55, sx }: Props) => {
   return (
     <Image
       source={avatar?.url ? { uri: avatar?.url } : NoAvatar}
-      style={[styles.image, { opacity: loaded ? 1 : 0 }, sx]}
-      blurRadius={loaded ? 0 : 5}
+      style={[styles.image, sx]}
       resizeMode="cover"
-      onLoad={() => setLoaded(true)}
       loadingIndicatorSource={NoAvatar}
     />
   );

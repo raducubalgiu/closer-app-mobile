@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 2.5,
+    marginRight: 10,
   },
   text: { color: black, fontWeight: "600", fontSize: 13.5 },
 });

@@ -1,10 +1,9 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { memo, useState } from "react";
 import { Divider, Icon } from "@rneui/themed";
-import theme from "../../../../assets/styles/theme";
-import { Checkmark, Stack, Rating } from "../../core";
-import CustomAvatar from "../../core/Avatars/CustomAvatar";
 import dayjs from "dayjs";
+import theme from "../../../../assets/styles/theme";
+import { Checkmark, Stack, Rating, CustomAvatar } from "../../core";
 import { User } from "../../../ts";
 import { useAuth, useDelete, useGet, usePost } from "../../../hooks";
 
@@ -21,6 +20,8 @@ type IProps = {
   likesCount: number;
 };
 
+type CheckResponse = { status: boolean };
+
 const RatingListItem = ({
   id,
   reviewer,
@@ -35,11 +36,13 @@ const RatingListItem = ({
   const [liked, setLiked] = useState(false);
   const endpoint = `/users/${user?.id}/reviews/${id}/likes`;
 
-  useGet({
+  useGet<CheckResponse>({
     model: "checkLike",
     uri: endpoint,
     options: {
-      onSuccess: (res) => setLiked(res.data.status),
+      onSuccess: (res) => {
+        if (res.data) setLiked(res.data?.status);
+      },
     },
   });
 

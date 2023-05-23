@@ -6,7 +6,8 @@ dayjs.extend(utc);
 export const NOW = dayjs.utc().format();
 
 export const FROM_NOW = (date: string) => dayjs(date).fromNow();
-export const shortFormat = (date: Dayjs) => dayjs(date).format("YYYY-MM-DD");
+export const shortFormat = (date: Dayjs | string) =>
+  dayjs(date).format("YYYY-MM-DD");
 
 export const addMinutesFromNow = (minutes: number) =>
   dayjs().startOf("day").add(minutes, "minutes").format("HH:mm");

@@ -14,6 +14,8 @@ import VideoListItemm from "../../components/customized/ListItems/Video/VideoLis
 import { Video } from "expo-av";
 import { findIndex, filter } from "lodash";
 import { Post } from "../../ts";
+import * as Animatable from "react-native-animatable";
+import VideoListItem from "../../components/customized/ListItems/Video/VideoListItem/VideoListItem";
 
 const { height } = Dimensions.get("window");
 type IProps = NativeStackScreenProps<RootStackParams, "FeedExploreVideo">;
@@ -27,11 +29,12 @@ type VideoRef = { ref: Video; key: string };
 
 export const FeedExploreVideoScreen = ({ route }: IProps) => {
   const { index, videos, video } = route.params;
-  const [scrollEnabled, setScrollEnabled] = useState(true);
   const { user } = useAuth();
   const tabBarHeight = useBottomTabBarHeight();
   const VIDEO_HEIGHT = height - tabBarHeight;
   const videoRefs = useRef<VideoRef[]>([]);
+
+  console.log("VIDEOS!!!", videos);
 
   const addToRefs = (ref: Video, item: PostListItem) => {
     const key = item.post.id;
@@ -103,9 +106,9 @@ export const FeedExploreVideoScreen = ({ route }: IProps) => {
       onViewableItemsChanged: onViewableItemsChanged,
     },
   ]).current;
-  6;
+
   return (
-    <View style={{ backgroundColor: "black" }}>
+    <View style={{ backgroundColor: "black", flex: 1 }}>
       <FlatList
         data={videos}
         keyExtractor={keyExtractor}
@@ -116,8 +119,6 @@ export const FeedExploreVideoScreen = ({ route }: IProps) => {
         getItemLayout={getItemLayout}
         initialScrollIndex={index}
         onEndReachedThreshold={0.3}
-        windowSize={5}
-        //scrollEnabled={scrollEnabled}
         viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs}
       />
     </View>

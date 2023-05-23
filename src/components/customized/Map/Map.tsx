@@ -1,14 +1,13 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import MapView, { Marker, Callout, PROVIDER_GOOGLE } from "react-native-maps";
+import { useEffect, useRef } from "react";
+import * as Animatable from "react-native-animatable";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import theme from "../../../../assets/styles/theme";
-import { IconLocation, IconStar, Stack } from "../../core";
+import { IconButton } from "../../core";
 import { RootStackParams } from "../../../navigation/rootStackParams";
-import { Icon } from "@rneui/themed";
-import * as Animatable from "react-native-animatable";
-import { useEffect, useRef } from "react";
 
 const { grey0, black } = theme.lightColors || {};
 
@@ -121,123 +120,24 @@ export const Map = ({
               longitude: loc.address.coordinates[1],
             }}
           >
-            <Pressable
-              style={{
-                backgroundColor: "white",
-                paddingVertical: 10,
-                paddingHorizontal: 15,
-                borderRadius: 20,
-                shadowColor: "#000",
-                shadowOffset: {
-                  width: 0,
-                  height: 2,
-                },
-                shadowOpacity: 0.25,
-                shadowRadius: 3.84,
-
-                elevation: 5,
-              }}
-            >
+            <Pressable style={styles.button}>
               <Text style={{ fontWeight: "700" }}>{loc?.minPrice} lei</Text>
             </Pressable>
-            <Callout
-              onPress={() =>
-                navigation.push("LocationItem", { locationId: loc?.id })
-              }
-            >
-              <Stack align="start" sx={styles.callOut}>
-                <Text style={styles.name}>{loc.name}</Text>
-                <Stack direction="row">
-                  <Text>{serviceName}</Text>
-                  <Text style={styles.from}>{t("from")}</Text>
-                  <Text style={styles.price}>{loc.minPrice}</Text>
-                </Stack>
-                <Stack direction="row" sx={styles.ratingsC}>
-                  <IconStar />
-                  <Text style={styles.ratingsAvg}>{loc.ratingsAverage}</Text>
-                  <Text style={styles.ratingsQuant}>
-                    {loc.ratingsQuantity} {t("reviews")}
-                  </Text>
-                </Stack>
-                <View style={styles.distanceC}>
-                  <IconLocation />
-                  <Text style={styles.distance}>
-                    {t("at")} {Math.round(loc.distance)} {t("kmFromYou")}
-                  </Text>
-                </View>
-              </Stack>
-            </Callout>
           </Marker>
         ))}
       </MapView>
       {sheetIndex === 0 && (
-        <Animatable.View
-          ref={animRef}
-          style={{
-            position: "absolute",
-            right: 0,
-            top: 25,
-            marginRight: 15,
-          }}
-        >
-          <Pressable
-            onPress={() => {
-              ref.current?.animateToRegion(initialRegion);
-            }}
-            style={{
-              backgroundColor: "white",
-              padding: 10,
-              borderRadius: 15,
-              shadowColor: "#000",
-              shadowOffset: {
-                width: 0,
-                height: 2,
-              },
-              shadowOpacity: 0.25,
-              shadowRadius: 3.84,
-
-              elevation: 5,
-            }}
-          >
-            <Icon name="navigation" type="feather" color={black} size={22.5} />
-          </Pressable>
-          <Pressable
-            style={{
-              backgroundColor: "white",
-              padding: 10,
-              borderRadius: 15,
-              shadowColor: "#000",
-              shadowOffset: {
-                width: 0,
-                height: 2,
-              },
-              shadowOpacity: 0.25,
-              shadowRadius: 3.84,
-
-              elevation: 5,
-              marginVertical: 10,
-            }}
-          >
-            <Icon name="plus" type="feather" color={black} size={22.5} />
-          </Pressable>
-          <Pressable
-            style={{
-              backgroundColor: "white",
-              padding: 10,
-              borderRadius: 15,
-              shadowColor: "#000",
-              shadowOffset: {
-                width: 0,
-                height: 2,
-              },
-              shadowOpacity: 0.25,
-              shadowRadius: 3.84,
-
-              elevation: 5,
-            }}
-          >
-            <Icon name="minus" type="feather" color={black} size={22.5} />
-          </Pressable>
+        <Animatable.View ref={animRef} style={styles.actions}>
+          <IconButton
+            name="navigation"
+            sx={styles.action}
+            onPress={() => ref.current?.animateToRegion(initialRegion)}
+          />
+          <IconButton
+            name="plus"
+            sx={{ ...styles.action, marginVertical: 10 }}
+          />
+          <IconButton name="minus" sx={styles.action} />
         </Animatable.View>
       )}
     </View>
@@ -245,44 +145,37 @@ export const Map = ({
 };
 
 const styles = StyleSheet.create({
-  callOut: {
-    padding: 5,
+  button: {
+    backgroundColor: "white",
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
-  name: {},
-  priceName: {
-    color: grey0,
+  actions: {
+    position: "absolute",
+    right: 0,
+    top: 25,
+    marginRight: 15,
   },
-  ratingsC: {
-    marginVertical: 5,
-  },
-  ratingsAvg: {
-    marginLeft: 2.5,
-  },
-  ratingsQuant: {
-    marginLeft: 5,
-    color: grey0,
-    fontSize: 12,
-  },
-  markerDistance: {
-    marginTop: 10,
-    textAlign: "right",
-  },
-  distanceC: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  distance: {
-    fontSize: 13,
-    marginLeft: 5,
-    color: grey0,
-  },
-  from: {
-    color: grey0,
-    marginLeft: 10,
-    fontSize: 10,
-  },
-  price: {
-    marginLeft: 2.5,
-    fontSize: 13.5,
+  action: {
+    backgroundColor: "white",
+    padding: 10,
+    borderRadius: 15,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
 });

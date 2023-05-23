@@ -33,16 +33,9 @@ type IProps = {
   service: Service | undefined;
   option: Option | null | undefined;
   period: Period | undefined;
-  onDisplayOwnerReviews: () => void;
 };
 
-const LocationListItem = ({
-  location,
-  service,
-  option,
-  period,
-  onDisplayOwnerReviews,
-}: IProps) => {
+const LocationListItem = ({ location, service, option, period }: IProps) => {
   const {
     imageCover,
     minPrice,
@@ -54,10 +47,9 @@ const LocationListItem = ({
     open,
     isClosingAt,
     isOpeningAt,
-    isOpeningTommorowAt,
   } = location;
   const { key, startDate } = period || {};
-  const { name, username } = ownerId;
+  const { name, username, id, ratingsQuantity } = ownerId;
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation("common");
@@ -74,13 +66,13 @@ const LocationListItem = ({
     }
   };
 
-  const slotss: AvailableSlot[] = [];
+  const slots: AvailableSlot[] = [];
 
   availableSlots.forEach((arr) => {
-    arr.map((el) => slotss.push(el));
+    arr.map((el) => slots.push(el));
   });
 
-  const sortedArr = sortBy(slotss, ["start", "owner.ratingsAverage"]);
+  const sortedArr = sortBy(slots, ["start", "owner.ratingsAverage"]);
 
   const renderSlot = useCallback(
     ({ item }: ListRenderItemInfo<AvailableSlot>) => (
@@ -98,11 +90,6 @@ const LocationListItem = ({
     .utc(true)
     .startOf("day")
     .isSame(dayjs().utc(true).startOf("day"));
-
-  const startsFromTommorow = dayjs(startDate, "YYYY-MM-DD")
-    .utc(true)
-    .startOf("day")
-    .isSame(dayjs().utc(true).add(1, "day").startOf("day"));
 
   const openingDescription = useCallback(() => {
     switch (true) {
@@ -124,16 +111,9 @@ const LocationListItem = ({
     []
   );
 
-  const ItemSeparator = useCallback(
-    () => (
-      <Divider
-        orientation="vertical"
-        style={{ marginHorizontal: 10 }}
-        color="#eee"
-      />
-    ),
-    []
-  );
+  const navigateToUserReviews = () => {
+    navigation.navigate("ReviewsSheet", { userId: id, name, ratingsQuantity });
+  };
 
   return (
     <View>
@@ -150,52 +130,48 @@ const LocationListItem = ({
                   {trimFunc(`${address?.street}, ${address?.number}`, 27)}
                 </Text>
               </Stack>
-              {startsFromToday && (
-                <Stack
-                  direction="row"
-                  justify="start"
-                  sx={{ marginVertical: 5 }}
-                >
-                  <Text
-                    style={
-                      open
-                        ? { fontWeight: "500", color: success }
-                        : { fontWeight: "500", color: error }
-                    }
+              <Pressable onPress={() => alert("Hello World!!")}>
+                {startsFromToday ? (
+                  <Stack
+                    direction="row"
+                    justify="start"
+                    sx={{ marginVertical: 7.5 }}
                   >
-                    {open ? t("open") : t("closed")}
-                  </Text>
-                  <Divider
-                    orientation="vertical"
-                    style={{ marginHorizontal: 10 }}
-                  />
-                  <Text style={{ color: grey0 }}>{openingDescription()}</Text>
-                </Stack>
-              )}
-              {startsFromTommorow && (
-                <Stack
-                  direction="row"
-                  sx={{ marginVertical: 5 }}
-                  justify="start"
-                >
-                  <Icon
-                    name="calendar"
-                    type="feather"
-                    color={grey0}
-                    size={20}
-                  />
-                  <Text style={{ color: grey0, marginLeft: 7.5 }}>
-                    {t("isOpeningTommorowAt", {
-                      IS_OPENING_TOMMOROW_AT: dayjs()
-                        .startOf("day")
-                        .add(isOpeningTommorowAt, "minutes")
-                        .format("HH:mm"),
-                    })}
-                  </Text>
-                  <Icon name="keyboard-arrow-down" color={grey0} size={20} />
-                </Stack>
-              )}
-              <Pressable onPress={onDisplayOwnerReviews}>
+                    <Text
+                      style={
+                        open
+                          ? { fontWeight: "500", color: success }
+                          : { fontWeight: "500", color: error }
+                      }
+                    >
+                      {open ? t("open") : t("closed")}
+                    </Text>
+                    <Divider
+                      orientation="vertical"
+                      style={{ marginHorizontal: 10 }}
+                    />
+                    <Text style={{ color: grey0 }}>{openingDescription()}</Text>
+                  </Stack>
+                ) : (
+                  <Stack
+                    direction="row"
+                    sx={{ marginVertical: 7.5 }}
+                    justify="start"
+                  >
+                    <Icon
+                      name="calendar"
+                      type="feather"
+                      color={grey0}
+                      size={20}
+                    />
+                    <Text style={{ color: grey0, marginHorizontal: 7.5 }}>
+                      Program
+                    </Text>
+                    <Icon name="keyboard-arrow-down" color={grey0} size={20} />
+                  </Stack>
+                )}
+              </Pressable>
+              <Pressable onPress={navigateToUserReviews}>
                 <Stack direction="row" justify="start" align="center">
                   <Text style={styles.ratingsAverage}>
                     {ownerId.ratingsAverage}
@@ -232,10 +208,20 @@ const LocationListItem = ({
               <Stack direction="row">
                 <Text style={styles.from}>de la</Text>
                 <Text style={styles.price}>{minPrice} Lei</Text>
+                <Text
+                  style={{
+                    fontSize: 11.5,
+                    color: error,
+                    marginLeft: 5,
+                    fontWeight: "500",
+                  }}
+                >
+                  (-10%)
+                </Text>
               </Stack>
               <Divider
                 orientation="vertical"
-                style={{ marginHorizontal: 10 }}
+                style={{ marginHorizontal: 7.5 }}
                 color="#ddd"
               />
               <Stack direction="row">
@@ -251,7 +237,9 @@ const LocationListItem = ({
           containerStyle={{
             marginTop: 15,
             marginHorizontal: 15,
-            paddingVertical: 5,
+            paddingHorizontal: 5,
+            paddingTop: 5,
+            paddingBottom: 7.5,
             justifyContent: "center",
             borderTopWidth: 1,
             borderTopColor: "#eee",
@@ -264,23 +252,47 @@ const LocationListItem = ({
               <ListItem.Title
                 style={{ fontSize: 14.5, fontWeight: "500", color: black }}
               >
-                Intervale sugerate
+                {t("availableSeats")}
               </ListItem.Title>
             </ListItem.Content>
           }
           isExpanded={expanded}
           onPress={() => setExpanded((expanded) => !expanded)}
         >
-          <FlatList
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            data={sortedArr}
-            keyExtractor={slotKeyExtractor}
-            renderItem={renderSlot}
-            getItemLayout={getItemLayout}
-            contentContainerStyle={styles.horizFlatlist}
-            ItemSeparatorComponent={ItemSeparator}
-          />
+          <Stack direction="row" justify="start" sx={{ marginTop: 15 }}>
+            <Pressable
+              style={{
+                height: 35,
+                paddingHorizontal: 10,
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 5,
+                backgroundColor: "white",
+                borderWidth: 1,
+                borderColor: "#eee",
+                marginLeft: 15,
+                marginRight: 10,
+              }}
+            >
+              <Stack direction="row">
+                <Icon
+                  name="calendar"
+                  type="feather"
+                  size={20}
+                  style={{ marginRight: 5 }}
+                />
+                <Icon name="keyboard-arrow-down" />
+              </Stack>
+            </Pressable>
+            <FlatList
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              data={sortedArr}
+              keyExtractor={slotKeyExtractor}
+              renderItem={renderSlot}
+              getItemLayout={getItemLayout}
+            />
+          </Stack>
         </ListItem.Accordion>
       </Pressable>
     </View>
@@ -363,6 +375,5 @@ const styles = StyleSheet.create({
   },
   horizFlatlist: {
     paddingHorizontal: 15,
-    paddingTop: 15,
   },
 });

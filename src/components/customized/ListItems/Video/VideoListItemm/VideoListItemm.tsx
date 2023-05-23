@@ -4,7 +4,7 @@ import { Post } from "../../../../../ts";
 import { Video, ResizeMode } from "expo-av";
 import { SharedElement } from "react-navigation-shared-element";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
-import VideoDetails from "./VideoDetails";
+import * as Animatable from "react-native-animatable";
 
 type IProps = {
   id: string;
@@ -21,24 +21,25 @@ const VideoListItemm = forwardRef(
 
     return (
       <View style={styles.container}>
-        <Pressable onPress={() => {}} style={{ width, height: VIDEO_HEIGHT }}>
-          <SharedElement id={post?.id} style={{ flex: 1 }}>
-            <Video
-              ref={ref}
-              style={{
-                width: undefined,
-                height: undefined,
-                ...StyleSheet.absoluteFillObject,
-              }}
-              source={{ uri: post?.images[0]?.url }}
-              useNativeControls={false}
-              shouldCorrectPitch={true}
-              isMuted={false}
-              isLooping={false}
-              resizeMode={ResizeMode.COVER}
-            />
-            <VideoDetails />
-          </SharedElement>
+        <Pressable
+          onPress={() => {}}
+          style={{ width, height: VIDEO_HEIGHT, flex: 1 }}
+        >
+          <Video
+            ref={ref}
+            style={{
+              width: undefined,
+              height: undefined,
+              ...StyleSheet.absoluteFillObject,
+              flex: 1,
+            }}
+            source={{ uri: post?.images[0]?.url }}
+            useNativeControls={false}
+            shouldCorrectPitch={true}
+            isMuted={false}
+            isLooping={true}
+            resizeMode={ResizeMode.COVER}
+          />
         </Pressable>
       </View>
     );

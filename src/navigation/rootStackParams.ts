@@ -189,6 +189,7 @@ export type RootStackParams = {
   ReportAProblem: any;
   ReportsList: any;
   ReportUser: any;
+  ReviewsSheet: { userId: string; name: string; ratingsQuantity: number };
   SavingData: any;
   Settings: any;
   SearchStack: any;

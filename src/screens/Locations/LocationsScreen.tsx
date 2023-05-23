@@ -8,21 +8,17 @@ import {
 import { useState, useCallback, useRef, useMemo } from "react";
 import { Divider } from "@rneui/themed";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import BottomSheet, {
-  BottomSheetFlatList,
-  BottomSheetModal,
-} from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import { useTranslation } from "react-i18next";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { isEmpty } from "lodash";
 import { RootStackParams } from "../../navigation/rootStackParams";
-import { SheetModal, Spinner } from "../../components/core";
+import { Spinner } from "../../components/core";
 import {
   HeaderServices,
   Map,
   NoFoundMessage,
   LocationListItem,
-  HeaderSheet,
 } from "../../components/customized";
 import { useGet } from "../../hooks";
 import theme from "../../../assets/styles/theme";
@@ -52,9 +48,7 @@ export const LocationsScreen = ({ route }: IProps) => {
   const mapHeight = height - HEADER_HEIGHT - insets.top - 50;
 
   const snapPoints = useMemo(() => [100, height / 2, fullHeight], []);
-  const businessReviewsSnapPoints = useMemo(() => [10, height / 1.5], []);
   const locationsRef = useRef<BottomSheet>(null);
-  const businessReviewsRef = useRef<BottomSheetModal>(null);
 
   const [sheetIndex, setSheetIndex] = useState(1);
 
@@ -74,9 +68,6 @@ export const LocationsScreen = ({ route }: IProps) => {
     uri: `/locations?page=1&limit=25&start=${period?.startDate}&end=${period?.endDate}&startMinutes=${startMinutes}&endMinutes=${endMinutes}&latlng=${longitude},${latitude}&serviceId=${service?.id}&option=${option?._id}&minprice=${price?.min}&maxprice=${price?.max}&mindistance=${minDistance}&maxdistance=${maxDistance}&sort=${sort?.query}`,
   });
 
-  const loading = isFetching || isLoading;
-  const displayError = !loading && isError && !locations;
-
   const renderLocation = useCallback(
     ({ item }: ListRenderItemInfo<Location>) => {
       return (
@@ -85,7 +76,6 @@ export const LocationsScreen = ({ route }: IProps) => {
           service={service}
           option={option}
           period={period}
-          onDisplayOwnerReviews={() => businessReviewsRef.current?.present()}
         />
       );
     },
@@ -97,9 +87,12 @@ export const LocationsScreen = ({ route }: IProps) => {
     []
   );
 
+  const loading = isFetching || isLoading;
+  const displayError = !loading && isError && isEmpty(locations);
+
   let footer = (
     <>
-      {!loading && isEmpty(locations) && (
+      {!loading && !isError && isEmpty(locations) && (
         <NoFoundMessage
           title={service?.name}
           description={t("noFoundLocations")}
@@ -176,18 +169,6 @@ export const LocationsScreen = ({ route }: IProps) => {
           contentContainerStyle={{ paddingBottom: insets.bottom }}
         />
       </BottomSheet>
-      <SheetModal
-        ref={businessReviewsRef}
-        snapPoints={businessReviewsSnapPoints}
-        showIndicator={false}
-        enableContentPanningGesture={false}
-        duration={500}
-      >
-        <HeaderSheet
-          title={t("reviews")}
-          onClose={() => businessReviewsRef.current?.close()}
-        />
-      </SheetModal>
     </View>
   );
 };

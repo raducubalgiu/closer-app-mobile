@@ -15,6 +15,8 @@ import CustomRangeSlider from "./RangeSlider/CustomRangeSlider";
 import CalendarPeriodTab from "./Tabs/PeriodTabs/CalendarPeriodTab";
 import FixedPeriodTab from "./Tabs/PeriodTabs/FixedPeriodTab";
 import CardReviewSummary from "./Cards/CardReviewSummary";
+import ReviewsSheet from "./Sheets/ReviewsSheet";
+import ReviewListtem from "./ListItems/ReviewListtem";
 
 export {
   DisplayText,
@@ -33,6 +35,8 @@ export {
   CalendarPeriodTab,
   FixedPeriodTab,
   CardReviewSummary,
+  ReviewsSheet,
+  ReviewListtem,
 };
 
 // Normal Components

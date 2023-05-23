@@ -39,5 +39,4 @@ export interface Location {
   availableSlots: AvailableSlot[][];
   isOpeningAt: number;
   isClosingAt: number;
-  isOpeningTommorowAt: number;
 }

@@ -51,7 +51,7 @@ const Rating = ({ rating, sx = {}, size = 16 }: IProps) => {
   }
 
   return (
-    <Stack direction="row" sx={{ ...styles.container, ...sx }}>
+    <Stack direction="row" justify="start" sx={{ ...styles.container, ...sx }}>
       {ratings.map((r, i) => (
         <View key={i}>{r}</View>
       ))}
@@ -64,6 +64,5 @@ export default Rating;
 const styles = StyleSheet.create({
   container: {
     marginVertical: 5,
-    flex: 1,
   },
 });
