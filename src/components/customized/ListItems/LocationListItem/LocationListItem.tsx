@@ -18,7 +18,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
 import { Location, Option, Period, Service } from "../../../../ts";
 import { Divider, Icon } from "@rneui/themed";
-import { sortBy } from "lodash";
+import { isNull, sortBy } from "lodash";
 import { AvailableSlot } from "../../../../ts/interfaces/location";
 import { ListItem } from "@rneui/themed";
 import AvailableSlotListItem from "./AvailableSlotListItem";
@@ -93,11 +93,11 @@ const LocationListItem = ({ location, service, option, period }: IProps) => {
 
   const openingDescription = useCallback(() => {
     switch (true) {
-      case !!isClosingAt:
+      case !isNull(isClosingAt):
         return t("isClosingAt", {
           IS_CLOSING_AT: addMinutesFromNow(isClosingAt),
         });
-      case !!isOpeningAt:
+      case !isNull(isOpeningAt):
         return t("isOpeningAt", {
           IS_OPENING_AT: addMinutesFromNow(isOpeningAt),
         });
@@ -115,6 +115,11 @@ const LocationListItem = ({ location, service, option, period }: IProps) => {
     navigation.navigate("ReviewsSheet", { userId: id, name, ratingsQuantity });
   };
 
+  const navigateToCalendar = () =>
+    navigation.navigate("CalendarSheet", { userId: id, name });
+
+  const isOpenColor = open ? success : error;
+
   return (
     <View>
       <Pressable onPress={goToUser}>
@@ -131,45 +136,43 @@ const LocationListItem = ({ location, service, option, period }: IProps) => {
                 </Text>
               </Stack>
               <Pressable onPress={() => alert("Hello World!!")}>
-                {startsFromToday ? (
-                  <Stack
-                    direction="row"
-                    justify="start"
-                    sx={{ marginVertical: 7.5 }}
-                  >
-                    <Text
-                      style={
-                        open
-                          ? { fontWeight: "500", color: success }
-                          : { fontWeight: "500", color: error }
-                      }
-                    >
-                      {open ? t("open") : t("closed")}
-                    </Text>
-                    <Divider
-                      orientation="vertical"
-                      style={{ marginHorizontal: 10 }}
-                    />
-                    <Text style={{ color: grey0 }}>{openingDescription()}</Text>
-                  </Stack>
-                ) : (
-                  <Stack
-                    direction="row"
-                    sx={{ marginVertical: 7.5 }}
-                    justify="start"
-                  >
-                    <Icon
-                      name="calendar"
-                      type="feather"
-                      color={grey0}
-                      size={20}
-                    />
-                    <Text style={{ color: grey0, marginHorizontal: 7.5 }}>
-                      Program
-                    </Text>
-                    <Icon name="keyboard-arrow-down" color={grey0} size={20} />
-                  </Stack>
-                )}
+                <Stack
+                  direction="row"
+                  justify="start"
+                  sx={{ marginVertical: 7.5 }}
+                >
+                  {startsFromToday ? (
+                    <>
+                      <Text style={{ fontWeight: "500", color: isOpenColor }}>
+                        {open ? t("open") : t("closed")}
+                      </Text>
+                      <Divider
+                        orientation="vertical"
+                        style={{ marginHorizontal: 10 }}
+                      />
+                      <Text style={{ color: grey0 }}>
+                        {openingDescription()}
+                      </Text>
+                    </>
+                  ) : (
+                    <>
+                      <Icon
+                        name="calendar"
+                        type="feather"
+                        color={grey0}
+                        size={20}
+                      />
+                      <Text style={{ color: grey0, marginHorizontal: 7.5 }}>
+                        Program
+                      </Text>
+                      <Icon
+                        name="keyboard-arrow-down"
+                        color={grey0}
+                        size={20}
+                      />
+                    </>
+                  )}
+                </Stack>
               </Pressable>
               <Pressable onPress={navigateToUserReviews}>
                 <Stack direction="row" justify="start" align="center">
@@ -188,16 +191,9 @@ const LocationListItem = ({ location, service, option, period }: IProps) => {
                     <CustomAvatar
                       avatar={review.reviewerId.avatar}
                       size={20}
-                      sx={{ borderWidth: 1.5, borderColor: primary }}
+                      sx={styles.reviewerAvatar}
                     />
-                    <Text
-                      style={{
-                        marginLeft: 10,
-                        color: grey0,
-                        flex: 1,
-                        fontStyle: "italic",
-                      }}
-                    >
+                    <Text style={styles.review}>
                       {trimByWord(`${review?.review}`, 10)}
                     </Text>
                   </Stack>
@@ -206,18 +202,9 @@ const LocationListItem = ({ location, service, option, period }: IProps) => {
             </View>
             <Stack direction="row" sx={{ marginTop: 10 }} justify="end">
               <Stack direction="row">
-                <Text style={styles.from}>de la</Text>
+                <Text style={styles.from}>{t("from")}</Text>
                 <Text style={styles.price}>{minPrice} Lei</Text>
-                <Text
-                  style={{
-                    fontSize: 11.5,
-                    color: error,
-                    marginLeft: 5,
-                    fontWeight: "500",
-                  }}
-                >
-                  (-10%)
-                </Text>
+                <Text style={styles.discount}>(-10%)</Text>
               </Stack>
               <Divider
                 orientation="vertical"
@@ -235,23 +222,13 @@ const LocationListItem = ({ location, service, option, period }: IProps) => {
         </Stack>
         <ListItem.Accordion
           containerStyle={{
-            marginTop: 15,
-            marginHorizontal: 15,
-            paddingHorizontal: 5,
-            paddingTop: 5,
-            paddingBottom: 7.5,
-            justifyContent: "center",
-            borderTopWidth: 1,
-            borderTopColor: "#eee",
-            borderBottomWidth: 1,
+            ...styles.accordion,
             borderBottomColor: expanded ? "transparent" : "#eee",
           }}
           leftRotate={true}
           content={
             <ListItem.Content>
-              <ListItem.Title
-                style={{ fontSize: 14.5, fontWeight: "500", color: black }}
-              >
+              <ListItem.Title style={styles.accordionTitle}>
                 {t("availableSeats")}
               </ListItem.Title>
             </ListItem.Content>
@@ -260,20 +237,7 @@ const LocationListItem = ({ location, service, option, period }: IProps) => {
           onPress={() => setExpanded((expanded) => !expanded)}
         >
           <Stack direction="row" justify="start" sx={{ marginTop: 15 }}>
-            <Pressable
-              style={{
-                height: 35,
-                paddingHorizontal: 10,
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: 5,
-                backgroundColor: "white",
-                borderWidth: 1,
-                borderColor: "#eee",
-                marginLeft: 15,
-                marginRight: 10,
-              }}
-            >
+            <Pressable onPress={navigateToCalendar} style={styles.calendarBtn}>
               <Stack direction="row">
                 <Icon
                   name="calendar"
@@ -344,15 +308,6 @@ const styles = StyleSheet.create({
     fontSize: 13.5,
     marginLeft: 2,
   },
-  option: {
-    fontWeight: "500",
-    marginTop: 2.5,
-    padding: 5,
-    fontSize: 13,
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 5,
-  },
   price: {
     fontSize: 15.5,
     marginLeft: 5,
@@ -362,10 +317,7 @@ const styles = StyleSheet.create({
   },
   from: {
     fontSize: 12,
-  },
-  warning: {
-    marginTop: 5,
-    fontSize: 13,
+    textTransform: "lowercase",
   },
   distance: {
     marginLeft: 2.5,
@@ -375,5 +327,42 @@ const styles = StyleSheet.create({
   },
   horizFlatlist: {
     paddingHorizontal: 15,
+  },
+  review: {
+    marginLeft: 10,
+    color: grey0,
+    flex: 1,
+    fontStyle: "italic",
+  },
+  reviewerAvatar: { borderWidth: 1.5, borderColor: primary },
+  accordion: {
+    marginTop: 15,
+    marginHorizontal: 15,
+    paddingHorizontal: 5,
+    paddingTop: 5,
+    paddingBottom: 7.5,
+    justifyContent: "center",
+    borderTopWidth: 1,
+    borderTopColor: "#eee",
+    borderBottomWidth: 1,
+  },
+  accordionTitle: { fontSize: 14.5, fontWeight: "500", color: black },
+  discount: {
+    fontSize: 11.5,
+    color: error,
+    marginLeft: 5,
+    fontWeight: "500",
+  },
+  calendarBtn: {
+    height: 35,
+    paddingHorizontal: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 5,
+    backgroundColor: "white",
+    borderWidth: 1,
+    borderColor: "#eee",
+    marginLeft: 15,
+    marginRight: 10,
   },
 });

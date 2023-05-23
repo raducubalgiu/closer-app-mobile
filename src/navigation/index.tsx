@@ -16,6 +16,7 @@ import {
   AddVideosPreviewScreen,
   AddPostScreen,
   AddScheduleScreen,
+  CalendarSheetScreen,
   ClearCacheScreen,
   CameraScreen,
   CameraTimerScreen,
@@ -145,6 +146,11 @@ const AppNavigation = () => {
             <Stack.Screen
               name="ReviewsSheet"
               component={ReviewsSheetScreen}
+              options={{ presentation: "formSheet" }}
+            />
+            <Stack.Screen
+              name="CalendarSheet"
+              component={CalendarSheetScreen}
               options={{ presentation: "formSheet" }}
             />
             <Stack.Screen

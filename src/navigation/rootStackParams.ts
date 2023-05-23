@@ -48,6 +48,7 @@ export type RootStackParams = {
     serviceId: string;
     expirationTime: string | null;
   };
+  CalendarSheet: { userId: string; name: string };
   Camera: { name: string; avatar: any };
   CameraPreview: {
     photo: ImagePickerAsset | CameraCapturedPicture;

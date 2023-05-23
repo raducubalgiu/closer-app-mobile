@@ -124,7 +124,7 @@ export const HeaderServices = ({
             borderRadius: 10,
             marginRight: 7.5,
             backgroundColor: "white",
-            borderWidth: item.isFiltered ? 1.5 : 1.25,
+            borderWidth: 1.25,
             borderColor: item.isFiltered ? "#4d4d4d" : "#eee",
           }}
         >

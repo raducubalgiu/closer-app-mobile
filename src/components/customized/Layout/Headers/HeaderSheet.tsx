@@ -2,6 +2,7 @@ import { StyleSheet, Text, Pressable, ViewStyle } from "react-native";
 import { Stack } from "../../../core";
 import { Icon, Divider } from "@rneui/themed";
 import theme from "../../../../../assets/styles/theme";
+import { isEmpty } from "lodash";
 
 const { black, grey3 } = theme.lightColors || {};
 
@@ -26,6 +27,7 @@ export const HeaderSheet = ({
     description: {
       color: grey3,
       fontSize: 15,
+      marginTop: 2.5,
     },
   });
 
@@ -35,7 +37,7 @@ export const HeaderSheet = ({
         <Icon name="close" type="ionicon" color="white" style={styles.icon} />
         <Stack>
           <Text style={styles.title}>{title}</Text>
-          <Text style={styles.description}>{description}</Text>
+          {description && <Text style={styles.description}>{description}</Text>}
         </Stack>
         <Pressable style={styles.icon} onPress={onClose}>
           <Icon name="close" type="ionicon" />
