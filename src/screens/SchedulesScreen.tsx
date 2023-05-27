@@ -18,6 +18,7 @@ import {
 import theme from "../../assets/styles/theme";
 import { yearMonthFormat } from "../utils/date-utils";
 import { Divider } from "@rneui/themed";
+import dayjs from "dayjs";
 
 const { black } = theme.lightColors || {};
 
@@ -41,7 +42,12 @@ export const SchedulesScreen = () => {
     const { year, month } = section?._id || {};
 
     return (
-      <Text style={styles.headerList}>{yearMonthFormat(year, month)}</Text>
+      <Text style={styles.headerList}>
+        {dayjs()
+          .year(year)
+          .month(month - 1)
+          .format("MMM YYYY")}
+      </Text>
     );
   }, []);
 

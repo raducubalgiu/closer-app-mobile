@@ -5,12 +5,13 @@ dayjs.extend(utc);
 
 export const NOW = dayjs.utc().format();
 
-export const FROM_NOW = (date: string) => dayjs(date).fromNow();
+export const fromNow = (date: string) => dayjs(date).fromNow();
+
 export const shortFormat = (date: Dayjs | string) =>
   dayjs(date).format("YYYY-MM-DD");
 
 export const addMinutesFromNow = (minutes: number) =>
-  dayjs().startOf("day").add(minutes, "minutes").format("HH:mm");
+  dayjs().utc(true).startOf("day").add(minutes, "minutes").format("HH:mm");
 
 export const dayMonthFormat = (date: Dayjs | null | string) => {
   if (date) {
@@ -18,16 +19,6 @@ export const dayMonthFormat = (date: Dayjs | null | string) => {
   } else {
     return "";
   }
-};
-export const startOfDayFormatUTC = (date: string) => {
-  return dayjs(date).utc().startOf("day").format();
-};
-
-export const yearMonthFormat = (year: number, month: number) => {
-  return dayjs()
-    .year(year)
-    .month(month - 1)
-    .format("MMM YYYY");
 };
 
 export const dayMonthTime = (date: string) =>

@@ -3,7 +3,7 @@ import CustomAvatar from "../../core/Avatars/CustomAvatar";
 import DisplayText from "../Typography/DisplayText/DisplayText";
 import theme from "../../../../assets/styles/theme";
 import { Stack } from "../../core";
-import { FROM_NOW } from "../../../utils/date-utils";
+import { fromNow } from "../../../utils/date-utils";
 
 const { grey0 } = theme.lightColors || {};
 
@@ -41,7 +41,7 @@ export const CardPostDescription = ({
         ) : (
           <Text>...</Text>
         )}
-        <Text style={styles.date}>{FROM_NOW(date)}</Text>
+        <Text style={styles.date}>{fromNow(date)}</Text>
       </View>
     </Stack>
   );

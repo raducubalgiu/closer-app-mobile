@@ -17,6 +17,8 @@ import FixedPeriodTab from "./Tabs/PeriodTabs/FixedPeriodTab";
 import CardReviewSummary from "./Cards/CardReviewSummary";
 import ReviewsSheet from "./Sheets/ReviewsSheet";
 import ReviewListtem from "./ListItems/ReviewListtem";
+import SlotListItem from "./ListItems/SlotListItem";
+import CalendarDayListItem from "./ListItems/LocationListItem/CalendarDayListItem";
 
 export {
   DisplayText,
@@ -37,6 +39,8 @@ export {
   CardReviewSummary,
   ReviewsSheet,
   ReviewListtem,
+  SlotListItem,
+  CalendarDayListItem,
 };
 
 // Normal Components

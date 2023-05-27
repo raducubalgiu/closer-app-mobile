@@ -12,7 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useTranslation } from "react-i18next";
 import { Post } from "../../../../ts";
-import { FROM_NOW } from "../../../../utils/date-utils";
+import { fromNow } from "../../../../utils/date-utils";
 import PostHeader from "./sections/PostHeader";
 import PostBookable from "./sections/PostBookable";
 import PostActions from "./sections/PostActions";
@@ -96,7 +96,7 @@ const PostVideoListItem = forwardRef(
         />
         <PostDescription
           description={description}
-          date={FROM_NOW(createdAt)}
+          date={fromNow(createdAt)}
           onGoToComments={goToComments}
         />
         <ConfirmModal

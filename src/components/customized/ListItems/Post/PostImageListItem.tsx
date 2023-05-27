@@ -14,7 +14,7 @@ import { useAuth, useDelete } from "../../../../hooks";
 import ConfirmModal from "../../Modals/ConfirmModal";
 import { PostInfoSheet } from "../../Sheets/PostInfoSheet";
 import { Post } from "../../../../ts";
-import { FROM_NOW } from "../../../../utils/date-utils";
+import { fromNow } from "../../../../utils/date-utils";
 import { SheetModal } from "../../../core";
 
 type IProps = {
@@ -86,7 +86,7 @@ const PostImageListItem = ({
       />
       <PostDescription
         description={description}
-        date={FROM_NOW(createdAt)}
+        date={fromNow(createdAt)}
         onGoToComments={goToComments}
       />
       <ConfirmModal

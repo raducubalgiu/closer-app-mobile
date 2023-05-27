@@ -17,6 +17,7 @@ import PostGradient from "../../Gradients/PostGradient";
 import StoryFooterListItem from "./StoryFooterListItem";
 import StoryHeaderListItem from "./StoryHeaderListItem";
 import { StoryViewsSheet } from "../../Sheets/StoryViewsSheet";
+import { fromNow } from "../../../../utils/date-utils";
 
 const { width, height } = Dimensions.get("window");
 type IProps = {
@@ -65,7 +66,7 @@ const StoryListItem = ({
           <StoryHeaderListItem
             avatar={userId?.avatar}
             username={userId?.username}
-            date={dayjs(createdAt).fromNow()}
+            date={fromNow(createdAt)}
           />
           <LinearGradient
             colors={["rgba(0,0,0,0.5)", "transparent"]}

@@ -115,8 +115,10 @@ const LocationListItem = ({ location, service, option, period }: IProps) => {
     navigation.navigate("ReviewsSheet", { userId: id, name, ratingsQuantity });
   };
 
-  const navigateToCalendar = () =>
-    navigation.navigate("CalendarSheet", { userId: id, name });
+  const navigateToCalendar = () => {
+    if (startDate)
+      navigation.navigate("CalendarSheet", { userId: id, name, startDate });
+  };
 
   const isOpenColor = open ? success : error;
 

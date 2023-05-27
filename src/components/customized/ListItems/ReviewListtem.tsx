@@ -4,7 +4,7 @@ import { Icon } from "@rneui/themed";
 import { Stack, CustomAvatar, Rating } from "../../core";
 import { Review } from "../../../ts";
 import theme from "../../../../assets/styles/theme";
-import { FROM_NOW } from "../../../utils/date-utils";
+import { fromNow } from "../../../utils/date-utils";
 
 const { black, grey0 } = theme.lightColors || {};
 
@@ -22,7 +22,7 @@ const ReviewListtem = ({ item }: IProps) => {
           <Rating rating={rating} size={14} />
           <Text style={styles.review}>{review}</Text>
           <Text style={{ color: grey0, marginTop: 5 }}>
-            {FROM_NOW(createdAt)}
+            {fromNow(createdAt)}
           </Text>
         </View>
       </Stack>

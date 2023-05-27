@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import { memo } from "react";
 import { Post } from "../../../../ts";
-import { FROM_NOW } from "../../../../utils/date-utils";
+import { fromNow } from "../../../../utils/date-utils";
 import PostHeader from "./sections/PostHeader";
 import PostBookable from "./sections/PostBookable";
 import PostActions from "./sections/PostActions";
@@ -64,7 +64,7 @@ const PostCarouselListItem = ({
       />
       <PostDescription
         description={description}
-        date={FROM_NOW(createdAt)}
+        date={fromNow(createdAt)}
         onGoToComments={goToComments}
       />
     </View>

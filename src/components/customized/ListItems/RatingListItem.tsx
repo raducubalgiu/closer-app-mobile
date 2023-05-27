@@ -1,11 +1,11 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { memo, useState } from "react";
 import { Divider, Icon } from "@rneui/themed";
-import dayjs from "dayjs";
 import theme from "../../../../assets/styles/theme";
 import { Checkmark, Stack, Rating, CustomAvatar } from "../../core";
 import { User } from "../../../ts";
 import { useAuth, useDelete, useGet, usePost } from "../../../hooks";
+import { fromNow } from "../../../utils/date-utils";
 
 const { black, grey0, error } = theme.lightColors || {};
 
@@ -69,7 +69,7 @@ const RatingListItem = ({
               <Text style={styles.name}>{reviewer?.name}</Text>
               {reviewer?.checkmark && <Checkmark sx={{ marginLeft: 5 }} />}
             </Stack>
-            <Text style={styles.date}>{dayjs(date).fromNow()}</Text>
+            <Text style={styles.date}>{fromNow(date)}</Text>
           </View>
         </Stack>
       </Stack>
