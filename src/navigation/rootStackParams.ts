@@ -48,7 +48,13 @@ export type RootStackParams = {
     serviceId: string;
     expirationTime: string | null;
   };
-  CalendarSheet: { userId: string; name: string; startDate: string };
+  CalendarSheet: {
+    userId: string;
+    name: string;
+    startDate: string;
+    option: Option;
+    service: Service;
+  };
   Camera: { name: string; avatar: any };
   CameraPreview: {
     photo: ImagePickerAsset | CameraCapturedPicture;
@@ -205,6 +211,12 @@ export type RootStackParams = {
   ScheduleDetails: { schedule: Schedule };
   ScheduleCancel: { scheduleId: string };
   SearchPosts: { search: string };
+  SelectProduct: {
+    userId: string;
+    start: string;
+    option: Option;
+    service: Service;
+  };
   SearchPopular: { post: Post; posts: Post[]; index: number };
   Service: { service: Service };
   Sound: { soundUri: any; avatar: any };

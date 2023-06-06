@@ -124,5 +124,6 @@ export { LanguageAppScreen } from "./User/SettingsAndPrivacy/Language/LanguageAp
 export { LanguageTranslationScreen } from "./User/SettingsAndPrivacy/Language/LanguageTranslationScreen";
 export { SearchPopularDetailScreen } from "./Search/SearchPopularDetailScreen";
 export { TagUsersScreen } from "./AddPost/TagUsersScreen";
+export { SelectProductScreen } from "../screens/SelectProductScreen";
 
 export { ProfileScreen };

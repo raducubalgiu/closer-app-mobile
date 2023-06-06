@@ -13,6 +13,7 @@ type IProps = {
   actionBtn?: React.ReactElement<any>;
   divider?: boolean;
   sx?: {};
+  customNavigation?: () => void;
 };
 
 export const Header = ({
@@ -21,14 +22,19 @@ export const Header = ({
   subtitle = "",
   actionBtn,
   divider = false,
+  customNavigation,
   sx,
 }: IProps) => {
   const navigation = useNavigation();
 
+  const onNavigate = () => {
+    customNavigation ? customNavigation() : navigation.goBack();
+  };
+
   return (
     <View style={[styles.container, sx]}>
       <Stack direction="row">
-        <Pressable onPress={() => navigation.goBack()} style={{ padding: 5 }}>
+        <Pressable onPress={onNavigate} style={{ padding: 5 }}>
           <Icon
             name="arrow-back-ios"
             size={21}
@@ -59,7 +65,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     color: black,
-    marginRight: 10,
     fontWeight: "700",
   },
   subtitle: { marginTop: 1, color: grey0, fontSize: 15 },

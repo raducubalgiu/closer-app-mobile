@@ -1,6 +1,6 @@
+import { StyleSheet, Text, Pressable, View } from "react-native";
 import { BottomSheetView } from "@gorhom/bottom-sheet";
 import { memo } from "react";
-import { StyleSheet, Text, Pressable } from "react-native";
 import { Icon } from "@rneui/themed";
 import { Stack } from "../../core";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
@@ -12,11 +12,19 @@ type IProps = {
   longitude: number;
   height: number;
   width: number;
+  subtitle: string;
   onClose: () => void;
 };
-const { black } = theme.lightColors || {};
+const { black, grey0 } = theme.lightColors || {};
 
-const SheetMap = ({ latitude, longitude, height, width, onClose }: IProps) => {
+const SheetMap = ({
+  latitude,
+  longitude,
+  height,
+  width,
+  subtitle,
+  onClose,
+}: IProps) => {
   const { t } = useTranslation("common");
 
   const mapStyle = [
@@ -59,7 +67,10 @@ const SheetMap = ({ latitude, longitude, height, width, onClose }: IProps) => {
     <BottomSheetView>
       <Stack direction="row">
         <Icon name="close" color="white" style={styles.icon} />
-        <Text style={styles.title}>{t("map")}</Text>
+        <Stack>
+          <Text style={styles.title}>{t("map")}</Text>
+          <Text style={styles.subtitle}>{subtitle}</Text>
+        </Stack>
         <Pressable style={styles.icon} onPress={onClose}>
           <Icon name="close" color={black} size={22.5} />
         </Pressable>
@@ -71,6 +82,7 @@ const SheetMap = ({ latitude, longitude, height, width, onClose }: IProps) => {
         provider={PROVIDER_GOOGLE}
         zoomEnabled={true}
         pitchEnabled={true}
+        showsUserLocation={true}
       >
         <Marker
           coordinate={{ latitude, longitude }}
@@ -82,8 +94,9 @@ const SheetMap = ({ latitude, longitude, height, width, onClose }: IProps) => {
 };
 
 const styles = StyleSheet.create({
-  icon: { paddingVertical: 12.5, paddingHorizontal: 15 },
-  title: { fontWeight: "500", fontSize: 17, color: black },
+  icon: { padding: 15 },
+  title: { fontWeight: "600", fontSize: 17, color: black },
+  subtitle: { color: grey0, fontSize: 15 },
 });
 
 export default memo(SheetMap);

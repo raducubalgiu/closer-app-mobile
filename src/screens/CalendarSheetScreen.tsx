@@ -1,6 +1,9 @@
 import { FlatList, StyleSheet, ListRenderItemInfo, View } from "react-native";
 import { useCallback, useState } from "react";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
 import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import { isEmpty } from "lodash";
@@ -42,14 +45,15 @@ type SlotsResponse = {
 };
 
 export const CalendarSheetScreen = ({ route }: IProps) => {
-  const { userId, name, startDate } = route.params;
+  const { userId, name, startDate, option, service } = route.params;
   const [selectedDay, setSelectedDay] = useState({
     day: startDate,
     monthIndex: 0,
   });
   const [isVisible, setIsVisible] = useState(false);
   const { t } = useTranslation("common");
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const insets = useSafeAreaInsets();
 
   const {
@@ -73,9 +77,22 @@ export const CalendarSheetScreen = ({ route }: IProps) => {
     options: { enabled: !isVisible },
   });
 
+  const navigateToSelectProduct = (item: Slot) => {
+    navigation.goBack();
+    navigation.push("SelectProduct", {
+      userId,
+      start: item.start,
+      option,
+      service,
+    });
+  };
+
   const renderSlot = useCallback(
     ({ item }: ListRenderItemInfo<Slot>) => (
-      <SlotListItem onPress={() => {}} hour={item.hour} />
+      <SlotListItem
+        onPress={() => navigateToSelectProduct(item)}
+        hour={item.hour}
+      />
     ),
     []
   );

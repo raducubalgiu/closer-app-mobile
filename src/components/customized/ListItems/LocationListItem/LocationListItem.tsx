@@ -7,13 +7,20 @@ import {
   Pressable,
   FlatList,
   ListRenderItemInfo,
+  useWindowDimensions,
 } from "react-native";
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback, useMemo, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import theme from "../../../../../assets/styles/theme";
 import { addMinutesFromNow, trimFunc } from "../../../../utils";
-import { CustomAvatar, IconLocation, Rating, Stack } from "../../../core";
+import {
+  CustomAvatar,
+  IconLocation,
+  Rating,
+  SheetModal,
+  Stack,
+} from "../../../core";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../../navigation/rootStackParams";
 import { Location, Option, Period, Service } from "../../../../ts";
@@ -24,6 +31,8 @@ import { ListItem } from "@rneui/themed";
 import AvailableSlotListItem from "./AvailableSlotListItem";
 import dayjs from "dayjs";
 import { trimByWord } from "../../../../utils/trimByWord";
+import SheetMap from "../../Sheets/SheetMap";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
 const { width } = Dimensions.get("window");
 const { black, grey0, primary, error, success } = theme.lightColors || {};
@@ -54,6 +63,9 @@ const LocationListItem = ({ location, service, option, period }: IProps) => {
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const { t } = useTranslation("common");
   const [expanded, setExpanded] = useState(false);
+  const sheetRef = useRef<BottomSheetModal>(null);
+  const { width, height } = useWindowDimensions();
+  const snapPoints = useMemo(() => [1, height / 1.25], []);
 
   const goToUser = () => {
     if (option && service) {
@@ -116,8 +128,14 @@ const LocationListItem = ({ location, service, option, period }: IProps) => {
   };
 
   const navigateToCalendar = () => {
-    if (startDate)
-      navigation.navigate("CalendarSheet", { userId: id, name, startDate });
+    if (startDate && option && service)
+      navigation.navigate("CalendarSheet", {
+        userId: id,
+        name,
+        startDate,
+        option,
+        service,
+      });
   };
 
   const isOpenColor = open ? success : error;
@@ -202,23 +220,26 @@ const LocationListItem = ({ location, service, option, period }: IProps) => {
                 )}
               </Pressable>
             </View>
-            <Stack direction="row" sx={{ marginTop: 10 }} justify="end">
-              <Stack direction="row">
+            <Stack direction="row" justify="end">
+              <Stack direction="row" sx={{ paddingTop: 15 }}>
                 <Text style={styles.from}>{t("from")}</Text>
                 <Text style={styles.price}>{minPrice} Lei</Text>
                 <Text style={styles.discount}>(-10%)</Text>
               </Stack>
               <Divider
                 orientation="vertical"
-                style={{ marginHorizontal: 7.5 }}
+                style={{ marginHorizontal: 7.5, marginTop: 15 }}
                 color="#ddd"
               />
-              <Stack direction="row">
+              <Pressable
+                style={{ paddingTop: 15 }}
+                onPress={() => sheetRef.current?.present()}
+              >
                 <Stack direction="row">
                   <IconLocation size={15} />
                   <Text style={styles.distance}>la {distance} km</Text>
                 </Stack>
-              </Stack>
+              </Pressable>
             </Stack>
           </View>
         </Stack>
@@ -261,6 +282,21 @@ const LocationListItem = ({ location, service, option, period }: IProps) => {
           </Stack>
         </ListItem.Accordion>
       </Pressable>
+      <SheetModal
+        duration={500}
+        showIndicator={false}
+        snapPoints={snapPoints}
+        ref={sheetRef}
+      >
+        <SheetMap
+          subtitle={name}
+          latitude={address.coordinates[0]}
+          longitude={address.coordinates[1]}
+          height={height / 1.25}
+          width={width}
+          onClose={() => sheetRef.current?.close()}
+        />
+      </SheetModal>
     </View>
   );
 };

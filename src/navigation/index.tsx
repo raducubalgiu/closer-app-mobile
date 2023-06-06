@@ -101,6 +101,7 @@ import {
   ScheduleCancelScreen,
   ScheduleConfirmScreen,
   ScheduleDetailsScreen,
+  SelectProductScreen,
   SearchServicesScreen,
   ServiceScreen,
   SavingDataScreen,
@@ -176,6 +177,10 @@ const AppNavigation = () => {
                 presentation: "containedModal",
                 gestureEnabled: false,
               }}
+            />
+            <Stack.Screen
+              name="SelectProduct"
+              component={SelectProductScreen}
             />
             <Stack.Screen name="EditProfile" component={EditProfileScreen} />
             <Stack.Screen name="EditName" component={EditNameScreen} />
